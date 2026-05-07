@@ -4,7 +4,7 @@
 
 # Script Writing Questions and Answers – Python Basics II
 
-----------
+
 
 **1. Write a Python script to demonstrate that integers are immutable objects. Your script should display the value and memory ID of an integer before and after modification.**
 
