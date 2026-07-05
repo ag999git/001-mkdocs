@@ -1,62 +1,44 @@
+# str() versus repr() Chapter 7
 
+#### **Research Question**
 
-
-
-### **Research Question**
-
-> Investigate the difference between `__str__()` and `__repr__()` methods in Python classes.  
+> Investigate the difference between `__str__()` and `__repr__()` methods in Python classes.\
 > When should each method be used? What happens when only one of them is defined?
-
-
 
 In this chapter in the book, we learned how to define the string representation of an object using the `__str__()` method. However, Python provides another important method called `__repr__()`.
 
 Although the difference between these two methods is subtle, it is very important.
 
-### Key Differences
+#### Key Differences
 
--   `__str__()`
-    
-    -   Called by the built-in function `str()` and by `print()`
-        
-    -   Provides a **user-friendly (informal)** string representation
-        
-    -   Intended for end users
-        
--   `__repr__()`
-    
-    -   Called by the built-in function `repr()`
-        
-    -   Provides an **official (formal)** string representation
-        
-    -   Intended for developers (debugging, logging)
-        
+* `__str__()`
+  * Called by the built-in function `str()` and by `print()`
+  * Provides a **user-friendly (informal)** string representation
+  * Intended for end users
+* `__repr__()`
+  * Called by the built-in function `repr()`
+  * Provides an **official (formal)** string representation
+  * Intended for developers (debugging, logging)
 
-### Important Rule
+#### Important Rule
 
 If a class defines `__repr__()` but does **not** define `__str__()`, then calling `str()` (or `print()`) will automatically use the `__repr__()` method.
 
-### **Task Instructions**
+#### **Task Instructions**
 
-1.  Create a class `Pet` with attributes like `name` and `type`.
-    
-2.  Implement both `__str__()` and `__repr__()` methods.
-    
-3.  Observe outputs of:
-    
-    -   `print(object)`
-        
-    -   `str(object)`
-        
-    -   `repr(object)`
-        
-4.  Remove the `__str__()` method and observe the change.
-    
-5.  Write your conclusions.
+1. Create a class `Pet` with attributes like `name` and `type`.
+2. Implement both `__str__()` and `__repr__()` methods.
+3. Observe outputs of:
+   * `print(object)`
+   * `str(object)`
+   * `repr(object)`
+4. Remove the `__str__()` method and observe the change.
+5. Write your conclusions.
 
-----------
+***
 
-### Case 1: When both __str__() and __repr__() are defined
+#### Case 1: When both **str**() and **repr**() are defined
+
 The following script shows the output when both`__str__()` and `__repr__()`are defined
 
 ```python
@@ -92,8 +74,9 @@ print("Using repr():", repr(pet1))  # Calls __repr__()
 
 ```
 
-### Case : When both __str__() is not defined nut `__repr__()` is defined:
-The following script shows the output when str__() is not defined nut `__repr__()` is defined:
+#### Case : When both **str**() is not defined nut `__repr__()` is defined:
+
+The following script shows the output when str\_\_() is not defined nut `__repr__()` is defined:
 
 ```python
 
@@ -119,14 +102,6 @@ print(repr(pet1))  # Uses __repr__()
 
 ```
 
-#### The following figure shows how str() and repr() interact:
+**The following figure shows how str() and repr() interact:**
 
-![Figure](/resources/ch-7-oop-str-vs-repr.png)
-
-
-
-
-
-
-
-
+![Figure](../.gitbook/assets/ch-7-oop-str-vs-repr.png)

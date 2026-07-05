@@ -1,69 +1,70 @@
-## Table of Contents 
-  - [1. What Is a Python Integer?](#1-what-is-a-python-integer)
-  - [2. Arbitrary Precision (Unlimited Size)](#2-arbitrary-precision-unlimited-size)
-  - [3. Integer Operations](#3-integer-operations)
-  - [4. Bitwise Operations (Advanced Feature)](#4-bitwise-operations-advanced-feature)
-  - [5. Advance concept:- Explanation of Bitwise Operation: 10 << 3](#5-advance-concept--explanation-of-bitwise-operation-10--3)
-  - [6. Advance concept:- Meaning of the Statement:- “Large integers can be shifted arbitrarily because Python supports arbitrary precision.”](#6-advance-concept--meaning-of-the-statement--large-integers-can-be-shifted-arbitrarily-because-python-supports-arbitrary-precision)
-  - [7. Type Conversions](#7-type-conversions)
-  - [8. Integer to other types:](#8-integer-to-other-types)
-  - [9. Relationship of int with bool (Subclassing)](#9-relationship-of-int-with-bool-subclassing)
-  - [10. Interactions of int with float and complex (Type Promotion)](#10-interactions-of-int-with-float-and-complex-type-promotion)
-  - [12. Common Pitfalls](#12-common-pitfalls)
-  - [13. Advance Concept:- Big Integer Mathematics](#13-advance-concept--big-integer-mathematics)
-  - [14. Advance Concept:- Understanding Performance of Integer Operations in Python](#14-advance-concept--understanding-performance-of-integer-operations-in-python)
-  - 
- 
+# Python Data Types
 
+* [1. What Is a Python Integer?](001-ch2-python-data-types.md#1-what-is-a-python-integer)
+* [2. Arbitrary Precision (Unlimited Size)](001-ch2-python-data-types.md#2-arbitrary-precision-unlimited-size)
+* [3. Integer Operations](001-ch2-python-data-types.md#3-integer-operations)
+* [4. Bitwise Operations (Advanced Feature)](001-ch2-python-data-types.md#4-bitwise-operations-advanced-feature)
+* [5. Advance concept:- Explanation of Bitwise Operation: 10 << 3](001-ch2-python-data-types.md#5-advance-concept--explanation-of-bitwise-operation-10--3)
+* [6. Advance concept:- Meaning of the Statement:- “Large integers can be shifted arbitrarily because Python supports arbitrary precision.”](001-ch2-python-data-types.md#6-advance-concept--meaning-of-the-statement--large-integers-can-be-shifted-arbitrarily-because-python-supports-arbitrary-precision)
+* [7. Type Conversions](001-ch2-python-data-types.md#7-type-conversions)
+* [8. Integer to other types:](001-ch2-python-data-types.md#8-integer-to-other-types)
+* [9. Relationship of int with bool (Subclassing)](001-ch2-python-data-types.md#9-relationship-of-int-with-bool-subclassing)
+* [10. Interactions of int with float and complex (Type Promotion)](001-ch2-python-data-types.md#10-interactions-of-int-with-float-and-complex-type-promotion)
+* [12. Common Pitfalls](001-ch2-python-data-types.md#12-common-pitfalls)
+* [13. Advance Concept:- Big Integer Mathematics](001-ch2-python-data-types.md#13-advance-concept--big-integer-mathematics)
+* [14. Advance Concept:- Understanding Performance of Integer Operations in Python](001-ch2-python-data-types.md#14-advance-concept--understanding-performance-of-integer-operations-in-python)
+*
 
-### Discussion: Python Integers (`int`) (With some advance concepts included)
+## Discussion: Python Integers (`int`) (With some advance concepts included)
 
-Python’s `int` type is one of the most powerful integer implementations among modern programming languages.  
+Python’s `int` type is one of the most powerful integer implementations among modern programming languages.\
 Unlike C, C++, or Java, Python integers are **arbitrary-precision**, memory-managed objects with a well-defined internal representation.
 
 This section covers Python `int` in depth.
 
----
+***
 
-#### 1. What Is a Python Integer?
+### 1. What Is a Python Integer?
 
-- Represents whole numbers (positive, negative, or zero).
-- Entirely implemented in C (CPython) as a structure called `PyLongObject`.
-- Immutable: any arithmetic operation creates a new integer object.
+* Represents whole numbers (positive, negative, or zero).
+* Entirely implemented in C (CPython) as a structure called `PyLongObject`.
+* Immutable: any arithmetic operation creates a new integer object.
 
 ```python
 x = 10
 x = x + 5   # creates a new int object; the old one is unused
 ```
 
----
+***
 
-#### 2. Arbitrary Precision (Unlimited Size)
+### 2. Arbitrary Precision (Unlimited Size)
 
 Python’s `int` has **no fixed upper limit**.
 
-- Grows automatically as needed.
-- Limited only by available RAM.
+* Grows automatically as needed.
+* Limited only by available RAM.
 
 Examples:
+
 ```python
 x = 10 ** 1000
 #print(x) # If uncommented will give a very large number
 print(len(str(x))) # Will give the number of digits ie 1001
 ```
 
-In languages like C, Java, C++, the size (32-bit, 64-bit) is fixed.  
+In languages like C, Java, C++, the size (32-bit, 64-bit) is fixed.\
 Python internally uses a dynamic array of machine words to store large integers.
 
+***
 
----
+### 3. Integer Operations
 
-#### 3. Integer Operations
+#### Arithmetic
 
-##### Arithmetic
 `+`, `-`, `*`, `//`, `/`, `%`, `**`
 
 Example:
+
 ```python
 a = 17
 b = 5
@@ -71,50 +72,55 @@ print(a / b) # 3.4 This will print the float division result
 print(a // b) # 3 Floor division.
 ```
 
-#### Floor division always rounds toward `negative infinity`:
+### Floor division always rounds toward `negative infinity`:
+
 ```python
 print(-15/4) # Output: -3.75
 print(15/-4) # Output: -3.75
 ```
 
----
+***
 
-#### 4. Bitwise Operations (Advanced Feature)
+### 4. Bitwise Operations (Advanced Feature)
 
 Python supports full bitwise operations:
 
-| Operator | Meaning |
-|----------|---------|
-| `&` | bitwise AND |
-| `|` | bitwise OR |
-| `^` | XOR |
-| `~` | bitwise NOT |
-| `<<` | left shift |
-| `>>` | right shift |
+| Operator | Meaning     |
+| -------- | ----------- |
+| `&`      | bitwise AND |
+| \`       | \`          |
+| `^`      | XOR         |
+| `~`      | bitwise NOT |
+| `<<`     | left shift  |
+| `>>`     | right shift |
 
 Example:
+
 ```python
 print(10 << 3)    # 80
 ```
 
-#### 5. Advance concept:- Explanation of Bitwise Operation: `10 << 3`
+### 5. Advance concept:- Explanation of Bitwise Operation: `10 << 3`
 
 <details>
-<summary>5. Advance concept:- Explanation of Bitwise Operation: `10 << 3`</summary>
 
-The operator `<<` is the **bitwise left shift** operator.  
+<summary>5. Advance concept:- Explanation of Bitwise Operation: `10 &#x3C;&#x3C; 3`</summary>
+
+The operator `<<` is the **bitwise left shift** operator.\
 It shifts the binary representation of a number **to the left** by a specified number of positions.
 
----
+***
 
-###### Step 1: Convert 10 to binary
+**Step 1: Convert 10 to binary**
+
 ```
 10 (decimal) = 1010 (binary)
 ```
 
----
+***
 
-###### Step 2: Shift left by 3 positions
+**Step 2: Shift left by 3 positions**
+
 `10 << 3` means:
 
 ```
@@ -123,9 +129,10 @@ It shifts the binary representation of a number **to the left** by a specified n
 
 Three zeros are added on the right.
 
----
+***
 
-###### Step 3: Convert result back to decimal
+**Step 3: Convert result back to decimal**
+
 Binary `1010000` equals:
 
 ```
@@ -133,13 +140,15 @@ Binary `1010000` equals:
 ```
 
 So:
+
 ```
 10 << 3 = 80
 ```
 
----
+***
 
-##### Why it works
+**Why it works**
+
 Shifting left by `n` bits is equivalent to multiplying by `2ⁿ`:
 
 ```
@@ -148,56 +157,61 @@ Shifting left by `n` bits is equivalent to multiplying by `2ⁿ`:
          =  80
 ```
 
----
+***
 
-##### Final Answer
+**Final Answer**
+
 ```
 10 << 3 = 80
 ```
+
 </details>
 
+### 6. Advance concept:- Meaning of the Statement:- “Large integers can be shifted arbitrarily because Python supports arbitrary precision.”
 
-#### 6. Advance concept:- Meaning of the Statement:- “Large integers can be shifted arbitrarily because Python supports arbitrary precision.”
+<details>
 
+<summary>6. Advance concept:- Meaning of the Statement:- “Large integers can be shifted arbitrarily because Python supports arbitrary precision.”</summary>
 
-<details> 
-<summary>6. Advance concept:- Meaning of the Statement:- “Large integers can be shifted arbitrarily because Python supports arbitrary precision.”</summary>summary
+summary
 
----
+***
 
-###### 1. What is arbitrary precision?
+**1. What is arbitrary precision?**
 
-- In many languages (C, C++, Java), integers have a **fixed number of bits** (e.g., 32-bit or 64-bit).
-- This means numbers have a maximum possible size.
-- Shifting them too far can cause:
-  - overflow  
-  - loss of bits  
-  - wrap-around  
-  - undefined behavior  
+* In many languages (C, C++, Java), integers have a **fixed number of bits** (e.g., 32-bit or 64-bit).
+* This means numbers have a maximum possible size.
+* Shifting them too far can cause:
+  * overflow
+  * loss of bits
+  * wrap-around
+  * undefined behavior
 
 Python is different:
 
-- Python integers have **no fixed size limit**.
-- They automatically grow to any size, limited only by available memory.
+* Python integers have **no fixed size limit**.
+* They automatically grow to any size, limited only by available memory.
 
----
+***
 
-###### 2. What does “shifted arbitrarily” mean?
+**2. What does “shifted arbitrarily” mean?**
 
-- Bitwise left shift (`<<`) adds zeros to the right side of a binary number.
-- In fixed-size languages, shifting too far is impossible or unsafe.
-- **In Python, you can shift a number by any number of bits**, even thousands or millions.
+* Bitwise left shift (`<<`) adds zeros to the right side of a binary number.
+* In fixed-size languages, shifting too far is impossible or unsafe.
+* **In Python, you can shift a number by any number of bits**, even thousands or millions.
 
 Example:
+
 ```python
 x = 5
 y = x << 1000    # shift by 1000 bits
 ```
+
 This works normally in Python.
 
----
+***
 
-###### 3. Example of a large shift
+**3. Example of a large shift**
 
 ```python
 x = 1
@@ -206,36 +220,39 @@ print(y)
 ```
 
 Output (a very large integer):
+
 ```
 1606938044258990275541962092341162602522202993782792835301376
 ```
 
 Python handles this because it expands the integer size automatically.
 
----
+***
 
-###### 4. Why Python can do this
+**4. Why Python can do this**
 
-- Bit shifts generate larger binary numbers.
-- Python does not restrict integer size to 32 or 64 bits.
-- It creates a larger integer object as needed.
-- Therefore, no overflow occurs.
+* Bit shifts generate larger binary numbers.
+* Python does not restrict integer size to 32 or 64 bits.
+* It creates a larger integer object as needed.
+* Therefore, no overflow occurs.
 
----
+***
 
-###### 5. Summary
+**5. Summary**
 
-- Python integers can grow to any size → **arbitrary precision**.
-- Bit shifting (`<<`) can be done a limitless number of times.
-- Python will automatically allocate more memory to store the larger integer.
-- This is why **large integers can be shifted arbitrarily** in Python.
+* Python integers can grow to any size → **arbitrary precision**.
+* Bit shifting (`<<`) can be done a limitless number of times.
+* Python will automatically allocate more memory to store the larger integer.
+* This is why **large integers can be shifted arbitrarily** in Python.
 
----
+***
+
 </details>
 
-#### 7. Type Conversions
+### 7. Type Conversions
 
-##### Convert to int:
+#### Convert to int:
+
 ```python
 int("123") # string to int because "123" is a valid integer representation
 int(" 456 ") # string with whitespace to int
@@ -258,18 +275,20 @@ int(1e3) # scientific notation float to int (truncates) because 1e3 is a float
 
 ```
 
-#### 8. Integer to other types:
+### 8. Integer to other types:
+
 ```python
 print(float(5)) # 5.0 because int can be converted to float
 print(complex(3)) # (3+0j) # int promoted to complex
 print(str(123)) # "123" # int to string
 ```
 
----
+***
 
-#### 9. Relationship of int with `bool` (Subclassing)
+### 9. Relationship of int with `bool` (Subclassing)
 
 In Python:
+
 ```
 bool is a subclass of int
 ```
@@ -366,14 +385,13 @@ print(divmod(5, True)) # (5, 0) Since divmod returns quotient and remainder
 ```
 
 Meaning:
-- `True` behaves as `1`
-- `False` behaves as `0`
 
+* `True` behaves as `1`
+* `False` behaves as `0`
 
+***
 
----
-
-#### 10. Interactions of int with float and complex (Type Promotion)
+### 10. Interactions of int with float and complex (Type Promotion)
 
 Python uses numeric tower widening:
 
@@ -382,35 +400,38 @@ int → float → complex
 ```
 
 Examples:
+
 ```python
 print(5 + 2.5) # 7.5 int promoted to float
 print(5 + 2j) # (5+2j) int promoted to complex
 ```
 
-##### 10.1 What is Numeric tower widening in Python?
+#### 10.1 What is Numeric tower widening in Python?
 
 > When Python performs arithmetic between numbers of **different types**, it automatically converts (“promotes”) the smaller, simpler type into the larger, more capable type **so that the operation makes sense and no information is lost**.
 
 Python follows this hierarchy:
 
-`int → float → complex` 
+`int → float → complex`
 
 This is called the **numeric tower**.
 
----
+***
 
----
+***
 
-#### Advance Concept:- 11. Memory Usage
+### Advance Concept:- 11. Memory Usage
 
 Memory increases with size of the integer.
 
 Approximate formula:
+
 ```
 24 bytes + 30 bits per digit (on 64-bit systems)
 ```
 
 Example:
+
 ```python
 import  sys
 print(sys.getsizeof(10**100)) # Gives size of a large integer in bytes
@@ -492,71 +513,77 @@ print(int("0"*100 + "1")) # Large string with leading zeros to int conversion
 # print(int("00A7")) # Raises ValueError
 ```
 
----
+***
 
-#### 12. Common Pitfalls
+### 12. Common Pitfalls
 
-##### 12.1 Confusing `/` and `//`
+#### 12.1 Confusing `/` and `//`
+
 ```python
 print(5 / 2) # 2.5 float
 print(5 // 2) # 2 int
 ```
 
-##### 12.2 Expecting fixed-size integers (Python does not overflow)
+#### 12.2 Expecting fixed-size integers (Python does not overflow)
+
 ```python
 print(2**200) #1606938044258990275541962092341162602522202993782792835301376
 ```
 
+***
 
-
----
-
-#### 13. Advance Concept:- Big Integer Mathematics
+### 13. Advance Concept:- Big Integer Mathematics
 
 <details>
+
 <summary>13. Advance Concept:- Big Integer Mathematics</summary>
 
 Python’s `int` supports:
-- exact big integer arithmetic  
-- modular arithmetic  
-- number-theoretic functions via libraries like `math` and `sympy`
+
+* exact big integer arithmetic
+* modular arithmetic
+* number-theoretic functions via libraries like `math` and `sympy`
 
 Examples:
+
 ```python
 pow(a, b, mod)  # fast modular exponentiation
 ```
 
----
+***
 
-##### Summary
+**Summary**
 
-- Python `int` is **arbitrary precision**, immutable, and extremely flexible.  
-- Implemented in C using dynamic arrays of machine words.  
-- Supports caching, bitwise arithmetic, type widening, and conversion.  
-- Much more powerful and safer than fixed-size integers in compiled languages.
+* Python `int` is **arbitrary precision**, immutable, and extremely flexible.
+* Implemented in C using dynamic arrays of machine words.
+* Supports caching, bitwise arithmetic, type widening, and conversion.
+* Much more powerful and safer than fixed-size integers in compiled languages.
 
----
+***
 
 </details>
 
-
-#### 14. Advance Concept:- Understanding Performance of Integer Operations in Python
+### 14. Advance Concept:- Understanding Performance of Integer Operations in Python
 
 <details>
-<summary>14. Advance Concept:- Understanding Performance of Integer Operations in Python</summary>summary
 
-Python's `int` is very powerful because it supports **arbitrary precision**—integers can grow to any size.  
+<summary>14. Advance Concept:- Understanding Performance of Integer Operations in Python</summary>
+
+summary
+
+Python's `int` is very powerful because it supports **arbitrary precision**—integers can grow to any size.\
 However, performance differs between **small** and **large** integers because of how they are stored and processed internally.
 
----
+***
 
-##### 1. Small integers: Very fast due to caching
+**1. Small integers: Very fast due to caching**
 
-- Python pre-allocates and stores (“caches”) all integers in the range **−5 to 256**.
-- These integers are created once at startup and **reused** throughout the program.
-- Any time you create an integer in this range, Python does **not** allocate new memory.
+* Python pre-allocates and stores (“caches”) all integers in the range **−5 to 256**.
+* These integers are created once at startup and **reused** throughout the program.
+* Any time you create an integer in this range, Python does **not** allocate new memory.
 
 Example:
+
 ```python
 a = 100
 b = 100
@@ -564,66 +591,69 @@ a is b     # True — both refer to the same cached object
 ```
 
 **Why this is fast:**
-- No memory allocation.
-- No object creation.
-- Python simply returns a reference to the cached integer.
+
+* No memory allocation.
+* No object creation.
+* Python simply returns a reference to the cached integer.
 
 This makes operations on small integers extremely efficient.
 
----
+***
 
-##### 2. Large integers: Slower operations (O(n), O(n²), sometimes O(n log n))
+**2. Large integers: Slower operations (O(n), O(n²), sometimes O(n log n))**
 
 When integers get large (hundreds or thousands of digits):
 
-- They no longer fit in a single machine word.
-- Python must store them as **arrays of digits** (base 2³⁰ or 2¹⁵ chunks internally).
-- Arithmetic must operate on **multiple chunks**, not one CPU instruction.
+* They no longer fit in a single machine word.
+* Python must store them as **arrays of digits** (base 2³⁰ or 2¹⁵ chunks internally).
+* Arithmetic must operate on **multiple chunks**, not one CPU instruction.
 
-#### Advance Concept:- Complexity overview
+**Advance Concept:- Complexity overview**
 
-| Operation | Time complexity | Reason |
-|----------|-----------------|--------|
-| Addition, subtraction | **O(n)** | Must process all “digits” of large numbers |
-| Comparison | **O(n)** | Must compare digit-by-digit from most significant end |
-| Multiplication | **O(n²)** for normal method | Every digit interacts with every digit |
-| Multiplication (optimized) | **O(n log n)** with better algorithms | Python switches for large values |
+| Operation                  | Time complexity                       | Reason                                                |
+| -------------------------- | ------------------------------------- | ----------------------------------------------------- |
+| Addition, subtraction      | **O(n)**                              | Must process all “digits” of large numbers            |
+| Comparison                 | **O(n)**                              | Must compare digit-by-digit from most significant end |
+| Multiplication             | **O(n²)** for normal method           | Every digit interacts with every digit                |
+| Multiplication (optimized) | **O(n log n)** with better algorithms | Python switches for large values                      |
 
 Where:
-- **n = number of internal digits**, not decimal digits.
+
+* **n = number of internal digits**, not decimal digits.
 
 Thus, very large integers behave like big sequences, not like primitive machine integers.
 
----
+***
 
-#### Advance Concept:- Multiplication uses optimized algorithms internally
+**Advance Concept:- Multiplication uses optimized algorithms internally**
 
 Python uses different multiplication algorithms depending on the size of the integers.
 
-##### a) Karatsuba algorithm (for medium-sized numbers)
+**a) Karatsuba algorithm (for medium-sized numbers)**
 
-- Faster than the standard grade-school multiplication.
-- Complexity: **O(n^1.585)**  
-- Used when integers have around **20–70 digits** (range varies).
+* Faster than the standard grade-school multiplication.
+* Complexity: **O(n^1.585)**
+* Used when integers have around **20–70 digits** (range varies).
 
 Karatsuba divides numbers into parts and reduces the total multiplications needed.
 
-##### b) FFT-based multiplication (for extremely large numbers)
+**b) FFT-based multiplication (for extremely large numbers)**
 
 When numbers become extremely large (thousands of digits), Python uses algorithms based on:
 
-- **FFT (Fast Fourier Transform)**
-- Schönhage–Strassen algorithm  
-- (Newer versions of Python may use Fürer-like algorithms)
+* **FFT (Fast Fourier Transform)**
+* Schönhage–Strassen algorithm
+* (Newer versions of Python may use Fürer-like algorithms)
 
 Complexity: approximately **O(n log n)** or better.
 
 These advanced algorithms treat multiplication like polynomial convolution using FFT.
 
----
+***
+
 </details>
 
-#### Advance Concept:- Internal Representation (CPython)
+### Advance Concept:- Internal Representation (CPython)
 
 CPython stores integers using a structure:
 
@@ -635,26 +665,21 @@ PyLongObject:
 ```
 
 Key notes:
-- “digits” are base-2³⁰ chunks (on 64-bit systems).
-- Large integers use multiple digits.
-- Thus, computing with huge numbers is slower but exact (no overflow).
 
----
+* “digits” are base-2³⁰ chunks (on 64-bit systems).
+* Large integers use multiple digits.
+* Thus, computing with huge numbers is slower but exact (no overflow).
 
+***
 
+***
 
----
+### Summary of small versus large integer usage in Python
 
-
-
-
-
-#### Summary of small versus large integer usage in Python
-
-- **Small integers** are extremely fast because Python reuses them from a cache.
-- **Large integers** require more memory and multi-chunk operations, leading to slower performance.
-- Python automatically chooses optimal multiplication algorithms depending on size:
-  - Standard or Karatsuba for mid-sized numbers  
-  - FFT-based algorithms for huge numbers  
+* **Small integers** are extremely fast because Python reuses them from a cache.
+* **Large integers** require more memory and multi-chunk operations, leading to slower performance.
+* Python automatically chooses optimal multiplication algorithms depending on size:
+  * Standard or Karatsuba for mid-sized numbers
+  * FFT-based algorithms for huge numbers
 
 This combination allows Python to support massive integers while still keeping performance as efficient as possible.

@@ -1,175 +1,123 @@
+# Exploring Advanced “Has-A” Relationships in Python (Composition, Aggregation, Dependency)
 
+***
 
-
-
-## Exploring Advanced “Has-A” Relationships in Python (Composition, Aggregation, Dependency)
-
-----------
-
-### Objective
+## Objective
 
 In this exercise, you will:
 
--   Understand different forms of **Has-A relationships**
-    
--   Implement **composition, aggregation, and dependency**
-    
--   Analyse **ownership and lifecycle of objects**
-    
--   Design a system using **Pet, Dog, Collar, and Toy classes**
-    
+* Understand different forms of **Has-A relationships**
+* Implement **composition, aggregation, and dependency**
+* Analyse **ownership and lifecycle of objects**
+* Design a system using **Pet, Dog, Collar, and Toy classes**
 
-### Problem Statement
+## Problem Statement
 
-You are required to design a small system involving pets and their accessories. 
-Your implementation must demonstrate the following:
+You are required to design a small system involving pets and their accessories. Your implementation must demonstrate the following:
 
-----------
+***
 
-#### PART A: Class Design
+### PART A: Class Design
 
-1.  Create the following classes:
-    
-    -   `Pet` (base class)
-        
-    -   `Dog` (derived from Pet)
-        
-    -   `Collar`
-        
-    -   `Toy`
-        
+1. Create the following classes:
+   * `Pet` (base class)
+   * `Dog` (derived from Pet)
+   * `Collar`
+   * `Toy`
 
-----------
+***
 
-#### PART B: Composition (Strong Has-A)
+### PART B: Composition (Strong Has-A)
 
-2.  Implement **Composition** such that:
-    
-    -   A `Dog` **creates its own Collar internally**
-        
-    -   The Collar should NOT be passed from outside
-        
-    -   Add attributes to Collar (e.g., color)
-        
-    -   Provide a method in Collar to display its details
-        
+2. Implement **Composition** such that:
+   * A `Dog` **creates its own Collar internally**
+   * The Collar should NOT be passed from outside
+   * Add attributes to Collar (e.g., color)
+   * Provide a method in Collar to display its details
 
 👉 Hint: Create Collar object inside `Dog.__init__()`
 
-----------
+***
 
-#### PART C: Aggregation (Weak Has-A)
+### PART C: Aggregation (Weak Has-A)
 
-3.  Implement **Aggregation** such that:
-    
-    -   A `Toy` object is created **outside the Dog class**
-        
-    -   The `Dog` receives this Toy as a parameter
-        
-    -   Store the Toy inside Dog
-        
+3. Implement **Aggregation** such that:
+   * A `Toy` object is created **outside the Dog class**
+   * The `Dog` receives this Toy as a parameter
+   * Store the Toy inside Dog
 
 Hint: Pass Toy as an argument to Dog constructor
 
-----------
+***
 
-#### PART D: Dependency (Uses-A)
+### PART D: Dependency (Uses-A)
 
-4.  Implement **Dependency** such that:
-    
-    -   Dog has a method that accepts a Toy as parameter
-        
-    -   Dog uses the Toy temporarily (without storing it)
-        
+4. Implement **Dependency** such that:
+   * Dog has a method that accepts a Toy as parameter
+   * Dog uses the Toy temporarily (without storing it)
 
 Hint: Method like `play_with_toy(self, toy)`
 
-----------
+***
 
-#### PART E: Functionality
+### PART E: Functionality
 
-5.  Your program must:
-    
-    -   Create at least:
-        
-        -   One Collar (internally via Dog)
-            
-        -   Two Toy objects (externally)
-            
-    -   Create a Dog object
-        
-    -   Demonstrate:
-        
-        -   Accessing Collar (composition)
-            
-        -   Accessing stored Toy (aggregation)
-            
-        -   Using another Toy temporarily (dependency)
-            
+5. Your program must:
+   * Create at least:
+     * One Collar (internally via Dog)
+     * Two Toy objects (externally)
+   * Create a Dog object
+   * Demonstrate:
+     * Accessing Collar (composition)
+     * Accessing stored Toy (aggregation)
+     * Using another Toy temporarily (dependency)
 
-----------
+***
 
-#### PART F: Conceptual Questions (Must Answer in Comments)
+### PART F: Conceptual Questions (Must Answer in Comments)
 
-6.  Answer the following inside your code as comments:
-    
-    -   Why is Collar an example of composition?
-        
-    -   Why is Toy an example of aggregation?
-        
-    -   What makes dependency different from aggregation?
-        
-    -   What happens to:
-        
-        -   Collar if Dog is deleted?
-            
-        -   Toy if Dog is deleted?
-            
+6. Answer the following inside your code as comments:
+   * Why is Collar an example of composition?
+   * Why is Toy an example of aggregation?
+   * What makes dependency different from aggregation?
+   * What happens to:
+     * Collar if Dog is deleted?
+     * Toy if Dog is deleted?
 
-----------
+***
 
-#### PART G: Advanced Task (Very Important)
+### PART G: Advanced Task (Very Important)
 
-7.  Modify your program so that:
-    
-    -   The same Toy is shared between **two Dog objects**
-        
-    -   Explain (in comments):
-        
-        -   What type of relationship this now represents
-            
-        -   Why it is not composition
-            
+7. Modify your program so that:
+   * The same Toy is shared between **two Dog objects**
+   * Explain (in comments):
+     * What type of relationship this now represents
+     * Why it is not composition
 
-----------
+***
 
-#### Expected Outcome
+### Expected Outcome
 
 Your program should clearly demonstrate:
 
--   Strong ownership (composition)
-    
--   Weak ownership (aggregation)
-    
--   Temporary usage (dependency)
-    
+* Strong ownership (composition)
+* Weak ownership (aggregation)
+* Temporary usage (dependency)
 
-----------
+***
 
-### **ANSWER (SOLUTION)**
-
+## **ANSWER (SOLUTION)**
 
 In the solution there are the following 4 classes:
-  
 
-| No. | Class | Concept |
-| --- | --- | --- |
-| -1 | Pet | Base class |
-| -2 | Dog | Main class |
-| -3 | Collar | Composition |
-| -4 | Toy | Aggregation + Dependency |
+| No. | Class  | Concept                  |
+| --- | ------ | ------------------------ |
+| -1  | Pet    | Base class               |
+| -2  | Dog    | Main class               |
+| -3  | Collar | Composition              |
+| -4  | Toy    | Aggregation + Dependency |
 
-#### The script is as follows:
+### The script is as follows:
 
 ```python
 
@@ -281,16 +229,6 @@ print(d2.name, "has toy:", d2.toy.name)  # Accessing the toy of d2 (same toy as 
 
 ```
 
-### The following diagram shows the relationships between the classes for the above script
+## The following diagram shows the relationships between the classes for the above script
 
-![Diagram](/resources/ch8-composition.png)
-
-
-
-
-
-
-
-
-
-
+![Diagram](../.gitbook/assets/ch8-composition.png)

@@ -1,23 +1,15 @@
-
-
-
-
-  #### 1. This is solution to the "Beyond Text" problem of:- How dead code manifests in different scenarios?
-
+# Chapter 4 Beyond Text Solution
 
 The following table gives comparison of Unreachable Code Types
-  
 
-| Type | Mechanism | Common Cause | How to Fix |
-| --- | --- | --- | --- |
-| Post-Return | The return statement exits a function immediately. | Placing cleanup code or logging after the return. | Move the code before the return or use a finally block if in a try statement. |
-| Post-Break | The break statement exits a loop immediately. | Writing code at the bottom of a loop body after a break condition is met. | Ensure the break is the final action in its conditional branch. |
-| Logical Gap | An if or else condition that can never be met (e.g., if False:). | Hard-coded flags or conflicting logic (e.g., if x > 5 and x < 2:). | Review the boolean logic or remove the block if the feature is no longer needed. |
-| Post-Raise | An exception is raised, stopping the current execution flow. | Writing code after a raise statement without a try/except handler. | Ensure error handling is in place or move logic before the error is triggered. |
-
+| Type        | Mechanism                                                        | Common Cause                                                              | How to Fix                                                                       |
+| ----------- | ---------------------------------------------------------------- | ------------------------------------------------------------------------- | -------------------------------------------------------------------------------- |
+| Post-Return | The return statement exits a function immediately.               | Placing cleanup code or logging after the return.                         | Move the code before the return or use a finally block if in a try statement.    |
+| Post-Break  | The break statement exits a loop immediately.                    | Writing code at the bottom of a loop body after a break condition is met. | Ensure the break is the final action in its conditional branch.                  |
+| Logical Gap | An if or else condition that can never be met (e.g., if False:). | Hard-coded flags or conflicting logic (e.g., if x > 5 and x < 2:).        | Review the boolean logic or remove the block if the feature is no longer needed. |
+| Post-Raise  | An exception is raised, stopping the current execution flow.     | Writing code after a raise statement without a try/except handler.        | Ensure error handling is in place or move logic before the error is triggered.   |
 
 The following script shows how dead code might enter into your script:-
-
 
 ```python
 
@@ -60,10 +52,7 @@ find_treasure(bag_of_items)
 
 ```
 
-
-
-
-### 2. This is the solution to the Beyond Text problem given In Chapter 4 Flow Control
+**2. This is the solution to the Beyond Text problem given In Chapter 4 Flow Control**
 
 In Python, we often use for loops to go through lists or strings. But have you ever wondered how the for loop actually "talks" to the list? It uses the **Iterator Protocol**.
 
@@ -81,24 +70,24 @@ Write a Python script that iterates through a list of three colors: **"Red"**, *
 
 **Constraints & Rules**
 
-*   **No `for` loops:** You must use a while True: loop to handle the repetition.
-*   **Manual Tracking:** Use the `iter()` function to initialize an iterator object from your list.
-*   **Manual Retrieval:** Use the `next()` function to retrieve each item from the iterator.
-*   **Error Handling:** You must use a `try...except` block to catch the specific exception that Python raises when it runs out of items.
-*   **Clean Exit:** When the end of the list is reached, print a "Loop Finished" message and use break to exit the loop gracefully.
+* **No `for` loops:** You must use a while True: loop to handle the repetition.
+* **Manual Tracking:** Use the `iter()` function to initialize an iterator object from your list.
+* **Manual Retrieval:** Use the `next()` function to retrieve each item from the iterator.
+* **Error Handling:** You must use a `try...except` block to catch the specific exception that Python raises when it runs out of items.
+* **Clean Exit:** When the end of the list is reached, print a "Loop Finished" message and use break to exit the loop gracefully.
 
 **Implementation Hints**
 
-1.  **The Iterator:** Think of the list as a book and the result of iter() as a bookmark that remembers the current page.
-2.  **The Trigger:** When `next()` is called on an empty iterator, it doesn't return None; it gives an error called `StopIteration`.
-3.  **The Safety Net:** Your except block should specifically look for `StopIteration` to know exactly when to stop the while loop.
+1. **The Iterator:** Think of the list as a book and the result of iter() as a bookmark that remembers the current page.
+2. **The Trigger:** When `next()` is called on an empty iterator, it doesn't return None; it gives an error called `StopIteration`.
+3. **The Safety Net:** Your except block should specifically look for `StopIteration` to know exactly when to stop the while loop.
 
 The expected **identical logic** to be used is:
 
-1.  **Initialize** the pointer (iter).
-2.  **Attempt** the action (try + next).
-3.  **Handle** the boundary condition (except StopIteration).
-4.  **Terminate** the process (break).
+1. **Initialize** the pointer (iter).
+2. **Attempt** the action (try + next).
+3. **Handle** the boundary condition (except StopIteration).
+4. **Terminate** the process (break).
 
 ```python
 
@@ -132,7 +121,3 @@ print("Program continues normally...")
 
 
 ```
-
-
-
-

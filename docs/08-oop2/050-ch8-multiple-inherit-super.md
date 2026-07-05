@@ -1,40 +1,31 @@
+# super() in Multiple Inheritance
 
+***
 
-
-
-
-
-## `super()` in Multiple Inheritance (Advanced Notes)
-
-----------
-
-### Core Idea
+## Core Idea
 
 In single inheritance:
 
->In single inheritance, `super()` usually calls the immediate parent, because the MRO is simple.
+> In single inheritance, `super()` usually calls the immediate parent, because the MRO is simple.
 
 In multiple inheritance:
 
 > `super()` → calls the **next class in MRO**
 
-----------
+***
 
-### Why This Matters
+## Why This Matters
 
--   Ensures **each class runs exactly once**
-    
--   Avoids duplicate calls (especially in diamond structure)
-    
--   Enables **cooperative inheritance**
-    
-
+* Ensures **each class runs exactly once**
+* Avoids duplicate calls (especially in diamond structure)
+* Enables **cooperative inheritance**
 
 **Cooperative inheritance** means every class participates in the chain by calling `super()` so that all classes get executed exactly once.
 
-----------
+***
 
-### Diamond Structure
+## Diamond Structure
+
 ```python
 
        Pet  
@@ -44,25 +35,24 @@ In multiple inheritance:
       Dog
 ```
 
-Both `Walker` and `Swimmer` inherit from `Pet`  
+Both `Walker` and `Swimmer` inherit from `Pet`\
 `Dog` inherits from both
 
-----------
+***
 
-
-### Correct Way Using `super()` (Cooperative Design)
+## Correct Way Using `super()` (Cooperative Design)
 
 **Key Rules of `super()` in Multiple Inheritance**
 
-----------
+***
 
-#### Rule 1: It follows MRO, not hierarchy tree
+### Rule 1: It follows MRO, not hierarchy tree
 
 Not “parent” → but **next in line**
 
-----------
+***
 
-#### Rule 2: All classes must cooperate
+### Rule 2: All classes must cooperate
 
 Every class must call:
 
@@ -70,16 +60,14 @@ Every class must call:
 
 If one class skips → chain breaks
 
-----------
+***
 
-#### Rule 3: Method should exist in all classes (if chaining)
+### Rule 3: Method should exist in all classes (if chaining)
 
 If a method uses `super()` for chaining, then every class in the MRO should either:
 
--  implement that method, OR
-
--  safely allow the chain to continue (by calling `super(`))
-
+* implement that method, OR
+* safely allow the chain to continue (by calling `super(`))
 
 Otherwise:
 
@@ -89,8 +77,8 @@ Otherwise:
 
 Because `super()` keeps doing: "Call the next class in MRO"
 
--  It does NOT check whether the method exists later
--  It simply tries to call it
+* It does NOT check whether the method exists later
+* It simply tries to call it
 
 **What happens if method is missing?**
 
@@ -102,10 +90,9 @@ Python raises:
 
 `AttributeError: 'super' object has no attribute 'action'`
 
+***
 
-----------
-
-#### Rule 4: Avoid direct parent calls
+### Rule 4: Avoid direct parent calls
 
 Don't do (Bad):
 
@@ -115,133 +102,97 @@ Do instead (Good):
 
 `super().__init__()`
 
-
-
-----------
-
+***
 
 <details>
 
-<summary> Problem statement and solution to use of `super()` and MRO in Multiple Inheritance </summary>
+<summary>Problem statement and solution to use of `super()` and MRO in Multiple Inheritance</summary>
 
+#### Problem statement and solution to use of `super()` and MRO in Multiple Inheritance
 
+***
 
-### Problem statement and solution to use of `super()` and MRO in Multiple Inheritance 
-
-----------
-
-### Problem Statement
+#### Problem Statement
 
 You are required to design a Python program to demonstrate how `super()` works in **multiple inheritance**, and how Python uses **Method Resolution Order (MRO)** to control execution.
 
-----------
+***
 
-#### Part A: Class Design
+**Part A: Class Design**
 
 Create the following class hierarchy:
 
-1.  A base class `Pet` with:
-    
-    -   A constructor that prints: `"Pet constructor"`
-        
-    -   A method `action()` that prints: `"Pet action"`
-        
+1. A base class `Pet` with:
+   * A constructor that prints: `"Pet constructor"`
+   * A method `action()` that prints: `"Pet action"`
 
-----------
+***
 
-2.  Two parent classes:
-    
+2. Two parent classes:
 
-#### (a) `Walker`
+**(a) `Walker`**
 
--   Inherits from `Pet`
-    
--   Constructor should:
-    
-    -   Print `"Walker constructor"`
-        
-    -   Call parent constructor using `super()`
-        
--   Method `action()`:
-    
-    -   Print `"Walking..."`
-        
-    -   Call next method using `super()`
-        
+* Inherits from `Pet`
+* Constructor should:
+  * Print `"Walker constructor"`
+  * Call parent constructor using `super()`
+* Method `action()`:
+  * Print `"Walking..."`
+  * Call next method using `super()`
 
-----------
+***
 
-#### (b) `Swimmer`
+**(b) `Swimmer`**
 
--   Same structure as `Walker`
-    
--   Replace output with `"Swimming..."`
-    
+* Same structure as `Walker`
+* Replace output with `"Swimming..."`
 
-----------
+***
 
-### Part B: Multiple Inheritance
+#### Part B: Multiple Inheritance
 
 Create two child classes:
 
-#### (a) `Dog1`
+**(a) `Dog1`**
 
--   Inherits from `Walker, Swimmer`
-    
--   Constructor:
-    
-    -   Print `"Dog1 constructor"`
-        
-    -   Call `super()`
-        
--   Method `action()`:
-    
-    -   Print `"Dog1 action"`
-        
-    -   Call `super()`
-        
+* Inherits from `Walker, Swimmer`
+* Constructor:
+  * Print `"Dog1 constructor"`
+  * Call `super()`
+* Method `action()`:
+  * Print `"Dog1 action"`
+  * Call `super()`
 
-----------
+***
 
-#### (b) `Dog2`
+**(b) `Dog2`**
 
--   Inherits from `Swimmer, Walker`
-    
--   Same structure as `Dog1`
-    
+* Inherits from `Swimmer, Walker`
+* Same structure as `Dog1`
 
-----------
+***
 
-### Part C: Execution
+#### Part C: Execution
 
 Write code to:
 
 1.  Print MRO of both classes:
-    
-    Dog1.__mro__  
-    Dog2.__mro__
-    
-2.  Create objects:
-    
-    -   `d1 = Dog1()`
-        
-    -   `d2 = Dog2()`
-        
+
+    Dog1.**mro**\
+    Dog2.**mro**
+2. Create objects:
+   * `d1 = Dog1()`
+   * `d2 = Dog2()`
 3.  Call:
-    
-    d1.action()  
+
+    d1.action()\
     d2.action()
 
 </details>
 
+***
 
-
-
-
-----------
-
-#### Script 
-
+### Script
 
 ```python
 
@@ -346,47 +297,32 @@ print(d2.__mro__)
 
 ```
 
->Key Insight: `super()` does not mean “go to parent” — it means “go to next class in MRO”.
+> Key Insight: `super()` does not mean “go to parent” — it means “go to next class in MRO”.
 
+## Constructor Flow for `Dog1`
 
-### Constructor Flow for `Dog1`
+* Dog1 constructor
+* Walker constructor
+* Swimmer constructor
+* Pet constructor
 
- - Dog1 constructor   
- - Walker constructor   
- - Swimmer constructor   
- - Pet constructor
-
-#### Why this order?
+### Why this order?
 
 Because MRO is:
 
-Dog  →  Walker  →  Swimmer  →  Pet  →  object
+Dog → Walker → Swimmer → Pet → object
 
+## Method Flow for `Dog1`
 
-### Method Flow for `Dog1`
-
- - Dog1 action   
- - Walking...   
- - Swimming...   
- - Pet action
+* Dog1 action
+* Walking...
+* Swimming...
+* Pet action
 
 Each class contributes once → **no duplication**
 
+## Flow chart
 
-### Flow chart
-**The following diagram shows how the MRO works for `__init__()` and `super()`
+\*\*The following diagram shows how the MRO works for `__init__()` and `super()`
 
-![Diagram](/resources/ch8-multiple-inherit-super2.png)
-
-
-
-
-
-
-
-
-
-
-
-
-
+![Diagram](../.gitbook/assets/ch8-multiple-inherit-super2.png)

@@ -1,145 +1,110 @@
-
-
-
-
-## **Problem Statement**
+# Demonstrate inheritance in OOP
 
 You are required to design and implement a **Python-based Animal Management System** to demonstrate advanced concepts of **inheritance and object-oriented programming**.
 
 Your solution must include multiple classes, inheritance relationships, and method implementations that collectively demonstrate key OOP features.
 
+## PART A: CLASS DESIGN
 
-### PART A: CLASS DESIGN
+### 1. Create an Abstract Base Class
 
-#### 1. Create an Abstract Base Class
+* Create a class `Animal` using `ABC`
+* Include:
+  * `__init__(self, name)`
+  * A **private attribute** `__secret`
+  * A concrete method `walk()`
+  * An **abstract method** `speak()`
 
--   Create a class `Animal` using `ABC`
-    
--   Include:
-    
-    -   `__init__(self, name)`
-        
-    -   A **private attribute** `__secret`
-        
-    -   A concrete method `walk()`
-        
-    -   An **abstract method** `speak()`
-        
+***
 
-----------
+### 2. Create an Additional Class
 
-#### 2. Create an Additional Class
+* Create a class `Friendly`
+* Include method:
+  * `nature()` → prints behavior of the animal
 
--   Create a class `Friendly`
-    
--   Include method:
-    
-    -   `nature()` → prints behavior of the animal
-        
+***
 
-----------
-
-#### 3. Create Derived Classes
+### 3. Create Derived Classes
 
 **A. Class `Dog`**
 
--   Inherit from both `Animal` and `Friendly`
-    
--   Add attribute `color`
-    
--   Implement:
-    
-    -   Constructor using `super()` (**constructor chaining**)
-        
-    -   Override `speak()`
-        
-    -   Method `show_secret()` to access private variable
-        
+* Inherit from both `Animal` and `Friendly`
+* Add attribute `color`
+* Implement:
+  * Constructor using `super()` (**constructor chaining**)
+  * Override `speak()`
+  * Method `show_secret()` to access private variable
 
-----------
+***
 
 **B. Class `Cat`**
 
--   Inherit from `Animal`
-    
--   Override `speak()`
-    
+* Inherit from `Animal`
+* Override `speak()`
 
-----------
+***
 
-### PART B: FUNCTIONAL REQUIREMENTS
+## PART B: FUNCTIONAL REQUIREMENTS
 
 Write code to demonstrate the following:
 
-----------
+***
 
-#### 1. Code Reuse
+### 1. Code Reuse
 
--   Call `walk()` method using object of `Dog` and `Cat`
-    
+* Call `walk()` method using object of `Dog` and `Cat`
 
-----------
+***
 
-#### 2. Method Overriding
+### 2. Method Overriding
 
--   Show that `Dog` and `Cat` override `speak()`
-    
+* Show that `Dog` and `Cat` override `speak()`
 
-----------
+***
 
-#### 3. Polymorphism (Dynamic Binding)
+### 3. Polymorphism (Dynamic Binding)
 
--   Create a list of animals
-    
--   Use a loop to call `speak()` for each object
-    
+* Create a list of animals
+* Use a loop to call `speak()` for each object
 
-----------
+***
 
-#### 4. Use of `super()`
+### 4. Use of `super()`
 
--   Ensure parent constructor is called from child
-    
+* Ensure parent constructor is called from child
 
-----------
+***
 
-#### 5. Multiple Inheritance
+### 5. Multiple Inheritance
 
--   Call `nature()` method using `Dog`
-    
+* Call `nature()` method using `Dog`
 
-----------
+***
 
-#### 6. Encapsulation (Private Members)
+### 6. Encapsulation (Private Members)
 
--   Access private variable using method inside class
-    
+* Access private variable using method inside class
 
-----------
+***
 
-#### 7. Type Checking
+### 7. Type Checking
 
--   Use:
-    
-    -   `isinstance()`
-        
-    -   `issubclass()`
-        
+* Use:
+  * `isinstance()`
+  * `issubclass()`
 
-----------
+***
 
-#### 8. Method Resolution Order (MRO)
+### 8. Method Resolution Order (MRO)
 
--   Print `__mro__` of class `Dog`
-    
+* Print `__mro__` of class `Dog`
 
-----------
+***
 
-### SOLUTION
-
+## SOLUTION
 
 **The following script implements all of above**
-
 
 ```python
 
@@ -237,47 +202,26 @@ print(Dog.__mro__)  # This will show the method resolution order for the Dog cla
 
 ```
 
-
-
-
-
-
-### PART C: TABLE
+## PART C: TABLE
 
 The following table analyses all the important concepts given in the script:
 
+| Property                | Description                     | Key Idea                | Syntax / Tool        | Example                 | Output Behavior         |
+| ----------------------- | ------------------------------- | ----------------------- | -------------------- | ----------------------- | ----------------------- |
+| Code Reuse              | Subclass uses parent methods    | No need to rewrite code | Inheritance          | Dog.walk()              | Uses Animal.walk()      |
+| Overriding              | Subclass redefines method       | Child has priority      | Same method name     | Dog.speak()             | Dog version runs        |
+| Polymorphism            | Same method, different behavior | Runtime decision        | Same interface       | pet.speak()             | Different outputs       |
+| super()                 | Calls parent method             | Extend parent logic     | super()              | super().**init**()      | Parent + child both run |
+| MRO                     | Method search order             | Avoid ambiguity         | **mro**              | Dog.**mro**             | Shows lookup chain      |
+| ABC                     | Enforce method implementation   | Blueprint class         | ABC, @abstractmethod | speak()                 | Must override           |
+| Encapsulation (Private) | Restrict access                 | Name mangling           | \_\_var              | \_Class\_\_var          | Hidden access           |
+| isinstance()            | Check object type               | Runtime check           | isinstance()         | isinstance(d, Dog)      | True/False              |
+| issubclass()            | Check class relation            | Inheritance check       | issubclass()         | issubclass(Dog, Animal) | True/False              |
+| Constructor chaining    | Parent + child init             | Proper initialization   | super().**init**()   | Dog init                | Both run                |
+| Dynamic Binding         | Method resolved at runtime      | Late decision           | Polymorphism         | loop pets               | Correct method called   |
 
-  
+### The following flowchart shows the parent and the derived classes
 
-  
+It also shows the attributes and methods of each class.
 
-| Property | Description | Key Idea | Syntax / Tool | Example | Output Behavior |
-| --- | --- | --- | --- | --- | --- |
-| Code Reuse | Subclass uses parent methods | No need to rewrite code | Inheritance | Dog.walk() | Uses Animal.walk() |
-| Overriding | Subclass redefines method | Child has priority | Same method name | Dog.speak() | Dog version runs |
-| Polymorphism | Same method, different behavior | Runtime decision | Same interface | pet.speak() | Different outputs |
-| super() | Calls parent method | Extend parent logic | super() | super().__init__() | Parent + child both run |
-| MRO | Method search order | Avoid ambiguity | __mro__ | Dog.__mro__ | Shows lookup chain |
-| ABC | Enforce method implementation | Blueprint class | ABC, @abstractmethod | speak() | Must override |
-| Encapsulation (Private) | Restrict access | Name mangling | __var | _Class__var | Hidden access |
-| isinstance() | Check object type | Runtime check | isinstance() | isinstance(d, Dog) | True/False |
-| issubclass() | Check class relation | Inheritance check | issubclass() | issubclass(Dog, Animal) | True/False |
-| Constructor chaining | Parent + child init | Proper initialization | super().__init__() | Dog init | Both run |
-| Dynamic Binding | Method resolved at runtime | Late decision | Polymorphism | loop pets | Correct method called |
-
-#### The following flowchart shows the parent and the derived classes
-It also shows the attributes and methods of each class. 
-
-![Diagram](/resources/ch8-inheritence-cat-dog.png)
-
-
-
-
-
-
-
-
-
-
-
-
+![Diagram](../.gitbook/assets/ch8-inheritence-cat-dog.png)

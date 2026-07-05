@@ -1,96 +1,95 @@
+# Comparative Study of JSON and Pickle for Data Serialization in Python with Real-World Applications
 
+### RESEARCH / PROJECT QUESTION
 
-## RESEARCH / PROJECT QUESTION
+### Title: “Comparative Study of JSON and Pickle for Data Serialization in Python with Real-World Applications”
 
-## Title: “Comparative Study of JSON and Pickle for Data Serialization in Python with Real-World Applications”
-
-## Problem Statement
+### Problem Statement
 
 Develop a Python system to:
 
-1.  Serialize and deserialize data using:
-    -   JSON
-    -   Pickle
-2.  Compare:
-    -   Performance
-    -   Security
-    -   Portability
-3.  Demonstrate:
-    -   API-style JSON usage
-    -   Limitations of JSON
-    -   Risks of Pickle
+1. Serialize and deserialize data using:
+   * JSON
+   * Pickle
+2. Compare:
+   * Performance
+   * Security
+   * Portability
+3. Demonstrate:
+   * API-style JSON usage
+   * Limitations of JSON
+   * Risks of Pickle
 
-----------
+***
 
-## Objectives
+### Objectives
 
-### A. Functional Tasks
+#### A. Functional Tasks
 
--   Store and retrieve:
-    -   Dictionary
-    -   List
-    -   Custom class
+* Store and retrieve:
+  * Dictionary
+  * List
+  * Custom class
 
-----------
+***
 
-### B. API Simulation
+#### B. API Simulation
 
--   Convert data → JSON string
--   Simulate sending/receiving data
+* Convert data → JSON string
+* Simulate sending/receiving data
 
-----------
+***
 
-### C. Error Handling
+#### C. Error Handling
 
--   Handle:
-    -   Invalid JSON
-    -   Unsupported data types
+* Handle:
+  * Invalid JSON
+  * Unsupported data types
 
-----------
+***
 
-### D. Security Study
+#### D. Security Study
 
--   Show why Pickle is unsafe
--   Show safe JSON usage
+* Show why Pickle is unsafe
+* Show safe JSON usage
 
-----------
+***
 
-## ANSWER (CONCEPTUAL)
+### ANSWER (CONCEPTUAL)
 
-### Key Findings
+#### Key Findings
 
--   JSON:
-    -   Portable, safe, widely used
--   Pickle:
-    -   Powerful but unsafe
--   APIs use JSON because:
-    -   Language-independent
-    -   Text-based
+* JSON:
+  * Portable, safe, widely used
+* Pickle:
+  * Powerful but unsafe
+* APIs use JSON because:
+  * Language-independent
+  * Text-based
 
-## Comparison Table
+### Comparison Table
 
-| Feature | JSON | Pickle | Use Case |
-| --- | --- | --- | --- |
-| Portability | High | Low | APIs |
-| Security | High | Low | Web |
-| Object Support | Limited | Full | Python apps |
-| Speed | Medium | High | Internal storage |
+| Feature        | JSON    | Pickle | Use Case         |
+| -------------- | ------- | ------ | ---------------- |
+| Portability    | High    | Low    | APIs             |
+| Security       | High    | Low    | Web              |
+| Object Support | Limited | Full   | Python apps      |
+| Speed          | Medium  | High   | Internal storage |
 
-
-### Final Insight 
+#### Final Insight
 
 > Use **JSON** for:
 
--   APIs
--   Web
--   Data exchange
+* APIs
+* Web
+* Data exchange
 
 > Use **Pickle** for:
 
--   Python-only programs
--   Complex object storage
+* Python-only programs
+* Complex object storage
 
-## Script
+### Script
 
 ```python
 
@@ -153,19 +152,8 @@ print("Loaded Student:", loaded_student.name, loaded_student.marks) # Output: Lo
 
 ```
 
+#### Flowchart
 
-### Flowchart
 The following diagram shows the flow of execution in JSON vs pickling
 
-![Flowchart](/resources/ch10-files-json-pickle.png)
-
-
-
-
-
-
-
-
-
-
-
+![Flowchart](../.gitbook/assets/ch10-files-json-pickle.png)
