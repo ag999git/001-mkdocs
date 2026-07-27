@@ -1,0 +1,26 @@
+name: Sync to MkDocs Repo
+
+on:
+  push:
+    branches:
+      - main
+  workflow_dispatch:
+
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: Sync to Target Repo
+        uses: cpina/github-action-push-to-another-repository@main
+        env:
+          API_TOKEN_GITHUB: ${{ secrets.MIRROR_TOKEN1 }}
+        with:
+          source-directory: '.'
+          destination-github-username: 'ag999git'
+          destination-repository-name: '001-mkdocs'
+          target-directory: 'docs'
+          user-email: 'github-actions[bot]@users.noreply.github.com'
+          target-branch: 'main'
