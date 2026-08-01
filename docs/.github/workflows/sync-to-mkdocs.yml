@@ -10,17 +10,58 @@ jobs:
   sync:
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout Repository
+      # 1. Checkout your Primary Repo explicitly
+      - name: Checkout Primary Repository
         uses: actions/checkout@v4
-
-      - name: Sync to Target Repo
-        uses: cpina/github-action-push-to-another-repository@main
-        env:
-          API_TOKEN_GITHUB: ${{ secrets.MIRROR_TOKEN1 }}
         with:
-          source-directory: '.'
-          destination-github-username: 'ag999git'
-          destination-repository-name: '001-mkdocs'
-          target-directory: 'docs'
-          user-email: 'github-actions[bot]@users.noreply.github.com'
-          target-branch: 'main'
+          repository: ag999git/001-Python-book-2026
+          path: primary-repo
+          token: ${{ secrets.MIRROR_TOKEN }}
+
+      # 2. Checkout your MkDocs Repo
+      - name: Checkout Target MkDocs Repo
+        uses: actions/checkout@v4
+        with:
+          repository: ag999git/001-mkdocs
+          path: mkdocs-repo
+          token: ${{ secrets.MIRROR_TOKEN }}
+
+      - name: Sync Folders & Clean GitBook Artifacts
+        run: |
+          mkdir -p mkdocs-repo/docs
+          rm -rf mkdocs-repo/docs/*
+
+          # Copy chapters/folders FROM the Primary Repo folder
+          cd primary-repo
+          for folder in [0-9][0-9]-* images resources colab-nb; do
+            if [ -d "$folder" ]; then
+              cp -r "$folder" ../mkdocs-repo/docs/
+            fi
+          done
+
+          # Copy index.md specifically from the root of Primary Repo
+          if [ -f "index.md" ]; then
+            cp index.md ../mkdocs-repo/docs/
+          fi
+          cd ..
+
+          # Clean up
+          find mkdocs-repo/docs -iname "summary.md" -delete
+          find mkdocs-repo/docs -iname "readme.md" -execdir mv {} index.md \;
+
+      - name: Commit and Push Changes
+        env:
+          PAT_TOKEN: ${{ secrets.MIRROR_TOKEN }}
+        run: |
+          cd mkdocs-repo
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git remote set-url origin https://x-access-token:${PAT_TOKEN}@github.com/ag999git/001-mkdocs.git
+          
+          git add docs/
+          if ! git diff --cached --quiet; then
+            git commit -m "Sync: Added index.md and updated chapters"
+            git push origin main
+          else
+            echo "No changes detected to push."
+          fi
