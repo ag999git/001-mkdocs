@@ -15,6 +15,8 @@ jobs:
     steps:
       - name: Checkout Repository
         uses: actions/checkout@v4
+        with:
+          fetch-depth: 0 # Essential for gh-deploy to maintain history
 
       - name: Set up Python
         uses: actions/setup-python@v5
@@ -26,8 +28,11 @@ jobs:
           pip install --upgrade pip
           pip install mkdocs mkdocs-material mkdocs-awesome-pages-plugin mknotebooks
 
-      - name: Build and Deploy to gh-pages Branch
+      - name: Build and Deploy
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
+          # Build the site first to verify it works
+          mkdocs build
+          # Deploy to gh-pages branch
           mkdocs gh-deploy --force --clean
