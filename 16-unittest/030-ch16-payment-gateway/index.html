@@ -8314,6 +8314,7 @@ The highest and most persistent tier of this hierarchy is the <strong>Session Sc
 </code></pre></div>
 <h2 id="application-simulation-architectural-design">Application Simulation Architectural Design<a class="headerlink" href="#application-simulation-architectural-design" title="Permanent link">&para;</a></h2>
 <p>To understand the practical implications of session scoping without relying on live external networks, we implement an application simulation representing an external financial gateway (e.g., Stripe or PayPal).</p>
+<p><a href="./#table-of-contents">Back to the Table of Contents</a></p>
 <h3 id="1-target-implementation-payment_gatewaypy">1. Target Implementation: <code>payment_gateway.py</code><a class="headerlink" href="#1-target-implementation-payment_gatewaypy" title="Permanent link">&para;</a></h3>
 <p>This module acts as a stateful emulator. It enforces linear state progression (Connection <span class="arithmatex">\(\rightarrow\)</span> Processing <span class="arithmatex">\(\rightarrow\)</span> Disconnection) and introduces simulated network latency.</p>
 <div class="highlight"><pre><span></span><code><span class="c1"># payment_gateway.py</span>
@@ -8351,6 +8352,7 @@ The highest and most persistent tier of this hierarchy is the <strong>Session Sc
 
         <span class="k">return</span> <span class="sa">f</span><span class="s2">&quot;Payment of $</span><span class="si">{</span><span class="n">amount</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2"> Processed Successfully.&quot;</span>
 </code></pre></div>
+<p><a href="./#table-of-contents">Back to the Table of Contents</a></p>
 <h3 id="2-automated-test-suite-test_paymentspy">2. Automated Test Suite: <code>test_payments.py</code><a class="headerlink" href="#2-automated-test-suite-test_paymentspy" title="Permanent link">&para;</a></h3>
 <p>This suite verifies the transaction capabilities of the gateway. It integrates a global tracking metric (<code>session_count</code>) to prove empirical verification of the fixture lifecycle.</p>
 <div class="highlight"><pre><span></span><code><span class="c1"># test_payments.py</span>
@@ -8431,6 +8433,7 @@ The highest and most persistent tier of this hierarchy is the <strong>Session Sc
 <p>Everything <strong>after</strong> <code>yield</code> is executed as the <strong>Teardown Phase</strong> (Resource cleanup).</p>
 </li>
 </ul>
+<p><a href="./#table-of-contents">Back to the Table of Contents</a></p>
 <h4 id="3-output-of-the-pytest-with-flag-s-shows-that-resources-are-optimized">3. Output of the pytest (with flag -s) shows that resources are optimized<a class="headerlink" href="#3-output-of-the-pytest-with-flag-s-shows-that-resources-are-optimized" title="Permanent link">&para;</a></h4>
 <p>When executing this test file with standard output capturing enabled (<code>pytest -s</code>), the console logs prove the lifecycle behavior:</p>
 <p>Plaintext</p>
@@ -8455,12 +8458,13 @@ The highest and most persistent tier of this hierarchy is the <strong>Session Sc
 <h3 id="1-shared-state-contamination-test-interdependence">1. Shared State Contamination (Test Interdependence)<a class="headerlink" href="#1-shared-state-contamination-test-interdependence" title="Permanent link">&para;</a></h3>
 <p>Because every test function across the entire test runner process interacts with the exact same instance of the <code>PaymentGateway</code>, state modifications pose an immediate threat.</p>
 <blockquote>
-<p>⚠️ <strong>The Risk:</strong> If <code>test_high_value_transaction</code> explicitly drops or corrupts the internal state of the gateway instance (e.g., changing <code>gateway_session.is_connected = False</code> during a failure injection test), every subsequent test execution following it will fail cascadingly. Tests lose their isolation guarantees (<span class="arithmatex">\(I\)</span> in the standard <strong>FIRST</strong> testing principles).</p>
+<p><strong>The Risk:</strong> If <code>test_high_value_transaction</code> explicitly drops or corrupts the internal state of the gateway instance (e.g., changing <code>gateway_session.is_connected = False</code> during a failure injection test), every subsequent test execution following it will fail cascadingly. Tests lose their isolation guarantees (<span class="arithmatex">\(I\)</span> in the standard <strong>FIRST</strong> testing principles).</p>
 </blockquote>
 <h3 id="2-thread-safety-and-concurrency-violations">2. Thread Safety and Concurrency Violations<a class="headerlink" href="#2-thread-safety-and-concurrency-violations" title="Permanent link">&para;</a></h3>
 <p>If you accelerate test execution using parallel execution plugins such as <code>pytest-xdist</code>, a session-scoped fixture can introduce race conditions. Multiple parallel processes attempting to alter or read internal attributes of a shared singleton object concurrently will induce flaky, non-deterministic test behavior.</p>
 <h3 id="3-structural-scaling-and-file-placement">3. Structural Scaling and File Placement<a class="headerlink" href="#3-structural-scaling-and-file-placement" title="Permanent link">&para;</a></h3>
 <p>In scaled multi-directory testing frameworks, declaring a session fixture inside a single test file restricts its accessibility. To expose session-scoped setups globally without explicit imports, they must be housed within a centralized, specialized orchestration file named <code>conftest.py</code> positioned at the project's root directory.</p>
+<p><a href="./#table-of-contents">Back to the Table of Contents</a></p>
 
 
 
