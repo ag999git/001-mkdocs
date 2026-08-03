@@ -310,7 +310,7 @@ plt.show()
 
 ```
 #### Output
-![Temperature Grid](/resources/ch15-temperature-grid.png)
+![Temperature Grid](/001-mkdocs/resources/ch15-temperature-grid.png)
 
 
 ### Common Plot Types for Grid/Matrix Data
@@ -1173,7 +1173,7 @@ plt.show()
 
 #### Output
 
-![Passenger distribution](/resources/ch15-passenger-distribution.png)
+![Passenger distribution](/001-mkdocs/resources/ch15-passenger-distribution.png)
 
 
 #### Comparison Between plot() and scatter()
@@ -1312,7 +1312,7 @@ plt.show()
 
 #### Output
 
-![Passenger Data using imshow()](/resources/ch15-passenger-imshow.png)
+![Passenger Data using imshow()](/001-mkdocs/resources/ch15-passenger-imshow.png)
 
 
 ### Step 3 — Plot using contourf()
@@ -1376,7 +1376,7 @@ plt.show()
 
 #### Output
 
-![contourf()](/resources/ch15-contourf.png)
+![contourf()](/001-mkdocs/resources/ch15-contourf.png)
 
 #### Difference Between imshow() and contourf()
 

@@ -417,7 +417,7 @@ root.mainloop()
 ## Flowchart
 The flowchart shows steps in execution of the given script
 
-![Flowchart](/resources/ch14-tkinter-professional-error-handling.png)
+![Flowchart](/001-mkdocs/resources/ch14-tkinter-professional-error-handling.png)
 
 
 

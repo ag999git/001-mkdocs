@@ -51,7 +51,7 @@ Think of these flags as controlling different aspects of pytest.
 
 ### Visual Representation
 
-![Visual Representation](/resources/ch16-pytest-080-flags-mental-model.png)
+![Visual Representation](/001-mkdocs/resources/ch16-pytest-080-flags-mental-model.png)
 
 
 ### Important Terminology
@@ -71,7 +71,7 @@ Think of these flags as controlling different aspects of pytest.
 
 When pytest starts, it first discovers tests and then applies any command-line flags supplied by the user.
 
-![How pytest processes flags](/resources/ch16-pytest-090-how-process-flags.png)
+![How pytest processes flags](/001-mkdocs/resources/ch16-pytest-090-how-process-flags.png)
 
 
 [Back to the Table of Contents](010-ch16-pytest-flags.md#table-of-contents)
@@ -225,7 +225,7 @@ Output capture collects printed text and hides it unless the test fails or the u
 
 ### Output Capture Flow
 
-![Output Capture Flow](/resources/ch16-pytest-092-flags-output-capture.png)
+![Output Capture Flow](/001-mkdocs/resources/ch16-pytest-092-flags-output-capture.png)
 
 
 ### Why Use -s ?
@@ -369,7 +369,7 @@ test_withdraw
 
 ## How -k Works
 
-![How -k works](/resources/ch16-pytest-095-flag-k.png)
+![How -k works](/001-mkdocs/resources/ch16-pytest-095-flag-k.png)
 
 
 ## Why Use -k ?
@@ -399,7 +399,7 @@ Meaning:
 
 ### Combined Execution Flow
 
-![Combined Execution Flow](/resources/ch16-pytest-096-combining-tests.png)
+![Combined Execution Flow](/001-mkdocs/resources/ch16-pytest-096-combining-tests.png)
 
 
 ### Common Development Scenarios

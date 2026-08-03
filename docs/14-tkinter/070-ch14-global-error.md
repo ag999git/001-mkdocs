@@ -243,7 +243,7 @@ Please try again.
 ```
 
 ## Flowchart showing the execution of the script
-![Flowchart handling global exceptions](/resources/ch14-tkinter-exceptions.png)
+![Flowchart handling global exceptions](/001-mkdocs/resources/ch14-tkinter-exceptions.png)
 
 ## Script
 

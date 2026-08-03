@@ -79,7 +79,7 @@ If you have ever used pip install -r requirements.txt, you have already used a c
 
 #### Flowchart explaining how configuration file is used
 
-![Flocchart explaining how configuration file works](/resources/ch16-pytest-060-config1.png)
+![Flocchart explaining how configuration file works](/001-mkdocs/resources/ch16-pytest-060-config1.png)
 
 
 
@@ -146,7 +146,7 @@ my_project/ <-- Project Root (Put file here)
 
 #### Flowchart showing how Pytest finds the configuration file
 
-![Flowchart showing how Pytest finds the configuration file](/resources/ch16-pytest-065-config2.png)
+![Flowchart showing how Pytest finds the configuration file](/001-mkdocs/resources/ch16-pytest-065-config2.png)
 
 ----------
 
@@ -226,7 +226,7 @@ addopts = -v --tb=short
 
 ### 7. Visualizing the Lifecycle (Flowchart)
 
-![Flowchart](/resources/ch16-pytest-070-config3.png)
+![Flowchart](/001-mkdocs/resources/ch16-pytest-070-config3.png)
 
 
 ### 8. A Complete Worked Example

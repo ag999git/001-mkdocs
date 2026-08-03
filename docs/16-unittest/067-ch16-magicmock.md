@@ -161,7 +161,7 @@ Output:
 
 ## Execution Flow
 
-![Simulating __len__()](/resources/ch16-pytest-097-magicmock1.png)
+![Simulating __len__()](/001-mkdocs/resources/ch16-pytest-097-magicmock1.png)
 
 ```
 
@@ -256,7 +256,7 @@ Output:
 ----------
 
 ## Execution Flow
-![Execution Flow](/resources/ch16-pytest-098-magicmock2-iter.png)
+![Execution Flow](/001-mkdocs/resources/ch16-pytest-098-magicmock2-iter.png)
 
 ----------
 
@@ -328,7 +328,7 @@ Hello
 
 ## Context Manager Flow
 
-![Simulating Context Manager](/resources/ch16-pytest-099-magicmock3.png)
+![Simulating Context Manager](/001-mkdocs/resources/ch16-pytest-099-magicmock3.png)
 
 
 ----------

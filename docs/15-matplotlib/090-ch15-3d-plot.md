@@ -816,7 +816,7 @@ print("Z Coordinates Statistics: min =", np.min(z), ", max =", np.max(z), ", mea
 ```
 
 #### Output Plot
-![Helix](/resources/ch15-matplotlib-3d-helix.png)
+![Helix](/001-mkdocs/resources/ch15-matplotlib-3d-helix.png)
 
 #### Output on terminal
 
@@ -895,7 +895,7 @@ plt.show()
 ```
 
 #### Output Plot
-![3D Scatter plot](/resources/ch15-matplotlib-3D-scatter.png)
+![3D Scatter plot](/001-mkdocs/resources/ch15-matplotlib-3D-scatter.png)
 
 #### What this script demonstrates
 
@@ -983,7 +983,7 @@ print("Z shape =", Z.shape)  # Z shape = (50, 50)
 
 #### Output Plot
 
-![3D Surface Plot](/resources/ch15-matplotlib-3d-surface.png)
+![3D Surface Plot](/001-mkdocs/resources/ch15-matplotlib-3d-surface.png)
 
 
 #### What this script demonstrates
@@ -1122,7 +1122,7 @@ plt.show()
 ```
 
 #### Output Plot
-![Wireframe](/resources/ch15-matplotlib-3D-wireframe.png)
+![Wireframe](/001-mkdocs/resources/ch15-matplotlib-3D-wireframe.png)
 
 
 #### What this script demonstrates

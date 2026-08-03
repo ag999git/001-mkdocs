@@ -404,7 +404,7 @@ plt.show()
 
 #### The resulting plot is as follows:-
 
-![Four plots](/resources/ch15-4-plots.png)
+![Four plots](/001-mkdocs/resources/ch15-4-plots.png)
 
 
 
@@ -497,7 +497,7 @@ plt.show()
 
 #### Resulting plot is shown below
 
-![Box plot](/resources/ch15-box-plot.png)
+![Box plot](/001-mkdocs/resources/ch15-box-plot.png)
 
 ### Explanation (of the Script)
 
@@ -595,7 +595,7 @@ plt.show()
 
 ### The resulting plot is as follows
 
-![Histogram](/resources/ch15-histogram.png)
+![Histogram](/001-mkdocs/resources/ch15-histogram.png)
 
 
 
@@ -677,7 +677,7 @@ plt.show()
 
 ### The ouptut plot is as follows
 
-![Scatter plot](/resources/ch15-scatter-plot.png)
+![Scatter plot](/001-mkdocs/resources/ch15-scatter-plot.png)
 
 
 

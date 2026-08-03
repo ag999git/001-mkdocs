@@ -292,7 +292,7 @@ root.mainloop()
 ## Flowchart
 The flowchart shows the steps in the execution of above script:
 
-![Unsafe vs Safe after Callback](/resources/ch14-tkinter-safe-unsafe-after.png)
+![Unsafe vs Safe after Callback](/001-mkdocs/resources/ch14-tkinter-safe-unsafe-after.png)
 
 
 

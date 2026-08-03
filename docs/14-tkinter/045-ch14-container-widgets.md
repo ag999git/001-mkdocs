@@ -21,7 +21,7 @@ The parameters below form the fundamental base configuration configuration optio
 
 Each member of the container family possesses specialized properties and unique method pipelines designed for specific structural tasks.
 ### Flowchart
-![Flowchart](/resources/ch14-tkinter-container-widgets.png)
+![Flowchart](/001-mkdocs/resources/ch14-tkinter-container-widgets.png)
 
 
 ### A. `ttk.Frame` (The Invisible Layout Divider)

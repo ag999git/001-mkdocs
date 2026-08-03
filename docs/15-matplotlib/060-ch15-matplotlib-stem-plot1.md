@@ -102,7 +102,7 @@ plt.show()
 
 ### Output plot (From above script)
 
-![Stem Plot](/resources/ch15-matplotlib-stem1.png)
+![Stem Plot](/001-mkdocs/resources/ch15-matplotlib-stem1.png)
 
 # FIGURE
 
@@ -244,7 +244,7 @@ plt.show()
 
 ### Output Plot
 
-![Plot from above script](/resources/ch15-matplotlib-scatter-stem-line.png)
+![Plot from above script](/001-mkdocs/resources/ch15-matplotlib-scatter-stem-line.png)
 
 ### What to Observe
 

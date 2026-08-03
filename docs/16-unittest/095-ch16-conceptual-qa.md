@@ -48,7 +48,7 @@ project/
         └── test_add()
  ```
 Execution flow:
-![Execution flow](/resources/ch16-pytest-100-conceptual-qa2.png)
+![Execution flow](/001-mkdocs/resources/ch16-pytest-100-conceptual-qa2.png)
 This automatic discovery removes the need to manually call every test function.
 ________________________________________
 **3. What is the role of assert in pytest? Why does pytest use normal Python assert?**
@@ -118,7 +118,7 @@ def test_connection(database):
 ```
 Execution:
 
-![Flowchart](/resources/ch16-pytest-101-conceptual-qa5.png)
+![Flowchart](/001-mkdocs/resources/ch16-pytest-101-conceptual-qa5.png)
 
 The parameter name is not a normal variable assignment. Pytest uses it as a request for a fixture.
 ________________________________________
