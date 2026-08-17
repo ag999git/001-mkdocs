@@ -8,14 +8,14 @@
 Below are practical, real-world examples of how to use the specialized data structures and tools covered in Chapter 17. 
 
 ## Table of Contents
-* [1. The collections Module](020-ch17-real-world-use.md#1-the-collections-module)
-* [2. The heapq Module](020-ch17-real-world-use.md#2-the-heapq-module)
-* [3. The bisect Module](020-ch17-real-world-use.md#3-the-bisect-module)
-* [4. The queue Module](020-ch17-real-world-use.md#4-the-queue-module)
-* [5. The enum Module](020-ch17-real-world-use.md#5-the-enum-module)
-* [6. dataclasses](020-ch17-real-world-use.md#6-dataclasses)
-* [7. functools Module](020-ch17-real-world-use.md#7-functools-module)
-* [8. itertools Module](020-ch17-real-world-use.md#8-itertools-module)
+* [1. The collections Module](020-ch16-real-world-use.md#1-the-collections-module)
+* [2. The heapq Module](020-ch16-real-world-use.md#2-the-heapq-module)
+* [3. The bisect Module](020-ch16-real-world-use.md#3-the-bisect-module)
+* [4. The queue Module](020-ch16-real-world-use.md#4-the-queue-module)
+* [5. The enum Module](020-ch16-real-world-use.md#5-the-enum-module)
+* [6. dataclasses](020-ch16-real-world-use.md#6-dataclasses)
+* [7. functools Module](020-ch16-real-world-use.md#7-functools-module)
+* [8. itertools Module](020-ch16-real-world-use.md#8-itertools-module)
 
 
 ---
@@ -106,7 +106,7 @@ print(dict(grade_book))
 ```
 
 **Explanation:** Because we used `defaultdict(list)`, the first time Python sees the grade "A", it realizes the key doesn't exist. Instead of crashing with a `KeyError`, it silently creates an empty list `[]` for "A", and then appends "Alice" to it.
-[Back to the Table of Contents](020-ch17-real-world-use.md#table-of-contents)
+[Back to the Table of Contents](020-ch16-real-world-use.md#table-of-contents)
 
 ### 1.4 `OrderedDict`: Most Recently Used (MRU) Cache
 **Usage:** Web browsers and apps keep a "Recently Viewed" list. When you view an old item again, it gets pulled out of the middle of the list and moved to the very end.
@@ -135,7 +135,7 @@ After viewing About again: ['Home', 'Contact', 'About']
 
 **Explanation:** A modern standard `dict` remembers insertion order, but it doesn't have tools to manipulate that order. `OrderedDict` gives us the `move_to_end()` method, which perfectly simulates an MRU list by moving "About" to the back of the line.
 
-[Back to the Table of Contents](020-ch17-real-world-use.md#table-of-contents)
+[Back to the Table of Contents](020-ch16-real-world-use.md#table-of-contents)
 ### 1.5 `namedtuple`: Parsing CSV Data
 **Usage:** You read a line of data from a comma-separated file. Instead of accessing `row[2]` and hoping it's the right column, you use a `namedtuple` to make your code self-documenting.
 ```python
@@ -208,7 +208,7 @@ Name: Sarah | Dept: Engineering
 ```
 
 **Explanation:** The `*csv_row.split(',')` unpacks the 4 strings directly into the `Employee` constructor. Now, you have a lightweight object where you can access data using `.name` and `.salary` instead of trying to remember index numbers.
-[Back to the Table of Contents](020-ch17-real-world-use.md#table-of-contents)
+[Back to the Table of Contents](020-ch16-real-world-use.md#table-of-contents)
 
 
 ### 1.6 `ChainMap`: Application Configuration
@@ -271,7 +271,7 @@ Volume: 50
 **Explanation:** `ChainMap` doesn't combine the dictionaries into a new one (which wastes memory). It creates a "view" that searches `user_prefs` first. If the key isn't there, it searches `defaults`. This is exactly how professional config parsers work.
 
 ---
-[Back to the Table of Contents](020-ch17-real-world-use.md#table-of-contents)
+[Back to the Table of Contents](020-ch16-real-world-use.md#table-of-contents)
 
 ## 2. The `heapq` Module
 
@@ -324,7 +324,7 @@ while  tasks:
 **Explanation:** We push tuples into a normal list. `heappush` automatically sorts them internally so the smallest number (highest priority) is always at index 0. `heappop` safely removes and returns that top priority item.
 
 ---
-[Back to the Table of Contents](020-ch17-real-world-use.md#table-of-contents)
+[Back to the Table of Contents](020-ch16-real-world-use.md#table-of-contents)
 
 ## 3. The `bisect` Module
 
@@ -359,7 +359,7 @@ print("Updated marks:", marks)  # Output: Updated marks: [40, 55, 65, 70, 80, 95
 **Explanation:** `bisect_left` instantly calculates that 350 belongs at index 2. `insort` then physically inserts it at that exact spot. Doing this manually with a `for` loop and `.insert()` would be much slower for large leaderboards.
 
 ---
-[Back to the Table of Contents](020-ch17-real-world-use.md#table-of-contents)
+[Back to the Table of Contents](020-ch16-real-world-use.md#table-of-contents)
 
 ## 4. The `queue` Module
 
@@ -437,7 +437,7 @@ print(f"  Reversed: {action_history.get()}")
 ```
 **Explanation:** Because it's Last-In, First-Out, putting "Deleted 'World'" in last means it's the very first thing `.get()` pulls out, perfectly simulating an Undo stack.
 
-[Back to the Table of Contents](020-ch17-real-world-use.md#table-of-contents)
+[Back to the Table of Contents](020-ch16-real-world-use.md#table-of-contents)
 
 ### 4.3 `PriorityQueue`: Hospital Triage
 **Usage:** Patients arrive at an ER, but they shouldn't be treated in the order they arrived. A patient with a heart attack (priority 1) must jump ahead of a patient with a scraped knee (priority 5).
@@ -458,7 +458,7 @@ while not er.empty():
 **Explanation:** Identical in behavior to `heapq`, but `PriorityQueue` is wrapped in a thread-safe class, meaning if multiple nurses (threads) are calling `.get()` at the same time, no two nurses will accidentally grab the same patient.
 
 ---
-[Back to the Table of Contents](020-ch17-real-world-use.md#table-of-contents)
+[Back to the Table of Contents](020-ch16-real-world-use.md#table-of-contents)
 
 ## 5. The `enum` Module
 
@@ -506,7 +506,7 @@ send_response(HttpStatus.NOT_FOUND)
 **Explanation:** `HttpStatus.NOT_FOUND` evaluates to `404`, but it makes the code instantly understandable to another developer. If you type `HttpStatus.NOT_FOUNT` by mistake, Python will immediately throw an error, preventing typos.
 
 ---
-[Back to the Table of Contents](020-ch17-real-world-use.md#table-of-contents)
+[Back to the Table of Contents](020-ch16-real-world-use.md#table-of-contents)
 
 ## 6. `dataclasses`
 
@@ -577,7 +577,7 @@ print(f"Tags for {p1.name}: {p1.tags}")
 **Explanation:** The `@dataclass` decorator saves us from writing `def __init__(self, name, price...` etc. It auto-generates the setup and the string representation. `field(default_factory=list)` safely ensures `p1` and `p2` don't accidentally share the same tags list.
 
 ---
-[Back to the Table of Contents](020-ch17-real-world-use.md#table-of-contents)
+[Back to the Table of Contents](020-ch16-real-world-use.md#table-of-contents)
 
 ## 7. `functools` Module
 
@@ -696,7 +696,7 @@ log_error("Database connection failed!")  # Output: [ERROR] Database connection 
 log_error("File not found!")  # Output: [ERROR] File not found!
 ```
 **Explanation:** `partial` takes a function and "freezes" some of its arguments. `log_error` is now a brand new function that only requires one argument (`message`), automatically passing `"ERROR"` to the background.
-[Back to the Table of Contents](020-ch17-real-world-use.md#table-of-contents)
+[Back to the Table of Contents](020-ch16-real-world-use.md#table-of-contents)
 
 ### 7.3 `reduce`: Calculating Shopping Cart Total
 **Usage:** You have a list of dictionary items in a shopping cart, and you need to calculate the grand total.
@@ -809,7 +809,7 @@ for month, items in groupby(transactions, key=lambda t: t[0]):
 # Mar: ['Electricity']
 ```
 **Explanation:** The `key` function tells `groupby` to look at index 0 (the month). It groups consecutive identical months together, allowing us to easily print a clean summary without writing complex `if/else` state-tracking logic.
-[Back to the Table of Contents](020-ch17-real-world-use.md#table-of-contents)
+[Back to the Table of Contents](020-ch16-real-world-use.md#table-of-contents)
 
 ### 8.3 `product`: Combination Lock Generator
 **Usage:** You are building a security tool or a puzzle game, and you need to generate every possible combination of a 2-dial lock, where each dial has numbers 0 through 2.
@@ -873,4 +873,4 @@ for arrangement in seating_charts:
 ```
 **Explanation:** Unlike `product`, `permutations` doesn't allow an item to be used more than once, and order matters (Alice-Bob-Charlie is different from Charlie-Bob-Alice). It instantly generates all $n!$ (n-factorial) arrangements.
 
-[Back to the Table of Contents](020-ch17-real-world-use.md#table-of-contents)
+[Back to the Table of Contents](020-ch16-real-world-use.md#table-of-contents)
