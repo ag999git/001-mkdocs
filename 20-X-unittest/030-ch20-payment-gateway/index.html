@@ -9184,13 +9184,13 @@
 <h1 id="advanced-fixture-lifecycles-and-optimization">Advanced Fixture Lifecycles and Optimization<a class="headerlink" href="#advanced-fixture-lifecycles-and-optimization" title="Permanent link">&para;</a></h1>
 <h2 id="table-of-contents">Table of Contents<a class="headerlink" href="#table-of-contents" title="Permanent link">&para;</a></h2>
 <ul>
-<li><a href="030-ch16-payment-gateway.md#theoretical-foundation-session-scope">Theoretical Foundation: Session Scope</a></li>
-<li><a href="030-ch16-payment-gateway.md#application-simulation-architectural-design">Application Simulation Architectural Design</a></li>
-<li><a href="030-ch16-payment-gateway.md#1-target-implementation-payment_gatewaypy">1. Target Implementation: payment_gateway.py</a></li>
-<li><a href="030-ch16-payment-gateway.md#2-automated-test-suite-test_paymentspy">2. Automated Test Suite: test_payments.py</a></li>
-<li><a href="030-ch16-payment-gateway.md#discussion">Discussion</a></li>
-<li><a href="030-ch16-payment-gateway.md#architectural--core-concepts">Architectural &amp; Core Concepts</a></li>
-<li><a href="030-ch16-payment-gateway.md#precautions--concerns-in-using-session-scope">Precautions &amp; Concerns in using session scope</a></li>
+<li><a href="./#theoretical-foundation-session-scope">Theoretical Foundation: Session Scope</a></li>
+<li><a href="./#application-simulation-architectural-design">Application Simulation Architectural Design</a></li>
+<li><a href="./#1-target-implementation-payment_gatewaypy">1. Target Implementation: payment_gateway.py</a></li>
+<li><a href="./#2-automated-test-suite-test_paymentspy">2. Automated Test Suite: test_payments.py</a></li>
+<li><a href="./#discussion">Discussion</a></li>
+<li><a href="./#architectural--core-concepts">Architectural &amp; Core Concepts</a></li>
+<li><a href="./#precautions--concerns-in-using-session-scope">Precautions &amp; Concerns in using session scope</a></li>
 </ul>
 <h2 id="theoretical-foundation-session-scope">Theoretical Foundation: Session Scope<a class="headerlink" href="#theoretical-foundation-session-scope" title="Permanent link">&para;</a></h2>
 <p>In real world software development, test suites may have hundreds or thousands of test cases. When executing these tests, certain infrastructure requirements—such as establishing database connections, or authenticating with external APIs— create heavy burdern on the computational resources.
@@ -9234,7 +9234,7 @@ The highest and most persistent tier of this hierarchy is the <strong>Session Sc
 </code></pre></div>
 <h2 id="application-simulation-architectural-design">Application Simulation Architectural Design<a class="headerlink" href="#application-simulation-architectural-design" title="Permanent link">&para;</a></h2>
 <p>To understand the practical implications of session scoping without relying on live external networks, we implement an application simulation representing an external financial gateway (e.g., Stripe or PayPal).</p>
-<p><a href="030-ch16-payment-gateway.md#table-of-contents">Back to the Table of Contents</a></p>
+<p><a href="./#table-of-contents">Back to the Table of Contents</a></p>
 <h3 id="1-target-implementation-payment_gatewaypy">1. Target Implementation: <code>payment_gateway.py</code><a class="headerlink" href="#1-target-implementation-payment_gatewaypy" title="Permanent link">&para;</a></h3>
 <p>This module acts as a stateful emulator. It enforces linear state progression (Connection <span class="arithmatex">\(\rightarrow\)</span> Processing <span class="arithmatex">\(\rightarrow\)</span> Disconnection) and introduces simulated network latency.</p>
 <div class="highlight"><pre><span></span><code><span class="c1"># payment_gateway.py</span>
@@ -9272,7 +9272,7 @@ The highest and most persistent tier of this hierarchy is the <strong>Session Sc
 
         <span class="k">return</span> <span class="sa">f</span><span class="s2">"Payment of $</span><span class="si">{</span><span class="n">amount</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2"> Processed Successfully."</span>
 </code></pre></div>
-<p><a href="030-ch16-payment-gateway.md#table-of-contents">Back to the Table of Contents</a></p>
+<p><a href="./#table-of-contents">Back to the Table of Contents</a></p>
 <h3 id="2-automated-test-suite-test_paymentspy">2. Automated Test Suite: <code>test_payments.py</code><a class="headerlink" href="#2-automated-test-suite-test_paymentspy" title="Permanent link">&para;</a></h3>
 <p>This suite verifies the transaction capabilities of the gateway. It integrates a global tracking metric (<code>session_count</code>) to prove empirical verification of the fixture lifecycle.</p>
 <div class="highlight"><pre><span></span><code><span class="c1"># test_payments.py</span>
@@ -9353,7 +9353,7 @@ The highest and most persistent tier of this hierarchy is the <strong>Session Sc
 <p>Everything <strong>after</strong> <code>yield</code> is executed as the <strong>Teardown Phase</strong> (Resource cleanup).</p>
 </li>
 </ul>
-<p><a href="030-ch16-payment-gateway.md#table-of-contents">Back to the Table of Contents</a></p>
+<p><a href="./#table-of-contents">Back to the Table of Contents</a></p>
 <h4 id="3-output-of-the-pytest-with-flag-s-shows-that-resources-are-optimized">3. Output of the pytest (with flag -s) shows that resources are optimized<a class="headerlink" href="#3-output-of-the-pytest-with-flag-s-shows-that-resources-are-optimized" title="Permanent link">&para;</a></h4>
 <p>When executing this test file with standard output capturing enabled (<code>pytest -s</code>), the console logs prove the lifecycle behavior:</p>
 <p>Plaintext</p>
@@ -9384,7 +9384,7 @@ The highest and most persistent tier of this hierarchy is the <strong>Session Sc
 <p>If you accelerate test execution using parallel execution plugins such as <code>pytest-xdist</code>, a session-scoped fixture can introduce race conditions. Multiple parallel processes attempting to alter or read internal attributes of a shared singleton object concurrently will induce flaky, non-deterministic test behavior.</p>
 <h3 id="3-structural-scaling-and-file-placement">3. Structural Scaling and File Placement<a class="headerlink" href="#3-structural-scaling-and-file-placement" title="Permanent link">&para;</a></h3>
 <p>In scaled multi-directory testing frameworks, declaring a session fixture inside a single test file restricts its accessibility. To expose session-scoped setups globally without explicit imports, they must be housed within a centralized, specialized orchestration file named <code>conftest.py</code> positioned at the project's root directory.</p>
-<p><a href="030-ch16-payment-gateway.md#table-of-contents">Back to the Table of Contents</a></p>
+<p><a href="./#table-of-contents">Back to the Table of Contents</a></p>
 
 
 
