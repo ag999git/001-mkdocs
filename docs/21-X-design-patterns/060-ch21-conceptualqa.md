@@ -255,6 +255,8 @@ ________________________________________
 ________________________________________
 Flowchart
 
+![Flowchart](/001-mkdocs/resources/ch16-21-august-qa-question-8.png)
+
 ```mermaid
 flowchart LR
 
