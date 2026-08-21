@@ -25,7 +25,7 @@
     
     
       
-        <title>007 ch6 generators advanced - Python 999</title>
+        <title>Advanced Concepts of Generators - Python 999</title>
       
     
     
@@ -82,7 +82,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#part-2-advanced-concepts-of-generators" class="md-skip">
+        <a href="#advanced-concepts-of-generators" class="md-skip">
           Skip to content
         </a>
       
@@ -118,7 +118,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              007 ch6 generators advanced
+              Advanced Concepts of Generators
             
           </span>
         </div>
@@ -1714,6 +1714,8 @@
       <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
       
       
+        
+      
       
         <label class="md-nav__link md-nav__link--active" for="__toc">
           
@@ -1722,7 +1724,7 @@
   <span class="md-ellipsis">
     
   
-    007 ch6 generators advanced
+    Advanced Concepts of Generators
   
 
     
@@ -1740,7 +1742,7 @@
   <span class="md-ellipsis">
     
   
-    007 ch6 generators advanced
+    Advanced Concepts of Generators
   
 
     
@@ -1756,6 +1758,8 @@
   
   
   
+    
+  
   
     <label class="md-nav__title" for="__toc">
       <span class="md-nav__icon md-icon"></span>
@@ -1764,18 +1768,6 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#part-2-advanced-concepts-of-generators" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Part 2 — Advanced Concepts of Generators
-      
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="Part 2 — Advanced Concepts of Generators">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
   <a href="#1-what-happens-when-a-generator-finishes" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -1784,31 +1776,37 @@
     </span>
   </a>
   
-</li>
+    <nav class="md-nav" aria-label="1. What Happens When a Generator Finishes?">
+      <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#example-demonstrating-stopiteration" class="md-nav__link">
+  <a href="#script-demonstrating-stopiteration" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Example Demonstrating StopIteration.
+        Script Demonstrating StopIteration
       
     </span>
   </a>
   
 </li>
         
-          <li class="md-nav__item">
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#2-how-a-for-loop-handles-generators" class="md-nav__link">
     <span class="md-ellipsis">
       
-        2. How a for-loop Handles Generators
+        2. How a for Loop Handles Generators
       
     </span>
   </a>
   
 </li>
-        
-          <li class="md-nav__item">
+      
+        <li class="md-nav__item">
   <a href="#3-fibonacci-generator" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -1818,8 +1816,8 @@
   </a>
   
 </li>
-        
-          <li class="md-nav__item">
+      
+        <li class="md-nav__item">
   <a href="#4-generator-example-prime-numbers" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -1829,8 +1827,8 @@
   </a>
   
 </li>
-        
-          <li class="md-nav__item">
+      
+        <li class="md-nav__item">
   <a href="#5-advantages-of-generators" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -1838,11 +1836,6 @@
       
     </span>
   </a>
-  
-</li>
-        
-      </ul>
-    </nav>
   
 </li>
       
@@ -8145,140 +8138,193 @@
   
 
 
-  <h1>007 ch6 generators advanced</h1>
-
-<h3 id="part-2-advanced-concepts-of-generators">Part 2 — Advanced Concepts of Generators<a class="headerlink" href="#part-2-advanced-concepts-of-generators" title="Permanent link">&para;</a></h3>
-<p>This section presumes a basic understanding of the idea of <code>yield</code>.</p>
+<h1 id="advanced-concepts-of-generators">Advanced Concepts of Generators<a class="headerlink" href="#advanced-concepts-of-generators" title="Permanent link">&para;</a></h1>
+<p>This section builds on the earlier introduction to <code>yield</code> and generator functions, and assumes you're already comfortable with the basic idea: a generator is a function that produces a sequence of values one at a time, pausing at each <code>yield</code> instead of computing everything up front. Here, we go one level deeper — what actually happens when a generator runs out of values, how a <code>for</code> loop uses generators under the hood, and two classic examples (Fibonacci numbers and prime numbers) that show why generators are so well suited to sequences that are large, or even infinite. Understanding this "under the hood" behavior matters because generators are everywhere in real Python code — file reading, database queries, and many library functions all return generator-like objects rather than full lists, precisely for the memory reasons covered at the end of this section.</p>
 <hr />
-<h4 id="1-what-happens-when-a-generator-finishes">1. What Happens When a Generator Finishes?<a class="headerlink" href="#1-what-happens-when-a-generator-finishes" title="Permanent link">&para;</a></h4>
-<p>When a generator finishes producing values, Python raises a special exception called: </p>
-<p><code>StopIteration</code></p>
-<p>This is <strong>not an error in your program</strong>.</p>
-<p>It simply signals that <strong>no more values remain</strong>.</p>
-<h4 id="example-demonstrating-stopiteration">Example Demonstrating StopIteration.<a class="headerlink" href="#example-demonstrating-stopiteration" title="Permanent link">&para;</a></h4>
-<p>The following diagram shows how StopIteration works in generator functions.</p>
+<h2 id="1-what-happens-when-a-generator-finishes">1. What Happens When a Generator Finishes?<a class="headerlink" href="#1-what-happens-when-a-generator-finishes" title="Permanent link">&para;</a></h2>
+<p>When a generator has no more values left to produce, Python signals this by raising a special exception called <code>StopIteration</code>.</p>
+<p>This is <strong>not an error in your program</strong> — it's a normal, expected signal that simply means <em>"there is nothing left to yield."</em> Every iterator in Python (not just generators) uses this same mechanism to announce that it's exhausted.</p>
+<p>The diagram below shows the flow of control as a generator function runs, pauses at each <code>yield</code>, and eventually raises <code>StopIteration</code> once its body finishes:</p>
 <p><img alt="StopIteration Diagram" src="https://github.com/ag999git/001-Python-book-2026/blob/main/resources/ch6-generators-stopiteration.png" /></p>
-<p>The following script shos the use of StopIteration for generator functions.</p>
-<div class="highlight"><pre><span></span><code><span class="c1"># Demonstration of a simple generator and StopIteration</span>
+<h3 id="script-demonstrating-stopiteration">Script Demonstrating <code>StopIteration</code><a class="headerlink" href="#script-demonstrating-stopiteration" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code><span class="c1"># Demonstration of a simple generator and StopIteration.</span>
+<span class="c1">#</span>
+<span class="c1"># This generator function has three yield statements, plus print</span>
+<span class="c1"># statements before/after each one, so we can clearly see WHEN the</span>
+<span class="c1"># function's code actually runs relative to each next() call.</span>
 
-<span class="c1"># 1. This generator function has multiple yield statements and print statements to show the flow of execution.</span>
 <span class="k">def</span><span class="w"> </span><span class="nf">simple_generator</span><span class="p">():</span>
 <span class="w">    </span><span class="sd">"""Generator with three yield statements."""</span>
 
     <span class="nb">print</span><span class="p">(</span><span class="s2">"Generator started"</span><span class="p">)</span>
 
-    <span class="k">yield</span> <span class="s2">"yielding 1"</span>     <span class="c1"># First value returned</span>
+    <span class="k">yield</span> <span class="s2">"yielding 1"</span>     <span class="c1"># Pauses here and hands back "yielding 1"</span>
     <span class="nb">print</span><span class="p">(</span><span class="s2">"Resuming after first yield"</span><span class="p">)</span>
 
-    <span class="k">yield</span> <span class="s2">"yielding 2"</span>     <span class="c1"># Second value returned</span>
+    <span class="k">yield</span> <span class="s2">"yielding 2"</span>     <span class="c1"># Pauses here and hands back "yielding 2"</span>
     <span class="nb">print</span><span class="p">(</span><span class="s2">"Resuming after second yield"</span><span class="p">)</span>
 
-    <span class="k">yield</span> <span class="s2">"yielding 3"</span>     <span class="c1"># Third value returned</span>
+    <span class="k">yield</span> <span class="s2">"yielding 3"</span>     <span class="c1"># Pauses here and hands back "yielding 3"</span>
     <span class="nb">print</span><span class="p">(</span><span class="s2">"Generator is about to finish"</span><span class="p">)</span>
+    <span class="c1"># No more yield statements after this point --</span>
+    <span class="c1"># once execution reaches the end of the function body,</span>
+    <span class="c1"># the generator is considered exhausted.</span>
 
-<span class="c1"># 2. Creating the generator object</span>
-<span class="n">gen</span> <span class="o">=</span> <span class="n">simple_generator</span><span class="p">()</span>   <span class="c1"># Function does NOT execute yet</span>
+
+<span class="c1"># ---- Step 1: create the generator object ----</span>
+<span class="c1"># IMPORTANT: calling simple_generator() does NOT run any of its code yet.</span>
+<span class="c1"># It only creates a generator object, ready to be advanced with next().</span>
+<span class="n">gen</span> <span class="o">=</span> <span class="n">simple_generator</span><span class="p">()</span>
 <span class="nb">print</span><span class="p">(</span><span class="s2">"Generator object created</span><span class="se">\n</span><span class="s2">"</span><span class="p">)</span>
 
 
-<span class="c1"># 3. Manually retrieving values using next()</span>
+<span class="c1"># ---- Step 2: manually retrieve values with next() ----</span>
 <span class="nb">print</span><span class="p">(</span><span class="s2">"First next() call:"</span><span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span><span class="nb">next</span><span class="p">(</span><span class="n">gen</span><span class="p">))</span>   <span class="c1"># Generator starts executing</span>
+<span class="nb">print</span><span class="p">(</span><span class="nb">next</span><span class="p">(</span><span class="n">gen</span><span class="p">))</span>   <span class="c1"># NOW the function body starts running, up to the first yield</span>
+
 <span class="nb">print</span><span class="p">(</span><span class="s2">"Second next() call:"</span><span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span><span class="nb">next</span><span class="p">(</span><span class="n">gen</span><span class="p">))</span>
+<span class="nb">print</span><span class="p">(</span><span class="nb">next</span><span class="p">(</span><span class="n">gen</span><span class="p">))</span>   <span class="c1"># Resumes right after the first yield, runs to the second</span>
+
 <span class="nb">print</span><span class="p">(</span><span class="s2">"Third next() call:"</span><span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span><span class="nb">next</span><span class="p">(</span><span class="n">gen</span><span class="p">))</span>
+<span class="nb">print</span><span class="p">(</span><span class="nb">next</span><span class="p">(</span><span class="n">gen</span><span class="p">))</span>   <span class="c1"># Resumes right after the second yield, runs to the third</span>
 
-<span class="c1"># 4. Generator is now exhausted</span>
-<span class="c1"># Calling next() again raises StopIteration</span>
+
+<span class="c1"># ---- Step 3: the generator is now exhausted ----</span>
+<span class="c1"># There are no more yield statements left to reach, so the NEXT call</span>
+<span class="c1"># to next() causes the function to run off its end -- and Python</span>
+<span class="c1"># turns that into a StopIteration exception.</span>
 <span class="nb">print</span><span class="p">(</span><span class="s2">"Fourth next() call:"</span><span class="p">)</span>
-
 <span class="k">try</span><span class="p">:</span>
     <span class="nb">print</span><span class="p">(</span><span class="nb">next</span><span class="p">(</span><span class="n">gen</span><span class="p">))</span>
 <span class="k">except</span> <span class="ne">StopIteration</span><span class="p">:</span>
-    <span class="nb">print</span><span class="p">(</span><span class="s2">"StopIteration raised → No more values left in generator!"</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">"StopIteration raised -&gt; no more values left in the generator!"</span><span class="p">)</span>
 
-<span class="c1"># 5. Using a generator inside a for-loop</span>
-<span class="nb">print</span><span class="p">(</span><span class="s2">"Using generator in a for-loop:"</span><span class="p">)</span>
 
-<span class="k">for</span> <span class="n">value</span> <span class="ow">in</span> <span class="n">simple_generator</span><span class="p">():</span>
+<span class="c1"># ---- Step 4: using a generator inside a for loop ----</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">"</span><span class="se">\n</span><span class="s2">Using generator in a for-loop:"</span><span class="p">)</span>
+
+<span class="k">for</span> <span class="n">value</span> <span class="ow">in</span> <span class="n">simple_generator</span><span class="p">():</span>   <span class="c1"># a fresh generator object, starting from scratch</span>
     <span class="nb">print</span><span class="p">(</span><span class="n">value</span><span class="p">)</span>
 
 <span class="nb">print</span><span class="p">(</span><span class="s2">"In a for-loop, StopIteration happens internally and is NOT shown."</span><span class="p">)</span>
 </code></pre></div>
-<h4 id="2-how-a-for-loop-handles-generators">2. How a for-loop Handles Generators<a class="headerlink" href="#2-how-a-for-loop-handles-generators" title="Permanent link">&para;</a></h4>
-<p>A <code>for</code> loop internally does something like this:</p>
-<ol>
-<li>
-<p>Call <code>next()</code></p>
-</li>
-<li>
-<p>Use the value</p>
-</li>
-<li>
-<p>Repeat</p>
-</li>
-<li>
-<p>Stop when <code>StopIteration</code> occurs</p>
-</li>
-</ol>
-<p>But the <strong>exception is hidden from the user</strong>.</p>
-<p>Example:</p>
-<div class="highlight"><pre><span></span><code><span class="k">for</span>  <span class="n">value</span>  <span class="ow">in</span>  <span class="n">simple_generator</span><span class="p">():</span>  
-  <span class="nb">print</span><span class="p">(</span><span class="n">value</span><span class="p">)</span>
+<p><strong>Output:</strong></p>
+<div class="highlight"><pre><span></span><code>Generator object created
+
+First next() call:
+Generator started
+yielding 1
+Second next() call:
+Resuming after first yield
+yielding 2
+Third next() call:
+Resuming after second yield
+yielding 3
+Fourth next() call:
+Generator is about to finish
+StopIteration raised -&gt; no more values left in the generator!
+
+Using generator in a for-loop:
+Generator started
+yielding 1
+Resuming after first yield
+yielding 2
+Resuming after second yield
+yielding 3
+Generator is about to finish
+In a for-loop, StopIteration happens internally and is NOT shown.
 </code></pre></div>
+<blockquote>
+<p><strong>Key thing to notice:</strong> each <code>next()</code> call runs the generator's code only until the <em>next</em> <code>yield</code> is reached — not to the end of the function. This is what "pausing" really means: local variables, the current position in the code, and everything else about the function's state is frozen in place until the following <code>next()</code> call resumes it exactly where it left off.</p>
+</blockquote>
 <hr />
-<h4 id="3-fibonacci-generator">3. Fibonacci Generator<a class="headerlink" href="#3-fibonacci-generator" title="Permanent link">&para;</a></h4>
-<p>Generators are perfect for sequences like Fibonacci numbers.</p>
-<div class="highlight"><pre><span></span><code><span class="c1"># Fibonacci generator</span>
+<h2 id="2-how-a-for-loop-handles-generators">2. How a <code>for</code> Loop Handles Generators<a class="headerlink" href="#2-how-a-for-loop-handles-generators" title="Permanent link">&para;</a></h2>
+<p>A <code>for</code> loop over a generator is really just convenient shorthand for a loop that calls <code>next()</code> repeatedly and catches <code>StopIteration</code> for you. Internally, it does roughly this:</p>
+<ol>
+<li>Call <code>next()</code> on the generator to get the next value.</li>
+<li>Run the loop body using that value.</li>
+<li>Repeat from step 1.</li>
+<li>When <code>next()</code> raises <code>StopIteration</code>, the loop catches it silently and simply ends — <strong>no exception is ever shown to you</strong>.</li>
+</ol>
+<p>That's why this code:</p>
+<div class="highlight"><pre><span></span><code><span class="k">for</span> <span class="n">value</span> <span class="ow">in</span> <span class="n">simple_generator</span><span class="p">():</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">value</span><span class="p">)</span>
+</code></pre></div>
+<p>never needs a <code>try</code>/<code>except</code> block of its own — the <code>for</code> loop is already handling <code>StopIteration</code> behind the scenes, exactly as it does for ordinary lists, tuples, and every other iterable.</p>
+<hr />
+<h2 id="3-fibonacci-generator">3. Fibonacci Generator<a class="headerlink" href="#3-fibonacci-generator" title="Permanent link">&para;</a></h2>
+<p>Generators are a natural fit for sequences like the Fibonacci numbers, where each value depends only on the previous two, and the sequence can in principle continue <strong>forever</strong>. A generator lets you express "produce Fibonacci numbers, one at a time, for as long as someone keeps asking" without ever needing to decide in advance how many to compute.</p>
+<div class="highlight"><pre><span></span><code><span class="c1"># Fibonacci generator: produces the Fibonacci sequence one number</span>
+<span class="c1"># at a time, indefinitely.</span>
 
 <span class="k">def</span><span class="w"> </span><span class="nf">fibonacci_generator</span><span class="p">():</span>
-    <span class="n">a</span><span class="p">,</span> <span class="n">b</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span>  <span class="c1"># Initialize the first two Fibonacci numbers</span>
+    <span class="n">a</span><span class="p">,</span> <span class="n">b</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span>  <span class="c1"># the first two Fibonacci numbers</span>
 
-    <span class="k">while</span> <span class="kc">True</span><span class="p">:</span>  <span class="c1"># Loop indefinitely to generate Fibonacci numbers</span>
+    <span class="k">while</span> <span class="kc">True</span><span class="p">:</span>  <span class="c1"># runs forever -- the generator itself never "decides" to stop</span>
         <span class="k">yield</span> <span class="n">a</span>
-        <span class="n">a</span><span class="p">,</span> <span class="n">b</span> <span class="o">=</span> <span class="n">b</span><span class="p">,</span> <span class="n">a</span> <span class="o">+</span> <span class="n">b</span>
+        <span class="n">a</span><span class="p">,</span> <span class="n">b</span> <span class="o">=</span> <span class="n">b</span><span class="p">,</span> <span class="n">a</span> <span class="o">+</span> <span class="n">b</span>  <span class="c1"># advance both values by one step in the sequence</span>
 
 
 <span class="n">fib</span> <span class="o">=</span> <span class="n">fibonacci_generator</span><span class="p">()</span>
 
-<span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">10</span><span class="p">):</span>  <span class="c1"># _ is a common convention for a variable that is not used</span>
+<span class="c1"># We choose how many values to take by only calling next() 10 times --</span>
+<span class="c1"># the infinite while loop inside the generator is perfectly safe here,</span>
+<span class="c1"># because we control how far we advance it from the outside.</span>
+<span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">10</span><span class="p">):</span>  <span class="c1"># '_' is the conventional name for a loop variable we don't use</span>
     <span class="nb">print</span><span class="p">(</span><span class="nb">next</span><span class="p">(</span><span class="n">fib</span><span class="p">))</span>
 </code></pre></div>
-<h4 id="4-generator-example-prime-numbers">4. Generator Example — Prime Numbers<a class="headerlink" href="#4-generator-example-prime-numbers" title="Permanent link">&para;</a></h4>
-<div class="highlight"><pre><span></span><code><span class="c1"># Generator for prime numbers greater than a given number</span>
+<p><strong>Output:</strong> <code>0 1 1 2 3 5 8 13 21 34</code></p>
+<blockquote>
+<p><strong>Why not just build a list?</strong> You could write a function that returns a list of the first <em>N</em> Fibonacci numbers, but that forces you to decide <em>N</em> in advance, and to hold every value in memory at once. The generator version separates those two concerns: it only knows how to produce the <em>next</em> value, and the caller decides when to stop asking.</p>
+</blockquote>
+<hr />
+<h2 id="4-generator-example-prime-numbers">4. Generator Example — Prime Numbers<a class="headerlink" href="#4-generator-example-prime-numbers" title="Permanent link">&para;</a></h2>
+<p>This example builds a generator that produces an endless stream of prime numbers greater than some starting value — another sequence where you rarely know in advance how many values you'll actually need.</p>
+<div class="highlight"><pre><span></span><code><span class="c1"># Generator for prime numbers greater than a given starting value.</span>
 
-<span class="k">def</span><span class="w"> </span><span class="nf">is_prime</span><span class="p">(</span><span class="n">num</span><span class="p">):</span>  <span class="c1"># Helper function to check if a number is prime</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">is_prime</span><span class="p">(</span><span class="n">num</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">"""Return True if num is a prime number, False otherwise."""</span>
 
-    <span class="k">if</span> <span class="n">num</span> <span class="o">&lt;=</span> <span class="mi">1</span><span class="p">:</span>  <span class="c1"># 0 and 1 are not prime numbers</span>
+    <span class="k">if</span> <span class="n">num</span> <span class="o">&lt;=</span> <span class="mi">1</span><span class="p">:</span>            <span class="c1"># 0, 1, and negative numbers are never prime</span>
         <span class="k">return</span> <span class="kc">False</span>
 
-    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="nb">int</span><span class="p">(</span><span class="n">num</span><span class="o">**</span><span class="mf">0.5</span><span class="p">)</span> <span class="o">+</span> <span class="mi">1</span><span class="p">):</span>  <span class="c1"># Check divisibility from 2 to sqrt(num)</span>
-        <span class="k">if</span> <span class="n">num</span> <span class="o">%</span> <span class="n">i</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>  <span class="c1"># If num is divisible by any number in this range, it's not prime</span>
+    <span class="c1"># A number only needs to be checked for factors up to its square</span>
+    <span class="c1"># root -- if it had a factor larger than that, it would necessarily</span>
+    <span class="c1"># also have a matching factor smaller than the square root, which</span>
+    <span class="c1"># we'd have already found.</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="nb">int</span><span class="p">(</span><span class="n">num</span> <span class="o">**</span> <span class="mf">0.5</span><span class="p">)</span> <span class="o">+</span> <span class="mi">1</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">num</span> <span class="o">%</span> <span class="n">i</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>    <span class="c1"># found a factor -- num is not prime</span>
             <span class="k">return</span> <span class="kc">False</span>
 
     <span class="k">return</span> <span class="kc">True</span>
 
 
 <span class="k">def</span><span class="w"> </span><span class="nf">next_prime_generator</span><span class="p">(</span><span class="n">start</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">"""Yield an endless sequence of primes, each greater than 'start'."""</span>
+
     <span class="n">num</span> <span class="o">=</span> <span class="n">start</span> <span class="o">+</span> <span class="mi">1</span>
 
-    <span class="k">while</span> <span class="kc">True</span><span class="p">:</span>  <span class="c1"># Loop indefinitely to find the next prime number</span>
+    <span class="k">while</span> <span class="kc">True</span><span class="p">:</span>              <span class="c1"># keeps searching forever, one number at a time</span>
         <span class="k">if</span> <span class="n">is_prime</span><span class="p">(</span><span class="n">num</span><span class="p">):</span>
-            <span class="k">yield</span> <span class="n">num</span>  <span class="c1"># Yield the prime number and pause until the next value is requested</span>
+            <span class="k">yield</span> <span class="n">num</span>         <span class="c1"># pause here and hand back this prime</span>
+        <span class="n">num</span> <span class="o">+=</span> <span class="mi">1</span>              <span class="c1"># on resume, move on to check the next number</span>
 
-        <span class="n">num</span> <span class="o">+=</span> <span class="mi">1</span>
 
+<span class="c1"># Create a generator that will produce primes greater than 100.</span>
+<span class="c1"># Nothing is computed yet -- calling the function just creates the</span>
+<span class="c1"># generator object, exactly as with fibonacci_generator() above.</span>
+<span class="n">prime_gen</span> <span class="o">=</span> <span class="n">next_prime_generator</span><span class="p">(</span><span class="mi">100</span><span class="p">)</span>
 
-<span class="n">prime_gen</span> <span class="o">=</span> <span class="n">next_prime_generator</span><span class="p">(</span><span class="mi">100</span><span class="p">)</span>  <span class="c1"># Create a generator that will produce prime numbers greater than 100</span>
-
-<span class="c1"># Get the first 10 prime numbers greater than 100. </span>
-<span class="c1"># Use _ as a throwaway variable since we don't need the loop index</span>
-<span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">10</span><span class="p">):</span>  
+<span class="c1"># Pull out the first 10 primes greater than 100, one at a time.</span>
+<span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">10</span><span class="p">):</span>
     <span class="nb">print</span><span class="p">(</span><span class="nb">next</span><span class="p">(</span><span class="n">prime_gen</span><span class="p">))</span>
 </code></pre></div>
-<h4 id="5-advantages-of-generators">5. Advantages of Generators<a class="headerlink" href="#5-advantages-of-generators" title="Permanent link">&para;</a></h4>
-<p>The following table shows the advantages of using generators:-</p>
+<p><strong>Output:</strong> <code>101 103 107 109 113 127 131 137 139 149</code></p>
+<blockquote>
+<p><strong>Notice the pattern:</strong> both this example and the Fibonacci generator share the same shape — an infinite <code>while True:</code> loop with a <code>yield</code> inside it. This is a very common and perfectly safe generator pattern in Python, <em>because</em> nothing forces the loop to actually run forever: it only advances one step every time something calls <code>next()</code> on it. The generator does exactly as much work as the caller asks for, and no more.</p>
+</blockquote>
+<hr />
+<h2 id="5-advantages-of-generators">5. Advantages of Generators<a class="headerlink" href="#5-advantages-of-generators" title="Permanent link">&para;</a></h2>
 <table>
 <thead>
 <tr>
@@ -8289,22 +8335,29 @@
 <tbody>
 <tr>
 <td>Memory efficient</td>
-<td>values generated only when needed</td>
+<td>Values are produced one at a time, on demand — nothing is held in memory beyond the current value and whatever state the generator needs to compute the next one.</td>
 </tr>
 <tr>
-<td>Faster for large sequences</td>
-<td>avoids building large lists</td>
+<td>Well suited to large or infinite sequences</td>
+<td>Since a generator never needs to know its total length in advance, it can represent sequences (like the primes above) that would be impossible to store as a complete list.</td>
 </tr>
 <tr>
-<td>Maintains state automatically</td>
-<td>variables preserved between yields</td>
+<td>Faster to get started</td>
+<td>The first value is available as soon as it's computed, without waiting for the rest of the sequence to be built — useful when you might only need the first few results.</td>
 </tr>
 <tr>
-<td>Works naturally with loops</td>
-<td>integrates with Python iteration</td>
+<td>State preserved automatically</td>
+<td>Local variables (like <code>a, b</code> in the Fibonacci example) stay exactly as they were when the function paused — you don't need to manually track progress between calls.</td>
+</tr>
+<tr>
+<td>Integrates naturally with loops</td>
+<td>A generator can be used directly in a <code>for</code> loop, in <code>list()</code>, in <code>sum()</code>, and anywhere else an iterable is expected, since <code>StopIteration</code> is handled automatically.</td>
 </tr>
 </tbody>
 </table>
+<blockquote>
+<p><strong>A trade-off worth knowing:</strong> the flip side of "compute only what's needed" is that a generator <strong>can only be iterated through once</strong>. Once it's exhausted (or once you stop pulling values from it), there's no way to "rewind" it — you'd need to call the generator function again to get a fresh one, as the <code>for</code>-loop example in Section 1 does with <code>simple_generator()</code>.</p>
+</blockquote>
 
 
 
