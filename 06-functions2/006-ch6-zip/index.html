@@ -25,7 +25,7 @@
     
     
       
-        <title>006 ch6 zip - Python 999</title>
+        <title>Functional Tools in Python: zip(), lambda, map(), and filter() - Python 999</title>
       
     
     
@@ -82,7 +82,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#1-zip-function" class="md-skip">
+        <a href="#functional-tools-in-python-zip-lambda-map-and-filter" class="md-skip">
           Skip to content
         </a>
       
@@ -118,7 +118,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              006 ch6 zip
+              Functional Tools in Python: zip(), lambda, map(), and filter()
             
           </span>
         </div>
@@ -1686,6 +1686,8 @@
       <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
       
       
+        
+      
       
         <label class="md-nav__link md-nav__link--active" for="__toc">
           
@@ -1694,7 +1696,7 @@
   <span class="md-ellipsis">
     
   
-    006 ch6 zip
+    Functional Tools in Python: zip(), lambda, map(), and filter()
   
 
     
@@ -1712,7 +1714,7 @@
   <span class="md-ellipsis">
     
   
-    006 ch6 zip
+    Functional Tools in Python: zip(), lambda, map(), and filter()
   
 
     
@@ -1727,6 +1729,8 @@
 <nav class="md-nav md-nav--secondary" aria-label="Table of contents">
   
   
+  
+    
   
   
     <label class="md-nav__title" for="__toc">
@@ -1774,6 +1778,17 @@
     <span class="md-ellipsis">
       
         Key Properties
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#script-demonstrating-zip" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Script Demonstrating zip()
       
     </span>
   </a>
@@ -1830,6 +1845,17 @@
   
 </li>
         
+          <li class="md-nav__item">
+  <a href="#script-demonstrating-lambda-functions" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Script Demonstrating Lambda Functions
+      
+    </span>
+  </a>
+  
+</li>
+        
       </ul>
     </nav>
   
@@ -1880,6 +1906,17 @@
   
 </li>
         
+          <li class="md-nav__item">
+  <a href="#script-demonstrating-map" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Script Demonstrating map()
+      
+    </span>
+  </a>
+  
+</li>
+        
       </ul>
     </nav>
   
@@ -1906,8 +1943,7 @@
     </span>
   </a>
   
-    <nav class="md-nav" aria-label="Concept">
-      <ul class="md-nav__list">
+</li>
         
           <li class="md-nav__item">
   <a href="#syntax_3" class="md-nav__link">
@@ -1946,9 +1982,15 @@
     </nav>
   
 </li>
-        
-      </ul>
-    </nav>
+      
+        <li class="md-nav__item">
+  <a href="#putting-it-together-map-filter-and-lambda-combined" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Putting It Together: map(), filter(), and lambda Combined
+      
+    </span>
+  </a>
   
 </li>
       
@@ -8279,26 +8321,21 @@
   
 
 
-<h3 id="1-zip-function">1. <code>zip()</code> Function<a class="headerlink" href="#1-zip-function" title="Permanent link">&para;</a></h3>
-<h4 id="concept">Concept<a class="headerlink" href="#concept" title="Permanent link">&para;</a></h4>
-<p>The <code>zip()</code> function combines elements from <strong>two or more iterables</strong> into <strong>tuples</strong>.</p>
-<p>Each tuple contains elements taken from the <strong>same position</strong> in the input iterables.</p>
-<p>The function <strong>stops when the shortest iterable is exhausted</strong>.</p>
-<p>Thus, <code>zip()</code> is often used when you want to <strong>iterate over multiple sequences in parallel</strong>.</p>
+<h1 id="functional-tools-in-python-zip-lambda-map-and-filter">Functional Tools in Python: <code>zip()</code>, <code>lambda</code>, <code>map()</code>, and <code>filter()</code><a class="headerlink" href="#functional-tools-in-python-zip-lambda-map-and-filter" title="Permanent link">&para;</a></h1>
+<p>This section introduces four tools that go hand in hand once you're comfortable with functions: <code>zip()</code> for walking through several sequences together, <code>lambda</code> for writing tiny throwaway functions inline, and <code>map()</code> and <code>filter()</code> for transforming and selecting data without writing an explicit loop. These four are used constantly in real Python code — especially together, since <code>lambda</code> is most often seen <em>inside</em> a call to <code>map()</code>, <code>filter()</code>, or <code>sorted()</code> rather than on its own. By the end of this section you should be comfortable recognizing this style of "functional" Python and choosing between it and a plain <code>for</code> loop.</p>
 <hr />
-<h4 id="syntax">Syntax<a class="headerlink" href="#syntax" title="Permanent link">&para;</a></h4>
-<p><code>zip(*iterables)</code></p>
+<h2 id="1-zip-function">1. <code>zip()</code> Function<a class="headerlink" href="#1-zip-function" title="Permanent link">&para;</a></h2>
+<h3 id="concept">Concept<a class="headerlink" href="#concept" title="Permanent link">&para;</a></h3>
+<p><code>zip()</code> combines elements from <strong>two or more iterables</strong> into tuples, pairing up elements that share the <strong>same position</strong> across all the inputs. It <strong>stops as soon as the shortest iterable runs out</strong>, so it's the natural tool whenever you want to <strong>iterate over multiple sequences in parallel</strong> — for example, walking through a list of names and a list of ages together.</p>
+<h3 id="syntax">Syntax<a class="headerlink" href="#syntax" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code><span class="nb">zip</span><span class="p">(</span><span class="o">*</span><span class="n">iterables</span><span class="p">)</span>
+</code></pre></div>
 <p>Where:</p>
 <ul>
-<li>
-<p><code>iterables</code> may be lists, tuples, strings, ranges, etc.</p>
-</li>
-<li>
-<p>The result is a <strong>zip object (iterator)</strong>.</p>
-</li>
+<li><code>iterables</code> can be any mix of lists, tuples, strings, ranges, or other iterables.</li>
+<li>The result is a <strong>zip object</strong> — a memory-efficient iterator, not a list. Wrap it in <code>list()</code> to see its contents directly, or loop over it directly in a <code>for</code> loop (see Example 4 below).</li>
 </ul>
-<hr />
-<h4 id="key-properties">Key Properties<a class="headerlink" href="#key-properties" title="Permanent link">&para;</a></h4>
+<h3 id="key-properties">Key Properties<a class="headerlink" href="#key-properties" title="Permanent link">&para;</a></h3>
 <table>
 <thead>
 <tr>
@@ -8308,111 +8345,128 @@
 </thead>
 <tbody>
 <tr>
-<td>Works with any iterable</td>
-<td>lists, tuples, strings, ranges</td>
+<td>Works with</td>
+<td>any iterable — lists, tuples, strings, ranges, and more</td>
 </tr>
 <tr>
 <td>Returns</td>
-<td>iterator object</td>
+<td>a <code>zip</code> iterator object</td>
 </tr>
 <tr>
 <td>Output format</td>
-<td>tuples</td>
+<td>tuples, one per matched position</td>
 </tr>
 <tr>
 <td>Stops when</td>
-<td>shortest iterable ends</td>
+<td>the <strong>shortest</strong> input iterable is exhausted</td>
 </tr>
 <tr>
 <td>Common use</td>
-<td>parallel iteration</td>
+<td>parallel iteration; building dictionaries; "unzipping" paired data</td>
 </tr>
 </tbody>
 </table>
-<p>Script Demonstrating <code>zip()</code></p>
+<h3 id="script-demonstrating-zip">Script Demonstrating <code>zip()</code><a class="headerlink" href="#script-demonstrating-zip" title="Permanent link">&para;</a></h3>
 <div class="highlight"><pre><span></span><code><span class="c1"># Demonstration of the zip() function in Python</span>
 
-<span class="c1"># 1. Zipping two lists")</span>
-
+<span class="c1"># ---- Example 1: zipping two lists ----</span>
 <span class="n">list1</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">]</span>
 <span class="n">list2</span> <span class="o">=</span> <span class="p">[</span><span class="s1">'a'</span><span class="p">,</span> <span class="s1">'b'</span><span class="p">,</span> <span class="s1">'c'</span><span class="p">,</span> <span class="s1">'d'</span><span class="p">]</span>
 
 <span class="n">z</span> <span class="o">=</span> <span class="nb">zip</span><span class="p">(</span><span class="n">list1</span><span class="p">,</span> <span class="n">list2</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">"Type of result:"</span><span class="p">,</span> <span class="nb">type</span><span class="p">(</span><span class="n">z</span><span class="p">))</span>  <span class="c1"># &lt;class 'zip'&gt; -- zip() returns an iterator, not a list</span>
 
-<span class="nb">print</span><span class="p">(</span><span class="s2">"Type of result:"</span><span class="p">,</span> <span class="nb">type</span><span class="p">(</span><span class="n">z</span><span class="p">))</span>  <span class="c1"># &lt;class 'zip'&gt; - zip() returns an iterator of tuples</span>
-<span class="c1"># Convert iterator to list to view contents</span>
+<span class="c1"># An iterator is "used up" once you read from it, so we convert</span>
+<span class="c1"># it to a list here purely to display its contents.</span>
 <span class="nb">print</span><span class="p">(</span><span class="s2">"Zipped result:"</span><span class="p">,</span> <span class="nb">list</span><span class="p">(</span><span class="n">z</span><span class="p">))</span>  <span class="c1"># [(1, 'a'), (2, 'b'), (3, 'c'), (4, 'd')]</span>
 
-<span class="c1"># 2: Zipping sequences of unequal length</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">"-----------------------------------"</span><span class="p">)</span>
 
+<span class="c1"># ---- Example 2: zipping sequences of unequal length ----</span>
 <span class="n">a</span> <span class="o">=</span> <span class="p">[</span><span class="mi">10</span><span class="p">,</span> <span class="mi">20</span><span class="p">,</span> <span class="mi">30</span><span class="p">,</span> <span class="mi">40</span><span class="p">]</span>
 <span class="n">b</span> <span class="o">=</span> <span class="p">[</span><span class="s1">'x'</span><span class="p">,</span> <span class="s1">'y'</span><span class="p">]</span>
 
+<span class="c1"># zip() pairs elements up until the SHORTER list (b) runs out,</span>
+<span class="c1"># then stops -- the extra elements in 'a' are simply ignored.</span>
 <span class="n">result</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="nb">zip</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">))</span>
-
-<span class="c1"># Stops when shortest iterable finishes</span>
 <span class="nb">print</span><span class="p">(</span><span class="n">result</span><span class="p">)</span>  <span class="c1"># [(10, 'x'), (20, 'y')]</span>
 
-<span class="c1"># 3: Zipping three sequences</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">"-----------------------------------"</span><span class="p">)</span>
 
+<span class="c1"># ---- Example 3: zipping three sequences at once ----</span>
 <span class="n">names</span> <span class="o">=</span> <span class="p">[</span><span class="s2">"Alice"</span><span class="p">,</span> <span class="s2">"Bob"</span><span class="p">,</span> <span class="s2">"Charlie"</span><span class="p">]</span>
 <span class="n">ages</span> <span class="o">=</span> <span class="p">[</span><span class="mi">21</span><span class="p">,</span> <span class="mi">22</span><span class="p">,</span> <span class="mi">23</span><span class="p">]</span>
 <span class="n">cities</span> <span class="o">=</span> <span class="p">[</span><span class="s2">"Delhi"</span><span class="p">,</span> <span class="s2">"Mumbai"</span><span class="p">,</span> <span class="s2">"Kolkata"</span><span class="p">]</span>
 
+<span class="c1"># zip() isn't limited to two iterables -- any number can be combined</span>
 <span class="n">combined</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="nb">zip</span><span class="p">(</span><span class="n">names</span><span class="p">,</span> <span class="n">ages</span><span class="p">,</span> <span class="n">cities</span><span class="p">))</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">combined</span><span class="p">)</span>
+<span class="c1"># [('Alice', 21, 'Delhi'), ('Bob', 22, 'Mumbai'), ('Charlie', 23, 'Kolkata')]</span>
 
-<span class="nb">print</span><span class="p">(</span><span class="n">combined</span><span class="p">)</span>  <span class="c1"># [('Alice', 21, 'Delhi'), ('Bob', 22, 'Mumbai'), ('Charlie', 23, 'Kolkata')]</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">"-----------------------------------"</span><span class="p">)</span>
 
-<span class="c1"># 4: Iterating with zip</span>
+<span class="c1"># ---- Example 4: iterating directly with zip (no list() needed) ----</span>
+<span class="n">numbers</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">]</span>
+<span class="n">letters</span> <span class="o">=</span> <span class="p">[</span><span class="s1">'A'</span><span class="p">,</span> <span class="s1">'B'</span><span class="p">,</span> <span class="s1">'C'</span><span class="p">]</span>
 
-<span class="n">numbers</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">]</span>
-<span class="n">letters</span> <span class="o">=</span> <span class="p">[</span><span class="s1">'A'</span><span class="p">,</span><span class="s1">'B'</span><span class="p">,</span><span class="s1">'C'</span><span class="p">]</span>
-
+<span class="c1"># A for loop can consume the zip iterator directly --</span>
+<span class="c1"># there's no need to convert it to a list first.</span>
 <span class="k">for</span> <span class="n">n</span><span class="p">,</span> <span class="n">l</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">numbers</span><span class="p">,</span> <span class="n">letters</span><span class="p">):</span>
     <span class="nb">print</span><span class="p">(</span><span class="n">n</span><span class="p">,</span> <span class="n">l</span><span class="p">)</span>
-
 <span class="c1"># Output:</span>
 <span class="c1"># 1 A</span>
 <span class="c1"># 2 B</span>
 <span class="c1"># 3 C</span>
 
-<span class="c1"># 5: Unzipping sequences</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">"-----------------------------------"</span><span class="p">)</span>
 
-<span class="n">pairs</span> <span class="o">=</span> <span class="p">[(</span><span class="mi">1</span><span class="p">,</span><span class="s1">'a'</span><span class="p">),</span> <span class="p">(</span><span class="mi">2</span><span class="p">,</span><span class="s1">'b'</span><span class="p">),</span> <span class="p">(</span><span class="mi">3</span><span class="p">,</span><span class="s1">'c'</span><span class="p">)]</span>
+<span class="c1"># ---- Example 5: "unzipping" paired data back into separate sequences ----</span>
+<span class="n">pairs</span> <span class="o">=</span> <span class="p">[(</span><span class="mi">1</span><span class="p">,</span> <span class="s1">'a'</span><span class="p">),</span> <span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="s1">'b'</span><span class="p">),</span> <span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="s1">'c'</span><span class="p">)]</span>
 
+<span class="c1"># The * operator unpacks the list of tuples into separate positional</span>
+<span class="c1"># arguments, i.e. zip(*pairs) is the same as zip((1,'a'), (2,'b'), (3,'c')).</span>
+<span class="c1"># zip() then re-groups them BY POSITION, effectively reversing the</span>
+<span class="c1"># original zipping -- this is why the trick is called "unzipping".</span>
 <span class="n">x</span><span class="p">,</span> <span class="n">y</span> <span class="o">=</span> <span class="nb">zip</span><span class="p">(</span><span class="o">*</span><span class="n">pairs</span><span class="p">)</span>
 
 <span class="nb">print</span><span class="p">(</span><span class="s2">"Numbers:"</span><span class="p">,</span> <span class="n">x</span><span class="p">)</span>  <span class="c1"># (1, 2, 3)</span>
 <span class="nb">print</span><span class="p">(</span><span class="s2">"Letters:"</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span>  <span class="c1"># ('a', 'b', 'c')</span>
 
-<span class="c1"># 6: Creating dictionary using zip</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">"-----------------------------------"</span><span class="p">)</span>
 
-<span class="n">keys</span> <span class="o">=</span> <span class="p">[</span><span class="s1">'name'</span><span class="p">,</span><span class="s1">'age'</span><span class="p">,</span><span class="s1">'city'</span><span class="p">]</span>
+<span class="c1"># ---- Example 6: building a dictionary from two parallel lists ----</span>
+<span class="n">keys</span> <span class="o">=</span> <span class="p">[</span><span class="s1">'name'</span><span class="p">,</span> <span class="s1">'age'</span><span class="p">,</span> <span class="s1">'city'</span><span class="p">]</span>
 <span class="n">values</span> <span class="o">=</span> <span class="p">[</span><span class="s1">'Rahul'</span><span class="p">,</span> <span class="mi">25</span><span class="p">,</span> <span class="s1">'Delhi'</span><span class="p">]</span>
 
+<span class="c1"># zip() pairs each key with its matching value; dict() then turns</span>
+<span class="c1"># those pairs directly into key-value entries.</span>
 <span class="n">dictionary</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">(</span><span class="nb">zip</span><span class="p">(</span><span class="n">keys</span><span class="p">,</span> <span class="n">values</span><span class="p">))</span>
 <span class="nb">print</span><span class="p">(</span><span class="n">dictionary</span><span class="p">)</span>  <span class="c1"># {'name': 'Rahul', 'age': 25, 'city': 'Delhi'}</span>
 </code></pre></div>
-<h3 id="2-lambda-functions">2. Lambda Functions<a class="headerlink" href="#2-lambda-functions" title="Permanent link">&para;</a></h3>
-<h4 id="concept_1">Concept<a class="headerlink" href="#concept_1" title="Permanent link">&para;</a></h4>
-<p>A <strong>lambda function</strong> is a small anonymous function.</p>
-<p>Unlike normal functions defined with <code>def</code>, lambda functions:</p>
+<blockquote>
+<p><strong>Common pitfall:</strong> because <code>zip()</code> silently stops at the shortest iterable (Example 2), mismatched-length inputs won't raise an error — they'll just quietly drop data. If your lists are <em>supposed</em> to be the same length, it's worth checking <code>len(a) == len(b)</code> before zipping, so a bug elsewhere in your program doesn't go unnoticed.</p>
+</blockquote>
+<hr />
+<h2 id="2-lambda-functions">2. Lambda Functions<a class="headerlink" href="#2-lambda-functions" title="Permanent link">&para;</a></h2>
+<h3 id="concept_1">Concept<a class="headerlink" href="#concept_1" title="Permanent link">&para;</a></h3>
+<p>A <strong>lambda function</strong> is a small, anonymous function — "anonymous" meaning it has no name of its own. Unlike a function defined with <code>def</code>, a lambda:</p>
 <ul>
-<li>
-<p>have <strong>no name</strong></p>
-</li>
-<li>
-<p>are written in <strong>a single expression</strong></p>
-</li>
+<li>has <strong>no name</strong> (unless you assign it to a variable, as in the examples below),</li>
+<li>is written as <strong>a single expression</strong> — no statements, no multiple lines, no <code>return</code> keyword,</li>
+<li>and <strong>automatically returns</strong> the value of that expression.</li>
 </ul>
-<p>They are commonly used when a <strong>small temporary function</strong> is required.</p>
-<hr />
-<h4 id="syntax_1">Syntax<a class="headerlink" href="#syntax_1" title="Permanent link">&para;</a></h4>
-<p><code>lambda arguments : expression</code></p>
+<p>Lambdas exist for situations where you need a small, throwaway function — often just to pass as an argument to another function — and writing a full <code>def</code> block would be more ceremony than the task deserves.</p>
+<h3 id="syntax_1">Syntax<a class="headerlink" href="#syntax_1" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code><span class="k">lambda</span> <span class="n">arguments</span><span class="p">:</span> <span class="n">expression</span>
+</code></pre></div>
 <p>Example:</p>
-<p><code>lambda x : x * x</code></p>
-<hr />
-<h4 id="key-characteristics">Key Characteristics<a class="headerlink" href="#key-characteristics" title="Permanent link">&para;</a></h4>
+<div class="highlight"><pre><span></span><code><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span> <span class="o">*</span> <span class="n">x</span>
+</code></pre></div>
+<p>This is functionally equivalent to:</p>
+<div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">square</span><span class="p">(</span><span class="n">x</span><span class="p">):</span>
+    <span class="k">return</span> <span class="n">x</span> <span class="o">*</span> <span class="n">x</span>
+</code></pre></div>
+<h3 id="key-characteristics">Key Characteristics<a class="headerlink" href="#key-characteristics" title="Permanent link">&para;</a></h3>
 <table>
 <thead>
 <tr>
@@ -8423,65 +8477,71 @@
 <tbody>
 <tr>
 <td>Anonymous</td>
-<td>no function name</td>
+<td>has no function name of its own</td>
 </tr>
 <tr>
-<td>One expression only</td>
-<td>no statements</td>
+<td>Body</td>
+<td>a single expression only — no statements, loops, or <code>if</code>/<code>else</code> blocks (a conditional <em>expression</em> is allowed, though — see the tip below)</td>
 </tr>
 <tr>
-<td>Automatic return</td>
-<td>expression result returned</td>
+<td>Return value</td>
+<td>automatic — whatever the expression evaluates to</td>
 </tr>
 <tr>
-<td>Often used with</td>
-<td>map(), filter(), sorted()</td>
+<td>Most often used with</td>
+<td><code>map()</code>, <code>filter()</code>, <code>sorted()</code>, and similar functions that expect a small function as an argument</td>
 </tr>
 </tbody>
 </table>
+<h3 id="script-demonstrating-lambda-functions">Script Demonstrating Lambda Functions<a class="headerlink" href="#script-demonstrating-lambda-functions" title="Permanent link">&para;</a></h3>
 <div class="highlight"><pre><span></span><code><span class="c1"># Demonstration of lambda functions</span>
 
-<span class="c1"># 1: Normal function</span>
+<span class="c1"># ---- Example 1: an ordinary named function ----</span>
 <span class="k">def</span><span class="w"> </span><span class="nf">square</span><span class="p">(</span><span class="n">x</span><span class="p">):</span>
     <span class="k">return</span> <span class="n">x</span> <span class="o">*</span> <span class="n">x</span>
 
-<span class="nb">print</span><span class="p">(</span><span class="n">square</span><span class="p">(</span><span class="mi">5</span><span class="p">))</span>  <span class="c1"># 25 </span>
+<span class="nb">print</span><span class="p">(</span><span class="n">square</span><span class="p">(</span><span class="mi">5</span><span class="p">))</span>  <span class="c1"># 25</span>
 
-<span class="c1"># 2: Lambda equivalent</span>
-
+<span class="c1"># ---- Example 2: the same logic as a lambda ----</span>
+<span class="c1"># A lambda that squares its input, assigned to a variable so it</span>
+<span class="c1"># can be called just like a normal function.</span>
 <span class="n">square_lambda</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span> <span class="o">*</span> <span class="n">x</span>
 <span class="nb">print</span><span class="p">(</span><span class="n">square_lambda</span><span class="p">(</span><span class="mi">6</span><span class="p">))</span>  <span class="c1"># 36</span>
 
-<span class="c1"># 3: Lambda with multiple arguments</span>
-
+<span class="c1"># ---- Example 3: a lambda with two arguments ----</span>
 <span class="n">add</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">:</span> <span class="n">x</span> <span class="o">+</span> <span class="n">y</span>
 <span class="nb">print</span><span class="p">(</span><span class="n">add</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">))</span>  <span class="c1"># 7</span>
 
-<span class="c1"># 4: Lambda with three arguments</span>
-
+<span class="c1"># ---- Example 4: a lambda with three arguments ----</span>
 <span class="n">sum_three</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">,</span> <span class="n">c</span><span class="p">:</span> <span class="n">a</span> <span class="o">+</span> <span class="n">b</span> <span class="o">+</span> <span class="n">c</span>
-<span class="nb">print</span><span class="p">(</span><span class="n">sum_three</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">4</span><span class="p">))</span>  <span class="c1"># 9</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">sum_three</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">))</span>  <span class="c1"># 9</span>
 
-<span class="c1"># 5: Lambda inside sorted</span>
-
+<span class="c1"># ---- Example 5: a lambda as a sort key ----</span>
 <span class="n">students</span> <span class="o">=</span> <span class="p">[(</span><span class="s2">"Alice"</span><span class="p">,</span> <span class="mi">23</span><span class="p">),</span> <span class="p">(</span><span class="s2">"Bob"</span><span class="p">,</span> <span class="mi">21</span><span class="p">),</span> <span class="p">(</span><span class="s2">"Charlie"</span><span class="p">,</span> <span class="mi">25</span><span class="p">)]</span>
 
-<span class="c1"># Sort by age</span>
+<span class="c1"># 'key' tells sorted() WHAT to sort by, not how to compare it.</span>
+<span class="c1"># Here, x[1] extracts each student's age, so the list is</span>
+<span class="c1"># sorted by age rather than by name (the default for tuples).</span>
 <span class="n">sorted_students</span> <span class="o">=</span> <span class="nb">sorted</span><span class="p">(</span><span class="n">students</span><span class="p">,</span> <span class="n">key</span><span class="o">=</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
 
-<span class="nb">print</span><span class="p">(</span><span class="n">sorted_students</span><span class="p">)</span>  <span class="c1"># [('Bob', 21), ('Alice', 23), ('Charlie', 25)] </span>
+<span class="nb">print</span><span class="p">(</span><span class="n">sorted_students</span><span class="p">)</span>
+<span class="c1"># [('Bob', 21), ('Alice', 23), ('Charlie', 25)]</span>
 </code></pre></div>
-<h3 id="3-map-function">3. <code>map()</code> Function<a class="headerlink" href="#3-map-function" title="Permanent link">&para;</a></h3>
-<h4 id="concept_2">Concept<a class="headerlink" href="#concept_2" title="Permanent link">&para;</a></h4>
-<p>The <code>map()</code> function applies a <strong>function to every element of an iterable</strong>.</p>
-<p>It returns a <strong>map object (iterator)</strong>.</p>
+<blockquote>
+<p><strong>Tip:</strong> although a lambda body must be a single <em>expression</em>, that expression can be a conditional one — for example <code>lambda x: "even" if x % 2 == 0 else "odd"</code> is perfectly valid, since Python's <code>A if condition else B</code> is itself an expression, not a statement.</p>
+<p><strong>Style note:</strong> if a lambda is getting hard to read, or you find yourself wanting to give it a name and reuse it in several places, that's usually a sign it should be a regular <code>def</code> function instead. Lambdas are best kept short and used once, typically inline as an argument.</p>
+</blockquote>
 <hr />
-<h4 id="syntax_2">Syntax<a class="headerlink" href="#syntax_2" title="Permanent link">&para;</a></h4>
-<p><code>map(function, iterable)</code></p>
-<p>Multiple iterables can also be used:</p>
-<p><code>map(function, iterable1, iterable2)</code></p>
-<hr />
-<h4 id="key-properties_1">Key Properties<a class="headerlink" href="#key-properties_1" title="Permanent link">&para;</a></h4>
+<h2 id="3-map-function">3. <code>map()</code> Function<a class="headerlink" href="#3-map-function" title="Permanent link">&para;</a></h2>
+<h3 id="concept_2">Concept<a class="headerlink" href="#concept_2" title="Permanent link">&para;</a></h3>
+<p><code>map()</code> applies a given <strong>function to every element</strong> of one or more iterables, producing a new value for each one. It returns a <strong>map object</strong> — an iterator, not a list — so its results are typically wrapped in <code>list()</code> when you want to see or store them all at once.</p>
+<h3 id="syntax_2">Syntax<a class="headerlink" href="#syntax_2" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code><span class="nb">map</span><span class="p">(</span><span class="n">function</span><span class="p">,</span> <span class="n">iterable</span><span class="p">)</span>
+</code></pre></div>
+<p><code>map()</code> can also work across <strong>multiple iterables</strong> at once, passing one element from each to the function on every step:</p>
+<div class="highlight"><pre><span></span><code><span class="nb">map</span><span class="p">(</span><span class="n">function</span><span class="p">,</span> <span class="n">iterable1</span><span class="p">,</span> <span class="n">iterable2</span><span class="p">)</span>
+</code></pre></div>
+<h3 id="key-properties_1">Key Properties<a class="headerlink" href="#key-properties_1" title="Permanent link">&para;</a></h3>
 <table>
 <thead>
 <tr>
@@ -8492,59 +8552,77 @@
 <tbody>
 <tr>
 <td>Input</td>
-<td>function + iterable</td>
+<td>a function, plus one or more iterables</td>
 </tr>
 <tr>
 <td>Output</td>
-<td>map iterator</td>
+<td>a <code>map</code> iterator</td>
 </tr>
 <tr>
 <td>Purpose</td>
-<td>transform elements</td>
+<td>transform every element of an iterable</td>
 </tr>
 <tr>
 <td>Works with</td>
-<td>multiple iterables</td>
+<td>multiple iterables in parallel (like <code>zip()</code>)</td>
 </tr>
 </tbody>
 </table>
-<div class="highlight"><pre><span></span><code><span class="c1"># Demonstration of map() function</span>
+<h3 id="script-demonstrating-map">Script Demonstrating <code>map()</code><a class="headerlink" href="#script-demonstrating-map" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code><span class="c1"># Demonstration of the map() function</span>
 
-<span class="c1"># 1: Using map with normal function</span>
+<span class="c1"># ---- Example 1: map() with an ordinary named function ----</span>
 <span class="k">def</span><span class="w"> </span><span class="nf">cube</span><span class="p">(</span><span class="n">n</span><span class="p">):</span>
     <span class="k">return</span> <span class="n">n</span> <span class="o">**</span> <span class="mi">3</span>
 
-<span class="n">numbers</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">4</span><span class="p">,</span><span class="mi">5</span><span class="p">]</span>
+<span class="n">numbers</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">]</span>
 
-<span class="c1"># 2. Using map to apply cube function to each element in numbers</span>
+<span class="c1"># map() applies cube() to every element of 'numbers' in turn,</span>
+<span class="c1"># without us having to write an explicit for loop.</span>
 <span class="n">cube_map</span> <span class="o">=</span> <span class="nb">map</span><span class="p">(</span><span class="n">cube</span><span class="p">,</span> <span class="n">numbers</span><span class="p">)</span>
 <span class="nb">print</span><span class="p">(</span><span class="nb">list</span><span class="p">(</span><span class="n">cube_map</span><span class="p">))</span>  <span class="c1"># [1, 8, 27, 64, 125]</span>
 
-<span class="c1"># 3: Using map with lambda function</span>
-<span class="n">numbers</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">4</span><span class="p">,</span><span class="mi">5</span><span class="p">]</span>
-<span class="n">cubes</span> <span class="o">=</span> <span class="nb">map</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span><span class="o">**</span><span class="mi">3</span><span class="p">,</span> <span class="n">numbers</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">"-----------------------------------"</span><span class="p">)</span>
+
+<span class="c1"># ---- Example 2: map() with a lambda instead of a named function ----</span>
+<span class="c1"># This is the most common style in real code -- define the</span>
+<span class="c1"># transformation inline, right where it's used.</span>
+<span class="n">numbers</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">]</span>
+<span class="n">cubes</span> <span class="o">=</span> <span class="nb">map</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span> <span class="o">**</span> <span class="mi">3</span><span class="p">,</span> <span class="n">numbers</span><span class="p">)</span>
 <span class="nb">print</span><span class="p">(</span><span class="nb">list</span><span class="p">(</span><span class="n">cubes</span><span class="p">))</span>  <span class="c1"># [1, 8, 27, 64, 125]</span>
 
-<span class="c1"># 4: Using map with two lists</span>
-<span class="n">list1</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">4</span><span class="p">]</span>
-<span class="n">list2</span> <span class="o">=</span> <span class="p">[</span><span class="mi">10</span><span class="p">,</span><span class="mi">20</span><span class="p">,</span><span class="mi">30</span><span class="p">,</span><span class="mi">40</span><span class="p">]</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">"-----------------------------------"</span><span class="p">)</span>
+
+<span class="c1"># ---- Example 3: map() across two lists at once ----</span>
+<span class="n">list1</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">]</span>
+<span class="n">list2</span> <span class="o">=</span> <span class="p">[</span><span class="mi">10</span><span class="p">,</span> <span class="mi">20</span><span class="p">,</span> <span class="mi">30</span><span class="p">,</span> <span class="mi">40</span><span class="p">]</span>
+
+<span class="c1"># Each call combines one element from list1 with the element</span>
+<span class="c1"># at the SAME position in list2 -- exactly like zip(), but the</span>
+<span class="c1"># results are transformed by the lambda instead of just paired.</span>
 <span class="n">result</span> <span class="o">=</span> <span class="nb">map</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">:</span> <span class="n">x</span> <span class="o">+</span> <span class="n">y</span><span class="p">,</span> <span class="n">list1</span><span class="p">,</span> <span class="n">list2</span><span class="p">)</span>
 <span class="nb">print</span><span class="p">(</span><span class="nb">list</span><span class="p">(</span><span class="n">result</span><span class="p">))</span>  <span class="c1"># [11, 22, 33, 44]</span>
 
-<span class="c1"># 5: Converting strings to integers</span>
-<span class="n">string_numbers</span> <span class="o">=</span> <span class="p">[</span><span class="s2">"10"</span><span class="p">,</span><span class="s2">"20"</span><span class="p">,</span><span class="s2">"30"</span><span class="p">]</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">"-----------------------------------"</span><span class="p">)</span>
+
+<span class="c1"># ---- Example 4: converting a list of strings into integers ----</span>
+<span class="c1"># Any function that takes one argument can be used with map() --</span>
+<span class="c1"># not just lambdas. Here, the built-in int() itself is passed directly.</span>
+<span class="n">string_numbers</span> <span class="o">=</span> <span class="p">[</span><span class="s2">"10"</span><span class="p">,</span> <span class="s2">"20"</span><span class="p">,</span> <span class="s2">"30"</span><span class="p">]</span>
 <span class="n">integers</span> <span class="o">=</span> <span class="nb">map</span><span class="p">(</span><span class="nb">int</span><span class="p">,</span> <span class="n">string_numbers</span><span class="p">)</span>
 <span class="nb">print</span><span class="p">(</span><span class="nb">list</span><span class="p">(</span><span class="n">integers</span><span class="p">))</span>  <span class="c1"># [10, 20, 30]</span>
 </code></pre></div>
-<h1 id="4-filter-function">4. <code>filter()</code> Function<a class="headerlink" href="#4-filter-function" title="Permanent link">&para;</a></h1>
+<blockquote>
+<p><strong><code>map()</code> vs. a list comprehension:</strong> <code>list(map(lambda x: x ** 3, numbers))</code> and <code>[x ** 3 for x in numbers]</code> do exactly the same thing. Many Python programmers find comprehensions more readable for simple cases, and reach for <code>map()</code> mainly when the transformation function already exists and has a name (as in Example 4, <code>map(int, string_numbers)</code>), since <code>[int(x) for x in string_numbers]</code> doesn't offer much of an advantage there.</p>
+</blockquote>
+<hr />
+<h2 id="4-filter-function">4. <code>filter()</code> Function<a class="headerlink" href="#4-filter-function" title="Permanent link">&para;</a></h2>
 <h3 id="concept_3">Concept<a class="headerlink" href="#concept_3" title="Permanent link">&para;</a></h3>
-<p>The <code>filter()</code> function selects elements from an iterable based on a <strong>Boolean condition</strong>.</p>
-<p>The filtering function must return <strong>True or False</strong>.</p>
-<hr />
-<h4 id="syntax_3">Syntax<a class="headerlink" href="#syntax_3" title="Permanent link">&para;</a></h4>
-<p><code>filter(function, iterable)</code></p>
-<hr />
-<h4 id="key-properties_2">Key Properties<a class="headerlink" href="#key-properties_2" title="Permanent link">&para;</a></h4>
+<p><code>filter()</code> selects only the elements of an iterable that satisfy a <strong>Boolean condition</strong> — the given function is applied to each element in turn, and only the elements for which it returns <code>True</code> are kept.</p>
+<h3 id="syntax_3">Syntax<a class="headerlink" href="#syntax_3" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code><span class="nb">filter</span><span class="p">(</span><span class="n">function</span><span class="p">,</span> <span class="n">iterable</span><span class="p">)</span>
+</code></pre></div>
+<h3 id="key-properties_2">Key Properties<a class="headerlink" href="#key-properties_2" title="Permanent link">&para;</a></h3>
 <table>
 <thead>
 <tr>
@@ -8555,37 +8633,43 @@
 <tbody>
 <tr>
 <td>Input</td>
-<td>function returning Boolean</td>
+<td>a function that returns <code>True</code>/<code>False</code>, plus an iterable</td>
 </tr>
 <tr>
 <td>Output</td>
-<td>filter iterator</td>
+<td>a <code>filter</code> iterator</td>
 </tr>
 <tr>
 <td>Purpose</td>
-<td>selection of elements</td>
+<td>select a subset of elements that meet some condition</td>
 </tr>
 </tbody>
 </table>
-<h4 id="script-demonstrating-filter">Script Demonstrating <code>filter()</code><a class="headerlink" href="#script-demonstrating-filter" title="Permanent link">&para;</a></h4>
-<div class="highlight"><pre><span></span><code><span class="c1"># Demonstration of filter() function</span>
+<h3 id="script-demonstrating-filter">Script Demonstrating <code>filter()</code><a class="headerlink" href="#script-demonstrating-filter" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code><span class="c1"># Demonstration of the filter() function</span>
 
-<span class="c1"># 1: Filtering even numbers</span>
+<span class="c1"># ---- Example 1: filtering even numbers ----</span>
 <span class="n">numbers</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="mi">10</span><span class="p">))</span>
 <span class="n">even_numbers</span> <span class="o">=</span> <span class="nb">filter</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span> <span class="o">%</span> <span class="mi">2</span> <span class="o">==</span> <span class="mi">0</span><span class="p">,</span> <span class="n">numbers</span><span class="p">)</span>
 <span class="nb">print</span><span class="p">(</span><span class="nb">list</span><span class="p">(</span><span class="n">even_numbers</span><span class="p">))</span>  <span class="c1"># [0, 2, 4, 6, 8]</span>
 
-<span class="c1"># 2: Filtering positive numbers</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">"-----------------------------------"</span><span class="p">)</span>
+
+<span class="c1"># ---- Example 2: filtering out non-positive numbers ----</span>
 <span class="n">data</span> <span class="o">=</span> <span class="p">[</span><span class="o">-</span><span class="mi">5</span><span class="p">,</span> <span class="o">-</span><span class="mi">2</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">7</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">]</span>
 <span class="n">positive_numbers</span> <span class="o">=</span> <span class="nb">filter</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">,</span> <span class="n">data</span><span class="p">)</span>
 <span class="nb">print</span><span class="p">(</span><span class="nb">list</span><span class="p">(</span><span class="n">positive_numbers</span><span class="p">))</span>  <span class="c1"># [3, 7]</span>
 
-<span class="c1"># 3: Filtering strings longer than 3 characters</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">"-----------------------------------"</span><span class="p">)</span>
+
+<span class="c1"># ---- Example 3: filtering strings by length ----</span>
 <span class="n">words</span> <span class="o">=</span> <span class="p">[</span><span class="s2">"cat"</span><span class="p">,</span> <span class="s2">"elephant"</span><span class="p">,</span> <span class="s2">"dog"</span><span class="p">,</span> <span class="s2">"tiger"</span><span class="p">]</span>
 <span class="n">long_words</span> <span class="o">=</span> <span class="nb">filter</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="nb">len</span><span class="p">(</span><span class="n">x</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">3</span><span class="p">,</span> <span class="n">words</span><span class="p">)</span>
 <span class="nb">print</span><span class="p">(</span><span class="nb">list</span><span class="p">(</span><span class="n">long_words</span><span class="p">))</span>  <span class="c1"># ['elephant', 'tiger']</span>
 
-<span class="c1"># 4: Using filter with normal function</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">"-----------------------------------"</span><span class="p">)</span>
+
+<span class="c1"># ---- Example 4: filter() with a named function instead of a lambda ----</span>
 <span class="k">def</span><span class="w"> </span><span class="nf">is_odd</span><span class="p">(</span><span class="n">n</span><span class="p">):</span>
     <span class="k">return</span> <span class="n">n</span> <span class="o">%</span> <span class="mi">2</span> <span class="o">!=</span> <span class="mi">0</span>
 
@@ -8593,6 +8677,19 @@
 <span class="n">odd_numbers</span> <span class="o">=</span> <span class="nb">filter</span><span class="p">(</span><span class="n">is_odd</span><span class="p">,</span> <span class="n">numbers</span><span class="p">)</span>
 <span class="nb">print</span><span class="p">(</span><span class="nb">list</span><span class="p">(</span><span class="n">odd_numbers</span><span class="p">))</span>  <span class="c1"># [1, 3, 5, 7, 9]</span>
 </code></pre></div>
+<blockquote>
+<p><strong><code>filter()</code> vs. a list comprehension:</strong> just like with <code>map()</code>, <code>list(filter(lambda x: x % 2 == 0, numbers))</code> is equivalent to <code>[x for x in numbers if x % 2 == 0]</code>. Both are idiomatic Python — use whichever reads more clearly for the task at hand.</p>
+</blockquote>
+<hr />
+<h2 id="putting-it-together-map-filter-and-lambda-combined">Putting It Together: <code>map()</code>, <code>filter()</code>, and <code>lambda</code> Combined<a class="headerlink" href="#putting-it-together-map-filter-and-lambda-combined" title="Permanent link">&para;</a></h2>
+<p>Because <code>map()</code> and <code>filter()</code> both return iterators, they can be chained together directly — the output of one feeding straight into the next — without ever materializing an intermediate list:</p>
+<div class="highlight"><pre><span></span><code><span class="n">numbers</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">11</span><span class="p">))</span>
+
+<span class="c1"># First keep only the even numbers, then cube each of those that remain.</span>
+<span class="n">result</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="nb">map</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span> <span class="o">**</span> <span class="mi">3</span><span class="p">,</span> <span class="nb">filter</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span> <span class="o">%</span> <span class="mi">2</span> <span class="o">==</span> <span class="mi">0</span><span class="p">,</span> <span class="n">numbers</span><span class="p">)))</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">result</span><span class="p">)</span>  <span class="c1"># [8, 64, 216, 512, 1000]</span>
+</code></pre></div>
+<p>This combination — <code>filter()</code> to select, <code>map()</code> to transform, <code>lambda</code> to define the logic inline — is a very common pattern in real-world Python code, and recognizing it will make other people's code (and library documentation) much easier to read.</p>
 
 
 
