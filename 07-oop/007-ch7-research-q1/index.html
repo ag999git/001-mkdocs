@@ -8281,20 +8281,7 @@
 </tr>
 </tbody>
 </table>
-<div class="highlight"><pre><span></span><code>flowchart LR
-    subgraph Reachable["Reachable from your code"]
-        dog_label["dog (Stack label)"]
-        cat_label["cat (Stack label)"]
-    end
-    subgraph Island["Island of Isolation (Heap)"]
-        Tiger["Tiger object&lt;br/&gt;friend -&gt; Kitty"]
-        Kitty["Kitty object&lt;br/&gt;friend -&gt; Tiger"]
-    end
-    dog_label -.-&gt;|deleted| Tiger
-    cat_label -.-&gt;|deleted| Kitty
-    Tiger --&gt;|self.friend| Kitty
-    Kitty --&gt;|self.friend| Tiger
-</code></pre></div>
+<p><img alt="Flowchart" src="/001-mkdocs/resources/ch-7august-2026-circular-reference.png" /></p>
 <p>The dotted arrows above show the links that <code>del dog</code> and <code>del cat</code> remove. Notice that even after both are deleted, the solid arrows — <code>Tiger.friend → Kitty</code> and <code>Kitty.friend → Tiger</code> — remain, keeping both objects alive as far as reference counting is concerned.</p>
 <hr />
 <h2 id="the-script-building-and-breaking-a-circular-reference">The script: building and breaking a circular reference<a class="headerlink" href="#the-script-building-and-breaking-a-circular-reference" title="Permanent link">&para;</a></h2>
