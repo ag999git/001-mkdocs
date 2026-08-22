@@ -8410,6 +8410,7 @@ End of script.
 <hr />
 <h2 id="6-what-happens-when-you-override-__del__">6. What happens when you override <code>__del__()</code><a class="headerlink" href="#6-what-happens-when-you-override-__del__" title="Permanent link">&para;</a></h2>
 <p>Overriding <code>__del__()</code> in your own class does <strong>not</strong> give you control over memory management itself — it just lets you "hook in" with your own cleanup code at the exact moment right before Python frees the memory. The full sequence looks like this:</p>
+<p><img alt="Flowchart" src="resources/ch-7-august-2026-del-diagram.png" /></p>
 <div class="highlight"><pre><span></span><code>flowchart TD
     A["Reference count reaches 0"] --&gt; B{"Did you define\n__del__() in your class?"}
     B -- Yes --&gt; C["Python calls YOUR __del__() code\n(e.g. close files, log messages)"]
