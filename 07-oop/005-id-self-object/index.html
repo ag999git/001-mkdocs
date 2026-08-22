@@ -25,7 +25,7 @@
     
     
       
-        <title>005 id self object - Python 999</title>
+        <title>Chapter 7 — Proving That self Is Just the Object Itself - Python 999</title>
       
     
     
@@ -82,7 +82,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#the-same-address-experiment" class="md-skip">
+        <a href="#chapter-7-proving-that-self-is-just-the-object-itself" class="md-skip">
           Skip to content
         </a>
       
@@ -118,7 +118,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              005 id self object
+              Chapter 7 — Proving That self Is Just the Object Itself
             
           </span>
         </div>
@@ -1894,6 +1894,8 @@
       <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
       
       
+        
+      
       
         <label class="md-nav__link md-nav__link--active" for="__toc">
           
@@ -1902,7 +1904,7 @@
   <span class="md-ellipsis">
     
   
-    005 id self object
+    Chapter 7 — Proving That self Is Just the Object Itself
   
 
     
@@ -1920,7 +1922,7 @@
   <span class="md-ellipsis">
     
   
-    005 id self object
+    Chapter 7 — Proving That self Is Just the Object Itself
   
 
     
@@ -1936,6 +1938,8 @@
   
   
   
+    
+  
   
     <label class="md-nav__title" for="__toc">
       <span class="md-nav__icon md-icon"></span>
@@ -1944,10 +1948,82 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#the-same-address-experiment" class="md-nav__link">
+  <a href="#what-this-page-covers" class="md-nav__link">
     <span class="md-ellipsis">
       
-        The "Same Address" Experiment
+        What this page covers
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#1-background-what-does-id-actually-return" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1. Background: what does id() actually return?
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#2-the-experiment-in-plain-english" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2. The experiment, in plain English
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#3-the-script" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3. The script
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="3. The script">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#expected-output-the-exact-numbers-will-differ-on-your-machine" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Expected output (the exact numbers will differ on your machine)
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#4-why-this-matters" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4. Why this matters
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#5-try-it-yourself" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5. Try it yourself
       
     </span>
   </a>
@@ -8073,41 +8149,119 @@
   
 
 
-  <h1>005 id self object</h1>
-
-<h3 id="the-same-address-experiment">The "Same Address" Experiment<a class="headerlink" href="#the-same-address-experiment" title="Permanent link">&para;</a></h3>
-<p>In Python, every object created is stored at a specific unique address in the computer's memory. </p>
-<p>The <code>id()</code> function returns this "memory address." 
-The address of the object outside the class is <strong>identical</strong> to the address of <code>self</code> inside the class. 
-This shows that <code>self</code> isn't some magical Python command—it is literally just a nickname for the object itself.</p>
-<p>Here is a script that proves that an object created has same id as <code>self</code>.</p>
-<div class="highlight"><pre><span></span><code><span class="c1"># This code demonstrates how the 'self' parameter in a class method refers to </span>
-<span class="c1"># the specific instance of the class that is calling the method. </span>
-<span class="c1"># Each object (instance) of the class has its own unique ID, </span>
-<span class="c1"># and when we call a method on that object, 'self' refers to that particular instance.</span>
+<h1 id="chapter-7-proving-that-self-is-just-the-object-itself">Chapter 7 — Proving That <code>self</code> Is Just the Object Itself<a class="headerlink" href="#chapter-7-proving-that-self-is-just-the-object-itself" title="Permanent link">&para;</a></h1>
+<h2 id="what-this-page-covers">What this page covers<a class="headerlink" href="#what-this-page-covers" title="Permanent link">&para;</a></h2>
+<p>This page is a short, hands-on experiment for Chapter 7 (Object-Oriented Programming). It answers a question almost every beginner asks sooner or later: <strong>"What actually <em>is</em> <code>self</code>?"</strong></p>
+<p>Many beginners are told to treat <code>self</code> as a fixed rule — "just always write <code>self</code> as the first parameter of a method" — without ever being shown <em>why</em>. This page removes the mystery using Python's built-in <code>id()</code> function: it shows, with real output, that <code>self</code> inside a method and the object you called that method on are, quite literally, the exact same thing in memory. Once this clicks, a lot of other OOP behaviour (why <code>self.name</code> works, why every object keeps its own data, why methods can tell objects apart) starts to make a lot more sense.</p>
+<p>By the end of this page you should be able to:
+- Explain what <code>id()</code> returns and why it's useful for this experiment.
+- Explain, in your own words, why <code>id(p1) == id(self)</code> inside <code>p1.show_id()</code>.
+- Predict what would happen if you ran the same experiment with a third object.</p>
+<hr />
+<h2 id="1-background-what-does-id-actually-return">1. Background: what does <code>id()</code> actually return?<a class="headerlink" href="#1-background-what-does-id-actually-return" title="Permanent link">&para;</a></h2>
+<p>Every object you create in Python — a number, a string, a list, or an instance of your own class — is stored somewhere in the computer's memory. Python's built-in <code>id()</code> function returns a number that identifies <em>where</em> that object lives, for as long as the object exists. Think of it as the object's <strong>home address</strong>: two different objects (almost) always have two different addresses, and the same object always has the same address, no matter how many names or variables point to it.</p>
+<blockquote>
+<p><strong>Note for beginners:</strong> the exact number <code>id()</code> returns isn't something you should ever rely on in real programs — it can differ every time you run your code, and even between different Python implementations. What <em>is</em> reliable, and what this experiment is really about, is the <strong>relationship</strong> between the addresses: whether two things share the same address or not.</p>
+</blockquote>
+<h2 id="2-the-experiment-in-plain-english">2. The experiment, in plain English<a class="headerlink" href="#2-the-experiment-in-plain-english" title="Permanent link">&para;</a></h2>
+<ol>
+<li>We create an object, <code>p1 = Pet("Tiger")</code>, and print <code>id(p1)</code> — this is the object's address as seen <strong>from outside</strong> the class.</li>
+<li>We then call a method on that same object, <code>p1.show_id()</code>, and inside the method we print <code>id(self)</code> — this is the address as seen <strong>from inside</strong> the class.</li>
+<li>If <code>self</code> really is just another name for "the object this method was called on," then these two addresses must match exactly.</li>
+<li>We repeat the whole thing with a second, completely separate object, <code>p2 = Pet("Kittie")</code>, to prove this isn't a coincidence — each object has its own unique address, and <code>self</code> always tracks whichever object is "currently acting."</li>
+</ol>
+<table>
+<thead>
+<tr>
+<th>Step</th>
+<th>What we check</th>
+<th>What it proves</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>id(p1)</code> outside the class</td>
+<td>The address Python gave to the <code>p1</code> object</td>
+<td>A baseline "home address" for <code>p1</code></td>
+</tr>
+<tr>
+<td><code>id(self)</code> inside <code>p1.show_id()</code></td>
+<td>The address Python sees <code>self</code> pointing to, during that call</td>
+<td><code>self</code> refers to the exact same object as <code>p1</code></td>
+</tr>
+<tr>
+<td><code>id(p2)</code> outside the class</td>
+<td>The address Python gave to the <code>p2</code> object</td>
+<td>A different, independent "home address" for <code>p2</code></td>
+</tr>
+<tr>
+<td><code>id(self)</code> inside <code>p2.show_id()</code></td>
+<td>The address Python sees <code>self</code> pointing to, during that call</td>
+<td><code>self</code> now refers to <code>p2</code> — it always matches whichever object made the call</td>
+</tr>
+</tbody>
+</table>
+<h2 id="3-the-script">3. The script<a class="headerlink" href="#3-the-script" title="Permanent link">&para;</a></h2>
+<div class="highlight"><pre><span></span><code><span class="c1"># This script demonstrates that the 'self' parameter inside a class method</span>
+<span class="c1"># is not a special keyword — it is simply a reference to whichever object</span>
+<span class="c1"># called that method. We prove this by comparing id(self) inside the method</span>
+<span class="c1"># to id(object) taken from outside the class.</span>
 
 <span class="k">class</span><span class="w"> </span><span class="nc">Pet</span><span class="p">:</span>
     <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">):</span>
+        <span class="c1"># __init__ runs automatically when a new Pet object is created.</span>
+        <span class="c1"># 'self' here refers to the new (still being built) object,</span>
+        <span class="c1"># and self.name = name stores 'name' as an attribute on that object.</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="n">name</span>
 
-    <span class="k">def</span><span class="w"> </span><span class="nf">show_id</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>  <span class="c1"># This method will show the ID of the instance that is calling it</span>
-        <span class="c1"># This will print the ID of whichever object is 'acting' right now</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">show_id</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="c1"># 'self' is automatically passed in whenever you call</span>
+        <span class="c1"># something.show_id() — Python fills it in for you.</span>
+        <span class="c1"># It always refers to the specific object the method was called on.</span>
         <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"Inside method for </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="si">}</span><span class="s2">, id(self) is: </span><span class="si">{</span><span class="nb">id</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
 
-<span class="c1"># --- Creating Two Separate Objects ---</span>
-<span class="n">p1</span> <span class="o">=</span> <span class="n">Pet</span><span class="p">(</span><span class="s2">"Tiger"</span><span class="p">)</span>  <span class="c1"># This creates the first object 'p1' of class Pet with name "Tiger"</span>
-<span class="n">p2</span> <span class="o">=</span> <span class="n">Pet</span><span class="p">(</span><span class="s2">"Kittie"</span><span class="p">)</span>  <span class="c1"># This creates the second object 'p2' of class Pet with name "Kittie"</span>
+
+<span class="c1"># --- Creating two separate objects ---</span>
+<span class="n">p1</span> <span class="o">=</span> <span class="n">Pet</span><span class="p">(</span><span class="s2">"Tiger"</span><span class="p">)</span>    <span class="c1"># creates the first Pet object and stores it in p1</span>
+<span class="n">p2</span> <span class="o">=</span> <span class="n">Pet</span><span class="p">(</span><span class="s2">"Kittie"</span><span class="p">)</span>   <span class="c1"># creates a second, independent Pet object in p2</span>
 
 <span class="c1"># --- Checking Pet 1 ---</span>
-<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"Outside class, id(p1) is: </span><span class="si">{</span><span class="nb">id</span><span class="p">(</span><span class="n">p1</span><span class="p">)</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>  <span class="c1"># This will print the ID of the object 'p1' outside the class</span>
-<span class="n">p1</span><span class="o">.</span><span class="n">show_id</span><span class="p">()</span> <span class="c1"># This will call the method 'show_id' on 'p1', and inside that method, 'self' will refer to 'p1', so it will print the ID of 'p1'</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"Outside class, id(p1) is: </span><span class="si">{</span><span class="nb">id</span><span class="p">(</span><span class="n">p1</span><span class="p">)</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
+<span class="c1"># id() here reports p1's memory address, seen from outside the class.</span>
 
-<span class="nb">print</span><span class="p">(</span><span class="s2">"-"</span> <span class="o">*</span> <span class="mi">30</span><span class="p">)</span>
+<span class="n">p1</span><span class="o">.</span><span class="n">show_id</span><span class="p">()</span>
+<span class="c1"># Python translates this call into Pet.show_id(p1) behind the scenes,</span>
+<span class="c1"># so inside the method, self *is* p1 — hence id(self) == id(p1).</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s2">"-"</span> <span class="o">*</span> <span class="mi">30</span><span class="p">)</span>   <span class="c1"># just a visual separator in the printed output</span>
 
 <span class="c1"># --- Checking Pet 2 ---</span>
-<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"Outside class, id(p2) is: </span><span class="si">{</span><span class="nb">id</span><span class="p">(</span><span class="n">p2</span><span class="p">)</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>  <span class="c1"># This will print the ID of the object 'p2' outside the class</span>
-<span class="n">p2</span><span class="o">.</span><span class="n">show_id</span><span class="p">()</span>  <span class="c1"># This will call the method 'show_id' on 'p2', and inside that method, 'self' will refer to 'p2', so it will print the ID of 'p2'</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"Outside class, id(p2) is: </span><span class="si">{</span><span class="nb">id</span><span class="p">(</span><span class="n">p2</span><span class="p">)</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
+<span class="c1"># A different address, because p2 is a completely separate object.</span>
+
+<span class="n">p2</span><span class="o">.</span><span class="n">show_id</span><span class="p">()</span>
+<span class="c1"># This time self refers to p2, so id(self) == id(p2) — not id(p1).</span>
 </code></pre></div>
+<h3 id="expected-output-the-exact-numbers-will-differ-on-your-machine">Expected output (the exact numbers will differ on your machine)<a class="headerlink" href="#expected-output-the-exact-numbers-will-differ-on-your-machine" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code>Outside class, id(p1) is: 140312831234576
+Inside method for Tiger, id(self) is: 140312831234576
+------------------------------
+Outside class, id(p2) is: 140312831239120
+Inside method for Kittie, id(self) is: 140312831239120
+</code></pre></div>
+<p>Notice the pattern: <strong>the first pair of numbers matches, the second pair of numbers matches, but the two pairs don't match each other.</strong> That's the whole experiment, confirmed in four lines of output.</p>
+<h2 id="4-why-this-matters">4. Why this matters<a class="headerlink" href="#4-why-this-matters" title="Permanent link">&para;</a></h2>
+<p>Once you've seen <code>id(p1) == id(self)</code> with your own eyes, several ideas about classes stop being "rules to memorize" and start being obvious consequences:</p>
+<ul>
+<li><strong><code>self.name = name</code> inside <code>__init__</code> really does store data on that specific object</strong> — because <code>self</code> <em>is</em> that object, not a copy of it.</li>
+<li><strong>Every object keeps its own independent data.</strong> <code>p1.name</code> and <code>p2.name</code> don't clash, because <code>p1</code> and <code>p2</code> are different objects at different addresses, each with its own copy of <code>name</code>.</li>
+<li><strong><code>self</code> is just a naming convention, not a keyword.</strong> Python doesn't require the name <code>self</code> — you could technically call it <code>this</code> or <code>me</code> — but every Python programmer uses <code>self</code> by convention, so method definitions are consistent and readable across any codebase.</li>
+<li><strong><code>obj.method()</code> is shorthand for <code>Class.method(obj)</code>.</strong> Python automatically passes the object as the first argument, which is exactly why every regular method needs <code>self</code> as its first parameter.</li>
+</ul>
+<h2 id="5-try-it-yourself">5. Try it yourself<a class="headerlink" href="#5-try-it-yourself" title="Permanent link">&para;</a></h2>
+<p>To make the idea stick, try extending the script:
+- Add a third object, <code>p3 = Pet("Rex")</code>, and confirm <code>id(p3)</code> behaves the same way.
+- Add a second method, say <code>compare_with(self, other_pet)</code>, that prints whether <code>self</code> and <code>other_pet</code> share the same <code>id()</code> — then call <code>p1.compare_with(p1)</code> and <code>p1.compare_with(p2)</code> to see the difference.</p>
 
 
 
