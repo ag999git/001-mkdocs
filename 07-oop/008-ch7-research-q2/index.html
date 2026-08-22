@@ -8315,10 +8315,7 @@ Deep ID:     140312831239120 -&gt; Different from Original
 </table>
 <hr />
 <h2 id="when-should-you-use-which">When should you use which?<a class="headerlink" href="#when-should-you-use-which" title="Permanent link">&para;</a></h2>
-<div class="highlight"><pre><span></span><code>flowchart TD
-    A["Do you need to modify the\ninner objects independently?"] --&gt;|No, read-only or immutable data| B["Use shallow copy\n(copy.copy) -- faster, less memory"]
-    A --&gt;|Yes, inner objects will be\nmodified separately| C["Use deep copy\n(copy.deepcopy) -- safe, independent"]
-</code></pre></div>
+<p><img alt="Flowchart" src="/001-mkdocs/resources/ch-7-august-2026-deep-copy-2.png" /></p>
 <ul>
 <li><strong>Choose a shallow copy</strong> when the inner objects are immutable (like numbers or strings), or when you specifically <em>want</em> the copy and original to stay linked — for example, two different "views" over the same underlying data that should always agree.</li>
 <li><strong>Choose a deep copy</strong> whenever you're duplicating a structure of <strong>mutable</strong> objects (like a list of <code>Pet</code> objects) and you need the copy to be a truly independent snapshot — for example, saving a backup of a game state before letting the player make changes, where the backup must never be affected by what happens next.</li>
