@@ -25,7 +25,7 @@
     
     
       
-        <title>Chapter 7.6 — How del and __del__() Really Work - Python 999</title>
+        <title>Chapter 7 — How del and __del__() Really Work - Python 999</title>
       
     
     
@@ -82,7 +82,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#chapter-76-how-del-and-__del__-really-work" class="md-skip">
+        <a href="#chapter-7-how-del-and-__del__-really-work" class="md-skip">
           Skip to content
         </a>
       
@@ -118,7 +118,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              Chapter 7.6 — How del and __del__() Really Work
+              Chapter 7 — How del and __del__() Really Work
             
           </span>
         </div>
@@ -1932,7 +1932,7 @@
   <span class="md-ellipsis">
     
   
-    Chapter 7.6 — How del and __del__() Really Work
+    Chapter 7 — How del and __del__() Really Work
   
 
     
@@ -1950,7 +1950,7 @@
   <span class="md-ellipsis">
     
   
-    Chapter 7.6 — How del and __del__() Really Work
+    Chapter 7 — How del and __del__() Really Work
   
 
     
@@ -8215,7 +8215,7 @@
   
 
 
-<h1 id="chapter-76-how-del-and-__del__-really-work">Chapter 7.6 — How <code>del</code> and <code>__del__()</code> Really Work<a class="headerlink" href="#chapter-76-how-del-and-__del__-really-work" title="Permanent link">&para;</a></h1>
+<h1 id="chapter-7-how-del-and-__del__-really-work">Chapter 7 — How <code>del</code> and <code>__del__()</code> Really Work<a class="headerlink" href="#chapter-7-how-del-and-__del__-really-work" title="Permanent link">&para;</a></h1>
 <h2 id="what-this-page-covers">What this page covers<a class="headerlink" href="#what-this-page-covers" title="Permanent link">&para;</a></h2>
 <p>This page explains one of the most misunderstood pairs of features in Python: the <strong><code>del</code> keyword</strong> and the <strong><code>__del__()</code> destructor method</strong>. It builds on earlier Chapter 7 material about objects and <code>self</code> by going one level deeper — into <em>where</em> objects actually live in memory, and what happens to that memory when your program stops using them.</p>
 <p>The core misconception this page corrects: <strong><code>del</code> does not delete objects.</strong> It only removes a <em>name</em> that points to an object. The object itself is only cleaned up automatically, later, by Python's garbage collector — and only once nothing points to it anymore. Understanding this distinction matters for every Python programmer, not just OOP users, because it explains real bugs you'll eventually run into: objects that "won't go away" because something you forgot about still references them, or files/database connections that don't close when you expect.</p>
@@ -8388,23 +8388,7 @@ End of script.
 </tr>
 </tbody>
 </table>
-<div class="highlight"><pre><span></span><code>sequenceDiagram
-    participant You as Your code
-    participant Stack
-    participant Heap as Heap (Tiger object)
-
-    You-&gt;&gt;Stack: p1 = Pet("Tiger")
-    Stack-&gt;&gt;Heap: create object, refcount = 1
-    You-&gt;&gt;Stack: p2 = p1
-    Stack-&gt;&gt;Heap: refcount = 2
-    You-&gt;&gt;Stack: del p1
-    Stack-&gt;&gt;Heap: remove p1 label, refcount = 1
-    Note over Heap: Object survives (p2 still points to it)
-    You-&gt;&gt;Stack: del p2
-    Stack-&gt;&gt;Heap: remove p2 label, refcount = 0
-    Heap--&gt;&gt;You: __del__() runs automatically
-    Note over Heap: Memory reclaimed by Garbage Collector
-</code></pre></div>
+<p><img alt="Sequence Diagram" src="/001-mkdocs/resources/ch-7-august-2026-del-diagram-2.png" /></p>
 <h3 id="another-way-of-visualizing-how-__del__-operates-is-as-follows">Another way of visualizing how <code>__del__()</code> operates is as follows:<a class="headerlink" href="#another-way-of-visualizing-how-__del__-operates-is-as-follows" title="Permanent link">&para;</a></h3>
 <p><img alt="Figure: How del works" src="../../.gitbook/assets/ch07-oop-del.png" /></p>
 <hr />
