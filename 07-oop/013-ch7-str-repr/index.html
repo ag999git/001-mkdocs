@@ -8262,17 +8262,7 @@
 </table>
 <h3 id="the-important-fallback-rule">The important fallback rule<a class="headerlink" href="#the-important-fallback-rule" title="Permanent link">&para;</a></h3>
 <p>If a class defines <code>__repr__()</code> but does <strong>not</strong> define <code>__str__()</code>, then calling <code>str()</code> (or <code>print()</code>) will automatically <strong>fall back to using <code>__repr__()</code> instead.</strong> Python only does this substitution in one direction — <code>__repr__()</code> is treated as the more fundamental, "always available" representation.</p>
-<div class="highlight"><pre><span></span><code>flowchart TD
-    A["print(obj) or str(obj) is called"] --&gt; B{"Does the class\ndefine __str__()?"}
-    B -- Yes --&gt; C["Use __str__()'s output"]
-    B -- No --&gt; D{"Does the class\ndefine __repr__()?"}
-    D -- Yes --&gt; E["Fall back to __repr__()'s output"]
-    D -- No --&gt; F["Fall back further, to Python's\ndefault object description\n(e.g. &lt;__main__.Pet object at 0x...&gt;)"]
-
-    G["repr(obj) is called"] --&gt; H{"Does the class\ndefine __repr__()?"}
-    H -- Yes --&gt; I["Use __repr__()'s output"]
-    H -- No --&gt; F
-</code></pre></div>
+<p><img alt="Flowchart" src="/001-mkdocs/resources/ch-7-august-2026-str-versus-repr.png" /></p>
 <p>Notice the asymmetry: <code>repr()</code> <strong>never</strong> falls back to <code>__str__()</code>. Only <code>str()</code>/<code>print()</code> are willing to fall back to <code>__repr__()</code>. This is why defining <code>__repr__()</code> alone still gives you working, sensible output everywhere, while defining <code>__str__()</code> alone leaves <code>repr()</code> using Python's generic, not-very-useful default.</p>
 <hr />
 <h2 id="task-instructions-from-the-book">Task instructions (from the book)<a class="headerlink" href="#task-instructions-from-the-book" title="Permanent link">&para;</a></h2>
