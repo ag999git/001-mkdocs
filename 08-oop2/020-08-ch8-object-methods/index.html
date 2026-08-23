@@ -8191,16 +8191,7 @@
 <p>The original exercise checks <code>__str__</code> specifically. As a natural extension: <strong>is this true for every inherited method, or could some of them differ?</strong> Try checking <code>Pet.__init__ is object.__init__</code> and <code>Pet.__repr__ is object.__repr__</code> as well — both should also be <code>True</code> for an empty class, for exactly the same reason <code>__str__</code> is. This is explored directly in the extended script below.</p>
 <hr />
 <h2 id="understanding-the-check-visually">Understanding the check, visually<a class="headerlink" href="#understanding-the-check-visually" title="Permanent link">&para;</a></h2>
-<div class="highlight"><pre><span></span><code>graph TD
-    ObjectClass[object class - defines str, init, repr, etc]
-    PetClass[Pet class - empty, just pass]
-    IdentityCheck[Pet.str is object.str]
-    Result[True - same method, not a copy]
-
-    ObjectClass --&gt; PetClass
-    PetClass --&gt; IdentityCheck
-    IdentityCheck --&gt; Result
-</code></pre></div>
+<p><img alt="Flowchart" src="/001-mkdocs/resources/ch8-august-2026-multiple-inherit-inspecting-built-in.png" /></p>
 <p>Because <code>Pet</code> never defines its own <code>__str__</code>, Python doesn't create a separate copy of <code>object</code>'s version for <code>Pet</code> to use — it simply reuses the <em>exact same</em> method object. That's precisely what the <code>is</code> check below confirms.</p>
 <hr />
 <h2 id="the-script">The script<a class="headerlink" href="#the-script" title="Permanent link">&para;</a></h2>
