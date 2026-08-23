@@ -25,7 +25,7 @@
     
     
       
-        <title>012 ch7 prng - Python 999</title>
+        <title>Chapter 7 — Research Question: Breaking a Linear Congruential Generator (LCG) - Python 999</title>
       
     
     
@@ -82,7 +82,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#research-study-question" class="md-skip">
+        <a href="#chapter-7-research-question-breaking-a-linear-congruential-generator-lcg" class="md-skip">
           Skip to content
         </a>
       
@@ -118,7 +118,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              012 ch7 prng
+              Chapter 7 — Research Question: Breaking a Linear Congruential Generator (LCG)
             
           </span>
         </div>
@@ -2090,6 +2090,8 @@
       <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
       
       
+        
+      
       
         <label class="md-nav__link md-nav__link--active" for="__toc">
           
@@ -2098,7 +2100,7 @@
   <span class="md-ellipsis">
     
   
-    012 ch7 prng
+    Chapter 7 — Research Question: Breaking a Linear Congruential Generator (LCG)
   
 
     
@@ -2116,7 +2118,7 @@
   <span class="md-ellipsis">
     
   
-    012 ch7 prng
+    Chapter 7 — Research Question: Breaking a Linear Congruential Generator (LCG)
   
 
     
@@ -2132,6 +2134,8 @@
   
   
   
+    
+  
   
     <label class="md-nav__title" for="__toc">
       <span class="md-nav__icon md-icon"></span>
@@ -2140,10 +2144,21 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#research-study-question" class="md-nav__link">
+  <a href="#what-this-page-covers" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Research / Study Question
+        What this page covers
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#research-question" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Research Question
       
     </span>
   </a>
@@ -2159,25 +2174,48 @@
     </span>
   </a>
   
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#implications" class="md-nav__link">
+    <nav class="md-nav" aria-label="Answer">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#background-how-an-lcg-actually-works" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Implications
+        Background: how an LCG actually works
       
     </span>
   </a>
   
-    <nav class="md-nav" aria-label="Implications">
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#the-mathematical-vulnerability" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        The mathematical vulnerability
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="The mathematical vulnerability">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#3-the-python-script-the-lcg-breaker" class="md-nav__link">
+  <a href="#attack-1-finding-c-when-a-and-m-are-already-known" class="md-nav__link">
     <span class="md-ellipsis">
       
-        3. The Python Script (The "LCG Breaker")
+        Attack 1 — Finding c (when a and m are already known)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#attack-2-finding-both-a-and-c-when-only-m-is-known" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Attack 2 — Finding both a and c (when only m is known)
       
     </span>
   </a>
@@ -2186,6 +2224,72 @@
         
       </ul>
     </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#summary-table" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Summary table
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#implications-for-security-sensitive-applications" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Implications for security-sensitive applications
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#the-python-script-the-lcg-breaker" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        The Python script: "The LCG Breaker"
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="The Python script: &#34;The LCG Breaker&#34;">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#expected-output" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Expected output
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#quick-recap" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Quick recap
+      
+    </span>
+  </a>
   
 </li>
       
@@ -8112,98 +8216,220 @@
   
 
 
-  <h1>012 ch7 prng</h1>
-
-<h4 id="research-study-question">Research / Study Question<a class="headerlink" href="#research-study-question" title="Permanent link">&para;</a></h4>
-<p><strong>Topic: Cryptographic Vulnerability in Pseudorandom Number Generators (PRNGs)</strong></p>
+<h1 id="chapter-7-research-question-breaking-a-linear-congruential-generator-lcg">Chapter 7 — Research Question: Breaking a Linear Congruential Generator (LCG)<a class="headerlink" href="#chapter-7-research-question-breaking-a-linear-congruential-generator-lcg" title="Permanent link">&para;</a></h1>
+<h2 id="what-this-page-covers">What this page covers<a class="headerlink" href="#what-this-page-covers" title="Permanent link">&para;</a></h2>
+<p>This page is a research-level deep dive that connects two topics from earlier in the book: Python classes (Chapter 7) and random number generation. It looks at a specific, well-known weakness in a simple kind of random number generator called a <strong>Linear Congruential Generator (LCG)</strong>, and shows — with working Python code — exactly how someone who sees just a handful of "random" numbers produced by an LCG can mathematically work backwards and predict every number it will ever produce next.</p>
+<p>This is relevant beyond pure math curiosity: LCGs are simple, fast, and still used in places where speed matters more than security — such as simulations, games, and some older or lightweight system libraries. The mistake beginners (and sometimes real systems) make is assuming <em>any</em> "random-looking" number generator is safe to use for things like passwords, tokens, or session IDs. This page demonstrates concretely why that assumption is dangerous for an LCG specifically, and why cryptographic applications need generators designed for security, not just for producing numbers that merely <em>look</em> random.</p>
+<p><strong>A few terms used throughout, explained simply:</strong>
+- <strong>Pseudorandom Number Generator (PRNG)</strong> — an algorithm that produces a sequence of numbers that <em>looks</em> random, but is actually fully determined by a starting value (the seed) and a fixed formula. (<a href="https://en.wikipedia.org/wiki/Pseudorandom_number_generator">Wikipedia: Pseudorandom number generator</a>)
+- <strong>Modulus / <code>mod</code> (<code>%</code>)</strong> — the remainder left over after division. E.g. <code>17 mod 5</code> is <code>2</code>, because <code>17 ÷ 5</code> leaves a remainder of 2. (<a href="https://en.wikipedia.org/wiki/Modular_arithmetic">Wikipedia: Modular arithmetic</a>)
+- <strong>Congruence (<code>≡</code>)</strong> — a way of saying "these two numbers give the same remainder when divided by some modulus," which is the mathematical language LCGs are naturally described in.
+- <strong>Modular Multiplicative Inverse</strong> — the modular arithmetic equivalent of "dividing" by a number, used because ordinary division doesn't work the same way once you're working with remainders (explained further in Step 2 below).</p>
+<hr />
+<h2 id="research-question">Research Question<a class="headerlink" href="#research-question" title="Permanent link">&para;</a></h2>
 <blockquote>
-<p><strong>Question:</strong> "In the context of the Linear Congruential Generator (LCG), how does the mathematical relationship between successive outputs <span class="arithmatex">\((X_n, X_{n+1}, X_{n+2})\)</span> allow an observer to reverse-engineer hidden parameters like the multiplier (<span class="arithmatex">\(a\)</span>) and increment (<span class="arithmatex">\(c\)</span>)? Discuss the implications of this predictability for security-sensitive applications and demonstrate the 'break' using a Python-based reconstruction script."</p>
+<p>In the context of the Linear Congruential Generator (LCG), how does the mathematical relationship between successive outputs (X<sub>n</sub>, X<sub>n+1</sub>, X<sub>n+2</sub>) allow an observer to reverse-engineer hidden parameters like the multiplier (<code>a</code>) and increment (<code>c</code>)? Discuss the implications of this predictability for security-sensitive applications, and demonstrate the "break" using a Python-based reconstruction script.</p>
 </blockquote>
 <hr />
-<h4 id="answer">Answer<a class="headerlink" href="#answer" title="Permanent link">&para;</a></h4>
-<p><strong>The Mathematical Vulnerability</strong></p>
-<p>The LCG relies on a simple linear equation:</p>
-<div class="arithmatex">\[X_{n+1} = (a \cdot X_n + c) \pmod m\]</div>
-<p>Because this is a linear relationship, knowing just a few consecutive outputs allows us to set up a system of equations.</p>
-<ol>
-<li>
-<p><strong>Finding <span class="arithmatex">\(c\)</span> (Multiplier <span class="arithmatex">\(a\)</span> and Modulus <span class="arithmatex">\(m\)</span> are known):</strong></p>
-<p>If we have two consecutive numbers, <span class="arithmatex">\(X_0\)</span> and <span class="arithmatex">\(X_1\)</span>, we can rearrange the formula:</p>
+<h2 id="answer">Answer<a class="headerlink" href="#answer" title="Permanent link">&para;</a></h2>
+<h3 id="background-how-an-lcg-actually-works">Background: how an LCG actually works<a class="headerlink" href="#background-how-an-lcg-actually-works" title="Permanent link">&para;</a></h3>
+<p>An LCG generates each new number entirely from the previous one, using one simple formula:</p>
+<div class="arithmatex">\[X_{n+1} = (a \cdot X_n + c) \bmod m\]</div>
+<table>
+<thead>
+<tr>
+<th>Symbol</th>
+<th>Meaning</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><span class="arithmatex">\(X_n\)</span></td>
+<td>The current number in the sequence</td>
+</tr>
+<tr>
+<td><span class="arithmatex">\(X_{n+1}\)</span></td>
+<td>The next number, generated from <span class="arithmatex">\(X_n\)</span></td>
+</tr>
+<tr>
+<td><span class="arithmatex">\(a\)</span></td>
+<td>The <strong>multiplier</strong> — a fixed constant</td>
+</tr>
+<tr>
+<td><span class="arithmatex">\(c\)</span></td>
+<td>The <strong>increment</strong> — another fixed constant</td>
+</tr>
+<tr>
+<td><span class="arithmatex">\(m\)</span></td>
+<td>The <strong>modulus</strong> — keeps every output within the range <span class="arithmatex">\([0, m-1]\)</span></td>
+</tr>
+</tbody>
+</table>
+<p>Everything about the sequence — every future "random" number — is completely determined by the starting seed and these three fixed constants (<span class="arithmatex">\(a\)</span>, <span class="arithmatex">\(c\)</span>, <span class="arithmatex">\(m\)</span>). Nothing about it is genuinely unpredictable; it only <em>looks</em> unpredictable if you don't know <span class="arithmatex">\(a\)</span>, <span class="arithmatex">\(c\)</span>, and <span class="arithmatex">\(m\)</span>.</p>
+<h3 id="the-mathematical-vulnerability">The mathematical vulnerability<a class="headerlink" href="#the-mathematical-vulnerability" title="Permanent link">&para;</a></h3>
+<p>Because the formula above is <strong>linear</strong> (no squaring, no exponentials — just multiplication and addition), seeing just a few consecutive outputs is enough to set up simple equations and solve for the hidden constants. There are two attack scenarios, depending on how much the attacker already knows:</p>
+<div class="highlight"><pre><span></span><code>flowchart TD
+    A["Attacker observes a few\nconsecutive LCG outputs"] --&gt; B{"Are a and m\nalready known?"}
+    B -- "Yes, only c is unknown" --&gt; C["Attack 1: recover c\nfrom 2 outputs"]
+    B -- "No, only m is known" --&gt; D["Attack 2: recover BOTH\na and c from 3 outputs"]
+    C --&gt; E["Attacker can now predict\nevery future output"]
+    D --&gt; E
+</code></pre></div>
+<h4 id="attack-1-finding-c-when-a-and-m-are-already-known">Attack 1 — Finding <code>c</code> (when <code>a</code> and <code>m</code> are already known)<a class="headerlink" href="#attack-1-finding-c-when-a-and-m-are-already-known" title="Permanent link">&para;</a></h4>
+<p>With just two consecutive outputs, <span class="arithmatex">\(X_0\)</span> and <span class="arithmatex">\(X_1\)</span>, we can rearrange the LCG formula to isolate <span class="arithmatex">\(c\)</span>:</p>
 <div class="arithmatex">\[c \equiv (X_1 - a \cdot X_0) \pmod m\]</div>
-<p>In Python, we use the modulo operator <code>%</code> to ensure <span class="arithmatex">\(c\)</span> stays within the range <span class="arithmatex">\([0, m-1]\)</span>.</p>
-</li>
-<li>
-<p><strong>Finding <span class="arithmatex">\(a\)</span> and <span class="arithmatex">\(c\)</span> (Only Modulus <span class="arithmatex">\(m\)</span> is known):</strong></p>
-<p>With three consecutive numbers (<span class="arithmatex">\(X_0, X_1, X_2\)</span>), we have:</p>
+<p><strong>In plain terms, step by step:</strong>
+1. Take the known next value, <span class="arithmatex">\(X_1\)</span>.
+2. Subtract <span class="arithmatex">\(a \times X_0\)</span> from it.
+3. Apply <code>mod m</code> to bring the result back into the valid range <span class="arithmatex">\([0, m-1]\)</span> — this is exactly what Python's <code>%</code> operator does for us automatically.</p>
+<h4 id="attack-2-finding-both-a-and-c-when-only-m-is-known">Attack 2 — Finding both <code>a</code> and <code>c</code> (when only <code>m</code> is known)<a class="headerlink" href="#attack-2-finding-both-a-and-c-when-only-m-is-known" title="Permanent link">&para;</a></h4>
+<p>This is the harder, more general case, and needs <strong>three</strong> consecutive outputs, <span class="arithmatex">\(X_0\)</span>, <span class="arithmatex">\(X_1\)</span>, <span class="arithmatex">\(X_2\)</span>. We start with the LCG formula written out twice:</p>
 <ol>
-<li>
-<p><span class="arithmatex">\(X_1 \equiv a \cdot X_0 + c \pmod m\)</span></p>
-</li>
-<li>
-<p><span class="arithmatex">\(X_2 \equiv a \cdot X_1 + c \pmod m\)</span></p>
-</li>
+<li><span class="arithmatex">\(X_1 \equiv a \cdot X_0 + c \pmod m\)</span></li>
+<li><span class="arithmatex">\(X_2 \equiv a \cdot X_1 + c \pmod m\)</span></li>
 </ol>
-<p>Subtracting (1) from (2) eliminates <span class="arithmatex">\(c\)</span>:</p>
-<div class="arithmatex">\[X_2 - X_1 \equiv a(X_1 - X_0) \pmod m\]</div>
-<p>To find <span class="arithmatex">\(a\)</span>, we need to multiply <span class="arithmatex">\((X_2 - X_1)\)</span> by the <strong>Modular Multiplicative Inverse</strong> of <span class="arithmatex">\((X_1 - X_0)\)</span>.</p>
-<p><em>Note: In your original hint, simple division <span class="arithmatex">\((X_2 - X_1) / (X_1 - X_0)\)</span> only works in standard algebra. In modular arithmetic, we must use <code>pow(diff_x, -1, m)</code>.</em></p>
-</li>
-</ol>
-<h3 id="implications"><strong>Implications</strong><a class="headerlink" href="#implications" title="Permanent link">&para;</a></h3>
-<p>This research shows that LCG is <strong>not cryptographically secure</strong>. If an attacker can see just three random values (like three session IDs or three "random" passwords), they can predict every future value the system will ever generate.</p>
+<p><strong>Step 1 — eliminate <code>c</code> by subtracting the two equations:</strong></p>
+<div class="arithmatex">\[X_2 - X_1 \equiv a \cdot (X_1 - X_0) \pmod m\]</div>
+<p>This leaves a single equation with only one unknown, <span class="arithmatex">\(a\)</span> — exactly what we need.</p>
+<p><strong>Step 2 — isolate <code>a</code>.</strong> In ordinary algebra, you'd just divide both sides by <span class="arithmatex">\((X_1 - X_0)\)</span>. But <strong>modular arithmetic doesn't support regular division</strong> — instead, "dividing" by a number means multiplying by its <strong>modular multiplicative inverse</strong>: a special value that behaves like "1 divided by that number," but calculated so the result still makes sense within the <code>mod m</code> system. In Python (3.8 and later), this is calculated with a single call: <code>pow(diff_x, -1, m)</code>.</p>
+<p><strong>Step 3 — solve for <code>a</code>:</strong></p>
+<div class="arithmatex">\[a \equiv (X_2 - X_1) \times \text{inverse}(X_1 - X_0) \pmod m\]</div>
+<p><strong>Step 4 — solve for <code>c</code></strong>, now that <code>a</code> is known, by plugging it back into the original Attack 1 formula.</p>
+<p><em>(One technical caveat: a modular inverse only exists if <span class="arithmatex">\((X_1 - X_0)\)</span> and <span class="arithmatex">\(m\)</span> share no common factors other than 1 — a condition called being "coprime." If this fails, the script below reports that the inverse doesn't exist, rather than silently producing a wrong answer.)</em></p>
+<h3 id="summary-table">Summary table<a class="headerlink" href="#summary-table" title="Permanent link">&para;</a></h3>
+<table>
+<thead>
+<tr>
+<th>Scenario</th>
+<th>What's known beforehand</th>
+<th>What's recovered</th>
+<th>Outputs needed</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Attack 1</td>
+<td><code>a</code> and <code>m</code></td>
+<td><code>c</code></td>
+<td>2 consecutive outputs</td>
+</tr>
+<tr>
+<td>Attack 2</td>
+<td>Only <code>m</code></td>
+<td>Both <code>a</code> and <code>c</code></td>
+<td>3 consecutive outputs</td>
+</tr>
+</tbody>
+</table>
+<h3 id="implications-for-security-sensitive-applications">Implications for security-sensitive applications<a class="headerlink" href="#implications-for-security-sensitive-applications" title="Permanent link">&para;</a></h3>
+<p>This research demonstrates a clear, practical conclusion: <strong>an LCG is not cryptographically secure.</strong> If an attacker can observe just three "random" values generated by a system using an LCG — for example, three session tokens, three password reset codes, or three shuffled card orders — they can mathematically recover the generator's hidden internal constants, and from that point on, correctly predict <strong>every single value it will ever produce</strong>, without ever needing to guess.</p>
+<p>This is precisely why real cryptographic systems (generating passwords, encryption keys, security tokens, etc.) never rely on a plain LCG. Instead, they use generators specifically designed to resist exactly this kind of mathematical attack, such as Python's own <a href="https://docs.python.org/3/library/secrets.html"><code>secrets</code> module</a>, built for security-sensitive randomness, as opposed to the general-purpose <code>random</code> module (whose default generator, incidentally, is a more sophisticated PRNG called the Mersenne Twister — not an LCG — but which is <em>still</em> not considered cryptographically secure and shouldn't be used for security purposes either).</p>
 <hr />
-<h4 id="3-the-python-script-the-lcg-breaker">3. The Python Script (The "LCG Breaker")<a class="headerlink" href="#3-the-python-script-the-lcg-breaker" title="Permanent link">&para;</a></h4>
-<p>This script implements the LCG class and then uses two "Breaker" functions to recover the hidden parameters.</p>
+<h2 id="the-python-script-the-lcg-breaker">The Python script: "The LCG Breaker"<a class="headerlink" href="#the-python-script-the-lcg-breaker" title="Permanent link">&para;</a></h2>
+<p>This script does three things: defines a simple <code>LCG</code> class that generates numbers exactly the way described above, implements the two "breaker" functions derived in the math above, and then runs both attacks against a sample sequence of outputs to prove they work.</p>
 <div class="highlight"><pre><span></span><code><span class="k">class</span><span class="w"> </span><span class="nc">LCG</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">"""A simple Linear Congruential Generator, following the formula:</span>
+<span class="sd">    X(n+1) = (a * X(n) + c) mod m</span>
+<span class="sd">    """</span>
     <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">seed</span><span class="p">,</span> <span class="n">a</span><span class="o">=</span><span class="mi">1103515245</span><span class="p">,</span> <span class="n">c</span><span class="o">=</span><span class="mi">12345</span><span class="p">,</span> <span class="n">m</span><span class="o">=</span><span class="mi">2</span><span class="o">**</span><span class="mi">31</span><span class="p">):</span>
+        <span class="c1"># Step 1: Store the starting seed and the three fixed constants</span>
+        <span class="c1"># that control the whole sequence.</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">state</span> <span class="o">=</span> <span class="n">seed</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">a</span> <span class="o">=</span> <span class="n">a</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">c</span> <span class="o">=</span> <span class="n">c</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">m</span> <span class="o">=</span> <span class="n">m</span>
 
     <span class="k">def</span><span class="w"> </span><span class="nf">next</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="c1"># Step 2: Apply the LCG formula to produce the next number,</span>
+        <span class="c1"># and remember it as the new current state for next time.</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">state</span> <span class="o">=</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">state</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">a</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">c</span><span class="p">)</span> <span class="o">%</span> <span class="bp">self</span><span class="o">.</span><span class="n">m</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">state</span>
 
-<span class="c1"># --- ASSIGNMENT SOLUTIONS ---</span>
+
+<span class="c1"># --- BREAKER FUNCTIONS (the "attack" logic) ---</span>
 
 <span class="k">def</span><span class="w"> </span><span class="nf">break_lcg_find_c</span><span class="p">(</span><span class="n">x0</span><span class="p">,</span> <span class="n">x1</span><span class="p">,</span> <span class="n">a</span><span class="p">,</span> <span class="n">m</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">"""Assignment 1: Recovers c when a and m are known"""</span>
+<span class="w">    </span><span class="sd">"""Attack 1: recovers c, when a and m are already known,</span>
+<span class="sd">    using just two consecutive outputs (x0, x1)."""</span>
+    <span class="c1"># Step 1: Rearranged LCG formula -- see "Attack 1" above.</span>
     <span class="n">c</span> <span class="o">=</span> <span class="p">(</span><span class="n">x1</span> <span class="o">-</span> <span class="n">a</span> <span class="o">*</span> <span class="n">x0</span><span class="p">)</span> <span class="o">%</span> <span class="n">m</span>
     <span class="k">return</span> <span class="n">c</span>
 
+
 <span class="k">def</span><span class="w"> </span><span class="nf">break_lcg_find_a_and_c</span><span class="p">(</span><span class="n">x0</span><span class="p">,</span> <span class="n">x1</span><span class="p">,</span> <span class="n">x2</span><span class="p">,</span> <span class="n">m</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">"""Assignment 2: Recovers a and c when only m is known"""</span>
-    <span class="c1"># Formula: (X2 - X1) = a * (X1 - X0) (mod m)</span>
+<span class="w">    </span><span class="sd">"""Attack 2: recovers BOTH a and c, when only m is known,</span>
+<span class="sd">    using three consecutive outputs (x0, x1, x2)."""</span>
+    <span class="c1"># Step 1: Subtract the two LCG equations to eliminate c,</span>
+    <span class="c1"># leaving a single equation in terms of 'a' only.</span>
     <span class="n">diff_y</span> <span class="o">=</span> <span class="p">(</span><span class="n">x2</span> <span class="o">-</span> <span class="n">x1</span><span class="p">)</span> <span class="o">%</span> <span class="n">m</span>
     <span class="n">diff_x</span> <span class="o">=</span> <span class="p">(</span><span class="n">x1</span> <span class="o">-</span> <span class="n">x0</span><span class="p">)</span> <span class="o">%</span> <span class="n">m</span>
 
-    <span class="c1"># To solve for 'a', we find the modular inverse of diff_x</span>
-    <span class="c1"># Python 3.8+ handles this with pow(val, -1, mod)</span>
+    <span class="c1"># Step 2: To "divide" by diff_x under modular arithmetic, we need</span>
+    <span class="c1"># its modular multiplicative inverse rather than ordinary division.</span>
+    <span class="c1"># Python 3.8+ provides this directly via pow(value, -1, modulus).</span>
     <span class="k">try</span><span class="p">:</span>
         <span class="n">inv_diff_x</span> <span class="o">=</span> <span class="nb">pow</span><span class="p">(</span><span class="n">diff_x</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="n">m</span><span class="p">)</span>
+
+        <span class="c1"># Step 3: Solve for 'a' using the inverse we just found.</span>
         <span class="n">recovered_a</span> <span class="o">=</span> <span class="p">(</span><span class="n">diff_y</span> <span class="o">*</span> <span class="n">inv_diff_x</span><span class="p">)</span> <span class="o">%</span> <span class="n">m</span>
+
+        <span class="c1"># Step 4: Now that 'a' is known, plug it back into the Attack 1</span>
+        <span class="c1"># formula to recover 'c' as well.</span>
         <span class="n">recovered_c</span> <span class="o">=</span> <span class="p">(</span><span class="n">x1</span> <span class="o">-</span> <span class="n">recovered_a</span> <span class="o">*</span> <span class="n">x0</span><span class="p">)</span> <span class="o">%</span> <span class="n">m</span>
         <span class="k">return</span> <span class="n">recovered_a</span><span class="p">,</span> <span class="n">recovered_c</span>
     <span class="k">except</span> <span class="ne">ValueError</span><span class="p">:</span>
+        <span class="c1"># This triggers if diff_x and m share a common factor, meaning</span>
+        <span class="c1"># no modular inverse exists for this particular pair of numbers.</span>
         <span class="k">return</span> <span class="kc">None</span><span class="p">,</span> <span class="s2">"Inverse does not exist (GCD != 1)"</span>
+
 
 <span class="c1"># --- TESTING THE ATTACK ---</span>
 
-<span class="c1"># Known outputs from the user's list</span>
+<span class="c1"># A sequence of outputs an attacker might have observed --</span>
+<span class="c1"># note the attacker does NOT need to know 'a' or 'c' in advance for Attack 2.</span>
 <span class="n">outputs</span> <span class="o">=</span> <span class="p">[</span><span class="mi">829870797</span><span class="p">,</span> <span class="mi">1533044610</span><span class="p">,</span> <span class="mi">1478614675</span><span class="p">]</span>
-<span class="n">m_val</span> <span class="o">=</span> <span class="mi">2</span><span class="o">**</span><span class="mi">31</span>
-<span class="n">a_val</span> <span class="o">=</span> <span class="mi">1103515245</span>
+<span class="n">m_val</span> <span class="o">=</span> <span class="mi">2</span> <span class="o">**</span> <span class="mi">31</span>
+<span class="n">a_val</span> <span class="o">=</span> <span class="mi">1103515245</span>   <span class="c1"># only needed for Attack 1, which assumes 'a' is known</span>
 
-<span class="nb">print</span><span class="p">(</span><span class="s2">"--- Assignment 1: Finding C ---"</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">"--- Attack 1: Finding c (assumes a and m are already known) ---"</span><span class="p">)</span>
 <span class="n">found_c</span> <span class="o">=</span> <span class="n">break_lcg_find_c</span><span class="p">(</span><span class="n">outputs</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">outputs</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">a_val</span><span class="p">,</span> <span class="n">m_val</span><span class="p">)</span>
 <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"Recovered c: </span><span class="si">{</span><span class="n">found_c</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
 
-<span class="nb">print</span><span class="p">(</span><span class="s2">"</span><span class="se">\n</span><span class="s2">--- Assignment 2: Finding A and C ---"</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">"</span><span class="se">\n</span><span class="s2">--- Attack 2: Finding a and c (only m is known) ---"</span><span class="p">)</span>
 <span class="n">found_a</span><span class="p">,</span> <span class="n">found_c2</span> <span class="o">=</span> <span class="n">break_lcg_find_a_and_c</span><span class="p">(</span><span class="n">outputs</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">outputs</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">outputs</span><span class="p">[</span><span class="mi">2</span><span class="p">],</span> <span class="n">m_val</span><span class="p">)</span>
 <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"Recovered a: </span><span class="si">{</span><span class="n">found_a</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
 <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"Recovered c: </span><span class="si">{</span><span class="n">found_c2</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
+
+<span class="c1"># --- PROOF: use the recovered constants to predict the NEXT output ---</span>
+<span class="c1"># If the attack genuinely worked, feeding the recovered a and c into a</span>
+<span class="c1"># fresh LCG (seeded with the last known output) should correctly predict</span>
+<span class="c1"># outputs the attacker never actually saw.</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">"</span><span class="se">\n</span><span class="s2">--- Proof: predicting a future output using recovered a and c ---"</span><span class="p">)</span>
+<span class="n">cracked_generator</span> <span class="o">=</span> <span class="n">LCG</span><span class="p">(</span><span class="n">seed</span><span class="o">=</span><span class="n">outputs</span><span class="p">[</span><span class="mi">2</span><span class="p">],</span> <span class="n">a</span><span class="o">=</span><span class="n">found_a</span><span class="p">,</span> <span class="n">c</span><span class="o">=</span><span class="n">found_c2</span><span class="p">,</span> <span class="n">m</span><span class="o">=</span><span class="n">m_val</span><span class="p">)</span>
+<span class="n">predicted_next</span> <span class="o">=</span> <span class="n">cracked_generator</span><span class="o">.</span><span class="n">next</span><span class="p">()</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"Predicted next output: </span><span class="si">{</span><span class="n">predicted_next</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
 </code></pre></div>
+<h3 id="expected-output">Expected output<a class="headerlink" href="#expected-output" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code>--- Attack 1: Finding c (assumes a and m are already known) ---
+Recovered c: 12345
+
+--- Attack 2: Finding a and c (only m is known) ---
+Recovered a: 1103515245
+Recovered c: 12345
+
+--- Proof: predicting a future output using recovered a and c ---
+Predicted next output: &lt;a specific number, fully determined by the recovered a and c&gt;
+</code></pre></div>
+<p>Both attacks correctly recover the LCG's real hidden constants (<code>a = 1103515245</code>, <code>c = 12345</code> — the same defaults used to build the original generator), confirmed by seeing them come back exactly as expected. The final "proof" step goes one step further: it builds a brand-new <code>LCG</code> object using only the recovered constants, and uses it to predict a value the attacker never actually saw — demonstrating the real-world danger described above.</p>
+<hr />
+<h2 id="quick-recap">Quick recap<a class="headerlink" href="#quick-recap" title="Permanent link">&para;</a></h2>
+<ul>
+<li>An LCG generates every output from a simple, fully linear formula: <span class="arithmatex">\(X_{n+1} = (a \cdot X_n + c) \bmod m\)</span>.</li>
+<li>Because the formula is linear, just 2–3 consecutive outputs give an observer enough information to mathematically solve for the hidden constants <code>a</code> and <code>c</code>, using nothing more advanced than modular arithmetic.</li>
+<li>Modular arithmetic requires a <strong>modular multiplicative inverse</strong> in place of ordinary division — in Python, <code>pow(value, -1, modulus)</code> computes this directly.</li>
+<li>Once <code>a</code> and <code>c</code> are recovered, every future value the generator will ever produce becomes fully predictable — which is exactly why LCGs must never be used for passwords, tokens, or any other security-sensitive randomness.</li>
+<li>Python's <a href="https://docs.python.org/3/library/secrets.html"><code>secrets</code> module</a> exists specifically for cases where unpredictability actually matters.</li>
+</ul>
 
 
 
