@@ -8443,17 +8443,7 @@ End of Script.
 </table>
 <p>This design rests on one observation from real-world programs: <strong>most objects die young</strong> (a temporary variable inside a function, for instance). So the GC checks Generation 0 most often, and only occasionally checks the older, more stable generations — saving a lot of unnecessary work.</p>
 <h3 id="the-mechanism-step-by-step">The mechanism, step by step<a class="headerlink" href="#the-mechanism-step-by-step" title="Permanent link">&para;</a></h3>
-<div class="highlight"><pre><span></span><code>flowchart TD
-    A["You call gc.collect()"] --&gt; B["Your program briefly pauses\n('stop the world')"]
-    B --&gt; C["GC traces every reference\nin the target generation"]
-    C --&gt; D{"Found objects that reference\neach other, but nothing\nreachable from the Stack?"}
-    D -- Yes --&gt; E["Mark them as garbage\n(an 'island')"]
-    D -- No --&gt; F["Leave them alone"]
-    E --&gt; G["Break the circular links"]
-    G --&gt; H["Reference counts drop to 0\n-&gt; __del__() fires -&gt; memory freed"]
-    F --&gt; I["Resume your program"]
-    H --&gt; I
-</code></pre></div>
+<p><img alt="Flowchart" src="/001-mkdocs/resources/ch-7august-2026-circular-reference--2.png" /></p>
 <ol>
 <li><strong>Detection:</strong> calling <code>gc.collect()</code> briefly pauses your running program.</li>
 <li><strong>Tracing:</strong> the GC walks through every object in the generation it's checking, following every reference ("arrow") it can find.</li>
