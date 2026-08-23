@@ -25,7 +25,7 @@
     
     
       
-        <title>011 ch7 scripts - Python 999</title>
+        <title>Chapter 7 — OOP Scripting Exercises - Python 999</title>
       
     
     
@@ -82,7 +82,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#scripting-questions" class="md-skip">
+        <a href="#chapter-7-oop-scripting-exercises" class="md-skip">
           Skip to content
         </a>
       
@@ -118,7 +118,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              011 ch7 scripts
+              Chapter 7 — OOP Scripting Exercises
             
           </span>
         </div>
@@ -2062,6 +2062,8 @@
       <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
       
       
+        
+      
       
         <label class="md-nav__link md-nav__link--active" for="__toc">
           
@@ -2070,7 +2072,7 @@
   <span class="md-ellipsis">
     
   
-    011 ch7 scripts
+    Chapter 7 — OOP Scripting Exercises
   
 
     
@@ -2088,7 +2090,7 @@
   <span class="md-ellipsis">
     
   
-    011 ch7 scripts
+    Chapter 7 — OOP Scripting Exercises
   
 
     
@@ -2104,6 +2106,8 @@
   
   
   
+    
+  
   
     <label class="md-nav__title" for="__toc">
       <span class="md-nav__icon md-icon"></span>
@@ -2112,10 +2116,21 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#scripting-questions" class="md-nav__link">
+  <a href="#what-this-page-covers" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Scripting Questions
+        What this page covers
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#quick-recap" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Quick recap
       
     </span>
   </a>
@@ -8073,136 +8088,293 @@
   
 
 
-  <h1>011 ch7 scripts</h1>
-
-<h2 id="scripting-questions">Scripting Questions<a class="headerlink" href="#scripting-questions" title="Permanent link">&para;</a></h2>
-<p><em>Focusing on implementation, constructors, and methods.</em></p>
+<h1 id="chapter-7-oop-scripting-exercises">Chapter 7 — OOP Scripting Exercises<a class="headerlink" href="#chapter-7-oop-scripting-exercises" title="Permanent link">&para;</a></h1>
+<h2 id="what-this-page-covers">What this page covers<a class="headerlink" href="#what-this-page-covers" title="Permanent link">&para;</a></h2>
+<p>This page is a set of hands-on coding exercises for Chapter 7 (Object-Oriented Programming). Where the previous page ("OOP Conceptual Questions and Answers") tested <em>definitions</em> — what a class is, what encapsulation means — this page tests whether you can actually <strong>write</strong> the code: constructors, methods, class variables, private attributes, and a few small real-world-style classes like <code>Car</code>, <code>Bank</code>, and <code>Temperature</code>.</p>
+<p><strong>A quick note before you start:</strong> if any of the terms below (constructor, class variable, private attribute, static method, operator overloading) are unfamiliar, they're all covered in more depth on the previous page, "OOP Conceptual Questions and Answers," which this page assumes you've read.</p>
+<hr />
 <p><strong>Q1. Create a class <code>Car</code> with a constructor that takes <code>brand</code> and <code>model</code>. Instantiate two different cars.</strong></p>
+<p><strong>Approach:</strong> A constructor is just the <code>__init__</code> method — it runs automatically when a new object is created, and its job here is to store <code>brand</code> and <code>model</code> onto the new object. "Instantiate" simply means "create an object from the class."</p>
 <div class="highlight"><pre><span></span><code><span class="k">class</span><span class="w"> </span><span class="nc">Car</span><span class="p">:</span>
     <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">brand</span><span class="p">,</span> <span class="n">model</span><span class="p">):</span>
+        <span class="c1"># Step 1: Save the two arguments as attributes on THIS object (self).</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">brand</span> <span class="o">=</span> <span class="n">brand</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">model</span> <span class="o">=</span> <span class="n">model</span>
 
+<span class="c1"># Step 2: Create two separate Car objects, each with its own brand and model.</span>
 <span class="n">car1</span> <span class="o">=</span> <span class="n">Car</span><span class="p">(</span><span class="s2">"Tata"</span><span class="p">,</span> <span class="s2">"Nexon"</span><span class="p">)</span>
 <span class="n">car2</span> <span class="o">=</span> <span class="n">Car</span><span class="p">(</span><span class="s2">"Mahindra"</span><span class="p">,</span> <span class="s2">"XUV700"</span><span class="p">)</span>
+
+<span class="c1"># Step 3: Confirm each object stored its own data correctly.</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"Car 1: </span><span class="si">{</span><span class="n">car1</span><span class="o">.</span><span class="n">brand</span><span class="si">}</span><span class="s2"> </span><span class="si">{</span><span class="n">car1</span><span class="o">.</span><span class="n">model</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"Car 2: </span><span class="si">{</span><span class="n">car2</span><span class="o">.</span><span class="n">brand</span><span class="si">}</span><span class="s2"> </span><span class="si">{</span><span class="n">car2</span><span class="o">.</span><span class="n">model</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
 </code></pre></div>
-<p><strong>Q2. Add a class variable <code>wheels = 4</code> to the <code>Car</code> class and print it using the Class name.</strong>
+<hr />
+<p><strong>Q2. Add a class variable <code>wheels = 4</code> to the <code>Car</code> class and print it using the Class name.</strong></p>
+<p><strong>Approach:</strong> A class variable is written directly inside the class body (not inside <code>__init__</code>), and belongs to the class itself rather than to any one object — so it can be read via the class name, with no object required at all.</p>
 <div class="highlight"><pre><span></span><code><span class="k">class</span><span class="w"> </span><span class="nc">Car</span><span class="p">:</span>
+    <span class="c1"># Step 1: A class variable, shared by every Car object (and even</span>
+    <span class="c1"># accessible with no Car object created at all).</span>
     <span class="n">wheels</span> <span class="o">=</span> <span class="mi">4</span>
-<span class="nb">print</span><span class="p">(</span><span class="n">Car</span><span class="o">.</span><span class="n">wheels</span><span class="p">)</span>
-</code></pre></div></p>
+
+<span class="c1"># Step 2: Access it directly through the class name.</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">Car</span><span class="o">.</span><span class="n">wheels</span><span class="p">)</span>   <span class="c1"># -&gt; 4</span>
+</code></pre></div>
+<hr />
 <p><strong>Q3. Write a method <code>start_engine</code> that prints "The [brand] [model] engine is running."</strong></p>
+<p><strong>Approach:</strong> This is a regular instance method — it needs <code>self</code> so it can read the specific object's own <code>brand</code> and <code>model</code> when building its message.</p>
 <div class="highlight"><pre><span></span><code><span class="k">class</span><span class="w"> </span><span class="nc">Car</span><span class="p">:</span>
     <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">brand</span><span class="p">,</span> <span class="n">model</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">brand</span> <span class="o">=</span> <span class="n">brand</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">model</span> <span class="o">=</span> <span class="n">model</span>
+
     <span class="k">def</span><span class="w"> </span><span class="nf">start_engine</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="c1"># Step 1: Use self.brand and self.model -- the values belonging</span>
+        <span class="c1"># to whichever Car object called this method.</span>
         <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"The </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">brand</span><span class="si">}</span><span class="s2"> </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">model</span><span class="si">}</span><span class="s2"> engine is running."</span><span class="p">)</span>
 
+<span class="c1"># Step 2: Create a Car and call the method on it.</span>
 <span class="n">my_car</span> <span class="o">=</span> <span class="n">Car</span><span class="p">(</span><span class="s2">"Toyota"</span><span class="p">,</span> <span class="s2">"Camry"</span><span class="p">)</span>
-<span class="n">my_car</span><span class="o">.</span><span class="n">start_engine</span><span class="p">()</span>
+<span class="n">my_car</span><span class="o">.</span><span class="n">start_engine</span><span class="p">()</span>   <span class="c1"># -&gt; The Toyota Camry engine is running.</span>
 </code></pre></div>
+<hr />
 <p><strong>Q4. Create a <code>Student</code> class where the <code>age</code> has a default value of 18.</strong></p>
+<p><strong>Approach:</strong> Giving a constructor parameter a default value (<code>age=18</code>) means callers can leave it out entirely, and Python will use 18 automatically — but they can also still override it by passing their own value.</p>
 <div class="highlight"><pre><span></span><code><span class="k">class</span><span class="w"> </span><span class="nc">Student</span><span class="p">:</span>
     <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">age</span><span class="o">=</span><span class="mi">18</span><span class="p">):</span>
+        <span class="c1"># Step 1: If the caller doesn't supply 'age', Python uses 18</span>
+        <span class="c1"># automatically. If they do supply it, their value is used instead.</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="n">name</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">age</span> <span class="o">=</span> <span class="n">age</span>
 
-<span class="n">s1</span> <span class="o">=</span> <span class="n">Student</span><span class="p">(</span><span class="s2">"Anil"</span><span class="p">)</span> <span class="c1"># Uses 18</span>
-<span class="n">s2</span> <span class="o">=</span> <span class="n">Student</span><span class="p">(</span><span class="s2">"Sunita"</span><span class="p">,</span> <span class="mi">20</span><span class="p">)</span> <span class="c1"># Overrides with 20</span>
+<span class="n">s1</span> <span class="o">=</span> <span class="n">Student</span><span class="p">(</span><span class="s2">"Anil"</span><span class="p">)</span>          <span class="c1"># age not given -&gt; uses the default, 18</span>
+<span class="n">s2</span> <span class="o">=</span> <span class="n">Student</span><span class="p">(</span><span class="s2">"Sunita"</span><span class="p">,</span> <span class="mi">20</span><span class="p">)</span>    <span class="c1"># age given -&gt; overrides the default with 20</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"</span><span class="si">{</span><span class="n">s1</span><span class="o">.</span><span class="n">name</span><span class="si">}</span><span class="s2"> is </span><span class="si">{</span><span class="n">s1</span><span class="o">.</span><span class="n">age</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>   <span class="c1"># -&gt; Anil is 18</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"</span><span class="si">{</span><span class="n">s2</span><span class="o">.</span><span class="n">name</span><span class="si">}</span><span class="s2"> is </span><span class="si">{</span><span class="n">s2</span><span class="o">.</span><span class="n">age</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>   <span class="c1"># -&gt; Sunita is 20</span>
 </code></pre></div>
+<hr />
 <p><strong>Q5. Implement a <code>Bank</code> class with a private attribute <code>__balance</code>. Create a method to check the balance.</strong></p>
+<p><strong>Approach:</strong> Prefixing an attribute with a double underscore (<code>__balance</code>) triggers Python's name mangling, making it awkward to access directly from outside the class (see the previous page's Q4/Q19 for the full explanation). Instead, we provide a controlled method, <code>get_balance</code>, as the intended way to read it.</p>
 <div class="highlight"><pre><span></span><code><span class="k">class</span><span class="w"> </span><span class="nc">Bank</span><span class="p">:</span>
     <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">amount</span><span class="p">):</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">__balance</span> <span class="o">=</span> <span class="n">amount</span> <span class="c1"># Private attribute</span>
+        <span class="c1"># Step 1: Store the balance as a "private" attribute. This</span>
+        <span class="c1"># signals that outside code shouldn't reach in and change it</span>
+        <span class="c1"># directly -- it should only be read through the method below.</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__balance</span> <span class="o">=</span> <span class="n">amount</span>
+
     <span class="k">def</span><span class="w"> </span><span class="nf">get_balance</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="c1"># Step 2: Provide a controlled, read-only way to check the balance.</span>
         <span class="k">return</span> <span class="sa">f</span><span class="s2">"Current Balance: </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">__balance</span><span class="si">}</span><span class="s2">"</span>
 
 <span class="n">account</span> <span class="o">=</span> <span class="n">Bank</span><span class="p">(</span><span class="mi">5000</span><span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span><span class="n">account</span><span class="o">.</span><span class="n">get_balance</span><span class="p">())</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">account</span><span class="o">.</span><span class="n">get_balance</span><span class="p">())</span>   <span class="c1"># -&gt; Current Balance: 5000</span>
 </code></pre></div>
+<hr />
 <p><strong>Q6. Write a script to count how many <code>User</code> objects have been created using a class variable.</strong></p>
+<p><strong>Approach:</strong> Because a class variable (<code>count</code>) is shared across every object of the class, incrementing it inside <code>__init__</code> — which runs once per object created — gives us a running total of how many objects exist, no matter how many are created.</p>
 <div class="highlight"><pre><span></span><code><span class="k">class</span><span class="w"> </span><span class="nc">User</span><span class="p">:</span>
+    <span class="c1"># Step 1: A class variable shared by ALL User objects, used here as</span>
+    <span class="c1"># a running counter. It starts at 0 before any User is created.</span>
     <span class="n">count</span> <span class="o">=</span> <span class="mi">0</span>
+
     <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="c1"># Step 2: Every time a new User is created, __init__ runs once,</span>
+        <span class="c1"># and increases the SHARED class variable by 1.</span>
+        <span class="c1"># (Using User.count, not self.count, updates the shared value</span>
+        <span class="c1"># rather than creating a separate instance variable.)</span>
         <span class="n">User</span><span class="o">.</span><span class="n">count</span> <span class="o">+=</span> <span class="mi">1</span>
 
 <span class="n">u1</span> <span class="o">=</span> <span class="n">User</span><span class="p">()</span>
 <span class="n">u2</span> <span class="o">=</span> <span class="n">User</span><span class="p">()</span>
-<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"Total Users: </span><span class="si">{</span><span class="n">User</span><span class="o">.</span><span class="n">count</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"Total Users: </span><span class="si">{</span><span class="n">User</span><span class="o">.</span><span class="n">count</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>   <span class="c1"># -&gt; Total Users: 2</span>
 </code></pre></div>
+<hr />
 <p><strong>Q7. Create a method <code>update_email</code> that takes a new email and updates the instance attribute.</strong></p>
+<p><strong>Approach:</strong> This is a straightforward "setter"-style method: it takes a new value as a parameter and overwrites the existing instance attribute with it.</p>
 <div class="highlight"><pre><span></span><code><span class="k">class</span><span class="w"> </span><span class="nc">User</span><span class="p">:</span>
     <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">email</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">email</span> <span class="o">=</span> <span class="n">email</span>
+
     <span class="k">def</span><span class="w"> </span><span class="nf">update_email</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">new_email</span><span class="p">):</span>
+        <span class="c1"># Step 1: Overwrite the old email with the new one, on this object.</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">email</span> <span class="o">=</span> <span class="n">new_email</span>
 
 <span class="n">user</span> <span class="o">=</span> <span class="n">User</span><span class="p">(</span><span class="s2">"test@old.com"</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"Before: </span><span class="si">{</span><span class="n">user</span><span class="o">.</span><span class="n">email</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>   <span class="c1"># -&gt; Before: test@old.com</span>
+
 <span class="n">user</span><span class="o">.</span><span class="n">update_email</span><span class="p">(</span><span class="s2">"test@new.com"</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"After:  </span><span class="si">{</span><span class="n">user</span><span class="o">.</span><span class="n">email</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>   <span class="c1"># -&gt; After:  test@new.com</span>
 </code></pre></div>
+<hr />
 <p><strong>Q8. Script an example of Operator Overloading using <code>+</code> for two strings.</strong></p>
+<p><strong>Approach:</strong> "Operator overloading" means the same operator (here, <code>+</code>) does something different depending on the <em>type</em> of the values it's used on. Python's built-in string type already overloads <code>+</code> to mean "join these two strings together," which is different from what <code>+</code> means for numbers (addition). This exercise doesn't require writing any new code to make overloading happen — it's demonstrating overloading that Python's <code>str</code> type already provides.</p>
 <div class="highlight"><pre><span></span><code><span class="n">x</span><span class="p">,</span> <span class="n">y</span> <span class="o">=</span> <span class="s2">"Python"</span><span class="p">,</span> <span class="s2">"999"</span>
-<span class="n">result</span> <span class="o">=</span> <span class="n">x</span> <span class="o">+</span> <span class="n">y</span> <span class="c1"># Overloaded for concatenation</span>
-<span class="nb">print</span><span class="p">(</span><span class="n">result</span><span class="p">)</span> <span class="c1"># Python999</span>
+
+<span class="c1"># Step 1: Because x and y are both strings, Python's built-in '+'</span>
+<span class="c1"># operator is "overloaded" to mean concatenation (joining text together)</span>
+<span class="c1"># here, rather than mathematical addition.</span>
+<span class="n">result</span> <span class="o">=</span> <span class="n">x</span> <span class="o">+</span> <span class="n">y</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="n">result</span><span class="p">)</span>   <span class="c1"># -&gt; Python999</span>
 </code></pre></div>
+<p><em>(For comparison: <code>5 + 3</code> uses the exact same <code>+</code> symbol, but because both values are numbers, Python runs numeric addition instead — that's operator overloading in a nutshell: one operator, different behaviour, depending on the type of data involved.)</em></p>
+<hr />
 <p><strong>Q9. Create a static method <code>info()</code> that prints "This is a utility class for Math."</strong></p>
+<p><strong>Approach:</strong> A static method doesn't need access to <code>self</code> or to any particular object's data — it's really just a regular function that's logically grouped inside the class for organisation. The <code>@staticmethod</code> decorator tells Python not to automatically pass an object in as the first argument.</p>
 <div class="highlight"><pre><span></span><code><span class="k">class</span><span class="w"> </span><span class="nc">MyMath</span><span class="p">:</span>
     <span class="nd">@staticmethod</span>
     <span class="k">def</span><span class="w"> </span><span class="nf">info</span><span class="p">():</span>
+        <span class="c1"># Step 1: No 'self' parameter here -- this method doesn't need</span>
+        <span class="c1"># any specific MyMath object to do its job.</span>
         <span class="nb">print</span><span class="p">(</span><span class="s2">"This is a utility class for Math."</span><span class="p">)</span>
 
+<span class="c1"># Step 2: Called directly on the class -- no object needed at all.</span>
 <span class="n">MyMath</span><span class="o">.</span><span class="n">info</span><span class="p">()</span>
 </code></pre></div>
+<hr />
 <p><strong>Q10. Use the <code>__dict__</code> attribute to print all attributes of a <code>Pet</code> object.</strong></p>
-<div class="highlight"><pre><span></span><code><span class="n">p</span> <span class="o">=</span> <span class="n">Pet</span><span class="p">(</span><span class="s2">"Tiger"</span><span class="p">,</span> <span class="s2">"Dog"</span><span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span><span class="n">p</span><span class="o">.</span><span class="vm">__dict__</span><span class="p">)</span> 
+<p><strong>Approach:</strong> Every regular Python object automatically keeps its instance attributes in a built-in dictionary, accessible as <code>object.__dict__</code>. This is a handy way to inspect everything currently stored on an object, without needing to know the attribute names in advance. (The original exercise assumes a <code>Pet</code> class already exists from earlier in the book — it's included below for completeness.)</p>
+<div class="highlight"><pre><span></span><code><span class="k">class</span><span class="w"> </span><span class="nc">Pet</span><span class="p">:</span>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">breed</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="n">name</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">breed</span> <span class="o">=</span> <span class="n">breed</span>
+
+<span class="n">p</span> <span class="o">=</span> <span class="n">Pet</span><span class="p">(</span><span class="s2">"Tiger"</span><span class="p">,</span> <span class="s2">"Dog"</span><span class="p">)</span>
+
+<span class="c1"># Step 1: __dict__ returns a regular Python dictionary of every</span>
+<span class="c1"># instance attribute currently stored on this object, as {name: value} pairs.</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">p</span><span class="o">.</span><span class="vm">__dict__</span><span class="p">)</span>   <span class="c1"># -&gt; {'name': 'Tiger', 'breed': 'Dog'}</span>
 </code></pre></div>
-<p><strong>Q1. Write a class <code>Product</code> with <code>price</code> and a method <code>apply_discount(percent)</code> that changes the price.</strong></p>
+<hr />
+<p><strong>Q11. Write a class <code>Product</code> with <code>price</code> and a method <code>apply_discount(percent)</code> that changes the price.</strong></p>
+<p><strong>Approach:</strong> The method needs to calculate the discount amount (a percentage of the current price) and subtract it from <code>self.price</code>, permanently updating the object's stored price.</p>
 <div class="highlight"><pre><span></span><code><span class="k">class</span><span class="w"> </span><span class="nc">Product</span><span class="p">:</span>
     <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">price</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">price</span> <span class="o">=</span> <span class="n">price</span>
+
     <span class="k">def</span><span class="w"> </span><span class="nf">apply_discount</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">percent</span><span class="p">):</span>
+        <span class="c1"># Step 1: Work out what the discount is worth in actual currency</span>
+        <span class="c1"># (percent / 100 turns e.g. 10 into 0.10).</span>
+        <span class="c1"># Step 2: Subtract that amount from the current price, updating</span>
+        <span class="c1"># self.price permanently for this object.</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">price</span> <span class="o">-=</span> <span class="bp">self</span><span class="o">.</span><span class="n">price</span> <span class="o">*</span> <span class="p">(</span><span class="n">percent</span> <span class="o">/</span> <span class="mi">100</span><span class="p">)</span>
 
 <span class="n">p</span> <span class="o">=</span> <span class="n">Product</span><span class="p">(</span><span class="mi">100</span><span class="p">)</span>
-<span class="n">p</span><span class="o">.</span><span class="n">apply_discount</span><span class="p">(</span><span class="mi">10</span><span class="p">)</span> <span class="c1"># Price becomes 90</span>
+<span class="n">p</span><span class="o">.</span><span class="n">apply_discount</span><span class="p">(</span><span class="mi">10</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">p</span><span class="o">.</span><span class="n">price</span><span class="p">)</span>   <span class="c1"># -&gt; 90.0</span>
 </code></pre></div>
+<hr />
 <p><strong>Q12. Demonstrate what happens when you redefine a function name in Python.</strong></p>
-<div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">check</span><span class="p">():</span> <span class="nb">print</span><span class="p">(</span><span class="s2">"First"</span><span class="p">)</span>
-<span class="k">def</span><span class="w"> </span><span class="nf">check</span><span class="p">():</span> <span class="nb">print</span><span class="p">(</span><span class="s2">"Second"</span><span class="p">)</span>
-<span class="n">check</span><span class="p">()</span> <span class="c1"># Output: Second (First is forgotten)</span>
+<p><strong>Approach:</strong> This connects directly to the "no true function overloading" idea from the previous page's Q3. Defining a second function with the same name doesn't create two versions — it simply replaces the first one, which is then completely forgotten.</p>
+<div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">check</span><span class="p">():</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">"First"</span><span class="p">)</span>
+
+<span class="k">def</span><span class="w"> </span><span class="nf">check</span><span class="p">():</span>
+    <span class="c1"># Step 1: This second definition OVERWRITES the first one above.</span>
+    <span class="c1"># Python doesn't keep both -- only the most recent 'check' survives.</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">"Second"</span><span class="p">)</span>
+
+<span class="n">check</span><span class="p">()</span>   <span class="c1"># -&gt; Second  (the "First" version no longer exists)</span>
 </code></pre></div>
+<hr />
 <p><strong>Q13. Create a class <code>Circle</code> that takes <code>radius</code> and has a method <code>area</code>. (Use 3.14).</strong></p>
+<p><strong>Approach:</strong> Standard constructor-plus-method pattern: store <code>radius</code> in <code>__init__</code>, then use the classic area formula (π × r²) inside the <code>area</code> method, using <code>self.radius</code>.</p>
 <div class="highlight"><pre><span></span><code><span class="k">class</span><span class="w"> </span><span class="nc">Circle</span><span class="p">:</span>
     <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">radius</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">radius</span> <span class="o">=</span> <span class="n">radius</span>
+
     <span class="k">def</span><span class="w"> </span><span class="nf">area</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="c1"># Step 1: Standard area formula: pi * radius squared.</span>
+        <span class="c1"># ** is Python's exponent operator, so radius ** 2 means radius squared.</span>
         <span class="k">return</span> <span class="mf">3.14</span> <span class="o">*</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">radius</span> <span class="o">**</span> <span class="mi">2</span><span class="p">)</span>
+
+<span class="n">c</span> <span class="o">=</span> <span class="n">Circle</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">c</span><span class="o">.</span><span class="n">area</span><span class="p">())</span>   <span class="c1"># -&gt; 78.5</span>
 </code></pre></div>
+<hr />
 <p><strong>Q14. Write a script where an object attribute is initialized inside <code>__init__</code> but not passed as a parameter.</strong></p>
+<p><strong>Approach:</strong> Not every attribute needs to come from the constructor's parameters — <code>__init__</code> can also set up attributes with a fixed starting value on its own, useful for things like counters or scores that should always start the same way for every new object.</p>
 <div class="highlight"><pre><span></span><code><span class="k">class</span><span class="w"> </span><span class="nc">Game</span><span class="p">:</span>
     <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">player_name</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">player_name</span> <span class="o">=</span> <span class="n">player_name</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">score</span> <span class="o">=</span> <span class="mi">0</span> <span class="c1"># Default starting score</span>
+        <span class="c1"># Step 1: 'score' is never passed in as a parameter -- __init__</span>
+        <span class="c1"># simply sets a sensible starting value for every new Game object.</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">score</span> <span class="o">=</span> <span class="mi">0</span>
 
 <span class="n">g</span> <span class="o">=</span> <span class="n">Game</span><span class="p">(</span><span class="s2">"Arjun"</span><span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span><span class="n">g</span><span class="o">.</span><span class="n">score</span><span class="p">)</span> <span class="c1"># 0</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">g</span><span class="o">.</span><span class="n">score</span><span class="p">)</span>   <span class="c1"># -&gt; 0</span>
 </code></pre></div>
+<hr />
 <p><strong>Q15. Create a class <code>Temperature</code> and use a setter method to ensure the temperature cannot be below Absolute Zero (-273.15°C).</strong></p>
+<p><strong>Approach:</strong> This is a validation pattern: instead of letting <code>__init__</code> set <code>self.celsius</code> directly, it routes the incoming value through a method (<code>set_temp</code>) that checks it first, so an invalid value (below Absolute Zero, the coldest temperature physically possible) is corrected before it's ever stored.</p>
 <div class="highlight"><pre><span></span><code><span class="k">class</span><span class="w"> </span><span class="nc">Temperature</span><span class="p">:</span>
     <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">celsius</span><span class="p">):</span>
+        <span class="c1"># Step 1: Route the starting value through set_temp() too,</span>
+        <span class="c1"># rather than storing it directly -- so even the FIRST value</span>
+        <span class="c1"># given gets validated, not just later updates.</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">set_temp</span><span class="p">(</span><span class="n">celsius</span><span class="p">)</span>
+
     <span class="k">def</span><span class="w"> </span><span class="nf">set_temp</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">celsius</span><span class="p">):</span>
+        <span class="c1"># Step 2: Reject anything below Absolute Zero by silently</span>
+        <span class="c1"># clamping it to the lowest possible valid value instead.</span>
         <span class="k">if</span> <span class="n">celsius</span> <span class="o">&lt;</span> <span class="o">-</span><span class="mf">273.15</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">celsius</span> <span class="o">=</span> <span class="o">-</span><span class="mf">273.15</span>
         <span class="k">else</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">celsius</span> <span class="o">=</span> <span class="n">celsius</span>
 
 <span class="n">t</span> <span class="o">=</span> <span class="n">Temperature</span><span class="p">(</span><span class="o">-</span><span class="mi">500</span><span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span><span class="n">t</span><span class="o">.</span><span class="n">celsius</span><span class="p">)</span> <span class="c1"># Output: -273.15</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">t</span><span class="o">.</span><span class="n">celsius</span><span class="p">)</span>   <span class="c1"># -&gt; -273.15  (clamped, since -500 is impossible)</span>
 </code></pre></div>
 <hr />
+<h2 id="quick-recap">Quick recap<a class="headerlink" href="#quick-recap" title="Permanent link">&para;</a></h2>
+<table>
+<thead>
+<tr>
+<th>Pattern used in this chapter</th>
+<th>Appears in</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Constructor storing parameters as attributes</td>
+<td>Q1, Q3, Q4, Q7, Q11, Q13</td>
+</tr>
+<tr>
+<td>Class variable (shared across all objects)</td>
+<td>Q2, Q6</td>
+</tr>
+<tr>
+<td>Private attribute + controlled access method</td>
+<td>Q5</td>
+</tr>
+<tr>
+<td>Default parameter values</td>
+<td>Q4</td>
+</tr>
+<tr>
+<td><code>__dict__</code> for inspecting an object's attributes</td>
+<td>Q10</td>
+</tr>
+<tr>
+<td>Static method (<code>@staticmethod</code>)</td>
+<td>Q9</td>
+</tr>
+<tr>
+<td>Setter method with built-in validation</td>
+<td>Q15</td>
+</tr>
+<tr>
+<td>Operator behaviour depending on data type</td>
+<td>Q8</td>
+</tr>
+<tr>
+<td>Redefining a function name (no true overloading)</td>
+<td>Q12</td>
+</tr>
+</tbody>
+</table>
+<p>If any single exercise above still feels unclear, it's worth re-reading the matching concept on the previous page, "OOP Conceptual Questions and Answers" — every script here is a direct, hands-on application of one of those ideas.</p>
 
 
 
