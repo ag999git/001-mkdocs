@@ -8268,13 +8268,7 @@
 <p>Everything about the sequence — every future "random" number — is completely determined by the starting seed and these three fixed constants (<span class="arithmatex">\(a\)</span>, <span class="arithmatex">\(c\)</span>, <span class="arithmatex">\(m\)</span>). Nothing about it is genuinely unpredictable; it only <em>looks</em> unpredictable if you don't know <span class="arithmatex">\(a\)</span>, <span class="arithmatex">\(c\)</span>, and <span class="arithmatex">\(m\)</span>.</p>
 <h3 id="the-mathematical-vulnerability">The mathematical vulnerability<a class="headerlink" href="#the-mathematical-vulnerability" title="Permanent link">&para;</a></h3>
 <p>Because the formula above is <strong>linear</strong> (no squaring, no exponentials — just multiplication and addition), seeing just a few consecutive outputs is enough to set up simple equations and solve for the hidden constants. There are two attack scenarios, depending on how much the attacker already knows:</p>
-<div class="highlight"><pre><span></span><code>flowchart TD
-    A["Attacker observes a few\nconsecutive LCG outputs"] --&gt; B{"Are a and m\nalready known?"}
-    B -- "Yes, only c is unknown" --&gt; C["Attack 1: recover c\nfrom 2 outputs"]
-    B -- "No, only m is known" --&gt; D["Attack 2: recover BOTH\na and c from 3 outputs"]
-    C --&gt; E["Attacker can now predict\nevery future output"]
-    D --&gt; E
-</code></pre></div>
+<p><img alt="Flowchart" src="/001-mkdocs/resources/ch-7-oop-prng-vulnerability.png" /></p>
 <h4 id="attack-1-finding-c-when-a-and-m-are-already-known">Attack 1 — Finding <code>c</code> (when <code>a</code> and <code>m</code> are already known)<a class="headerlink" href="#attack-1-finding-c-when-a-and-m-are-already-known" title="Permanent link">&para;</a></h4>
 <p>With just two consecutive outputs, <span class="arithmatex">\(X_0\)</span> and <span class="arithmatex">\(X_1\)</span>, we can rearrange the LCG formula to isolate <span class="arithmatex">\(c\)</span>:</p>
 <div class="arithmatex">\[c \equiv (X_1 - a \cdot X_0) \pmod m\]</div>
