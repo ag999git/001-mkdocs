@@ -8590,20 +8590,7 @@ The answers — each one is now broken into logical steps, includes a short runn
 <li>This "bubbling up" repeats, one level at a time, until either a matching handler is found somewhere in the chain of calls, or the very top of the program is reached.</li>
 <li>If it reaches the top without ever being caught, Python's own default handler takes over: it prints a traceback and stops the program.</li>
 </ol>
-<div class="highlight"><pre><span></span><code>flowchart TD
-    A["Exception raised in level3()"] --&gt; B{"except block in level3()?"}
-    B -- No --&gt; C["Propagate to caller: level2()"]
-    C --&gt; D{"except block in level2()?"}
-    D -- No --&gt; E["Propagate to caller: level1()"]
-    E --&gt; F{"except block in level1()?"}
-    F -- No --&gt; G["Propagate to top-level script"]
-    G --&gt; H{"except block there?"}
-    H -- No --&gt; I["Python's default handler: print traceback, stop program"]
-    H -- Yes --&gt; J["Handled -- program continues"]
-    F -- Yes --&gt; J
-    D -- Yes --&gt; J
-    B -- Yes --&gt; J
-</code></pre></div>
+<p><img alt="Flowchart" src="/001-mkdocs/resources/ch-9-exceptions-august-2026-conceptual-question-bank1.png" /></p>
 <blockquote>
 <p><strong>New term — "bubbling up" / "propagation":</strong> this is just the everyday name for an exception moving outward through the chain of function calls, level by level, until something catches it. See the <a href="https://docs.python.org/3/reference/compound_stmts.html#the-try-statement">official Python docs on the exception-handling statement</a> for the formal description of this process.</p>
 </blockquote>
