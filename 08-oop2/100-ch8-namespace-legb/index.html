@@ -8340,7 +8340,7 @@
 <span class="nb">print</span><span class="p">(</span><span class="s2">"Modified name:-&gt;"</span><span class="p">,</span> <span class="n">d</span><span class="o">.</span><span class="n">name</span><span class="p">)</span>
 <span class="c1"># Output: Modified name:-&gt; Bruno</span>
 </code></pre></div>
-<p><img alt="Flowchart" src="/001-mkdocs/resources/ch-8-august-2026-namespaces-and-legb-rules.png" /></p>
+<p><img alt="Flowchart" src="/001-mkdocs/resources/ch-8-august-2026-namespaces-and-legb-rules--corrected-2.png" /></p>
 <h3 id="what-this-confirms">What this confirms<a class="headerlink" href="#what-this-confirms" title="Permanent link">&para;</a></h3>
 <ul>
 <li><strong>Classes and their instances maintain separate <code>__dict__</code> namespaces.</strong> <code>Dog.__dict__</code> holds class-level content (like <code>species</code> and the method definitions themselves); <code>d.__dict__</code> holds only what's specific to that one object (like <code>name</code>).</li>
@@ -8360,21 +8360,7 @@
 <p>Whenever your code uses a variable name, Python checks these four scopes <strong>step by step</strong>, in exactly this order, and stops at the very first match it finds. If the same name exists in more than one of these scopes, the one found <em>first</em> (i.e., the innermost one) wins — this is called <strong>shadowing</strong>, and it's covered in detail in the script below.</p>
 <p>One more important subtlety: <strong>assignment behaves differently from access.</strong> When you assign a value to a variable <em>inside</em> a function, Python's default behaviour is to create a brand-new <strong>local</strong> variable — even if a variable with the same name already exists at an outer scope — unless you explicitly say otherwise using the <code>global</code> or <code>nonlocal</code> keywords.</p>
 <h3 id="legb-visualized">LEGB, visualized<a class="headerlink" href="#legb-visualized" title="Permanent link">&para;</a></h3>
-<div class="highlight"><pre><span></span><code>graph TD
-    Lookup[Python needs to resolve a variable name]
-    Local[1 - Local - inside the current function]
-    Enclosing[2 - Enclosing - inside any outer nested function]
-    Global[3 - Global - at module or file level]
-    Builtin[4 - Built-in - Python's own predefined names]
-    NotFound[NameError - not found anywhere]
-
-    Lookup --&gt; Local
-    Local --&gt; Enclosing
-    Enclosing --&gt; Global
-    Global --&gt; Builtin
-    Builtin --&gt; NotFound
-</code></pre></div>
-<p><em>(In reality Python stops at the FIRST match rather than always reaching the end — this diagram shows the full checking order, not a guaranteed full traversal.)</em></p>
+<p><img alt="Flowchart" src="/001-mkdocs/resources/ch-8-august-2026-namespaces-and-legb-rules.png" /></p>
 <hr />
 <h3 id="summary-table">Summary table<a class="headerlink" href="#summary-table" title="Permanent link">&para;</a></h3>
 <table>
