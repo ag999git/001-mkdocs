@@ -25,7 +25,7 @@
     
     
       
-        <title>150 ch8 scripts q - Python 999</title>
+        <title>Chapter 8.150 — 20 Programming Script Questions & Answers - Python 999</title>
       
     
     
@@ -82,7 +82,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#part-2-20-programming-script-questions-answers" class="md-skip">
+        <a href="#chapter-8150-20-programming-script-questions-answers" class="md-skip">
           Skip to content
         </a>
       
@@ -118,7 +118,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              150 ch8 scripts q
+              Chapter 8.150 — 20 Programming Script Questions &amp; Answers
             
           </span>
         </div>
@@ -2764,6 +2764,8 @@
       <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
       
       
+        
+      
       
         <label class="md-nav__link md-nav__link--active" for="__toc">
           
@@ -2772,7 +2774,7 @@
   <span class="md-ellipsis">
     
   
-    150 ch8 scripts q
+    Chapter 8.150 — 20 Programming Script Questions &amp; Answers
   
 
     
@@ -2790,7 +2792,7 @@
   <span class="md-ellipsis">
     
   
-    150 ch8 scripts q
+    Chapter 8.150 — 20 Programming Script Questions &amp; Answers
   
 
     
@@ -2806,6 +2808,8 @@
   
   
   
+    
+  
   
     <label class="md-nav__title" for="__toc">
       <span class="md-nav__icon md-icon"></span>
@@ -2814,10 +2818,21 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#part-2-20-programming-script-questions-answers" class="md-nav__link">
+  <a href="#what-this-page-covers" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Part 2: 20 Programming Script Questions &amp; Answers
+        What this page covers
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#quick-recap" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Quick recap
       
     </span>
   </a>
@@ -8073,126 +8088,140 @@
   
 
 
-  <h1>150 ch8 scripts q</h1>
-
-<h2 id="part-2-20-programming-script-questions-answers">Part 2: 20 Programming Script Questions &amp; Answers<a class="headerlink" href="#part-2-20-programming-script-questions-answers" title="Permanent link">&para;</a></h2>
-<ol>
-<li>
-<p>Create a <code>Vehicle</code> parent class and a <code>Car</code> child class. Use the pass keyword to demonstrate "Implicit Is-A" inheritance.
+<h1 id="chapter-8150-20-programming-script-questions-answers">Chapter 8.150 — 20 Programming Script Questions &amp; Answers<a class="headerlink" href="#chapter-8150-20-programming-script-questions-answers" title="Permanent link">&para;</a></h1>
+<h2 id="what-this-page-covers">What this page covers<a class="headerlink" href="#what-this-page-covers" title="Permanent link">&para;</a></h2>
+<p>This page is a hands-on companion to the two "Conceptual Questions" review pages earlier in this chapter — where those pages tested <em>definitions</em>, this page tests whether you can actually <strong>write the code</strong> behind each concept: inheritance patterns, MRO, composition, abstraction, properties, custom containers, and <code>__slots__</code>, all in short, focused scripts.</p>
+<p>Each of the twenty questions below keeps the code from the original assignment, with a short plain-language explanation added before it, fuller step comments added inside it, and — for scripts that didn't originally show their output — the expected output added so you can check your own run against it.</p>
+<hr />
+<p><strong>1. Create a <code>Vehicle</code> parent class and a <code>Car</code> child class. Use the <code>pass</code> keyword to demonstrate "Implicit Is-A" inheritance.</strong></p>
+<p>This is the simplest possible form of inheritance: <code>Car</code> adds nothing of its own at all, so it behaves as an exact copy of <code>Vehicle</code>.</p>
 <div class="highlight"><pre><span></span><code><span class="k">class</span><span class="w"> </span><span class="nc">Vehicle</span><span class="p">:</span>
     <span class="k">def</span><span class="w"> </span><span class="nf">move</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="nb">print</span><span class="p">(</span><span class="s2">"This vehicle is moving"</span><span class="p">)</span>
 
-<span class="c1"># Child class inheriting everything without changes</span>
+<span class="c1"># Step 1: 'pass' means Car adds NOTHING new -- it inherits move()</span>
+<span class="c1"># completely unchanged from Vehicle.</span>
 <span class="k">class</span><span class="w"> </span><span class="nc">Car</span><span class="p">(</span><span class="n">Vehicle</span><span class="p">):</span>
     <span class="k">pass</span>
 
 <span class="n">c</span> <span class="o">=</span> <span class="n">Car</span><span class="p">()</span>
-<span class="n">c</span><span class="o">.</span><span class="n">move</span><span class="p">()</span> <span class="c1"># Output: This vehicle is moving</span>
-</code></pre></div></p>
-</li>
-<li>
-<p>Write a script that uses <code>isinstance()</code> to check if a <code>Puppy</code> object is an instance of <code>Dog</code> and an instance of <code>Pet</code>.</p>
-</li>
-</ol>
+<span class="n">c</span><span class="o">.</span><span class="n">move</span><span class="p">()</span>   <span class="c1"># -&gt; This vehicle is moving</span>
+</code></pre></div>
+<hr />
+<p><strong>2. Write a script that uses <code>isinstance()</code> to check if a <code>Puppy</code> object is an instance of <code>Dog</code> and an instance of <code>Pet</code>.</strong></p>
+<p>This demonstrates <strong>transitivity</strong> (covered on the earlier "30 Conceptual Questions" page, Q6): <code>Puppy</code> inherits from <code>Dog</code>, which inherits from <code>Pet</code>, so a <code>Puppy</code> object correctly counts as <em>both</em>.</p>
 <div class="highlight"><pre><span></span><code><span class="k">class</span><span class="w"> </span><span class="nc">Pet</span><span class="p">:</span> <span class="k">pass</span>
 <span class="k">class</span><span class="w"> </span><span class="nc">Dog</span><span class="p">(</span><span class="n">Pet</span><span class="p">):</span> <span class="k">pass</span>
 <span class="k">class</span><span class="w"> </span><span class="nc">Puppy</span><span class="p">(</span><span class="n">Dog</span><span class="p">):</span> <span class="k">pass</span>
 
 <span class="n">p</span> <span class="o">=</span> <span class="n">Puppy</span><span class="p">()</span>
-<span class="c1"># Checking inheritance relationships</span>
-<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"Is p a Dog? </span><span class="si">{</span><span class="nb">isinstance</span><span class="p">(</span><span class="n">p</span><span class="p">,</span><span class="w"> </span><span class="n">Dog</span><span class="p">)</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>  <span class="c1"># True</span>
-<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"Is p a Pet? </span><span class="si">{</span><span class="nb">isinstance</span><span class="p">(</span><span class="n">p</span><span class="p">,</span><span class="w"> </span><span class="n">Pet</span><span class="p">)</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>  <span class="c1"># True</span>
+
+<span class="c1"># Step 1: isinstance() checks the FULL ancestry chain, not just the</span>
+<span class="c1"># immediate parent -- that's exactly what transitivity means in practice.</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"Is p a Dog? </span><span class="si">{</span><span class="nb">isinstance</span><span class="p">(</span><span class="n">p</span><span class="p">,</span><span class="w"> </span><span class="n">Dog</span><span class="p">)</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>   <span class="c1"># -&gt; True</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"Is p a Pet? </span><span class="si">{</span><span class="nb">isinstance</span><span class="p">(</span><span class="n">p</span><span class="p">,</span><span class="w"> </span><span class="n">Pet</span><span class="p">)</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>   <span class="c1"># -&gt; True</span>
 </code></pre></div>
-<ol>
-<li>Demonstrate the <code>__mro__</code> attribute by creating a three-level hierarchy: <code>Animal -&gt; Mammal -&gt; Cat</code>.</li>
-</ol>
+<hr />
+<p><strong>3. Demonstrate the <code>__mro__</code> attribute by creating a three-level hierarchy: <code>Animal -&gt; Mammal -&gt; Cat</code>.</strong></p>
 <div class="highlight"><pre><span></span><code><span class="k">class</span><span class="w"> </span><span class="nc">Animal</span><span class="p">:</span> <span class="k">pass</span>
 <span class="k">class</span><span class="w"> </span><span class="nc">Mammal</span><span class="p">(</span><span class="n">Animal</span><span class="p">):</span> <span class="k">pass</span>
 <span class="k">class</span><span class="w"> </span><span class="nc">Cat</span><span class="p">(</span><span class="n">Mammal</span><span class="p">):</span> <span class="k">pass</span>
 
-<span class="c1"># Printing the Method Resolution Order</span>
+<span class="c1"># Step 1: __mro__ shows the exact order Python would search through</span>
+<span class="c1"># this hierarchy when looking for a method.</span>
 <span class="nb">print</span><span class="p">(</span><span class="n">Cat</span><span class="o">.</span><span class="vm">__mro__</span><span class="p">)</span>
+<span class="c1"># Output: (&lt;class '__main__.Cat'&gt;, &lt;class '__main__.Mammal'&gt;,</span>
+<span class="c1">#          &lt;class '__main__.Animal'&gt;, &lt;class 'object'&gt;)</span>
 </code></pre></div>
-<ol>
-<li>Create a class where the <code>__init__</code> method of the child class explicitly calls the <code>__init__</code> method of the parent class using <code>super()</code>.</li>
-</ol>
+<hr />
+<p><strong>4. Create a class where the child class's <code>__init__</code> explicitly calls the parent's <code>__init__</code> using <code>super()</code>.</strong></p>
+<p>This is <strong>constructor chaining</strong> — see the earlier chapter pages on inheritance and <code>super()</code> for the full picture.</p>
 <div class="highlight"><pre><span></span><code><span class="k">class</span><span class="w"> </span><span class="nc">Bird</span><span class="p">:</span>
     <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">species</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">species</span> <span class="o">=</span> <span class="n">species</span>
 
 <span class="k">class</span><span class="w"> </span><span class="nc">Parrot</span><span class="p">(</span><span class="n">Bird</span><span class="p">):</span>
     <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">species</span><span class="p">,</span> <span class="n">color</span><span class="p">):</span>
-        <span class="c1"># Initialize parent attributes using super()</span>
+        <span class="c1"># Step 1: Reuse Bird's own setup logic for 'species', instead</span>
+        <span class="c1"># of duplicating "self.species = species" here.</span>
         <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">species</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">color</span> <span class="o">=</span> <span class="n">color</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">color</span> <span class="o">=</span> <span class="n">color</span>   <span class="c1"># Step 2: Parrot-specific attribute.</span>
 
 <span class="n">p</span> <span class="o">=</span> <span class="n">Parrot</span><span class="p">(</span><span class="s2">"Parrot"</span><span class="p">,</span> <span class="s2">"Green"</span><span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span><span class="n">p</span><span class="o">.</span><span class="n">species</span><span class="p">,</span> <span class="n">p</span><span class="o">.</span><span class="n">color</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">p</span><span class="o">.</span><span class="n">species</span><span class="p">,</span> <span class="n">p</span><span class="o">.</span><span class="n">color</span><span class="p">)</span>   <span class="c1"># -&gt; Parrot Green</span>
 </code></pre></div>
-<ol>
-<li>Write a script that creates a class attribute and an instance attribute, then prints the <code>__dict__</code> of both the class and the instance.</li>
-</ol>
+<hr />
+<p><strong>5. Write a script that creates a class attribute and an instance attribute, then prints the <code>__dict__</code> of both the class and the instance.</strong></p>
+<p>See the earlier "<code>__dict__</code>" chapter page for the full explanation of why these two dictionaries look so different from each other.</p>
 <div class="highlight"><pre><span></span><code><span class="k">class</span><span class="w"> </span><span class="nc">Robot</span><span class="p">:</span>
-    <span class="n">laws</span> <span class="o">=</span> <span class="s2">"Protect humans"</span> <span class="c1"># Class attribute</span>
+    <span class="n">laws</span> <span class="o">=</span> <span class="s2">"Protect humans"</span>   <span class="c1"># Class attribute -- lives in Robot's own __dict__.</span>
 
     <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">):</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="n">name</span> <span class="c1"># Instance attribute</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="n">name</span>   <span class="c1"># Instance attribute -- lives in THIS object's __dict__.</span>
 
 <span class="n">r</span> <span class="o">=</span> <span class="n">Robot</span><span class="p">(</span><span class="s2">"R2D2"</span><span class="p">)</span>
+
 <span class="nb">print</span><span class="p">(</span><span class="s2">"Class Dict:"</span><span class="p">,</span> <span class="n">Robot</span><span class="o">.</span><span class="vm">__dict__</span><span class="p">)</span>
+<span class="c1"># Output (abbreviated): {'__module__': '__main__', 'laws': 'Protect humans', ...}</span>
+
 <span class="nb">print</span><span class="p">(</span><span class="s2">"Instance Dict:"</span><span class="p">,</span> <span class="n">r</span><span class="o">.</span><span class="vm">__dict__</span><span class="p">)</span>
+<span class="c1"># Output: {'name': 'R2D2'}</span>
+<span class="c1"># Notice 'laws' does NOT appear here -- it lives only on the class.</span>
 </code></pre></div>
-<ol>
-<li>Use multiple inheritance to create a <code>FlyingFish</code> class that inherits from both <code>Bird</code> (for flying) and <code>Fish</code> (for swimming).</li>
-</ol>
+<hr />
+<p><strong>6. Use multiple inheritance to create a <code>FlyingFish</code> class that inherits from both <code>Bird</code> (for flying) and <code>Fish</code> (for swimming).</strong></p>
 <div class="highlight"><pre><span></span><code><span class="k">class</span><span class="w"> </span><span class="nc">Bird</span><span class="p">:</span>
     <span class="k">def</span><span class="w"> </span><span class="nf">fly</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span> <span class="nb">print</span><span class="p">(</span><span class="s2">"Flying..."</span><span class="p">)</span>
 
 <span class="k">class</span><span class="w"> </span><span class="nc">Fish</span><span class="p">:</span>
     <span class="k">def</span><span class="w"> </span><span class="nf">swim</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span> <span class="nb">print</span><span class="p">(</span><span class="s2">"Swimming..."</span><span class="p">)</span>
 
-<span class="c1"># Multiple inheritance</span>
+<span class="c1"># Step 1: FlyingFish combines behaviour from BOTH parents at once --</span>
+<span class="c1"># this is multiple inheritance, covered fully in the earlier</span>
+<span class="c1"># "Diamond Problem" chapter page.</span>
 <span class="k">class</span><span class="w"> </span><span class="nc">FlyingFish</span><span class="p">(</span><span class="n">Bird</span><span class="p">,</span> <span class="n">Fish</span><span class="p">):</span>
     <span class="k">pass</span>
 
 <span class="n">ff</span> <span class="o">=</span> <span class="n">FlyingFish</span><span class="p">()</span>
-<span class="n">ff</span><span class="o">.</span><span class="n">fly</span><span class="p">()</span>
-<span class="n">ff</span><span class="o">.</span><span class="n">swim</span><span class="p">()</span>
+<span class="n">ff</span><span class="o">.</span><span class="n">fly</span><span class="p">()</span>    <span class="c1"># -&gt; Flying...</span>
+<span class="n">ff</span><span class="o">.</span><span class="n">swim</span><span class="p">()</span>   <span class="c1"># -&gt; Swimming...</span>
 </code></pre></div>
-<ol>
-<li>Demonstrate "Method Overriding" by creating a parent class <code>Shape</code> with a <code>draw()</code> method and a child class <code>Circle</code> that changes the <code>draw()</code> message.</li>
-</ol>
+<hr />
+<p><strong>7. Demonstrate "Method Overriding" by creating a parent class <code>Shape</code> with a <code>draw()</code> method and a child class <code>Circle</code> that changes the <code>draw()</code> message.</strong></p>
 <div class="highlight"><pre><span></span><code><span class="k">class</span><span class="w"> </span><span class="nc">Shape</span><span class="p">:</span>
     <span class="k">def</span><span class="w"> </span><span class="nf">draw</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="nb">print</span><span class="p">(</span><span class="s2">"Drawing a generic shape"</span><span class="p">)</span>
 
 <span class="k">class</span><span class="w"> </span><span class="nc">Circle</span><span class="p">(</span><span class="n">Shape</span><span class="p">):</span>
     <span class="k">def</span><span class="w"> </span><span class="nf">draw</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="c1"># This overrides the parent method</span>
+        <span class="c1"># Step 1: This completely REPLACES Shape's version of draw()</span>
+        <span class="c1"># for any Circle object -- no super() call here at all.</span>
         <span class="nb">print</span><span class="p">(</span><span class="s2">"Drawing a circle"</span><span class="p">)</span>
 
 <span class="n">c</span> <span class="o">=</span> <span class="n">Circle</span><span class="p">()</span>
-<span class="n">c</span><span class="o">.</span><span class="n">draw</span><span class="p">()</span>
+<span class="n">c</span><span class="o">.</span><span class="n">draw</span><span class="p">()</span>   <span class="c1"># -&gt; Drawing a circle</span>
 </code></pre></div>
-<ol>
-<li>Write a script showing "Cooperative Inheritance" where a child method calls <code>super().speak()</code> and then adds its own text.</li>
-</ol>
+<hr />
+<p><strong>8. Write a script showing "Cooperative Inheritance" where a child method calls <code>super().speak()</code> and then adds its own text.</strong></p>
+<p>Unlike Question 7, this one <em>builds on</em> the parent's logic rather than replacing it — see the earlier "30 Conceptual Questions" page, Q15 and Q24, for the "Cooperative Is-A" pattern this demonstrates.</p>
 <div class="highlight"><pre><span></span><code><span class="k">class</span><span class="w"> </span><span class="nc">Person</span><span class="p">:</span>
     <span class="k">def</span><span class="w"> </span><span class="nf">speak</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="nb">print</span><span class="p">(</span><span class="s2">"Hello"</span><span class="p">,</span> <span class="n">end</span><span class="o">=</span><span class="s2">" "</span><span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">"Hello"</span><span class="p">,</span> <span class="n">end</span><span class="o">=</span><span class="s2">" "</span><span class="p">)</span>   <span class="c1"># end=" " avoids a line break, so the</span>
+                                    <span class="c1"># next print continues on the same line.</span>
 
 <span class="k">class</span><span class="w"> </span><span class="nc">Student</span><span class="p">(</span><span class="n">Person</span><span class="p">):</span>
     <span class="k">def</span><span class="w"> </span><span class="nf">speak</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">speak</span><span class="p">()</span> <span class="c1"># Call parent logic</span>
+        <span class="c1"># Step 1: Run the PARENT's logic first...</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">speak</span><span class="p">()</span>
+        <span class="c1"># Step 2: ...then add the child's own extra behaviour on top.</span>
         <span class="nb">print</span><span class="p">(</span><span class="s2">"I am a student."</span><span class="p">)</span>
 
 <span class="n">s</span> <span class="o">=</span> <span class="n">Student</span><span class="p">()</span>
-<span class="n">s</span><span class="o">.</span><span class="n">speak</span><span class="p">()</span>
+<span class="n">s</span><span class="o">.</span><span class="n">speak</span><span class="p">()</span>   <span class="c1"># -&gt; Hello I am a student.</span>
 </code></pre></div>
-<ol>
-<li>Create a "Has-A" relationship (Composition) between a CPU class and a <code>Computer</code> class.</li>
-</ol>
+<hr />
+<p><strong>9. Create a "Has-A" relationship (Composition) between a <code>CPU</code> class and a <code>Computer</code> class.</strong></p>
+<p>See the earlier "Has-A Relationships" chapter page for the full comparison between Composition, Aggregation, and Dependency.</p>
 <div class="highlight"><pre><span></span><code><span class="k">class</span><span class="w"> </span><span class="nc">CPU</span><span class="p">:</span>
     <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">brand</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">brand</span> <span class="o">=</span> <span class="n">brand</span>
@@ -8200,105 +8229,129 @@
 <span class="k">class</span><span class="w"> </span><span class="nc">Computer</span><span class="p">:</span>
     <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">cpu_brand</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="n">name</span>
-        <span class="c1"># Composition: Computer HAS-A CPU</span>
+        <span class="c1"># Step 1: Composition -- the CPU object is created RIGHT HERE,</span>
+        <span class="c1"># inside Computer's own constructor. No CPU exists independently</span>
+        <span class="c1"># of its Computer, and it isn't shared with any other Computer.</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">processor</span> <span class="o">=</span> <span class="n">CPU</span><span class="p">(</span><span class="n">cpu_brand</span><span class="p">)</span>
 
 <span class="n">pc</span> <span class="o">=</span> <span class="n">Computer</span><span class="p">(</span><span class="s2">"MyPC"</span><span class="p">,</span> <span class="s2">"Intel"</span><span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"</span><span class="si">{</span><span class="n">pc</span><span class="o">.</span><span class="n">name</span><span class="si">}</span><span class="s2"> has an </span><span class="si">{</span><span class="n">pc</span><span class="o">.</span><span class="n">processor</span><span class="o">.</span><span class="n">brand</span><span class="si">}</span><span class="s2"> CPU"</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"</span><span class="si">{</span><span class="n">pc</span><span class="o">.</span><span class="n">name</span><span class="si">}</span><span class="s2"> has an </span><span class="si">{</span><span class="n">pc</span><span class="o">.</span><span class="n">processor</span><span class="o">.</span><span class="n">brand</span><span class="si">}</span><span class="s2"> CPU"</span><span class="p">)</span>   <span class="c1"># -&gt; MyPC has an Intel CPU</span>
 </code></pre></div>
-<ol>
-<li>Implement an abstract method using <code>NotImplementedError</code> in a class ElectronicDevice and implement it in a <code>Phone</code> class.</li>
-</ol>
+<p><img alt="Flowchart" src="/001-mkdocs/resources/ch-8-august-2026-scripting-question-09.png" /></p>
+<hr />
+<p><strong>10. Implement an abstract method using <code>NotImplementedError</code> in a class <code>ElectronicDevice</code>, and implement it in a <code>Phone</code> class.</strong></p>
+<p>This is the "informal" style of abstraction — see the earlier "30 More Conceptual Questions" page, Q21, for how this compares to a formal <code>ABC</code>-based abstract method.</p>
 <div class="highlight"><pre><span></span><code><span class="k">class</span><span class="w"> </span><span class="nc">ElectronicDevice</span><span class="p">:</span>
     <span class="k">def</span><span class="w"> </span><span class="nf">power_on</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="c1"># Abstract placeholder</span>
+        <span class="c1"># Step 1: A placeholder -- this is only "abstract" by</span>
+        <span class="c1"># convention; nothing stops ElectronicDevice itself from being</span>
+        <span class="c1"># instantiated directly (unlike a true ABC).</span>
         <span class="k">raise</span> <span class="ne">NotImplementedError</span><span class="p">(</span><span class="s2">"Must implement power_on in subclass"</span><span class="p">)</span>
 
 <span class="k">class</span><span class="w"> </span><span class="nc">Phone</span><span class="p">(</span><span class="n">ElectronicDevice</span><span class="p">):</span>
     <span class="k">def</span><span class="w"> </span><span class="nf">power_on</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="c1"># Step 2: The REAL implementation, replacing the placeholder.</span>
         <span class="nb">print</span><span class="p">(</span><span class="s2">"Phone screen lights up"</span><span class="p">)</span>
 
 <span class="n">p</span> <span class="o">=</span> <span class="n">Phone</span><span class="p">()</span>
-<span class="n">p</span><span class="o">.</span><span class="n">power_on</span><span class="p">()</span>
+<span class="n">p</span><span class="o">.</span><span class="n">power_on</span><span class="p">()</span>   <span class="c1"># -&gt; Phone screen lights up</span>
 </code></pre></div>
-<ol>
-<li>Write a script that uses <code>locals()</code> inside a function to show the names and values of local variables.</li>
-</ol>
+<hr />
+<p><strong>11. Write a script that uses <code>locals()</code> inside a function to show the names and values of local variables.</strong></p>
+<p>See the earlier LEGB chapter page for the full explanation of <code>locals()</code> and <code>globals()</code>.</p>
 <div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">my_function</span><span class="p">():</span>
     <span class="n">a</span> <span class="o">=</span> <span class="mi">10</span>
-    <span class="n">b</span> <span class="o">=</span> <span class="s2">"```python"</span>
-    <span class="c1"># Returns the local namespace dictionary</span>
+    <span class="n">b</span> <span class="o">=</span> <span class="s2">"hello world"</span>
+    <span class="c1"># Step 1: locals() returns a REAL dictionary of every local</span>
+    <span class="c1"># variable currently defined inside this function, at this exact point.</span>
     <span class="nb">print</span><span class="p">(</span><span class="nb">locals</span><span class="p">())</span>
 
 <span class="n">my_function</span><span class="p">()</span>
+<span class="c1"># Output: {'a': 10, 'b': 'hello world'}</span>
 </code></pre></div>
-<ol>
-<li>Demonstrate the "Diamond Problem" in multiple inheritance and show the resulting MRO.</li>
-</ol>
+<hr />
+<p><strong>12. Demonstrate the "Diamond Problem" in multiple inheritance and show the resulting MRO.</strong></p>
 <div class="highlight"><pre><span></span><code><span class="k">class</span><span class="w"> </span><span class="nc">A</span><span class="p">:</span> <span class="k">pass</span>
 <span class="k">class</span><span class="w"> </span><span class="nc">B</span><span class="p">(</span><span class="n">A</span><span class="p">):</span> <span class="k">pass</span>
 <span class="k">class</span><span class="w"> </span><span class="nc">C</span><span class="p">(</span><span class="n">A</span><span class="p">):</span> <span class="k">pass</span>
 <span class="k">class</span><span class="w"> </span><span class="nc">D</span><span class="p">(</span><span class="n">B</span><span class="p">,</span> <span class="n">C</span><span class="p">):</span> <span class="k">pass</span>
 
-<span class="c1"># D inherits from B and C, which both inherit from A</span>
+<span class="c1"># Step 1: D inherits from BOTH B and C, and both B and C independently</span>
+<span class="c1"># inherit from A -- this is the classic diamond shape.</span>
 <span class="nb">print</span><span class="p">(</span><span class="n">D</span><span class="o">.</span><span class="vm">__mro__</span><span class="p">)</span>
+<span class="c1"># Output: (&lt;class '__main__.D'&gt;, &lt;class '__main__.B'&gt;,</span>
+<span class="c1">#          &lt;class '__main__.C'&gt;, &lt;class '__main__.A'&gt;,</span>
+<span class="c1">#          &lt;class 'object'&gt;)</span>
+<span class="c1"># Notice 'A' appears only ONCE, at the very end -- Python's C3</span>
+<span class="c1"># Linearization (see the earlier "30 More Conceptual Questions" page,</span>
+<span class="c1"># Q10) guarantees this, even though A is reachable through two</span>
+<span class="c1"># separate paths (via B and via C).</span>
 </code></pre></div>
-<ol>
-<li>Create a class <code>Account</code> and manually add an attribute to its instance using the <code>__dict__</code> dictionary.</li>
-</ol>
+<p><img alt="Flowchart" src="/001-mkdocs/resources/ch-8-august-2026-scripting-question-12.png" /></p>
+<hr />
+<p><strong>13. Create a class <code>Account</code> and manually add an attribute to its instance using the <code>__dict__</code> dictionary.</strong></p>
 <div class="highlight"><pre><span></span><code><span class="k">class</span><span class="w"> </span><span class="nc">Account</span><span class="p">:</span>
     <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">owner</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">owner</span> <span class="o">=</span> <span class="n">owner</span>
 
 <span class="n">acc</span> <span class="o">=</span> <span class="n">Account</span><span class="p">(</span><span class="s2">"Anurag"</span><span class="p">)</span>
-<span class="c1"># Injecting attribute directly into namespace</span>
+
+<span class="c1"># Step 1: Adding a new key directly into acc's __dict__ is exactly</span>
+<span class="c1"># equivalent to writing "acc.balance = 5000" -- both insert the same</span>
+<span class="c1"># key into the same underlying dictionary (see the earlier __dict__</span>
+<span class="c1"># chapter page for the full explanation).</span>
 <span class="n">acc</span><span class="o">.</span><span class="vm">__dict__</span><span class="p">[</span><span class="s1">'balance'</span><span class="p">]</span> <span class="o">=</span> <span class="mi">5000</span>
+
 <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"Owner: </span><span class="si">{</span><span class="n">acc</span><span class="o">.</span><span class="n">owner</span><span class="si">}</span><span class="s2">, Balance: </span><span class="si">{</span><span class="n">acc</span><span class="o">.</span><span class="n">balance</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
+<span class="c1"># -&gt; Owner: Anurag, Balance: 5000</span>
 </code></pre></div>
-<ol>
-<li>Write a script that defines a global variable and a function, then uses <code>globals()</code> to check if they exist in the global namespace.</li>
-</ol>
+<hr />
+<p><strong>14. Write a script that defines a global variable and a function, then uses <code>globals()</code> to check if they exist in the global namespace.</strong></p>
 <div class="highlight"><pre><span></span><code><span class="n">top_score</span> <span class="o">=</span> <span class="mi">100</span>
 
 <span class="k">def</span><span class="w"> </span><span class="nf">play</span><span class="p">():</span> <span class="k">pass</span>
 
-<span class="c1"># Checking the global namespace keys</span>
-<span class="nb">print</span><span class="p">(</span><span class="s1">'top_score'</span> <span class="ow">in</span> <span class="nb">globals</span><span class="p">())</span>
-<span class="nb">print</span><span class="p">(</span><span class="s1">'play'</span> <span class="ow">in</span> <span class="nb">globals</span><span class="p">())</span>
+<span class="c1"># Step 1: globals() returns a dictionary of EVERYTHING currently</span>
+<span class="c1"># defined at module level -- checking "in globals()" is really just</span>
+<span class="c1"># checking whether a given key exists in that dictionary.</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">'top_score'</span> <span class="ow">in</span> <span class="nb">globals</span><span class="p">())</span>   <span class="c1"># -&gt; True</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">'play'</span> <span class="ow">in</span> <span class="nb">globals</span><span class="p">())</span>        <span class="c1"># -&gt; True</span>
 </code></pre></div>
-<ol>
-<li>Create a <code>Manager</code> class that inherits from <code>Employee</code> and adds a list of subordinates. Use <code>super()</code> in the constructor.</li>
-</ol>
+<hr />
+<p><strong>15. Create a <code>Manager</code> class that inherits from <code>Employee</code> and adds a list of subordinates. Use <code>super()</code> in the constructor.</strong></p>
 <div class="highlight"><pre><span></span><code><span class="k">class</span><span class="w"> </span><span class="nc">Employee</span><span class="p">:</span>
     <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="n">name</span>
 
 <span class="k">class</span><span class="w"> </span><span class="nc">Manager</span><span class="p">(</span><span class="n">Employee</span><span class="p">):</span>
     <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">staff_list</span><span class="p">):</span>
+        <span class="c1"># Step 1: Reuse Employee's own setup for 'name'.</span>
         <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">name</span><span class="p">)</span>
+        <span class="c1"># Step 2: Manager-specific attribute, added on top.</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">subordinates</span> <span class="o">=</span> <span class="n">staff_list</span>
 
 <span class="n">m</span> <span class="o">=</span> <span class="n">Manager</span><span class="p">(</span><span class="s2">"Gupta"</span><span class="p">,</span> <span class="p">[</span><span class="s2">"Alice"</span><span class="p">,</span> <span class="s2">"Bob"</span><span class="p">])</span>
-<span class="nb">print</span><span class="p">(</span><span class="n">m</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> <span class="s2">"manages"</span><span class="p">,</span> <span class="n">m</span><span class="o">.</span><span class="n">subordinates</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">m</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> <span class="s2">"manages"</span><span class="p">,</span> <span class="n">m</span><span class="o">.</span><span class="n">subordinates</span><span class="p">)</span>   <span class="c1"># -&gt; Gupta manages ['Alice', 'Bob']</span>
 </code></pre></div>
-<ol>
-<li>Demonstrate "Replacement Is-A" where a <code>SilentPet</code> class overrides <code>speak()</code> to do absolutely nothing.</li>
-</ol>
+<hr />
+<p><strong>16. Demonstrate "Replacement Is-A" where a <code>SilentPet</code> class overrides <code>speak()</code> to do absolutely nothing.</strong></p>
 <div class="highlight"><pre><span></span><code><span class="k">class</span><span class="w"> </span><span class="nc">Pet</span><span class="p">:</span>
     <span class="k">def</span><span class="w"> </span><span class="nf">speak</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="nb">print</span><span class="p">(</span><span class="s2">"Some sound"</span><span class="p">)</span>
 
 <span class="k">class</span><span class="w"> </span><span class="nc">SilentPet</span><span class="p">(</span><span class="n">Pet</span><span class="p">):</span>
     <span class="k">def</span><span class="w"> </span><span class="nf">speak</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="c1"># Replaces parent logic with a silent pass</span>
+        <span class="c1"># Step 1: 'pass' here means this method deliberately does</span>
+        <span class="c1"># NOTHING -- it still fully overrides Pet's speak(), it just</span>
+        <span class="c1"># replaces it with silence rather than a different message.</span>
         <span class="k">pass</span>
 
 <span class="n">s</span> <span class="o">=</span> <span class="n">SilentPet</span><span class="p">()</span>
-<span class="n">s</span><span class="o">.</span><span class="n">speak</span><span class="p">()</span> <span class="c1"># Nothing is printed</span>
+<span class="n">s</span><span class="o">.</span><span class="n">speak</span><span class="p">()</span>   <span class="c1"># Nothing is printed at all.</span>
 </code></pre></div>
-<ol>
-<li>Use the <code>@property</code> decorator to create a "getter" for a <code>Circle</code> class that calculates area based on radius.</li>
-</ol>
+<hr />
+<p><strong>17. Use the <code>@property</code> decorator to create a "getter" for a <code>Circle</code> class that calculates area based on radius.</strong></p>
+<p>See the earlier "<code>@property</code>" chapter page for the full explanation of how properties work internally.</p>
 <div class="highlight"><pre><span></span><code><span class="kn">import</span><span class="w"> </span><span class="nn">math</span>
 
 <span class="k">class</span><span class="w"> </span><span class="nc">Circle</span><span class="p">:</span>
@@ -8307,29 +8360,31 @@
 
     <span class="nd">@property</span>
     <span class="k">def</span><span class="w"> </span><span class="nf">area</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="c1"># Calculated attribute</span>
+        <span class="c1"># Step 1: This is a CALCULATED attribute -- there's no</span>
+        <span class="c1"># self._area stored anywhere; the value is computed fresh,</span>
+        <span class="c1"># from self._radius, every single time c.area is read.</span>
         <span class="k">return</span> <span class="n">math</span><span class="o">.</span><span class="n">pi</span> <span class="o">*</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_radius</span> <span class="o">**</span> <span class="mi">2</span><span class="p">)</span>
 
 <span class="n">c</span> <span class="o">=</span> <span class="n">Circle</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"Area: </span><span class="si">{</span><span class="n">c</span><span class="o">.</span><span class="n">area</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"Area: </span><span class="si">{</span><span class="n">c</span><span class="o">.</span><span class="n">area</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>   <span class="c1"># -&gt; Area: 78.54</span>
 </code></pre></div>
-<ol>
-<li>Implement a "Custom Container" using <code>__getitem__</code> to allow square bracket access to a <code>PetBox</code> class.</li>
-</ol>
+<hr />
+<p><strong>18. Implement a "Custom Container" using <code>__getitem__</code> to allow square bracket access to a <code>PetBox</code> class.</strong></p>
+<p>See the earlier "30 More Conceptual Questions" page, Q24–25, for the broader idea of custom containers.</p>
 <div class="highlight"><pre><span></span><code><span class="k">class</span><span class="w"> </span><span class="nc">PetBox</span><span class="p">:</span>
     <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">pets</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">pets</span> <span class="o">=</span> <span class="n">pets</span>
 
     <span class="k">def</span><span class="w"> </span><span class="fm">__getitem__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">index</span><span class="p">):</span>
-        <span class="c1"># Allows access like: box[0]</span>
+        <span class="c1"># Step 1: This is what makes "box[index]" work at all -- it</span>
+        <span class="c1"># simply forwards the request to the real underlying list, self.pets.</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">pets</span><span class="p">[</span><span class="n">index</span><span class="p">]</span>
 
 <span class="n">box</span> <span class="o">=</span> <span class="n">PetBox</span><span class="p">([</span><span class="s2">"Dog"</span><span class="p">,</span> <span class="s2">"Cat"</span><span class="p">,</span> <span class="s2">"Hamster"</span><span class="p">])</span>
-<span class="nb">print</span><span class="p">(</span><span class="n">box</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span> <span class="c1"># Output: Cat</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">box</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>   <span class="c1"># -&gt; Cat</span>
 </code></pre></div>
-<ol>
-<li>Create a script that shows "Hierarchical Inheritance" with one parent <code>Weapon</code> and two children <code>Sword</code> and <code>Bow</code>.</li>
-</ol>
+<hr />
+<p><strong>19. Create a script that shows "Hierarchical Inheritance" with one parent <code>Weapon</code> and two children <code>Sword</code> and <code>Bow</code>.</strong></p>
 <div class="highlight"><pre><span></span><code><span class="k">class</span><span class="w"> </span><span class="nc">Weapon</span><span class="p">:</span>
     <span class="k">def</span><span class="w"> </span><span class="nf">attack</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span> <span class="nb">print</span><span class="p">(</span><span class="s2">"Attacking!"</span><span class="p">)</span>
 
@@ -8338,14 +8393,19 @@
 
 <span class="n">s</span> <span class="o">=</span> <span class="n">Sword</span><span class="p">()</span>
 <span class="n">b</span> <span class="o">=</span> <span class="n">Bow</span><span class="p">()</span>
-<span class="n">s</span><span class="o">.</span><span class="n">attack</span><span class="p">()</span>
-<span class="n">b</span><span class="o">.</span><span class="n">attack</span><span class="p">()</span>
+<span class="n">s</span><span class="o">.</span><span class="n">attack</span><span class="p">()</span>   <span class="c1"># -&gt; Attacking!</span>
+<span class="n">b</span><span class="o">.</span><span class="n">attack</span><span class="p">()</span>   <span class="c1"># -&gt; Attacking!</span>
+<span class="c1"># Both children reuse the SAME parent method, completely unchanged --</span>
+<span class="c1"># this is hierarchical inheritance: one parent, multiple independent children.</span>
 </code></pre></div>
-<ol>
-<li>Use <code>__slots__</code> to restrict a <code>Point</code> class to only have <code>x</code> and <code>y</code> attributes, preventing the creation of <code>__dict__</code>.</li>
-</ol>
+<p><img alt="Flowchart" src="/001-mkdocs/resources/ch-8-august-2026-scripting-question-19.png" /></p>
+<hr />
+<p><strong>20. Use <code>__slots__</code> to restrict a <code>Point</code> class to only have <code>x</code> and <code>y</code> attributes, preventing the creation of <code>__dict__</code>.</strong></p>
+<p>See the earlier "<code>__slots__</code>" chapter page for the full memory-optimization project this connects to.</p>
 <div class="highlight"><pre><span></span><code><span class="k">class</span><span class="w"> </span><span class="nc">Point</span><span class="p">:</span>
-    <span class="c1"># Memory optimization: no __dict__ created</span>
+    <span class="c1"># Step 1: Declaring __slots__ removes __dict__ entirely for</span>
+    <span class="c1"># Point objects -- only 'x' and 'y' are allowed to ever exist on</span>
+    <span class="c1"># any Point instance.</span>
     <span class="vm">__slots__</span> <span class="o">=</span> <span class="p">[</span><span class="s1">'x'</span><span class="p">,</span> <span class="s1">'y'</span><span class="p">]</span>
 
     <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">):</span>
@@ -8353,9 +8413,19 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">y</span> <span class="o">=</span> <span class="n">y</span>
 
 <span class="n">p</span> <span class="o">=</span> <span class="n">Point</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">20</span><span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span><span class="n">p</span><span class="o">.</span><span class="n">x</span><span class="p">,</span> <span class="n">p</span><span class="o">.</span><span class="n">y</span><span class="p">)</span>
-<span class="c1"># Attempting p.z = 30 would now raise an AttributeError</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">p</span><span class="o">.</span><span class="n">x</span><span class="p">,</span> <span class="n">p</span><span class="o">.</span><span class="n">y</span><span class="p">)</span>   <span class="c1"># -&gt; 10 20</span>
+
+<span class="c1"># p.z = 30   # Uncommenting this raises: AttributeError: 'Point'</span>
+             <span class="c1"># object has no attribute 'z' -- there's no __dict__ left</span>
+             <span class="c1"># to add an unplanned attribute to.</span>
 </code></pre></div>
+<hr />
+<h2 id="quick-recap">Quick recap<a class="headerlink" href="#quick-recap" title="Permanent link">&para;</a></h2>
+<ul>
+<li>These twenty scripts turn the conceptual definitions from the two earlier review pages into actual, runnable code — inheritance patterns (Q1, 2, 7, 8, 16, 19), MRO and multiple inheritance (Q3, 6, 12), constructors and <code>super()</code> (Q4, 15), namespaces (Q5, 11, 13, 14), and the more specialized tools covered later in the chapter — composition (Q9), abstraction (Q10), properties (Q17), custom containers (Q18), and <code>__slots__</code> (Q20).</li>
+<li>If any single script above still feels unclear, every question links back to the specific earlier chapter page that develops that exact idea in full depth, with additional diagrams and explanation.</li>
+<li>A good way to test your own understanding: for each script, try predicting the output <em>before</em> looking at the comment that shows it — and for the diamond-problem script (Q12) and the multiple-inheritance script (Q6), try changing the order of the parent classes and predicting how the <code>__mro__</code> output would change, exactly as the earlier "Diamond Problem" chapter page's <code>Dog1</code>/<code>Dog2</code> comparison demonstrated.</li>
+</ul>
 
 
 
