@@ -25,7 +25,7 @@
     
     
       
-        <title>PROJECT 2: Property Decorators (@property) - Python 999</title>
+        <title>Chapter 8.120 — Project: Property Decorators (@property) - Python 999</title>
       
     
     
@@ -82,7 +82,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#project-2-property-decorators-property" class="md-skip">
+        <a href="#chapter-8120-project-property-decorators-property" class="md-skip">
           Skip to content
         </a>
       
@@ -118,7 +118,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              PROJECT 2: Property Decorators (@property)
+              Chapter 8.120 — Project: Property Decorators (@property)
             
           </span>
         </div>
@@ -2662,7 +2662,7 @@
   <span class="md-ellipsis">
     
   
-    PROJECT 2: Property Decorators (@property)
+    Chapter 8.120 — Project: Property Decorators (@property)
   
 
     
@@ -2680,7 +2680,7 @@
   <span class="md-ellipsis">
     
   
-    PROJECT 2: Property Decorators (@property)
+    Chapter 8.120 — Project: Property Decorators (@property)
   
 
     
@@ -2706,15 +2706,26 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#project-assignment-task-is-as-follows" class="md-nav__link">
+  <a href="#what-this-page-covers" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Project/ Assignment Task is as follows
+        What this page covers
       
     </span>
   </a>
   
-    <nav class="md-nav" aria-label="Project/ Assignment Task is as follows">
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#project-assignment-task" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Project / Assignment Task
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Project / Assignment Task">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
@@ -2726,8 +2737,7 @@
     </span>
   </a>
   
-    <nav class="md-nav" aria-label="Instructions">
-      <ul class="md-nav__list">
+</li>
         
           <li class="md-nav__item">
   <a href="#hints" class="md-nav__link">
@@ -2744,7 +2754,18 @@
   <a href="#dos-and-donts" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Dos and Don’ts
+        Dos and don'ts
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#a-follow-up-question-worth-exploring" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        A follow-up question worth exploring
       
     </span>
   </a>
@@ -2755,23 +2776,24 @@
     </nav>
   
 </li>
-        
-          <li class="md-nav__item">
+      
+        <li class="md-nav__item">
   <a href="#answer-solution" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Answer/ Solution
+        Answer / Solution
       
     </span>
   </a>
   
-</li>
+    <nav class="md-nav" aria-label="Answer / Solution">
+      <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#table" class="md-nav__link">
+  <a href="#comparison-table" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Table
+        Comparison table
       
     </span>
   </a>
@@ -2788,6 +2810,17 @@
     <span class="md-ellipsis">
       
         Solution script
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#quick-recap" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Quick recap
       
     </span>
   </a>
@@ -8155,64 +8188,49 @@
   
 
 
-<h1 id="project-2-property-decorators-property">PROJECT 2: Property Decorators (@property)<a class="headerlink" href="#project-2-property-decorators-property" title="Permanent link">&para;</a></h1>
+<h1 id="chapter-8120-project-property-decorators-property">Chapter 8.120 — Project: Property Decorators (<code>@property</code>)<a class="headerlink" href="#chapter-8120-project-property-decorators-property" title="Permanent link">&para;</a></h1>
+<h2 id="what-this-page-covers">What this page covers<a class="headerlink" href="#what-this-page-covers" title="Permanent link">&para;</a></h2>
+<p>The earlier "OOP Conceptual Questions" page (Q22) briefly introduced <code>@property</code> as a way to combine attribute-style access with the control of a method. This page goes much deeper: it explains exactly what a <code>property</code> object <em>is</em> internally, how <code>@property</code> and <code>@age.setter</code> connect to each other, and then applies all of that in a full project — adding validated encapsulation to a <code>Pet</code> class's <code>age</code> attribute.</p>
+<p>This is one of the most practically useful patterns in everyday Python: it lets you start with a plain, simple attribute, and later add validation or other logic <em>without ever changing how the rest of your code accesses it</em> — <code>obj.age</code> and <code>obj.age = value</code> keep working exactly the same, even after a property quietly starts running extra logic behind the scenes.</p>
+<hr />
 <details>
+<summary>Understanding the three attributes <code>fget</code>, <code>fset</code>, and <code>fdel</code> (every property object has these) — click ► to expand</summary>
 
-<summary>Understanding the three attributes `fget`, `fset` and `fdel` (Which all property objects have) (Click ► to expand)</summary>
+### Before we proceed further, we need to understand `fget`, `fset`, and `fdel`
 
-#### Before we proceed further, we need to understand `fget`, `fset` and `fdel`
+**What is `fset` in `Pet.age.fset(p, 10)`?**
 
-**What is fset in `Pet.age.fset(p, 10)`?**
+`fset` is the **setter function** associated with the property. So `Pet.age.fset(p, 10)` means: *"call the setter function of the property `age` manually."*
 
-**Answer:**
-
-`fset` is the **setter function** associated with the property.
-
-So:
-
-`Pet.age.fset(p, 10)`
-
-means:
-
-“Call the setter function of the property `age` manually”
-
-#### Step-by-Step Understanding
+#### Step-by-step understanding
 
 **1. What is `Pet.age` actually?**
 
-When you write:
-
-<div class="highlight"><pre><span></span><code><span class="k">class</span><span class="w">  </span><span class="nc">Pet</span><span class="p">:</span>  
-  <span class="nd">@property</span>  
-  <span class="k">def</span><span class="w">  </span><span class="nf">age</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>  
-  <span class="k">return</span>  <span class="bp">self</span><span class="o">.</span><span class="n">_age</span>
+<div class="highlight"><pre><span></span><code><span class="k">class</span><span class="w"> </span><span class="nc">Pet</span><span class="p">:</span>
+    <span class="nd">@property</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">age</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_age</span>
 </code></pre></div>
 
-* `age` is **not a normal method**
-* It becomes a **property object**
+Once decorated with `@property`, `age` is **not a normal method anymore** — it becomes a **property object**.
 
-So:
-
-`print(type(Pet.age))`
-
-Output:
-
-`<class 'property'>`
+<div class="highlight"><pre><span></span><code><span class="nb">print</span><span class="p">(</span><span class="nb">type</span><span class="p">(</span><span class="n">Pet</span><span class="o">.</span><span class="n">age</span><span class="p">))</span>
+</code></pre></div>
+Output: `<class 'property'>`
 
 **2. What does a property object contain?**
 
-A property internally stores 3 important functions:
+A property internally stores three important functions:
 
-| Attribute | Meaning          |
-| --------- | ---------------- |
-| fget      | Getter function  |
-| fset      | Setter function  |
-| fdel      | Deleter function |
+| Attribute | Meaning |
+|---|---|
+| `fget` | The getter function |
+| `fset` | The setter function |
+| `fdel` | The deleter function |
 
-**3. Your class internally becomes**
+**3. What your class internally becomes**
 
-**Your code:**
-
+Your code:
 <div class="highlight"><pre><span></span><code><span class="k">class</span><span class="w"> </span><span class="nc">Pet</span><span class="p">:</span>
     <span class="nd">@property</span>
     <span class="k">def</span><span class="w"> </span><span class="nf">age</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
@@ -8223,8 +8241,7 @@ A property internally stores 3 important functions:
         <span class="bp">self</span><span class="o">.</span><span class="n">_age</span> <span class="o">=</span> <span class="n">value</span>
 </code></pre></div>
 
-**Is Internally equivalent to:**
-
+...is internally equivalent to:
 <div class="highlight"><pre><span></span><code><span class="k">class</span><span class="w"> </span><span class="nc">Pet</span><span class="p">:</span>
     <span class="k">def</span><span class="w"> </span><span class="nf">get_age</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_age</span>
@@ -8235,177 +8252,111 @@ A property internally stores 3 important functions:
     <span class="n">age</span> <span class="o">=</span> <span class="nb">property</span><span class="p">(</span><span class="n">get_age</span><span class="p">,</span> <span class="n">set_age</span><span class="p">)</span>
 </code></pre></div>
 
-**What happens in:**
+**What happens in `Pet.age.fset(p, 10)`, step by step:**
 
-`Pet.age.fset(p, 10)`
+1. `Pet.age` → the property object itself
+2. `.fset` → its stored setter function
+3. `(p, 10)` → call that setter function directly, with `self = p` and `value = 10`
 
-Step-by-step:
+So this ultimately executes: `p._age = 10`.
 
-1. `Pet.age` → property object
-2. `.fset` → setter function
-3. `(p, 10)` → call setter with:
-   * `self = p`
-   * `value = 10`
-
-So it executes:
-
-`p._age = 10`
-
-Key Takeaways
-
-* Every property has fget, fset, fdel
-* They may be None if not defined
-* They are not dunder methods
-* They belong to the property object, not the class directly
-* They store the actual functions used for attribute control
-
-#### End of collapsable section on the three attributes `fget`, `fset` and `fdel`
+**Key takeaways:**
+- Every property has `fget`, `fset`, and `fdel` — though any of them may be `None` if you never defined that part.
+- These are **not** dunder methods — they don't start and end with double underscores.
+- They belong to the **property object itself**, not directly to the class.
+- They store the *actual functions* used for controlling attribute access.
 
 </details>
 
 <details>
+<summary>Discussion on <code>@property</code> and <code>@age.setter</code> — click ► to expand</summary>
 
-<summary>Discussion on `@property` and `@age.setter` (Click ► to expand)</summary>
-
-Before we take up the project, it is important to understand how \`@property\` and \`@age.setter\` work.
+Before taking up the project, it's worth understanding exactly how `@property` and `@age.setter` work together.
 
 ### A. `@property`
 
-#### 1. What does `@property` do? The Core Idea:
+**The core idea:** `@property` **converts a method into something that behaves like an attribute.**
 
-`@property` **converts a method into an attribute**
+Without `@property`, you'd have to call it like an ordinary method:
+<div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">age</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_age</span>
 
-#### 2. Without `@property`:
-
-<div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w">  </span><span class="nf">age</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>  
-  <span class="k">return</span>  <span class="bp">self</span><span class="o">.</span><span class="n">_age</span>  
-
-<span class="nb">print</span><span class="p">(</span><span class="n">p</span><span class="o">.</span><span class="n">age</span><span class="p">())</span> <span class="c1"># must call like a function</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">p</span><span class="o">.</span><span class="n">age</span><span class="p">())</span>   <span class="c1"># must call it like a function, with parentheses</span>
 </code></pre></div>
 
-#### 3. With `@property`:
+With `@property`, the same method can be accessed without parentheses at all:
+<div class="highlight"><pre><span></span><code><span class="nd">@property</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">age</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_age</span>
 
-<div class="highlight"><pre><span></span><code><span class="nd">@property</span>  
-<span class="k">def</span><span class="w">  </span><span class="nf">age</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>  
-  <span class="k">return</span>  <span class="bp">self</span><span class="o">.</span><span class="n">_age</span>  
-
-<span class="nb">print</span><span class="p">(</span><span class="n">p</span><span class="o">.</span><span class="n">age</span><span class="p">)</span> <span class="c1"># looks like attribute</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">p</span><span class="o">.</span><span class="n">age</span><span class="p">)</span>   <span class="c1"># looks and behaves exactly like a plain attribute</span>
 </code></pre></div>
 
-#### So:
-
-> `@property` allows a method to behave like a variable
+**So:** `@property` allows a method to behave like a variable, from the caller's point of view.
 
 ### B. `@age.setter`
 
-#### 1. What does `@age.setter` do? The Core Idea:
+**The core idea:** it defines what should happen when you *assign* a value, e.g. `p.age = 10`.
 
-It defines **what should happen when you assign a value**
+Internally, Python converts that assignment into: `Pet.age.fset(p, 10)`, which in turn calls your actual setter method, `def age(self, value):`.
 
-`p.age = 10`
+**So:** `@age.setter` defines exactly how assignment is handled.
 
-#### 2. Internally, Python converts this to:
+### C. The link between `@property` and `@age.setter`
 
-`Pet.age.fset(p, 10)`
+This is the single most important concept on this page.
 
-Which calls:
+1. **`@property` creates a property object.** Writing `@property` above `def age(self):` is equivalent to `age = property(getter_function)`.
+2. **`@age.setter` attaches a setter to that *same* property object**, rather than creating a second, separate one. Writing `@age.setter` above a second `def age(self, value):` modifies the existing property, effectively becoming `age = property(getter, setter)`.
+3. **So both the getter and setter belong to one single property object.** You can visualize this as:
 
-`def age(self, value):`
-
-#### 3. So:
-
-> `@age.setter` defines how assignment works
-
-### C. What is the link between `@property` and `@age.setter`?
-
-This is the **most important concept**.
-
-#### 1: `@property` creates a property object
-
-<div class="highlight"><pre><span></span><code><span class="nd">@property</span>  
-<span class="k">def</span><span class="w">  </span><span class="nf">age</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="highlight"><pre><span></span><code>age (property object)
+├── getter -&gt; returns _age
+└── setter -&gt; validates and sets _age
 </code></pre></div>
 
-This creates:
+### D. Where are `@property` and `@age.setter` actually defined?
 
-`age = property(getter_function)`
-
-#### 2: `@age.setter` attaches setter to same property
-
-<div class="highlight"><pre><span></span><code><span class="nd">@age</span><span class="o">.</span><span class="n">setter</span>  
-<span class="k">def</span><span class="w">  </span><span class="nf">age</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
-</code></pre></div>
-
-This modifies the SAME property:
-
-`age = property(getter, setter)`
-
-#### 3. So:
-
-> Both getter and setter belong to the same "property object"
-
-***
-
-#### 4. You can visualise the scheme as follows:
-
-age (property object)\
-├── getter → returns \_age\
-└── setter → validates and sets \_age
-
-### D. Where are `@property` and `@age.setter` defined?
-
-### 1. Answer:
-
-They are **built-in in Python**
-
-No import needed.
-
-#### 2. Internally:
-
-* `property` is a built-in class
-* `@property` is just syntactic sugar
+They're **built into Python itself** — no import is needed. Internally, `property` is simply a built-in class, and `@property` (along with `@age.setter`) is just convenient syntactic sugar layered on top of it.
 
 </details>
 
-<h2 id="project-assignment-task-is-as-follows">Project/ Assignment Task is as follows<a class="headerlink" href="#project-assignment-task-is-as-follows" title="Permanent link">&para;</a></h2>
-<p>Modify a <code>Pet</code> class to implement <strong>encapsulation using property decorators</strong>.</p>
+<p><img alt="Flowchart" src="/001-mkdocs/resources/ch-8-august-2026-property-decorator.png" /></p>
 <hr />
+<h2 id="project-assignment-task">Project / Assignment Task<a class="headerlink" href="#project-assignment-task" title="Permanent link">&para;</a></h2>
+<p><em>(Kept exactly as set in the assignment.)</em></p>
+<p>Modify a <code>Pet</code> class to implement <strong>encapsulation using property decorators</strong>.</p>
 <h3 id="instructions">Instructions<a class="headerlink" href="#instructions" title="Permanent link">&para;</a></h3>
 <ul>
-<li>Use attribute:</li>
-<li><code>_age</code></li>
-<li>Provide:</li>
-<li>Getter</li>
-<li>Setter</li>
-<li>(Optional) Deleter</li>
+<li>Use attribute: <code>_age</code></li>
+<li>Provide: Getter, Setter, and (optionally) a Deleter</li>
 </ul>
-<h4 id="hints">Hints<a class="headerlink" href="#hints" title="Permanent link">&para;</a></h4>
+<h3 id="hints">Hints<a class="headerlink" href="#hints" title="Permanent link">&para;</a></h3>
 <ul>
-<li>Use:</li>
-<li><code>@property</code></li>
-<li><code>@age.setter</code></li>
-<li>Raise error if:</li>
+<li>Use <code>@property</code> and <code>@age.setter</code></li>
+<li>Raise an error if <code>age &lt; 0</code></li>
 </ul>
-<p><code>age &lt; 0</code></p>
+<h3 id="dos-and-donts">Dos and don'ts<a class="headerlink" href="#dos-and-donts" title="Permanent link">&para;</a></h3>
+<ul>
+<li><strong>Do</strong> use <code>_age</code> internally (see the earlier chapter page on encapsulation and name mangling for the general convention this follows)</li>
+<li><strong>Do</strong> validate age</li>
+<li><strong>Don't</strong> write <code>self.age = value</code> <em>inside</em> the setter itself (this would call the setter again, causing infinite recursion — see the follow-up question below)</li>
+</ul>
+<h3 id="a-follow-up-question-worth-exploring">A follow-up question worth exploring<a class="headerlink" href="#a-follow-up-question-worth-exploring" title="Permanent link">&para;</a></h3>
+<p>The "don't" above warns against writing <code>self.age = value</code> inside the setter. As a follow-up exercise: <strong>try it yourself, deliberately, and observe what happens.</strong> Change the setter's last line from <code>self._age = value</code> to <code>self.age = value</code>, then run the script. You should see a <code>RecursionError</code>. Before running it, try to predict <em>why</em> this happens, based on what you now know about how <code>@age.setter</code> and assignment are connected (Section B above is the key clue).</p>
 <hr />
-<h4 id="dos-and-donts">Dos and Don’ts<a class="headerlink" href="#dos-and-donts" title="Permanent link">&para;</a></h4>
+<h2 id="answer-solution">Answer / Solution<a class="headerlink" href="#answer-solution" title="Permanent link">&para;</a></h2>
 <ul>
-<li>Use <code>_age</code> internally</li>
-<li>Validate age</li>
-<li>Do not assign <code>self.age = value</code> inside setter</li>
+<li>A <strong>property</strong> allows controlled access to an attribute, while still letting calling code use simple, ordinary attribute syntax.</li>
+<li>It <strong>replaces</strong> separate <code>get_age()</code>/<code>set_age()</code> methods with the same familiar <code>obj.age</code> / <code>obj.age = value</code> syntax.</li>
+<li><strong>Validation logic can be added invisibly</strong> — none of the code that <em>uses</em> a <code>Pet</code> object needs to change, even after validation is added to the setter.</li>
 </ul>
-<h3 id="answer-solution">Answer/ Solution<a class="headerlink" href="#answer-solution" title="Permanent link">&para;</a></h3>
-<ul>
-<li>Property allows controlled access to attributes.</li>
-<li>It replaces getter/setter methods.</li>
-<li>Validation logic can be added without changing syntax.</li>
-</ul>
-<h3 id="table">Table<a class="headerlink" href="#table" title="Permanent link">&para;</a></h3>
+<h3 id="comparison-table">Comparison table<a class="headerlink" href="#comparison-table" title="Permanent link">&para;</a></h3>
 <table>
 <thead>
 <tr>
 <th>Feature</th>
-<th>Traditional</th>
+<th>Traditional (getter/setter methods)</th>
 <th>Property</th>
 </tr>
 </thead>
@@ -8422,60 +8373,84 @@ No import needed.
 </tr>
 <tr>
 <td>Validation</td>
-<td>Manual</td>
-<td>Built-in</td>
+<td>Manual — the caller must remember to call <code>set_age()</code> instead of setting an attribute directly</td>
+<td>Built-in — ordinary assignment (<code>obj.age = value</code>) automatically runs the validation</td>
 </tr>
 </tbody>
 </table>
+<hr />
 <h2 id="solution-script">Solution script<a class="headerlink" href="#solution-script" title="Permanent link">&para;</a></h2>
-<div class="highlight"><pre><span></span><code><span class="c1"># This script defines the Pet class with instance attributes "name" and "age", and a property for age with validation. </span>
-<span class="c1"># The @property decorator is used to create a getter for the age attribute, allowing us to access it as if it were a regular attribute. </span>
-<span class="c1"># The @age.setter decorator is used to define a setter for the age property, which includes validation to ensure </span>
-<span class="c1"># that the age cannot be set to a negative value. # If an attempt is made to set a negative age, a ValueError </span>
-<span class="c1"># is raised with the message "Invalid age". # Finally, we test the class by creating an instance of Pet, </span>
-<span class="c1"># accessing the age property, and setting a new valid age. We also demonstrate that setting an invalid age raises an error.  </span>
-
-
-<span class="c1"># A. Define the Pet class.</span>
+<div class="highlight"><pre><span></span><code><span class="c1"># ============================================================</span>
+<span class="c1"># A. THE Pet CLASS</span>
+<span class="c1"># ============================================================</span>
 <span class="k">class</span><span class="w"> </span><span class="nc">Pet</span><span class="p">:</span>
     <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">age</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="n">name</span>
+        <span class="c1"># Step 1: Notice we assign to self._age here, NOT self.age --</span>
+        <span class="c1"># this deliberately bypasses the property's setter during</span>
+        <span class="c1"># initial construction... actually, in Python, assigning to</span>
+        <span class="c1"># self._age directly is a plain, ordinary attribute assignment</span>
+        <span class="c1"># (there's no property named "_age"), while self.age = age</span>
+        <span class="c1"># WOULD go through the property setter below. Either works</span>
+        <span class="c1"># here since the value is already valid, but going through</span>
+        <span class="c1"># self._age keeps this line simple and explicit.</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_age</span> <span class="o">=</span> <span class="n">age</span>
 
-    <span class="c1"># B. @property for age with validation. </span>
-    <span class="c1"># The @property decorator is used to create a getter for the age attribute, allowing us to access it as </span>
-    <span class="c1"># if it were a regular attribute. The method simply returns the value of the private attribute _age, </span>
-    <span class="c1"># which is where we store the actual age value. By using @property, we can add validation logic in </span>
-    <span class="c1"># the setter method while still allowing users to access the age attribute in a natural way.</span>
-
+    <span class="c1"># ------------------------------------------------------------</span>
+    <span class="c1"># B. GETTER -- makes age READABLE as a plain attribute</span>
+    <span class="c1"># ------------------------------------------------------------</span>
     <span class="nd">@property</span>
-    <span class="k">def</span><span class="w"> </span><span class="nf">age</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>  
+    <span class="k">def</span><span class="w"> </span><span class="nf">age</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="c1"># Step 2: This turns "age" into a property object. From now</span>
+        <span class="c1"># on, reading p.age (with no parentheses) calls this method</span>
+        <span class="c1"># automatically and returns the real, stored value from _age.</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_age</span>
 
-    <span class="c1"># C. Setter for age with validation</span>
-    <span class="c1"># The @age.setter decorator allows us to define a setter method for the age property. This means that when </span>
-    <span class="c1"># we assign a value to pet_instance.age, this setter method will be called with the new value. </span>
-    <span class="c1"># Inside the setter, we can add validation logic to ensure that the age being set is </span>
-    <span class="c1"># valid (in this case, non-negative). If the value is less than 0, we raise a ValueError to indicate </span>
-    <span class="c1"># that the age is invalid. If the value is valid, we assign it to the private attribute _age. </span>
-    <span class="c1"># This way, we can control how the age attribute is set and ensure that it always contains a valid value.   </span>
-
+    <span class="c1"># ------------------------------------------------------------</span>
+    <span class="c1"># C. SETTER -- makes age WRITABLE, but with validation</span>
+    <span class="c1"># ------------------------------------------------------------</span>
     <span class="nd">@age</span><span class="o">.</span><span class="n">setter</span>
-    <span class="k">def</span><span class="w"> </span><span class="nf">age</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>  
+    <span class="k">def</span><span class="w"> </span><span class="nf">age</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
+        <span class="c1"># Step 3: This attaches a setter to the SAME property object</span>
+        <span class="c1"># created above -- it does NOT create a second, separate</span>
+        <span class="c1"># property. From now on, writing p.age = &lt;value&gt; calls this</span>
+        <span class="c1"># method automatically, passing &lt;value&gt; as the 'value' parameter.</span>
         <span class="k">if</span> <span class="n">value</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="c1"># Step 4: Reject invalid input immediately, before it's</span>
+            <span class="c1"># ever stored -- this is the entire point of using a</span>
+            <span class="c1"># property instead of a plain public attribute.</span>
             <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">"Invalid age"</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_age</span> <span class="o">=</span> <span class="n">value</span>
+        <span class="c1"># Step 5: Store the validated value in the REAL underlying</span>
+        <span class="c1"># attribute, _age -- never write "self.age = value" here, or</span>
+        <span class="c1"># you would call this exact setter again, forever (see the</span>
+        <span class="c1"># follow-up question above).</span>
 
 
-<span class="c1"># C. Testing</span>
+<span class="c1"># ============================================================</span>
+<span class="c1"># B. TESTING</span>
+<span class="c1"># ============================================================</span>
 <span class="n">p</span> <span class="o">=</span> <span class="n">Pet</span><span class="p">(</span><span class="s2">"Tommy"</span><span class="p">,</span> <span class="mi">5</span><span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span><span class="n">p</span><span class="o">.</span><span class="n">age</span><span class="p">)</span>  <span class="c1"># Output: 5. </span>
+<span class="nb">print</span><span class="p">(</span><span class="n">p</span><span class="o">.</span><span class="n">age</span><span class="p">)</span>   <span class="c1"># -&gt; 5</span>
+<span class="c1"># This LOOKS like plain attribute access, but is secretly calling the</span>
+<span class="c1"># getter method defined above.</span>
 
 <span class="n">p</span><span class="o">.</span><span class="n">age</span> <span class="o">=</span> <span class="mi">10</span>
-<span class="nb">print</span><span class="p">(</span><span class="n">p</span><span class="o">.</span><span class="n">age</span><span class="p">)</span>  <span class="c1"># Output: 10.</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">p</span><span class="o">.</span><span class="n">age</span><span class="p">)</span>   <span class="c1"># -&gt; 10</span>
+<span class="c1"># This LOOKS like plain attribute assignment, but is secretly calling</span>
+<span class="c1"># the setter method, which validates 10 (&gt;= 0) before storing it.</span>
 
-<span class="c1"># p.age = -5  # Error: Invalid age</span>
+<span class="c1"># p.age = -5   # Uncommenting this raises: ValueError: Invalid age</span>
 </code></pre></div>
+<hr />
+<h2 id="quick-recap">Quick recap<a class="headerlink" href="#quick-recap" title="Permanent link">&para;</a></h2>
+<ul>
+<li>A <strong>property object</strong> bundles up to three functions — <code>fget</code>, <code>fset</code>, and (optionally) <code>fdel</code> — behind what looks, from the outside, like an ordinary attribute.</li>
+<li><strong><code>@property</code> converts a method into a getter</strong>, letting it be accessed without parentheses; <strong><code>@age.setter</code> attaches a setter to that <em>same</em> property</strong>, letting assignment (<code>p.age = value</code>) run your own validation logic automatically.</li>
+<li><strong>This is entirely built into core Python</strong> — no imports needed, and <code>@property</code>/<code>@x.setter</code> are just convenient syntax layered over the built-in <code>property</code> class.</li>
+<li><strong>The biggest pitfall</strong> is writing <code>self.age = value</code> <em>inside</em> the setter itself — since that assignment is exactly what triggers the setter to run, doing so inside the setter creates infinite recursion. Always assign to the real underlying attribute (<code>self._age</code>) inside the setter instead.</li>
+<li><strong>The practical payoff</strong>: adding a property to an existing class doesn't require changing any of the code that already uses <code>obj.age</code> or <code>obj.age = value</code> — validation and other logic can be added completely invisibly to the rest of your program.</li>
+</ul>
 
 
 
