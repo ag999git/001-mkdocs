@@ -25,7 +25,7 @@
     
     
       
-        <title>Research Project - Python 999</title>
+        <title>Chapter 11 — Research Project: Row Vectors vs. Column Vectors in NumPy and Linear Algebra - Python 999</title>
       
     
     
@@ -82,7 +82,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#research-project" class="md-skip">
+        <a href="#chapter-11-research-project-row-vectors-vs-column-vectors-in-numpy-and-linear-algebra" class="md-skip">
           Skip to content
         </a>
       
@@ -118,7 +118,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              Research Project
+              Chapter 11 — Research Project: Row Vectors vs. Column Vectors in NumPy and Linear Algebra
             
           </span>
         </div>
@@ -3812,7 +3812,7 @@
   <span class="md-ellipsis">
     
   
-    Research Project
+    Chapter 11 — Research Project: Row Vectors vs. Column Vectors in NumPy and Linear Algebra
   
 
     
@@ -3830,7 +3830,7 @@
   <span class="md-ellipsis">
     
   
-    Research Project
+    Chapter 11 — Research Project: Row Vectors vs. Column Vectors in NumPy and Linear Algebra
   
 
     
@@ -3856,10 +3856,10 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#project-title-row-vectors-vs-column-vectors-in-numpy-and-linear-algebra-concepts-comparisons-and-transformations" class="md-nav__link">
+  <a href="#about-this-chapter" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Project Title: Row Vectors vs Column Vectors in NumPy and Linear Algebra: Concepts, Comparisons, and Transformations
+        About this chapter
       
     </span>
   </a>
@@ -3870,7 +3870,7 @@
   <a href="#research-project-question" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Research/ Project Question
+        Research / Project Question
       
     </span>
   </a>
@@ -8088,111 +8088,160 @@
   
 
 
-<h1 id="research-project">Research Project<a class="headerlink" href="#research-project" title="Permanent link">&para;</a></h1>
-<h2 id="project-title-row-vectors-vs-column-vectors-in-numpy-and-linear-algebra-concepts-comparisons-and-transformations">Project Title: Row Vectors vs Column Vectors in NumPy and Linear Algebra: Concepts, Comparisons, and Transformations<a class="headerlink" href="#project-title-row-vectors-vs-column-vectors-in-numpy-and-linear-algebra-concepts-comparisons-and-transformations" title="Permanent link">&para;</a></h2>
-<h2 id="research-project-question">Research/ Project Question<a class="headerlink" href="#research-project-question" title="Permanent link">&para;</a></h2>
-<p>Study the concept of <strong>row vectors and column vectors</strong> in NumPy and linear algebra.<br />
-Explain their structure, differences, and practical use cases in data science, machine learning, and mathematical transformations.</p>
+<h1 id="chapter-11-research-project-row-vectors-vs-column-vectors-in-numpy-and-linear-algebra">Chapter 11 — Research Project: Row Vectors vs. Column Vectors in NumPy and Linear Algebra<a class="headerlink" href="#chapter-11-research-project-row-vectors-vs-column-vectors-in-numpy-and-linear-algebra" title="Permanent link">&para;</a></h1>
+<h2 id="about-this-chapter">About this chapter<a class="headerlink" href="#about-this-chapter" title="Permanent link">&para;</a></h2>
+<p>This page works through a research project on <strong>vectors</strong> — one of the most
+fundamental ideas in linear algebra, and one you'll meet constantly in data
+science and machine learning. Specifically, it looks at the two ways a list
+of numbers can be arranged: as a <strong>row</strong> (side by side) or as a <strong>column</strong>
+(stacked vertically). The two forms hold exactly the same numbers, but as
+you'll see, <em>orientation</em> changes what you can do with them mathematically
+— especially once matrices and geometric transformations (like rotating or
+resizing a shape) enter the picture.</p>
+<p>By the end of this page you should be able to:</p>
+<ul>
+<li>Tell a row vector and a column vector apart, both on paper and in NumPy's <code>shape</code> output.</li>
+<li>Explain why a plain Python list, a NumPy 1D array, a row vector, and a column vector are all subtly different things.</li>
+<li>Understand <em>why</em> transformations like rotation and scaling are written as <code>matrix × column vector</code>.</li>
+<li>Run and modify working NumPy scripts that rotate and scale a point in 2D.</li>
+</ul>
+<blockquote>
+<p><strong>Quick glossary, before we start</strong>
+- <strong>Vector</strong> — in this context, simply an ordered list of numbers. See
+  <a href="https://www.khanacademy.org/math/precalculus/x9e81a4f98389efdf:vectors">Khan Academy's intro to vectors</a>.
+- <strong>Matrix</strong> — a rectangular grid of numbers, arranged in rows and
+  columns. See <a href="https://www.khanacademy.org/math/algebra-home/alg-matrices">Khan Academy's intro to matrices</a>.
+- <strong>Shape</strong> (in NumPy) — a tuple describing an array's dimensions, e.g.
+  <code>(3, 1)</code> means 3 rows and 1 column.
+- <strong><code>reshape()</code></strong> — a NumPy method that rearranges the same values into a
+  different shape, without changing the values themselves.
+- <strong>Matrix multiplication</strong> — a specific way of combining two matrices
+  (or a matrix and a vector) that is <em>not</em> the same as multiplying
+  numbers one by one. See <a href="https://www.khanacademy.org/math/algebra-home/alg-matrices/alg-multiplying-matrices-by-matrices/a/multiplying-matrices">Khan Academy's guide to matrix multiplication</a>.
+- <strong>Linear transformation</strong> — a mathematical operation (like rotating,
+  scaling, or reflecting) that moves every point in space according to a
+  consistent rule, usually written as <code>matrix × vector</code>.</p>
+</blockquote>
+<hr />
+<h2 id="research-project-question">Research / Project Question<a class="headerlink" href="#research-project-question" title="Permanent link">&para;</a></h2>
+<p><em>(Reproduced exactly as set in the printed book — unchanged.)</em></p>
+<blockquote>
+<p>Study the concept of <strong>row vectors and column vectors</strong> in NumPy and
+linear algebra.
+Explain their structure, differences, and practical use cases in data
+science, machine learning, and mathematical transformations.</p>
 <p>Your study should include:</p>
 <ol>
 <li>Definition and structure of row vectors and column vectors.</li>
-<li>Comparison between:<ul>
+<li>Comparison between:</li>
 <li>Python lists</li>
 <li>NumPy 1D arrays</li>
 <li>Row vectors</li>
 <li>Column vectors</li>
-</ul>
-</li>
 <li>Explanation of why many mathematical transformations use <strong>column vectors</strong>.</li>
-<li>Demonstration of matrix multiplication involving:<ul>
+<li>Demonstration of matrix multiplication involving:</li>
 <li>Matrix × Column vector</li>
-</ul>
-</li>
-<li>Implementation of geometric transformations such as:<ul>
+<li>Implementation of geometric transformations such as:</li>
 <li>Rotation of a point in a 2D system</li>
 <li>Scaling transformation</li>
-</ul>
-</li>
 <li>Use NumPy scripts to demonstrate the concepts.</li>
 <li>Include tables, diagrams, and explanations.</li>
 </ol>
-<p>Finally, conclude when it is preferable to use row vectors and when column vectors are more appropriate.</p>
+<p>Finally, conclude when it is preferable to use row vectors and when
+column vectors are more appropriate.</p>
+</blockquote>
 <hr />
 <h1 id="answer">Answer<a class="headerlink" href="#answer" title="Permanent link">&para;</a></h1>
 <h2 id="1-introduction">1. Introduction<a class="headerlink" href="#1-introduction" title="Permanent link">&para;</a></h2>
-<p>Vectors are fundamental objects in mathematics, data science, and machine learning. In NumPy, vectors can be represented in different forms depending on how the data is structured.</p>
-<p>The two main forms are:</p>
+<p>A <strong>vector</strong> — an ordered list of numbers — is one of the most basic
+building blocks in mathematics, data science, and machine learning. In
+NumPy, the same set of numbers can be arranged in more than one way, and
+two of the most important arrangements are:</p>
 <ul>
-<li>Row vector</li>
-<li>Column vector</li>
+<li>the <strong>row vector</strong> — values laid out horizontally, and</li>
+<li>the <strong>column vector</strong> — values stacked vertically.</li>
 </ul>
-<p>Although both store the same values, their <strong>orientation affects mathematical operations</strong>, especially matrix multiplication and transformations.</p>
+<p>Both forms store identical values. What changes is their <strong>orientation</strong>,
+and that difference turns out to matter a great deal once you start doing
+matrix multiplication or geometric transformations — the same numbers,
+arranged the "wrong" way, can produce a completely different (or invalid)
+calculation.</p>
+<div class="highlight"><pre><span></span><code>flowchart TD
+    A["Same 3 values: 3, 5, 7"] --&gt; B["Row vector - shape (1, 3)&lt;br/&gt;arranged side by side"]
+    A --&gt; C["Column vector - shape (3, 1)&lt;br/&gt;arranged stacked vertically"]
+    B --&gt; D["Used for: single data records,&lt;br/&gt;one row of a dataset"]
+    C --&gt; E["Used for: points and vectors&lt;br/&gt;in transformations, matrix math"]
+</code></pre></div>
+<p><em>(Plain boxes and arrows only — no subgraphs — so this should import
+cleanly into <a href="https://app.diagrams.net/">draw.io</a> as well as render on
+GitHub/GitBook.)</em></p>
 <hr />
 <h2 id="2-row-vector">2. Row Vector<a class="headerlink" href="#2-row-vector" title="Permanent link">&para;</a></h2>
-<p>A row vector is a horizontal arrangement of values.</p>
+<p>A <strong>row vector</strong> arranges its values horizontally, in a single row.</p>
 <p>Example:</p>
 <p><code>[ 3  5  7 ]</code></p>
-<p>Shape in NumPy:</p>
-<p><code>(1, 3)</code></p>
-<p>Example code:</p>
-<div class="highlight"><pre><span></span><code><span class="c1"># This code demonstrates how to create a row vector using NumPy and reshape it to have a specific shape.</span>
-<span class="c1"># A row vector is a 1D array that has only one row and multiple columns.</span>
-<span class="c1"># NumPy library is used for creating and manipulating arrays in Python. </span>
-<span class="c1"># The reshape method is used to change the shape of the array without changing its data. </span>
-<span class="c1"># In this case, we are reshaping a 1D array into a 2D array with 1 row and 3 columns.</span>
-
-<span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>  
-
-<span class="c1"># Create a row vector (1D array) with values 3, 5, and 7, and reshape it to have 1 row and 3 columns.</span>
-<span class="c1"># The reshape(1, 3) method is used to change the shape of the array to a 2D array with 1 row and 3 columns.</span>
-<span class="n">row_vector</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mi">3</span><span class="p">,</span><span class="mi">5</span><span class="p">,</span><span class="mi">7</span><span class="p">])</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">3</span><span class="p">)</span>  
-
-<span class="nb">print</span><span class="p">(</span><span class="n">row_vector</span><span class="p">)</span>  <span class="c1"># Output: [[3 5 7]]</span>
-<span class="nb">print</span><span class="p">(</span><span class="s2">"Shape:"</span><span class="p">,</span> <span class="n">row_vector</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>  <span class="c1"># Output: (1, 3) - This indicates that the array has 1 row and 3 columns.</span>
-</code></pre></div>
-<h2 id="3-column-vector">3. Column Vector<a class="headerlink" href="#3-column-vector" title="Permanent link">&para;</a></h2>
-<p>A column vector is a vertical arrangement of values.</p>
-<p>Example:</p>
-<p><div class="highlight"><pre><span></span><code><span class="p">[</span><span class="mi">3</span>  
- <span class="mi">5</span>  
- <span class="mi">7</span><span class="p">]</span>
-</code></pre></div>
-Shape:</p>
-<p><code>(3,1)</code></p>
-<p>Example:</p>
-<div class="highlight"><pre><span></span><code><span class="c1"># This code demonstrates how to create a column vector using NumPy and check its shape.</span>
-<span class="c1"># A column vector is a 2D array that has multiple rows and only one column.</span>
-<span class="c1"># NumPy library is used for creating and manipulating arrays in Python. </span>
-<span class="c1"># The reshape method is used to change the shape of the array without changing its data.</span>
-
+<p>Shape in NumPy: <code>(1, 3)</code> — meaning 1 row and 3 columns.</p>
+<div class="highlight"><pre><span></span><code><span class="c1"># This script creates a ROW VECTOR: a 2D array with exactly one row.</span>
+<span class="c1">#</span>
+<span class="c1"># Step 1 - Import NumPy, the library used for array creation and maths.</span>
 <span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
 
-<span class="c1"># Create a column vector (2D array) with values 3, 5, and 7, and </span>
-<span class="c1"># reshape it to have 3 rows and 1 column.</span>
-<span class="n">column_vector</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mi">3</span><span class="p">,</span><span class="mi">5</span><span class="p">,</span><span class="mi">7</span><span class="p">])</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span><span class="mi">1</span><span class="p">)</span>
+<span class="c1"># Step 2 - Start with a plain 1D array of 3 values.</span>
+<span class="c1"># Step 3 - reshape(1, 3) rearranges those same 3 values into a 2D shape:</span>
+<span class="c1">#          1 row, 3 columns. No values are changed — only the arrangement is.</span>
+<span class="n">row_vector</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mi">3</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">7</span><span class="p">])</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span>
 
-<span class="nb">print</span><span class="p">(</span><span class="n">column_vector</span><span class="p">)</span> <span class="c1"># Output: [[3]</span>
-<span class="c1">#                    #          [5]</span>
-<span class="c1">#                    #          [7]]</span>
-
-<span class="nb">print</span><span class="p">(</span><span class="s2">"Shape:"</span><span class="p">,</span> <span class="n">column_vector</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>  
-<span class="c1"># Output: (3, 1) - This indicates that the array has 3 rows and 1 column.</span>
+<span class="c1"># Step 4 - Display the row vector and confirm its shape.</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">row_vector</span><span class="p">)</span>             <span class="c1"># Output: [[3 5 7]]</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">"Shape:"</span><span class="p">,</span> <span class="n">row_vector</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>   <span class="c1"># Output: (1, 3) -&gt; 1 row, 3 columns</span>
 </code></pre></div>
-<p><strong>Interpretation: Three values stacked vertically.</strong></p>
-<h2 id="comparison-table-row-vector-column-vector">Comparison Table (Row Vector | Column Vector)<a class="headerlink" href="#comparison-table-row-vector-column-vector" title="Permanent link">&para;</a></h2>
+<hr />
+<h2 id="3-column-vector">3. Column Vector<a class="headerlink" href="#3-column-vector" title="Permanent link">&para;</a></h2>
+<p>A <strong>column vector</strong> arranges its values vertically, stacked one on top of
+another.</p>
+<p>Example:</p>
+<div class="highlight"><pre><span></span><code>[3
+ 5
+ 7]
+</code></pre></div>
+<p>Shape in NumPy: <code>(3, 1)</code> — meaning 3 rows and 1 column.</p>
+<div class="highlight"><pre><span></span><code><span class="c1"># This script creates a COLUMN VECTOR: a 2D array with exactly one column.</span>
+<span class="c1">#</span>
+<span class="c1"># Step 1 - Import NumPy.</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+
+<span class="c1"># Step 2 - Start with the same 3 values as before.</span>
+<span class="c1"># Step 3 - reshape(3, 1) rearranges them into a 2D shape:</span>
+<span class="c1">#          3 rows, 1 column — the values are stacked vertically instead</span>
+<span class="c1">#          of laid out side by side.</span>
+<span class="n">column_vector</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mi">3</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">7</span><span class="p">])</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+
+<span class="c1"># Step 4 - Display the column vector and confirm its shape.</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">column_vector</span><span class="p">)</span>
+<span class="c1"># Output:</span>
+<span class="c1"># [[3]</span>
+<span class="c1">#  [5]</span>
+<span class="c1">#  [7]]</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s2">"Shape:"</span><span class="p">,</span> <span class="n">column_vector</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>   <span class="c1"># Output: (3, 1) -&gt; 3 rows, 1 column</span>
+</code></pre></div>
+<p><strong>Interpretation:</strong> the same three values, <code>3</code>, <code>5</code>, and <code>7</code>, are now
+stacked vertically instead of laid out side by side.</p>
+<hr />
+<h2 id="4-comparison-table-row-vector-vs-column-vector">4. Comparison Table: Row Vector vs. Column Vector<a class="headerlink" href="#4-comparison-table-row-vector-vs-column-vector" title="Permanent link">&para;</a></h2>
 <table>
 <thead>
 <tr>
 <th>Feature</th>
-<th>Row Vector</th>
-<th>Column Vector</th>
+<th>Row vector</th>
+<th>Column vector</th>
 </tr>
 </thead>
 <tbody>
 <tr>
 <td>Shape</td>
-<td>(1,n)</td>
-<td>(n,1)</td>
+<td><code>(1, n)</code></td>
+<td><code>(n, 1)</code></td>
 </tr>
 <tr>
 <td>Orientation</td>
@@ -8201,98 +8250,131 @@ Shape:</p>
 </tr>
 <tr>
 <td>Common use</td>
-<td>Represent one data record</td>
-<td>Used in matrix transformations</td>
+<td>Represents one data record (e.g. one row of a spreadsheet)</td>
+<td>Used in matrix transformations and geometric calculations</td>
 </tr>
 <tr>
 <td>Machine learning</td>
-<td>Prediction input</td>
-<td>Model computations</td>
+<td>Often used to represent a single input for prediction</td>
+<td>Often used internally in model computations</td>
 </tr>
 <tr>
 <td>Linear algebra</td>
-<td>Less common</td>
-<td>Standard representation</td>
+<td>Less commonly the "default" form</td>
+<td>The standard, conventional way to represent a vector</td>
 </tr>
 </tbody>
 </table>
-<h2 id="5-comparison-with-python-lists">5. Comparison with Python Lists<a class="headerlink" href="#5-comparison-with-python-lists" title="Permanent link">&para;</a></h2>
+<hr />
+<h2 id="5-comparison-with-python-lists-and-numpy-1d-arrays">5. Comparison with Python Lists and NumPy 1D Arrays<a class="headerlink" href="#5-comparison-with-python-lists-and-numpy-1d-arrays" title="Permanent link">&para;</a></h2>
+<p>It's worth pausing on a distinction that trips up a lot of beginners: a
+<strong>plain Python list</strong>, a <strong>NumPy 1D array</strong>, and a <strong>row or column vector</strong>
+are three different things, even though a beginner might describe all
+three simply as "a list of numbers."</p>
 <table>
 <thead>
 <tr>
 <th>Feature</th>
-<th>Python List</th>
-<th>NumPy Row Vector</th>
-<th>NumPy Column Vector</th>
+<th>Python list</th>
+<th>NumPy 1D array</th>
+<th>NumPy row/column vector</th>
 </tr>
 </thead>
 <tbody>
 <tr>
 <td>Structure</td>
-<td>Flexible</td>
-<td>Structured</td>
-<td>Structured</td>
+<td>Very flexible — can mix data types, resize freely</td>
+<td>Structured — one data type, fixed size</td>
+<td>Structured, <strong>and</strong> has an explicit 2D shape</td>
 </tr>
 <tr>
 <td>Shape</td>
-<td>Not defined</td>
-<td>Defined</td>
-<td>Defined</td>
+<td>Not defined (<code>len()</code> only, no <code>.shape</code>)</td>
+<td>Defined, but only one dimension, e.g. <code>(3,)</code></td>
+<td>Defined with two dimensions, e.g. <code>(1, 3)</code> or <code>(3, 1)</code></td>
 </tr>
 <tr>
-<td>Matrix math</td>
-<td>Not supported</td>
-<td>Supported</td>
-<td>Supported</td>
+<td>Supports matrix multiplication (<code>@</code>)</td>
+<td>No</td>
+<td>Only in a limited sense (as a 1D array)</td>
+<td>Yes — this is exactly the form matrix maths expects</td>
 </tr>
 <tr>
 <td>Performance</td>
-<td>Slower</td>
+<td>Slower for numeric work</td>
 <td>Fast</td>
 <td>Fast</td>
 </tr>
 </tbody>
 </table>
+<p><strong>Beginner tip:</strong> a NumPy 1D array like <code>np.array([3, 5, 7])</code> has shape
+<code>(3,)</code> — notice there's only <em>one</em> number in that tuple. It isn't yet
+"officially" a row or a column; it's a flat sequence. Calling
+<code>.reshape(1, 3)</code> or <code>.reshape(3, 1)</code> on it is what turns it into an
+explicit row vector or column vector, with a proper 2D shape that matrix
+mathematics expects.</p>
+<hr />
 <h2 id="6-why-column-vectors-are-used-in-transformations">6. Why Column Vectors Are Used in Transformations<a class="headerlink" href="#6-why-column-vectors-are-used-in-transformations" title="Permanent link">&para;</a></h2>
-<p>In linear algebra, transformations such as:</p>
-<p>rotation
-scaling
-projection
-translation</p>
-<p>are defined using:</p>
-<p><code>Matrix × Column Vector</code></p>
-<p>Mathematically:</p>
-<p><code>y = Mx</code></p>
-<p>Where</p>
-<p><code>M = transformation matrix</code></p>
-<p><code>x = column vector</code></p>
-<h2 id="7-example-rotation-by-90-degrees">7. Example: Rotation by 90 Degrees<a class="headerlink" href="#7-example-rotation-by-90-degrees" title="Permanent link">&para;</a></h2>
-<p>Suppose we have a point: <code>(2,1)</code></p>
-<p>We represent it as a column vector.</p>
-<p>Rotation matrix for 90°:</p>
-<div class="highlight"><pre><span></span><code><span class="p">[</span> <span class="mi">0</span>  <span class="o">-</span><span class="mi">1</span> <span class="p">]</span>
-<span class="p">[</span> <span class="mi">1</span>   <span class="mi">0</span> <span class="p">]</span>
+<p>In linear algebra, common geometric transformations — including:</p>
+<ul>
+<li>rotation,</li>
+<li>scaling,</li>
+<li>projection, and</li>
+<li>translation</li>
+</ul>
+<p>are conventionally written as:</p>
+<p><strong><code>Matrix × Column Vector</code></strong></p>
+<p>or, in the shorthand you'll see in most textbooks:</p>
+<p><strong><code>y = Mx</code></strong></p>
+<p>where:</p>
+<ul>
+<li><code>M</code> is the <strong>transformation matrix</strong> — it encodes <em>what</em> transformation is being applied,</li>
+<li><code>x</code> is the <strong>column vector</strong> — it encodes the point (or points) being transformed, and</li>
+<li><code>y</code> is the resulting column vector, after the transformation has been applied.</li>
+</ul>
+<div class="highlight"><pre><span></span><code>flowchart LR
+    X["Original point&lt;br/&gt;column vector x"] --&gt; M["Transformation matrix M&lt;br/&gt;(rotation, scaling, etc.)"]
+    M --&gt; Y["New point&lt;br/&gt;column vector y = M x"]
 </code></pre></div>
-<h2 id="8-script-for-rotation-bt-90-degrees">8 Script for rotation bt 90 Degrees<a class="headerlink" href="#8-script-for-rotation-bt-90-degrees" title="Permanent link">&para;</a></h2>
+<p><strong>Why a column, specifically?</strong> The rule for matrix multiplication requires
+the number of <em>columns</em> in the first item to match the number of <em>rows</em> in
+the second. An <code>n × n</code> transformation matrix naturally lines up with an
+<code>n × 1</code> column vector — that's simply the shape matrix multiplication
+expects on the right-hand side. Writing the point as a row vector instead
+would require flipping the whole equation around (<code>y = xM</code> with <code>x</code> as a
+row vector), which is mathematically possible but is <em>not</em> the convention
+most textbooks, libraries, and courses use — so column vectors have become
+the standard, expected form.</p>
+<hr />
+<h2 id="7-example-rotation-by-90-degrees">7. Example: Rotation by 90 Degrees<a class="headerlink" href="#7-example-rotation-by-90-degrees" title="Permanent link">&para;</a></h2>
+<p>Suppose we have a point at <code>(2, 1)</code>. We represent it as a column vector so
+it's ready for matrix multiplication.</p>
+<p>The rotation matrix for a 90° counter-clockwise turn is:</p>
+<div class="highlight"><pre><span></span><code>[ 0  -1 ]
+[ 1   0 ]
+</code></pre></div>
+<p><strong>Why this particular matrix?</strong> Multiplying it by a point <code>(x, y)</code> produces
+<code>(-y, x)</code> — swapping the coordinates and flipping one sign — which is
+exactly the geometric effect of a 90° counter-clockwise rotation around the
+origin.</p>
+<h2 id="8-script-rotation-by-90-degrees">8. Script: Rotation by 90 Degrees<a class="headerlink" href="#8-script-rotation-by-90-degrees" title="Permanent link">&para;</a></h2>
 <div class="highlight"><pre><span></span><code><span class="c1"># Rotation Transformation Example</span>
 
 <span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
 
-<span class="c1"># 1. Create Original point</span>
-<span class="c1"># We create a column vector (2D array) for the point (2, 1) and </span>
-<span class="c1"># reshape it to have 2 rows and 1 column.</span>
-<span class="n">point</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mi">2</span><span class="p">,</span><span class="mi">1</span><span class="p">])</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span><span class="mi">1</span><span class="p">)</span>  <span class="c1"># Original point as a column vector (2D array)</span>
+<span class="c1"># Step 1 - Create the original point (2, 1) as a COLUMN VECTOR.</span>
+<span class="c1"># reshape(2, 1) gives it the shape matrix multiplication expects:</span>
+<span class="c1"># 2 rows, 1 column.</span>
+<span class="n">point</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mi">2</span><span class="p">,</span> <span class="mi">1</span><span class="p">])</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
 
 <span class="nb">print</span><span class="p">(</span><span class="s2">"Original Point:"</span><span class="p">)</span>
 <span class="nb">print</span><span class="p">(</span><span class="n">point</span><span class="p">)</span>
 
-<span class="c1"># 2. Create Rotation matrix (90 degrees)</span>
-<span class="c1"># We create a 2x2 rotation matrix for a 90-degree rotation.</span>
-<span class="c1"># The rotation matrix for a 90-degree counterclockwise rotation in 2D is:</span>
-<span class="c1"># [ 0 -1]</span>
-<span class="c1"># [ 1  0]</span>
-<span class="c1"># because it transforms the point (x, y) to (-y, x), which corresponds </span>
-<span class="c1"># to a 90-degree rotation.</span>
+<span class="c1"># Step 2 - Create the 90-degree rotation matrix.</span>
+<span class="c1"># For a 90-degree counter-clockwise rotation in 2D, the matrix is:</span>
+<span class="c1">#   [ 0  -1 ]</span>
+<span class="c1">#   [ 1   0 ]</span>
+<span class="c1"># because it transforms any point (x, y) into (-y, x).</span>
 <span class="n">rotation_matrix</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span>
     <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">],</span>
     <span class="p">[</span><span class="mi">1</span><span class="p">,</span>  <span class="mi">0</span><span class="p">]</span>
@@ -8301,74 +8383,134 @@ translation</p>
 <span class="nb">print</span><span class="p">(</span><span class="s2">"</span><span class="se">\n</span><span class="s2">Rotation Matrix:"</span><span class="p">)</span>
 <span class="nb">print</span><span class="p">(</span><span class="n">rotation_matrix</span><span class="p">)</span>
 
-<span class="c1"># 3. Perform Transformation</span>
-<span class="c1"># M x P = New Point rotated by 90 degrees</span>
-<span class="c1"># [ 0 -1][2]   = [ 0*2 + (-1)*1] = [-1]</span>
-<span class="c1"># [ 1  0][1]   = [ 1*2 +  0*1] = [ 2]</span>
+<span class="c1"># Step 3 - Perform the transformation: matrix @ column_vector.</span>
+<span class="c1"># The @ operator performs proper matrix multiplication in Python/NumPy</span>
+<span class="c1"># (this is NOT the same as multiplying two arrays element-by-element).</span>
+<span class="c1">#</span>
+<span class="c1"># By hand, this calculation is:</span>
+<span class="c1">#   [ 0  -1 ] [2]   [ 0*2 + (-1)*1 ]   [-1]</span>
+<span class="c1">#   [ 1   0 ] [1] = [ 1*2 +   0*1  ] = [ 2]</span>
+<span class="n">rotated_point</span> <span class="o">=</span> <span class="n">rotation_matrix</span> <span class="o">@</span> <span class="n">point</span>
 
-<span class="n">rotated_point</span> <span class="o">=</span> <span class="n">rotation_matrix</span> <span class="o">@</span> <span class="n">point</span>  <span class="c1"># The @ operator is used for matrix multiplication in Python. It multiplies the rotation matrix by the point vector to get the new coordinates of the point after rotation.</span>
-
-<span class="nb">print</span><span class="p">(</span><span class="s2">"</span><span class="se">\n</span><span class="s2">Rotated Point:"</span><span class="p">)</span> 
+<span class="nb">print</span><span class="p">(</span><span class="s2">"</span><span class="se">\n</span><span class="s2">Rotated Point:"</span><span class="p">)</span>
 <span class="nb">print</span><span class="p">(</span><span class="n">rotated_point</span><span class="p">)</span>
-<span class="c1"># Output: [[-1]</span>
-<span class="c1">#          [ 2]]</span>
+<span class="c1"># Output:</span>
+<span class="c1"># [[-1]</span>
+<span class="c1">#  [ 2]]</span>
 </code></pre></div>
-<h3 id="the-following-figure-shows-how-the-vector-gets-rotated">The following figure shows how the vector gets rotated<a class="headerlink" href="#the-following-figure-shows-how-the-vector-gets-rotated" title="Permanent link">&para;</a></h3>
-<p><img alt="2D diagram" src="https://github.com/ag999git/001-Python-book-2026/blob/main/resources/ch11-final-vector-rotation.png" /></p>
+<p><strong>Beginner tip:</strong> try tracing the "by hand" calculation in the comment
+against the actual printed output — matching a small example like this by
+hand is one of the best ways to build real confidence in matrix
+multiplication, rather than just trusting that <code>@</code> does the right thing.</p>
+<h3 id="the-following-figure-shows-how-the-point-gets-rotated">The following figure shows how the point gets rotated<a class="headerlink" href="#the-following-figure-shows-how-the-point-gets-rotated" title="Permanent link">&para;</a></h3>
+<p><img alt="2D diagram showing a point rotated 90 degrees using a rotation matrix" src="/001-mkdocs/resources/ch11-final-vector-rotation.png" /></p>
+<hr />
 <h2 id="9-example-scaling-transformation">9. Example: Scaling Transformation<a class="headerlink" href="#9-example-scaling-transformation" title="Permanent link">&para;</a></h2>
-<p>Scaling increases or decreases size.</p>
-<h2 id="example-scaling-transformation">Example: Scaling Transformation<a class="headerlink" href="#example-scaling-transformation" title="Permanent link">&para;</a></h2>
-<p>Scaling increases or decreases size.</p>
-<p>Scaling matrix:</p>
-<p>In general  if:-</p>
+<p><strong>Scaling</strong> increases or decreases the size of a shape, stretching or
+shrinking it along each axis independently.</p>
+<p>If:</p>
 <ul>
-<li>
-<p>$<span class="arithmatex">\(s_x = scaling  factor\)</span>$  on  X-axis </p>
-</li>
-<li>
-<p>$<span class="arithmatex">\(s_y = scaling factor\)</span>$ on Y-axis </p>
-</li>
+<li><span class="arithmatex">\(s_x\)</span> = the scaling factor along the X-axis, and</li>
+<li><span class="arithmatex">\(s_y\)</span> = the scaling factor along the Y-axis,</li>
 </ul>
-<p>The scaling matrix is a <strong>diagonal matrix</strong></p>
+<p>then the scaling matrix is a <strong>diagonal matrix</strong> (a matrix with values only
+along its main diagonal, and zeros everywhere else):</p>
 <div class="arithmatex">\[
-S = \begin{bmatrix} s_x &amp; 0 \\\\ 0 &amp; s_y \end{bmatrix}
+S = \begin{bmatrix} s_x &amp; 0 \\ 0 &amp; s_y \end{bmatrix}
 \]</div>
-<p><div class="highlight"><pre><span></span><code><span class="p">[</span><span class="mi">2</span> <span class="mi">0</span><span class="p">]</span>  
-<span class="p">[</span><span class="mi">0</span> <span class="mi">3</span><span class="p">]</span>
+<p>For example, the matrix</p>
+<div class="highlight"><pre><span></span><code>[2 0]
+[0 3]
 </code></pre></div>
-This means:</p>
-<p>x scaled by 2<br />
-y scaled by 3</p>
-<p>Example script:</p>
-<p>Scaling matrix:</p>
-<p><div class="highlight"><pre><span></span><code><span class="p">[</span><span class="mi">2</span> <span class="mi">0</span><span class="p">]</span>  
-<span class="p">[</span><span class="mi">0</span> <span class="mi">3</span><span class="p">]</span>
-</code></pre></div>
-This means:</p>
-<p>x scaled by 2<br />
-y scaled by 3</p>
-<h2 id="example-script">Example script:<a class="headerlink" href="#example-script" title="Permanent link">&para;</a></h2>
-<div class="highlight"><pre><span></span><code><span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
-<span class="c1"># Scaling Transformation</span>
+<p>scales every point's <code>x</code>-coordinate by <code>2</code> and its <code>y</code>-coordinate by <code>3</code>.</p>
+<h2 id="10-script-scaling-transformation">10. Script: Scaling Transformation<a class="headerlink" href="#10-script-scaling-transformation" title="Permanent link">&para;</a></h2>
+<div class="highlight"><pre><span></span><code><span class="c1"># Scaling Transformation Example</span>
 
-<span class="c1"># 1. Create Original point</span>
-<span class="n">point</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mi">3</span><span class="p">,</span><span class="mi">4</span><span class="p">])</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span><span class="mi">1</span><span class="p">)</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
 
-<span class="c1"># 2. Create Scaling matrix</span>
+<span class="c1"># Step 1 - Create the original point (3, 4) as a COLUMN VECTOR.</span>
+<span class="n">point</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">])</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+
+<span class="c1"># Step 2 - Create the scaling matrix.</span>
+<span class="c1"># This is a diagonal matrix: 2 along the top-left (scales x),</span>
+<span class="c1"># 3 along the bottom-right (scales y), and zeros elsewhere.</span>
 <span class="n">scaling_matrix</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span>
-    <span class="p">[</span><span class="mi">2</span><span class="p">,</span><span class="mi">0</span><span class="p">],</span>
-    <span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="mi">3</span><span class="p">]</span>
+    <span class="p">[</span><span class="mi">2</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span>
+    <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">3</span><span class="p">]</span>
 <span class="p">])</span>
 
-<span class="c1"># 3. Perform Transformation</span>
-<span class="n">scaled_point</span> <span class="o">=</span> <span class="n">scaling_matrix</span> <span class="o">@</span> <span class="n">point</span>  <span class="c1"># The @ operator is used for matrix multiplication in Python. It multiplies the scaling matrix by the point vector to get the new coordinates of the point after scaling.</span>
+<span class="c1"># Step 3 - Perform the transformation: matrix @ column_vector.</span>
+<span class="c1"># The @ operator performs matrix multiplication, applying the scaling</span>
+<span class="c1"># factors to the point's x and y coordinates independently.</span>
+<span class="n">scaled_point</span> <span class="o">=</span> <span class="n">scaling_matrix</span> <span class="o">@</span> <span class="n">point</span>
 
 <span class="nb">print</span><span class="p">(</span><span class="s2">"Scaled Point:"</span><span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span><span class="n">scaled_point</span><span class="p">)</span>  <span class="c1"># Output: [[ 6]</span>
-<span class="c1">#                    #          [12]]</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">scaled_point</span><span class="p">)</span>
+<span class="c1"># Output:</span>
+<span class="c1"># [[ 6]</span>
+<span class="c1">#  [12]]</span>
+<span class="c1"># (x: 3 * 2 = 6,  y: 4 * 3 = 12)</span>
 </code></pre></div>
 <h2 id="figure-showing-scaling-in-2d">Figure showing scaling in 2D<a class="headerlink" href="#figure-showing-scaling-in-2d" title="Permanent link">&para;</a></h2>
-<p><img alt="Figure showing scaling" src="https://github.com/ag999git/001-Python-book-2026/blob/main/resources/ch11-scaling-matrix.png" /></p>
+<p><img alt="Figure showing a point scaled using a diagonal scaling matrix" src="/001-mkdocs/resources/ch11-scaling-matrix.png" /></p>
+<hr />
+<h2 id="11-conclusion-when-to-use-row-vectors-vs-column-vectors">11. Conclusion: When to Use Row Vectors vs. Column Vectors<a class="headerlink" href="#11-conclusion-when-to-use-row-vectors-vs-column-vectors" title="Permanent link">&para;</a></h2>
+<p>Bringing together everything above, here's a practical rule of thumb:</p>
+<table>
+<thead>
+<tr>
+<th>Use a <strong>row vector</strong> when…</th>
+<th>Use a <strong>column vector</strong> when…</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>You're representing one record/observation in a dataset (e.g. one row of a spreadsheet or CSV file)</td>
+<td>You're representing a point, direction, or quantity that will go through matrix multiplication</td>
+</tr>
+<tr>
+<td>You're feeding a single example into a machine-learning model for prediction</td>
+<td>You're performing geometric transformations — rotation, scaling, projection, translation</td>
+</tr>
+<tr>
+<td>Readability alongside tabular data matters more than matrix-multiplication conventions</td>
+<td>You want to follow the standard linear-algebra convention (<code>y = Mx</code>) used in nearly every textbook and library</td>
+</tr>
+</tbody>
+</table>
+<p>In short: <strong>row vectors are the natural fit for "one record of data,"</strong>
+the way you'd think of a single row in a spreadsheet, while <strong>column
+vectors are the natural fit for "one mathematical object being
+transformed,"</strong> the way you'd think of a point moving through space. When
+in doubt, and especially when working with transformation matrices, the
+column vector is the safer, more conventional default.</p>
+<div class="highlight"><pre><span></span><code>flowchart TD
+    Q["Do you need to multiply by a&lt;br/&gt;transformation matrix (M x)?"] --&gt;|Yes| CV["Use a column vector"]
+    Q --&gt;|No| R["Are you representing one record&lt;br/&gt;of a dataset or one input example?"]
+    R --&gt;|Yes| RV["Use a row vector"]
+    R --&gt;|No| CV2["Column vector is usually the safer default"]
+</code></pre></div>
+<hr />
+<h2 id="follow-up-questions-for-practice">Follow-up questions for practice<a class="headerlink" href="#follow-up-questions-for-practice" title="Permanent link">&para;</a></h2>
+<p><em>(These are additional, optional questions for self-testing — they don't
+replace or change the original research question above.)</em></p>
+<ol>
+<li>Take the row vector <code>np.array([3, 5, 7]).reshape(1, 3)</code> and the column
+   vector <code>np.array([3, 5, 7]).reshape(3, 1)</code>. What happens if you try
+   <code>row_vector @ column_vector</code>? What about <code>column_vector @ row_vector</code>?
+   Predict the resulting shape <em>before</em> running the code, then check.</li>
+<li>Modify the rotation script to rotate the point <code>(2, 1)</code> by 90° a second
+   time (i.e. rotate the already-rotated point again). What point do you
+   end up at, and how does that compare to rotating the original point by
+   180° in one step?</li>
+<li>Write a scaling matrix that scales <code>x</code> by <code>0.5</code> (shrinking it) and
+   leaves <code>y</code> unchanged. Apply it to the point <code>(8, 8)</code> and predict the
+   result before running your code.</li>
+<li>A NumPy 1D array such as <code>np.array([3, 5, 7])</code> has shape <code>(3,)</code>. Why is
+   this considered neither a row vector nor a column vector until it's
+   reshaped? What practical problems might this cause if you forget to
+   reshape it before a matrix multiplication?</li>
+</ol>
 
 
 
