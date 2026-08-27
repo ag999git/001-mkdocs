@@ -25,7 +25,7 @@
     
     
       
-        <title>Project: Understanding 3D Arrays and Axis Operations in NumPy - Python 999</title>
+        <title>Chapter 11 — Project: Understanding 3D Arrays and Axis Operations in NumPy - Python 999</title>
       
     
     
@@ -82,7 +82,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#project-understanding-3d-arrays-and-axis-operations-in-numpy" class="md-skip">
+        <a href="#chapter-11-project-understanding-3d-arrays-and-axis-operations-in-numpy" class="md-skip">
           Skip to content
         </a>
       
@@ -118,7 +118,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              Project: Understanding 3D Arrays and Axis Operations in NumPy
+              Chapter 11 — Project: Understanding 3D Arrays and Axis Operations in NumPy
             
           </span>
         </div>
@@ -3840,7 +3840,7 @@
   <span class="md-ellipsis">
     
   
-    Project: Understanding 3D Arrays and Axis Operations in NumPy
+    Chapter 11 — Project: Understanding 3D Arrays and Axis Operations in NumPy
   
 
     
@@ -3858,7 +3858,7 @@
   <span class="md-ellipsis">
     
   
-    Project: Understanding 3D Arrays and Axis Operations in NumPy
+    Chapter 11 — Project: Understanding 3D Arrays and Axis Operations in NumPy
   
 
     
@@ -3884,32 +3884,21 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
+  <a href="#about-this-chapter" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        About this chapter
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#objective" class="md-nav__link">
     <span class="md-ellipsis">
       
         Objective
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#part-a-conceptual-study" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        PART A — CONCEPTUAL STUDY
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#study-questions" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Study Questions
       
     </span>
   </a>
@@ -8099,168 +8088,341 @@
   
 
 
-<h1 id="project-understanding-3d-arrays-and-axis-operations-in-numpy">Project: Understanding 3D Arrays and Axis Operations in NumPy<a class="headerlink" href="#project-understanding-3d-arrays-and-axis-operations-in-numpy" title="Permanent link">&para;</a></h1>
+<h1 id="chapter-11-project-understanding-3d-arrays-and-axis-operations-in-numpy">Chapter 11 — Project: Understanding 3D Arrays and Axis Operations in NumPy<a class="headerlink" href="#chapter-11-project-understanding-3d-arrays-and-axis-operations-in-numpy" title="Permanent link">&para;</a></h1>
+<h2 id="about-this-chapter">About this chapter<a class="headerlink" href="#about-this-chapter" title="Permanent link">&para;</a></h2>
+<p>Up to now, you've mostly worked with 1D arrays (a simple list of numbers)
+and 2D arrays (a grid of rows and columns). This project takes the natural
+next step: <strong>3D arrays</strong> — arrays with a third dimension, best pictured as
+several 2D grids stacked on top of one another, like pages in a notebook or
+layers in a cake.</p>
+<p>The real point of this project isn't just building a 3D array — it's
+understanding <strong>axes</strong>, and specifically what happens when you tell NumPy
+to "sum along axis 0," "axis 1," or "axis 2." This single idea —
+<strong>collapsing one axis while keeping the others</strong> — is the same idea behind
+almost every "reduce this data down" operation you'll later use in NumPy
+and pandas (totals, averages, counts, and so on), so it's worth taking the
+time to build a solid mental picture of it here, with a small example you
+can fully trace by hand.</p>
+<blockquote>
+<p><strong>Quick glossary, before we start</strong>
+- <strong>Dimension / axis</strong> — a "direction" along which an array's data is
+  arranged. A 2D array has 2 axes (rows and columns); a 3D array has 3
+  axes. See the <a href="https://numpy.org/doc/stable/user/absolute_beginners.html#understanding-data-types">NumPy guide to array basics</a>.
+- <strong>Shape</strong> — a tuple telling you the array's size along each axis, e.g.
+  <code>(2, 2, 2)</code> means "2 along axis 0, 2 along axis 1, 2 along axis 2."
+- <strong><code>sum(axis=...)</code></strong> — adds up values <em>along</em> the axis you specify,
+  effectively collapsing (removing) that axis from the result. Explained
+  step by step below.
+- <strong>Collapsing an axis</strong> — the everyday way to describe what
+  <code>sum(axis=...)</code> (or <code>mean()</code>, <code>max()</code>, etc.) does: that axis
+  "disappears" from the result's shape because its values have been
+  combined into one.</p>
+</blockquote>
 <hr />
 <h2 id="objective">Objective<a class="headerlink" href="#objective" title="Permanent link">&para;</a></h2>
 <p>To understand:</p>
 <ul>
-<li>Structure of 3D arrays</li>
-<li>Meaning of axes (0, 1, 2)</li>
+<li>The structure of 3D arrays</li>
+<li>The meaning of axes (<code>0</code>, <code>1</code>, <code>2</code>)</li>
 <li>How <code>sum(axis=...)</code> works</li>
 <li>How multi-dimensional data is reduced</li>
 </ul>
 <hr />
-<h2 id="part-a-conceptual-study">PART A — CONCEPTUAL STUDY<a class="headerlink" href="#part-a-conceptual-study" title="Permanent link">&para;</a></h2>
+<h1 id="part-a-conceptual-study">PART A — CONCEPTUAL STUDY<a class="headerlink" href="#part-a-conceptual-study" title="Permanent link">&para;</a></h1>
 <h2 id="study-questions">Study Questions<a class="headerlink" href="#study-questions" title="Permanent link">&para;</a></h2>
 <ol>
 <li>What is the shape of a 3D array?</li>
 <li>What do the three indices represent?</li>
+<li>What do the three indices represent?</li>
 <li>What does each axis correspond to?</li>
-<li>What does it mean to “collapse an axis”?</li>
+<li>What does it mean to "collapse an axis"?</li>
 </ol>
+<blockquote>
+<p><strong>Note:</strong> questions 2 and 3 in the printed book both ask "What do the
+three indices represent?" — that repetition is preserved above exactly
+as printed, rather than silently corrected, since the original questions
+can't be changed. Question 4 below treats it as a single question and
+answers it once.</p>
+</blockquote>
+<h3 id="suggested-answers">Suggested answers:<a class="headerlink" href="#suggested-answers" title="Permanent link">&para;</a></h3>
+<p><strong>1. What is the shape of a 3D array?</strong></p>
+<p>A 3D array's shape is a tuple of <strong>three numbers</strong>, written as
+<code>(depth, rows, columns)</code>. For example, a shape of <code>(2, 2, 2)</code> means: 2
+separate 2×2 grids, stacked one behind another. You can check any array's
+shape at any time with <code>arr.shape</code>.</p>
+<p><strong>2–3. What do the three indices represent?</strong></p>
+<p>Each element in a 3D array is located using <strong>three index numbers</strong>,
+written <code>arr[i, j, k]</code>:</p>
+<table>
+<thead>
+<tr>
+<th>Index</th>
+<th>Common name in this project</th>
+<th>What it selects</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>i</code> (1st index)</td>
+<td>Layer / depth</td>
+<td><em>Which</em> 2D grid (layer) you're looking at</td>
+</tr>
+<tr>
+<td><code>j</code> (2nd index)</td>
+<td>Row</td>
+<td><em>Which row</em> within that layer</td>
+</tr>
+<tr>
+<td><code>k</code> (3rd index)</td>
+<td>Column</td>
+<td><em>Which column</em> within that row</td>
+</tr>
+</tbody>
+</table>
+<p>So <code>arr[1, 0, 1]</code> means: "go to layer <code>1</code>, then row <code>0</code> within that layer,
+then column <code>1</code> within that row."</p>
+<p><strong>4. What does each axis correspond to?</strong></p>
+<p>An <strong>axis</strong> is simply the direction associated with one of those indices.
+For a 3D array shaped <code>(layers, rows, columns)</code>:</p>
+<table>
+<thead>
+<tr>
+<th>Axis</th>
+<th>Direction it moves along</th>
+<th>Colloquially</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>axis=0</code></td>
+<td>Between layers</td>
+<td>"Depth" — moving from one layer to the next</td>
+</tr>
+<tr>
+<td><code>axis=1</code></td>
+<td>Between rows, within a layer</td>
+<td>"Down" — moving from one row to the next</td>
+</tr>
+<tr>
+<td><code>axis=2</code></td>
+<td>Between columns, within a row</td>
+<td>"Across" — moving from one column to the next</td>
+</tr>
+</tbody>
+</table>
+<p><strong>5. What does it mean to "collapse an axis"?</strong></p>
+<p>When you run an operation like <code>arr.sum(axis=0)</code>, NumPy combines
+(adds together, in this case) every value <strong>along</strong> axis 0, and that axis
+disappears from the resulting shape — it has been "collapsed" into a
+single combined value at each remaining position. This is exactly why
+summing a <code>(2, 2, 2)</code> array along <code>axis=0</code> leaves you with a <code>(2, 2)</code>
+result: one dimension has been removed, and the other two survive
+unchanged.</p>
+<p><img alt="Flowchart" src="/001-mkdocs/resources/ch-11-numpy-august-2026-3D-arrays-axis-ops.png" /></p>
 <hr />
 <h1 id="visualizing-a-3d-array">Visualizing a 3D Array<a class="headerlink" href="#visualizing-a-3d-array" title="Permanent link">&para;</a></h1>
-<p>Given a 3D array:
-<div class="highlight"><pre><span></span><code>arr  =  np.array([  
- [[1,2],[3,4]],  
- [[5,6],[7,8]]  
-])
-</code></pre></div></p>
-<h3 id="its-shape-2-2-2">Its Shape = (2, 2, 2)<a class="headerlink" href="#its-shape-2-2-2" title="Permanent link">&para;</a></h3>
+<p>Given a 3D array:</p>
+<div class="highlight"><pre><span></span><code><span class="n">arr</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span>
+    <span class="p">[[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">],</span> <span class="p">[</span><span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">]],</span>
+    <span class="p">[[</span><span class="mi">5</span><span class="p">,</span> <span class="mi">6</span><span class="p">],</span> <span class="p">[</span><span class="mi">7</span><span class="p">,</span> <span class="mi">8</span><span class="p">]]</span>
+<span class="p">])</span>
+</code></pre></div>
+<h3 id="its-shape-2-2-2">Its shape = <code>(2, 2, 2)</code><a class="headerlink" href="#its-shape-2-2-2" title="Permanent link">&para;</a></h3>
+<p>Read as: <strong>2 layers</strong>, each with <strong>2 rows</strong>, each row having <strong>2
+columns</strong>.</p>
 <hr />
-<h2 id="there-are-various-ways-in-which-it-can-be-represented-visualized">There are various ways in which it can be represented/ visualized<a class="headerlink" href="#there-are-various-ways-in-which-it-can-be-represented-visualized" title="Permanent link">&para;</a></h2>
-<p>### Representation 1: Visualizing it as 2 layers
-<div class="highlight"><pre><span></span><code>Layer 0:  
-[[1 2]  
- [3 4]]  
+<h2 id="there-are-several-ways-to-picture-the-same-array">There are several ways to picture the same array<a class="headerlink" href="#there-are-several-ways-to-picture-the-same-array" title="Permanent link">&para;</a></h2>
+<h3 id="representation-1-two-stacked-layers">Representation 1: Two stacked layers<a class="headerlink" href="#representation-1-two-stacked-layers" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code>Layer 0:
+[[1 2]
+ [3 4]]
 
-Layer 1:  
-[[5 6]  
+Layer 1:
+[[5 6]
  [7 8]]
-</code></pre></div></p>
-<hr />
-<h3 id="representation-2-indexed-view">Representation 2: Indexed View<a class="headerlink" href="#representation-2-indexed-view" title="Permanent link">&para;</a></h3>
-<p><strong>Here we view each item by its index of form <code>arr[i, j, k]</code></strong>
-<div class="highlight"><pre><span></span><code>arr[0,0,0] = 1   arr[0,0,1] = 2  
-arr[0,1,0] = 3   arr[0,1,1] = 4  
+</code></pre></div>
+<p><img alt="Flowchart" src="/001-mkdocs/resources/ch-11-numpy-august-2026-3D-arrays-2.png" /></p>
+<h3 id="representation-2-indexed-view-arri-j-k">Representation 2: Indexed view — <code>arr[i, j, k]</code><a class="headerlink" href="#representation-2-indexed-view-arri-j-k" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code>arr[0,0,0] = 1   arr[0,0,1] = 2
+arr[0,1,0] = 3   arr[0,1,1] = 4
 
-arr[1,0,0] = 5   arr[1,0,1] = 6  
+arr[1,0,0] = 5   arr[1,0,1] = 6
 arr[1,1,0] = 7   arr[1,1,1] = 8
-</code></pre></div></p>
-<hr />
-<h3 id="representation-3-coordinates">Representation 3: Coordinates<a class="headerlink" href="#representation-3-coordinates" title="Permanent link">&para;</a></h3>
-<p><strong>*Here we view each item in the array as <code>(i, j, k) → value</code></strong> 
-  ```
-(0,0,0) → 1<br />
+</code></pre></div>
+<h3 id="representation-3-coordinates-value">Representation 3: Coordinates → value<a class="headerlink" href="#representation-3-coordinates-value" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code>(0,0,0) → 1
 (1,1,1) → 8
-<div class="highlight"><pre><span></span><code>----------
+</code></pre></div>
+<p><strong>Beginner tip:</strong> all three representations above describe the <em>exact same
+array</em> — they're just different ways of looking at it. If you can
+translate confidently between "layer 0, row 1, column 0" and <code>arr[0,1,0]</code>
+and "the value <code>3</code>," you've understood the core idea behind 3D indexing.</p>
+<hr />
+<h2 id="part-b-task">Part B: Task<a class="headerlink" href="#part-b-task" title="Permanent link">&para;</a></h2>
+<p>Write a script that:</p>
+<ol>
+<li>Creates the 3D array</li>
+<li>Displays it in multiple forms</li>
+<li>Computes:</li>
+<li><code>sum(axis=0)</code></li>
+<li><code>sum(axis=1)</code></li>
+<li><code>sum(axis=2)</code></li>
+<li>Explains each result</li>
+</ol>
+<h3 id="hints">HINTS<a class="headerlink" href="#hints" title="Permanent link">&para;</a></h3>
+<ul>
+<li>Use loops to print layers</li>
+<li>Print shapes after each operation</li>
+<li>Compare results carefully</li>
+</ul>
+<hr />
+<h2 id="script">Script<a class="headerlink" href="#script" title="Permanent link">&para;</a></h2>
+<p>Every stage of the script below is labelled with a <code># Step N -</code> comment,
+matching the four-part task above, so you can follow along without losing
+your place. Comments have also been added inline wherever a beginner is
+likely to pause and ask "wait, why that number?"</p>
+<div class="highlight"><pre><span></span><code><span class="c1"># 3D Array Axis Exploration</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
 
-## Part B: Task
+<span class="c1"># Step 1 - Create the array, and think of it as 2 "layers" of 2x2 grids.</span>
+<span class="n">arr</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span>
+    <span class="p">[</span>   <span class="c1"># Layer 0</span>
+        <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">],</span>
+        <span class="p">[</span><span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">]</span>
+    <span class="p">],</span>
+    <span class="p">[</span>   <span class="c1"># Layer 1</span>
+        <span class="p">[</span><span class="mi">5</span><span class="p">,</span> <span class="mi">6</span><span class="p">],</span>
+        <span class="p">[</span><span class="mi">7</span><span class="p">,</span> <span class="mi">8</span><span class="p">]</span>
+    <span class="p">]</span>
+<span class="p">])</span>
 
-Write a script that:
-
-1.  Creates the 3D array
-2.  Displays it in multiple forms
-3.  Computes:
-    -   `sum(axis=0)`
-    -   `sum(axis=1)`
-    -   `sum(axis=2)`
-4.  Explains each result
-
-----------
-
-### HINTS
-
--   Use loops to print layers
--   Print shapes after each operation
--   Compare results carefully
-
-----------
-
-## Script
-
-
-```python
-
-# 3D Array Axis Exploration
-
-import numpy as np
-
-# Step 1: Create array. Visualize as 2 layers of 2x2 matrices.
-arr = np.array([
-    [   # Layer 0
-        [1, 2],
-        [3, 4]
-    ],
-    [   # Layer 1
-        [5, 6],
-        [7, 8]
-    ]
-])
-
-print("Array shape:", arr.shape)  # (2, 2, 2) → 2 layers, each with 2 rows and 2 columns
-print("Array:-&gt;\n", arr)
-# Output:
-# Array:-&gt;
-# [[[1 2]
-#   [3 4]]
-#
-#  [[5 6]
-#   [7 8]]]
-
-# Step 2: Visualize layers. Each layer is a 2x2 matrix. We can access them using arr[0] and arr[1].
-for i in range(arr.shape[0]):
-    print(f"\nLayer-&gt; {i}:\n", arr[i])
-
-# Output:
-# Layer-&gt; 0:
-# [[1 2]
-#  [3 4]]
-# Layer-&gt; 1:
-# [[5 6]
-#  [7 8]]
-
-# Step 3: axis = 0 (across layers). For each position (i,j), sum across layers:
-sum0 = arr.sum(axis=0)
-print("\nSum axis=0:\n", sum0)
-# Output:
-# [[ 6  8]
-#  [10 12]]
-# Explanation:
-# axis=0 → combine layers. For each position (i,j), sum across layers:
-# sum0[0,0] = arr[0,0,0] + arr[1,0,0] = 1 + 5 = 6
-# sum0[0,1] = arr[0,0,1] + arr[1,0,1] = 2 + 6 = 8
-# sum0[1,0] = arr[0,1,0] + arr[1,1,0] = 3 + 7 = 10
-# sum0[1,1] = arr[0,1,1] + arr[1,1,1] = 4 + 8 = 12  
-
-# Step 4: axis = 1 (across rows). For each layer and column, sum across rows:
-# For layer 0, column 0: sum1[0,0] = arr[0,0,0] + arr[0,1,0] = 1 + 3 = 4
-# For layer 0, column 1: sum1[0,1] = arr[0,0,1] + arr[0,1,1] = 2 + 4 = 6
-# For layer 1, column 0: sum1[1,0] = arr[1,0,0] + arr[1,1,0] = 5 + 7 = 12
-# For layer 1, column 1: sum1[1,1] = arr[1,0,1] + arr[1,1,1] = 6 + 8 = 14
-sum1 = arr.sum(axis=1)
-print("\nSum axis=1:\n", sum1)
-# Output:
-# [[ 4  6]
-#  [12 14]]
+<span class="nb">print</span><span class="p">(</span><span class="s2">"Array shape:"</span><span class="p">,</span> <span class="n">arr</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>   <span class="c1"># (2, 2, 2) -&gt; 2 layers, each 2 rows x 2 columns</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">"Array:-&gt;</span><span class="se">\n</span><span class="s2">"</span><span class="p">,</span> <span class="n">arr</span><span class="p">)</span>
+<span class="c1"># Output:</span>
+<span class="c1"># Array:-&gt;</span>
+<span class="c1"># [[[1 2]</span>
+<span class="c1">#   [3 4]]</span>
+<span class="c1">#</span>
+<span class="c1">#  [[5 6]</span>
+<span class="c1">#   [7 8]]]</span>
 
 
-# Step 5: axis = 2 (across columns). For each layer and row, sum across columns:
-# For layer 0, row 0: sum2[0,0] = arr[0,0,0] + arr[0,0,1] = 1 + 2 = 3
-# For layer 0, row 1: sum2[0,1] = arr[0,1,0] + arr[0,1,1] = 3 + 4 = 7
-# For layer 1, row 0: sum2[1,0] = arr[1,0,0] + arr[1,0,1] = 5 + 6 = 11
-# For layer 1, row 1: sum2[1,1] = arr[1,1,0] + arr[1,1,1] = 7 + 8 = 15
-sum2 = arr.sum(axis=2)
-print("\nSum axis=2:\n", sum2)
-# Output:
-# [[ 3  7]
-#  [11 15]]
+<span class="c1"># Step 2 - Display the array one layer at a time.</span>
+<span class="c1"># arr[0] gives the whole first layer as a 2x2 grid, arr[1] gives the second.</span>
+<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">arr</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]):</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"</span><span class="se">\n</span><span class="s2">Layer-&gt; </span><span class="si">{</span><span class="n">i</span><span class="si">}</span><span class="s2">:</span><span class="se">\n</span><span class="s2">"</span><span class="p">,</span> <span class="n">arr</span><span class="p">[</span><span class="n">i</span><span class="p">])</span>
+<span class="c1"># Output:</span>
+<span class="c1"># Layer-&gt; 0:</span>
+<span class="c1"># [[1 2]</span>
+<span class="c1">#  [3 4]]</span>
+<span class="c1"># Layer-&gt; 1:</span>
+<span class="c1"># [[5 6]</span>
+<span class="c1">#  [7 8]]</span>
 
-# Overall Conclusion:
-# axis=0 → combine layers
-# axis=1 → combine rows
-# axis=2 → combine columns
-</code></pre></div></p>
+
+<span class="c1"># Step 3 - Sum along axis=0: this COLLAPSES THE LAYERS, adding</span>
+<span class="c1"># corresponding positions from Layer 0 and Layer 1 together.</span>
+<span class="c1"># Explanation, position by position:</span>
+<span class="c1">#   sum0[0,0] = arr[0,0,0] + arr[1,0,0] = 1 + 5 = 6</span>
+<span class="c1">#   sum0[0,1] = arr[0,0,1] + arr[1,0,1] = 2 + 6 = 8</span>
+<span class="c1">#   sum0[1,0] = arr[0,1,0] + arr[1,1,0] = 3 + 7 = 10</span>
+<span class="c1">#   sum0[1,1] = arr[0,1,1] + arr[1,1,1] = 4 + 8 = 12</span>
+<span class="n">sum0</span> <span class="o">=</span> <span class="n">arr</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">"</span><span class="se">\n</span><span class="s2">Sum axis=0 (collapses layers), shape"</span><span class="p">,</span> <span class="n">sum0</span><span class="o">.</span><span class="n">shape</span><span class="p">,</span> <span class="s2">":</span><span class="se">\n</span><span class="s2">"</span><span class="p">,</span> <span class="n">sum0</span><span class="p">)</span>
+<span class="c1"># Output:</span>
+<span class="c1"># [[ 6  8]</span>
+<span class="c1">#  [10 12]]</span>
+
+
+<span class="c1"># Step 4 - Sum along axis=1: this COLLAPSES THE ROWS within each layer,</span>
+<span class="c1"># adding each layer's row 0 and row 1 together, column by column.</span>
+<span class="c1"># Explanation, position by position:</span>
+<span class="c1">#   Layer 0, column 0: sum1[0,0] = arr[0,0,0] + arr[0,1,0] = 1 + 3 = 4</span>
+<span class="c1">#   Layer 0, column 1: sum1[0,1] = arr[0,0,1] + arr[0,1,1] = 2 + 4 = 6</span>
+<span class="c1">#   Layer 1, column 0: sum1[1,0] = arr[1,0,0] + arr[1,1,0] = 5 + 7 = 12</span>
+<span class="c1">#   Layer 1, column 1: sum1[1,1] = arr[1,0,1] + arr[1,1,1] = 6 + 8 = 14</span>
+<span class="n">sum1</span> <span class="o">=</span> <span class="n">arr</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">"</span><span class="se">\n</span><span class="s2">Sum axis=1 (collapses rows), shape"</span><span class="p">,</span> <span class="n">sum1</span><span class="o">.</span><span class="n">shape</span><span class="p">,</span> <span class="s2">":</span><span class="se">\n</span><span class="s2">"</span><span class="p">,</span> <span class="n">sum1</span><span class="p">)</span>
+<span class="c1"># Output:</span>
+<span class="c1"># [[ 4  6]</span>
+<span class="c1">#  [12 14]]</span>
+
+
+<span class="c1"># Step 5 - Sum along axis=2: this COLLAPSES THE COLUMNS within each row,</span>
+<span class="c1"># adding each row's two values together.</span>
+<span class="c1"># Explanation, position by position:</span>
+<span class="c1">#   Layer 0, row 0: sum2[0,0] = arr[0,0,0] + arr[0,0,1] = 1 + 2 = 3</span>
+<span class="c1">#   Layer 0, row 1: sum2[0,1] = arr[0,1,0] + arr[0,1,1] = 3 + 4 = 7</span>
+<span class="c1">#   Layer 1, row 0: sum2[1,0] = arr[1,0,0] + arr[1,0,1] = 5 + 6 = 11</span>
+<span class="c1">#   Layer 1, row 1: sum2[1,1] = arr[1,1,0] + arr[1,1,1] = 7 + 8 = 15</span>
+<span class="n">sum2</span> <span class="o">=</span> <span class="n">arr</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">"</span><span class="se">\n</span><span class="s2">Sum axis=2 (collapses columns), shape"</span><span class="p">,</span> <span class="n">sum2</span><span class="o">.</span><span class="n">shape</span><span class="p">,</span> <span class="s2">":</span><span class="se">\n</span><span class="s2">"</span><span class="p">,</span> <span class="n">sum2</span><span class="p">)</span>
+<span class="c1"># Output:</span>
+<span class="c1"># [[ 3  7]</span>
+<span class="c1">#  [11 15]]</span>
+
+
+<span class="c1"># Step 6 - Overall conclusion, printed as a quick reference.</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">"</span><span class="se">\n</span><span class="s2">Summary:"</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">"axis=0 -&gt; combines LAYERS  (depth disappears from the result)"</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">"axis=1 -&gt; combines ROWS    (row dimension disappears from the result)"</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">"axis=2 -&gt; combines COLUMNS (column dimension disappears from the result)"</span><span class="p">)</span>
+</code></pre></div>
+<hr />
+<h2 id="summary-table-what-each-axis-collapses">Summary table: what each axis collapses<a class="headerlink" href="#summary-table-what-each-axis-collapses" title="Permanent link">&para;</a></h2>
+<table>
+<thead>
+<tr>
+<th><code>axis=</code> value</th>
+<th>What gets combined</th>
+<th>What survives in the result</th>
+<th>Result shape (from this example)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>0</code></td>
+<td>Values across <strong>layers</strong></td>
+<td>Rows and columns</td>
+<td><code>(2, 2)</code></td>
+</tr>
+<tr>
+<td><code>1</code></td>
+<td>Values across <strong>rows</strong>, within each layer</td>
+<td>Layers and columns</td>
+<td><code>(2, 2)</code></td>
+</tr>
+<tr>
+<td><code>2</code></td>
+<td>Values across <strong>columns</strong>, within each row</td>
+<td>Layers and rows</td>
+<td><code>(2, 2)</code></td>
+</tr>
+</tbody>
+</table>
+<p><strong>Beginner tip:</strong> a quick way to sanity-check any <code>axis=</code> result is to
+count the dimensions. The original array had 3 dimensions (shape length 3);
+after summing along any single axis, exactly <strong>one</strong> dimension disappears,
+so the result always has 2 dimensions in this example — never zero, and
+never three.</p>
+<hr />
+<h2 id="follow-up-questions-for-practice">Follow-up questions for practice<a class="headerlink" href="#follow-up-questions-for-practice" title="Permanent link">&para;</a></h2>
+<p><em>(These are additional, optional questions for self-testing — they don't
+replace or change the original study questions or task above.)</em></p>
+<ol>
+<li>What would <code>arr.sum(axis=0).sum(axis=0)</code> give you — i.e. collapsing
+   axis 0 twice in a row? What single number do you expect, and why?</li>
+<li>If you called <code>arr.sum()</code> with <strong>no</strong> <code>axis</code> argument at all, what do
+   you think happens, and what shape would the result have? Try it and
+   check.</li>
+<li>Extend the array to 3 layers instead of 2 (you'll need to add a third
+   2×2 grid, and the array's shape will become <code>(3, 2, 2)</code>). Which
+   <code>sum(axis=...)</code> calls change shape as a result, and which stay the
+   same?</li>
+<li>Using <code>arr.mean(axis=1)</code> instead of <code>arr.sum(axis=1)</code>, work out by hand
+   what you'd expect the result to be for this project's original array,
+   then confirm it with code.</li>
+</ol>
 
 
 
