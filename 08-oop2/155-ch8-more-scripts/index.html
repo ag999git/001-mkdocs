@@ -8091,7 +8091,6 @@
 <h1 id="chapter-8155-20-more-python-scripting-scenarios">Chapter 8.155 — 20 More Python Scripting Scenarios<a class="headerlink" href="#chapter-8155-20-more-python-scripting-scenarios" title="Permanent link">&para;</a></h1>
 <h2 id="what-this-page-covers">What this page covers<a class="headerlink" href="#what-this-page-covers" title="Permanent link">&para;</a></h2>
 <p>This page is a second set of twenty short scripting exercises, covering the same broad territory as the earlier "20 Programming Script Questions" page — inheritance patterns, MRO, abstraction, composition, namespaces, and a few new additions (virtual subclasses, class decorators, and enforcing <code>__eq__</code>/<code>__hash__</code> consistency). Working through both sets back to back is a good way to confirm that these ideas have become second nature, rather than something you can only recognize when reading about them.</p>
-<p>The questions and code are fixed, exactly as printed in the book. The original write-up around them used quite dense, formal language (the kind of phrasing you'd find in a software architecture document rather than a beginner's guide) — the version below explains the same twenty scripts in plain, everyday language instead, with fuller step comments, expected output added wherever it was missing, and links back to the specific earlier chapter pages that cover each idea in full depth.</p>
 <hr />
 <p><strong>1. Checking instance relationships using <code>isinstance()</code> for parent and child classes.</strong></p>
 <div class="highlight"><pre><span></span><code><span class="k">class</span><span class="w"> </span><span class="nc">Parent</span><span class="p">:</span>
@@ -8211,18 +8210,7 @@
 <span class="n">d1</span><span class="o">.</span><span class="n">action</span><span class="p">()</span>   <span class="c1"># -&gt; Walking...</span>
 <span class="n">d2</span><span class="o">.</span><span class="n">action</span><span class="p">()</span>   <span class="c1"># -&gt; Swimming...</span>
 </code></pre></div>
-<div class="highlight"><pre><span></span><code>graph TD
-    Walker[Walker]
-    Swimmer[Swimmer]
-    Dog1[Dog1 Walker then Swimmer]
-    Dog2[Dog2 Swimmer then Walker]
-
-    Walker --&gt; Dog1
-    Swimmer --&gt; Dog1
-    Swimmer --&gt; Dog2
-    Walker --&gt; Dog2
-</code></pre></div>
-<p><em>(This diagram uses plain <code>graph TD</code> syntax with simple boxes and arrows only — no subgraphs, no styled/labeled edges, no special characters in labels — so it should paste cleanly into draw.io via Extras → Edit Diagram.)</em></p>
+<p><img alt="Flowchart" src="/001-mkdocs/resources/ch-8-august-2026-scripting-question-II-q7.png" /></p>
 <hr />
 <p><strong>8. Implementing a basic "Has-A" relationship (Composition) between a <code>Dog</code> and a <code>Collar</code>.</strong></p>
 <p>See the earlier "Has-A Relationships" chapter page for the full comparison against the two weaker Has-A variants (Aggregation and Dependency).</p>
@@ -8300,16 +8288,7 @@
 <span class="c1"># from Pet -- isinstance() and issubclass() recognise the registration,</span>
 <span class="c1"># but the actual method-lookup chain (__mro__) is completely unaffected by it.</span>
 </code></pre></div>
-<div class="highlight"><pre><span></span><code>graph TD
-    Pet[Pet - ABC]
-    RobotDog[RobotDog - no real inheritance]
-    IsinstanceCheck[isinstance RobotDog Pet - True]
-    MROCheck[RobotDog dot mro - does not include Pet]
-
-    Pet -.-&gt;|registered| RobotDog
-    RobotDog --&gt; IsinstanceCheck
-    RobotDog --&gt; MROCheck
-</code></pre></div>
+<p><img alt="Flowchart" src="/001-mkdocs/resources/ch-8-august-2026-scripting-question-II-q11.png" /></p>
 <hr />
 <p><strong>12. Creating a custom container using <code>__setitem__</code> and <code>__getitem__</code>.</strong></p>
 <div class="highlight"><pre><span></span><code><span class="k">class</span><span class="w"> </span><span class="nc">VehicleRegistry</span><span class="p">:</span>
