@@ -8328,13 +8328,7 @@ are exactly what <code>matrix @ vector</code> computes in a single line of Pytho
   converting from degrees is a common early stumbling block. See
   <a href="https://numpy.org/doc/stable/reference/generated/numpy.radians.html">NumPy's <code>radians()</code> documentation</a>.</p>
 </blockquote>
-<div class="highlight"><pre><span></span><code>flowchart TD
-    A["Vector x"] --&gt; B["Multiply by matrix M: y = M x"]
-    B --&gt; C["Uniform scaling:&lt;br/&gt;same factor on every axis"]
-    B --&gt; D["Non-uniform scaling:&lt;br/&gt;different factor per axis"]
-    B --&gt; E["Reflection:&lt;br/&gt;flips across an axis or line"]
-    B --&gt; F["Rotation:&lt;br/&gt;turns the vector by an angle"]
-</code></pre></div>
+<p><img alt="Flowchart" src="/001-mkdocs/resources/ch-11-numpy-august-2026-vector-matrices-01.png" /></p>
 <hr />
 <h2 id="1-vectors-and-matrices">1. Vectors and Matrices<a class="headerlink" href="#1-vectors-and-matrices" title="Permanent link">&para;</a></h2>
 <p>In standard algebra, a vector is typically represented as a column matrix.
@@ -8622,7 +8616,9 @@ R(\theta)=\left[\begin{array}{cc}
 \end{array}\right]
 \]</div>
 <p><strong>Example:</strong> suppose we want to rotate the point</p>
-<div class="arithmatex">\[\mathbf{x}=\begin{bmatrix} 1\\2\end{bmatrix}\]</div>
+<div class="arithmatex">\[
+\mathbf{x} = \begin{bmatrix} 1 \\\\ 2 \end{bmatrix}
+\]</div>
 <p>by <span class="arithmatex">\(90°\)</span> (<span class="arithmatex">\(\pi/2\)</span> radians). Since <span class="arithmatex">\(\cos(90°) = 0\)</span> and <span class="arithmatex">\(\sin(90°) = 1\)</span>:</p>
 <div class="arithmatex">\[
 R(90°)=\begin{bmatrix}
@@ -8640,20 +8636,7 @@ the example introduces. Both versions are shown below so you can see
 exactly where the mismatch is, and what the correct result is for the
 vector the example originally names.</p>
 </blockquote>
-<p><strong>As printed (rotating <span class="arithmatex">\([1, 0]^T\)</span>, not <span class="arithmatex">\([1, 2]^T\)</span>):</strong></p>
-<div class="arithmatex">\[
-\mathbf{x}^{\prime}=\left[\begin{array}{cc}
-0 &amp; -1 \\
-1 &amp; 0
-\end{array}\right]\left[\begin{array}{l}
-1 \\
-0
-\end{array}\right]=\left[\begin{array}{l}
-0 \\
-1
-\end{array}\right]
-\]</div>
-<p><strong>Corrected (actually rotating the stated vector <span class="arithmatex">\([1, 2]^T\)</span>):</strong></p>
+<p><strong>Rotating the vector <span class="arithmatex">\([1, 2]^T\)</span>):</strong></p>
 <div class="arithmatex">\[
 \mathbf{x}^{\prime}=\left[\begin{array}{cc}
 0 &amp; -1 \\
@@ -8685,15 +8668,9 @@ vector the example originally names.</p>
 <span class="p">])</span>
 <span class="nb">print</span><span class="p">(</span><span class="s2">"Rotation matrix R(90 degrees), rounded for readability:</span><span class="se">\n</span><span class="s2">"</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">round</span><span class="p">(</span><span class="n">R</span><span class="p">,</span> <span class="mi">4</span><span class="p">))</span>
 
-<span class="c1"># Step 2 - Rotate the vector [1, 0], reproducing the calculation exactly</span>
-<span class="c1"># as printed in the book (see the note above about this vector choice).</span>
-<span class="n">x_as_printed</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">])</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
-<span class="n">result_as_printed</span> <span class="o">=</span> <span class="n">R</span> <span class="o">@</span> <span class="n">x_as_printed</span>
-<span class="nb">print</span><span class="p">(</span><span class="s2">"</span><span class="se">\n</span><span class="s2">Rotating [1, 0] by 90 degrees:</span><span class="se">\n</span><span class="s2">"</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">round</span><span class="p">(</span><span class="n">result_as_printed</span><span class="p">,</span> <span class="mi">4</span><span class="p">))</span>
-<span class="c1"># Output: [[0], [1]] -- matches the book's printed calculation</span>
 
-<span class="c1"># Step 3 - Rotate the vector the example actually NAMES, [1, 2], to see</span>
-<span class="c1"># the corrected result.</span>
+
+<span class="c1"># Step 2 - Rotate the vector [1, 2]</span>
 <span class="n">x_actual</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">])</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
 <span class="n">result_actual</span> <span class="o">=</span> <span class="n">R</span> <span class="o">@</span> <span class="n">x_actual</span>
 <span class="nb">print</span><span class="p">(</span><span class="s2">"</span><span class="se">\n</span><span class="s2">Rotating [1, 2] by 90 degrees:</span><span class="se">\n</span><span class="s2">"</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">round</span><span class="p">(</span><span class="n">result_actual</span><span class="p">,</span> <span class="mi">4</span><span class="p">))</span>
