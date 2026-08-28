@@ -4281,6 +4281,28 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#types-of-transformations" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Types of Transformations
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#script" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Script
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#the-following-figures-show-the-transformation-of-a-2d-vector-by-a-22-matrix" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -8404,140 +8426,176 @@ for scaling (Sections further below).</p>
   dimensions <span class="arithmatex">\(n \times 1\)</span> produces a <strong>new</strong> vector <span class="arithmatex">\(y\)</span> of dimensions
   <span class="arithmatex">\(m \times 1\)</span>.</li>
 </ul>
-<div class="highlight"><pre><span></span><code>![Flowchart](/001-mkdocs/resources/ch-11-numpy-august-2026-vector-matrices-02.png)
-
-
-**The important insight:** matrix-to-vector multiplication doesn't just
-change the *individual values* in the vector — it can also change the
-vector's *dimensions* entirely (if $m \ne n$). Every matrix therefore does
+<p><img alt="Flowchart" src="/001-mkdocs/resources/ch-11-numpy-august-2026-vector-matrices-02.png" /></p>
+<p><strong>The important insight:</strong> matrix-to-vector multiplication doesn't just
+change the <em>individual values</em> in the vector — it can also change the
+vector's <em>dimensions</em> entirely (if <span class="arithmatex">\(m \ne n\)</span>). Every matrix therefore does
 two things at once: (1) it changes the vector's contents, and (2) it
 produces a genuinely new vector. This combined change is exactly what's
-meant by calling it a **transformation**.
-
-**A practical note for this project's script:** every matrix used below is
-square ($2 \times 2$), and the vector is $2 \times 1$ (well, `(2,)` as a
-plain NumPy array) — so in every case here, $m = n = 2$, and the *shape*
+meant by calling it a <strong>transformation</strong>.</p>
+<p><strong>A practical note for this project's script:</strong> every matrix used below is
+square (<span class="arithmatex">\(2 \times 2\)</span>), and the vector is <span class="arithmatex">\(2 \times 1\)</span> (well, <code>(2,)</code> as a
+plain NumPy array) — so in every case here, <span class="arithmatex">\(m = n = 2\)</span>, and the <em>shape</em>
 of the vector never changes, only its values. You'll see matrices that
-*do* change a vector's dimensions later on in this book.
+<em>do</em> change a vector's dimensions later on in this book.</p>
+<hr />
+<h2 id="types-of-transformations">Types of Transformations<a class="headerlink" href="#types-of-transformations" title="Permanent link">&para;</a></h2>
+<p>Having understood what a transformation is, we can look at the specific
+types of transformation a matrix can apply to a vector:</p>
+<table>
+<thead>
+<tr>
+<th>Type</th>
+<th>Matrix form</th>
+<th>Effect</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Scaling</td>
+<td>Diagonal</td>
+<td>Stretch or shrink</td>
+</tr>
+<tr>
+<td>Reflection</td>
+<td>Special <code>1</code>/<code>-1</code> pattern</td>
+<td>Flip direction</td>
+</tr>
+<tr>
+<td>Rotation</td>
+<td>Trigonometric (<code>sin</code>/<code>cos</code>)</td>
+<td>Rotate the vector</td>
+</tr>
+</tbody>
+</table>
+<p>For a <span class="arithmatex">\(2 \times 2\)</span> matrix specifically, here are the common transformations
+this project's script will demonstrate:</p>
+<table>
+<thead>
+<tr>
+<th>Operation</th>
+<th>Matrix</th>
+<th>Effect</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Uniform scaling</td>
+<td><code>[[k, 0], [0, k]]</code></td>
+<td>Stretch equally on both axes</td>
+</tr>
+<tr>
+<td>Non-uniform scaling</td>
+<td><code>[[a, 0], [0, b]]</code></td>
+<td>Stretch differently on each axis</td>
+</tr>
+<tr>
+<td>Reflection (X-axis)</td>
+<td><code>[[1, 0], [0, -1]]</code></td>
+<td>Flip vertically</td>
+</tr>
+<tr>
+<td>Reflection (Y-axis)</td>
+<td><code>[[-1, 0], [0, 1]]</code></td>
+<td>Flip horizontally</td>
+</tr>
+<tr>
+<td>Rotation</td>
+<td><code>[[cos θ, -sin θ], [sin θ, cos θ]]</code></td>
+<td>Rotate by angle θ</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="script">Script<a class="headerlink" href="#script" title="Permanent link">&para;</a></h2>
+<p>The following script demonstrates every transformation above, applied to
+the <em>same</em> starting vector, so the results are directly comparable.</p>
+<div class="highlight"><pre><span></span><code><span class="c1"># Matrix-Vector Transformations in NumPy</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
 
----
-
-## Types of Transformations
-
-Having understood what a transformation is, we can look at the specific
-types of transformation a matrix can apply to a vector:
-
-| Type | Matrix form | Effect |
-| --- | --- | --- |
-| Scaling | Diagonal | Stretch or shrink |
-| Reflection | Special `1`/`-1` pattern | Flip direction |
-| Rotation | Trigonometric (`sin`/`cos`) | Rotate the vector |
-
-For a $2 \times 2$ matrix specifically, here are the common transformations
-this project's script will demonstrate:
-
-| Operation | Matrix | Effect |
-| --- | --- | --- |
-| Uniform scaling | `[[k, 0], [0, k]]` | Stretch equally on both axes |
-| Non-uniform scaling | `[[a, 0], [0, b]]` | Stretch differently on each axis |
-| Reflection (X-axis) | `[[1, 0], [0, -1]]` | Flip vertically |
-| Reflection (Y-axis) | `[[-1, 0], [0, 1]]` | Flip horizontally |
-| Rotation | `[[cos θ, -sin θ], [sin θ, cos θ]]` | Rotate by angle θ |
-
----
-
-## Script
-
-The following script demonstrates every transformation above, applied to
-the *same* starting vector, so the results are directly comparable.
-
-```python
-# Matrix-Vector Transformations in NumPy
-import numpy as np
-
-# ---------------------------------------------------
-# Step 1 - Define the vector we'll transform throughout this script.
-# Kept as a plain 1D array (shape (2,)) rather than reshaped to (2, 1) —
-# NumPy's @ operator automatically treats a 1D array as a column vector
-# when multiplying it against a 2D matrix, so this works correctly, and
-# the result also comes back as a plain 1D array for easy printing.
-# ---------------------------------------------------
-x = np.array([1, 2])
-print("Original vector:", x)   # Output: [1 2]
-
-
-# ---------------------------------------------------
-# Step 2 - Uniform scaling.
-# M1 is a diagonal matrix with the SAME scaling factor (3) on both
-# diagonal positions, so it stretches both the x and y components
-# equally when multiplied against the vector.
-# ---------------------------------------------------
-M1 = np.array([[3, 0],
-               [0, 3]])
-
-y1 = M1 @ x
-print("\nUniform scaling (x3):", y1)   # [3, 6]
-
-
-# ---------------------------------------------------
-# Step 3 - Non-uniform scaling.
-# M2 is a diagonal matrix with DIFFERENT scaling factors on each
-# diagonal position, so it stretches the x-component by 3 and the
-# y-component by 5 — an unequal stretch along each axis.
-# ---------------------------------------------------
-M2 = np.array([[3, 0],
-               [0, 5]])
-
-y2 = M2 @ x
-print("\nNon-uniform scaling:", y2)   # [3, 10]
-
-
-# ---------------------------------------------------
-# Step 4 - Reflection about the X-axis.
-# M3 leaves the x-component untouched but inverts the sign of the
-# y-component, which is exactly what reflecting across the X-axis means.
-# ---------------------------------------------------
-M3 = np.array([[1, 0],
-               [0, -1]])
-
-y3 = M3 @ x
-print("\nReflection about X-axis:", y3)   # [1, -2]
-
-
-# ---------------------------------------------------
-# Step 5 - Reflection about the Y-axis.
-# M4 leaves the y-component untouched but inverts the sign of the
-# x-component, reflecting the vector across the Y-axis instead.
-# ---------------------------------------------------
-M4 = np.array([[-1, 0],
-               [0, 1]])
-
-y4 = M4 @ x
-print("\nReflection about Y-axis:", y4)   # [-1, 2]
+<span class="c1"># ---------------------------------------------------</span>
+<span class="c1"># Step 1 - Define the vector we'll transform throughout this script.</span>
+<span class="c1"># Kept as a plain 1D array (shape (2,)) rather than reshaped to (2, 1) —</span>
+<span class="c1"># NumPy's @ operator automatically treats a 1D array as a column vector</span>
+<span class="c1"># when multiplying it against a 2D matrix, so this works correctly, and</span>
+<span class="c1"># the result also comes back as a plain 1D array for easy printing.</span>
+<span class="c1"># ---------------------------------------------------</span>
+<span class="n">x</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">])</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">"Original vector:"</span><span class="p">,</span> <span class="n">x</span><span class="p">)</span>   <span class="c1"># Output: [1 2]</span>
 
 
-# ---------------------------------------------------
-# Step 6 - Rotation by 90 degrees.
-# np.pi / 2 radians = 90 degrees (NumPy's trig functions expect radians,
-# not degrees). M5 is built from cos(theta) and sin(theta), arranged in
-# the standard rotation-matrix pattern, and rotates the vector 90
-# degrees counter-clockwise while preserving its length.
-# ---------------------------------------------------
-theta = np.pi / 2
+<span class="c1"># ---------------------------------------------------</span>
+<span class="c1"># Step 2 - Uniform scaling.</span>
+<span class="c1"># M1 is a diagonal matrix with the SAME scaling factor (3) on both</span>
+<span class="c1"># diagonal positions, so it stretches both the x and y components</span>
+<span class="c1"># equally when multiplied against the vector.</span>
+<span class="c1"># ---------------------------------------------------</span>
+<span class="n">M1</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="mi">3</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span>
+               <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">3</span><span class="p">]])</span>
 
-M5 = np.array([[np.cos(theta), -np.sin(theta)],
-               [np.sin(theta),  np.cos(theta)]])
-
-y5 = M5 @ x
-print("\nRotation (90 degrees):", y5)   # approx [-2, 1]
+<span class="n">y1</span> <span class="o">=</span> <span class="n">M1</span> <span class="o">@</span> <span class="n">x</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">"</span><span class="se">\n</span><span class="s2">Uniform scaling (x3):"</span><span class="p">,</span> <span class="n">y1</span><span class="p">)</span>   <span class="c1"># [3, 6]</span>
 
 
-# ---------------------------------------------------
-# Interpretation
-# ---------------------------------------------------
-# Every matrix above changed the SAME starting vector x differently,
-# depending only on the numbers inside that matrix.
-# -&gt; This act of a matrix changing a vector is called a TRANSFORMATION.
+<span class="c1"># ---------------------------------------------------</span>
+<span class="c1"># Step 3 - Non-uniform scaling.</span>
+<span class="c1"># M2 is a diagonal matrix with DIFFERENT scaling factors on each</span>
+<span class="c1"># diagonal position, so it stretches the x-component by 3 and the</span>
+<span class="c1"># y-component by 5 — an unequal stretch along each axis.</span>
+<span class="c1"># ---------------------------------------------------</span>
+<span class="n">M2</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="mi">3</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span>
+               <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">5</span><span class="p">]])</span>
+
+<span class="n">y2</span> <span class="o">=</span> <span class="n">M2</span> <span class="o">@</span> <span class="n">x</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">"</span><span class="se">\n</span><span class="s2">Non-uniform scaling:"</span><span class="p">,</span> <span class="n">y2</span><span class="p">)</span>   <span class="c1"># [3, 10]</span>
+
+
+<span class="c1"># ---------------------------------------------------</span>
+<span class="c1"># Step 4 - Reflection about the X-axis.</span>
+<span class="c1"># M3 leaves the x-component untouched but inverts the sign of the</span>
+<span class="c1"># y-component, which is exactly what reflecting across the X-axis means.</span>
+<span class="c1"># ---------------------------------------------------</span>
+<span class="n">M3</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span>
+               <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">]])</span>
+
+<span class="n">y3</span> <span class="o">=</span> <span class="n">M3</span> <span class="o">@</span> <span class="n">x</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">"</span><span class="se">\n</span><span class="s2">Reflection about X-axis:"</span><span class="p">,</span> <span class="n">y3</span><span class="p">)</span>   <span class="c1"># [1, -2]</span>
+
+
+<span class="c1"># ---------------------------------------------------</span>
+<span class="c1"># Step 5 - Reflection about the Y-axis.</span>
+<span class="c1"># M4 leaves the y-component untouched but inverts the sign of the</span>
+<span class="c1"># x-component, reflecting the vector across the Y-axis instead.</span>
+<span class="c1"># ---------------------------------------------------</span>
+<span class="n">M4</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span>
+               <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">]])</span>
+
+<span class="n">y4</span> <span class="o">=</span> <span class="n">M4</span> <span class="o">@</span> <span class="n">x</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">"</span><span class="se">\n</span><span class="s2">Reflection about Y-axis:"</span><span class="p">,</span> <span class="n">y4</span><span class="p">)</span>   <span class="c1"># [-1, 2]</span>
+
+
+<span class="c1"># ---------------------------------------------------</span>
+<span class="c1"># Step 6 - Rotation by 90 degrees.</span>
+<span class="c1"># np.pi / 2 radians = 90 degrees (NumPy's trig functions expect radians,</span>
+<span class="c1"># not degrees). M5 is built from cos(theta) and sin(theta), arranged in</span>
+<span class="c1"># the standard rotation-matrix pattern, and rotates the vector 90</span>
+<span class="c1"># degrees counter-clockwise while preserving its length.</span>
+<span class="c1"># ---------------------------------------------------</span>
+<span class="n">theta</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">pi</span> <span class="o">/</span> <span class="mi">2</span>
+
+<span class="n">M5</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="n">np</span><span class="o">.</span><span class="n">cos</span><span class="p">(</span><span class="n">theta</span><span class="p">),</span> <span class="o">-</span><span class="n">np</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="n">theta</span><span class="p">)],</span>
+               <span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="n">theta</span><span class="p">),</span>  <span class="n">np</span><span class="o">.</span><span class="n">cos</span><span class="p">(</span><span class="n">theta</span><span class="p">)]])</span>
+
+<span class="n">y5</span> <span class="o">=</span> <span class="n">M5</span> <span class="o">@</span> <span class="n">x</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">"</span><span class="se">\n</span><span class="s2">Rotation (90 degrees):"</span><span class="p">,</span> <span class="n">y5</span><span class="p">)</span>   <span class="c1"># approx [-2, 1]</span>
+
+
+<span class="c1"># ---------------------------------------------------</span>
+<span class="c1"># Interpretation</span>
+<span class="c1"># ---------------------------------------------------</span>
+<span class="c1"># Every matrix above changed the SAME starting vector x differently,</span>
+<span class="c1"># depending only on the numbers inside that matrix.</span>
+<span class="c1"># -&gt; This act of a matrix changing a vector is called a TRANSFORMATION.</span>
 </code></pre></div>
 <p><strong>Beginner tip:</strong> the rotation result prints as <em>approximately</em>
 <code>[-2, 1]</code>, not exactly — this is completely normal. <code>np.cos(np.pi / 2)</code>
@@ -8548,15 +8606,15 @@ instead). If you want a tidier printout, wrap the result in
 <hr />
 <h2 id="the-following-figures-show-the-transformation-of-a-2d-vector-by-a-22-matrix">The following figures show the transformation of a 2D vector by a 2×2 matrix<a class="headerlink" href="#the-following-figures-show-the-transformation-of-a-2d-vector-by-a-22-matrix" title="Permanent link">&para;</a></h2>
 <h3 id="uniform-scaling">Uniform scaling<a class="headerlink" href="#uniform-scaling" title="Permanent link">&para;</a></h3>
-<p><img alt="Uniform Scaling" src="https://github.com/ag999git/001-Python-book-2026/blob/main/resources/ch11-uniform-scaling-matrix-vector.png" /></p>
+<p><img alt="Uniform Scaling" src="/001-mkdocs/resources/ch11-uniform-scaling-matrix-vector.png" /></p>
 <h3 id="non-uniform-scaling">Non-uniform scaling<a class="headerlink" href="#non-uniform-scaling" title="Permanent link">&para;</a></h3>
-<p><img alt="Non-Uniform scaling" src="https://github.com/ag999git/001-Python-book-2026/blob/main/resources/ch11-non-uniform-scaling-matrix-vector.png" /></p>
+<p><img alt="Non-Uniform scaling" src="/001-mkdocs/resources/ch11-non-uniform-scaling-matrix-vector.png" /></p>
 <h3 id="reflection-on-x-axis">Reflection on X-axis<a class="headerlink" href="#reflection-on-x-axis" title="Permanent link">&para;</a></h3>
-<p><img alt="Reflection on X axis" src="https://github.com/ag999git/001-Python-book-2026/blob/main/resources/ch11-reflection-x-axis-matrix-vector.png" /></p>
+<p><img alt="Reflection on X axis" src="/001-mkdocs/resources/ch11-reflection-x-axis-matrix-vector.png" /></p>
 <h3 id="reflection-on-y-axis">Reflection on Y-axis<a class="headerlink" href="#reflection-on-y-axis" title="Permanent link">&para;</a></h3>
-<p><img alt="Reflection on Y-axis" src="https://github.com/ag999git/001-Python-book-2026/blob/main/resources/ch11-reflection-y-axis-matrix-vector.png" /></p>
+<p><img alt="Reflection on Y-axis" src="/001-mkdocs/resources/ch11-reflection-y-axis-matrix-vector.png" /></p>
 <h3 id="rotation-by-90-degrees">Rotation by 90 degrees<a class="headerlink" href="#rotation-by-90-degrees" title="Permanent link">&para;</a></h3>
-<p><img alt="Rotation by 90 degrees" src="https://github.com/ag999git/001-Python-book-2026/blob/main/resources/ch11-rotation-90-matrix-vector.png" /></p>
+<p><img alt="Rotation by 90 degrees" src="/001-mkdocs/resources/ch11-rotation-90-matrix-vector.png" /></p>
 <blockquote>
 <p><strong>Note:</strong> the "Reflection on X-axis" image link had a small Markdown
 syntax error in the original (<code>![...[(url)</code> instead of <code>![...](url)</code>),
