@@ -8236,15 +8236,14 @@ useful ideas in applied linear algebra: it's the mathematical foundation
 behind Principal Component Analysis (PCA), a large part of how Singular
 Value Decomposition works, and a common tool for analysing the stability
 of systems in engineering and physics.</p>
-<p>The original version of this chapter presented the theory on its own,
-without any NumPy code. Since this is a <em>Python</em> book, this improved
-version keeps every piece of the original mathematics exactly as written,
-and adds a working NumPy script at the end — so the equations
-<span class="arithmatex">\(A\vec{v} = \lambda\vec{v}\)</span> and <span class="arithmatex">\(A = Q\Lambda Q^{-1}\)</span> aren't just symbols on
+<p>This writeup gives both the theory and implementation of eigen decomposition.</p>
+<p>So the equations
+<span class="arithmatex">\(A\vec{v} = \lambda\vec{v}\)</span> and <span class="arithmatex">\(A = Q\Lambda Q^{-1}\)</span> </p>
+<p>aren't just symbols on
 a page, but things you can compute and verify for yourself in a few lines
 of code.</p>
 <blockquote>
-<p><strong>Quick glossary, before we start</strong>
+<p><strong>Glossary of terms</strong>
 - <strong>Eigenvector</strong> — a special vector that a given matrix only <em>stretches
   or shrinks</em>, without changing its direction, when multiplied against
   it.
@@ -8281,13 +8280,7 @@ of code.</p>
 <li>The <strong>direction remains unchanged</strong></li>
 <li>Only the <strong>magnitude changes</strong>, by a factor of <span class="arithmatex">\(\lambda\)</span>.</li>
 </ul>
-<div class="highlight"><pre><span></span><code>flowchart LR
-    A["Vector v"] --&gt; B["Multiply by matrix A"]
-    B --&gt; C["Result: lambda * v&lt;br/&gt;SAME direction, scaled magnitude"]
-</code></pre></div>
-<p><em>(Plain boxes and arrows only, no subgraphs, so every diagram in this
-chapter should import cleanly into <a href="https://app.diagrams.net/">draw.io</a> as
-well as render on GitHub/GitBook.)</em></p>
+<p><img alt="Flowchart" src="/001-mkdocs/resources/ch-11-numpy-august-2026-eigen-decomposition.png" /></p>
 <p><strong>Beginner tip:</strong> this is precisely what makes <span class="arithmatex">\(\vec{v}\)</span> special — for
 <em>almost any</em> vector, multiplying it by a matrix <span class="arithmatex">\(A\)</span> changes its direction
 as well as its length. An eigenvector is one of the rare vectors (for a
@@ -8360,14 +8353,7 @@ matrix equation for all eigenvalues simultaneously:</p>
 <div class="arithmatex">\[AQ = Q\Lambda\]</div>
 <p>If <span class="arithmatex">\(Q\)</span> is invertible:</p>
 <div class="arithmatex">\[A = Q \Lambda Q^{-1}\]</div>
-<div class="highlight"><pre><span></span><code>flowchart TD
-    A1["Matrix A, shape (n,n)"] --&gt; B1["Find eigenvalues: lambda1...lambdaN"]
-    A1 --&gt; B2["Find eigenvectors: v1...vN"]
-    B1 --&gt; C1["Arrange into diagonal matrix Lambda"]
-    B2 --&gt; C2["Arrange as columns into matrix Q"]
-    C1 --&gt; D["Combine: A = Q x Lambda x Q-inverse"]
-    C2 --&gt; D
-</code></pre></div>
+<p><img alt="Flowchart" src="/001-mkdocs/resources/ch-11-numpy-august-2026-eigen-decomposition-02.png" /></p>
 <hr />
 <h3 id="interpretation_1">Interpretation<a class="headerlink" href="#interpretation_1" title="Permanent link">&para;</a></h3>
 <p>Eigen decomposition represents:</p>
