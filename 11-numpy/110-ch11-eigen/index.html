@@ -25,7 +25,7 @@
     
     
       
-        <title>Eigen Decomposition: A Detailed Guide - Python 999</title>
+        <title>Chapter 11 — Eigen Decomposition: A Detailed Guide - Python 999</title>
       
     
     
@@ -82,7 +82,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#eigen-decomposition-a-detailed-guide" class="md-skip">
+        <a href="#chapter-11-eigen-decomposition-a-detailed-guide" class="md-skip">
           Skip to content
         </a>
       
@@ -118,7 +118,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              Eigen Decomposition: A Detailed Guide
+              Chapter 11 — Eigen Decomposition: A Detailed Guide
             
           </span>
         </div>
@@ -4148,7 +4148,7 @@
   <span class="md-ellipsis">
     
   
-    Eigen Decomposition: A Detailed Guide
+    Chapter 11 — Eigen Decomposition: A Detailed Guide
   
 
     
@@ -4166,7 +4166,7 @@
   <span class="md-ellipsis">
     
   
-    Eigen Decomposition: A Detailed Guide
+    Chapter 11 — Eigen Decomposition: A Detailed Guide
   
 
     
@@ -4190,6 +4190,17 @@
       Table of contents
     </label>
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#about-this-chapter" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        About this chapter
+      
+    </span>
+  </a>
+  
+</li>
       
         <li class="md-nav__item">
   <a href="#1-the-core-concept" class="md-nav__link">
@@ -4299,6 +4310,39 @@
         
       </ul>
     </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#3-turning-this-into-numpy-code" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3. Turning This Into NumPy Code
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#summary" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Summary
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#follow-up-questions-for-practice" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Follow-up questions for practice
+      
+    </span>
+  </a>
   
 </li>
       
@@ -8177,17 +8221,53 @@
   
 
 
-<h1 id="eigen-decomposition-a-detailed-guide">Eigen Decomposition: A Detailed Guide<a class="headerlink" href="#eigen-decomposition-a-detailed-guide" title="Permanent link">&para;</a></h1>
+<h1 id="chapter-11-eigen-decomposition-a-detailed-guide">Chapter 11 — Eigen Decomposition: A Detailed Guide<a class="headerlink" href="#chapter-11-eigen-decomposition-a-detailed-guide" title="Permanent link">&para;</a></h1>
 <blockquote>
-<p><em>Note:</em> The topic of eigen decomposition may appear mathematical. However, it is essential for understanding advanced topics like Singular Value Decomposition (SVD). If you are not interested in SVD, you may skip this section.</p>
+<p><em>Note:</em> The topic of eigen decomposition may appear mathematical.
+However, it is essential for understanding advanced topics like
+Singular Value Decomposition (SVD). If you are not interested in SVD,
+you may skip this section.</p>
+</blockquote>
+<h2 id="about-this-chapter">About this chapter<a class="headerlink" href="#about-this-chapter" title="Permanent link">&para;</a></h2>
+<p>Eigen decomposition takes a single square matrix and rewrites it as three
+simpler pieces multiplied together — a rotation, a scaling, and a reversal
+of that same rotation. That might sound abstract, but it's one of the most
+useful ideas in applied linear algebra: it's the mathematical foundation
+behind Principal Component Analysis (PCA), a large part of how Singular
+Value Decomposition works, and a common tool for analysing the stability
+of systems in engineering and physics.</p>
+<p>The original version of this chapter presented the theory on its own,
+without any NumPy code. Since this is a <em>Python</em> book, this improved
+version keeps every piece of the original mathematics exactly as written,
+and adds a working NumPy script at the end — so the equations
+<span class="arithmatex">\(A\vec{v} = \lambda\vec{v}\)</span> and <span class="arithmatex">\(A = Q\Lambda Q^{-1}\)</span> aren't just symbols on
+a page, but things you can compute and verify for yourself in a few lines
+of code.</p>
+<blockquote>
+<p><strong>Quick glossary, before we start</strong>
+- <strong>Eigenvector</strong> — a special vector that a given matrix only <em>stretches
+  or shrinks</em>, without changing its direction, when multiplied against
+  it.
+- <strong>Eigenvalue</strong> — the number (usually written <span class="arithmatex">\(\lambda\)</span>, the Greek
+  letter "lambda") by which that stretching or shrinking happens.
+- <strong>Scalar</strong> — a single plain number, as opposed to a vector or matrix.
+- <strong>Diagonal matrix</strong> — a matrix with non-zero values only along its main
+  diagonal; used here to hold all the eigenvalues together in one place.
+- <strong>Invertible matrix</strong> — a matrix that has a genuine "undo" matrix
+  (its inverse, <span class="arithmatex">\(Q^{-1}\)</span>), such that multiplying the two together gives
+  back the identity matrix. See
+  <a href="https://www.khanacademy.org/math/algebra-home/alg-matrices/alg-intro-to-matrix-inverses/a/intro-to-matrix-inverses">Khan Academy's introduction to matrix inverses</a>.
+- <strong>Decomposition</strong> — breaking a single mathematical object down into a
+  product (or combination) of simpler pieces, the way this chapter breaks
+  a matrix <span class="arithmatex">\(A\)</span> into <span class="arithmatex">\(Q\)</span>, <span class="arithmatex">\(\Lambda\)</span>, and <span class="arithmatex">\(Q^{-1}\)</span>.</p>
 </blockquote>
 <hr />
 <h2 id="1-the-core-concept">1. The Core Concept<a class="headerlink" href="#1-the-core-concept" title="Permanent link">&para;</a></h2>
 <p>Previously, we established that if:</p>
 <ul>
-<li><span class="arithmatex">\(A\)</span> is a square matrix  </li>
-<li><span class="arithmatex">\(\vec{v}\)</span> is a non-zero vector  </li>
-<li><span class="arithmatex">\(\lambda\)</span> is a scalar  </li>
+<li><span class="arithmatex">\(A\)</span> is a square matrix</li>
+<li><span class="arithmatex">\(\vec{v}\)</span> is a non-zero vector</li>
+<li><span class="arithmatex">\(\lambda\)</span> is a scalar</li>
 </ul>
 <p>then:</p>
 <div class="arithmatex">\[A\vec{v} = \lambda \vec{v}\]</div>
@@ -8196,9 +8276,22 @@
 <li>The matrix <span class="arithmatex">\(A\)</span> acts on vector <span class="arithmatex">\(\vec{v}\)</span></li>
 <li>The result is a <strong>scaled version of the same vector</strong></li>
 </ul>
-<p>This means:
-- The <strong>direction remains unchanged</strong>
-- Only the <strong>magnitude changes</strong> by a factor of <span class="arithmatex">\(\lambda\)</span>.</p>
+<p>This means:</p>
+<ul>
+<li>The <strong>direction remains unchanged</strong></li>
+<li>Only the <strong>magnitude changes</strong>, by a factor of <span class="arithmatex">\(\lambda\)</span>.</li>
+</ul>
+<div class="highlight"><pre><span></span><code>flowchart LR
+    A["Vector v"] --&gt; B["Multiply by matrix A"]
+    B --&gt; C["Result: lambda * v&lt;br/&gt;SAME direction, scaled magnitude"]
+</code></pre></div>
+<p><em>(Plain boxes and arrows only, no subgraphs, so every diagram in this
+chapter should import cleanly into <a href="https://app.diagrams.net/">draw.io</a> as
+well as render on GitHub/GitBook.)</em></p>
+<p><strong>Beginner tip:</strong> this is precisely what makes <span class="arithmatex">\(\vec{v}\)</span> special — for
+<em>almost any</em> vector, multiplying it by a matrix <span class="arithmatex">\(A\)</span> changes its direction
+as well as its length. An eigenvector is one of the rare vectors (for a
+given matrix) where the direction is left completely untouched.</p>
 <hr />
 <h3 id="cases-of-eigenvalues">Cases of Eigenvalues<a class="headerlink" href="#cases-of-eigenvalues" title="Permanent link">&para;</a></h3>
 <table>
@@ -8230,41 +8323,230 @@
 <hr />
 <h2 id="2-the-logic-behind-decomposition">2. The Logic Behind Decomposition<a class="headerlink" href="#2-the-logic-behind-decomposition" title="Permanent link">&para;</a></h2>
 <p>Why do we decompose a matrix?</p>
-<p>The logic is similar to how a machine works by taking it apart into its components.
-It is just like breaking a machine into parts to understand it.</p>
+<p>The logic is similar to how a machine works by taking it apart into its
+components. It is just like breaking a machine into parts to understand
+it.</p>
+<p><strong>A little more context on <em>why</em> this is worth doing:</strong> once a matrix is
+broken into its eigenvalues and eigenvectors, many operations that are
+difficult or slow on the original matrix become dramatically simpler on
+the decomposed pieces — for example, raising a matrix to a large power, or
+understanding how a system behaves after many repeated transformations.
+This is also the mathematical basis for <strong>Principal Component Analysis
+(PCA)</strong>, a widely used technique for reducing the number of variables in a
+dataset while keeping as much meaningful information as possible.</p>
 <hr />
 <h3 id="step-1-eigenvalues-and-eigenvectors">Step 1: Eigenvalues and Eigenvectors<a class="headerlink" href="#step-1-eigenvalues-and-eigenvectors" title="Permanent link">&para;</a></h3>
 <p>For a matrix <span class="arithmatex">\(A\)</span> of dimensions <span class="arithmatex">\(n \times n\)</span>:</p>
 <ul>
-<li>
-<p>Suppose the Eigenvalues are:<br />
-  $<span class="arithmatex">\(\lambda_1, \lambda_2, \dots, \lambda_n\)</span>$</p>
-</li>
-<li>
-<p>And the corresponding Eigenvectors are:<br />
-  $<span class="arithmatex">\(\vec{v_1}, \vec{v_2}, \dots, \vec{v_n}\)</span>$</p>
-</li>
+<li>Suppose the eigenvalues are:
+  $<span class="arithmatex">\(\lambda_1, \lambda_2, \dots, \lambda_n\)</span>$</li>
+<li>And the corresponding eigenvectors are:
+  $<span class="arithmatex">\(\vec{v_1}, \vec{v_2}, \dots, \vec{v_n}\)</span>$</li>
 </ul>
 <hr />
 <h3 id="step-2-construct-matrix-q">Step 2: Construct Matrix <span class="arithmatex">\(Q\)</span><a class="headerlink" href="#step-2-construct-matrix-q" title="Permanent link">&para;</a></h3>
 <p>We can arrange the eigenvectors as columns into a matrix <span class="arithmatex">\(Q\)</span>:</p>
 <div class="arithmatex">\[Q = [\vec{v_1} \quad \vec{v_2} \quad \dots \quad \vec{v_n}]\]</div>
-<p><strong>Columns are eigenvectors</strong></p>
+<p><strong>Columns are eigenvectors.</strong></p>
 <hr />
 <h3 id="step-3-construct-diagonal-matrix-lambda">Step 3: Construct Diagonal Matrix <span class="arithmatex">\(\Lambda\)</span><a class="headerlink" href="#step-3-construct-diagonal-matrix-lambda" title="Permanent link">&para;</a></h3>
-<p>Next, we arrange the eigenvalues into a diagonal matrix <span class="arithmatex">\(\Lambda\)</span>:</p>
+<p>Next, we arrange the eigenvalues into a diagonal matrix <span class="arithmatex">\(\Lambda\)</span>
+(the capital Greek letter "lambda"):</p>
 <div class="arithmatex">\[\Lambda = \begin{bmatrix} \lambda_1 &amp; 0 &amp; \cdots &amp; 0 \\ 0 &amp; \lambda_2 &amp; \cdots &amp; 0 \\ \vdots &amp; \vdots &amp; \ddots &amp; \vdots \\ 0 &amp; 0 &amp; \cdots &amp; \lambda_n \end{bmatrix}\]</div>
 <hr />
 <h3 id="step-4-key-equation">Step 4: Key Equation<a class="headerlink" href="#step-4-key-equation" title="Permanent link">&para;</a></h3>
-<p>Using the definition <span class="arithmatex">\(A\vec{v} = \lambda \vec{v}\)</span>, we write a combined matrix equation for all eigenvalues simultaneously:</p>
+<p>Using the definition <span class="arithmatex">\(A\vec{v} = \lambda \vec{v}\)</span>, we write a combined
+matrix equation for all eigenvalues simultaneously:</p>
 <div class="arithmatex">\[AQ = Q\Lambda\]</div>
 <p>If <span class="arithmatex">\(Q\)</span> is invertible:</p>
 <div class="arithmatex">\[A = Q \Lambda Q^{-1}\]</div>
+<div class="highlight"><pre><span></span><code>flowchart TD
+    A1["Matrix A, shape (n,n)"] --&gt; B1["Find eigenvalues: lambda1...lambdaN"]
+    A1 --&gt; B2["Find eigenvectors: v1...vN"]
+    B1 --&gt; C1["Arrange into diagonal matrix Lambda"]
+    B2 --&gt; C2["Arrange as columns into matrix Q"]
+    C1 --&gt; D["Combine: A = Q x Lambda x Q-inverse"]
+    C2 --&gt; D
+</code></pre></div>
 <hr />
 <h3 id="interpretation_1">Interpretation<a class="headerlink" href="#interpretation_1" title="Permanent link">&para;</a></h3>
-<p>Eigen Decomposition represents:</p>
-<p>```text
-A = Rotation → Scaling → Rotation back</p>
+<p>Eigen decomposition represents:</p>
+<div class="highlight"><pre><span></span><code>A = Rotation → Scaling → Rotation back
+</code></pre></div>
+<p><strong>In plain terms:</strong> <span class="arithmatex">\(Q^{-1}\)</span> first rotates (or more precisely, changes the
+coordinate system of) a vector into the special "eigenvector-aligned"
+view; <span class="arithmatex">\(\Lambda\)</span> then simply stretches or shrinks each coordinate
+independently (exactly the diagonal-matrix scaling from earlier in this
+chapter); and <span class="arithmatex">\(Q\)</span> rotates the result back into the original coordinate
+system. The net effect of doing all three, in order, is mathematically
+identical to just applying <span class="arithmatex">\(A\)</span> directly — decomposition doesn't change
+<em>what</em> the matrix does, only reveals <em>how</em> it does it.</p>
+<hr />
+<h2 id="3-turning-this-into-numpy-code">3. Turning This Into NumPy Code<a class="headerlink" href="#3-turning-this-into-numpy-code" title="Permanent link">&para;</a></h2>
+<p>NumPy's <code>np.linalg.eig()</code> function computes a matrix's eigenvalues and
+eigenvectors directly, so you don't need to work them out by hand. The
+script below uses it to verify every equation covered above, with the same
+matrix throughout.</p>
+<div class="highlight"><pre><span></span><code><span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+
+<span class="c1"># ---------------------------------------------------</span>
+<span class="c1"># Step 1 - Define a square matrix A to decompose.</span>
+<span class="c1"># ---------------------------------------------------</span>
+<span class="n">A</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span>
+    <span class="p">[</span><span class="mi">2</span><span class="p">,</span> <span class="mi">1</span><span class="p">],</span>
+    <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">]</span>
+<span class="p">])</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">"Matrix A:</span><span class="se">\n</span><span class="s2">"</span><span class="p">,</span> <span class="n">A</span><span class="p">)</span>
+
+
+<span class="c1"># ---------------------------------------------------</span>
+<span class="c1"># Step 2 - Compute the eigenvalues and eigenvectors using NumPy.</span>
+<span class="c1"># np.linalg.eig() returns two things:</span>
+<span class="c1">#   eigenvalues  -&gt; a 1D array, e.g. [lambda1, lambda2]</span>
+<span class="c1">#   eigenvectors -&gt; a 2D array whose COLUMNS are the eigenvectors,</span>
+<span class="c1">#                   in the same order as the eigenvalues</span>
+<span class="c1"># This eigenvectors array IS the matrix Q from the theory above.</span>
+<span class="c1"># ---------------------------------------------------</span>
+<span class="n">eigenvalues</span><span class="p">,</span> <span class="n">Q</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">eig</span><span class="p">(</span><span class="n">A</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s2">"</span><span class="se">\n</span><span class="s2">Eigenvalues (lambda1, lambda2):"</span><span class="p">,</span> <span class="n">eigenvalues</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">"</span><span class="se">\n</span><span class="s2">Eigenvector matrix Q (columns are eigenvectors):</span><span class="se">\n</span><span class="s2">"</span><span class="p">,</span> <span class="n">Q</span><span class="p">)</span>
+
+
+<span class="c1"># ---------------------------------------------------</span>
+<span class="c1"># Step 3 - Verify A @ v = lambda * v for ONE eigenvector, to confirm</span>
+<span class="c1"># what "eigenvector" and "eigenvalue" actually mean in practice.</span>
+<span class="c1"># ---------------------------------------------------</span>
+<span class="n">v1</span> <span class="o">=</span> <span class="n">Q</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">]</span>          <span class="c1"># the FIRST column of Q -&gt; the first eigenvector</span>
+<span class="n">lambda1</span> <span class="o">=</span> <span class="n">eigenvalues</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+
+<span class="n">left_side</span> <span class="o">=</span> <span class="n">A</span> <span class="o">@</span> <span class="n">v1</span>            <span class="c1"># A applied to the eigenvector</span>
+<span class="n">right_side</span> <span class="o">=</span> <span class="n">lambda1</span> <span class="o">*</span> <span class="n">v1</span>     <span class="c1"># the eigenvector, simply scaled by lambda1</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s2">"</span><span class="se">\n</span><span class="s2">A @ v1:       "</span><span class="p">,</span> <span class="n">left_side</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">"lambda1 * v1: "</span><span class="p">,</span> <span class="n">right_side</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">"Equal (within floating-point rounding)?"</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">allclose</span><span class="p">(</span><span class="n">left_side</span><span class="p">,</span> <span class="n">right_side</span><span class="p">))</span>
+<span class="c1"># Output: True -- confirming A @ v1 really does equal lambda1 * v1,</span>
+<span class="c1"># exactly as the definition A*v = lambda*v promised.</span>
+
+
+<span class="c1"># ---------------------------------------------------</span>
+<span class="c1"># Step 4 - Build the diagonal matrix Lambda from the eigenvalues.</span>
+<span class="c1"># np.diag() turns the flat list of eigenvalues into the diagonal</span>
+<span class="c1"># matrix described in Step 3 of the theory above.</span>
+<span class="c1"># ---------------------------------------------------</span>
+<span class="n">Lambda</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">diag</span><span class="p">(</span><span class="n">eigenvalues</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">"</span><span class="se">\n</span><span class="s2">Diagonal matrix Lambda:</span><span class="se">\n</span><span class="s2">"</span><span class="p">,</span> <span class="n">Lambda</span><span class="p">)</span>
+
+
+<span class="c1"># ---------------------------------------------------</span>
+<span class="c1"># Step 5 - Reconstruct A from Q, Lambda, and the inverse of Q,</span>
+<span class="c1"># to verify the key equation: A = Q @ Lambda @ Q_inverse</span>
+<span class="c1"># ---------------------------------------------------</span>
+<span class="n">Q_inverse</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">inv</span><span class="p">(</span><span class="n">Q</span><span class="p">)</span>
+<span class="n">A_reconstructed</span> <span class="o">=</span> <span class="n">Q</span> <span class="o">@</span> <span class="n">Lambda</span> <span class="o">@</span> <span class="n">Q_inverse</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s2">"</span><span class="se">\n</span><span class="s2">Original A:</span><span class="se">\n</span><span class="s2">"</span><span class="p">,</span> <span class="n">A</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">"</span><span class="se">\n</span><span class="s2">Reconstructed A = Q @ Lambda @ Q_inverse:</span><span class="se">\n</span><span class="s2">"</span><span class="p">,</span> <span class="n">A_reconstructed</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">"</span><span class="se">\n</span><span class="s2">Matches original A (within floating-point rounding)?"</span><span class="p">,</span>
+      <span class="n">np</span><span class="o">.</span><span class="n">allclose</span><span class="p">(</span><span class="n">A</span><span class="p">,</span> <span class="n">A_reconstructed</span><span class="p">))</span>
+<span class="c1"># Output: True -- the decomposition, multiplied back together,</span>
+<span class="c1"># genuinely reproduces the original matrix.</span>
+</code></pre></div>
+<p><strong>Expected output (values may show tiny floating-point differences, e.g.
+<code>1.9999999999999998</code> instead of exactly <code>2</code>):</strong></p>
+<div class="highlight"><pre><span></span><code>Matrix A:
+ [[2 1]
+ [1 2]]
+
+Eigenvalues (lambda1, lambda2): [3. 1.]
+
+Eigenvector matrix Q (columns are eigenvectors):
+ [[ 0.70710678 -0.70710678]
+ [ 0.70710678  0.70710678]]
+
+A @ v1:        [2.12132034 2.12132034]
+lambda1 * v1:  [2.12132034 2.12132034]
+Equal (within floating-point rounding)? True
+
+Diagonal matrix Lambda:
+ [[3. 0.]
+ [0. 1.]]
+
+Original A:
+ [[2 1]
+ [1 2]]
+
+Reconstructed A = Q @ Lambda @ Q_inverse:
+ [[2. 1.]
+ [1. 2.]]
+
+Matches original A (within floating-point rounding)? True
+</code></pre></div>
+<p><strong>Beginner tip:</strong> always compare floating-point results with
+<code>np.allclose()</code> rather than <code>==</code>. Because of how computers store decimal
+numbers internally, a value that is <em>mathematically</em> exactly <code>2</code> might
+actually be stored as <code>1.9999999999999998</code> after a chain of
+multiplications and inversions — <code>np.allclose()</code> checks for equality
+<em>within a small, sensible tolerance</em>, rather than demanding bit-for-bit
+exactness.</p>
+<hr />
+<h2 id="summary">Summary<a class="headerlink" href="#summary" title="Permanent link">&para;</a></h2>
+<table>
+<thead>
+<tr>
+<th>Concept</th>
+<th>Key takeaway</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><span class="arithmatex">\(A\vec{v} = \lambda\vec{v}\)</span></td>
+<td>An eigenvector's <em>direction</em> is unchanged by <span class="arithmatex">\(A\)</span>; only its length changes, by a factor of <span class="arithmatex">\(\lambda\)</span></td>
+</tr>
+<tr>
+<td><span class="arithmatex">\(Q\)</span></td>
+<td>A matrix whose columns are the eigenvectors of <span class="arithmatex">\(A\)</span></td>
+</tr>
+<tr>
+<td><span class="arithmatex">\(\Lambda\)</span></td>
+<td>A diagonal matrix holding all of <span class="arithmatex">\(A\)</span>'s eigenvalues</td>
+</tr>
+<tr>
+<td><span class="arithmatex">\(A = Q\Lambda Q^{-1}\)</span></td>
+<td>The full decomposition: rotate into eigenvector space, scale, rotate back</td>
+</tr>
+<tr>
+<td><code>np.linalg.eig(A)</code></td>
+<td>NumPy's direct tool for computing eigenvalues and eigenvectors, without solving by hand</td>
+</tr>
+<tr>
+<td>Why it matters</td>
+<td>Foundational to PCA, closely related to SVD, and simplifies many repeated-transformation problems</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="follow-up-questions-for-practice">Follow-up questions for practice<a class="headerlink" href="#follow-up-questions-for-practice" title="Permanent link">&para;</a></h2>
+<p><em>(These are additional, optional questions for self-testing.)</em></p>
+<ol>
+<li>Using the script above, verify <span class="arithmatex">\(A\vec{v} = \lambda\vec{v}\)</span> for the
+   <strong>second</strong> eigenvector (<code>Q[:, 1]</code> and <code>eigenvalues[1]</code>) instead of the
+   first. Does <code>np.allclose()</code> still confirm a match?</li>
+<li>What eigenvalues would you expect for a pure scaling matrix like
+   <code>np.array([[4, 0], [0, 4]])</code>? Run <code>np.linalg.eig()</code> on it and check
+   your prediction — does this match the "Cases of Eigenvalues" table
+   above?</li>
+<li>Try running <code>np.linalg.eig()</code> on a matrix that represents a 90-degree
+   rotation, <code>np.array([[0, -1], [1, 0]])</code>. What do you notice about the
+   eigenvalues? (Hint: a pure rotation has no real direction that stays
+   unchanged — see if the result gives you a clue why.)</li>
+<li>Using <code>np.diag()</code> and the reconstructed-matrix approach from Step 5,
+   what would happen if you deliberately used the <em>wrong</em> order of columns
+   in <code>Q</code> (e.g. swapped <code>Q[:, 0]</code> and <code>Q[:, 1]</code>) without also swapping the
+   matching eigenvalues in <code>Lambda</code>? Would the reconstruction still work?
+   Why or why not?</li>
+</ol>
 
 
 
