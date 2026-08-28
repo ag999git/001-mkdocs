@@ -25,7 +25,7 @@
     
     
       
-        <title>PROJECT: Visualizing Surfaces using NumPy and Matplotlib - Python 999</title>
+        <title>Chapter 11 — Project: Visualizing Surfaces using NumPy and Matplotlib - Python 999</title>
       
     
     
@@ -82,7 +82,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#project-visualizing-surfaces-using-numpy-and-matplotlib" class="md-skip">
+        <a href="#chapter-11-project-visualizing-surfaces-using-numpy-and-matplotlib" class="md-skip">
           Skip to content
         </a>
       
@@ -118,7 +118,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              PROJECT: Visualizing Surfaces using NumPy and Matplotlib
+              Chapter 11 — Project: Visualizing Surfaces using NumPy and Matplotlib
             
           </span>
         </div>
@@ -4064,7 +4064,7 @@
   <span class="md-ellipsis">
     
   
-    PROJECT: Visualizing Surfaces using NumPy and Matplotlib
+    Chapter 11 — Project: Visualizing Surfaces using NumPy and Matplotlib
   
 
     
@@ -4082,7 +4082,7 @@
   <span class="md-ellipsis">
     
   
-    PROJECT: Visualizing Surfaces using NumPy and Matplotlib
+    Chapter 11 — Project: Visualizing Surfaces using NumPy and Matplotlib
   
 
     
@@ -4106,6 +4106,17 @@
       Table of contents
     </label>
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#about-this-chapter" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        About this chapter
+      
+    </span>
+  </a>
+  
+</li>
       
         <li class="md-nav__item">
   <a href="#objective" class="md-nav__link">
@@ -4142,10 +4153,21 @@
 </li>
         
           <li class="md-nav__item">
+  <a href="#suggested-answers-for-a-beginner-working-through-this-alone" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Suggested answers, for a beginner working through this alone
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
   <a href="#study-these-matplotlib-functions" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Study these matplotlib functions
+        Study these Matplotlib functions
       
     </span>
   </a>
@@ -4179,23 +4201,6 @@
   </a>
   
 </li>
-        
-      </ul>
-    </nav>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#zxy" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        $\(Z=X+Y\)$
-      
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="$\(Z=X+Y\)$">
-      <ul class="md-nav__list">
         
           <li class="md-nav__item">
   <a href="#surface-2-cone-like-surface" class="md-nav__link">
@@ -4271,6 +4276,28 @@
         
       </ul>
     </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#summary" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Summary
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#follow-up-questions-for-practice" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Follow-up questions for practice
+      
+    </span>
+  </a>
   
 </li>
       
@@ -8233,16 +8260,51 @@
   
 
 
-<h1 id="project-visualizing-surfaces-using-numpy-and-matplotlib">PROJECT: Visualizing Surfaces using NumPy and Matplotlib<a class="headerlink" href="#project-visualizing-surfaces-using-numpy-and-matplotlib" title="Permanent link">&para;</a></h1>
+<h1 id="chapter-11-project-visualizing-surfaces-using-numpy-and-matplotlib">Chapter 11 — Project: Visualizing Surfaces using NumPy and Matplotlib<a class="headerlink" href="#chapter-11-project-visualizing-surfaces-using-numpy-and-matplotlib" title="Permanent link">&para;</a></h1>
+<h2 id="about-this-chapter">About this chapter<a class="headerlink" href="#about-this-chapter" title="Permanent link">&para;</a></h2>
+<p>This project connects two ideas you've already met — <code>np.linspace()</code> and
+<code>np.meshgrid()</code> — to a genuinely visual payoff: drawing a full 3D surface.
+Up to now, <code>meshgrid()</code> may have felt a little abstract (why do I need two
+2D grids instead of two 1D lists?). Plotting an actual surface is where
+that question gets a satisfying, visual answer: a 3D surface needs a
+height value at <em>every point on a grid</em>, and <code>meshgrid()</code> is precisely the
+tool that builds that grid for you.</p>
+<p>By the end of this project you should be able to explain, in your own
+words, how four things fit together: an evenly-spaced list of numbers
+(<code>linspace()</code>), a full coordinate grid built from two such lists
+(<code>meshgrid()</code>), a mathematical function applied to that grid
+(<code>Z = f(X, Y)</code>), and finally, a rendered 3D picture (Matplotlib).</p>
+<blockquote>
+<p><strong>Quick glossary, before we start</strong>
+- <strong><code>linspace()</code></strong> — creates a fixed <em>number</em> of evenly spaced values
+  between a start and stop point. See
+  <a href="https://numpy.org/doc/stable/reference/generated/numpy.linspace.html">NumPy's <code>linspace()</code> documentation</a>.
+- <strong><code>meshgrid()</code></strong> — takes two 1D arrays (representing x and y positions)
+  and expands them into two full 2D grids, so that every possible (x, y)
+  pairing on the grid is represented.
+- <strong>Surface plot</strong> — a 3D chart where height (<code>Z</code>) is shown at every
+  point of an <code>(X, Y)</code> grid, producing a shape like a sheet, hill, or
+  bowl. See
+  <a href="https://matplotlib.org/stable/gallery/mplot3d/surface3d.html">Matplotlib's own 3D surface plotting tutorial</a>.
+- <strong><code>Z = f(X, Y)</code></strong> — mathematical shorthand for "the height <code>Z</code> at
+  position <code>(X, Y)</code> is calculated by some function <code>f</code>." In this project,
+  <code>f</code> is first a simple addition, then a square-root formula.</p>
+</blockquote>
 <hr />
 <h2 id="objective">Objective<a class="headerlink" href="#objective" title="Permanent link">&para;</a></h2>
 <p>Understand how:</p>
 <ul>
 <li><code>linspace()</code> creates values</li>
 <li><code>meshgrid()</code> creates coordinate grids</li>
-<li>functions $<span class="arithmatex">\(Z=f(X,Y)\)</span>$ create surfaces</li>
+<li>functions <span class="arithmatex">\(Z = f(X, Y)\)</span> create surfaces</li>
 <li>Matplotlib visualizes them</li>
 </ul>
+<div class="highlight"><pre><span></span><code>flowchart LR
+    A["np.linspace(): 1D list of x values"] --&gt; C["np.meshgrid(): full 2D grids X and Y"]
+    B["np.linspace(): 1D list of y values"] --&gt; C
+    C --&gt; D["Apply a formula: Z = f(X, Y)"]
+    D --&gt; E["Matplotlib plot_surface(X, Y, Z): rendered 3D surface"]
+</code></pre></div>
 <hr />
 <h2 id="part-a-conceptual-study">PART A — Conceptual Study<a class="headerlink" href="#part-a-conceptual-study" title="Permanent link">&para;</a></h2>
 <h3 id="study-the-following">Study the following:<a class="headerlink" href="#study-the-following" title="Permanent link">&para;</a></h3>
@@ -8254,8 +8316,69 @@
 <li>Y → y-coordinates</li>
 <li>Z → height (function output)</li>
 </ol>
+<h3 id="suggested-answers-for-a-beginner-working-through-this-alone">Suggested answers, for a beginner working through this alone<a class="headerlink" href="#suggested-answers-for-a-beginner-working-through-this-alone" title="Permanent link">&para;</a></h3>
+<p><strong>1. What does <code>np.linspace()</code> do?</strong></p>
+<p><code>np.linspace(start, stop, num)</code> produces exactly <code>num</code> values, evenly
+spaced between <code>start</code> and <code>stop</code> (including both endpoints). For example,
+<code>np.linspace(-5, 5, 50)</code> gives 50 evenly spaced numbers from <code>-5</code> up to and
+including <code>5</code> — this becomes the set of x-positions (and separately, the
+set of y-positions) our grid will be built from.</p>
+<p><strong>2. How does <code>np.meshgrid()</code> convert 1D arrays into 2D grids?</strong></p>
+<p>Given a 1D array of x-values and a 1D array of y-values, <code>np.meshgrid()</code>
+produces <strong>two</strong> 2D arrays, <code>X</code> and <code>Y</code>, both the same shape, such that
+every position <code>(i, j)</code> in those arrays holds one valid <code>(x, y)</code> pairing
+from the grid. In other words: instead of two separate lists of
+coordinates, you get two grids that, read together position by position,
+give you <em>every combination</em> of x and y across the whole surface.</p>
+<p><strong>Step-by-step, for a tiny example:</strong></p>
+<div class="highlight"><pre><span></span><code><span class="n">x</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">])</span>
+<span class="n">y</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mi">10</span><span class="p">,</span> <span class="mi">20</span><span class="p">])</span>
+<span class="n">X</span><span class="p">,</span> <span class="n">Y</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">meshgrid</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span>
+
+<span class="c1"># X:</span>
+<span class="c1"># [[1 2]</span>
+<span class="c1">#  [1 2]]</span>
+<span class="c1">#</span>
+<span class="c1"># Y:</span>
+<span class="c1"># [[10 10]</span>
+<span class="c1">#  [20 20]]</span>
+</code></pre></div>
+<p>Reading <code>X</code> and <code>Y</code> together at position <code>[0, 1]</code> gives the pair
+<code>(2, 10)</code>; at <code>[1, 0]</code> gives <code>(1, 20)</code> — every combination of the original
+x and y values is represented, one per grid position.</p>
+<p><strong>3. What does each of X, Y, and Z represent?</strong></p>
+<table>
+<thead>
+<tr>
+<th>Symbol</th>
+<th>Represents</th>
+<th>Shape</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>X</code></td>
+<td>The x-coordinate at every grid position</td>
+<td>Same shape as <code>Y</code> and <code>Z</code></td>
+</tr>
+<tr>
+<td><code>Y</code></td>
+<td>The y-coordinate at every grid position</td>
+<td>Same shape as <code>X</code> and <code>Z</code></td>
+</tr>
+<tr>
+<td><code>Z</code></td>
+<td>The <strong>height</strong> of the surface at that <code>(X, Y)</code> position — the <em>output</em> of your function <code>f(X, Y)</code></td>
+<td>Same shape as <code>X</code> and <code>Y</code></td>
+</tr>
+</tbody>
+</table>
+<p><strong>Beginner tip:</strong> the requirement that <code>X</code>, <code>Y</code>, and <code>Z</code> all share the same
+shape isn't a coincidence — it's exactly what lets Matplotlib read
+<code>X[i,j]</code>, <code>Y[i,j]</code>, and <code>Z[i,j]</code> together as one single 3D point on the
+surface, for every <code>(i, j)</code> in the grid.</p>
 <hr />
-<h3 id="study-these-matplotlib-functions">Study these matplotlib functions<a class="headerlink" href="#study-these-matplotlib-functions" title="Permanent link">&para;</a></h3>
+<h3 id="study-these-matplotlib-functions">Study these Matplotlib functions<a class="headerlink" href="#study-these-matplotlib-functions" title="Permanent link">&para;</a></h3>
 <table>
 <thead>
 <tr>
@@ -8265,271 +8388,316 @@
 </thead>
 <tbody>
 <tr>
-<td>plt.figure()</td>
-<td>Create a figure</td>
+<td><code>plt.figure()</code></td>
+<td>Create a figure (a blank canvas to draw on)</td>
 </tr>
 <tr>
-<td>add_subplot(projection='3d')</td>
-<td>Enable 3D plotting</td>
+<td><code>add_subplot(projection='3d')</code></td>
+<td>Enable 3D plotting on that canvas</td>
 </tr>
 <tr>
-<td>plot_surface(X, Y, Z)</td>
-<td>Plot surface</td>
+<td><code>plot_surface(X, Y, Z)</code></td>
+<td>Plot the surface itself</td>
 </tr>
 <tr>
-<td>set_xlabel(), set_ylabel(), set_zlabel()</td>
-<td>Label axes</td>
+<td><code>set_xlabel()</code>, <code>set_ylabel()</code>, <code>set_zlabel()</code></td>
+<td>Label the three axes</td>
 </tr>
 <tr>
-<td>set_title()</td>
-<td>Add title</td>
+<td><code>set_title()</code></td>
+<td>Add a title</td>
 </tr>
 <tr>
-<td>plt.show()</td>
-<td>Display plot</td>
+<td><code>plt.show()</code></td>
+<td>Display the finished plot</td>
 </tr>
 </tbody>
 </table>
 <details>
-
-<summary>Matplotlib Functions Used (Explained Simply- Click to expand)</summary>
+<summary>Matplotlib Functions Used (Explained Simply — click to expand)</summary>
 
 ### Matplotlib Functions Used (Explained Simply)
 
-***
+---
 
 #### 1. `plt.figure()`
 
-**Role:**\
-Creates a new drawing canvas (called a _figure_).
+**Role:** Creates a new drawing canvas (called a *figure*).
 
-**Purpose:**\
-To start a new plot. Without it, plots may overlap or reuse old figures.
+**Purpose:** To start a new plot. Without it, plots may overlap or reuse
+old figures.
 
-**Input parameters (common):**
+**Common input parameters:**
+- `figsize=(width, height)` → optional size of the figure
 
-* `figsize=(width, height)` → optional size of figure
-
-**Output:**\
-Returns a figure object (stored as `fig`)
+**Output:** Returns a figure object (typically stored as `fig`).
 
 **Example:**
+<div class="highlight"><pre><span></span><code><span class="n">fig</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">()</span>
+</code></pre></div>
 
-fig = plt.figure()
+**Key idea:** think of this as opening a blank page for drawing.
 
-**Key Idea:**
-
-> Think of this as opening a blank page for drawing.
-
-***
+---
 
 #### 2. `fig.add_subplot(projection='3d')`
 
-**Role:**\
-Adds a plotting area (axes) inside the figure.
+**Role:** Adds a plotting area (axes) inside the figure.
 
-**Purpose:**\
-Enables **3D plotting**.
+**Purpose:** Enables **3D plotting** — without `projection='3d'`, you'd
+only get a normal flat 2D plotting area.
 
 **Input parameters:**
+- `projection='3d'` → required for 3D plots
 
-* `projection='3d'` → required for 3D plots
-
-**Output:**\
-Returns an axes object (stored as `ax`)
+**Output:** Returns an axes object (typically stored as `ax`).
 
 **Example:**
+<div class="highlight"><pre><span></span><code><span class="n">ax</span> <span class="o">=</span> <span class="n">fig</span><span class="o">.</span><span class="n">add_subplot</span><span class="p">(</span><span class="n">projection</span><span class="o">=</span><span class="s1">'3d'</span><span class="p">)</span>
+</code></pre></div>
 
-ax = fig.add\_subplot(projection='3d')
+**Key idea:** converts the blank page into a 3D coordinate system.
 
-**Key Idea:**
-
-> Converts the blank page into a 3D coordinate system.
-
-***
+---
 
 #### 3. `ax.plot_surface(X, Y, Z)`
 
-**Role:**\
-Plots a 3D surface.
+**Role:** Plots a 3D surface.
 
-**Purpose:**\
-To visualize a function Z=f(X,Y)Z = f(X,Y)Z=f(X,Y)
+**Purpose:** To visualize a function `Z = f(X, Y)`.
 
 **Input parameters:**
+- `X, Y, Z` → NumPy arrays, all the **same shape**
 
-* `X, Y, Z` → NumPy arrays of same shape
-
-**Output:**\
-Draws a surface plot on the axes
+**Output:** Draws a surface on the axes.
 
 **Example:**
+<div class="highlight"><pre><span></span><code><span class="n">ax</span><span class="o">.</span><span class="n">plot_surface</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">Y</span><span class="p">,</span> <span class="n">Z</span><span class="p">)</span>
+</code></pre></div>
 
-ax.plot\_surface(X, Y, Z)
+**Key idea:** uses the grid points `(X, Y)` and their heights `Z` to draw a
+continuous surface.
 
-**Key Idea:**
-
-> Uses grid points (X,Y) and heights (Z) to draw a surface.
-
-***
+---
 
 #### 4. `ax.set_xlabel()`, `set_ylabel()`, `set_zlabel()`
 
-**Role:**\
-Labels the axes.
+**Role:** Labels the axes.
 
-**Purpose:**\
-To make plots understandable.
+**Purpose:** To make the plot understandable to anyone viewing it.
 
-**Input parameters:**
+**Input:** A string (the label text).
 
-* A string (label name)
-
-**Output:**\
-Updates axis labels
+**Output:** Updates the axis labels.
 
 **Example:**
+<div class="highlight"><pre><span></span><code><span class="n">ax</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s2">"X"</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s2">"Y"</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_zlabel</span><span class="p">(</span><span class="s2">"Z"</span><span class="p">)</span>
+</code></pre></div>
 
-ax.set\_xlabel("X")\
-ax.set\_ylabel("Y")\
-ax.set\_zlabel("Z")
+**Key idea:** always label your axes — an unlabelled 3D plot is very hard
+to interpret correctly.
 
-**Key Idea:**
-
-> Always label axes—otherwise plots are meaningless.
-
-***
+---
 
 #### 5. `ax.set_title()`
 
-**Role:**\
-Adds a title to the plot.
+**Role:** Adds a title to the plot.
 
-**Purpose:**\
-To describe what the plot represents.
+**Purpose:** To describe what the plot represents.
 
-**Input:**
+**Input:** A string.
 
-* A string
-
-**Output:**\
-Displays title above plot
+**Output:** Displays a title above the plot.
 
 **Example:**
+<div class="highlight"><pre><span></span><code><span class="n">ax</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s2">"Z = X + Y"</span><span class="p">)</span>
+</code></pre></div>
 
-ax.set\_title("Z = X + Y")
-
-***
+---
 
 #### 6. `plt.show()`
 
-**Role:**\
-Displays the plot window.
+**Role:** Displays the plot window.
 
-**Purpose:**\
-To render all figures created
+**Purpose:** To render all figures that have been created.
 
-**Input:**\
-None
+**Input:** None.
 
-**Output:**\
-Shows the final plot
+**Output:** Shows the final plot(s) on screen.
 
 **Example:**
+<div class="highlight"><pre><span></span><code><span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</code></pre></div>
 
-plt.show()
+**Key idea:** without this call, your plots may never actually appear.
 
-**Key Idea:**
-
-> Without this, plots may not appear.
-
-| Function          | Role          | Input         | Output         |
-| ----------------- | ------------- | ------------- | -------------- |
-| figure()          | Create canvas | optional size | figure         |
-| add\_subplot()    | Create axes   | projection    | axes           |
-| plot\_surface()   | Draw surface  | X,Y,Z arrays  | 3D plot        |
-| set\_xlabel() etc | Label axes    | string        | labeled axes   |
-| set\_title()      | Add title     | string        | titled plot    |
-| show()            | Display plot  | none          | visible output |
+| Function | Role | Input | Output |
+| --- | --- | --- | --- |
+| `figure()` | Create canvas | optional size | figure object |
+| `add_subplot()` | Create axes | `projection` | axes object |
+| `plot_surface()` | Draw surface | `X, Y, Z` arrays | 3D surface plot |
+| `set_xlabel()` etc. | Label axes | string | labelled axes |
+| `set_title()` | Add title | string | titled plot |
+| `show()` | Display plot | none | visible output |
 
 </details>
 
+<hr />
 <h2 id="part-b-task">Part B — Task<a class="headerlink" href="#part-b-task" title="Permanent link">&para;</a></h2>
 <p>Write a program that:</p>
 <ol>
 <li>Creates a grid using <code>linspace()</code> and <code>meshgrid()</code></li>
 <li>Plots two surfaces:</li>
 </ol>
-<hr />
 <h3 id="surface-1-plane">Surface 1 (Plane)<a class="headerlink" href="#surface-1-plane" title="Permanent link">&para;</a></h3>
-<h2 id="zxy">$<span class="arithmatex">\(Z=X+Y\)</span>$<a class="headerlink" href="#zxy" title="Permanent link">&para;</a></h2>
+<div class="arithmatex">\[Z = X + Y\]</div>
 <h3 id="surface-2-cone-like-surface">Surface 2 (Cone-like surface)<a class="headerlink" href="#surface-2-cone-like-surface" title="Permanent link">&para;</a></h3>
-<div class="arithmatex">\[Z= \sqrt{X^2 + Y^2}\]</div>
-<p>Derived from $<span class="arithmatex">\(Z^2 =X^2+Y^2\)</span>$</p>
-<hr />
+<div class="arithmatex">\[Z = \sqrt{X^2 + Y^2}\]</div>
+<p>Derived from <span class="arithmatex">\(Z^2 = X^2 + Y^2\)</span></p>
 <h3 id="hints">Hints<a class="headerlink" href="#hints" title="Permanent link">&para;</a></h3>
 <ul>
-<li>Use same X and Y for both surfaces</li>
-<li>Z must have same shape as X and Y</li>
+<li>Use the same <code>X</code> and <code>Y</code> for both surfaces</li>
+<li><code>Z</code> must have the same shape as <code>X</code> and <code>Y</code></li>
 <li>Use two different figures</li>
-<li>Keep grid symmetric (e.g., -5 to 5)</li>
+<li>Keep the grid symmetric (e.g., <code>-5</code> to <code>5</code>)</li>
 </ul>
 <h3 id="flowchart-of-the-process">Flowchart of the process<a class="headerlink" href="#flowchart-of-the-process" title="Permanent link">&para;</a></h3>
-<p><img alt="Flowchart" src="https://github.com/ag999git/001-Python-book-2026/blob/main/resources/ch11-numpy-flowchart-matplotlib.png" /></p>
+<p><img alt="Flowchart" src="/001-mkdocs/resources/ch11-numpy-flowchart-matplotlib.png" /></p>
+<hr />
 <h2 id="script">Script<a class="headerlink" href="#script" title="Permanent link">&para;</a></h2>
+<p>Every stage of the script below is labelled with a <code># Step N -</code> comment,
+matching the task's requirements, with extra explanation added wherever a
+beginner is likely to pause and ask "wait, why that choice?"</p>
 <div class="highlight"><pre><span></span><code><span class="c1"># Project: Visualizing surfaces using NumPy and Matplotlib</span>
-
 <span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
 <span class="kn">import</span><span class="w"> </span><span class="nn">matplotlib.pyplot</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">plt</span>
 
-<span class="c1"># Step 1: Create values</span>
+<span class="c1"># ---------------------------------------------------</span>
+<span class="c1"># Step 1 - Create the x and y coordinate VALUES (still just 1D lists).</span>
+<span class="c1"># 50 points gives a reasonably smooth-looking surface; fewer points</span>
+<span class="c1"># would look noticeably "blocky" once plotted.</span>
+<span class="c1"># ---------------------------------------------------</span>
+<span class="n">x</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="o">-</span><span class="mi">5</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">50</span><span class="p">)</span>   <span class="c1"># 50 evenly spaced values from -5 to 5</span>
+<span class="n">y</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="o">-</span><span class="mi">5</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">50</span><span class="p">)</span>   <span class="c1"># 50 evenly spaced values from -5 to 5</span>
 
-<span class="n">x</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="o">-</span><span class="mi">5</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">50</span><span class="p">)</span>   <span class="c1"># With 50 points from -5 to 5 we get smoother surfaces</span>
-<span class="n">y</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="o">-</span><span class="mi">5</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">50</span><span class="p">)</span>   <span class="c1"># 50 points from -5 to 5</span>
 
-<span class="c1"># Step 2: Create grid</span>
-<span class="c1"># meshgrid creates 2D arrays for X and Y. Each (i,j) gives a pair (X[i,j], Y[i,j]) which is one input to f(x,y).</span>
+<span class="c1"># ---------------------------------------------------</span>
+<span class="c1"># Step 2 - Turn those two 1D lists into a full 2D GRID.</span>
+<span class="c1"># meshgrid() produces two 2D arrays, X and Y, of the same shape.</span>
+<span class="c1"># Reading X[i,j] and Y[i,j] TOGETHER gives one (x, y) coordinate pair —</span>
+<span class="c1"># this is exactly the input plot_surface() will need later.</span>
+<span class="c1"># ---------------------------------------------------</span>
 <span class="n">X</span><span class="p">,</span> <span class="n">Y</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">meshgrid</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span>
 
-<span class="c1"># Step 3: Define surfaces</span>
 
-<span class="c1"># Surface 1: Plane. It is a slanted plane where Z increases as X and Y increase. </span>
+<span class="c1"># ---------------------------------------------------</span>
+<span class="c1"># Step 3 - Define each surface's height, Z, as a formula applied to</span>
+<span class="c1"># the WHOLE grid at once (this is vectorization — no loop needed).</span>
+<span class="c1"># ---------------------------------------------------</span>
+
+<span class="c1"># Surface 1: a flat, slanted plane. Z increases as X and/or Y increase.</span>
 <span class="n">Z1</span> <span class="o">=</span> <span class="n">X</span> <span class="o">+</span> <span class="n">Y</span>
 
-<span class="c1"># Surface 2: Inverted Cone-like surface. It is a cone where Z increases with the distance from the origin.</span>
-<span class="n">Z2</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">X</span><span class="o">**</span><span class="mi">2</span> <span class="o">+</span> <span class="n">Y</span><span class="o">**</span><span class="mi">2</span><span class="p">)</span>  <span class="c1">#</span>
+<span class="c1"># Surface 2: a cone-like surface (an upward-opening cone from the origin).</span>
+<span class="c1"># Z increases with distance from the origin, regardless of direction —</span>
+<span class="c1"># this is exactly the distance formula, since sqrt(x^2 + y^2) is the</span>
+<span class="c1"># straight-line distance from (0, 0) to (x, y).</span>
+<span class="n">Z2</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">X</span><span class="o">**</span><span class="mi">2</span> <span class="o">+</span> <span class="n">Y</span><span class="o">**</span><span class="mi">2</span><span class="p">)</span>
 
-<span class="c1"># Step 4: Plot Surface 1</span>
-<span class="n">fig1</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">()</span>  <span class="c1"># separate figure for first surface</span>
-<span class="n">ax1</span> <span class="o">=</span> <span class="n">fig1</span><span class="o">.</span><span class="n">add_subplot</span><span class="p">(</span><span class="n">projection</span><span class="o">=</span><span class="s1">'3d'</span><span class="p">)</span>  <span class="c1"># 3D subplot for surface plot</span>
-<span class="n">ax1</span><span class="o">.</span><span class="n">plot_surface</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">Y</span><span class="p">,</span> <span class="n">Z1</span><span class="p">)</span>
+
+<span class="c1"># ---------------------------------------------------</span>
+<span class="c1"># Step 4 - Plot Surface 1 (the plane), in its OWN figure window.</span>
+<span class="c1"># ---------------------------------------------------</span>
+<span class="n">fig1</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">()</span>                       <span class="c1"># a separate blank canvas for this surface</span>
+<span class="n">ax1</span> <span class="o">=</span> <span class="n">fig1</span><span class="o">.</span><span class="n">add_subplot</span><span class="p">(</span><span class="n">projection</span><span class="o">=</span><span class="s1">'3d'</span><span class="p">)</span>   <span class="c1"># enable 3D plotting on this canvas</span>
+<span class="n">ax1</span><span class="o">.</span><span class="n">plot_surface</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">Y</span><span class="p">,</span> <span class="n">Z1</span><span class="p">)</span>                <span class="c1"># draw the surface using the grid + heights</span>
 <span class="n">ax1</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s2">"Z = X + Y (Plane)"</span><span class="p">)</span>
-<span class="n">ax1</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s2">"X"</span><span class="p">)</span>  <span class="c1"># X-axis label</span>
-<span class="n">ax1</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s2">"Y"</span><span class="p">)</span>  <span class="c1"># Y-axis label</span>
-<span class="n">ax1</span><span class="o">.</span><span class="n">set_zlabel</span><span class="p">(</span><span class="s2">"Z"</span><span class="p">)</span>  <span class="c1"># Z-axis label</span>
+<span class="n">ax1</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s2">"X"</span><span class="p">)</span>
+<span class="n">ax1</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s2">"Y"</span><span class="p">)</span>
+<span class="n">ax1</span><span class="o">.</span><span class="n">set_zlabel</span><span class="p">(</span><span class="s2">"Z"</span><span class="p">)</span>
 
-<span class="c1"># Step 5: Plot Surface 2</span>
-<span class="n">fig2</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">()</span>  <span class="c1"># separate figure for second surface</span>
-<span class="n">ax2</span> <span class="o">=</span> <span class="n">fig2</span><span class="o">.</span><span class="n">add_subplot</span><span class="p">(</span><span class="n">projection</span><span class="o">=</span><span class="s1">'3d'</span><span class="p">)</span>  <span class="c1"># 3D subplot for surface plot</span>
-<span class="n">ax2</span><span class="o">.</span><span class="n">plot_surface</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">Y</span><span class="p">,</span> <span class="n">Z2</span><span class="p">)</span>  <span class="c1"># cone-like surface. As the distance from origin increases, Z increases.</span>
-<span class="n">ax2</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s2">"Z = sqrt(X^2 + Y^2) (Cone)"</span><span class="p">)</span>  <span class="c1"># title indicates the function being plotted</span>
-<span class="n">ax2</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s2">"X"</span><span class="p">)</span>  <span class="c1"># X-axis label</span>
-<span class="n">ax2</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s2">"Y"</span><span class="p">)</span>  <span class="c1"># Y-axis label</span>
-<span class="n">ax2</span><span class="o">.</span><span class="n">set_zlabel</span><span class="p">(</span><span class="s2">"Z"</span><span class="p">)</span>  <span class="c1"># Z-axis label</span>
 
-<span class="c1"># Step 6: Show plots</span>
-<span class="c1"># Displays both surface plots. Each plot is in a separate window. The first shows the plane Z=X+Y, </span>
-<span class="c1"># and the second shows the cone-like surface Z=sqrt(X^2 + Y^2).</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>  <span class="c1"># show() renders the plots on the screen.</span>
+<span class="c1"># ---------------------------------------------------</span>
+<span class="c1"># Step 5 - Plot Surface 2 (the cone), in a SECOND, separate figure window.</span>
+<span class="c1"># Using a second np.figure() call keeps this plot fully independent of</span>
+<span class="c1"># the first one — they won't overlap or interfere with each other.</span>
+<span class="c1"># ---------------------------------------------------</span>
+<span class="n">fig2</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">()</span>
+<span class="n">ax2</span> <span class="o">=</span> <span class="n">fig2</span><span class="o">.</span><span class="n">add_subplot</span><span class="p">(</span><span class="n">projection</span><span class="o">=</span><span class="s1">'3d'</span><span class="p">)</span>
+<span class="n">ax2</span><span class="o">.</span><span class="n">plot_surface</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">Y</span><span class="p">,</span> <span class="n">Z2</span><span class="p">)</span>
+<span class="n">ax2</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s2">"Z = sqrt(X^2 + Y^2) (Cone)"</span><span class="p">)</span>
+<span class="n">ax2</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s2">"X"</span><span class="p">)</span>
+<span class="n">ax2</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s2">"Y"</span><span class="p">)</span>
+<span class="n">ax2</span><span class="o">.</span><span class="n">set_zlabel</span><span class="p">(</span><span class="s2">"Z"</span><span class="p">)</span>
 
-<span class="c1"># Key Ideas:</span>
-<span class="c1"># X,Y → coordinates</span>
-<span class="c1"># Z → height at each coordinate</span>
+
+<span class="c1"># ---------------------------------------------------</span>
+<span class="c1"># Step 6 - Render both figures on screen at once.</span>
+<span class="c1"># plt.show() displays every figure created since the script started —</span>
+<span class="c1"># in this case, both the plane and the cone, each in its own window.</span>
+<span class="c1"># ---------------------------------------------------</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+
+<span class="c1"># Key ideas to remember:</span>
+<span class="c1"># X, Y -&gt; the coordinates on the grid (where you are)</span>
+<span class="c1"># Z    -&gt; the height of the surface at that coordinate (how high you are)</span>
 </code></pre></div>
 <h3 id="output-figure-plane">Output Figure (Plane)<a class="headerlink" href="#output-figure-plane" title="Permanent link">&para;</a></h3>
-<p><img alt="Figure Plane" src="https://github.com/ag999git/001-Python-book-2026/blob/main/resources/ch11-numpy-matplotlib-plane.png" /></p>
+<p><img alt="Figure Plane" src="/001-mkdocs/resources/ch11-numpy-matplotlib-plane.png" /></p>
 <h3 id="output-figure-cone">Output Figure (Cone)<a class="headerlink" href="#output-figure-cone" title="Permanent link">&para;</a></h3>
-<p><img alt="Figure Cone" src="https://github.com/ag999git/001-Python-book-2026/blob/main/resources/ch11-numpy-matplotlib-cone.png" /></p>
+<p><img alt="Figure Cone" src="/001-mkdocs/resources/ch11-numpy-matplotlib-cone.png" /></p>
+<hr />
+<h2 id="summary">Summary<a class="headerlink" href="#summary" title="Permanent link">&para;</a></h2>
+<table>
+<thead>
+<tr>
+<th>Piece</th>
+<th>Role</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>np.linspace()</code></td>
+<td>Builds the raw list of evenly spaced x (or y) values</td>
+</tr>
+<tr>
+<td><code>np.meshgrid()</code></td>
+<td>Expands two 1D lists into two full 2D coordinate grids</td>
+</tr>
+<tr>
+<td><code>Z = f(X, Y)</code></td>
+<td>A formula applied to the whole grid at once, producing a height at every point</td>
+</tr>
+<tr>
+<td><code>ax.plot_surface(X, Y, Z)</code></td>
+<td>Draws the actual 3D surface from the grid and its heights</td>
+</tr>
+<tr>
+<td>Two separate figures</td>
+<td>Keeps the plane and the cone as two independent, non-overlapping plots</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="follow-up-questions-for-practice">Follow-up questions for practice<a class="headerlink" href="#follow-up-questions-for-practice" title="Permanent link">&para;</a></h2>
+<p><em>(These are additional, optional questions for self-testing — they don't
+replace or change the original task above.)</em></p>
+<ol>
+<li>What would happen to the plotted surface's <em>smoothness</em> if you changed
+   <code>np.linspace(-5, 5, 50)</code> to <code>np.linspace(-5, 5, 5)</code>? Try it and compare
+   the two plane plots side by side.</li>
+<li>Write a third surface, <code>Z3 = X**2 - Y**2</code> (a "saddle" shape), reusing
+   the same <code>X</code> and <code>Y</code> grid. What do you expect this surface to look like
+   before you plot it?</li>
+<li>In Step 2, what would happen if you accidentally used two <em>differently
+   sized</em> <code>linspace()</code> calls for <code>x</code> and <code>y</code> (e.g. 50 points for <code>x</code> but
+   30 for <code>y</code>)? Would <code>meshgrid()</code> still work? Would <code>plot_surface()</code>?</li>
+<li>The hint says to "keep the grid symmetric (e.g., -5 to 5)." For
+   Surface 2 specifically (the cone), what visual difference would you
+   expect if the grid ran from <code>0</code> to <code>10</code> instead of <code>-5</code> to <code>5</code>?</li>
+</ol>
 
 
 
