@@ -88,7 +88,7 @@ matrix multiplication or geometric transformations — the same numbers,
 arranged the "wrong" way, can produce a completely different (or invalid)
 calculation.
 
-![Flowchart](/001-mkdocs/resources/ch-11-numpy-august-2026-row-vs-column-vector.png)
+![Flowchart](../resources/ch-11-numpy-august-2026-row-vs-column-vector.png)
 
 ---
 

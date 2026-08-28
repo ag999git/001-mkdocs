@@ -80,6 +80,7 @@ The assignment has `Cat` inherit from `Animal` only, while `Dog` inherits from b
 
 
 
+*(This diagram uses plain `graph TD` syntax with simple boxes and arrows only — no subgraphs, no styled/labeled edges, no special characters in labels — so it should paste cleanly into draw.io via Extras → Edit Diagram.)*
 
 Notice `Dog` has **two** arrows pointing into it — one from `Animal`, one from `Friendly` — this is exactly what multiple inheritance looks like: a single class combining behaviour from two separate parents at once.
 
