@@ -25,7 +25,7 @@
     
     
       
-        <title>Singular Value Decomposition (SVD) - Python 999</title>
+        <title>Chapter 11 — Singular Value Decomposition (SVD) - Python 999</title>
       
     
     
@@ -82,7 +82,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#singular-value-decomposition-svd" class="md-skip">
+        <a href="#chapter-11-singular-value-decomposition-svd" class="md-skip">
           Skip to content
         </a>
       
@@ -118,7 +118,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              Singular Value Decomposition (SVD)
+              Chapter 11 — Singular Value Decomposition (SVD)
             
           </span>
         </div>
@@ -4176,7 +4176,7 @@
   <span class="md-ellipsis">
     
   
-    Singular Value Decomposition (SVD)
+    Chapter 11 — Singular Value Decomposition (SVD)
   
 
     
@@ -4194,7 +4194,7 @@
   <span class="md-ellipsis">
     
   
-    Singular Value Decomposition (SVD)
+    Chapter 11 — Singular Value Decomposition (SVD)
   
 
     
@@ -4218,6 +4218,17 @@
       Table of contents
     </label>
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#about-this-chapter" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        About this chapter
+      
+    </span>
+  </a>
+  
+</li>
       
         <li class="md-nav__item">
   <a href="#1-introduction" class="md-nav__link">
@@ -4274,7 +4285,7 @@
   <a href="#verifying-the-properties" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Verifying the Properties
+        Verifying the properties
       
     </span>
   </a>
@@ -4298,17 +4309,6 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#script" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Script
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
   <a href="#5-real-world-application-dimensionality-reduction-latent-semantic-analysis" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -4324,7 +4324,7 @@
   <a href="#the-scenario-book-recommendations" class="md-nav__link">
     <span class="md-ellipsis">
       
-        The Scenario: Book Recommendations
+        The scenario: book recommendations
       
     </span>
   </a>
@@ -4359,10 +4359,21 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#script-for-the-reader-book-example" class="md-nav__link">
+  <a href="#summary" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Script for the reader-book example
+        Summary
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#follow-up-questions-for-practice" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Follow-up questions for practice
       
     </span>
   </a>
@@ -8216,38 +8227,129 @@
   
 
 
-<h1 id="singular-value-decomposition-svd">Singular Value Decomposition (SVD)<a class="headerlink" href="#singular-value-decomposition-svd" title="Permanent link">&para;</a></h1>
+<h1 id="chapter-11-singular-value-decomposition-svd">Chapter 11 — Singular Value Decomposition (SVD)<a class="headerlink" href="#chapter-11-singular-value-decomposition-svd" title="Permanent link">&para;</a></h1>
 <blockquote>
-<p><strong>Note for GitHub Readers:</strong> To view the mathematical equations properly on GitHub, ensure MathJax is enabled in your repository settings, or use a Markdown viewer that supports LaTeX (like Typora, Obsidian, or VS Code with Markdown Math extensions).</p>
+<p><strong>Note for GitHub readers:</strong> to view the mathematical equations properly
+on GitHub, ensure MathJax is enabled in your repository settings, or use
+a Markdown viewer that supports LaTeX (like Typora, Obsidian, or VS Code
+with a Markdown Math extension).</p>
 </blockquote>
+<h2 id="about-this-chapter">About this chapter<a class="headerlink" href="#about-this-chapter" title="Permanent link">&para;</a></h2>
+<p>This chapter builds directly on the previous one, <strong>Eigen Decomposition</strong>
+— if any part of <span class="arithmatex">\(A = Q\Lambda Q^{-1}\)</span> felt unfamiliar, it's worth
+revisiting that chapter first. Singular Value Decomposition (SVD) takes
+the same underlying idea — breaking a matrix into simpler, structured
+pieces — and generalizes it to work on <strong>any</strong> matrix, not just square
+ones.</p>
+<p>SVD shows up constantly in real applications: it's the mathematical engine
+behind Principal Component Analysis (PCA), a common technique for
+compressing images, a tool for reducing noise in signals, and — as this
+chapter's main worked example shows — the basis for early recommendation
+systems (the kind that guess which books, movies, or products you might
+like based on patterns in other people's preferences).</p>
+<blockquote>
+<p><strong>Quick glossary, before we start</strong>
+- <strong>Unitary / orthonormal matrix</strong> — a matrix whose columns are all unit
+  length (magnitude <code>1</code>) and all perpendicular to each other. See
+  <a href="https://www.khanacademy.org/math/linear-algebra/alternate-bases/orthonormal-basis/v/linear-algebra-introduction-to-orthonormal-bases">Khan Academy's introduction to orthonormal vectors</a>.
+- <strong>Singular values</strong> — the diagonal entries of <span class="arithmatex">\(\Sigma\)</span>, always
+  non-negative, that describe how much a matrix stretches space along
+  each of its principal directions.
+- <strong>Rank / low-rank approximation</strong> — the <em>rank</em> of a matrix is roughly
+  "how many independent directions of information it truly contains." A
+  <em>low-rank approximation</em> deliberately keeps only the most important
+  few directions, discarding the rest as noise — exactly what "truncated
+  SVD" does later in this chapter.
+- <strong>Frobenius norm</strong> — a way of measuring the overall "size" or "total
+  energy" of a matrix, by treating all of its entries as one long vector
+  and finding that vector's length. Used later in this chapter to check
+  how much information survives a truncation.
+- <strong>Latent Semantic Analysis (LSA)</strong> — a technique (originally from text
+  analysis, but usable anywhere) for uncovering hidden ("latent")
+  categories in data using SVD, without those categories being labelled
+  in advance.</p>
+</blockquote>
+<hr />
 <h2 id="1-introduction">1. Introduction<a class="headerlink" href="#1-introduction" title="Permanent link">&para;</a></h2>
-<p>Singular Value Decomposition (SVD) is one of the most fundamental and powerful matrix decomposition techniques in linear algebra. It acts as the "swiss-army knife" of data science, serving as the underlying engine for Principal Component Analysis (PCA), recommendation systems, image compression, and noise reduction.</p>
-<p>At its core, SVD is the process of factorizing any <span class="arithmatex">\(m×n\)</span> matrix <span class="arithmatex">\(A\)</span> into the product of three special matrices:
-<span class="arithmatex">\(A=U\Sigma V^{T}\)</span></p>
+<p>Singular Value Decomposition (SVD) is one of the most fundamental and
+powerful matrix decomposition techniques in linear algebra. It acts as the
+"Swiss Army knife" of data science, serving as the underlying engine for
+Principal Component Analysis (PCA), recommendation systems, image
+compression, and noise reduction.</p>
+<p>At its core, SVD factorizes any <span class="arithmatex">\(m \times n\)</span> matrix <span class="arithmatex">\(A\)</span> into the product
+of three special matrices:</p>
+<div class="arithmatex">\[A = U \Sigma V^{T}\]</div>
+<p>Where:</p>
 <ul>
-<li>Where: <span class="arithmatex">\(U\)</span> is an <span class="arithmatex">\(m×n\)</span> <strong>unitary matrix</strong> (Specifically, its columns are orthonormal vectors. This means <span class="arithmatex">\(U^{TU}=I\)</span> , the identity matrix).</li>
-<li>Σ (Sigma) is an <span class="arithmatex">\(m×n\)</span> <strong>rectangular diagonal matrix</strong>. All elements are zero except the diagonal entries, which are non-negative real numbers called <strong>singular values</strong>.</li>
-<li><span class="arithmatex">\(V^T\)</span> is an <span class="arithmatex">\(n×n\)</span> <strong>unitary matrix</strong> (the transpose of <span class="arithmatex">\(V\)</span>, whose columns are also orthonormal vectors).</li>
+<li><span class="arithmatex">\(U\)</span> is an <span class="arithmatex">\(m \times m\)</span> <strong>unitary matrix</strong> — specifically, its columns
+  are orthonormal vectors, meaning <span class="arithmatex">\(U^{T}U = I\)</span>, the identity matrix.</li>
+<li><span class="arithmatex">\(\Sigma\)</span> (Sigma) is an <span class="arithmatex">\(m \times n\)</span> <strong>rectangular diagonal matrix</strong>. All
+  entries are zero except the diagonal ones, which are non-negative real
+  numbers called <strong>singular values</strong>.</li>
+<li><span class="arithmatex">\(V^{T}\)</span> is the transpose of an <span class="arithmatex">\(n \times n\)</span> <strong>unitary matrix</strong> <span class="arithmatex">\(V\)</span>,
+  whose columns are also orthonormal vectors.</li>
 </ul>
 <h3 id="terminology">Terminology<a class="headerlink" href="#terminology" title="Permanent link">&para;</a></h3>
 <ul>
-<li>The diagonal entries of <span class="arithmatex">\(Σ\)</span> are the <strong>Singular Values</strong> of <span class="arithmatex">\(A\)</span></li>
-<li>The columns of <span class="arithmatex">\(U\)</span> are the <strong>Left-Singular Vectors</strong> of <span class="arithmatex">\(A\)</span></li>
-<li>The columns of <span class="arithmatex">\(V\)</span> are the <strong>Right-Singular Vectors</strong> of <span class="arithmatex">\(A\)</span></li>
+<li>The diagonal entries of <span class="arithmatex">\(\Sigma\)</span> are the <strong>singular values</strong> of <span class="arithmatex">\(A\)</span>.</li>
+<li>The columns of <span class="arithmatex">\(U\)</span> are the <strong>left-singular vectors</strong> of <span class="arithmatex">\(A\)</span>.</li>
+<li>The columns of <span class="arithmatex">\(V\)</span> are the <strong>right-singular vectors</strong> of <span class="arithmatex">\(A\)</span>.</li>
 </ul>
+<div class="highlight"><pre><span></span><code>flowchart LR
+    A["Any matrix A, shape (m,n)"] --&gt; U["U: m x m&lt;br/&gt;orthonormal columns"]
+    A --&gt; S["Sigma: m x n&lt;br/&gt;diagonal, singular values"]
+    A --&gt; V["V transpose: n x n&lt;br/&gt;orthonormal columns"]
+    U --&gt; R["A = U x Sigma x V-transpose"]
+    S --&gt; R
+    V --&gt; R
+</code></pre></div>
+<p><em>(Plain boxes and arrows only, no subgraphs, so every diagram in this
+chapter should import cleanly into <a href="https://app.diagrams.net/">draw.io</a> as
+well as render on GitHub/GitBook.)</em></p>
 <hr />
 <h2 id="2-svd-vs-eigendecomposition">2. SVD vs. Eigendecomposition<a class="headerlink" href="#2-svd-vs-eigendecomposition" title="Permanent link">&para;</a></h2>
-<p>SVD is very similar to eigen decomposition. The important differences are:-
-1.  Eigen decomposition is done for a square matrix but SVD can be done for a non-square matrix also.
-2.  In eigen decomposition, when you form the diagonal matrix L from the eigen values, you don’t insist upon the eigen values to be in any particular order. But in SVD, by convention you put the eigen values in the diagonal matrix in descending order on the diagonal. </p>
-<p>If you are familiar with Eigendecomposition (<span class="arithmatex">\(A=QΛQ^{−1}\)</span>), SVD will look very similar. However, SVD is strictly more general and has two critical advantages:
-| Feature | Eigendecomposition | Singular Value Decomposition (SVD) |
-| --- | --- | --- |
-| Matrix Requirements | Must be a square (n×n) matrix. | Works on any matrix (m×n). |
-| Eigenvalue Ordering | Eigenvalues can be in any order. | Singular values are always sorted in descending order (σ1​≥σ2​≥…). |</p>
-<p>The descending order of singular values is incredibly useful. It means the first column of <span class="arithmatex">\(U\)</span> and the first row of <span class="arithmatex">\(V^T\)</span> capture the most variance/information in the matrix, the second captures the second most, and so on.</p>
+<p>SVD is very similar to eigen decomposition. The important differences are:</p>
+<ol>
+<li>Eigen decomposition is done for a <strong>square</strong> matrix, but SVD can be
+   done for a <strong>non-square</strong> matrix too.</li>
+<li>In eigen decomposition, when you form the diagonal matrix <span class="arithmatex">\(\Lambda\)</span>
+   from the eigenvalues, you don't insist that the eigenvalues be in any
+   particular order. But in SVD, by convention, the singular values are
+   always placed on the diagonal in <strong>descending order</strong>.</li>
+</ol>
+<p>If you're familiar with eigendecomposition (<span class="arithmatex">\(A = Q\Lambda Q^{-1}\)</span>), SVD
+will look very similar. However, SVD is strictly more general, and has two
+critical advantages:</p>
+<table>
+<thead>
+<tr>
+<th>Feature</th>
+<th>Eigendecomposition</th>
+<th>Singular Value Decomposition (SVD)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Matrix requirements</td>
+<td>Must be a square (<span class="arithmatex">\(n \times n\)</span>) matrix</td>
+<td>Works on any matrix (<span class="arithmatex">\(m \times n\)</span>)</td>
+</tr>
+<tr>
+<td>Eigenvalue/singular-value ordering</td>
+<td>Eigenvalues can be in any order</td>
+<td>Singular values are always sorted in descending order (<span class="arithmatex">\(\sigma_1 \ge \sigma_2 \ge \dots\)</span>)</td>
+</tr>
+</tbody>
+</table>
+<p>The descending order of singular values is incredibly useful: it means the
+<strong>first</strong> column of <span class="arithmatex">\(U\)</span> and <strong>first</strong> row of <span class="arithmatex">\(V^{T}\)</span> capture the <em>most</em>
+variance/information in the matrix, the second captures the second most,
+and so on. This ordering is exactly what makes "keep only the first few"
+(truncation, covered later) a sensible strategy.</p>
+<hr />
 <h2 id="3-basic-mathematical-example">3. Basic Mathematical Example<a class="headerlink" href="#3-basic-mathematical-example" title="Permanent link">&para;</a></h2>
-<p>SVD can be best understood by an example. Let's decompose a <span class="arithmatex">\(3×2\)</span> matrix <span class="arithmatex">\(A\)</span></p>
+<p>SVD can be best understood by an example. Let's decompose a <span class="arithmatex">\(3 \times 2\)</span>
+matrix <span class="arithmatex">\(A\)</span>:</p>
 <div class="arithmatex">\[
 A = \begin{bmatrix}
 1 &amp; -1 \\
@@ -8260,8 +8362,8 @@ A = \begin{bmatrix}
 \begin{bmatrix}
 1 &amp; -1 \\
 0 &amp; 1 \\
-0 &amp; 0
-\end{bmatrix} = 
+1 &amp; 0
+\end{bmatrix} =
 \begin{bmatrix}
 -\frac{2}{\sqrt{6}} &amp; 0 &amp; -\frac{1}{\sqrt{3}} \\
 \frac{1}{\sqrt{6}} &amp; -\frac{1}{\sqrt{2}} &amp; \frac{1}{\sqrt{3}} \\
@@ -8277,10 +8379,8 @@ A = \begin{bmatrix}
 -\frac{1}{\sqrt{2}} &amp; -\frac{1}{\sqrt{2}}
 \end{bmatrix}
 \]</div>
-<h3 id="verifying-the-properties">Verifying the Properties<a class="headerlink" href="#verifying-the-properties" title="Permanent link">&para;</a></h3>
-<ol>
-<li><strong>Unit Vectors:</strong> Look at the first column of U is:</li>
-</ol>
+<h3 id="verifying-the-properties">Verifying the properties<a class="headerlink" href="#verifying-the-properties" title="Permanent link">&para;</a></h3>
+<p><strong>1. Unit vectors:</strong> the first column of <span class="arithmatex">\(U\)</span> is:</p>
 <div class="arithmatex">\[
 \begin{bmatrix}
 -2/\sqrt{6} \\
@@ -8288,58 +8388,80 @@ A = \begin{bmatrix}
 -1/\sqrt{6}
 \end{bmatrix}
 \]</div>
-<p>or we can also write it as Transpose as: <span class="arithmatex">\(U=\)</span> <span class="arithmatex">\(\left[-2/\sqrt{6}\quad1/\sqrt{6}\quad-1/\sqrt{6}\right]^{T}\)</span></p>
-<ol>
-<li>Its magnitude is  <span class="arithmatex">\(\sqrt{(-2/\sqrt{6})^{2}+(1/\sqrt{6})^{2}+(-1/\sqrt{6})^{2}}=\sqrt{4/6+1/6+1/6}=1\)</span> . It is a unit vector.</li>
-<li><strong>Orthogonality:</strong> The dot product of the 2nd and 3rd columns of <span class="arithmatex">\(U\)</span> is: <span class="arithmatex">\(0\left(-\frac{1}{\sqrt{3}}\right) + \left(-\frac{1}{\sqrt{2}}\right)\left(-\frac{1}{\sqrt{3}}\right) + \left(-\frac{1}{\sqrt{2}}\right)\left(\frac{1}{\sqrt{3}}\right) = 0 + \frac{1}{\sqrt{6}} - \frac{1}{\sqrt{6}} = 0\)</span> . They are orthogonal.</li>
-<li><strong>Descending Order in</strong> <span class="arithmatex">\(Σ\)</span>: The diagonal values are <span class="arithmatex">\({\sqrt{3}}\approx1.73\)</span> and 1. They are in descending order.</li>
-</ol>
+<p>or, written as the transpose of a row: <span class="arithmatex">\(U_1 = \left[-2/\sqrt{6} \quad 1/\sqrt{6} \quad -1/\sqrt{6}\right]^{T}\)</span></p>
+<p>Its magnitude is:</p>
+<div class="arithmatex">\[\sqrt{(-2/\sqrt{6})^{2}+(1/\sqrt{6})^{2}+(-1/\sqrt{6})^{2}}=\sqrt{4/6+1/6+1/6}=1\]</div>
+<p>Since its magnitude is exactly <code>1</code>, it's a genuine <strong>unit vector</strong>.</p>
+<p><strong>2. Orthogonality:</strong> the dot product of the 2nd and 3rd columns of <span class="arithmatex">\(U\)</span> is:</p>
+<div class="arithmatex">\[0\left(-\frac{1}{\sqrt{3}}\right) + \left(-\frac{1}{\sqrt{2}}\right)\left(-\frac{1}{\sqrt{3}}\right) + \left(-\frac{1}{\sqrt{2}}\right)\left(\frac{1}{\sqrt{3}}\right) = 0 + \frac{1}{\sqrt{6}} - \frac{1}{\sqrt{6}} = 0\]</div>
+<p>Since the dot product is <code>0</code>, these two columns are genuinely
+<strong>orthogonal</strong> (perpendicular to each other).</p>
+<p><strong>3. Descending order in <span class="arithmatex">\(\Sigma\)</span>:</strong> the diagonal values are
+<span class="arithmatex">\(\sqrt{3} \approx 1.73\)</span> and <code>1</code>. They are indeed in descending order,
+exactly as SVD's convention requires.</p>
+<hr />
 <h2 id="4-python-implementation-basic-svd">4. Python Implementation: Basic SVD<a class="headerlink" href="#4-python-implementation-basic-svd" title="Permanent link">&para;</a></h2>
-<p>When performing SVD in Python using <code>scipy.linalg.svd</code> or <code>numpy.linalg.svd</code>, the function optimizes for memory. Instead of returning a full <span class="arithmatex">\(m×n\)</span> matrix filled with zeros for <span class="arithmatex">\(Σ\)</span>, it returns a <strong>1D array</strong> containing only the singular values.</p>
-<h2 id="script">Script<a class="headerlink" href="#script" title="Permanent link">&para;</a></h2>
+<p>When performing SVD in Python using <code>scipy.linalg.svd</code> or
+<code>numpy.linalg.svd</code>, the function optimizes for memory: instead of
+returning a full <span class="arithmatex">\(m \times n\)</span> matrix filled mostly with zeros for
+<span class="arithmatex">\(\Sigma\)</span>, it returns a compact <strong>1D array</strong> containing only the singular
+values themselves.</p>
 <div class="highlight"><pre><span></span><code><span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">scipy</span><span class="w"> </span><span class="kn">import</span> <span class="n">linalg</span>
 
-<span class="c1"># Format output for readability</span>
-<span class="n">np</span><span class="o">.</span><span class="n">set_printoptions</span><span class="p">(</span><span class="n">precision</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span> <span class="n">suppress</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>  <span class="c1"># Suppress scientific notation for small numbers and round to 3 decimal places for better readability.</span>
+<span class="c1"># Step 1 - Format printed output for readability: round to 3 decimal</span>
+<span class="c1"># places and suppress scientific notation for very small numbers.</span>
+<span class="n">np</span><span class="o">.</span><span class="n">set_printoptions</span><span class="p">(</span><span class="n">precision</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span> <span class="n">suppress</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 
-<span class="c1"># Define a 3x2 matrix (m=3, n=2). </span>
+<span class="c1"># Step 2 - Define a 3x2 matrix (m=3 rows, n=2 columns) to decompose.</span>
 <span class="n">A</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="mi">1</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">],</span>
-            <span class="p">[</span><span class="mi">0</span><span class="p">,</span>  <span class="mi">1</span><span class="p">],</span>
-            <span class="p">[</span><span class="mi">1</span><span class="p">,</span>  <span class="mi">0</span><span class="p">]])</span>
+              <span class="p">[</span><span class="mi">0</span><span class="p">,</span>  <span class="mi">1</span><span class="p">],</span>
+              <span class="p">[</span><span class="mi">1</span><span class="p">,</span>  <span class="mi">0</span><span class="p">]])</span>
 
-<span class="c1"># Perform SVD. The function linalg.svd returns three matrices: U, S, and Vt.</span>
-<span class="c1"># U is an m x m orthogonal matrix (3x3 in this case).</span>
-<span class="c1"># S is a 1D array of singular values (length min(m, n) = 2 in this case).</span>
-<span class="c1"># Vt is the transpose of V, where V is an n x n orthogonal matrix (2x2 in this case).</span>
+<span class="c1"># Step 3 - Perform SVD. linalg.svd() returns three pieces:</span>
+<span class="c1">#   U  -&gt; an (m, m) orthogonal matrix, i.e. shape (3, 3) here</span>
+<span class="c1">#   S  -&gt; a 1D array of singular values, length min(m, n) = 2 here</span>
+<span class="c1">#   Vt -&gt; the TRANSPOSE of V, an (n, n) orthogonal matrix, shape (2, 2) here</span>
 <span class="n">U</span><span class="p">,</span> <span class="n">S</span><span class="p">,</span> <span class="n">Vt</span> <span class="o">=</span> <span class="n">linalg</span><span class="o">.</span><span class="n">svd</span><span class="p">(</span><span class="n">A</span><span class="p">)</span>
 
-<span class="nb">print</span><span class="p">(</span><span class="s2">"Matrix U Shape:"</span><span class="p">,</span> <span class="n">U</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>  <span class="c1"># Output: (3, 3)</span>
-<span class="nb">print</span><span class="p">(</span><span class="s2">"Matrix U:</span><span class="se">\n</span><span class="s2">"</span><span class="p">,</span> <span class="n">U</span><span class="p">)</span>  <span class="c1"># Output: A 3x3 matrix where columns are the left singular vectors of A.</span>
-<span class="nb">print</span><span class="p">(</span><span class="s2">"</span><span class="se">\n</span><span class="s2">1D Array S Shape:"</span><span class="p">,</span> <span class="n">S</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>  <span class="c1"># Output: (2,) because S contains only the non-zero singular values, which are 2 in this case.</span>
-<span class="nb">print</span><span class="p">(</span><span class="s2">"Array S:"</span><span class="p">,</span> <span class="n">S</span><span class="p">)</span>  <span class="c1"># Output: [1.618, 1.000] (the singular values of A, sorted in descending order)</span>
-<span class="nb">print</span><span class="p">(</span><span class="s2">"</span><span class="se">\n</span><span class="s2">Matrix Vt Shape:"</span><span class="p">,</span> <span class="n">Vt</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>  <span class="c1"># Output: (2, 2) because Vt is the transpose of V, which is a 2x2 matrix in this case.</span>
-<span class="nb">print</span><span class="p">(</span><span class="s2">"Matrix Vt:</span><span class="se">\n</span><span class="s2">"</span><span class="p">,</span> <span class="n">Vt</span><span class="p">)</span>  <span class="c1"># Output: A 2x2 matrix where rows are the right singular vectors of A (or columns of V, since Vt is the transpose of V).</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">"Matrix U shape:"</span><span class="p">,</span> <span class="n">U</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>          <span class="c1"># (3, 3)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">"Matrix U:</span><span class="se">\n</span><span class="s2">"</span><span class="p">,</span> <span class="n">U</span><span class="p">)</span>                    <span class="c1"># columns are the left-singular vectors of A</span>
 
-<span class="c1"># --- RECONSTRUCTION ---</span>
-<span class="c1"># To multiply U @ S @ Vt, we must convert the 1D array S into a 3x2 matrix.</span>
-<span class="c1"># We create a matrix of zeros with the same shape as A, and fill the diagonal.</span>
-<span class="n">Sigma</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">A</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>  <span class="c1"># Create a matrix of zeros with the same shape as A (3x2).</span>
-<span class="n">np</span><span class="o">.</span><span class="n">fill_diagonal</span><span class="p">(</span><span class="n">Sigma</span><span class="p">,</span> <span class="n">S</span><span class="p">)</span>  <span class="c1"># Fill the diagonal of Sigma with the singular values from S.</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">"</span><span class="se">\n</span><span class="s2">1D array S shape:"</span><span class="p">,</span> <span class="n">S</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>      <span class="c1"># (2,) -- only the non-zero singular values</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">"Array S:"</span><span class="p">,</span> <span class="n">S</span><span class="p">)</span>                       <span class="c1"># e.g. [1.618, 1.000], sorted descending</span>
 
-<span class="c1"># Reconstruct A. The original matrix A can be reconstructed by multiplying U, Sigma, and Vt together.</span>
-<span class="n">A_reconstructed</span> <span class="o">=</span> <span class="n">U</span> <span class="o">@</span> <span class="n">Sigma</span> <span class="o">@</span> <span class="n">Vt</span>  <span class="c1"># The @ operator is used for matrix multiplication in Python. It multiplies U by Sigma, and then the result by Vt to reconstruct A.</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">"</span><span class="se">\n</span><span class="s2">Matrix Vt shape:"</span><span class="p">,</span> <span class="n">Vt</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>      <span class="c1"># (2, 2)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">"Matrix Vt:</span><span class="se">\n</span><span class="s2">"</span><span class="p">,</span> <span class="n">Vt</span><span class="p">)</span>                  <span class="c1"># rows are the right-singular vectors of A</span>
 
-<span class="nb">print</span><span class="p">(</span><span class="s2">"</span><span class="se">\n</span><span class="s2">Reconstructed Matrix:</span><span class="se">\n</span><span class="s2">"</span><span class="p">,</span> <span class="n">A_reconstructed</span><span class="p">)</span>  <span class="c1"># Output: A matrix that should closely match the original matrix A, confirming that the SVD decomposition and reconstruction are correct.</span>
-<span class="c1"># Output matches A exactly (up to floating point precision)</span>
+
+<span class="c1"># ---------------------------------------------------</span>
+<span class="c1"># Step 4 - Reconstruct A from U, S, and Vt, to prove the decomposition</span>
+<span class="c1"># is genuinely reversible.</span>
+<span class="c1"># ---------------------------------------------------</span>
+
+<span class="c1"># U @ S @ Vt requires S to be a full (3, 2) matrix, not the compact 1D</span>
+<span class="c1"># array SciPy gave us. Build that matrix by starting from all zeros</span>
+<span class="c1"># (matching A's shape) and filling in the diagonal with S's values.</span>
+<span class="n">Sigma</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">A</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
+<span class="n">np</span><span class="o">.</span><span class="n">fill_diagonal</span><span class="p">(</span><span class="n">Sigma</span><span class="p">,</span> <span class="n">S</span><span class="p">)</span>
+
+<span class="n">A_reconstructed</span> <span class="o">=</span> <span class="n">U</span> <span class="o">@</span> <span class="n">Sigma</span> <span class="o">@</span> <span class="n">Vt</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s2">"</span><span class="se">\n</span><span class="s2">Reconstructed matrix:</span><span class="se">\n</span><span class="s2">"</span><span class="p">,</span> <span class="n">A_reconstructed</span><span class="p">)</span>
+<span class="c1"># Output matches the original A exactly, up to floating-point precision —</span>
+<span class="c1"># confirming the decomposition and reconstruction are correct.</span>
 </code></pre></div>
+<hr />
 <h2 id="5-real-world-application-dimensionality-reduction-latent-semantic-analysis">5. Real-World Application: Dimensionality Reduction (Latent Semantic Analysis)<a class="headerlink" href="#5-real-world-application-dimensionality-reduction-latent-semantic-analysis" title="Permanent link">&para;</a></h2>
-<p>The true power of SVD is revealed when we use it to reduce the dimensionality of data.</p>
-<h3 id="the-scenario-book-recommendations">The Scenario: Book Recommendations<a class="headerlink" href="#the-scenario-book-recommendations" title="Permanent link">&para;</a></h3>
-<p>Imagine a matrix where rows represent <strong>Readers</strong> and columns represent <strong>Books</strong>. The values are ratings from 1 to 10.</p>
+<p>The true power of SVD is revealed when we use it to reduce the
+dimensionality of data.</p>
+<h3 id="the-scenario-book-recommendations">The scenario: book recommendations<a class="headerlink" href="#the-scenario-book-recommendations" title="Permanent link">&para;</a></h3>
+<p>Imagine a matrix where rows represent <strong>readers</strong> and columns represent
+<strong>books</strong>. The values are ratings from <code>1</code> to <code>10</code>.</p>
 <table>
 <thead>
 <tr>
+<th></th>
 <th>Math Book 1</th>
 <th>Math Book 2</th>
 <th>Math Book 3</th>
@@ -8356,6 +8478,7 @@ A = \begin{bmatrix}
 <td>9</td>
 <td>1</td>
 <td>0</td>
+<td>0</td>
 </tr>
 <tr>
 <td>Reader 2</td>
@@ -8363,6 +8486,7 @@ A = \begin{bmatrix}
 <td>10</td>
 <td>9</td>
 <td>0</td>
+<td>1</td>
 <td>1</td>
 </tr>
 <tr>
@@ -8372,6 +8496,7 @@ A = \begin{bmatrix}
 <td>1</td>
 <td>10</td>
 <td>8</td>
+<td>1</td>
 </tr>
 <tr>
 <td>Reader 4</td>
@@ -8380,152 +8505,201 @@ A = \begin{bmatrix}
 <td>1</td>
 <td>9</td>
 <td>8</td>
+<td>0</td>
 </tr>
 </tbody>
 </table>
-<p><strong>The Problem:</strong> We have 6 dimensions (books). Can we reduce this to 2 "latent" (hidden) dimensions that represent underlying categories?</p>
-<p><strong>The SVD Solution:</strong> When we apply SVD to this <span class="arithmatex">\(4×6\)</span></p>
-<p>matrix, we get <span class="arithmatex">\(U\)</span>, <span class="arithmatex">\(Σ\)</span> and <span class="arithmatex">\(V^T\)</span></p>
-<p>.</p>
+<p><strong>The problem:</strong> we have 6 dimensions (books). Can we reduce this to 2
+"latent" (hidden) dimensions representing underlying categories?</p>
+<p><strong>The SVD solution:</strong> applying SVD to this <span class="arithmatex">\(4 \times 6\)</span> matrix gives us
+<span class="arithmatex">\(U\)</span>, <span class="arithmatex">\(\Sigma\)</span>, and <span class="arithmatex">\(V^{T}\)</span>:</p>
 <ul>
-<li><span class="arithmatex">\(U\)</span> (Readers to Latent Categories): Tells us how much each reader aligns with the hidden categories.</li>
-<li><span class="arithmatex">\(Σ\)</span> (Strength of Categories): The singular values will look something like <code>[22.8, 17.2, 2.1, 0.9]</code>. Notice the massive drop-off after the first two values! This means the first two "latent categories" contain almost all the useful information. The rest is noise.</li>
-<li><span class="arithmatex">\(V^T\)</span> (Latent Categories to Books): Tells us how much each book belongs to the hidden categories.</li>
+<li><strong><span class="arithmatex">\(U\)</span></strong> (readers → latent categories) tells us how strongly each reader
+  aligns with each hidden category.</li>
+<li><strong><span class="arithmatex">\(\Sigma\)</span></strong> (strength of categories): the singular values might look
+  something like <code>[22.8, 17.2, 2.1, 0.9]</code>. Notice the sharp drop-off after
+  the first two values — this means the first two "latent categories"
+  contain almost all the useful information, and the rest is mostly noise.</li>
+<li><strong><span class="arithmatex">\(V^{T}\)</span></strong> (latent categories → books) tells us how strongly each book
+  belongs to each hidden category.</li>
 </ul>
+<div class="highlight"><pre><span></span><code>flowchart TD
+    RB["Reader-Book matrix, shape (4,6)"] --&gt; SVD1["Full SVD: A = U x Sigma x Vt"]
+    SVD1 --&gt; Sig["Singular values, e.g. [22.8, 17.2, 2.1, 0.9]"]
+    Sig --&gt; Drop["Sharp drop-off after the first 2 values"]
+    Drop --&gt; Trunc["Keep only the top 2 -&gt; Truncated SVD"]
+    Trunc --&gt; Y["Approximated matrix Y:&lt;br/&gt;6 book dimensions compressed to 2 topics"]
+</code></pre></div>
 <h3 id="truncated-svd">Truncated SVD<a class="headerlink" href="#truncated-svd" title="Permanent link">&para;</a></h3>
-<p>If we keep only the top 2 singular values, we effectively "truncate" the matrices:</p>
+<p>If we keep only the top 2 singular values, we effectively "truncate" the
+matrices:</p>
 <ol>
-<li>
-<p>Keep only the first 2 columns of <span class="arithmatex">\(U\)</span></p>
-</li>
-<li>
-<p>Keep only the top-left <span class="arithmatex">\(2×2\)</span> block of <span class="arithmatex">\(Σ\)</span></p>
-</li>
-<li>
-<p>Keep only the first 2 rows of <span class="arithmatex">\(V^T\)</span></p>
-</li>
+<li>Keep only the first 2 columns of <span class="arithmatex">\(U\)</span></li>
+<li>Keep only the top-left <span class="arithmatex">\(2 \times 2\)</span> block of <span class="arithmatex">\(\Sigma\)</span></li>
+<li>Keep only the first 2 rows of <span class="arithmatex">\(V^{T}\)</span></li>
 </ol>
-<p>If we multiply these truncated matrices together (<span class="arithmatex">\(Y=U_{trunc}​Σ_{trunc}​V_{trunc}^T​\)</span>), we get an approximated matrix <span class="arithmatex">\(Y\)</span></p>
-<p><strong>The Magic:</strong> If you look at the output <span class="arithmatex">\(Y\)</span>, you will see that the original ratings are almost perfectly preserved, <em>but</em> we have successfully compressed the 6 book dimensions into just 2 abstract "Topic" dimensions (Topic 1 is clearly "Math", Topic 2 is clearly "Literature"). The "Econ Book" has very low scores in both categories and is effectively treated as noise.</p>
+<p>Multiplying these truncated matrices together
+(<span class="arithmatex">\(Y = U_{trunc}\,\Sigma_{trunc}\,V_{trunc}^{T}\)</span>) gives an <em>approximated</em>
+matrix <span class="arithmatex">\(Y\)</span>.</p>
+<p><strong>The result:</strong> looking at <span class="arithmatex">\(Y\)</span>, the original ratings are almost perfectly
+preserved — but we've successfully compressed 6 book dimensions into just
+2 abstract "topic" dimensions (Topic 1 turns out to be clearly "Math",
+Topic 2 clearly "Literature"). The Economics Book scores low in both
+categories and is effectively treated as noise.</p>
 <hr />
 <h2 id="6-advanced-python-script-truncated-svd-reconstruction">6. Advanced Python Script: Truncated SVD &amp; Reconstruction<a class="headerlink" href="#6-advanced-python-script-truncated-svd-reconstruction" title="Permanent link">&para;</a></h2>
-<p>This script performs the book recommendation scenario, truncates the dimensions, reconstructs the matrix, and proves mathematically that the reconstructed matrix retains almost all the original "energy" using the <strong>Frobenius Norm</strong>.</p>
+<p>This script carries out the book-recommendation scenario end to end: it
+performs the full SVD, truncates to the top 2 components, reconstructs an
+approximate matrix, and then proves — using the <strong>Frobenius norm</strong> — that
+the reconstruction retains almost all of the original "information."</p>
 <p>The Frobenius norm of a matrix <span class="arithmatex">\(A\)</span> is defined as:</p>
-<div class="arithmatex">\[\left|\left|A\right|\right|_{F}=\sqrt{\sum_{i=1}^{m}\sum_{j=1}^{n}\left|a_{i j}\right|^{2}}\]</div>
-<h2 id="script-for-the-reader-book-example">Script for the reader-book example<a class="headerlink" href="#script-for-the-reader-book-example" title="Permanent link">&para;</a></h2>
+<div class="arithmatex">\[\left|\left|A\right|\right|_{F}=\sqrt{\sum_{i=1}^{m}\sum_{j=1}^{n}\left|a_{ij}\right|^{2}}\]</div>
+<blockquote>
+<p><strong>A note on this script:</strong> the version below keeps every calculation
+from the original, but trims down comments that repeated the same
+explanation three or four times in a row — the underlying logic is
+unchanged, just easier to read in one pass.</p>
+</blockquote>
 <div class="highlight"><pre><span></span><code><span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">scipy</span><span class="w"> </span><span class="kn">import</span> <span class="n">linalg</span>
 
-<span class="c1"># 1. Define the Reader-Book Matrix</span>
+<span class="c1"># ---------------------------------------------------</span>
+<span class="c1"># Step 1 - Define the Reader-Book ratings matrix.</span>
+<span class="c1"># Rows = readers, columns = books, values = ratings (1-10).</span>
+<span class="c1"># ---------------------------------------------------</span>
 <span class="n">A</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="mi">10</span><span class="p">,</span> <span class="mi">8</span><span class="p">,</span> <span class="mi">9</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span>
-            <span class="p">[</span> <span class="mi">9</span><span class="p">,</span><span class="mi">10</span><span class="p">,</span> <span class="mi">9</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">],</span>
-            <span class="p">[</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span><span class="mi">10</span><span class="p">,</span> <span class="mi">8</span><span class="p">,</span> <span class="mi">1</span><span class="p">],</span>
-            <span class="p">[</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">9</span><span class="p">,</span> <span class="mi">8</span><span class="p">,</span> <span class="mi">0</span><span class="p">]])</span>
+              <span class="p">[</span> <span class="mi">9</span><span class="p">,</span><span class="mi">10</span><span class="p">,</span> <span class="mi">9</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">],</span>
+              <span class="p">[</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span><span class="mi">10</span><span class="p">,</span> <span class="mi">8</span><span class="p">,</span> <span class="mi">1</span><span class="p">],</span>
+              <span class="p">[</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">9</span><span class="p">,</span> <span class="mi">8</span><span class="p">,</span> <span class="mi">0</span><span class="p">]])</span>
 
-<span class="c1"># 2. Perform Full SVD. The function linalg.svd returns three matrices: U, S, and Vt.</span>
-<span class="c1"># U is an m x m orthogonal matrix (4x4 in this case).</span>
-<span class="c1"># S is a 1D array of singular values (length min(m, n) = 4 in this case).</span>
-<span class="c1"># Vt is the transpose of V, where V is an n x n orthogonal matrix (6x6 in this case).</span>
+<span class="c1"># ---------------------------------------------------</span>
+<span class="c1"># Step 2 - Perform FULL SVD.</span>
+<span class="c1"># U: (4, 4) orthogonal matrix -- reader-to-topic relationships</span>
+<span class="c1"># S: 1D array of singular values, length min(4, 6) = 4, sorted descending</span>
+<span class="c1"># Vt: (6, 6) orthogonal matrix -- topic-to-book relationships</span>
+<span class="c1"># ---------------------------------------------------</span>
 <span class="n">U</span><span class="p">,</span> <span class="n">S</span><span class="p">,</span> <span class="n">Vt</span> <span class="o">=</span> <span class="n">linalg</span><span class="o">.</span><span class="n">svd</span><span class="p">(</span><span class="n">A</span><span class="p">)</span>
 
-<span class="c1"># 3. Truncate the Matrices (Keep top 2 components)</span>
-<span class="c1"># In SVD, components are already sorted by descending singular value</span>
-<span class="c1"># We keep the top k=2 components to create a low-rank approximation of the original matrix A.</span>
-<span class="c1"># U_trunc will be m x k (4x2), S_trunc will be k x k (2x2), and Vt_trunc will be k x n (2x6).</span>
-<span class="c1"># The truncated matrices represent the most significant features of the original matrix A,</span>
-<span class="c1"># where U_trunc captures the reader-to-topic relationships, Sigma_trunc captures the strength of the topics, and Vt_trunc captures the topic-to-book relationships. </span>
-<span class="c1"># By keeping only the top 2 components, we are effectively reducing the dimensionality of the data while retaining as much of the original information as possible, which is a key advantage of using SVD for dimensionality reduction and latent semantic analysis in recommendation systems.  </span>
-<span class="c1"># The truncated SVD allows us to capture the underlying structure of the data (e.g., latent topics) while reducing noise and computational complexity, making it easier to analyze and make recommendations based on the most important features of the reader-book interactions.   </span>
 
-<span class="n">k</span> <span class="o">=</span> <span class="mi">2</span> 
-<span class="n">U_trunc</span> <span class="o">=</span> <span class="n">U</span><span class="p">[:,</span> <span class="p">:</span><span class="n">k</span><span class="p">]</span>          <span class="c1"># Keep first 2 columns of U</span>
-<span class="n">S_trunc</span> <span class="o">=</span> <span class="n">S</span><span class="p">[:</span><span class="n">k</span><span class="p">]</span>             <span class="c1"># Keep first 2 singular values</span>
-<span class="n">Vt_trunc</span> <span class="o">=</span> <span class="n">Vt</span><span class="p">[:</span><span class="n">k</span><span class="p">,</span> <span class="p">:]</span>        <span class="c1"># Keep first 2 rows of Vt</span>
+<span class="c1"># ---------------------------------------------------</span>
+<span class="c1"># Step 3 - Truncate to the top k=2 components.</span>
+<span class="c1"># Because SVD always sorts singular values in descending order, the</span>
+<span class="c1"># FIRST k columns/rows are automatically the most informative ones —</span>
+<span class="c1"># no extra sorting step is needed.</span>
+<span class="c1"># ---------------------------------------------------</span>
+<span class="n">k</span> <span class="o">=</span> <span class="mi">2</span>
+<span class="n">U_trunc</span> <span class="o">=</span> <span class="n">U</span><span class="p">[:,</span> <span class="p">:</span><span class="n">k</span><span class="p">]</span>      <span class="c1"># (4, 2) -- reader-to-topic mapping, top 2 topics only</span>
+<span class="n">S_trunc</span> <span class="o">=</span> <span class="n">S</span><span class="p">[:</span><span class="n">k</span><span class="p">]</span>         <span class="c1"># (2,)   -- the 2 largest singular values</span>
+<span class="n">Vt_trunc</span> <span class="o">=</span> <span class="n">Vt</span><span class="p">[:</span><span class="n">k</span><span class="p">,</span> <span class="p">:]</span>    <span class="c1"># (2, 6) -- topic-to-book mapping, top 2 topics only</span>
 
-<span class="c1"># Construct the 2x2 diagonal matrix from the truncated 1D array</span>
+<span class="c1"># Build the (2, 2) diagonal matrix from the truncated 1D singular values.</span>
 <span class="n">Sigma_trunc</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">diag</span><span class="p">(</span><span class="n">S_trunc</span><span class="p">)</span>
 
-<span class="nb">print</span><span class="p">(</span><span class="s2">"--- Truncated Matrices ---"</span><span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span><span class="s2">"U_trunc (4x2) - Reader to Topic mapping:</span><span class="se">\n</span><span class="s2">"</span><span class="p">,</span> <span class="n">U_trunc</span><span class="p">)</span>
-<span class="c1"># Output: U_trunc is a 4x2 matrix where each row corresponds to a reader and each column </span>
-<span class="c1"># corresponds to a latent topic. The values in U_trunc indicate how strongly each reader </span>
-<span class="c1"># is associated with each topic. For example, a higher value in the first column for a reader </span>
-<span class="c1"># indicates a stronger association with the first topic, while a higher value in the second </span>
-<span class="c1"># column indicates a stronger association with the second topic. This matrix helps us understand </span>
-<span class="c1"># the underlying preferences of the readers based on their interactions with the books.  </span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">"--- Truncated matrices ---"</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">"U_trunc (4x2) - reader-to-topic mapping:</span><span class="se">\n</span><span class="s2">"</span><span class="p">,</span> <span class="n">U_trunc</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">"</span><span class="se">\n</span><span class="s2">Sigma_trunc (2x2) - topic strengths:</span><span class="se">\n</span><span class="s2">"</span><span class="p">,</span> <span class="n">Sigma_trunc</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">"</span><span class="se">\n</span><span class="s2">Vt_trunc (2x6) - topic-to-book mapping:</span><span class="se">\n</span><span class="s2">"</span><span class="p">,</span> <span class="n">Vt_trunc</span><span class="p">)</span>
 
-<span class="nb">print</span><span class="p">(</span><span class="s2">"</span><span class="se">\n</span><span class="s2">Sigma_trunc (2x2) - Topic Strengths:</span><span class="se">\n</span><span class="s2">"</span><span class="p">,</span> <span class="n">Sigma_trunc</span><span class="p">)</span>
-<span class="c1"># Output: Sigma_trunc is a 2x2 diagonal matrix where the diagonal elements are the top 2 singular values from S.</span>
-<span class="c1"># The singular values in Sigma_trunc represent the strength or importance of the corresponding topics.  </span>
-<span class="c1"># A higher singular value indicates that the corresponding topic captures more of the variance in the original data, meaning it is more significant in explaining the reader-book interactions.</span>
-<span class="c1"># The off-diagonal elements are zero, which is a key property of the diagonal matrix in SVD. The values in Sigma_trunc help us understand how much of the original information is retained by the top 2 topics, and they play a crucial role in the reconstruction of the approximated matrix Y.    </span>
-<span class="c1">#</span>
-<span class="nb">print</span><span class="p">(</span><span class="s2">"</span><span class="se">\n</span><span class="s2">Vt_trunc (2x6) - Topic to Book mapping:</span><span class="se">\n</span><span class="s2">"</span><span class="p">,</span> <span class="n">Vt_trunc</span><span class="p">)</span>
 
-<span class="c1"># 4. Reconstruct the Approximated Matrix: Y = U_trunc @ Sigma_trunc @ Vt_trunc</span>
-<span class="c1"># Step A: Multiply Sigma and Vt</span>
-<span class="n">temp</span> <span class="o">=</span> <span class="n">Sigma_trunc</span> <span class="o">@</span> <span class="n">Vt_trunc</span>
-<span class="c1"># Step B: Multiply U by the result</span>
-<span class="n">Y</span> <span class="o">=</span> <span class="n">U_trunc</span> <span class="o">@</span> <span class="n">temp</span>
+<span class="c1"># ---------------------------------------------------</span>
+<span class="c1"># Step 4 - Reconstruct an APPROXIMATE matrix using only the top 2 topics:</span>
+<span class="c1"># Y = U_trunc @ Sigma_trunc @ Vt_trunc</span>
+<span class="c1"># ---------------------------------------------------</span>
+<span class="n">Y</span> <span class="o">=</span> <span class="n">U_trunc</span> <span class="o">@</span> <span class="n">Sigma_trunc</span> <span class="o">@</span> <span class="n">Vt_trunc</span>
 
-<span class="nb">print</span><span class="p">(</span><span class="s2">"</span><span class="se">\n</span><span class="s2">--- Original Matrix (A) ---"</span><span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span><span class="n">A</span><span class="p">)</span>  <span class="c1"># Output: A is the original 4x6 reader-book matrix, where rows correspond to </span>
-<span class="c1"># readers and columns correspond to books. The values in A represent the interactions between </span>
-<span class="c1"># readers and books (e.g., ratings, purchases, etc.). This matrix serves as the input for the </span>
-<span class="c1"># SVD decomposition, and our goal is to approximate it using a lower-rank representation </span>
-<span class="c1"># while retaining as much of the original information as possible. The original matrix A </span>
-<span class="c1"># contains all the details of the reader-book interactions, while the reconstructed matrix </span>
-<span class="c1"># Y will capture the most significant patterns based on the top 2 latent topics identified </span>
-<span class="c1"># through SVD.</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">"</span><span class="se">\n</span><span class="s2">--- Original matrix (A) ---"</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">A</span><span class="p">)</span>
 
-<span class="nb">print</span><span class="p">(</span><span class="s2">"</span><span class="se">\n</span><span class="s2">--- Reconstructed Matrix (Y) using only 2 topics ---"</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">"</span><span class="se">\n</span><span class="s2">--- Reconstructed matrix (Y), using only 2 topics ---"</span><span class="p">)</span>
 <span class="nb">print</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">round</span><span class="p">(</span><span class="n">Y</span><span class="p">,</span> <span class="mi">2</span><span class="p">))</span>
-<span class="c1"># Output: Y is the reconstructed 4x6 matrix obtained by multiplying the truncated matrices U_trunc, Sigma_trunc, and Vt_trunc together.</span>
-<span class="c1"># The values in Y represent the approximated interactions between readers and books based on the top 2 latent topics identified </span>
-<span class="c1"># through SVD. The reconstructed matrix Y is a low-rank approximation of the original matrix A, and it captures the most significant </span>
-<span class="c1"># patterns in the data while reducing noise and less important details. The values in Y may not match A exactly, but they should </span>
-<span class="c1"># be close, especially for the most significant interactions, indicating that the top 2 topics are effectively capturing the </span>
-<span class="c1"># underlying structure of the reader-book interactions. The approximation allows us to analyze and make recommendations based on </span>
-<span class="c1"># the most important features of the data while reducing computational complexity.    </span>
-<span class="c1"># The reconstructed matrix Y can be used for various applications, such as making recommendations for readers based on their </span>
-<span class="c1"># preferences, identifying similar books based on the latent topics, and understanding the underlying structure of the reader-book </span>
-<span class="c1"># interactions. By retaining only the top 2 topics, we are able to capture the most important information while filtering out </span>
-<span class="c1"># noise and less significant details, which is a key advantage of using SVD for dimensionality reduction and latent semantic </span>
-<span class="c1"># analysis in recommendation systems.    </span>
-<span class="c1"># The values in Y represent the approximated interactions between readers and books based on the top 2 latent topics identified </span>
-<span class="c1"># through SVD. The reconstructed matrix Y is a low-rank approximation of the original matrix A, and it captures the most significant </span>
-<span class="c1"># patterns in the data while reducing noise and less important details. The values in Y may not match A exactly, but they </span>
-<span class="c1"># should be close, especially for the most significant interactions, indicating that the top 2 topics are effectively </span>
-<span class="c1"># capturing the underlying structure of the reader-book interactions. The approximation allows us to analyze and make </span>
-<span class="c1"># recommendations based on the most important features of the data while reducing computational complexity.    </span>
-<span class="c1"># The reconstructed matrix Y can be used for various applications, such as making recommendations for readers based on their </span>
-<span class="c1"># preferences, identifying similar books based on the latent topics, and understanding the underlying structure of the reader-book </span>
-<span class="c1"># interactions. </span>
+<span class="c1"># Y won't match A exactly (some detail was deliberately discarded), but</span>
+<span class="c1"># it should be very close for the strongest reader-book interactions,</span>
+<span class="c1"># showing that 2 "topics" already capture most of the real structure.</span>
 
-<span class="c1"># 5. Compare using Frobenius Norm</span>
-<span class="c1"># The Frobenius norm represents the "total energy" or "information" in the matrix</span>
-<span class="n">frob_A</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">norm</span><span class="p">(</span><span class="n">A</span><span class="p">,</span> <span class="s1">'fro'</span><span class="p">)</span>  
-<span class="c1"># The Frobenius norm of the original matrix A represents the total amount of information or variance in the original reader-book </span>
-<span class="c1"># interactions. It is calculated as the square root of the sum of the squares of all the elements in A. This value serves as a </span>
-<span class="c1"># baseline for understanding how much information is retained in the reconstructed matrix Y after truncating to 2 topics. </span>
-<span class="c1"># A higher Frobenius norm indicates that there is more information or variance in the original data, while a lower Frobenius </span>
-<span class="c1"># norm indicates that there is less information. By comparing the Frobenius norm of Y to that of A, we can assess how well </span>
-<span class="c1"># the truncated SVD captures the essential patterns in the data while reducing dimensionality.</span>
-<span class="n">frob_Y</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">norm</span><span class="p">(</span><span class="n">Y</span><span class="p">,</span> <span class="s1">'fro'</span><span class="p">)</span>  <span class="c1"># The Frobenius norm of the reconstructed matrix Y represents the total amount of information or</span>
-<span class="c1"># variance retained in the reconstructed matrix after truncating to 2 topics. It is calculated in the same way as for A, </span>
-<span class="c1"># by taking the square root of the sum of the squares of all the elements in Y. This value allows us to quantify how much of the </span>
-<span class="c1"># original information from A is preserved in Y after the dimensionality reduction.</span>
 
-<span class="nb">print</span><span class="p">(</span><span class="s2">"</span><span class="se">\n</span><span class="s2">--- Information Retention ---"</span><span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"Frobenius Norm of Original A: </span><span class="si">{</span><span class="n">frob_A</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>  <span class="c1"># Output: Frobenius Norm of Original A: 28.28 (rounded to 2 decimal places)</span>
-<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"Frobenius Norm of Reconstructed Y: </span><span class="si">{</span><span class="n">frob_Y</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>  <span class="c1"># Output: Frobenius Norm of Reconstructed Y: 27.00 (rounded to 2 decimal places)</span>
-<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"Information Retained: </span><span class="si">{</span><span class="p">(</span><span class="n">frob_Y</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="n">frob_A</span><span class="p">)</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="mi">100</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2">%"</span><span class="p">)</span>  <span class="c1"># Output: Information Retained: 95.49% (rounded to 2 decimal places)</span>
-<span class="c1"># The information retention percentage indicates how much of the original information from A is preserved in the reconstructed matrix Y after truncating to 2 topics. </span>
-<span class="c1"># A higher percentage means that the truncated SVD is effectively capturing the essential patterns in the data while reducing </span>
-<span class="c1"># dimensionality, while a lower percentage indicates that more information is lost in the approximation. In this case, </span>
-<span class="c1"># retaining around 95.49% of the information suggests that the top 2 topics are capturing most of the significant interactions </span>
-<span class="c1"># between readers and books, making it a useful approximation for analysis and recommendations.   </span>
+<span class="c1"># ---------------------------------------------------</span>
+<span class="c1"># Step 5 - Measure information retention using the Frobenius norm.</span>
+<span class="c1"># The Frobenius norm treats the whole matrix as one long vector and</span>
+<span class="c1"># measures its overall "size" -- a stand-in for "total information."</span>
+<span class="c1"># ---------------------------------------------------</span>
+<span class="n">frob_A</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">norm</span><span class="p">(</span><span class="n">A</span><span class="p">,</span> <span class="s1">'fro'</span><span class="p">)</span>
+<span class="n">frob_Y</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">norm</span><span class="p">(</span><span class="n">Y</span><span class="p">,</span> <span class="s1">'fro'</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s2">"</span><span class="se">\n</span><span class="s2">--- Information retention ---"</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"Frobenius norm of original A:      </span><span class="si">{</span><span class="n">frob_A</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"Frobenius norm of reconstructed Y: </span><span class="si">{</span><span class="n">frob_Y</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"Information retained: </span><span class="si">{</span><span class="p">(</span><span class="n">frob_Y</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="n">frob_A</span><span class="p">)</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="mi">100</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2">%"</span><span class="p">)</span>
 </code></pre></div>
+<p><strong>Sample output:</strong></p>
+<div class="highlight"><pre><span></span><code>--- Information retention ---
+Frobenius norm of original A:      28.28
+Frobenius norm of reconstructed Y: 27.00
+Information retained: 95.49%
+</code></pre></div>
+<p><strong>Beginner tip:</strong> retaining roughly 95% of the original "information"
+while cutting the number of dimensions from 6 down to 2 is exactly the
+trade-off dimensionality reduction is built around — a small, controlled
+loss of detail in exchange for a much simpler, easier-to-analyze
+structure. In a real recommendation system, that simpler <code>U_trunc</code> matrix
+(readers mapped to just 2 topic scores) is what would actually get used to
+find similar readers or suggest new books.</p>
+<hr />
+<h2 id="summary">Summary<a class="headerlink" href="#summary" title="Permanent link">&para;</a></h2>
+<table>
+<thead>
+<tr>
+<th>Concept</th>
+<th>Key takeaway</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><span class="arithmatex">\(A = U\Sigma V^{T}\)</span></td>
+<td>Any matrix (square or not) can be factored into two orthonormal matrices and a diagonal matrix of singular values</td>
+</tr>
+<tr>
+<td>Singular values</td>
+<td>Always non-negative, always sorted in descending order — unlike eigenvalues</td>
+</tr>
+<tr>
+<td><code>linalg.svd(A)</code></td>
+<td>Returns <code>U</code>, a compact 1D array <code>S</code>, and <code>Vt</code> (already transposed)</td>
+</tr>
+<tr>
+<td>Truncated SVD</td>
+<td>Keeping only the top <code>k</code> components gives a smaller, approximate — but usually still very informative — version of the original matrix</td>
+</tr>
+<tr>
+<td>Frobenius norm</td>
+<td>A way to measure how much "information" survives a truncation</td>
+</tr>
+<tr>
+<td>Real-world use</td>
+<td>PCA, image compression, noise reduction, and recommendation systems all rely on exactly this idea</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="follow-up-questions-for-practice">Follow-up questions for practice<a class="headerlink" href="#follow-up-questions-for-practice" title="Permanent link">&para;</a></h2>
+<p><em>(These are additional, optional questions for self-testing.)</em></p>
+<ol>
+<li>Using the script in Section 4, confirm that <code>U.T @ U</code> is approximately
+   the identity matrix (use <code>np.allclose()</code> to check, since floating-point
+   rounding means it won't be <em>exactly</em> the identity). What property of
+   <span class="arithmatex">\(U\)</span> does this confirm?</li>
+<li>In Section 6, try changing <code>k</code> from <code>2</code> to <code>1</code>. How much does the
+   "Information Retained" percentage drop? Does the reconstructed matrix
+   still roughly capture the Math vs. Literature split, or does it become
+   too simplified to be useful?</li>
+<li>What would you expect to happen to the singular values if two of the
+   Reader-Book matrix's rows were <em>identical</em> (e.g. two readers rated
+   every book exactly the same)? Try duplicating a row in the script and
+   see whether a singular value drops to (near) zero.</li>
+<li>Using the Section 4 script, compute the actual <span class="arithmatex">\(U\)</span>, <span class="arithmatex">\(\Sigma\)</span>, and
+   <span class="arithmatex">\(V^{T}\)</span> for the matrix <code>[[1, -1], [0, 1], [1, 0]]</code>, and compare the
+   printed first column of <span class="arithmatex">\(U\)</span> against the one shown in the "Verifying the
+   Properties" section above. Do they match?</li>
+</ol>
 
 
 
