@@ -25,7 +25,7 @@
     
     
       
-        <title>20 ch12 dataframe creation - Python 999</title>
+        <title>Chapter 12.20 — How DataFrames Are Created - Python 999</title>
       
     
     
@@ -82,7 +82,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#how-dataframes-are-created" class="md-skip">
+        <a href="#chapter-1220-how-dataframes-are-created" class="md-skip">
           Skip to content
         </a>
       
@@ -118,7 +118,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              20 ch12 dataframe creation
+              Chapter 12.20 — How DataFrames Are Created
             
           </span>
         </div>
@@ -4418,6 +4418,8 @@
       <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
       
       
+        
+      
       
         <label class="md-nav__link md-nav__link--active" for="__toc">
           
@@ -4426,7 +4428,7 @@
   <span class="md-ellipsis">
     
   
-    20 ch12 dataframe creation
+    Chapter 12.20 — How DataFrames Are Created
   
 
     
@@ -4444,7 +4446,7 @@
   <span class="md-ellipsis">
     
   
-    20 ch12 dataframe creation
+    Chapter 12.20 — How DataFrames Are Created
   
 
     
@@ -4460,6 +4462,8 @@
   
   
   
+    
+  
   
     <label class="md-nav__title" for="__toc">
       <span class="md-nav__icon md-icon"></span>
@@ -4468,22 +4472,55 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#how-dataframes-are-created" class="md-nav__link">
+  <a href="#what-this-page-covers" class="md-nav__link">
     <span class="md-ellipsis">
       
-        How DataFrames are Created
+        What this page covers
       
     </span>
   </a>
   
-    <nav class="md-nav" aria-label="How DataFrames are Created">
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#the-three-categories-at-a-glance" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        The three categories, at a glance
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#category-a-from-standard-python-structures" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Category A: From Standard Python Structures
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#category-b-from-external-data-sources-io" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Category B: From External Data Sources (I/O)
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Category B: From External Data Sources (I/O)">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#1-from-standard-python-structures" class="md-nav__link">
+  <a href="#understanding-iostringio-and-iobytesio-first" class="md-nav__link">
     <span class="md-ellipsis">
       
-        1. From Standard Python Structures:
+        Understanding io.StringIO and io.BytesIO first
       
     </span>
   </a>
@@ -4491,32 +4528,10 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#2-from-external-data-sources-io" class="md-nav__link">
+  <a href="#the-script" class="md-nav__link">
     <span class="md-ellipsis">
       
-        2. From External Data Sources (I/O):
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#3-from-existing-pandasnumpy-objects" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        3. From Existing Pandas/NumPy Objects:
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#the-entire-script" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        The entire script
+        The script
       
     </span>
   </a>
@@ -4525,6 +4540,50 @@
         
       </ul>
     </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#category-c-from-existing-pandasnumpy-objects" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Category C: From Existing Pandas/NumPy Objects
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#the-complete-combined-script-all-nine-methods" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        The complete combined script (all nine methods)
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#choosing-the-right-method" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Choosing the right method
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#quick-recap" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Quick recap
+      
+    </span>
+  </a>
   
 </li>
       
@@ -8123,26 +8182,45 @@
   
 
 
-  <h1>20 ch12 dataframe creation</h1>
-
-<h2 id="how-dataframes-are-created">How DataFrames are Created<a class="headerlink" href="#how-dataframes-are-created" title="Permanent link">&para;</a></h2>
-<p>A Pandas DataFrame can be created in many ways, but all methods fall into three broad categories based on where the data is coming from: (1) From Standard Python Structures (2) From external Data Sources (3) From existing Pandas/ NumPy Objects
-Each of these are explained through example scripts</p>
-<h3 id="1-from-standard-python-structures">1. From Standard Python Structures:<a class="headerlink" href="#1-from-standard-python-structures" title="Permanent link">&para;</a></h3>
-<p>You manually type out the data using basic Python (lists, dictionaries). This is mostly used for learning, testing small logic, or creating lookup tables.</p>
+<h1 id="chapter-1220-how-dataframes-are-created">Chapter 12.20 — How DataFrames Are Created<a class="headerlink" href="#chapter-1220-how-dataframes-are-created" title="Permanent link">&para;</a></h1>
+<h2 id="what-this-page-covers">What this page covers<a class="headerlink" href="#what-this-page-covers" title="Permanent link">&para;</a></h2>
+<p>This page shows practical ways to create a Pandas <code>DataFrame</code>.
+<code>DataFrame</code> as you know is the two-dimensional, table-like structure that sits at the center of almost all Pandas work (think of it as a spreadsheet: rows and columns, with labels on both). </p>
+<p>Building on the previous chapter page's coverage of <code>Series</code> (a single column), this page shows how those columns come together into a full table, and covers the three broad categories every creation method falls into: 
+-  typing data directly in Python,
+-  loading it from an external source (CSV, Excel, JSON),
+-  or building it from Pandas/NumPy objects you already have in memory.</p>
+<p>Knowing all three categories matters because real projects use different ones at different stages: you might type out a small <code>DataFrame</code> by hand while testing an idea, then switch to loading a genuine CSV file once you're working with real data, and later combine several <code>Series</code> you've already cleaned individually into one final table.</p>
+<p><strong>A few terms used throughout, explained simply:</strong>
+- <strong><code>DataFrame</code></strong> — a two-dimensional, labeled data structure — rows and columns, similar to a spreadsheet or a SQL table. (<a href="https://pandas.pydata.org/docs/reference/api/pandas.DataFrame.html">Pandas docs: <code>DataFrame</code></a>)
+- <strong>CSV (Comma-Separated Values)</strong> — a simple, widely-used plain-text format for storing tabular data, where each line is a row and commas separate the columns.
+- <strong>JSON (JavaScript Object Notation)</strong> — a common, human-readable text format for structured data, widely used by web APIs. (<a href="https://www.json.org/json-en.html">json.org</a>)
+- <strong>In-memory file simulation</strong> (<code>io.StringIO</code>/<code>io.BytesIO</code>) — covered in its own dedicated section below, since it's genuinely useful to understand but easy to find confusing at first glance.</p>
+<hr />
+<h2 id="the-three-categories-at-a-glance">The three categories, at a glance<a class="headerlink" href="#the-three-categories-at-a-glance" title="Permanent link">&para;</a></h2>
+<p><img alt="Flowchart" src="../../resources/ch12-august-2026-DataFrame-creation-01.png" /></p>
+<hr />
+<h2 id="category-a-from-standard-python-structures">Category A: From Standard Python Structures<a class="headerlink" href="#category-a-from-standard-python-structures" title="Permanent link">&para;</a></h2>
+<p><strong>When you'd use this:</strong> typing out data manually, for learning, testing small logic, or building a quick lookup table — not typically how real, large datasets get loaded.</p>
 <div class="highlight"><pre><span></span><code><span class="kn">import</span><span class="w"> </span><span class="nn">pandas</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">pd</span>
 
+<span class="c1"># ------------------------------------------------------------</span>
 <span class="c1"># Method 1: From a Dictionary of Lists</span>
-<span class="c1"># USE CASE: Most common manual method. Keys become column names.</span>
+<span class="c1"># USE CASE: The most common manual method. Dictionary KEYS</span>
+<span class="c1"># automatically become the DataFrame's COLUMN NAMES.</span>
+<span class="c1"># ------------------------------------------------------------</span>
 <span class="n">data_dict</span> <span class="o">=</span> <span class="p">{</span>
-    <span class="s1">'Name'</span><span class="p">:</span> <span class="p">[</span><span class="s1">'Alice'</span><span class="p">,</span> <span class="s1">'Bob'</span><span class="p">,</span> <span class="s1">'Charlie'</span><span class="p">],</span> <span class="c1"># Keys 'Name' &amp; 'Age' → column names</span>
+    <span class="s1">'Name'</span><span class="p">:</span> <span class="p">[</span><span class="s1">'Alice'</span><span class="p">,</span> <span class="s1">'Bob'</span><span class="p">,</span> <span class="s1">'Charlie'</span><span class="p">],</span>   <span class="c1"># 'Name' and 'Age' become column names</span>
     <span class="s1">'Age'</span><span class="p">:</span> <span class="p">[</span><span class="mi">25</span><span class="p">,</span> <span class="mi">30</span><span class="p">,</span> <span class="mi">35</span><span class="p">]</span>
 <span class="p">}</span>
 <span class="n">df1</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">data_dict</span><span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span><span class="s2">"1. From Dict of Lists:</span><span class="se">\n</span><span class="s2">"</span><span class="p">,</span> <span class="n">df1</span><span class="p">)</span> 
+<span class="nb">print</span><span class="p">(</span><span class="s2">"1. From Dict of Lists:</span><span class="se">\n</span><span class="s2">"</span><span class="p">,</span> <span class="n">df1</span><span class="p">)</span>
 
+<span class="c1"># ------------------------------------------------------------</span>
 <span class="c1"># Method 2: From a List of Dictionaries</span>
-<span class="c1"># USE CASE: Great when your data comes in records (like JSON API responses).</span>
+<span class="c1"># USE CASE: Great when your data arrives as individual RECORDS</span>
+<span class="c1"># (this is exactly the shape data from a JSON API often comes in).</span>
+<span class="c1"># ------------------------------------------------------------</span>
 <span class="n">data_list</span> <span class="o">=</span> <span class="p">[</span>
     <span class="p">{</span><span class="s1">'Name'</span><span class="p">:</span> <span class="s1">'Alice'</span><span class="p">,</span> <span class="s1">'Age'</span><span class="p">:</span> <span class="mi">25</span><span class="p">},</span>
     <span class="p">{</span><span class="s1">'Name'</span><span class="p">:</span> <span class="s1">'Bob'</span><span class="p">,</span> <span class="s1">'Age'</span><span class="p">:</span> <span class="mi">30</span><span class="p">},</span>
@@ -8151,135 +8229,249 @@ Each of these are explained through example scripts</p>
 <span class="n">df2</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">data_list</span><span class="p">)</span>
 <span class="nb">print</span><span class="p">(</span><span class="s2">"</span><span class="se">\n</span><span class="s2">2. From List of Dicts:</span><span class="se">\n</span><span class="s2">"</span><span class="p">,</span> <span class="n">df2</span><span class="p">)</span>
 
-<span class="c1"># Method 3: From a List of Lists (with explicit columns). In list of lists, </span>
-<span class="c1"># you must provide the 'columns' parameter to name the columns. Else Pandas </span>
-<span class="c1"># will default to column names (0, 1, 2...) which is usually not what you want</span>
+<span class="c1"># ------------------------------------------------------------</span>
+<span class="c1"># Method 3: From a List of Lists (with explicit column names)</span>
+<span class="c1"># IMPORTANT: with a plain list of lists, Pandas has no way to know</span>
+<span class="c1"># what to call the columns -- without the 'columns' argument, it</span>
+<span class="c1"># would default to plain numbers (0, 1, 2...), which is rarely</span>
+<span class="c1"># what you actually want.</span>
+<span class="c1"># ------------------------------------------------------------</span>
 <span class="n">matrix_data</span> <span class="o">=</span> <span class="p">[</span>
     <span class="p">[</span><span class="s1">'Alice'</span><span class="p">,</span> <span class="mi">25</span><span class="p">],</span>
     <span class="p">[</span><span class="s1">'Bob'</span><span class="p">,</span> <span class="mi">30</span><span class="p">],</span>
     <span class="p">[</span><span class="s1">'Charlie'</span><span class="p">,</span> <span class="mi">35</span><span class="p">]</span>
 <span class="p">]</span>
-<span class="n">df3</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">matrix_data</span><span class="p">,</span> <span class="n">columns</span><span class="o">=</span><span class="p">[</span><span class="s1">'Name'</span><span class="p">,</span> <span class="s1">'Age'</span><span class="p">])</span> <span class="c1"># Provided column names </span>
+<span class="n">df3</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">matrix_data</span><span class="p">,</span> <span class="n">columns</span><span class="o">=</span><span class="p">[</span><span class="s1">'Name'</span><span class="p">,</span> <span class="s1">'Age'</span><span class="p">])</span>   <span class="c1"># Column names supplied explicitly</span>
 <span class="nb">print</span><span class="p">(</span><span class="s2">"</span><span class="se">\n</span><span class="s2">3. From List of Lists:</span><span class="se">\n</span><span class="s2">"</span><span class="p">,</span> <span class="n">df3</span><span class="p">)</span>
 </code></pre></div>
-<h3 id="2-from-external-data-sources-io">2. From External Data Sources (I/O):<a class="headerlink" href="#2-from-external-data-sources-io" title="Permanent link">&para;</a></h3>
-<p>You load data that already exists outside of Python (like a CSV file, an Excel spreadsheet, or a database). This is how 95% of real-world data analysis begins.
-The following script shows the use of methods to create Dataframes from external sources.</p>
-<div class="highlight"><pre><span></span><code>import pandas as pd
-import io
-
-# CATEGORY B: FROM EXTERNAL DATA SOURCES (I/O)
-# (Best for: Actual data analysis, loading real-world datasets)
-# NOTE: We use io.StringIO and io.BytesIO to simulate files so you can run 
-# this script without needing to create actual files on your computer.
-
-# Method 4: From a CSV (Comma Separated Values) File
-# USE CASE: The absolute most common way to load data in the entire industry.
-csv_data = "Name,Age\nAlice,25\nBob,30"
-df4 = pd.read_csv(io.StringIO(csv_data))
-print("4. From CSV (.read_csv):\n", df4)
-
-# Method 5: From an Excel File
-# USE CASE: Extremely common in corporate/business environments.
-# NOTE: Reading .xlsx files requires the 'openpyxl' library 
-# (Install it via terminal: pip install openpyxl)
-print("\n5. From Excel (.read_excel):")
-try:
-    # Step A: Create a valid Excel file in memory
-    excel_buffer = io.BytesIO()
-    temp_df = pd.DataFrame({'Name': ['Alice', 'Bob'], 'Age': [25, 30]})
-    temp_df.to_excel(excel_buffer, index=False, engine='openpyxl')
-
-    # Step B: Move the cursor back to the start of the buffer
-    excel_buffer.seek(0)
-
-    # Step C: Read the Excel file from memory
-    df5 = pd.read_excel(excel_buffer, engine='openpyxl')
-    print(df5)
-except ImportError:
-    print("  [Skipped] Please install openpyxl to run this: pip install openpyxl")
-
-# Method 6: From JSON Data
-# USE CASE: Standard format for web APIs and NoSQL databases (like MongoDB).
-json_data = '[{"Name": "Alice", "Age": 25}, {"Name": "Bob", "Age": 30}]'
-df6 = pd.read_json(json_data)
-print("\n6. From JSON (.read_json):\n", df6)
-</code></pre></div>
-<p>In the above script: What is io.StringIO and io.BytesIO? To understand this, you first need to understand how functions like pd.read_csv() normally work. Normally, Pandas expects to read a physical file sitting on your computer's hard drive. If you write pd.read_csv('data.csv'), Python stops, goes to your hard drive, searches for data.csv, opens it, and reads it. If it does not find it it will give FileNotFoundError. The Solution: Faking a File in Memory Python has a built-in module called io. Inside io are two magic tools: StringIO and BytesIO. Instead of saving data to your hard drive, these tools take a plain Python string or bytes variable and wrap it up to look and act exactly like a real file in your computer's RAM (memory).
-Why did we need two of them?
-•   io.StringIO: Used for plain text files like .csv. It takes a standard Python string.
-•   io.BytesIO: Used for complex, binary files like .xlsx (Excel). Excel files aren't just text; they are compressed folders of code. BytesIO simulates the raw binary 1s and 0s of a file on your hard drive.
-(Note: In a real life scenario, you will almost never use io.StringIO. You will always use real file paths. We only use it here to make the script copy-paste-and-run friendly)</p>
-<h3 id="3-from-existing-pandasnumpy-objects">3. From Existing Pandas/NumPy Objects:<a class="headerlink" href="#3-from-existing-pandasnumpy-objects" title="Permanent link">&para;</a></h3>
-<p>You construct a DataFrame by combining things you've already built in Pandas (like sticking two Series together, or converting a NumPy matrix).
-The following script how you can create a dataframe from existing Pandas/ NumPy objects:</p>
-<div class="highlight"><pre><span></span><code><span class="kn">import</span><span class="w"> </span><span class="nn">pandas</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">pd</span>
-<span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
-
-<span class="c1"># CATEGORY C: FROM EXISTING PANDAS / NUMPY OBJECTS</span>
-<span class="c1"># (Best for: Manipulating data already in memory, math operations)</span>
-
-<span class="c1"># Method 7: From a Dictionary of Series</span>
-<span class="c1"># USE CASE: When you have cleaned separate columns individually and want to merge them into a table.</span>
-<span class="n">names</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">([</span><span class="s1">'Alice'</span><span class="p">,</span> <span class="s1">'Bob'</span><span class="p">,</span> <span class="s1">'Charlie'</span><span class="p">])</span>
-<span class="n">ages</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">([</span><span class="mi">25</span><span class="p">,</span> <span class="mi">30</span><span class="p">,</span> <span class="mi">35</span><span class="p">])</span>
-<span class="n">df7</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">({</span><span class="s1">'Name'</span><span class="p">:</span> <span class="n">names</span><span class="p">,</span> <span class="s1">'Age'</span><span class="p">:</span> <span class="n">ages</span><span class="p">})</span>
-<span class="nb">print</span><span class="p">(</span><span class="s2">"7. From Dict of Series:</span><span class="se">\n</span><span class="s2">"</span><span class="p">,</span> <span class="n">df7</span><span class="p">)</span>
-
-<span class="c1"># Method 8: From a 2D NumPy Array</span>
-<span class="c1"># USE CASE: When doing heavy mathematical/machine learning preprocessing before converting to Pandas.</span>
-<span class="n">numpy_matrix</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">],</span> <span class="p">[</span><span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">6</span><span class="p">],</span> <span class="p">[</span><span class="mi">7</span><span class="p">,</span> <span class="mi">8</span><span class="p">,</span> <span class="mi">9</span><span class="p">]])</span>
-<span class="n">df8</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">numpy_matrix</span><span class="p">,</span> <span class="n">columns</span><span class="o">=</span><span class="p">[</span><span class="s1">'Col_A'</span><span class="p">,</span> <span class="s1">'Col_B'</span><span class="p">,</span> <span class="s1">'Col_C'</span><span class="p">])</span>
-<span class="nb">print</span><span class="p">(</span><span class="s2">"</span><span class="se">\n</span><span class="s2">8. From NumPy Array:</span><span class="se">\n</span><span class="s2">"</span><span class="p">,</span> <span class="n">df8</span><span class="p">)</span>
-
-<span class="c1"># Method 9: Creating an Empty DataFrame (and adding columns later)</span>
-<span class="c1"># USE CASE: When you know the structure you need, but will populate it row-by-row inside a loop.</span>
-<span class="n">df9</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">columns</span><span class="o">=</span><span class="p">[</span><span class="s1">'Name'</span><span class="p">,</span> <span class="s1">'Score'</span><span class="p">])</span>
-<span class="c1"># Appending a new row (ignore_index=True prevents index errors)</span>
-<span class="n">df9</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">concat</span><span class="p">([</span><span class="n">df9</span><span class="p">,</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">([{</span><span class="s1">'Name'</span><span class="p">:</span> <span class="s1">'Alice'</span><span class="p">,</span> <span class="s1">'Score'</span><span class="p">:</span> <span class="mi">95</span><span class="p">}])],</span> <span class="n">ignore_index</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span><span class="s2">"</span><span class="se">\n</span><span class="s2">9. Empty DF + Appending:</span><span class="se">\n</span><span class="s2">"</span><span class="p">,</span> <span class="n">df9</span><span class="p">)</span>
-</code></pre></div>
-<h3 id="the-entire-script">The entire script<a class="headerlink" href="#the-entire-script" title="Permanent link">&para;</a></h3>
+<hr />
+<h2 id="category-b-from-external-data-sources-io">Category B: From External Data Sources (I/O)<a class="headerlink" href="#category-b-from-external-data-sources-io" title="Permanent link">&para;</a></h2>
+<p><strong>When you'd use this:</strong> loading data that already exists <em>outside</em> Python — a CSV file, an Excel spreadsheet, a database export, or a web API's response. This is how the overwhelming majority of real-world data analysis actually begins.</p>
+<h3 id="understanding-iostringio-and-iobytesio-first">Understanding <code>io.StringIO</code> and <code>io.BytesIO</code> first<a class="headerlink" href="#understanding-iostringio-and-iobytesio-first" title="Permanent link">&para;</a></h3>
+<p>Before looking at the script, it helps to understand a small trick it uses. Normally, a function like <code>pd.read_csv()</code> expects to read a real, physical file sitting on your computer's hard drive: writing <code>pd.read_csv('data.csv')</code> makes Python stop, search your hard drive for a file named <code>data.csv</code>, and open it — raising <code>FileNotFoundError</code> if it isn't there.</p>
+<p>The <code>io</code> module (part of Python's standard library) provides two tools that let you skip needing a real file on disk at all: they take a plain Python string or bytes value and wrap it up so it <em>behaves</em> exactly like a real file, entirely inside your computer's memory (RAM).</p>
+<ul>
+<li><strong><code>io.StringIO</code></strong> — used for plain text data (like a CSV), since it works directly with regular Python strings.</li>
+<li><strong><code>io.BytesIO</code></strong> — used for more complex, binary formats (like <code>.xlsx</code> Excel files), since Excel files aren't plain text at all — they're actually compressed archives containing multiple internal files. <code>BytesIO</code> simulates the raw binary data such a file would contain.</li>
+</ul>
+<p><strong>A practical note:</strong> in real projects, you will almost always use genuine file paths rather than these in-memory tools — they're used here purely so this script can be copied, pasted, and run immediately, without you needing to first create any actual files on your own computer.</p>
+<p><img alt="Flowchart" src="/001-mkdocs/resources/ch12-august-2026-DataFrame-creation-02.png" /></p>
+<h3 id="the-script">The script<a class="headerlink" href="#the-script" title="Permanent link">&para;</a></h3>
 <div class="highlight"><pre><span></span><code><span class="kn">import</span><span class="w"> </span><span class="nn">pandas</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">pd</span>
 <span class="kn">import</span><span class="w"> </span><span class="nn">io</span>
 
-<span class="c1"># CATEGORY B: FROM EXTERNAL DATA SOURCES (I/O)</span>
-<span class="c1"># (Best for: Actual data analysis, loading real-world datasets)</span>
-<span class="c1"># NOTE: We use io.StringIO and io.BytesIO to simulate files so you can run </span>
-<span class="c1"># this script without needing to create actual files on your computer.</span>
-
-<span class="c1"># Method 4: From a CSV (Comma Separated Values) File</span>
-<span class="c1"># USE CASE: The absolute most common way to load data in the entire industry.</span>
+<span class="c1"># ------------------------------------------------------------</span>
+<span class="c1"># Method 4: From a CSV (Comma-Separated Values) File</span>
+<span class="c1"># USE CASE: The single most common way to load data across the</span>
+<span class="c1"># entire data-analysis industry.</span>
+<span class="c1"># ------------------------------------------------------------</span>
 <span class="n">csv_data</span> <span class="o">=</span> <span class="s2">"Name,Age</span><span class="se">\n</span><span class="s2">Alice,25</span><span class="se">\n</span><span class="s2">Bob,30"</span>
+
+<span class="c1"># Step 1: io.StringIO wraps the plain string above so read_csv()</span>
+<span class="c1"># can treat it exactly as if it were reading a real .csv file.</span>
 <span class="n">df4</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="n">io</span><span class="o">.</span><span class="n">StringIO</span><span class="p">(</span><span class="n">csv_data</span><span class="p">))</span>
 <span class="nb">print</span><span class="p">(</span><span class="s2">"4. From CSV (.read_csv):</span><span class="se">\n</span><span class="s2">"</span><span class="p">,</span> <span class="n">df4</span><span class="p">)</span>
 
+<span class="c1"># ------------------------------------------------------------</span>
 <span class="c1"># Method 5: From an Excel File</span>
 <span class="c1"># USE CASE: Extremely common in corporate/business environments.</span>
-<span class="c1"># NOTE: Reading .xlsx files requires the 'openpyxl' library </span>
-<span class="c1"># (Install it via terminal: pip install openpyxl)</span>
+<span class="c1"># NOTE: reading .xlsx files requires the 'openpyxl' library --</span>
+<span class="c1"># install it via: pip install openpyxl</span>
+<span class="c1"># ------------------------------------------------------------</span>
 <span class="nb">print</span><span class="p">(</span><span class="s2">"</span><span class="se">\n</span><span class="s2">5. From Excel (.read_excel):"</span><span class="p">)</span>
 <span class="k">try</span><span class="p">:</span>
-    <span class="c1"># Step A: Create a valid Excel file in memory</span>
+    <span class="c1"># Step A: Build a genuine, valid Excel file, but entirely in</span>
+    <span class="c1"># memory rather than on disk, using io.BytesIO as the "container."</span>
     <span class="n">excel_buffer</span> <span class="o">=</span> <span class="n">io</span><span class="o">.</span><span class="n">BytesIO</span><span class="p">()</span>
     <span class="n">temp_df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">({</span><span class="s1">'Name'</span><span class="p">:</span> <span class="p">[</span><span class="s1">'Alice'</span><span class="p">,</span> <span class="s1">'Bob'</span><span class="p">],</span> <span class="s1">'Age'</span><span class="p">:</span> <span class="p">[</span><span class="mi">25</span><span class="p">,</span> <span class="mi">30</span><span class="p">]})</span>
     <span class="n">temp_df</span><span class="o">.</span><span class="n">to_excel</span><span class="p">(</span><span class="n">excel_buffer</span><span class="p">,</span> <span class="n">index</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">engine</span><span class="o">=</span><span class="s1">'openpyxl'</span><span class="p">)</span>
 
-    <span class="c1"># Step B: Move the cursor back to the start of the buffer</span>
+    <span class="c1"># Step B: Move the buffer's internal cursor back to the very</span>
+    <span class="c1"># beginning -- writing to it moved the cursor to the END, and</span>
+    <span class="c1"># reading needs to start from position 0 (see the earlier</span>
+    <span class="c1"># chapter page on seek() for the general idea behind this).</span>
     <span class="n">excel_buffer</span><span class="o">.</span><span class="n">seek</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
 
-    <span class="c1"># Step C: Read the Excel file from memory</span>
+    <span class="c1"># Step C: Read the "file" back, exactly as if it were a real</span>
+    <span class="c1"># .xlsx file on disk.</span>
     <span class="n">df5</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_excel</span><span class="p">(</span><span class="n">excel_buffer</span><span class="p">,</span> <span class="n">engine</span><span class="o">=</span><span class="s1">'openpyxl'</span><span class="p">)</span>
     <span class="nb">print</span><span class="p">(</span><span class="n">df5</span><span class="p">)</span>
 <span class="k">except</span> <span class="ne">ImportError</span><span class="p">:</span>
     <span class="nb">print</span><span class="p">(</span><span class="s2">"  [Skipped] Please install openpyxl to run this: pip install openpyxl"</span><span class="p">)</span>
 
+<span class="c1"># ------------------------------------------------------------</span>
 <span class="c1"># Method 6: From JSON Data</span>
-<span class="c1"># USE CASE: Standard format for web APIs and NoSQL databases (like MongoDB).</span>
+<span class="c1"># USE CASE: The standard format for web APIs and many NoSQL</span>
+<span class="c1"># databases (like MongoDB).</span>
+<span class="c1"># ------------------------------------------------------------</span>
 <span class="n">json_data</span> <span class="o">=</span> <span class="s1">'[{"Name": "Alice", "Age": 25}, {"Name": "Bob", "Age": 30}]'</span>
 <span class="n">df6</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_json</span><span class="p">(</span><span class="n">json_data</span><span class="p">)</span>
 <span class="nb">print</span><span class="p">(</span><span class="s2">"</span><span class="se">\n</span><span class="s2">6. From JSON (.read_json):</span><span class="se">\n</span><span class="s2">"</span><span class="p">,</span> <span class="n">df6</span><span class="p">)</span>
 </code></pre></div>
+<hr />
+<h2 id="category-c-from-existing-pandasnumpy-objects">Category C: From Existing Pandas/NumPy Objects<a class="headerlink" href="#category-c-from-existing-pandasnumpy-objects" title="Permanent link">&para;</a></h2>
+<p><strong>When you'd use this:</strong> you're building a <code>DataFrame</code> from pieces you've already constructed within Python — separate <code>Series</code> you've cleaned individually, a NumPy array from some numerical processing, or growing a table row by row inside a loop.</p>
+<div class="highlight"><pre><span></span><code><span class="kn">import</span><span class="w"> </span><span class="nn">pandas</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">pd</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+
+<span class="c1"># ------------------------------------------------------------</span>
+<span class="c1"># Method 7: From a Dictionary of Series</span>
+<span class="c1"># USE CASE: When you've already cleaned separate columns</span>
+<span class="c1"># individually (each as its own Series) and now want to combine</span>
+<span class="c1"># them into a single table.</span>
+<span class="c1"># ------------------------------------------------------------</span>
+<span class="n">names</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">([</span><span class="s1">'Alice'</span><span class="p">,</span> <span class="s1">'Bob'</span><span class="p">,</span> <span class="s1">'Charlie'</span><span class="p">])</span>
+<span class="n">ages</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">([</span><span class="mi">25</span><span class="p">,</span> <span class="mi">30</span><span class="p">,</span> <span class="mi">35</span><span class="p">])</span>
+<span class="n">df7</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">({</span><span class="s1">'Name'</span><span class="p">:</span> <span class="n">names</span><span class="p">,</span> <span class="s1">'Age'</span><span class="p">:</span> <span class="n">ages</span><span class="p">})</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">"7. From Dict of Series:</span><span class="se">\n</span><span class="s2">"</span><span class="p">,</span> <span class="n">df7</span><span class="p">)</span>
+
+<span class="c1"># ------------------------------------------------------------</span>
+<span class="c1"># Method 8: From a 2D NumPy Array</span>
+<span class="c1"># USE CASE: Common after heavy mathematical or machine-learning</span>
+<span class="c1"># preprocessing, before converting the result over to Pandas for</span>
+<span class="c1"># further analysis or display.</span>
+<span class="c1"># ------------------------------------------------------------</span>
+<span class="n">numpy_matrix</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">],</span> <span class="p">[</span><span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">6</span><span class="p">],</span> <span class="p">[</span><span class="mi">7</span><span class="p">,</span> <span class="mi">8</span><span class="p">,</span> <span class="mi">9</span><span class="p">]])</span>
+<span class="n">df8</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">numpy_matrix</span><span class="p">,</span> <span class="n">columns</span><span class="o">=</span><span class="p">[</span><span class="s1">'Col_A'</span><span class="p">,</span> <span class="s1">'Col_B'</span><span class="p">,</span> <span class="s1">'Col_C'</span><span class="p">])</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">"</span><span class="se">\n</span><span class="s2">8. From NumPy Array:</span><span class="se">\n</span><span class="s2">"</span><span class="p">,</span> <span class="n">df8</span><span class="p">)</span>
+
+<span class="c1"># ------------------------------------------------------------</span>
+<span class="c1"># Method 9: Creating an Empty DataFrame, then Adding Rows Later</span>
+<span class="c1"># USE CASE: When you know the STRUCTURE you'll eventually need,</span>
+<span class="c1"># but plan to fill it in row by row -- for example, inside a loop.</span>
+<span class="c1"># ------------------------------------------------------------</span>
+<span class="n">df9</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">columns</span><span class="o">=</span><span class="p">[</span><span class="s1">'Name'</span><span class="p">,</span> <span class="s1">'Score'</span><span class="p">])</span>
+
+<span class="c1"># Step 1: pd.concat() joins two DataFrames together -- here, the</span>
+<span class="c1"># (currently empty) df9 with a brand-new one-row DataFrame.</span>
+<span class="c1"># Step 2: ignore_index=True prevents index-numbering conflicts</span>
+<span class="c1"># between the two pieces being joined.</span>
+<span class="n">df9</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">concat</span><span class="p">([</span><span class="n">df9</span><span class="p">,</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">([{</span><span class="s1">'Name'</span><span class="p">:</span> <span class="s1">'Alice'</span><span class="p">,</span> <span class="s1">'Score'</span><span class="p">:</span> <span class="mi">95</span><span class="p">}])],</span> <span class="n">ignore_index</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">"</span><span class="se">\n</span><span class="s2">9. Empty DF + Appending:</span><span class="se">\n</span><span class="s2">"</span><span class="p">,</span> <span class="n">df9</span><span class="p">)</span>
+</code></pre></div>
+<hr />
+<h2 id="the-complete-combined-script-all-nine-methods">The complete combined script (all nine methods)<a class="headerlink" href="#the-complete-combined-script-all-nine-methods" title="Permanent link">&para;</a></h2>
+<div class="highlight"><pre><span></span><code><span class="kn">import</span><span class="w"> </span><span class="nn">pandas</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">pd</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">io</span>
+
+<span class="c1"># ============================================================</span>
+<span class="c1"># CATEGORY A: FROM STANDARD PYTHON STRUCTURES</span>
+<span class="c1"># ============================================================</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">"CATEGORY A: FROM STANDARD PYTHON STRUCTURES"</span><span class="p">)</span>
+
+<span class="n">data_dict</span> <span class="o">=</span> <span class="p">{</span><span class="s1">'Name'</span><span class="p">:</span> <span class="p">[</span><span class="s1">'Alice'</span><span class="p">,</span> <span class="s1">'Bob'</span><span class="p">,</span> <span class="s1">'Charlie'</span><span class="p">],</span> <span class="s1">'Age'</span><span class="p">:</span> <span class="p">[</span><span class="mi">25</span><span class="p">,</span> <span class="mi">30</span><span class="p">,</span> <span class="mi">35</span><span class="p">]}</span>
+<span class="n">df1</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">data_dict</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">"1. From Dict of Lists:</span><span class="se">\n</span><span class="s2">"</span><span class="p">,</span> <span class="n">df1</span><span class="p">)</span>
+
+<span class="n">data_list</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="p">{</span><span class="s1">'Name'</span><span class="p">:</span> <span class="s1">'Alice'</span><span class="p">,</span> <span class="s1">'Age'</span><span class="p">:</span> <span class="mi">25</span><span class="p">},</span>
+    <span class="p">{</span><span class="s1">'Name'</span><span class="p">:</span> <span class="s1">'Bob'</span><span class="p">,</span> <span class="s1">'Age'</span><span class="p">:</span> <span class="mi">30</span><span class="p">},</span>
+    <span class="p">{</span><span class="s1">'Name'</span><span class="p">:</span> <span class="s1">'Charlie'</span><span class="p">,</span> <span class="s1">'Age'</span><span class="p">:</span> <span class="mi">35</span><span class="p">}</span>
+<span class="p">]</span>
+<span class="n">df2</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">data_list</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">"</span><span class="se">\n</span><span class="s2">2. From List of Dicts:</span><span class="se">\n</span><span class="s2">"</span><span class="p">,</span> <span class="n">df2</span><span class="p">)</span>
+
+<span class="n">matrix_data</span> <span class="o">=</span> <span class="p">[[</span><span class="s1">'Alice'</span><span class="p">,</span> <span class="mi">25</span><span class="p">],</span> <span class="p">[</span><span class="s1">'Bob'</span><span class="p">,</span> <span class="mi">30</span><span class="p">],</span> <span class="p">[</span><span class="s1">'Charlie'</span><span class="p">,</span> <span class="mi">35</span><span class="p">]]</span>
+<span class="n">df3</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">matrix_data</span><span class="p">,</span> <span class="n">columns</span><span class="o">=</span><span class="p">[</span><span class="s1">'Name'</span><span class="p">,</span> <span class="s1">'Age'</span><span class="p">])</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">"</span><span class="se">\n</span><span class="s2">3. From List of Lists:</span><span class="se">\n</span><span class="s2">"</span><span class="p">,</span> <span class="n">df3</span><span class="p">)</span>
+
+
+<span class="c1"># ============================================================</span>
+<span class="c1"># CATEGORY B: FROM EXTERNAL DATA SOURCES (I/O)</span>
+<span class="c1"># ============================================================</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">"</span><span class="se">\n</span><span class="s2">"</span> <span class="o">+</span> <span class="s2">"="</span><span class="o">*</span><span class="mi">60</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">"CATEGORY B: FROM EXTERNAL DATA SOURCES (I/O)"</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">"="</span><span class="o">*</span><span class="mi">60</span><span class="p">)</span>
+
+<span class="n">csv_data</span> <span class="o">=</span> <span class="s2">"Name,Age</span><span class="se">\n</span><span class="s2">Alice,25</span><span class="se">\n</span><span class="s2">Bob,30"</span>
+<span class="n">df4</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="n">io</span><span class="o">.</span><span class="n">StringIO</span><span class="p">(</span><span class="n">csv_data</span><span class="p">))</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">"4. From CSV (.read_csv):</span><span class="se">\n</span><span class="s2">"</span><span class="p">,</span> <span class="n">df4</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s2">"</span><span class="se">\n</span><span class="s2">5. From Excel (.read_excel):"</span><span class="p">)</span>
+<span class="k">try</span><span class="p">:</span>
+    <span class="n">excel_buffer</span> <span class="o">=</span> <span class="n">io</span><span class="o">.</span><span class="n">BytesIO</span><span class="p">()</span>
+    <span class="n">temp_df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">({</span><span class="s1">'Name'</span><span class="p">:</span> <span class="p">[</span><span class="s1">'Alice'</span><span class="p">,</span> <span class="s1">'Bob'</span><span class="p">],</span> <span class="s1">'Age'</span><span class="p">:</span> <span class="p">[</span><span class="mi">25</span><span class="p">,</span> <span class="mi">30</span><span class="p">]})</span>
+    <span class="n">temp_df</span><span class="o">.</span><span class="n">to_excel</span><span class="p">(</span><span class="n">excel_buffer</span><span class="p">,</span> <span class="n">index</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">engine</span><span class="o">=</span><span class="s1">'openpyxl'</span><span class="p">)</span>
+    <span class="n">excel_buffer</span><span class="o">.</span><span class="n">seek</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+    <span class="n">df5</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_excel</span><span class="p">(</span><span class="n">excel_buffer</span><span class="p">,</span> <span class="n">engine</span><span class="o">=</span><span class="s1">'openpyxl'</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">df5</span><span class="p">)</span>
+<span class="k">except</span> <span class="ne">ImportError</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">"  [Skipped] Please install openpyxl to run this: pip install openpyxl"</span><span class="p">)</span>
+
+<span class="n">json_data</span> <span class="o">=</span> <span class="s1">'[{"Name": "Alice", "Age": 25}, {"Name": "Bob", "Age": 30}]'</span>
+<span class="n">df6</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_json</span><span class="p">(</span><span class="n">json_data</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">"</span><span class="se">\n</span><span class="s2">6. From JSON (.read_json):</span><span class="se">\n</span><span class="s2">"</span><span class="p">,</span> <span class="n">df6</span><span class="p">)</span>
+
+
+<span class="c1"># ============================================================</span>
+<span class="c1"># CATEGORY C: FROM EXISTING PANDAS / NUMPY OBJECTS</span>
+<span class="c1"># ============================================================</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">"</span><span class="se">\n</span><span class="s2">"</span> <span class="o">+</span> <span class="s2">"="</span><span class="o">*</span><span class="mi">60</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">"CATEGORY C: FROM EXISTING PANDAS / NUMPY OBJECTS"</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">"="</span><span class="o">*</span><span class="mi">60</span><span class="p">)</span>
+
+<span class="n">names</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">([</span><span class="s1">'Alice'</span><span class="p">,</span> <span class="s1">'Bob'</span><span class="p">,</span> <span class="s1">'Charlie'</span><span class="p">])</span>
+<span class="n">ages</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">([</span><span class="mi">25</span><span class="p">,</span> <span class="mi">30</span><span class="p">,</span> <span class="mi">35</span><span class="p">])</span>
+<span class="n">df7</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">({</span><span class="s1">'Name'</span><span class="p">:</span> <span class="n">names</span><span class="p">,</span> <span class="s1">'Age'</span><span class="p">:</span> <span class="n">ages</span><span class="p">})</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">"7. From Dict of Series:</span><span class="se">\n</span><span class="s2">"</span><span class="p">,</span> <span class="n">df7</span><span class="p">)</span>
+
+<span class="n">numpy_matrix</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">],</span> <span class="p">[</span><span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">6</span><span class="p">],</span> <span class="p">[</span><span class="mi">7</span><span class="p">,</span> <span class="mi">8</span><span class="p">,</span> <span class="mi">9</span><span class="p">]])</span>
+<span class="n">df8</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">numpy_matrix</span><span class="p">,</span> <span class="n">columns</span><span class="o">=</span><span class="p">[</span><span class="s1">'Col_A'</span><span class="p">,</span> <span class="s1">'Col_B'</span><span class="p">,</span> <span class="s1">'Col_C'</span><span class="p">])</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">"</span><span class="se">\n</span><span class="s2">8. From NumPy Array:</span><span class="se">\n</span><span class="s2">"</span><span class="p">,</span> <span class="n">df8</span><span class="p">)</span>
+
+<span class="n">df9</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">columns</span><span class="o">=</span><span class="p">[</span><span class="s1">'Name'</span><span class="p">,</span> <span class="s1">'Score'</span><span class="p">])</span>
+<span class="n">df9</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">concat</span><span class="p">([</span><span class="n">df9</span><span class="p">,</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">([{</span><span class="s1">'Name'</span><span class="p">:</span> <span class="s1">'Alice'</span><span class="p">,</span> <span class="s1">'Score'</span><span class="p">:</span> <span class="mi">95</span><span class="p">}])],</span> <span class="n">ignore_index</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">"</span><span class="se">\n</span><span class="s2">9. Empty DF + Appending:</span><span class="se">\n</span><span class="s2">"</span><span class="p">,</span> <span class="n">df9</span><span class="p">)</span>
+</code></pre></div>
+<hr />
+<h2 id="choosing-the-right-method">Choosing the right method<a class="headerlink" href="#choosing-the-right-method" title="Permanent link">&para;</a></h2>
+<table>
+<thead>
+<tr>
+<th>If your data is...</th>
+<th>Use...</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Small, hand-typed for testing/learning</td>
+<td>Category A — dictionary of lists, list of dicts, or list of lists</td>
+</tr>
+<tr>
+<td>Coming from a CSV file</td>
+<td><code>pd.read_csv()</code></td>
+</tr>
+<tr>
+<td>Coming from an Excel spreadsheet</td>
+<td><code>pd.read_excel()</code> (requires <code>openpyxl</code>)</td>
+</tr>
+<tr>
+<td>Coming from a web API or NoSQL source</td>
+<td><code>pd.read_json()</code></td>
+</tr>
+<tr>
+<td>Already split across several cleaned <code>Series</code></td>
+<td>Category C — dictionary of Series</td>
+</tr>
+<tr>
+<td>The result of NumPy calculations</td>
+<td>Category C — directly from a NumPy array</td>
+</tr>
+<tr>
+<td>Going to be built up incrementally, row by row</td>
+<td>Category C — start empty, then <code>pd.concat()</code> new rows in</td>
+</tr>
+</tbody>
+</table>
+<h2 id="quick-recap">Quick recap<a class="headerlink" href="#quick-recap" title="Permanent link">&para;</a></h2>
+<ul>
+<li>Every way of creating a <code>DataFrame</code> falls into one of three categories: <strong>typed directly in Python</strong>, <strong>loaded from an external source</strong>, or <strong>built from existing Pandas/NumPy objects</strong>.</li>
+<li><strong><code>io.StringIO</code> and <code>io.BytesIO</code></strong> let you simulate a real file entirely in memory — genuinely useful for runnable examples and quick tests, but something you'll rarely need in a real project, where you'll typically pass a genuine file path instead.</li>
+<li><strong>Dictionary keys become column names</strong> (Method 1) — one of the most common and intuitive ways to build a small <code>DataFrame</code> by hand.</li>
+<li><strong>A list of lists needs explicit column names</strong> (Method 3) — without the <code>columns</code> argument, Pandas has no way to know what to call each column, and will default to plain numbers instead.</li>
+<li><strong><code>pd.read_csv()</code>, <code>pd.read_excel()</code>, and <code>pd.read_json()</code></strong> are the three workhorse functions for real-world data loading — of these, <code>read_csv()</code> is by far the most commonly used across the industry.</li>
+</ul>
 
 
 
