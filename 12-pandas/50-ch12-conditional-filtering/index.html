@@ -8289,6 +8289,7 @@
 <span class="nb">print</span><span class="p">(</span><span class="s2">"</span><span class="se">\n</span><span class="s2">--- FIRST 5 ROWS ---"</span><span class="p">)</span>
 <span class="nb">print</span><span class="p">(</span><span class="s2">"df.head()-&gt;"</span><span class="p">,</span> <span class="n">df</span><span class="o">.</span><span class="n">head</span><span class="p">())</span>   <span class="c1"># A quick first look at the data's shape and columns</span>
 </code></pre></div>
+<strong>Output</strong></p>
 <div class="highlight"><pre><span></span><code> STEP 0. IMPORT LIBRARIES AND LOAD DATASET
 
 --- FIRST 5 ROWS ---
@@ -8298,7 +8299,7 @@ df.head()-&gt;   species     island  bill_length_mm  bill_depth_mm  flipper_leng
 2  Adelie  Torgersen            40.3           18.0              195.0       3250.0  Female
 3  Adelie  Torgersen             NaN            NaN                NaN          NaN     NaN
 4  Adelie  Torgersen            36.7           19.3              193.0       3450.0  Female
-</code></pre></div></p>
+</code></pre></div>
 <p><strong>Good practice:</strong> use the standard aliases (<code>pd</code>, <code>sns</code>); avoid reloading the dataset repeatedly or modifying the original <code>df</code> unintentionally.</p>
 <hr />
 <h3 id="step-1-basic-boolean-indexing">Step 1: Basic Boolean Indexing<a class="headerlink" href="#step-1-basic-boolean-indexing" title="Permanent link">&para;</a></h3>
@@ -8314,6 +8315,7 @@ df.head()-&gt;   species     island  bill_length_mm  bill_depth_mm  flipper_leng
 <span class="nb">print</span><span class="p">(</span><span class="s2">"</span><span class="se">\n</span><span class="s2">Penguins with body_mass_g &gt; 4000:"</span><span class="p">)</span>
 <span class="nb">print</span><span class="p">(</span><span class="s2">"heavy_penguins.head()-&gt;"</span><span class="p">,</span> <span class="n">heavy_penguins</span><span class="o">.</span><span class="n">head</span><span class="p">())</span>
 </code></pre></div>
+<strong>Output</strong></p>
 <div class="highlight"><pre><span></span><code> STEP 1. BASIC BOOLEAN FILTERING
 
 Penguins with body_mass_g &gt; 4000:
@@ -8323,7 +8325,7 @@ heavy_penguins.head()-&gt;    species     island  bill_length_mm  bill_depth_mm 
 14  Adelie  Torgersen            34.6           21.1              198.0       4400.0  Male
 17  Adelie  Torgersen            42.5           20.7              197.0       4500.0  Male
 19  Adelie  Torgersen            46.0           21.5              194.0       4200.0  Male
-</code></pre></div></p>
+</code></pre></div>
 <p><strong>Limitation:</strong> on its own, basic Boolean indexing can't combine multiple conditions — that's what Step 2 is for.</p>
 <hr />
 <h3 id="step-2-combining-conditions">Step 2: Combining Conditions<a class="headerlink" href="#step-2-combining-conditions" title="Permanent link">&para;</a></h3>
@@ -8346,6 +8348,7 @@ heavy_penguins.head()-&gt;    species     island  bill_length_mm  bill_depth_mm 
 <span class="nb">print</span><span class="p">(</span><span class="s2">"</span><span class="se">\n</span><span class="s2">Penguins that are NOT Adelie:"</span><span class="p">)</span>
 <span class="nb">print</span><span class="p">(</span><span class="s2">"cond_not.head()-&gt;"</span><span class="p">,</span> <span class="n">cond_not</span><span class="o">.</span><span class="n">head</span><span class="p">())</span>
 </code></pre></div>
+<strong>Output</strong></p>
 <div class="highlight"><pre><span></span><code> STEP 2. COMBINING CONDITIONS
 
 Adelie penguins with body_mass_g &gt; 4000:
@@ -8371,22 +8374,9 @@ cond_not.head()-&gt;        species island  bill_length_mm  bill_depth_mm  flipp
 154  Chinstrap  Dream            51.3           19.2              193.0       3650.0    Male
 155  Chinstrap  Dream            45.4           18.7              188.0       3525.0  Female
 156  Chinstrap  Dream            52.7           19.8              197.0       3725.0    Male
-</code></pre></div></p>
-<p><strong>Why <code>&amp;</code>/<code>|</code>/<code>~</code> instead of <code>and</code>/<code>or</code>/<code>not</code>?</strong> Python's built-in <code>and</code>/<code>or</code>/<code>not</code> expect a <em>single</em> <code>True</code> or <code>False</code> value — but <code>df['species'] == 'Adelie'</code> produces an entire <em>Series</em> of hundreds of <code>True</code>/<code>False</code> values, one per row, not just one. Pandas's <code>&amp;</code>, <code>|</code>, and <code>~</code> are specifically designed to compare two Series <em>element by element</em> (a "vectorized" operation, mentioned in the glossary above), which is exactly what's needed here.</p>
-<div class="highlight"><pre><span></span><code>graph TD
-    CondA[Condition A - one True or False per row]
-    CondB[Condition B - one True or False per row]
-    AndOp[A AND B - both true - use ampersand]
-    OrOp[A OR B - either true - use pipe]
-    NotOp[NOT A - flips true and false - use tilde]
-
-    CondA --&gt; AndOp
-    CondB --&gt; AndOp
-    CondA --&gt; OrOp
-    CondB --&gt; OrOp
-    CondA --&gt; NotOp
 </code></pre></div>
-<p><em>(This diagram uses plain <code>graph TD</code> syntax with simple boxes and arrows only — no subgraphs, no styled/labeled edges, no special characters in labels — so it should paste cleanly into draw.io via Extras → Edit Diagram.)</em></p>
+<p><strong>Why <code>&amp;</code>/<code>|</code>/<code>~</code> instead of <code>and</code>/<code>or</code>/<code>not</code>?</strong> Python's built-in <code>and</code>/<code>or</code>/<code>not</code> expect a <em>single</em> <code>True</code> or <code>False</code> value — but <code>df['species'] == 'Adelie'</code> produces an entire <em>Series</em> of hundreds of <code>True</code>/<code>False</code> values, one per row, not just one. Pandas's <code>&amp;</code>, <code>|</code>, and <code>~</code> are specifically designed to compare two Series <em>element by element</em> (a "vectorized" operation, mentioned in the glossary above), which is exactly what's needed here.</p>
+<p><img alt="Flowchart" src="../../resources/ch12-august-2026-conditional-filtering-01.png" /></p>
 <p><strong>Important:</strong> always wrap each individual condition in its own parentheses — skipping this is one of the most common sources of errors, covered directly in Step 6.</p>
 <hr />
 <h3 id="step-3-using-isin">Step 3: Using <code>.isin()</code><a class="headerlink" href="#step-3-using-isin" title="Permanent link">&para;</a></h3>
@@ -8445,6 +8435,7 @@ species_filter.head()-&gt;   species     island  bill_length_mm  bill_depth_mm  
 <span class="nb">print</span><span class="p">(</span><span class="s2">"</span><span class="se">\n</span><span class="s2">Filtering 'male' safely (ignoring NaN):"</span><span class="p">)</span>
 <span class="nb">print</span><span class="p">(</span><span class="s2">"safe_filter.head()-&gt;"</span><span class="p">,</span> <span class="n">safe_filter</span><span class="o">.</span><span class="n">head</span><span class="p">())</span>
 </code></pre></div>
+<strong>Output</strong></p>
 <div class="highlight"><pre><span></span><code> STEP 5. HANDLING NaN IN STRING FILTERING
 
 Filtering 'male' safely (ignoring NaN):
@@ -8454,7 +8445,7 @@ safe_filter.head()-&gt;   species     island  bill_length_mm  bill_depth_mm  fli
 2  Adelie  Torgersen            40.3           18.0              195.0       3250.0  Female
 4  Adelie  Torgersen            36.7           19.3              193.0       3450.0  Female
 5  Adelie  Torgersen            39.3           20.6              190.0       3650.0    Male
-</code></pre></div></p>
+</code></pre></div>
 <p>Notice row 3 (which had a missing <code>sex</code> value, as seen back in Step 0's output) is correctly and cleanly excluded here, rather than causing an error.</p>
 <hr />
 <h3 id="step-6-understanding-common-errors">Step 6: Understanding Common Errors<a class="headerlink" href="#step-6-understanding-common-errors" title="Permanent link">&para;</a></h3>
@@ -8490,7 +8481,7 @@ safe_filter.head()-&gt;   species     island  bill_length_mm  bill_depth_mm  fli
 <span class="c1"># a mask containing NaN to filter rows, raising: ValueError: Cannot</span>
 <span class="c1"># mask with non-boolean array containing NA / NaN values.</span>
 </code></pre></div>
-<p><strong>Corrected error-type summary:</strong></p>
+<p><strong>Error-type summary:</strong></p>
 <table>
 <thead>
 <tr>
@@ -8527,26 +8518,7 @@ safe_filter.head()-&gt;   species     island  bill_length_mm  bill_depth_mm  fli
 </tr>
 </tbody>
 </table>
-<div class="highlight"><pre><span></span><code>graph TD
-    A[Filtering code fails]
-    B{Did you forget parentheses around each condition}
-    C[TypeError - wrong precedence]
-    D{Did you use and or or instead of ampersand or pipe}
-    E[ValueError - ambiguous truth value]
-    F{Did you use dot str on a non text column}
-    G[AttributeError - str needs text]
-    H{Does the column have NaN without na equals False}
-    I[ValueError - cannot mask with NaN]
-
-    A --&gt; B
-    B --&gt;|Yes| C
-    B --&gt;|No| D
-    D --&gt;|Yes| E
-    D --&gt;|No| F
-    F --&gt;|Yes| G
-    F --&gt;|No| H
-    H --&gt;|Yes| I
-</code></pre></div>
+<p><img alt="Flowchart" src="../../resources/ch12-august-2026-conditional-filtering-02.png" /></p>
 <hr />
 <h3 id="step-7-summary">Step 7: Summary<a class="headerlink" href="#step-7-summary" title="Permanent link">&para;</a></h3>
 <div class="highlight"><pre><span></span><code><span class="nb">print</span><span class="p">(</span><span class="s2">"""</span>
