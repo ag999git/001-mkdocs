@@ -9003,19 +9003,7 @@
 - <code>axis=1</code> → operate on <strong>columns</strong>
 - <code>how='any'</code> → if <strong>any</strong> row in a given column is missing, that <em>entire</em> column is dropped</p>
 <p>This is genuinely risky on a dataset like this one: since almost every column has <em>at least one</em> missing value somewhere, using this without thinking can remove most of your dataset's actual content — as Step 3(B) below demonstrates directly.</p>
-<div class="highlight"><pre><span></span><code>graph TD
-    Start[dropna called]
-    AxisChoice{axis is 0 or 1}
-    RowMode[axis 0 - treat each ROW as a unit]
-    ColMode[axis 1 - treat each COLUMN as a unit]
-    RowDrop[Drop the row if ANY value in it is missing]
-    ColDrop[Drop the column if ANY value in it is missing]
-
-    Start --&gt; AxisChoice
-    AxisChoice --&gt;|axis=0| RowMode --&gt; RowDrop
-    AxisChoice --&gt;|axis=1| ColMode --&gt; ColDrop
-</code></pre></div>
-<p><em>(This diagram uses plain <code>graph TD</code> syntax with simple boxes and arrows only — no subgraphs, no styled/labeled edges, no special characters in labels — so it should paste cleanly into draw.io via Extras → Edit Diagram.)</em></p>
+<p><img alt="Flowchart" src="../../resources/ch12-august-2026-missing-values-01.png" /></p>
 <hr />
 <h2 id="2-conceptual-understanding">2. Conceptual Understanding<a class="headerlink" href="#2-conceptual-understanding" title="Permanent link">&para;</a></h2>
 <p><strong>Identifying missing values:</strong></p>
@@ -9184,6 +9172,7 @@
 <span class="nb">print</span><span class="p">(</span><span class="n">df</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>          <span class="c1"># Step 2: check the overall size FIRST.</span>
 <span class="nb">print</span><span class="p">(</span><span class="s2">"df.head()-&gt;"</span><span class="p">,</span> <span class="n">df</span><span class="o">.</span><span class="n">head</span><span class="p">())</span>   <span class="c1"># Step 3: a quick visual sanity check.</span>
 </code></pre></div>
+<strong>Output</strong></p>
 <div class="highlight"><pre><span></span><code>STEP 1. IMPORT LIBRARIES AND LOAD DATASET
 
 --- FIRST 5 ROWS OF ORIGINAL DATAFRAME ---
@@ -9194,7 +9183,7 @@ df.head()-&gt;   species     island  bill_length_mm  bill_depth_mm  flipper_leng
 2  Adelie  Torgersen            40.3           18.0              195.0       3250.0  Female
 3  Adelie  Torgersen             NaN            NaN                NaN          NaN     NaN
 4  Adelie  Torgersen            36.7           19.3              193.0       3450.0  Female
-</code></pre></div></p>
+</code></pre></div>
 <p>Notice <code>df.shape</code> returns <code>(344, 7)</code>: 344 rows and 7 columns — and row 3 already shows several <code>NaN</code> values, which is exactly what Step 2 investigates properly.</p>
 <hr />
 <h3 id="step-2-identifying-missing-values">STEP 2: Identifying Missing Values<a class="headerlink" href="#step-2-identifying-missing-values" title="Permanent link">&para;</a></h3>
@@ -9267,6 +9256,7 @@ df.head()-&gt;   species     island  bill_length_mm  bill_depth_mm  flipper_leng
 <span class="nb">print</span><span class="p">(</span><span class="s2">"</span><span class="se">\n</span><span class="s2">Missing values (True/False):-&gt;"</span><span class="p">)</span>
 <span class="nb">print</span><span class="p">(</span><span class="s2">"df.isna().head()-&gt;"</span><span class="p">,</span> <span class="n">df</span><span class="o">.</span><span class="n">isna</span><span class="p">()</span><span class="o">.</span><span class="n">head</span><span class="p">())</span>
 </code></pre></div>
+<strong>Output</strong></p>
 <div class="highlight"><pre><span></span><code>Missing values (True/False):-&gt;
 df.isna().head()-&gt;    species  island  bill_length_mm  bill_depth_mm  flipper_length_mm  body_mass_g    sex
 0    False   False           False          False              False        False  False
@@ -9274,7 +9264,7 @@ df.isna().head()-&gt;    species  island  bill_length_mm  bill_depth_mm  flipper
 2    False   False           False          False              False        False  False
 3    False   False            True           True               True         True   True
 4    False   False           False          False              False        False  False
-</code></pre></div></p>
+</code></pre></div>
 <p><strong>2(B) — <code>.isna().sum()</code>: counting missing values per column</strong></p>
 <p><div class="highlight"><pre><span></span><code><span class="c1"># Step 1: Chaining .sum() directly onto .isna() adds up the True</span>
 <span class="c1"># values in each column -- since True counts as 1 and False as 0,</span>
@@ -9282,6 +9272,7 @@ df.isna().head()-&gt;    species  island  bill_length_mm  bill_depth_mm  flipper
 <span class="nb">print</span><span class="p">(</span><span class="s2">"</span><span class="se">\n</span><span class="s2">Missing values count per column:-&gt;"</span><span class="p">)</span>
 <span class="nb">print</span><span class="p">(</span><span class="s2">"df.isna().sum()-&gt;"</span><span class="p">,</span> <span class="n">df</span><span class="o">.</span><span class="n">isna</span><span class="p">()</span><span class="o">.</span><span class="n">sum</span><span class="p">())</span>
 </code></pre></div>
+<strong>Output</strong></p>
 <div class="highlight"><pre><span></span><code>Missing values count per column:-&gt;
 df.isna().sum()-&gt; species               0
 island                0
@@ -9291,12 +9282,13 @@ flipper_length_mm     2
 body_mass_g           2
 sex                  11
 dtype: int64
-</code></pre></div></p>
+</code></pre></div>
 <p><strong>2(C) — <code>.isnull()</code>: an identical alternative</strong></p>
 <p><div class="highlight"><pre><span></span><code><span class="c1"># .isnull() and .isna() are simply two names for the exact same thing.</span>
 <span class="nb">print</span><span class="p">(</span><span class="s2">"</span><span class="se">\n</span><span class="s2">Using isnull():-&gt;"</span><span class="p">)</span>
 <span class="nb">print</span><span class="p">(</span><span class="s2">"df.isnull().sum()-&gt;"</span><span class="p">,</span> <span class="n">df</span><span class="o">.</span><span class="n">isnull</span><span class="p">()</span><span class="o">.</span><span class="n">sum</span><span class="p">())</span>
 </code></pre></div>
+<strong>Output</strong></p>
 <div class="highlight"><pre><span></span><code>Using isnull():-&gt;
 df.isnull().sum()-&gt; species               0
 island                0
@@ -9306,7 +9298,7 @@ flipper_length_mm     2
 body_mass_g           2
 sex                  11
 dtype: int64
-</code></pre></div></p>
+</code></pre></div>
 <hr />
 <h3 id="step-3-dropping-missing-values">STEP 3: Dropping Missing Values<a class="headerlink" href="#step-3-dropping-missing-values" title="Permanent link">&para;</a></h3>
 <h4 id="why-this-step-is-done_2">Why this step is done<a class="headerlink" href="#why-this-step-is-done_2" title="Permanent link">&para;</a></h4>
@@ -9360,6 +9352,7 @@ dtype: int64
 <span class="nb">print</span><span class="p">(</span><span class="s2">"df_drop_rows.shape-&gt;"</span><span class="p">,</span> <span class="n">df_drop_rows</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
 <span class="nb">print</span><span class="p">(</span><span class="s2">"df_drop_rows.head()-&gt;"</span><span class="p">,</span> <span class="n">df_drop_rows</span><span class="o">.</span><span class="n">head</span><span class="p">())</span>
 </code></pre></div>
+<strong>Output</strong></p>
 <div class="highlight"><pre><span></span><code>After dropping rows with missing values:
 df_drop_rows.shape-&gt; (333, 7)
 df_drop_rows.head()-&gt;   species     island  bill_length_mm  bill_depth_mm  flipper_length_mm  body_mass_g     sex
@@ -9368,7 +9361,7 @@ df_drop_rows.head()-&gt;   species     island  bill_length_mm  bill_depth_mm  fl
 2  Adelie  Torgersen            40.3           18.0              195.0       3250.0  Female
 4  Adelie  Torgersen            36.7           19.3              193.0       3450.0  Female
 5  Adelie  Torgersen            39.3           20.6              190.0       3650.0    Male
-</code></pre></div></p>
+</code></pre></div>
 <p>The shape went from <code>(344, 7)</code> to <code>(333, 7)</code> — exactly <strong>11 rows</strong> were dropped (matching the <code>sex</code> column's 11 missing values from Step 2(B), since every row missing a numeric measurement also happens to be missing <code>sex</code> in this particular dataset).</p>
 <p><strong>3(B) — Dropping columns: <code>.dropna(axis=1)</code></strong></p>
 <p><div class="highlight"><pre><span></span><code><span class="c1"># axis=1 drops any COLUMN that has at least one missing value ANYWHERE in it.</span>
@@ -9379,6 +9372,7 @@ df_drop_rows.head()-&gt;   species     island  bill_length_mm  bill_depth_mm  fl
 <span class="nb">print</span><span class="p">(</span><span class="s2">"df_drop_cols.head()-&gt;"</span><span class="p">,</span> <span class="n">df_drop_cols</span><span class="o">.</span><span class="n">head</span><span class="p">())</span>
 <span class="nb">print</span><span class="p">(</span><span class="s2">"df_drop_cols.columns-&gt;"</span><span class="p">,</span> <span class="n">df_drop_cols</span><span class="o">.</span><span class="n">columns</span><span class="p">)</span>
 </code></pre></div>
+<strong>Output</strong></p>
 <div class="highlight"><pre><span></span><code>After dropping columns with missing values:
 df_drop_cols.shape-&gt; (344, 2)
 df_drop_cols.head()-&gt;   species     island
@@ -9388,7 +9382,7 @@ df_drop_cols.head()-&gt;   species     island
 3  Adelie  Torgersen
 4  Adelie  Torgersen
 df_drop_cols.columns-&gt; Index(['species', 'island'], dtype='object')
-</code></pre></div></p>
+</code></pre></div>
 <p>This is a dramatic result: <strong>5 of the original 7 columns are gone</strong>, leaving only <code>species</code> and <code>island</code> — every single numeric measurement and the <code>sex</code> column have been removed, because <em>each one</em> had at least one missing value somewhere. This is precisely the risk flagged in Section 1 above, and exactly what the follow-up question at the top of this page asks you to reflect on.</p>
 <p>A gentler alternative worth knowing: <code>df.dropna(axis=1, how='all')</code> only drops a column if <em>every single value</em> in it is missing — a much less aggressive condition than the default <code>how='any'</code>.</p>
 <hr />
@@ -9451,12 +9445,13 @@ df_drop_cols.columns-&gt; Index(['species', 'island'], dtype='object')
 <span class="nb">print</span><span class="p">(</span><span class="s2">"</span><span class="se">\n</span><span class="s2">Filled with mean:"</span><span class="p">)</span>
 <span class="nb">print</span><span class="p">(</span><span class="s2">"df_mean['body_mass_g'].isna().sum()-&gt;"</span><span class="p">,</span> <span class="n">df_mean</span><span class="p">[</span><span class="s1">'body_mass_g'</span><span class="p">]</span><span class="o">.</span><span class="n">isna</span><span class="p">()</span><span class="o">.</span><span class="n">sum</span><span class="p">())</span>
 </code></pre></div>
+<strong>Output</strong></p>
 <div class="highlight"><pre><span></span><code>Mean of body_mass_g:-&gt; 4201.754385964912
 Missing BEFORE fillna:-&gt; 2
 
 Filled with mean:
 df_mean['body_mass_g'].isna().sum()-&gt; 0
-</code></pre></div></p>
+</code></pre></div>
 <p><strong>A note on reading that final <code>0</code> correctly:</strong> it's easy to glance at <code>isna().sum() -&gt; 0</code> and worry that <em>nothing</em> got filled in. It's actually the opposite — <strong><code>0</code> means the fill was completely successful.</strong> Here's the exact sequence:</p>
 <ol>
 <li>Before <code>fillna()</code> runs, <code>body_mass_g</code> has <strong>2</strong> missing values (as confirmed by Step 2(B), and by the "BEFORE" check added above).</li>
@@ -9474,11 +9469,12 @@ df_mean['body_mass_g'].isna().sum()-&gt; 0
 <span class="nb">print</span><span class="p">(</span><span class="s2">"</span><span class="se">\n</span><span class="s2">Filled with median:"</span><span class="p">)</span>
 <span class="nb">print</span><span class="p">(</span><span class="s2">"df_median['body_mass_g'].isna().sum()-&gt;"</span><span class="p">,</span> <span class="n">df_median</span><span class="p">[</span><span class="s1">'body_mass_g'</span><span class="p">]</span><span class="o">.</span><span class="n">isna</span><span class="p">()</span><span class="o">.</span><span class="n">sum</span><span class="p">())</span>
 </code></pre></div>
+<strong>Output</strong></p>
 <div class="highlight"><pre><span></span><code>Median of body_mass_g:-&gt; 4050.0
 
 Filled with median:
 df_median['body_mass_g'].isna().sum()-&gt; 0
-</code></pre></div></p>
+</code></pre></div>
 <p><strong>4(C) — Mode imputation (for categorical data)</strong></p>
 <p><div class="highlight"><pre><span></span><code><span class="n">df_mode</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
 <span class="c1"># .mode() can technically return MULTIPLE values if there's a tie for</span>
@@ -9492,11 +9488,12 @@ df_median['body_mass_g'].isna().sum()-&gt; 0
 <span class="nb">print</span><span class="p">(</span><span class="s2">"</span><span class="se">\n</span><span class="s2">Filled with mode:"</span><span class="p">)</span>
 <span class="nb">print</span><span class="p">(</span><span class="s2">"df_mode['sex'].isna().sum()-&gt;"</span><span class="p">,</span> <span class="n">df_mode</span><span class="p">[</span><span class="s1">'sex'</span><span class="p">]</span><span class="o">.</span><span class="n">isna</span><span class="p">()</span><span class="o">.</span><span class="n">sum</span><span class="p">())</span>
 </code></pre></div>
+<strong>Output</strong></p>
 <div class="highlight"><pre><span></span><code>Mode of sex:-&gt; Male
 
 Filled with mode:
 df_mode['sex'].isna().sum()-&gt; 0
-</code></pre></div></p>
+</code></pre></div>
 <hr />
 <h3 id="step-5-understanding-common-errors">STEP 5: Understanding Common Errors<a class="headerlink" href="#step-5-understanding-common-errors" title="Permanent link">&para;</a></h3>
 <h4 id="why-this-step-is-done_4">Why this step is done<a class="headerlink" href="#why-this-step-is-done_4" title="Permanent link">&para;</a></h4>
@@ -9598,24 +9595,7 @@ df_mode['sex'].isna().sum()-&gt; 0
 <div class="highlight"><pre><span></span><code><span class="n">df</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">fillna</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>          <span class="c1"># Option 1: reassign the result back to df</span>
 <span class="n">df</span><span class="o">.</span><span class="n">fillna</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">inplace</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span> <span class="c1"># Option 2: use inplace=True to modify df directly</span>
 </code></pre></div>
-<div class="highlight"><pre><span></span><code>graph TD
-    A[fillna or dropna not behaving as expected]
-    B{Is the column genuinely numeric}
-    C[Use mean or median only for numeric columns]
-    D{Did you mean any values missing or all values missing}
-    E[how equals any drops if ANY value missing]
-    F[how equals all drops ONLY if EVERY value missing]
-    G{Did you assign the result back or use inplace}
-    H[Reassign - df equals df dot fillna value]
-
-    A --&gt; B
-    B --&gt;|No, it is categorical| C
-    B --&gt;|Yes| D
-    D --&gt;|any| E
-    D --&gt;|all| F
-    A --&gt; G
-    G --&gt;|Neither| H
-</code></pre></div>
+<p><img alt="Flowchart" src="../../resources/ch12-august-2026-missing-values-02.png" /></p>
 <hr />
 <h3 id="step-6-summary">STEP 6: Summary<a class="headerlink" href="#step-6-summary" title="Permanent link">&para;</a></h3>
 <h4 id="why-this-step-is-done_5">Why this step is done<a class="headerlink" href="#why-this-step-is-done_5" title="Permanent link">&para;</a></h4>
