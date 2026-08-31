@@ -8785,11 +8785,12 @@
 <span class="nb">print</span><span class="p">(</span><span class="s2">"Original dataset df_raw columns:-&gt;"</span><span class="p">,</span> <span class="nb">list</span><span class="p">(</span><span class="n">df_raw</span><span class="o">.</span><span class="n">columns</span><span class="p">))</span>
 <span class="nb">print</span><span class="p">(</span><span class="s2">"Original dataset df_raw shape:-&gt;"</span><span class="p">,</span> <span class="n">df_raw</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
 </code></pre></div>
+<strong>Output</strong></p>
 <div class="highlight"><pre><span></span><code>STEP 0. IMPORT LIBRARIES AND LOAD DATASET
 === ORIGINAL DATA ===
 Original dataset df_raw columns:-&gt; ['species', 'island', 'bill_length_mm', 'bill_depth_mm', 'flipper_length_mm', 'body_mass_g', 'sex']
 Original dataset df_raw shape:-&gt; (344, 7)
-</code></pre></div></p>
+</code></pre></div>
 <hr />
 <h3 id="phase-1-creating-messy-data-simulation">PHASE 1: Creating Messy Data (Simulation)<a class="headerlink" href="#phase-1-creating-messy-data-simulation" title="Permanent link">&para;</a></h3>
 <p>The remainder of this project needs <em>messy</em> data to clean — so this phase deliberately breaks the clean dataset in three specific, realistic ways, matching the three research-assistant problems described in the project scenario.</p>
@@ -8876,6 +8877,7 @@ Original dataset df_raw shape:-&gt; (344, 7)
 <span class="nb">print</span><span class="p">(</span><span class="s2">"Messy dataset df_messy dtypes:-&gt;</span><span class="se">\n</span><span class="s2">"</span><span class="p">,</span> <span class="n">df_messy</span><span class="o">.</span><span class="n">dtypes</span><span class="p">)</span>
 <span class="nb">print</span><span class="p">(</span><span class="s2">"Messy dataset df_messy tail (showing the appended duplicates):-&gt;</span><span class="se">\n</span><span class="s2">"</span><span class="p">,</span> <span class="n">df_messy</span><span class="o">.</span><span class="n">tail</span><span class="p">(</span><span class="mi">7</span><span class="p">))</span>
 </code></pre></div>
+<strong>Output</strong></p>
 <div class="highlight"><pre><span></span><code>=== INITIAL MESSY DATA ===
 Messy dataset df_messy shape:-&gt; (349, 7)
 Messy dataset df_messy dtypes:-&gt;
@@ -8896,7 +8898,7 @@ Messy dataset df_messy tail (showing the appended duplicates):-&gt;
 346  Adelie  Torgersen  40.3  18.0  195.0  3250.0  Female
 347  Adelie  Torgersen   NaN   NaN    NaN     NaN     NaN
 348  Adelie  Torgersen  36.7  19.3  193.0  3450.0  Female
-</code></pre></div></p>
+</code></pre></div>
 <p>The shape confirms it: <code>344 + 5 = 349</code> rows. Notice rows 344–348 (the appended copies) are identical to rows 0–4 at the very start of the dataset — this is exactly what Step 2.3 will detect and remove. Also notice <code>BLmm</code> is now listed as <code>str</code>, exactly as intended by Step 1.2, and (per the "Did you know?" note above) row 347's missing value still displays as <code>NaN</code> here, since this is Pandas's own display formatting rather than the raw string value underneath.</p>
 <hr />
 <h3 id="phase-2-structural-cleaning">PHASE 2: Structural Cleaning<a class="headerlink" href="#phase-2-structural-cleaning" title="Permanent link">&para;</a></h3>
@@ -8938,11 +8940,12 @@ Messy dataset df_messy tail (showing the appended duplicates):-&gt;
 <span class="nb">print</span><span class="p">(</span><span class="s2">"</span><span class="se">\n</span><span class="s2">=== AFTER RENAMING COLUMNS BACK TO ORIGINAL ==="</span><span class="p">)</span>
 <span class="nb">print</span><span class="p">(</span><span class="s2">"df_messy columns after renaming:-&gt;"</span><span class="p">,</span> <span class="nb">list</span><span class="p">(</span><span class="n">df_messy</span><span class="o">.</span><span class="n">columns</span><span class="p">))</span>
 </code></pre></div>
+<strong>Output</strong></p>
 <div class="highlight"><pre><span></span><code> STEP 2.1: RENAMING COLUMNS ================
 
 === AFTER RENAMING COLUMNS BACK TO ORIGINAL ===
 df_messy columns after renaming:-&gt; ['species', 'island', 'bill_length_mm', 'bill_depth_mm', 'flipper_length_mm', 'body_mass_g', 'sex']
-</code></pre></div></p>
+</code></pre></div>
 <hr />
 <h4 id="step-22-fixing-data-types">STEP 2.2: Fixing Data Types<a class="headerlink" href="#step-22-fixing-data-types" title="Permanent link">&para;</a></h4>
 <p><strong>Why:</strong> correct data types are essential for two separate reasons: <strong>computation</strong> (you can't average a text column) and <strong>memory efficiency</strong> (see the category type below).</p>
@@ -8994,6 +8997,7 @@ df_messy columns after renaming:-&gt; ['species', 'island', 'bill_length_mm', 'b
 <span class="nb">print</span><span class="p">(</span><span class="s2">"</span><span class="se">\n</span><span class="s2">=== AFTER TYPE CONVERSION ==="</span><span class="p">)</span>
 <span class="nb">print</span><span class="p">(</span><span class="s2">"df_messy dtypes after conversion:-&gt;</span><span class="se">\n</span><span class="s2">"</span><span class="p">,</span> <span class="n">df_messy</span><span class="o">.</span><span class="n">dtypes</span><span class="p">)</span>
 </code></pre></div>
+<strong>Output</strong></p>
 <div class="highlight"><pre><span></span><code> STEP 2.2: CHANGING DATA TYPES ================
 
 === AFTER TYPE CONVERSION ===
@@ -9006,7 +9010,7 @@ flipper_length_mm     float64
 body_mass_g           float64
 sex                  category
 dtype: object
-</code></pre></div></p>
+</code></pre></div>
 <p><code>bill_length_mm</code> is a proper <code>float64</code> again, and <code>island</code>/<code>sex</code> are now <code>category</code> — exactly the changes made. (<code>species</code> remains plain text here since it wasn't targeted for conversion in this script, though it would be an equally good candidate for <code>category</code>, given it also has only a few distinct values.)</p>
 <hr />
 <h4 id="step-23-handling-duplicates">STEP 2.3: Handling Duplicates<a class="headerlink" href="#step-23-handling-duplicates" title="Permanent link">&para;</a></h4>
@@ -9048,6 +9052,7 @@ dtype: object
 <span class="nb">print</span><span class="p">(</span><span class="s2">"</span><span class="se">\n</span><span class="s2">=== AFTER DROPPING DUPLICATES ==="</span><span class="p">)</span>
 <span class="nb">print</span><span class="p">(</span><span class="s2">"df_clean shape after dropping duplicates:-&gt;"</span><span class="p">,</span> <span class="n">df_clean</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
 </code></pre></div>
+<strong>Output</strong></p>
 <div class="highlight"><pre><span></span><code> STEP 2.3: REMOVING DUPLICATES ================
 
 === DUPLICATE ROWS (keep=False) ===
@@ -9067,7 +9072,7 @@ df_messy duplicate rows before dropping:-&gt;
 
 === AFTER DROPPING DUPLICATES ===
 df_clean shape after dropping duplicates:-&gt; (344, 7)
-</code></pre></div></p>
+</code></pre></div>
 <blockquote>
 <p><strong>A wording clarification worth flagging:</strong> with <code>keep=False</code>, <code>.duplicated()</code> marks <strong>10</strong> rows as <code>True</code> here — not "5 duplicates." That's because it marks <em>both</em> copies of each repeated row (the 5 originals at rows 0–4, <em>and</em> the 5 appended copies at rows 344–348) — 5 pairs, 10 rows total. It's "5 rows that have been duplicated," each now appearing twice. After <code>.drop_duplicates()</code> removes the 5 extra copies, the shape correctly returns to <code>(344, 7)</code> — back to the original size, exactly undoing Phase 1's Step 1.3.</p>
 </blockquote>
@@ -9124,6 +9129,7 @@ Moves the current index back out into a regular column, restoring the default nu
 <span class="c1"># df_reset = df_final.reset_index()</span>
 <span class="c1"># print("df_reset head:-&gt;", df_reset.head())</span>
 </code></pre></div>
+<strong>Output</strong></p>
 <div class="highlight"><pre><span></span><code> STEP 2.4: SETTING AND RESETTING INDEX ================
 
 === AFTER SETTING INDEX ===
@@ -9137,7 +9143,7 @@ ID_3         Adelie  Torgersen             NaN            NaN                NaN
 ID_4         Adelie  Torgersen            36.7           19.3              193.0       3450.0  Female
 
 df_final index name:-&gt; penguin_id
-</code></pre></div></p>
+</code></pre></div>
 <p>Every row now has a genuinely meaningful label (<code>ID_0</code>, <code>ID_1</code>, ...) instead of an anonymous position — and <code>df_final.index.name</code> confirms the index itself is now named <code>penguin_id</code>, rather than being unnamed as the default <code>0, 1, 2, ...</code> index always is.</p>
 <p><strong>Index Comparison</strong></p>
 <table>
