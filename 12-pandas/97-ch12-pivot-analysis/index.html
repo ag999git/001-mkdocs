@@ -4794,7 +4794,7 @@
   <a href="#introduction-what-this-file-contains-and-why-it-matters" class="md-nav__link">
     <span class="md-ellipsis">
       
-        📖 Introduction — What This File Contains and Why It Matters
+        Introduction — What This File Contains and Why It Matters
       
     </span>
   </a>
@@ -5000,17 +5000,6 @@
     <span class="md-ellipsis">
       
         Advanced Discussion — Multi-Column Grouping &amp; MultiIndex in Pandas
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#table-of-changes-original-vs-modified" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        ✅ Table of Changes — Original vs Modified
       
     </span>
   </a>
@@ -8321,7 +8310,7 @@
 <p><strong>GitHub source:</strong> <a href="https://github.com/ag999git/001-Python-book-2026/blob/main/12-pandas/97-ch12-pivot-analysis.md?plain=1">97-ch12-pivot-analysis.md</a></p>
 </blockquote>
 <hr />
-<h2 id="introduction-what-this-file-contains-and-why-it-matters">📖 Introduction — What This File Contains and Why It Matters<a class="headerlink" href="#introduction-what-this-file-contains-and-why-it-matters" title="Permanent link">&para;</a></h2>
+<h2 id="introduction-what-this-file-contains-and-why-it-matters">Introduction — What This File Contains and Why It Matters<a class="headerlink" href="#introduction-what-this-file-contains-and-why-it-matters" title="Permanent link">&para;</a></h2>
 <p>Real-world data is rarely "flat." Biological data, for example, is naturally <strong>nested</strong>: individual penguins belong to a <em>sex</em>, and those measurements vary across <em>species</em>. A flat table cannot show that hierarchy directly — but Pandas can, using a tool called a <strong>MultiIndex</strong> (<em>an index with multiple levels — think of it like folders inside folders</em>).</p>
 <p>This supplement extends the material in Chapter 12 (Pandas) with:</p>
 <ol>
@@ -8333,7 +8322,7 @@
 </ol>
 <p><strong>Why this matters for Python learners:</strong> <code>groupby()</code> → <code>unstack()</code> → analysis → <code>stack()</code> is one of the most common real-world Pandas workflows. Once you can move data fluidly between shapes, you can answer questions that are awkward in one shape and trivial in the other.</p>
 <blockquote>
-<p>💡 <strong>Note on technical terms:</strong> Words in <em>italics</em> are briefly explained where they first appear. For deeper study see the official docs: <a href="https://pandas.pydata.org/docs/user_guide/groupby.html">Group by</a>, <a href="https://pandas.pydata.org/docs/user_guide/advanced.html">Advanced indexing / MultiIndex</a>, and <a href="https://pandas.pydata.org/docs/user_guide/reshaping.html">Reshaping</a>.</p>
+<p><strong>Note on technical terms:</strong> Words in <em>italics</em> are briefly explained where they first appear. For deeper study see the official docs: <a href="https://pandas.pydata.org/docs/user_guide/groupby.html">Group by</a>, <a href="https://pandas.pydata.org/docs/user_guide/advanced.html">Advanced indexing / MultiIndex</a>, and <a href="https://pandas.pydata.org/docs/user_guide/reshaping.html">Reshaping</a>.</p>
 </blockquote>
 <hr />
 <h2 id="research-question">Research Question<a class="headerlink" href="#research-question" title="Permanent link">&para;</a></h2>
@@ -8373,15 +8362,7 @@
 <li><strong>Structured format (long)</strong> → for reporting / storage</li>
 </ul>
 <h3 id="the-reshaping-cycle-at-a-glance">The Reshaping Cycle at a Glance<a class="headerlink" href="#the-reshaping-cycle-at-a-glance" title="Permanent link">&para;</a></h3>
-<div class="highlight"><pre><span></span><code>flowchart TD
-    A["Raw flat table\n(one row per penguin)"] --&gt; B["groupby(['species','sex']).mean()\n→ MultiIndex Series (long)"]
-    B --&gt; C{"What is the task?"}
-    C --&gt;|"Compare / calculate"| D["unstack()\n→ Wide table\n(columns = sex)"]
-    D --&gt; E["Vectorized analysis\nMale - Female → diff_M_F"]
-    E --&gt; F["stack()\n→ Back to MultiIndex (long)\nfor reporting / storage"]
-    C --&gt;|"Store / pipeline"| F
-</code></pre></div>
-<p><em>(Mermaid-compatible with draw.io — paste the code into any mermaid-compatible tool or recreate the boxes there.)</em></p>
+<p><img alt="Flowchart" src="../../resources/ch12-august-2026-hierarcichal-data-analysis-01.png" /></p>
 <hr />
 <h2 id="step-by-step-discussion">STEP BY STEP DISCUSSION<a class="headerlink" href="#step-by-step-discussion" title="Permanent link">&para;</a></h2>
 <h3 id="step-1-raw-data-flat-structure">Step 1 → Raw Data (Flat Structure)<a class="headerlink" href="#step-1-raw-data-flat-structure" title="Permanent link">&para;</a></h3>
@@ -8682,7 +8663,7 @@ dtype: float64
 <li>Misunderstanding structure</li>
 </ul>
 <blockquote>
-<p>💡 <strong>Reading the errors is a skill in itself</strong> A <code>KeyError: 'wrong'</code> is Pandas telling you <em>"no such level/column exists — here is what does exist."</em> Always read the last line of a traceback first.</p>
+<p><strong>Reading the errors is a skill in itself</strong> A <code>KeyError: 'wrong'</code> is Pandas telling you <em>"no such level/column exists — here is what does exist."</em> Always read the last line of a traceback first.</p>
 </blockquote>
 <hr />
 <h2 id="final-flow-summary">Final Flow Summary<a class="headerlink" href="#final-flow-summary" title="Permanent link">&para;</a></h2>
@@ -8973,9 +8954,6 @@ dtype: float64
 <span class="s2">- Store/Model → Long</span>
 <span class="s2">"""</span><span class="p">)</span>
 </code></pre></div>
-<blockquote>
-<p>⚠️ <strong>Correction from the original:</strong> the original script began with <code>from matplotlib.pylab import float64</code>. That import was unused, unnecessary, and importing from <code>matplotlib.pylab</code> is not good practice — it has been removed. Only <code>pandas</code> and <code>seaborn</code> are needed.</p>
-</blockquote>
 <h3 id="flowchart-showing-steps-in-the-script">Flowchart showing steps in the script<a class="headerlink" href="#flowchart-showing-steps-in-the-script" title="Permanent link">&para;</a></h3>
 <p><img alt="Flowchart showing steps in the script" src="../../.gitbook/assets/ch12-pivot-table2.png" /></p>
 <hr />
@@ -9247,139 +9225,6 @@ Not just rows — columns can also be hierarchical.
 </details>
 
 <hr />
-<h2 id="table-of-changes-original-vs-modified">✅ Table of Changes — Original vs Modified<a class="headerlink" href="#table-of-changes-original-vs-modified" title="Permanent link">&para;</a></h2>
-<table>
-<thead>
-<tr>
-<th>#</th>
-<th>Element</th>
-<th>Original file</th>
-<th>Modified file</th>
-<th>Type of change</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>1</td>
-<td>Title &amp; heading</td>
-<td>Plain title only</td>
-<td>Added subtitle line, GitHub source link, and a full <strong>Introduction</strong> section (what the file contains, relevance to PythonChapter 12, links to official docs)</td>
-<td><strong>Added</strong></td>
-</tr>
-<tr>
-<td>2</td>
-<td>Research Question</td>
-<td>Verbatim</td>
-<td><strong>Unchanged</strong> (kept verbatim, as requested)</td>
-<td>Preserved</td>
-</tr>
-<tr>
-<td>3</td>
-<td>Follow-up sub-questions</td>
-<td>None</td>
-<td>Added (a)–(e) after the Research Question</td>
-<td><strong>Added</strong> (permitted)</td>
-</tr>
-<tr>
-<td>4</td>
-<td>Learning Outcomes &amp; Analytical Context</td>
-<td>As written</td>
-<td>Content unchanged; minor formatting polish only</td>
-<td>Preserved</td>
-</tr>
-<tr>
-<td>5</td>
-<td>Mermaid flowchart (Reshaping Cycle)</td>
-<td>None in this section</td>
-<td>Added flowchart (draw.io-compatible) showing flat → MultiIndex → wide → analysis → long</td>
-<td><strong>Added</strong></td>
-</tr>
-<tr>
-<td>6</td>
-<td>Step-by-step discussion (Steps 1–8)</td>
-<td>Present with (a)–(e) structure</td>
-<td>All (a)–(e) items and long explanations <strong>retained</strong>; wording lightly polished; <strong>output fenced blocks added</strong> under each step with explanatory notes (e.g., row-number jump after <code>dropna()</code>, <code>diff_M_F</code> becoming an index label after <code>stack()</code>)</td>
-<td>Modified (additions + polish, nothing shortened)</td>
-</tr>
-<tr>
-<td>7</td>
-<td>Step 8 heading</td>
-<td><code>Common Errors (Conceptual Understanding)\*\*</code> — stray escaped asterisks</td>
-<td>Cleaned to <code>Common Errors (Conceptual Understanding)</code></td>
-<td><strong>Fixed</strong></td>
-</tr>
-<tr>
-<td>8</td>
-<td>Step 8 error examples</td>
-<td>Inline, inconsistent formatting (backtick errors)</td>
-<td>Reformatted as proper numbered code blocks; expected error types (<code>KeyError</code>, etc.) noted in comments</td>
-<td>Modified</td>
-</tr>
-<tr>
-<td>9</td>
-<td>Script</td>
-<td>Present</td>
-<td>Retained in full; added <code># Step n:</code> hash comments throughout; <strong>removed <code>from matplotlib.pylab import float64</code></strong> (unused, bad practice) with a warning note; kept all <code>print()</code> statements and OUTPUT hints</td>
-<td>Modified</td>
-</tr>
-<tr>
-<td>10</td>
-<td>Flowchart image</td>
-<td>Present</td>
-<td>Retained unchanged</td>
-<td>Preserved</td>
-</tr>
-<tr>
-<td>11</td>
-<td>Advanced Discussion (15 sections)</td>
-<td>Present inside <code>&lt;details&gt;</code></td>
-<td>All 15 sections retained; fixed broken formatting in §3 (missing code fence), §5 (spacing in code), §6, §15 ("Dont:→" list rebuilt as proper bullets); added clarifying note on <code>index.levels</code> in §6 (unique sorted values; three species present)</td>
-<td>Modified (fixes + notes)</td>
-</tr>
-<tr>
-<td>12</td>
-<td>§4 heading</td>
-<td>"Comparing Single Index to" (cut off)</td>
-<td>Completed: "Comparing Single Index to MultiIndex"</td>
-<td><strong>Fixed</strong></td>
-</tr>
-<tr>
-<td>13</td>
-<td>Final Flow Summary table</td>
-<td>Present</td>
-<td>Unchanged</td>
-<td>Preserved</td>
-</tr>
-<tr>
-<td>14</td>
-<td>Technical terms</td>
-<td>Undefined for beginners</td>
-<td>Brief plain-language explanations added at first use (MultiIndex, aggregation, vectorized, NaN, GroupBy object), plus doc links (<a href="https://pandas.pydata.org/docs/user_guide/groupby.html">groupby</a>, <a href="https://pandas.pydata.org/docs/user_guide/advanced.html">MultiIndex</a>, <a href="https://pandas.pydata.org/docs/user_guide/reshaping.html">reshaping</a>)</td>
-<td><strong>Added</strong></td>
-</tr>
-<tr>
-<td>15</td>
-<td>Outputs</td>
-<td>Only as <code># OUTPUT:</code> comments inside script</td>
-<td>Retained in script; <strong>additionally shown as fenced <code>text</code> blocks</strong> at each discussion step, using the exact values from your original comments</td>
-<td><strong>Added</strong></td>
-</tr>
-<tr>
-<td>16</td>
-<td>Change log table</td>
-<td>None</td>
-<td>This table</td>
-<td><strong>Added</strong></td>
-</tr>
-</tbody>
-</table>
-<p><strong>Verification note:</strong> A line-by-line comparison was performed. The Research Question, Learning Outcomes, Analytical</p>
-<p>Context, all Step (a)–(e) explanations, both flowcharts, the full script, all 15 Advanced Discussion sections, and the Final Flow Summary were preserved. The only <em>deletions</em> were: (1) the unused <code>matplotlib.pylab</code> import, and (2) formatting debris (stray asterisks, broken backticks, incomplete headings) — no content was shortened or dropped. All output values shown in the fenced blocks were taken verbatim from the <code># OUTPUT:</code> comments in your original script.</p>
-<p><strong>Two small inconsistencies worth noting from your original (kept but flagged):</strong></p>
-<ul>
-<li><strong>§3 output values</strong> (Adelie Male 192.5, Gentoo Female 212.4) are <em>illustrative</em> mini-example numbers, slightly different from the real dataset values (192.410959, 212.706897). I retained them since they come from the simplified 5-row example table above them — but you may wish to align them to the real values (Gentoo Female 210.0 is used in the raw example, so 212.4 is inconsistent even internally).</li>
-<li><strong>§6 Output Hint levels</strong> in your original read <code>[['Adelie', 'Gentoo'], ['Male', 'Female']]</code> — missing <strong>Chinstrap</strong>. I corrected this in the modified version to include all three species and sorted the sexes (<code>Female</code>, <code>Male</code>), with an explanatory note. If you prefer your original hint kept verbatim, revert that one block.</li>
-</ul>
 <hr />
 <h2 id="suggested-next-steps-for-students">📋 Suggested Next Steps for Students<a class="headerlink" href="#suggested-next-steps-for-students" title="Permanent link">&para;</a></h2>
 <ol>
@@ -9393,7 +9238,6 @@ Not just rows — columns can also be hierarchical.
 <p>💡 For further reading: <a href="https://pandas.pydata.org/docs/user_guide/groupby.html">pandas GroupBy user guide</a> · <a href="https://pandas.pydata.org/docs/user_guide/advanced.html">MultiIndex / advanced indexing</a> · <a href="https://pandas.pydata.org/docs/user_guide/reshaping.html">Reshaping and pivot tables</a></p>
 </blockquote>
 <hr />
-<p><em>End of file. Concatenate this with nothing else — the complete corrected chapter is above (the earlier truncated response's final rows are superseded by the verification note and flagged items above).</em></p>
 
 
 
