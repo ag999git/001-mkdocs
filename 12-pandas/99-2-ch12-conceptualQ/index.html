@@ -5535,17 +5535,6 @@
   
 </li>
       
-        <li class="md-nav__item">
-  <a href="#change-log" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Change Log
-      
-    </span>
-  </a>
-  
-</li>
-      
     </ul>
   
 </nav>
@@ -9251,18 +9240,7 @@ Now .mean() works: 23.333333333333332
 <li><strong>Type-Specific Operations</strong> — the "specialised tools" stage: methods that only make sense for a particular kind of column, reached through <strong>accessors</strong> like <code>.str</code> (for text) and <code>.dt</code> (for dates) — see Question 22/45.</li>
 </ol>
 <p>The flowchart below lays these four out side by side, with a few representative methods under each, so you can see at a glance which pillar a method you've just learned belongs to.</p>
-<div class="highlight"><pre><span></span><code>flowchart TD
-    Root[The 4 Pillars of DataFrame Operations]
-    Root --&gt; P1[Pillar 1: Inspection and Retrieval]
-    Root --&gt; P2[Pillar 2: Analysis and Summarization]
-    Root --&gt; P3[Pillar 3: Cleaning and Manipulation]
-    Root --&gt; P4[Pillar 4: Type-Specific Operations]
-    P1 --&gt; P1a[head, sample, loc, iloc]
-    P2 --&gt; P2a[describe, groupby, pivot_table]
-    P3 --&gt; P3a[dropna, fillna, rename, set_index]
-    P4 --&gt; P4a[str accessor and dt accessor]
-</code></pre></div>
-<p><em>(This diagram is written in Mermaid. Paste the code block into <a href="https://mermaid.live">mermaid.live</a> or, in draw.io / diagrams.net, into </em><em>Extras → Edit Diagram</em><em>, to view or edit it visually.)</em></p>
+<p><img alt="Flowchart" src="../../resources/ch12-august-2026-conceptual-question-13.png" /></p>
 <p>Following these four pillars roughly in order — inspect, analyse, clean, then reach for type-specific tools as needed — is a reasonable default workflow for a new dataset, though in practice you'll often loop back to earlier pillars (cleaning frequently follows analysis, once you've spotted a problem in the summary statistics).</p>
 <hr />
 <p><a id="q14"></a></p>
@@ -9362,11 +9340,7 @@ max        NaN       50.000000
 <li><strong>Combine</strong> — the individual results from every pile are stitched back together into a single, tidy summary table, with the group labels (island names) now acting as the row index.</li>
 </ol>
 <p>The practical benefit is that you go from one giant average for the whole dataset to a side-by-side comparison across meaningful segments — which is almost always the more useful question ("how does body mass differ <em>by</em> island?" rather than just "what's the average body mass overall?").</p>
-<div class="highlight"><pre><span></span><code>flowchart LR
-    A[Split: divide rows into groups by a category] --&gt; B[Apply: run a function on each group separately]
-    B --&gt; C[Combine: gather the per-group results into one summary table]
-</code></pre></div>
-<p><em>(You can paste this Mermaid code into <a href="https://mermaid.live">mermaid.live</a> or draw.io's </em><em>Extras → Edit Diagram</em><em> to view or edit it visually.)</em></p>
+<p><img alt="Flowchart" src="../../resources/ch12-august-2026-conceptual-question-16.png" /></p>
 <div class="highlight"><pre><span></span><code><span class="kn">import</span><span class="w"> </span><span class="nn">pandas</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">pd</span>
 
 <span class="n">penguins_gb</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">({</span>
@@ -10101,11 +10075,7 @@ Number of columns pandas found: 2
 <li><strong>Wide format</strong> — the same information, but spread out: one row per shop, with a separate column for each item's amount. This is easier for a person to read at a glance — comparing Pen vs. Pencil sales for Shop1 means looking along one row, rather than scanning down a long list of Long-format rows and mentally filtering.</li>
 <li>The two are not competitors so much as complementary views of the same data — pandas' <code>.stack()</code> / <code>.unstack()</code> (Question 19/54) and <code>.pivot_table()</code> (Question 17) are exactly the tools for converting between them as the situation calls for one or the other.</li>
 </ol>
-<div class="highlight"><pre><span></span><code>flowchart LR
-    W[Wide format: one row per Shop, one column per Item] -- stack --&gt; L[Long format: one row per Shop and Item combination]
-    L -- unstack --&gt; W
-</code></pre></div>
-<p><em>(Paste this Mermaid code into <a href="https://mermaid.live">mermaid.live</a> or draw.io's </em><em>Extras → Edit Diagram</em><em> to view or edit it visually.)</em></p>
+<p><img alt="Flowchart" src="../../resources/ch12-august-2026-conceptual-question-35.png" /></p>
 <p><em>Learn more:</em> <a href="https://pandas.pydata.org/docs/user_guide/reshaping.html">Reshaping and pivot tables</a></p>
 <hr />
 <p><a id="q36"></a></p>
@@ -10657,93 +10627,6 @@ ALL DONE
 </ol>
 <p>See Question 19 above for a full runnable example showing both directions on the same small dataset.</p>
 <p><em>Learn more:</em> <a href="https://pandas.pydata.org/docs/user_guide/reshaping.html">Reshaping by stacking and unstacking</a></p>
-<h2 id="change-log">Change Log<a class="headerlink" href="#change-log" title="Permanent link">&para;</a></h2>
-<p>Because every one of the 55 question-and-answer entries received the same kind of treatment, the table below groups the changes by <em>type</em> rather than listing all 55 individually — with specific, notable items called out on their own rows.</p>
-<table>
-<thead>
-<tr>
-<th>#</th>
-<th>Element</th>
-<th>Original</th>
-<th>Change</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>1</td>
-<td>Page title &amp; introduction</td>
-<td>None — the file began directly with Question 1, no heading or context</td>
-<td>Added a <code>#</code> title, a "What this page covers" introduction explaining the page's purpose and relationship to the pandas chapter, and a note about the numbering quirk described below</td>
-</tr>
-<tr>
-<td>2</td>
-<td>Topic map</td>
-<td>Not present</td>
-<td>Added a table grouping all 54 questions by topic (Foundations, Indexing, Grouping, Reshaping, Cleaning, Accessors, Reading Data, Combining, Dataset Choice), each linking down to its question, so the page can be browsed by topic as well as read top to bottom</td>
-</tr>
-<tr>
-<td>3</td>
-<td>All 55 question headings</td>
-<td>Bold, numbered questions (e.g. "<strong>1. What is...</strong>")</td>
-<td><strong>Kept 100% verbatim, unchanged</strong>, as instructed — including capitalisation, phrasing, and punctuation. No question was reworded, shortened, or removed</td>
-</tr>
-<tr>
-<td>4</td>
-<td>All 55 answers</td>
-<td>A single, fairly compact paragraph per question</td>
-<td>Expanded into a short "In short" summary followed by a numbered, step-by-step explanation, with technical terms explained in plain language and linked to official documentation, per the request for simple language with optional deeper links</td>
-</tr>
-<tr>
-<td>5</td>
-<td>Code examples</td>
-<td>Not present anywhere in the original — every answer was prose only</td>
-<td>Added a short, runnable Python/pandas example to 45 of the 55 answers: 44 of them carry <code># Step N</code> comments and a <strong>verified, real Output block</strong> — every one of those 44 examples was actually executed, and its exact printed output is what's shown, not a guess at what it would print — plus one further, clearly-labelled illustrative example (Question 24) that depends on live internet access and isn't run on this page (see row 10 below)</td>
-</tr>
-<tr>
-<td>6</td>
-<td>Diagrams</td>
-<td>Not present</td>
-<td>Added 3 Mermaid flowcharts: the "4 Pillars" framework (Question 13), the Split-Apply-Combine pattern (Question 16), and the Wide vs. Long reshaping relationship (Question 35) — all compatible with draw.io / diagrams.net import</td>
-</tr>
-<tr>
-<td>7</td>
-<td>Duplicate "31." numbering</td>
-<td>Two different, unrelated questions are both printed as "<strong>31. ...</strong>" one after the other</td>
-<td>Preserved exactly as printed — <strong>not</strong> renumbered — with a short note added at each occurrence flagging that this is "the first" or "the second" question 31, so a reader isn't left wondering whether something was mis-copied</td>
-</tr>
-<tr>
-<td>8</td>
-<td>Question 6's answer (Series from a scalar)</td>
-<td>States that providing an <code>index</code> is required when creating a Series from a scalar value</td>
-<td>The expanded answer keeps this framing but adds a corrective nuance, verified by actually running the code: <code>pd.Series(5)</code> with <strong>no</strong> index is valid in current pandas and simply creates a length-one Series — an index only becomes necessary once you want the scalar broadcast across <em>more than one</em> position</td>
-</tr>
-<tr>
-<td>9</td>
-<td>Near-duplicate questions (16 &amp; 33, 19 &amp; 54, 20 &amp; 39, 21 &amp; 40, 22 &amp; 45, 23 &amp; 36, 27 &amp; 34)</td>
-<td>Each pair asks essentially the same thing in different words, with two separate full-length answers</td>
-<td>Both questions in each pair are still answered individually and in full, but the second of each pair now cross-references the first (e.g. "see Question 16 above for the full example") instead of repeating an identical code example, per the instruction to avoid unnecessary repetition while keeping quality and completeness intact</td>
-</tr>
-<tr>
-<td>10</td>
-<td>Question 24 (User-Agent header)</td>
-<td>Prose answer only</td>
-<td>Kept as prose plus an <strong>illustrative</strong> (not executed) code example, clearly labelled as such, since it depends on live internet access and a specific website's own blocking behaviour rather than something reliably verifiable on this page</td>
-</tr>
-<tr>
-<td>11</td>
-<td>Question 30 (Palmer Penguins vs. Iris)</td>
-<td>Prose paragraph</td>
-<td>Kept as prose, with a small comparison table added (columns: column types, missing values, grouping opportunities, realism) to make the comparison easier to scan</td>
-</tr>
-<tr>
-<td>12</td>
-<td>This Change Log</td>
-<td>Not present</td>
-<td>Added, as the final section of the page, per the request to document every modification</td>
-</tr>
-</tbody>
-</table>
-<p><em>A general style note: every expanded answer keeps the substance of the original explanation intact — nothing correct was removed or shortened for the sake of brevity — while adding the steps, terminology links, and (where useful) verified code that the original, more compact paragraph didn't include.</em></p>
 
 
 
