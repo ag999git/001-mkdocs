@@ -5305,17 +5305,6 @@
   
 </li>
       
-        <li class="md-nav__item">
-  <a href="#change-log" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Change Log
-      
-    </span>
-  </a>
-  
-</li>
-      
     </ul>
   
 </nav>
@@ -9051,20 +9040,7 @@ Sun    21.410000  247.39
 </tr>
 </tbody>
 </table>
-<div class="highlight"><pre><span></span><code>flowchart LR
-    A[Original tips DataFrame\nall rows mixed together] --&gt;|"Split by day"| B1[Group: Thur]
-    A --&gt;|"Split by day"| B2[Group: Fri]
-    A --&gt;|"Split by day"| B3[Group: Sat]
-    A --&gt;|"Split by day"| B4[Group: Sun]
-    B1 --&gt;|"Apply: mean bill, sum tip"| C1[Thur summary row]
-    B2 --&gt;|"Apply: mean bill, sum tip"| C2[Fri summary row]
-    B3 --&gt;|"Apply: mean bill, sum tip"| C3[Sat summary row]
-    B4 --&gt;|"Apply: mean bill, sum tip"| C4[Sun summary row]
-    C1 --&gt; D[Combine: one result table\nindexed by day]
-    C2 --&gt; D
-    C3 --&gt; D
-    C4 --&gt; D
-</code></pre></div>
+<p><img alt="Flowchart" src="../../resources/ch12-august-2026-scripting-question-08.png" /></p>
 <p><em>Learn more:</em> <a href="https://pandas.pydata.org/docs/user_guide/groupby.html">Group by: split-apply-combine (user guide)</a> · <a href="https://pandas.pydata.org/docs/reference/api/pandas.core.groupby.DataFrameGroupBy.agg.html">DataFrameGroupBy.agg() reference</a></p>
 <hr />
 <p><a id="q9"></a></p>
@@ -9626,22 +9602,7 @@ Reshaped Long Format:
 </tr>
 </tbody>
 </table>
-<div class="highlight"><pre><span></span><code>flowchart TD
-    subgraph W["Wide format - one row per product"]
-    direction LR
-    W1["Product: A | Jan: 100 | Feb: 150 | Mar: 120"]
-    end
-    subgraph L["Long format - one row per product+month"]
-    direction TB
-    L1["Product: A, Month: Jan, Sales: 100"]
-    L2["Product: A, Month: Feb, Sales: 150"]
-    L3["Product: A, Month: Mar, Sales: 120"]
-    end
-    W --&gt;|".melt()"| L
-    L --&gt;|".pivot_table() / .unstack()"| W
-</code></pre></div>
-<p><em>Learn more:</em> <a href="https://pandas.pydata.org/docs/reference/api/pandas.melt.html">DataFrame.melt() reference</a> · <a href="https://pandas.pydata.org/docs/user_guide/reshaping.html#reshaping-by-melt">Reshaping by melt (user guide)</a></p>
-<hr />
+<p><img alt="Flowchart" src="../../resources/ch12-august-2026-scripting-question-16.png" /></p>
 <p><a id="q17"></a></p>
 <h3 id="17-what-is-the-dtype_backendpyarrow-parameter-in-modern-pandas-and-what-specific-advantages-does-apache-arrow-offer-over-the-traditional-numpy-backend-for-handling-missing-data">17. What is the dtype_backend='pyarrow' parameter in modern Pandas, and what specific advantages does Apache Arrow offer over the traditional NumPy backend for handling missing data?<a class="headerlink" href="#17-what-is-the-dtype_backendpyarrow-parameter-in-modern-pandas-and-what-specific-advantages-does-apache-arrow-offer-over-the-traditional-numpy-backend-for-handling-missing-data" title="Permanent link">&para;</a></h3>
 <p><strong>Task:</strong> Write a script that loads the 'tips' dataset using both the default NumPy backend and the PyArrow backend. Print the dtypes of the 'total_bill' column in both to show how PyArrow uses dedicated nullable types (like double[pyarrow] or int64[pyarrow]) compared to standard NumPy types.</p>
@@ -10329,15 +10290,7 @@ Total Sum of all chunks: 1818
 <li>The trade-off: any calculation that needs to see the <em>whole</em> dataset at once (an overall median, or a global sort by value, for instance) can no longer be done with one simple built-in method call — you instead have to write logic that combines each chunk's own partial result into a running, whole-file answer, exactly as this script's <code>total_sum</code> running total does for addition. Some calculations (like a running sum, or a running count) translate naturally into this chunk-by-chunk pattern; others (like an exact median) are genuinely harder to compute this way and may require a different, specialised out-of-core approach.</li>
 <li>This is the same underlying idea that lets database systems and big-data tools handle files vastly larger than any one computer's RAM — process a manageable slice, combine its result into a running summary, discard the slice, repeat — and <code>chunksize</code> is Pandas' straightforward, built-in way to apply that same pattern to an oversized CSV file.</li>
 </ol>
-<div class="highlight"><pre><span></span><code>flowchart LR
-    A[Large CSV file\nfar bigger than RAM] --&gt;|"chunksize=10"| B[Chunk 1\nrows 1-10]
-    A --&gt;|"chunksize=10"| C[Chunk 2\nrows 11-20]
-    A --&gt;|"chunksize=10"| D[Chunk 3\nrows 21-30]
-    B --&gt;|"sum, discard"| E[Running total]
-    C --&gt;|"sum, add, discard"| E
-    D --&gt;|"sum, add, discard"| E
-    E --&gt; F[Final grand total\nonly ever holds ONE chunk\nplus the running total in memory]
-</code></pre></div>
+<p><img alt="Flowchart" src="../../resources/ch12-august-2026-scripting-question-27.png" /></p>
 <p><em>Learn more:</em> <a href="https://pandas.pydata.org/docs/reference/api/pandas.read_csv.html">read_csv() reference (see chunksize)</a> · <a href="https://pandas.pydata.org/docs/user_guide/scale.html">Scaling to large datasets (user guide)</a></p>
 <hr />
 <p><a id="q28"></a></p>
@@ -10497,105 +10450,6 @@ Price dtype: float64
 </ol>
 <p><em>Learn more:</em> <a href="https://pandas.pydata.org/docs/reference/api/pandas.read_csv.html">read_csv() reference (see skiprows)</a></p>
 <p><strong>Follow-up question:</strong> What would happen if this same file also had 2 extra footer lines <em>after</em> the data (say, a "Report End" note)? <code>skiprows</code> only controls the <em>top</em> of the file — look up <code>read_csv()</code>'s <code>skipfooter</code> parameter (used together with <code>engine='python'</code>) to see how the equivalent problem at the <em>bottom</em> of a file gets handled.</p>
-<h2 id="change-log">Change Log<a class="headerlink" href="#change-log" title="Permanent link">&para;</a></h2>
-<p>Because every one of the 30 questions received the same kind of treatment, the table below groups the changes by <em>type</em> rather than listing all 30 individually — with specific, notable items called out on their own rows.</p>
-<table>
-<thead>
-<tr>
-<th>#</th>
-<th>Element</th>
-<th>Original</th>
-<th>Change</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>1</td>
-<td>Page title &amp; introduction</td>
-<td>A one-line title and a two-sentence description</td>
-<td>Kept the same title, expanded into a fuller "What this page covers" introduction explaining the page's purpose and relevance to the pandas chapter, plus a dedicated "A note on pandas versions" section (see row 8 below) and a topic map</td>
-</tr>
-<tr>
-<td>2</td>
-<td>Topic map</td>
-<td>Not present</td>
-<td>Added a table grouping all 30 questions by topic (Foundations, Core DataFrame Mechanics, Indexing &amp; Selection, Grouping/Pivoting/Reshaping, Cleaning Missing Data, String &amp; Date/Time Accessors, Combining DataFrames, Data Types &amp; Memory, Reading &amp; Loading Data), each linking down to its question</td>
-</tr>
-<tr>
-<td>3</td>
-<td>All 30 question headings and task descriptions</td>
-<td>Bold numbered headings (<code>## N. ...</code>) followed by a task paragraph</td>
-<td><strong>Kept 100% verbatim, unchanged</strong>, as instructed — including capitalisation, phrasing, and punctuation — with one exception: Question 29's task description had its currency-symbol character corrupted into a stray line break by what looks like a markdown/LaTeX rendering issue in the original file; that one character has been restored (<code>'$'</code>), flagged with an explicit note at that question, and nothing else in the sentence was touched</td>
-</tr>
-<tr>
-<td>4</td>
-<td>"Steps to follow" outline</td>
-<td>Not present</td>
-<td>Added a short, numbered list before every script, translating the task into a plain-language plan a student can follow <em>before</em> reading the code</td>
-</tr>
-<tr>
-<td>5</td>
-<td>All 30 scripts</td>
-<td>Runnable Python with some comments already present</td>
-<td>Every script was actually re-executed in a real Python/pandas environment to verify it runs without errors; comments were expanded throughout with <code># Step N</code> markers matching the new "Steps to follow" outlines, and a small number of scripts gained one extra confirmation <code>print()</code> statement (Questions 11 and 23) to make an existing <code>assert</code> check's success visible in the output rather than silent</td>
-</tr>
-<tr>
-<td>6</td>
-<td>Output blocks</td>
-<td>Present for 29 of the 30 questions (Question 15 had none)</td>
-<td><strong>Every one of the 29 output blocks was regenerated from a real, verified execution of the final script</strong> — none was hand-typed or assumed. Two of the original output blocks (Questions 8 and 9) contained a stray leaked line of source code above the real output (an apparent copy-paste artifact); this page's verified output blocks are clean. Question 15 still has no Output block, and now explicitly explains why (it depends on live internet access that isn't available in the verification environment) rather than leaving the gap unexplained</td>
-</tr>
-<tr>
-<td>7</td>
-<td>Non-reproducible values</td>
-<td>Presented as plain, fixed numbers with no caveat (Questions 1, 4, 27)</td>
-<td>Added an explicit note under each of these three questions' Output block, explaining specifically why timing numbers (Q1), <code>id()</code> memory addresses (Q4), and randomly-generated test data (Q27) will differ on every run, on any machine — and that this is expected, not an error</td>
-</tr>
-<tr>
-<td>8</td>
-<td>Pandas-version differences</td>
-<td>Not addressed (the original output blocks reflect whatever pandas version they were originally generated on)</td>
-<td>Added a "A note on pandas versions" section to the introduction explaining three specific, genuine differences discovered while re-verifying every script against pandas 3.0.2: <code>object</code> vs. <code>str</code> dtype (Questions 2, 11, 25), <code>datetime64[ns]</code> vs. <code>datetime64[us]</code> (Question 18), and the <code>DataFrame</code> class-path string in <code>.info()</code> output (Question 25) — each affected question also carries its own short version note pointing back to this explanation</td>
-</tr>
-<tr>
-<td>9</td>
-<td>EXPLANATION sections</td>
-<td>A single block of prose per question (one question, Q28, had a formatting typo: <code>**EXPLANATION</code> was missing its closing <code>**</code>)</td>
-<td>Restructured into a short "In short" summary followed by a numbered, step-by-step walkthrough, with technical terms linked to the official pandas documentation — substance was preserved and, where the original explanation already contained a correct, useful insight (for example, Question 28's original note that <code>N/A</code> is already a pandas default), that insight was kept and re-expressed rather than discarded</td>
-</tr>
-<tr>
-<td>10</td>
-<td>Diagrams</td>
-<td>Not present</td>
-<td>Added 3 Mermaid flowcharts, each compatible with draw.io / diagrams.net import: the Split-Apply-Combine pipeline (Question 8), the Wide ↔ Long relationship (Question 16), and the chunked out-of-core processing pattern (Question 27)</td>
-</tr>
-<tr>
-<td>11</td>
-<td>Comparison tables</td>
-<td>Not present</td>
-<td>Added 4 summary tables where a side-by-side comparison aids understanding: Split-Apply-Combine stages (Question 8), Inner vs. Left Join (Question 12), Wide vs. Long format (Question 16), and plain-text vs. <code>category</code> dtype storage (Question 25)</td>
-</tr>
-<tr>
-<td>12</td>
-<td>Follow-up / bonus questions</td>
-<td>Not present</td>
-<td>Added 5 optional follow-up questions (Questions 1, 6, 12, 14, 30) that extend the original question with a related "what if" a student can try on their own, per the instruction allowing additional sub-questions</td>
-</tr>
-<tr>
-<td>13</td>
-<td>Question 14 (<code>.dt</code> accessor)</td>
-<td>Script uses <code>.day_name()</code> / <code>.month</code> directly on a <code>DatetimeIndex</code>, while the question and task both specifically ask about the <code>.dt</code> <em>accessor</em> (which applies to a Series column, not an index)</td>
-<td>Kept the original script exactly as given (it correctly demonstrates the same temporal-extraction concept), and added an explanation paragraph plus a follow-up question clarifying the distinction: a <code>DatetimeIndex</code> exposes these properties directly, while the <code>.dt</code> accessor is the equivalent tool needed once the same values live in an ordinary Series column instead</td>
-</tr>
-<tr>
-<td>14</td>
-<td>This Change Log</td>
-<td>Not present</td>
-<td>Added, as the final section of the page, per the request to document every modification</td>
-</tr>
-</tbody>
-</table>
-<p><em>A general style note: every rewritten explanation keeps the substance of the original intact — nothing correct was removed or shortened for the sake of brevity — while adding the steps, terminology links, verified output, and (where useful) diagrams or tables that the original, more compact version didn't include.</em></p>
 
 
 
