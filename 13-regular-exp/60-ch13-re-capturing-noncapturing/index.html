@@ -25,7 +25,7 @@
     
     
       
-        <title>60 ch13 re capturing noncapturing - Python 999</title>
+        <title>Capturing vs. Non-Capturing Groups in Python Regular Expressions - Python 999</title>
       
     
     
@@ -82,7 +82,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#capturing-versus-non-capturing-groups" class="md-skip">
+        <a href="#capturing-vs-non-capturing-groups-in-python-regular-expressions" class="md-skip">
           Skip to content
         </a>
       
@@ -118,7 +118,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              60 ch13 re capturing noncapturing
+              Capturing vs. Non-Capturing Groups in Python Regular Expressions
             
           </span>
         </div>
@@ -5044,6 +5044,8 @@
       <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
       
       
+        
+      
       
         <label class="md-nav__link md-nav__link--active" for="__toc">
           
@@ -5052,7 +5054,7 @@
   <span class="md-ellipsis">
     
   
-    60 ch13 re capturing noncapturing
+    Capturing vs. Non-Capturing Groups in Python Regular Expressions
   
 
     
@@ -5070,7 +5072,7 @@
   <span class="md-ellipsis">
     
   
-    60 ch13 re capturing noncapturing
+    Capturing vs. Non-Capturing Groups in Python Regular Expressions
   
 
     
@@ -5086,6 +5088,8 @@
   
   
   
+    
+  
   
     <label class="md-nav__title" for="__toc">
       <span class="md-nav__icon md-icon"></span>
@@ -5094,13 +5098,257 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#capturing-versus-non-capturing-groups" class="md-nav__link">
+  <a href="#what-this-page-contains-and-why-it-matters" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Capturing versus non-capturing groups
+        What this page contains, and why it matters
       
     </span>
   </a>
+  
+    <nav class="md-nav" aria-label="What this page contains, and why it matters">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#a-quick-glossary-for-reference-while-you-read" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        A quick glossary (for reference while you read)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#table-of-contents" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Table of contents
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#why-parentheses-have-two-separate-jobs-in-regex" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Why parentheses have two separate jobs in regex
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#capturing-groups-a-quick-recap" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Capturing groups: a quick recap
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#non-capturing-groups" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Non-capturing groups
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#when-should-non-capturing-groups-be-used" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        When should non-capturing groups be used?
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#common-uses-of-non-capturing-groups" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Common uses of non-capturing groups
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Common uses of non-capturing groups">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#a-grouping-for-repetition-quantifiers" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        A. Grouping for repetition (quantifiers)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#b-grouping-for-alternation-or" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        B. Grouping for alternation (OR)
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#performance-benefits-of-non-capturing-groups" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Performance benefits of non-capturing groups
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#avoiding-unwanted-backreferences" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Avoiding unwanted backreferences
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#cleaner-numbering-of-capturing-groups" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Cleaner numbering of capturing groups
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#worked-example-choosing-which-part-of-a-match-to-capture" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Worked example: choosing which part of a match to capture
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#case-study-removing-duplicate-words-with-a-backreference" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Case study: removing duplicate words with a backreference
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Case study: removing duplicate words with a backreference">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#the-pattern-piece-by-piece" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        The pattern, piece by piece
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#two-ways-to-write-the-same-idea" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Two ways to write the same idea
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#finding-each-duplicate-one-at-a-time" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Finding each duplicate, one at a time
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#combined-script-full-duplicate-word-case-study" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Combined script: full duplicate-word case study
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#decision-guide-capturing-or-non-capturing" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Decision guide: capturing or non-capturing?
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Decision guide: capturing or non-capturing?">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#summary-comparison-table" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Summary comparison table
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
   
 </li>
       
@@ -8073,188 +8321,314 @@
   
 
 
-  <h1>60 ch13 re capturing noncapturing</h1>
+<h1 id="capturing-vs-non-capturing-groups-in-python-regular-expressions">Capturing vs. Non-Capturing Groups in Python Regular Expressions<a class="headerlink" href="#capturing-vs-non-capturing-groups-in-python-regular-expressions" title="Permanent link">&para;</a></h1>
+<h2 id="what-this-page-contains-and-why-it-matters">What this page contains, and why it matters<a class="headerlink" href="#what-this-page-contains-and-why-it-matters" title="Permanent link">&para;</a></h2>
+<p>This page is a focused companion resource for Chapter 13 ("Regular Expressions") of the printed book <em>Python Programming: Problem Solving, Packages and Libraries</em>. It zooms in on one specific, easy-to-miss idea inside Python's <a href="https://docs.python.org/3/library/re.html"><code>re</code> module</a>: parentheses <code>( )</code> in a regex pattern can do <strong>two different jobs</strong>, and choosing the wrong one is a very common source of confusing bugs — patterns that "work" but return the wrong thing, or output that shifts unexpectedly when a pattern is edited.</p>
+<p>By the end of this page you should be able to say, for any pair of parentheses in a pattern you write, <em>why</em> they are there — either to remember a piece of matched text for later (a <strong>capturing group</strong>), or purely to group things together for a quantifier or an alternation without remembering anything (a <strong>non-capturing group</strong>) — and to choose correctly between the two.</p>
+<p>If you would like the wider companion resources for this chapter, see <a href="../10-ch13-re/"><code>10-ch13-re.md</code></a> (eighteen worked example scripts, a primality-testing mini-project, a password validator, and a from-scratch regex engine) and <a href="../50-ch13-re-conceptual-qa/"><code>50-ch13-re-conceptual-qa.md</code></a> (twenty-one short conceptual questions and answers) in this same folder.</p>
+<h3 id="a-quick-glossary-for-reference-while-you-read">A quick glossary (for reference while you read)<a class="headerlink" href="#a-quick-glossary-for-reference-while-you-read" title="Permanent link">&para;</a></h3>
+<table>
+<thead>
+<tr>
+<th>Term</th>
+<th>Plain-language meaning</th>
+<th>Learn more</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Regular expression (regex)</td>
+<td>A text pattern that describes a <em>shape</em> of text to search for, rather than exact text</td>
+<td><a href="https://docs.python.org/3/library/re.html">Python <code>re</code> docs</a></td>
+</tr>
+<tr>
+<td>Capturing group</td>
+<td>Part of a pattern wrapped in <code>( )</code> whose matched text Python remembers, so it can be retrieved later with <code>.group(n)</code></td>
+<td><a href="https://docs.python.org/3/library/re.html#re.Match.group">Python <code>re</code> — groups</a></td>
+</tr>
+<tr>
+<td>Non-capturing group</td>
+<td>Part of a pattern wrapped in <code>(?: )</code> used only to group pieces together — nothing is remembered</td>
+<td><a href="https://docs.python.org/3/library/re.html#regular-expression-syntax">Python <code>re</code> — regex syntax</a></td>
+</tr>
+<tr>
+<td>Backreference</td>
+<td>A later part of the same pattern, written <code>\1</code>, <code>\2</code>, … (or <code>(?P=name)</code>), that means "match whatever group 1 (or <code>name</code>) already matched"</td>
+<td><a href="https://docs.python.org/3/howto/regex.html">Python <code>re</code> HOWTO — backreferences</a></td>
+</tr>
+<tr>
+<td>Alternation</td>
+<td>The <code>\|</code> symbol, meaning "either this or that" inside a pattern</td>
+<td><a href="https://docs.python.org/3/library/re.html#regular-expression-syntax">Python <code>re</code> — alternation</a></td>
+</tr>
+<tr>
+<td>Quantifier</td>
+<td>A symbol such as <code>*</code>, <code>+</code>, <code>?</code>, or <code>{m,n}</code> that says <em>how many times</em> something can repeat</td>
+<td><a href="https://docs.python.org/3/howto/regex.html#repeating-things">Python <code>re</code> HOWTO — repeating things</a></td>
+</tr>
+<tr>
+<td>Word boundary (<code>\b</code>)</td>
+<td>A zero-width position between a "word" character and a "non-word" character (or the start/end of the string)</td>
+<td><a href="https://docs.python.org/3/library/re.html#regular-expression-syntax">Python <code>re</code> — special sequences</a></td>
+</tr>
+</tbody>
+</table>
+<h3 id="table-of-contents">Table of contents<a class="headerlink" href="#table-of-contents" title="Permanent link">&para;</a></h3>
+<ul>
+<li><a href="#what-this-page-contains-and-why-it-matters">What this page contains, and why it matters</a></li>
+<li><a href="#why-parentheses-have-two-separate-jobs-in-regex">Why parentheses have two separate jobs in regex</a></li>
+<li><a href="#capturing-groups-a-quick-recap">Capturing groups: a quick recap</a></li>
+<li><a href="#non-capturing-groups">Non-capturing groups</a></li>
+<li><a href="#when-should-non-capturing-groups-be-used">When should non-capturing groups be used?</a></li>
+<li><a href="#common-uses-of-non-capturing-groups">Common uses of non-capturing groups</a></li>
+<li><a href="#performance-benefits-of-non-capturing-groups">Performance benefits of non-capturing groups</a></li>
+<li><a href="#avoiding-unwanted-backreferences">Avoiding unwanted backreferences</a></li>
+<li><a href="#cleaner-numbering-of-capturing-groups">Cleaner numbering of capturing groups</a></li>
+<li><a href="#worked-example-choosing-which-part-of-a-match-to-capture">Worked example: choosing which part of a match to capture</a></li>
+<li><a href="#case-study-removing-duplicate-words-with-a-backreference">Case study: removing duplicate words with a backreference</a></li>
+<li><a href="#decision-guide-capturing-or-non-capturing">Decision guide: capturing or non-capturing?</a></li>
+<li><a href="#summary-of-changes-made-to-this-page">Summary of changes made to this page</a></li>
+</ul>
+<h2 id="why-parentheses-have-two-separate-jobs-in-regex">Why parentheses have two separate jobs in regex<a class="headerlink" href="#why-parentheses-have-two-separate-jobs-in-regex" title="Permanent link">&para;</a></h2>
+<p>We need to understand the difference between capturing and non-capturing groups, because parentheses <code>( )</code> in a regular expression quietly do <strong>two separate jobs</strong>, and it is easy to use them for one job while accidentally also triggering the other.</p>
+<ul>
+<li><strong>Grouping</strong> — controlling <em>precedence</em>, <em>repetition</em>, and <em>alternation</em>. Just like parentheses in ordinary arithmetic (<code>2 * (3 + 4)</code>), parentheses in a regex let you treat several characters as a single unit, so that a quantifier (<code>*</code>, <code>+</code>, <code>{m,n}</code>, …) or an alternation (<code>|</code>) applies to the <em>whole group</em> rather than to just the one character immediately next to it.</li>
+<li><strong>Capturing</strong> — storing the text that was matched inside the parentheses, so your code can retrieve it afterwards with <code>.group(n)</code>, or refer back to it later in the <em>same</em> pattern with a backreference such as <code>\1</code>.</li>
+</ul>
+<p>You can combine these two jobs in two different ways:</p>
+<ol>
+<li><strong>Grouping <em>with</em> capturing</strong> — ordinary parentheses <code>(pattern)</code>. This is what most beginners learn first, and it is what we have used throughout the earlier scripts on this chapter's companion pages.</li>
+<li><strong>Grouping <em>without</em> capturing</strong> — the subject of this page — using the special syntax <code>(?:pattern)</code> instead of plain <code>(pattern)</code>.</li>
+</ol>
+<h2 id="capturing-groups-a-quick-recap">Capturing groups: a quick recap<a class="headerlink" href="#capturing-groups-a-quick-recap" title="Permanent link">&para;</a></h2>
+<p>A <strong>capturing group</strong>, written <code>(pattern)</code>, does both jobs at once: it groups the enclosed pattern together, <em>and</em> it remembers whatever text that group matched, so you can pull it out afterwards with <code>m.group(1)</code>, <code>m.group(2)</code>, and so on (see <a href="../10-ch13-re/"><code>10-ch13-re.md</code></a> and <a href="../50-ch13-re-conceptual-qa/"><code>50-ch13-re-conceptual-qa.md</code></a> for worked examples of <code>.group()</code> in action). This is the syntax we have used up to this point, and it remains the right choice whenever you actually need the matched text back afterwards.</p>
+<h2 id="non-capturing-groups">Non-capturing groups<a class="headerlink" href="#non-capturing-groups" title="Permanent link">&para;</a></h2>
+<p>A <strong>non-capturing group</strong> is a group that exists <strong>only for grouping</strong> — it plays no part in capturing text. Its syntax is:</p>
+<div class="highlight"><pre><span></span><code>(?:pattern)
+</code></pre></div>
+<p>The <code>?:</code> immediately after the opening parenthesis is what tells Python's regex engine "group this, but don't bother remembering it." Unlike an ordinary capturing group <code>(pattern)</code>, a non-capturing group <code>(?:pattern)</code>:</p>
+<ul>
+<li>does <strong>not</strong> store the matched text,</li>
+<li>does <strong>not</strong> create a group number (so it never shifts the numbering of the <em>real</em> capturing groups elsewhere in the pattern — see <a href="#cleaner-numbering-of-capturing-groups">Cleaner numbering of capturing groups</a> below), and</li>
+<li><strong>cannot</strong> be referred back to later using a backreference such as <code>\1</code>, since there is nothing stored to refer back to.</li>
+</ul>
+<h2 id="when-should-non-capturing-groups-be-used">When should non-capturing groups be used?<a class="headerlink" href="#when-should-non-capturing-groups-be-used" title="Permanent link">&para;</a></h2>
+<p>Reach for a non-capturing group whenever you find yourself writing parentheses purely to control grouping, precedence, or alternation — and you have no intention of ever calling <code>.group(n)</code> on that particular piece, or referring back to it with a backreference. In practice, that means non-capturing groups are the right tool when:</p>
+<table>
+<thead>
+<tr>
+<th>You want to…</th>
+<th>Because…</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Avoid unwanted backreferences</td>
+<td>A stray capturing group can silently be referred to by a later <code>\1</code>, <code>\2</code>, etc. that was meant for a <em>different</em> group</td>
+</tr>
+<tr>
+<td>Skip storing matched text you will never use</td>
+<td>Capturing text costs a small amount of memory and bookkeeping for no benefit if you never read it back</td>
+</tr>
+<tr>
+<td>Group things purely for structure</td>
+<td>Sometimes parentheses are needed only so a quantifier or <code>\|</code> applies to several characters at once</td>
+</tr>
+<tr>
+<td>Keep group numbering clean</td>
+<td>Every capturing group shifts the numbers of every capturing group that comes after it (see below)</td>
+</tr>
+<tr>
+<td>Get slightly better performance</td>
+<td>The regex engine does less bookkeeping when there is nothing to remember (see <a href="#performance-benefits-of-non-capturing-groups">Performance benefits</a> below)</td>
+</tr>
+<tr>
+<td>Avoid confusion from "extra" groups</td>
+<td>A pattern with fewer, more meaningful capturing groups is easier for the next person (including future you) to read</td>
+</tr>
+</tbody>
+</table>
+<h2 id="common-uses-of-non-capturing-groups">Common uses of non-capturing groups<a class="headerlink" href="#common-uses-of-non-capturing-groups" title="Permanent link">&para;</a></h2>
+<h3 id="a-grouping-for-repetition-quantifiers">A. Grouping for repetition (quantifiers)<a class="headerlink" href="#a-grouping-for-repetition-quantifiers" title="Permanent link">&para;</a></h3>
+<p>This is the single most common use of a non-capturing group. You often need to apply a quantifier — <code>*</code>, <code>+</code>, <code>{m,n}</code>, and so on — not to a single character, but to a whole <em>sequence</em> of characters treated as one unit. Ordinary parentheses would do this too, but since there is no need to capture the repeated text here, a non-capturing group is the cleaner choice.</p>
+<div class="highlight"><pre><span></span><code><span class="c1"># Step 1: Import re</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">re</span>
 
-<h2 id="capturing-versus-non-capturing-groups">Capturing versus non-capturing groups<a class="headerlink" href="#capturing-versus-non-capturing-groups" title="Permanent link">&para;</a></h2>
-<p>We need to understand the difference between capturing and non-capturing groups</p>
-<p>Parentheses in regex serve two separate purposes:</p>
-<p><strong>Grouping-</strong> To control precedence, repetition, alternation, etc using (...)</p>
-<p><strong>Capturing-</strong> To store matched text for later use.</p>
-<p>You can do (a) Grouping with capturing and (b) grouping without capturing.</p>
-<p>So far we have discussed capturing groups which use the syntax:- (......)</p>
-<p>A non-capturing group is a group that is used only for grouping and not for capturing text.</p>
-<p>Its Syntax is  <strong>(?:pattern)</strong></p>
-<p>Unlike normal parentheses (pattern), a non-capturing group:</p>
-<ul>
-<li>does not store the matched text</li>
-<li>does not create a group number</li>
-<li>cannot be referenced using backreferences like \1</li>
-</ul>
-<p>When Should Non-Capturing Groups Be Used? Non-capturing groups are used when:</p>
-<ul>
-<li>You don’t want backreferences</li>
-<li>You don’t need to store matched text</li>
-<li>You only need grouping</li>
-<li>You want cleaner group numbering</li>
-<li>You want better performance</li>
-<li>You want to avoid confusion caused by extra groups</li>
-</ul>
-<p><strong>Common Uses of Non-Capturing Groups are as follows:-</strong></p>
-<p><strong>A. Grouping for Repetition (Quantifiers). This is the most common use</strong></p>
-<p>You often need to apply *, +, {m,n} to more than one token. Example: Grouping for Repetition
-<div class="highlight"><pre><span></span><code><span class="n">text</span> <span class="o">=</span> <span class="s2">"ababab"</span>
-<span class="c1"># The regex pattern (?:ab)+ matches one or more occurrences</span>
-<span class="c1"># of the sequence 'ab' without capturing it as a group.</span>
+<span class="c1"># Step 2: Set up the text to search</span>
+<span class="n">text</span> <span class="o">=</span> <span class="s2">"ababab"</span>
+
+<span class="c1"># Step 3: (?:ab)+ means "the two-character sequence 'ab', repeated</span>
+<span class="c1"># one or more times". The (?:...) groups "ab" together purely so</span>
+<span class="c1"># that the '+' quantifier applies to the WHOLE pair, not just to</span>
+<span class="c1"># the 'b' immediately before it -- and since we don't need to pull</span>
+<span class="c1"># "ab" back out afterwards, there is no reason to capture it.</span>
 <span class="n">pattern</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">findall</span><span class="p">(</span><span class="sa">r</span><span class="s2">"(?:ab)+"</span><span class="p">,</span> <span class="n">text</span><span class="p">)</span>
 <span class="nb">print</span><span class="p">(</span><span class="n">pattern</span><span class="p">)</span>
-<span class="c1"># Output: ['ababab']</span>
 </code></pre></div>
-Note:- (1) ab is grouped (2) + applies to the whole group (3) No unwanted capturing occurs</p>
-<p><strong>B. Grouping for Alternation (OR)</strong></p>
-<p>Used when alternatives should be treated as <strong>one logical unit</strong>. The following example shows use of alternation without capturing and with capturing groups.</p>
-<div class="highlight"><pre><span></span><code><span class="kn">import</span><span class="w">  </span><span class="nn">re</span>
-<span class="c1"># Using non-capturing groups with (?:...) allows us to match patterns without</span>
-<span class="c1"># creating separate capture groups, resulting in a simpler output from re.findall.</span>
-<span class="c1"># 1. Non-capturing group (?:cat|dog|rat) matches 'cat', 'dog', or 'rat'</span>
-<span class="c1"># It allows us to group alternatives together without creating separate</span>
-<span class="c1"># capture groups. re.findall returns list of matched strings directly.</span>
-<span class="c1"># For example:</span>
-<span class="n">pattern1</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">findall</span><span class="p">(</span><span class="sa">r</span><span class="s2">"(?:cat|dog|rat)"</span><span class="p">,</span> <span class="s2">"cat dog rat bat"</span><span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span><span class="s2">"Non-capturing-&gt; "</span><span class="p">,</span> <span class="n">pattern1</span><span class="p">)</span>
-<span class="c1"># Output: Non-capturing-&gt; ['cat', 'dog', 'rat']</span>
-<span class="c1"># 2. If we use capturing groups (i.e., (cat|dog|rat)), re.findall</span>
-<span class="c1"># would return list of tuples with each matched string in its own</span>
-<span class="c1"># tuple because each match is captured in its own group.</span>
-<span class="c1"># For example:</span>
-<span class="n">pattern2</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">findall</span><span class="p">(</span><span class="sa">r</span><span class="s2">"(cat|dog|rat)"</span><span class="p">,</span> <span class="s2">"cat dog rat bat"</span><span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span><span class="s2">"Capturing-&gt; "</span><span class="p">,</span> <span class="n">pattern2</span><span class="p">)</span>
-<span class="c1"># Output</span>
-<span class="c1"># [('cat',), ('dog',), ('rat',)]</span>
+<div class="highlight"><pre><span></span><code>['ababab']
 </code></pre></div>
-<p><strong>Performance Benefits of Non-Capturing Groups</strong></p>
-<p>Capturing groups require the regex engine to: (1) Store matched text. (2) Track group numbers (3) Manage additional backtracking states</p>
-<p>Non-capturing groups <strong>avoid all of this</strong>. Non-capturing groups are:- (1) lighter (2) faster (3) easier to maintain</p>
-<p><strong>Avoiding Unwanted Backreferences</strong></p>
-<p>Capturing groups can unintentionally create backreferences that:- (1) May confuse the code user (2) May break group numbering. (3) May cause bugs in group(n) access</p>
-<p>Example: Comparing Non-capturing to unwanted Capturing</p>
-<p><div class="highlight"><pre><span></span><code><span class="kn">import</span><span class="w">  </span><span class="nn">re</span>
-<span class="c1"># 1. Original Version Using Capturing Group</span>
-<span class="n">pattern</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">search</span><span class="p">(</span><span class="sa">r</span><span class="s2">"(Mr|Ms|Dr)\.  (\w+)"</span><span class="p">,</span> <span class="s2">"Dr. John"</span><span class="p">)</span>
+<p><strong>What this shows:</strong> <code>(?:ab)+</code> matches the entire run <code>"ababab"</code> as one single match, because <code>+</code> repeats the <em>whole group</em> <code>(?:ab)</code> — not just its last character. No unwanted capturing occurs, because <code>(?:...)</code> never stores anything.</p>
+<h3 id="b-grouping-for-alternation-or">B. Grouping for alternation (OR)<a class="headerlink" href="#b-grouping-for-alternation-or" title="Permanent link">&para;</a></h3>
+<p>A non-capturing group is also the natural choice when you want several alternatives, joined with <code>|</code>, to be treated as <strong>one logical unit</strong> — but you only care about <em>which</em> alternative matched, not about capturing it separately (since <code>findall()</code> already gives you the matched text directly). The script below shows the same alternation written both ways, so you can see exactly what changes.</p>
+<div class="highlight"><pre><span></span><code><span class="c1"># Step 1: Import re</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">re</span>
+
+<span class="c1"># Step 2: Set up the text to search — it contains three different</span>
+<span class="c1"># animal words, plus one word ("bat") that should NOT match</span>
+<span class="n">text</span> <span class="o">=</span> <span class="s2">"cat dog rat bat"</span>
+
+<span class="c1"># Step 3: Non-capturing group (?:cat|dog|rat) groups the three</span>
+<span class="c1"># alternatives together purely so '|' applies across all of them,</span>
+<span class="c1"># without creating a separate capturing group. Because there is</span>
+<span class="c1"># nothing to capture, findall() returns a plain list of the</span>
+<span class="c1"># matched TEXT directly.</span>
+<span class="n">pattern1</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">findall</span><span class="p">(</span><span class="sa">r</span><span class="s2">"(?:cat|dog|rat)"</span><span class="p">,</span> <span class="n">text</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">"Non-capturing -&gt;"</span><span class="p">,</span> <span class="n">pattern1</span><span class="p">)</span>
+
+<span class="c1"># Step 4: Now try the SAME alternation using an ordinary capturing</span>
+<span class="c1"># group instead: (cat|dog|rat)</span>
+<span class="n">pattern2</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">findall</span><span class="p">(</span><span class="sa">r</span><span class="s2">"(cat|dog|rat)"</span><span class="p">,</span> <span class="n">text</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">"Capturing     -&gt;"</span><span class="p">,</span> <span class="n">pattern2</span><span class="p">)</span>
+</code></pre></div>
+<div class="highlight"><pre><span></span><code>Non-capturing -&gt; ['cat', 'dog', 'rat']
+Capturing     -&gt; ['cat', 'dog', 'rat']
+</code></pre></div>
+<blockquote>
+<p>Note that with <strong>exactly one</strong> capturing group in the pattern, <code>findall()</code> still returns a plain list of matched strings, identical to the non-capturing version above.
+Python's own documentation confirms that <code>findall()</code> only starts returning tuples once a pattern has <strong>two or more</strong> capturing groups (in which case each tuple holds one string per group).
+This is exactly the same "one group vs. many groups" rule already verified on the companion pages for this chapter — see Q14 on <a href="../50-ch13-re-conceptual-qa/"><code>50-ch13-re-conceptual-qa.md</code></a>.</p>
+</blockquote>
+<p>So in this particular example, both versions happen to produce identical output — which is itself a useful thing to notice: the <em>practical</em> difference between capturing and non-capturing only shows up once you add a <strong>second</strong> group to the pattern, as the next few sections demonstrate.</p>
+<h2 id="performance-benefits-of-non-capturing-groups">Performance benefits of non-capturing groups<a class="headerlink" href="#performance-benefits-of-non-capturing-groups" title="Permanent link">&para;</a></h2>
+<p>Every capturing group requires Python's regex engine to do a small amount of extra bookkeeping as it works through a pattern:</p>
+<ol>
+<li><strong>Store the matched text</strong> for that group, so it is available afterwards.</li>
+<li><strong>Track a group number</strong> for it, alongside every other capturing group in the pattern.</li>
+<li><strong>Manage additional backtracking state</strong>, since the engine may need to remember and restore what a group had captured if it backtracks and retries a different path through the pattern.</li>
+</ol>
+<p>A non-capturing group asks the engine to do <strong>none of this</strong> — it only needs to group the pattern together, with nothing to remember afterwards. This makes non-capturing groups:</p>
+<ul>
+<li><strong>Lighter</strong> — less bookkeeping per group,</li>
+<li><strong>Faster</strong> — especially noticeable in patterns with many repeated or nested groups, or when the same pattern is applied to a very large amount of text, and</li>
+<li><strong>Easier to maintain</strong> — a reader immediately knows that a <code>(?:...)</code> group is <em>structural only</em>, with no data to track down elsewhere in the code.</li>
+</ul>
+<h2 id="avoiding-unwanted-backreferences">Avoiding unwanted backreferences<a class="headerlink" href="#avoiding-unwanted-backreferences" title="Permanent link">&para;</a></h2>
+<p>A capturing group you did not really need can cause more than just clutter — it can actively introduce bugs. Every capturing group:</p>
+<ol>
+<li>May <strong>confuse the next reader</strong> of the code, who has to work out whether <code>.group(2)</code> in some other line is actually meaningful, or just an accidental group nobody uses.</li>
+<li>May <strong>break group numbering</strong> — inserting or removing an unrelated pair of capturing parentheses shifts the numbers of every capturing group that follows it (see <a href="#cleaner-numbering-of-capturing-groups">Cleaner numbering of capturing groups</a> below).</li>
+<li>May cause <strong>bugs in <code>.group(n)</code> access</strong>, if code elsewhere assumes a particular group number that has silently shifted.</li>
+</ol>
+<p>The example below compares an "original" version that captures a title (<code>Mr</code>, <code>Ms</code>, or <code>Dr</code>) it does not actually need, against an improved version that uses a non-capturing group for the title instead.</p>
+<div class="highlight"><pre><span></span><code><span class="c1"># Step 1: Import re</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">re</span>
+
+<span class="c1"># Step 2: Set up the text to search</span>
+<span class="n">text</span> <span class="o">=</span> <span class="s2">"Dr. John"</span>
+
+<span class="c1"># Step 3: Original version -- captures the title as well as the name,</span>
+<span class="c1"># even though the title is never actually used afterwards</span>
+<span class="n">pattern</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">search</span><span class="p">(</span><span class="sa">r</span><span class="s2">"(Mr|Ms|Dr)\. (\w+)"</span><span class="p">,</span> <span class="n">text</span><span class="p">)</span>
 <span class="nb">print</span><span class="p">(</span><span class="n">pattern</span><span class="o">.</span><span class="n">groups</span><span class="p">())</span>
-<span class="c1"># Output: ('Dr', 'John')</span>
-<span class="c1"># 2. But if title not needed , capturing is unnecessary.</span>
-<span class="c1"># Improved Version Using Non-Capturing Group</span>
-<span class="n">pattern</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">search</span><span class="p">(</span><span class="sa">r</span><span class="s2">"(?:Mr|Ms|Dr)\.  (\w+)"</span><span class="p">,</span> <span class="s2">"Dr. John"</span><span class="p">)</span>
+
+<span class="c1"># Step 4: Improved version -- (?:...) groups the title alternatives</span>
+<span class="c1"># together for '|', WITHOUT capturing the title text, since only</span>
+<span class="c1"># the name is actually needed</span>
+<span class="n">pattern</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">search</span><span class="p">(</span><span class="sa">r</span><span class="s2">"(?:Mr|Ms|Dr)\. (\w+)"</span><span class="p">,</span> <span class="n">text</span><span class="p">)</span>
 <span class="nb">print</span><span class="p">(</span><span class="n">pattern</span><span class="o">.</span><span class="n">groups</span><span class="p">())</span>
-<span class="c1"># Output: ('John',)</span>
 </code></pre></div>
-<strong>Non-capturing can provide cleaner Numbering of Capturing Groups</strong>
-Unnecessary capturing shifts group numbers and makes code harder to read.
-Suppose you want to capture only the group containing dog.
-The doing <strong><code>(a)(b)(c)(dog)</code></strong>  is bad practice because here, <strong><code>"dog"</code></strong> becomes <strong>group(4)</strong></p>
-<p>Better Practice would be <strong><code>(?:a)(?:b)(?:c)(dog)</code></strong>. Now <strong><code>"dog"</code></strong> \is: <strong>group(1)</strong>.</p>
-<p>This is (1) Cleaner (2) Less error-prone</p>
-<p>The following script shows difference in use of capturing and non-capturing groups:-</p>
-<div class="highlight"><pre><span></span><code><span class="kn">import</span><span class="w">  </span><span class="nn">re</span>
+<div class="highlight"><pre><span></span><code>('Dr', 'John')
+('John',)
+</code></pre></div>
+<h2 id="cleaner-numbering-of-capturing-groups">Cleaner numbering of capturing groups<a class="headerlink" href="#cleaner-numbering-of-capturing-groups" title="Permanent link">&para;</a></h2>
+<p>Unnecessary capturing groups do not just add clutter — they actively <strong>shift the numbers</strong> of every capturing group that comes after them, which makes code more error-prone every time the pattern is edited.</p>
+<p>Suppose you want to capture only the group containing the word <code>"dog"</code>, out of a longer pattern that also matches three other words before it.</p>
+<ul>
+<li><strong>Bad practice:</strong> <code>(one)(two)(three)(dog)</code> — every word gets its own capturing group, so <code>"dog"</code> ends up as <code>group(4)</code>. If anyone later adds or removes one of the earlier groups, <code>group(4)</code> silently starts referring to something else.</li>
+<li><strong>Better practice:</strong> <code>(?:one)(?:two)(?:three)(dog)</code> — the first three words are grouped but not captured, so <code>"dog"</code> becomes <code>group(1)</code>, and stays <code>group(1)</code> no matter how the earlier, non-capturing parts of the pattern are edited later.</li>
+</ul>
+<div class="highlight"><pre><span></span><code><span class="c1"># Step 1: Import re</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">re</span>
+<span class="n">text</span> <span class="o">=</span> <span class="s2">"one two three dog"</span>
+
+<span class="c1"># Step 2: Bad practice -- every word is captured, so "dog" is</span>
+<span class="c1"># buried at group(4), and that position depends on exactly how</span>
+<span class="c1"># many groups happen to come before it</span>
+<span class="n">m_bad</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">search</span><span class="p">(</span><span class="sa">r</span><span class="s2">"(one) (two) (three) (dog)"</span><span class="p">,</span> <span class="n">text</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">"Bad practice   groups():"</span><span class="p">,</span> <span class="n">m_bad</span><span class="o">.</span><span class="n">groups</span><span class="p">())</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">"Bad practice   group(4):"</span><span class="p">,</span> <span class="n">m_bad</span><span class="o">.</span><span class="n">group</span><span class="p">(</span><span class="mi">4</span><span class="p">))</span>
+
+<span class="c1"># Step 3: Better practice -- only the word we actually care about</span>
+<span class="c1"># is a capturing group; the other three are grouped with (?:...)</span>
+<span class="c1"># purely for structure, so "dog" becomes the ONE AND ONLY group(1)</span>
+<span class="n">m_better</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">search</span><span class="p">(</span><span class="sa">r</span><span class="s2">"(?:one) (?:two) (?:three) (dog)"</span><span class="p">,</span> <span class="n">text</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">"Better practice groups():"</span><span class="p">,</span> <span class="n">m_better</span><span class="o">.</span><span class="n">groups</span><span class="p">())</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">"Better practice group(1):"</span><span class="p">,</span> <span class="n">m_better</span><span class="o">.</span><span class="n">group</span><span class="p">(</span><span class="mi">1</span><span class="p">))</span>
+</code></pre></div>
+<div class="highlight"><pre><span></span><code>Bad practice   groups(): ('one', 'two', 'three', 'dog')
+Bad practice   group(4): dog
+Better practice groups(): ('dog',)
+Better practice group(1): dog
+</code></pre></div>
+<p><strong>What this shows:</strong> this script was newly added here (it did not appear in the original text, which only described the bad-vs-better idea in prose) to make the "bad vs. better practice" point concrete and verifiable, rather than something you have to take on faith. Both versions successfully find <code>"dog"</code> — but the better-practice version makes it <code>group(1)</code>, the simplest possible position to remember and to keep stable as the pattern evolves. This is (1) cleaner and (2) less error-prone, exactly as the original text summarised.</p>
+<h2 id="worked-example-choosing-which-part-of-a-match-to-capture">Worked example: choosing which part of a match to capture<a class="headerlink" href="#worked-example-choosing-which-part-of-a-match-to-capture" title="Permanent link">&para;</a></h2>
+<p>The next script searches a sentence containing several filenames, and shows three slightly different patterns — each capturing a different piece of the match — to demonstrate how you choose exactly which part of a pattern to make capturing.</p>
+<div class="highlight"><pre><span></span><code><span class="c1"># Step 1: Import re</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">re</span>
+
+<span class="c1"># Step 2: Set up a sentence containing several different filenames</span>
 <span class="n">text</span> <span class="o">=</span> <span class="s2">"Here are some files: report.pdf, notes.docx, image.png, summary.txt."</span>
-<span class="c1"># 1. Using non-capturing group for filename to focus on capturing the file extension</span>
-<span class="c1"># The regex r"(?:\w+)\.(pdf|docx|txt)" is in 3 parts:</span>
-<span class="c1"># A. (?:\w+) → non-capturing group for the filename (we don't need to capture it)</span>
-<span class="c1"># B. \. → literal dot before the file extension</span>
-<span class="c1"># C. (pdf|docx|txt) → capturing group for specific file extensions we want to match</span>
-<span class="n">m1</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">search</span><span class="p">(</span><span class="sa">r</span><span class="s2">"(?:\w+)\.(pdf|docx|txt)"</span><span class="p">,</span> <span class="n">text</span><span class="p">)</span> <span class="c1"># Selecting only pdf, docx, txt files</span>
-<span class="nb">print</span><span class="p">(</span><span class="n">m1</span><span class="o">.</span><span class="n">group</span><span class="p">(</span><span class="mi">1</span><span class="p">))</span> <span class="c1"># docx</span>
-<span class="c1"># 2. Using capturing group for filename to capture the filename part</span>
+
+<span class="c1"># Step 3: Pattern 1 -- capture ONLY the file extension.</span>
+<span class="c1"># The pattern r"(?:\w+)\.(pdf|docx|txt)" has three parts:</span>
+<span class="c1">#   A. (?:\w+)          -- a non-capturing group for the filename</span>
+<span class="c1">#                          part (we don't need it back, so no capture)</span>
+<span class="c1">#   B. \.                -- a literal dot before the extension</span>
+<span class="c1">#   C. (pdf|docx|txt)    -- a CAPTURING group for the extension,</span>
+<span class="c1">#                          since that IS the piece we want back</span>
+<span class="n">m1</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">search</span><span class="p">(</span><span class="sa">r</span><span class="s2">"(?:\w+)\.(pdf|docx|txt)"</span><span class="p">,</span> <span class="n">text</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">"m1.group(1):"</span><span class="p">,</span> <span class="n">m1</span><span class="o">.</span><span class="n">group</span><span class="p">(</span><span class="mi">1</span><span class="p">))</span>
+
+<span class="c1"># Step 4: Pattern 2 -- capture the FILENAME part instead, using an</span>
+<span class="c1"># ordinary capturing group (\w+) in place of the non-capturing one</span>
 <span class="n">m2</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">search</span><span class="p">(</span><span class="sa">r</span><span class="s2">"(\w+)\.(pdf|docx|txt)"</span><span class="p">,</span> <span class="n">text</span><span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span><span class="n">m2</span><span class="o">.</span><span class="n">group</span><span class="p">(</span><span class="mi">1</span><span class="p">))</span> <span class="c1"># notes</span>
-<span class="c1"># In m1, we use a non-capturing group (?:...) for the filename part since we only need to capture the file extension.</span>
-<span class="c1"># In m2, we use a capturing group (...) for the filename part to capture 'notes'.</span>
-<span class="c1"># 3. If you want to capture both filename and extension, you can do:</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">"m2.group(1):"</span><span class="p">,</span> <span class="n">m2</span><span class="o">.</span><span class="n">group</span><span class="p">(</span><span class="mi">1</span><span class="p">))</span>
+
+<span class="c1"># Step 5: Pattern 3 -- capture BOTH the filename and the extension,</span>
+<span class="c1"># using the exact same pattern as Step 4 (it already has two groups)</span>
 <span class="n">m3</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">search</span><span class="p">(</span><span class="sa">r</span><span class="s2">"(\w+)\.(pdf|docx|txt)"</span><span class="p">,</span> <span class="n">text</span><span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span><span class="n">m3</span><span class="o">.</span><span class="n">group</span><span class="p">(</span><span class="mi">1</span><span class="p">))</span> <span class="c1"># notes</span>
-<span class="nb">print</span><span class="p">(</span><span class="n">m3</span><span class="o">.</span><span class="n">group</span><span class="p">(</span><span class="mi">2</span><span class="p">))</span> <span class="c1"># docx</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">"m3.group(1):"</span><span class="p">,</span> <span class="n">m3</span><span class="o">.</span><span class="n">group</span><span class="p">(</span><span class="mi">1</span><span class="p">))</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">"m3.group(2):"</span><span class="p">,</span> <span class="n">m3</span><span class="o">.</span><span class="n">group</span><span class="p">(</span><span class="mi">2</span><span class="p">))</span>
 </code></pre></div>
-<p>The following script shows use of non-capturing and capturing groups in removing duplicate words in a sentence:-</p>
-<div class="highlight"><pre><span></span><code><span class="c1"># Difference between (\b\w+)(?:\s+\1)+ and (\b\w+)(\s+\1)+</span>
-<span class="kn">import</span><span class="w">  </span><span class="nn">re</span>
-<span class="c1"># 1. Using non-capturing group for the repeated duplicates</span>
-<span class="c1"># Explanation for (\b\w+)(?:\s+\1)+</span>
-<span class="c1"># In this pattern, the first group (\b\w+) captures a word.</span>
-<span class="c1"># The second part (?:\s+\1)+ is a non-capturing group that matches</span>
-<span class="c1"># one or more occurrences of whitespace followed by the same word</span>
-<span class="c1"># captured in the first group. Since it is a non-capturing group,</span>
-<span class="c1"># it does not create a separate capturing group for the repeated matches.</span>
-<span class="k">def</span><span class="w">  </span><span class="nf">remove_duplicates_non_capturing</span><span class="p">(</span><span class="n">some_text</span><span class="p">):</span>
-    <span class="c1"># Using non-capturing group for the repeated duplicates</span>
-    <span class="n">without_dup_text</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">sub</span><span class="p">(</span><span class="sa">r</span><span class="s1">'(\b\w+)(?:\s+\1)+'</span><span class="p">,</span> <span class="sa">r</span><span class="s1">'\1'</span><span class="p">,</span> <span class="n">some_text</span><span class="p">)</span>
-    <span class="k">return</span>  <span class="n">without_dup_text</span>
-
-<span class="c1"># Test the function</span>
-<span class="n">text_with_dup</span> <span class="o">=</span> <span class="s1">'The The cat cat cat sat sat on on the the wall wall.'</span>
-<span class="n">text_without_dup</span> <span class="o">=</span> <span class="n">remove_duplicates_non_capturing</span><span class="p">(</span><span class="n">text_with_dup</span><span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span><span class="s2">"Using non-capturing-&gt;"</span><span class="p">,</span> <span class="n">text_without_dup</span><span class="p">)</span> <span class="c1"># Output: 'The cat sat on the wall.'</span>
-<span class="c1"># Explanation: Capturing vs Non-Capturing Groups</span>
-<span class="c1"># In capturing, the pattern is (\b\w+)(\s+\1)+. The second group (\s+\1)</span>
-<span class="c1"># captures the whitespace and the repeated word. This means that every</span>
-<span class="c1"># time a duplicate is found, it is captured again, which can lead to more</span>
-<span class="c1"># complex backreferences.</span>
-<span class="c1"># In contrast, using a non-capturing group (?:\s+\1)+ means that we are only interested in matching the duplicates without capturing them again.</span>
-<span class="c1"># This simplifies the pattern and makes it more efficient for the purpose of removing duplicates.</span>
-<span class="c1"># Both patterns will effectively remove duplicates, but the non-capturing group is more efficient in this context.</span>
-<span class="c1"># The output will be the same for both patterns:</span>
-<span class="c1"># 'The cat sat on the wall.'</span>
-<span class="c1"># However, using the non-capturing group is generally preferred when the repeated matches do not need to be referenced later.</span>
-<span class="c1"># 2. Using capturing group for the repeated duplicates</span>
-<span class="c1"># Explanation for (\b\w+)(\s+\1)+</span>
-<span class="c1"># In this pattern, the first group (\b\w+) captures a word.</span>
-<span class="c1"># The second part (\s+\1)+ is a capturing group that matches one or more</span>
-<span class="c1"># occurrences of whitespace followed by the same word captured in the first group.</span>
-<span class="c1"># Since it is a capturing group, it creates a separate capturing group for the repeated matches.</span>
-<span class="c1"># This means that every time a duplicate is found, it is captured again, which can lead to more</span>
-<span class="c1"># complex backreferences.</span>
-<span class="k">def</span><span class="w">  </span><span class="nf">remove_duplicates_capturing</span><span class="p">(</span><span class="n">some_text</span><span class="p">):</span>
-    <span class="n">without_dup_text</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">sub</span><span class="p">(</span><span class="sa">r</span><span class="s1">'(\b\w+)(\s+\1)+'</span><span class="p">,</span> <span class="sa">r</span><span class="s1">'\1'</span><span class="p">,</span> <span class="n">some_text</span><span class="p">)</span>
-    <span class="k">return</span>  <span class="n">without_dup_text</span>
-
-<span class="c1"># Test the function</span>
-<span class="n">text_with_dup</span> <span class="o">=</span> <span class="s1">'The The cat cat cat sat sat on on the the wall wall.'</span>
-<span class="n">text_without_dup_capturing</span> <span class="o">=</span> <span class="n">remove_duplicates_capturing</span><span class="p">(</span><span class="n">text_with_dup</span><span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span><span class="s2">"Using capturing-&gt; "</span><span class="p">,</span> <span class="n">text_without_dup_capturing</span><span class="p">)</span> <span class="c1"># Output: 'The cat sat on the wall.'</span>
-<span class="c1"># Both functions produce the same output, but the first function uses a non-capturing group for efficiency.</span>
+<div class="highlight"><pre><span></span><code>m1.group(1): pdf
+m2.group(1): report
+m3.group(1): report
+m3.group(2): pdf
 </code></pre></div>
-<p><strong>Example Python Script which removes duplicate words using non-capturing groups.</strong></p>
-<p><div class="highlight"><pre><span></span><code><span class="kn">import</span><span class="w">  </span><span class="nn">re</span>
-<span class="n">text</span> <span class="o">=</span> <span class="s2">"The The cat cat cat sat sat on on the the wall wall"</span>
-<span class="n">pattern</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">compile</span><span class="p">(</span><span class="sa">r</span><span class="s2">"(\b\w+)(?:\s+\1)+"</span><span class="p">)</span> <span class="c1"># Pattern to find duplicate words</span>
-<span class="n">matches</span> <span class="o">=</span> <span class="n">pattern</span><span class="o">.</span><span class="n">finditer</span><span class="p">(</span><span class="n">text</span><span class="p">)</span>
-<span class="k">for</span>  <span class="n">m</span>  <span class="ow">in</span>  <span class="n">matches</span><span class="p">:</span>
-    <span class="nb">print</span><span class="p">(</span><span class="s2">"Duplicate word:"</span><span class="p">,</span> <span class="n">m</span><span class="o">.</span><span class="n">group</span><span class="p">(</span><span class="mi">1</span><span class="p">))</span>
-
-<span class="c1"># Output:</span>
-<span class="c1"># Duplicate word: The</span>
-<span class="c1"># Duplicate word: cat</span>
-<span class="c1"># Duplicate word: sat</span>
-<span class="c1"># Duplicate word: on</span>
-<span class="c1"># Duplicate word: the</span>
-<span class="c1"># Duplicate word: wall</span>
-</code></pre></div>
-The regex rconsists of 2 groups. The components of these groups are</p>
-<p><strong>1. The First Group: (\b\w+)</strong></p>
-<p>This part identifies the "original" word you are looking for.</p>
+<blockquote>
+<p><strong>Fix applied here:</strong> the original text claimed <code>m1.group(1)</code> would be <code>"docx"</code>, and that <code>m2.group(1)</code> / <code>m3.group(1)</code> would both be <code>"notes"</code>.
+Note: <code>re.search()</code> always returns the <strong>first</strong> (leftmost) match it finds while scanning the text from left to right, and in <code>"Here are some files: report.pdf, notes.docx, image.png, summary.txt."</code>, the filename <code>report.pdf</code> appears <strong>before</strong> <code>notes.docx</code>.
+Since <code>report.pdf</code> matches the pattern just as well as <code>notes.docx</code> would have, <code>re.search()</code> stops there and never even looks as far as <code>notes.docx</code>.
+This is exactly the same leftmost-match rule already verified elsewhere on this chapter's companion page — see Script 13 on <a href="../10-ch13-re/"><code>10-ch13-re.md</code></a>, which uses this very same sentence as its example text.</p>
+</blockquote>
+<p>Notice that <code>m2</code> and <code>m3</code> above use the <em>exact same pattern</em> — the script simply calls <code>.group(1)</code> and <code>.group(2)</code> on the same match twice, in two separate steps, to show that both pieces are available on the one <code>Match</code> object once you capture them both.</p>
+<h2 id="case-study-removing-duplicate-words-with-a-backreference">Case study: removing duplicate words with a backreference<a class="headerlink" href="#case-study-removing-duplicate-words-with-a-backreference" title="Permanent link">&para;</a></h2>
+<p>This case study puts capturing and non-capturing groups side by side in a single, realistic task: cleaning up a sentence where some words have accidentally been typed twice in a row (<code>"The The cat cat cat sat sat on on the the wall wall."</code>).</p>
+<h3 id="the-pattern-piece-by-piece">The pattern, piece by piece<a class="headerlink" href="#the-pattern-piece-by-piece" title="Permanent link">&para;</a></h3>
+<p>The pattern used throughout this case study is <code>r"(\b\w+)(?:\s+\1)+"</code>. Reading it as two groups makes it much easier to follow:</p>
+<p><strong>1. The first group: <code>(\b\w+)</code></strong> — this identifies the "original" word being searched for.</p>
 <ul>
-<li><strong>(...) (Capturing Group):</strong> The parentheses tell Python to "remember" whatever matches inside. This becomes <strong>Group 1</strong>.</li>
-<li><strong>\b (Word Boundary):</strong> This ensures the match starts at the beginning of a word (so it doesn't match "ear" inside "near").</li>
-<li><strong>\w+:</strong> This matches one or more "word characters" (letters, numbers, or underscores).</li>
+<li><strong><code>(...)</code> (capturing group):</strong> the parentheses tell Python to <em>remember</em> whatever matches inside them. This becomes <strong>group 1</strong>.</li>
+<li><strong><code>\b</code> (word boundary):</strong> ensures the match starts at the beginning of a word, so it does not, for instance, match "ear" in the middle of "near".</li>
+<li><strong><code>\w+</code>:</strong> matches one or more "word characters" (letters, digits, or underscores) — the word itself.</li>
 </ul>
-<p><strong>2. The Second Group: (?:\s+\1)+</strong></p>
-<p>This part looks for the repeats.</p>
+<p><strong>2. The second group: <code>(?:\s+\1)+</code></strong> — this part looks for the <em>repeats</em> of that same word.</p>
 <ul>
-<li><strong>(?: ... ) (Non-Capturing Group):</strong> These parentheses group the instructions together so the + at the end applies to the whole set, but it doesn't "save" this match as a separate group.</li>
-<li><strong>\s+:</strong> This matches one or more whitespace characters (spaces, tabs, or newlines).</li>
-<li><strong>\1 (Backreference):</strong> This is the magic part. It tells the regex to match <strong>exactly</strong> what was found in <strong>Group 1</strong>. If Group 1 found "the", \1 will only match "the".</li>
-<li><strong>+ (Quantifier):</strong> The plus sign at the very end means "one or more of the preceding group." This allows the pattern to catch "hello hello" as well as "hello hello hello."</li>
+<li><strong><code>(?: ... )</code> (non-capturing group):</strong> groups the instructions together so the trailing <code>+</code> applies to the <em>whole</em> "whitespace-then-same-word" unit, without saving this repeated match as a separate group of its own.</li>
+<li><strong><code>\s+</code>:</strong> matches one or more whitespace characters (spaces, tabs, or newlines) between the repeats.</li>
+<li><strong><code>\1</code> (backreference):</strong> the key piece — it tells the regex engine to match <strong>exactly</strong> the same text that group 1 already matched. If group 1 found <code>"the"</code>, then <code>\1</code> will only match another literal <code>"the"</code> at that position, not any other word.</li>
+<li><strong><code>+</code> (quantifier):</strong> applied to the whole non-capturing group, meaning "one or more repeats of this" — which is what allows the pattern to catch a word repeated three times (<code>"cat cat cat"</code>) just as well as one repeated twice.</li>
 </ul>
-<p><strong>Table: Meanings of "Parts" of Regular Expression (r"(\b\w+)(?:\s+\1)+")</strong></p>
 <table>
 <thead>
 <tr>
@@ -8264,32 +8638,133 @@ The regex rconsists of 2 groups. The components of these groups are</p>
 </thead>
 <tbody>
 <tr>
-<td>\b</td>
-<td>Start at a word boundary.</td>
+<td><code>\b</code></td>
+<td>Start at a word boundary</td>
 </tr>
 <tr>
-<td>\w+</td>
-<td>Match the word (e.g., "apple").</td>
+<td><code>\w+</code></td>
+<td>Match the word itself (e.g. <code>"apple"</code>)</td>
 </tr>
 <tr>
-<td>(...)</td>
-<td>Capture that word so we can refer to it later.</td>
+<td><code>( ... )</code></td>
+<td>Capture that word, so it can be referred to again later in the pattern</td>
 </tr>
 <tr>
-<td>\s+</td>
-<td>Look for one or more spaces after that word.</td>
+<td><code>\s+</code></td>
+<td>Match one or more spaces after that word</td>
 </tr>
 <tr>
-<td>\1</td>
-<td>Look for the exact same word again.</td>
+<td><code>\1</code></td>
+<td>Match the <em>exact same</em> word again</td>
 </tr>
 <tr>
-<td>(?:...)+</td>
-<td>Repeat the "space + same word" logic one or more times.</td>
+<td><code>(?: ... )+</code></td>
+<td>Repeat the "space + same word" check one or more times, without creating a second capturing group for each repeat</td>
 </tr>
 </tbody>
 </table>
-<p><strong>Table: Comparison of capturing to non-capturing groups:-</strong></p>
+<h3 id="two-ways-to-write-the-same-idea">Two ways to write the same idea<a class="headerlink" href="#two-ways-to-write-the-same-idea" title="Permanent link">&para;</a></h3>
+<p>The script below defines two functions that do the <em>same</em> cleanup job — one using a non-capturing group for the repeated part, one using an ordinary capturing group instead — so you can compare their behaviour directly.</p>
+<div class="highlight"><pre><span></span><code><span class="c1"># Step 1: Import re</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">re</span>
+
+<span class="c1"># Step 2: Non-capturing version. The repeated "\s+\1" part is</span>
+<span class="c1"># wrapped in (?:...) because we only need it to control repetition</span>
+<span class="c1"># with the trailing '+' -- we never need to retrieve that repeated</span>
+<span class="c1"># text separately, since \1 already tells us what it must have been.</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">remove_duplicates_non_capturing</span><span class="p">(</span><span class="n">some_text</span><span class="p">):</span>
+    <span class="k">return</span> <span class="n">re</span><span class="o">.</span><span class="n">sub</span><span class="p">(</span><span class="sa">r</span><span class="s1">'(\b\w+)(?:\s+\1)+'</span><span class="p">,</span> <span class="sa">r</span><span class="s1">'\1'</span><span class="p">,</span> <span class="n">some_text</span><span class="p">)</span>
+
+<span class="c1"># Step 3: Capturing version. Functionally equivalent, but the</span>
+<span class="c1"># repeated part (\s+\1) is now its OWN capturing group as well,</span>
+<span class="c1"># which is not needed here and adds a second group number that</span>
+<span class="c1"># nothing in this script ever reads.</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">remove_duplicates_capturing</span><span class="p">(</span><span class="n">some_text</span><span class="p">):</span>
+    <span class="k">return</span> <span class="n">re</span><span class="o">.</span><span class="n">sub</span><span class="p">(</span><span class="sa">r</span><span class="s1">'(\b\w+)(\s+\1)+'</span><span class="p">,</span> <span class="sa">r</span><span class="s1">'\1'</span><span class="p">,</span> <span class="n">some_text</span><span class="p">)</span>
+
+<span class="c1"># Step 4: Try both functions on the same sentence full of</span>
+<span class="c1"># accidentally doubled words</span>
+<span class="n">text_with_dup</span> <span class="o">=</span> <span class="s1">'The The cat cat cat sat sat on on the the wall wall.'</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">"Using non-capturing -&gt;"</span><span class="p">,</span> <span class="n">remove_duplicates_non_capturing</span><span class="p">(</span><span class="n">text_with_dup</span><span class="p">))</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">"Using capturing     -&gt;"</span><span class="p">,</span> <span class="n">remove_duplicates_capturing</span><span class="p">(</span><span class="n">text_with_dup</span><span class="p">))</span>
+</code></pre></div>
+<div class="highlight"><pre><span></span><code>Using non-capturing -&gt; The cat sat on the wall.
+Using capturing     -&gt; The cat sat on the wall.
+</code></pre></div>
+<p><strong>What this shows:</strong> both functions produce <strong>exactly the same output</strong> — this is expected, and is precisely the point of the comparison. <code>re.sub()</code>'s replacement text <code>r'\1'</code> only ever refers to group 1 (the original word) in either version, so the <em>extra</em> capturing group in the second function does no harm here — but it also does no good. It exists purely as bookkeeping overhead: an unused group number that a future reader might wrongly assume is meaningful. This is exactly the situation where a non-capturing group is the better choice: functionally identical, but clearer about what actually matters in the pattern.</p>
+<blockquote>
+<p><strong>Extra practice question (not in the printed book):</strong> the same idea can be written using a <em>named</em> group and a named backreference instead of a numbered one — <code>(?P&lt;word&gt;\b\w+)(?:\s+(?P=word))+</code>, replacing with <code>r'\g&lt;word&gt;'</code>. Try it yourself: does it produce the same result? <em>(It does — named groups and numbered groups behave identically for matching purposes; named groups simply give you a more readable label than a bare number, which becomes valuable once a pattern has several groups.)</em></p>
+</blockquote>
+<h3 id="finding-each-duplicate-one-at-a-time">Finding each duplicate, one at a time<a class="headerlink" href="#finding-each-duplicate-one-at-a-time" title="Permanent link">&para;</a></h3>
+<p>Rather than removing the duplicates, the next script instead <em>reports</em> each duplicated word it finds, one at a time, by iterating over every match with <code>finditer()</code>.</p>
+<div class="highlight"><pre><span></span><code><span class="c1"># Step 1: Import re</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">re</span>
+
+<span class="c1"># Step 2: Set up the same sentence full of doubled words</span>
+<span class="n">text</span> <span class="o">=</span> <span class="s2">"The The cat cat cat sat sat on on the the wall wall"</span>
+
+<span class="c1"># Step 3: Compile the pattern once, since it will be reused for</span>
+<span class="c1"># every match finditer() finds</span>
+<span class="n">pattern</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">compile</span><span class="p">(</span><span class="sa">r</span><span class="s2">"(\b\w+)(?:\s+\1)+"</span><span class="p">)</span>
+
+<span class="c1"># Step 4: finditer() gives back one Match object per duplicated</span>
+<span class="c1"># word, in the order they appear in the text</span>
+<span class="n">matches</span> <span class="o">=</span> <span class="n">pattern</span><span class="o">.</span><span class="n">finditer</span><span class="p">(</span><span class="n">text</span><span class="p">)</span>
+
+<span class="c1"># Step 5: group(1) on each Match object gives just the word itself</span>
+<span class="c1"># (not the repeated copies, and not any surrounding whitespace)</span>
+<span class="k">for</span> <span class="n">m</span> <span class="ow">in</span> <span class="n">matches</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">"Duplicate word:"</span><span class="p">,</span> <span class="n">m</span><span class="o">.</span><span class="n">group</span><span class="p">(</span><span class="mi">1</span><span class="p">))</span>
+</code></pre></div>
+<div class="highlight"><pre><span></span><code>Duplicate word: The
+Duplicate word: cat
+Duplicate word: sat
+Duplicate word: on
+Duplicate word: the
+Duplicate word: wall
+</code></pre></div>
+<p><strong>What this shows:</strong> because the capturing group <code>(\b\w+)</code> stores only the <em>word itself</em> — never the repeated copies or the whitespace between them — <code>m.group(1)</code> on every match gives back a clean, single copy of each duplicated word, ready to use in a report, a log message, or a further check.</p>
+<h3 id="combined-script-full-duplicate-word-case-study">Combined script: full duplicate-word case study<a class="headerlink" href="#combined-script-full-duplicate-word-case-study" title="Permanent link">&para;</a></h3>
+<p>Since this case study builds its examples up as three separate scripts above, here is everything combined into one complete, runnable script — including both cleanup functions and the reporting loop together in one place.</p>
+<div class="highlight"><pre><span></span><code><span class="c1"># Step 1: Import re</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">re</span>
+
+<span class="c1"># Step 2: Define the non-capturing-group version of the cleanup</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">remove_duplicates_non_capturing</span><span class="p">(</span><span class="n">some_text</span><span class="p">):</span>
+    <span class="k">return</span> <span class="n">re</span><span class="o">.</span><span class="n">sub</span><span class="p">(</span><span class="sa">r</span><span class="s1">'(\b\w+)(?:\s+\1)+'</span><span class="p">,</span> <span class="sa">r</span><span class="s1">'\1'</span><span class="p">,</span> <span class="n">some_text</span><span class="p">)</span>
+
+<span class="c1"># Step 3: Define the capturing-group version of the cleanup, for</span>
+<span class="c1"># comparison -- functionally identical, but with an extra, unused</span>
+<span class="c1"># capturing group</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">remove_duplicates_capturing</span><span class="p">(</span><span class="n">some_text</span><span class="p">):</span>
+    <span class="k">return</span> <span class="n">re</span><span class="o">.</span><span class="n">sub</span><span class="p">(</span><span class="sa">r</span><span class="s1">'(\b\w+)(\s+\1)+'</span><span class="p">,</span> <span class="sa">r</span><span class="s1">'\1'</span><span class="p">,</span> <span class="n">some_text</span><span class="p">)</span>
+
+<span class="c1"># Step 4: Set up the sentence full of doubled words</span>
+<span class="n">text_with_dup</span> <span class="o">=</span> <span class="s1">'The The cat cat cat sat sat on on the the wall wall.'</span>
+
+<span class="c1"># Step 5: Run both cleanup functions and compare their output</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">"Using non-capturing -&gt;"</span><span class="p">,</span> <span class="n">remove_duplicates_non_capturing</span><span class="p">(</span><span class="n">text_with_dup</span><span class="p">))</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">"Using capturing     -&gt;"</span><span class="p">,</span> <span class="n">remove_duplicates_capturing</span><span class="p">(</span><span class="n">text_with_dup</span><span class="p">))</span>
+
+<span class="c1"># Step 6: Now report every duplicated word found, one at a time,</span>
+<span class="c1"># using the same non-capturing pattern compiled once and reused</span>
+<span class="n">pattern</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">compile</span><span class="p">(</span><span class="sa">r</span><span class="s2">"(\b\w+)(?:\s+\1)+"</span><span class="p">)</span>
+<span class="k">for</span> <span class="n">m</span> <span class="ow">in</span> <span class="n">pattern</span><span class="o">.</span><span class="n">finditer</span><span class="p">(</span><span class="n">text_with_dup</span><span class="p">):</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">"Duplicate word:"</span><span class="p">,</span> <span class="n">m</span><span class="o">.</span><span class="n">group</span><span class="p">(</span><span class="mi">1</span><span class="p">))</span>
+</code></pre></div>
+<div class="highlight"><pre><span></span><code>Using non-capturing -&gt; The cat sat on the wall.
+Using capturing     -&gt; The cat sat on the wall.
+Duplicate word: The
+Duplicate word: cat
+Duplicate word: sat
+Duplicate word: on
+Duplicate word: the
+Duplicate word: wall
+</code></pre></div>
+<h2 id="decision-guide-capturing-or-non-capturing">Decision guide: capturing or non-capturing?<a class="headerlink" href="#decision-guide-capturing-or-non-capturing" title="Permanent link">&para;</a></h2>
+<p>The flowchart below summarises the decision in one place: for any pair of parentheses you are about to type into a pattern, ask yourself whether you will ever need that piece of text back again — either through <code>.group(n)</code> afterwards, or through a backreference such as <code>\1</code> later in the <em>same</em> pattern.</p>
+<p><img alt="Flowchart" src="../../resources/ch-13-august-2026-capturing-noncapturing-decision-01.png" /></p>
+<h3 id="summary-comparison-table">Summary comparison table<a class="headerlink" href="#summary-comparison-table" title="Permanent link">&para;</a></h3>
 <table>
 <thead>
 <tr>
@@ -8299,33 +8774,34 @@ The regex rconsists of 2 groups. The components of these groups are</p>
 <th>Supports backreferences</th>
 <th>Used for extraction</th>
 <th>Used for grouping only</th>
-<th>Better performance</th>
-<th>Cleaner group numbering</th>
+<th>Performance</th>
+<th>Group numbering</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td>Capturing Group ( )</td>
+<td>Capturing group <code>( )</code></td>
 <td>Yes</td>
 <td>Yes</td>
 <td>Yes</td>
 <td>Yes</td>
 <td>Sometimes</td>
 <td>Slightly slower</td>
-<td>No</td>
+<td>Shifts with every new group</td>
 </tr>
 <tr>
-<td>Non-Capturing Group (?: )</td>
+<td>Non-capturing group <code>(?: )</code></td>
 <td>No</td>
 <td>No</td>
 <td>No</td>
 <td>No</td>
 <td>Ideal</td>
 <td>Faster</td>
-<td>Yes</td>
+<td>Never affected</td>
 </tr>
 </tbody>
 </table>
+<p><strong>Why:</strong> a capturing group's small performance cost and its effect on group numbering both come from the same root cause — it has something to <em>remember</em>. A non-capturing group has nothing to remember, so it avoids both costs entirely; the trade-off is simply that you can never call <code>.group(n)</code> or use <code>\1</code> to get that particular piece of text back afterwards, which is exactly why the choice always comes down to the one question this page has been building towards: <em>will I need this text again?</em></p>
 
 
 
