@@ -5323,45 +5323,6 @@
   
 </li>
         
-          <li class="md-nav__item">
-  <a href="#summary-of-changes-made-to-this-page" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Summary of changes made to this page
-      
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="Summary of changes made to this page">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#section-by-section-summary" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Section-by-section summary
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#corrections-genuine-errors-found-and-fixed-each-verified-by-running-the-code" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Corrections — genuine errors found and fixed (each verified by running the code)
-      
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-        
       </ul>
     </nav>
   
@@ -8876,7 +8837,7 @@ To check whether one *specific* flag is switched on inside a combined value, use
 DotAll is OFF
 </code></pre></div>
 
-> **Structural fix applied here:** in the original page, the explanatory sentence "*To check whether a specific flag is set…*" and a second `import re` had accidentally been left **inside** the first code block, which would make the block fail to run as Python at all (plain English text is not valid Python syntax). The example is now split into the two separate, independently runnable scripts shown above.
+
 
   </details>
   <details>
@@ -8984,7 +8945,7 @@ groups non-greedy-&gt; &lt;!DOCTYPE html&gt;
 Capturing-&gt;  ['cat', 'dog', 'rat']
 </code></pre></div>
 
-> **Fix applied here:** the original text claimed that using a capturing group here would make `findall()` return a list of one-element **tuples**, like `[('cat',), ('dog',), ('rat',)]`. That is only true when a pattern has **two or more** capturing groups. Python's own documentation for [`re.findall()`](https://docs.python.org/3/library/re.html#re.findall) is explicit about this: *"If there is exactly one group, return a list of strings matching that group."* Because `(cat|dog|rat)` has exactly **one** group, `findall()` correctly returns a plain list of strings — identical, in this particular case, to the non-capturing version. The very next script (12) shows a case with two groups, where the tuple behaviour genuinely does appear.
+
 
   </details>
 
@@ -9050,7 +9011,7 @@ report
 pdf
 </code></pre></div>
 
-> **Fix applied here:** the original comments claimed the answers would be `docx` (for `m1.group(1)`) and `notes` (for `m2.group(1)` / `m3.group(1)`), as if the search had matched `notes.docx`. But `re.search()` always returns the *first* match it finds while scanning left to right, and `report.pdf` appears **before** `notes.docx` in the sentence — so the true, verified answers are `pdf` and `report`, as shown above. If you genuinely wanted to reach `notes.docx` specifically, you would need `re.findall()` (to get every match) or a more specific pattern that rules out `report.pdf`.
+`report.pdf`.
 
   </details>
 
@@ -9268,6 +9229,7 @@ Both scripts (17 and 18) agree on every test case, which is exactly what you wou
   </details>
 
 </details>
+
 <h3 id="python-re-module-questions-answers">Python <code>re</code> Module – Questions &amp; Answers<a class="headerlink" href="#python-re-module-questions-answers" title="Permanent link">&para;</a></h3>
 <p><a href="#table-of-contents">Back to Table of Contents</a></p>
 <p>This section contains a graded set of <strong>questions, answers, and learning points</strong> for practising Python's <code>re</code> module, arranged in three levels of difficulty: Beginner, Intermediate, and Advanced. The questions themselves are printed exactly as set; the answers below them have been expanded into full explanations with runnable, verified example scripts and their actual output, so you can check your own understanding against real results rather than against a one-line bullet point. A short <em>extra practice question</em> has been added under a few entries — these are new, optional, and clearly marked as such; they are not part of the original set of questions.</p>
@@ -9307,7 +9269,7 @@ Both scripts (17 and 18) agree on every test case, which is exactly what you wou
 - Match *position* matters just as much as whether a match happens at all.
 - A very common beginner mistake is to use `re.match()` when what is actually needed is `re.search()` — if `re.match(pattern, text)` unexpectedly returns `None`, the first thing to check is whether the pattern might match somewhere *other* than the very start of the string.
 
-> 🔎 **Extra practice question (not in the printed book):** What would `re.match(r"cat", "dogcat")` return, and why? (Try it yourself before reading the answer: because `"dogcat"` does not start with `"cat"`, `re.match()` returns `None`, even though `re.search()` on the same text succeeds.)
+>  **Extra practice question (not in the printed book):** What would `re.match(r"cat", "dogcat")` return, and why? (Try it yourself before reading the answer: because `"dogcat"` does not start with `"cat"`, `re.match()` returns `None`, even though `re.search()` on the same text succeeds.)
 
 #### **Q2. What is the role of the backslash (**`\`**) in regular expressions?**
 
@@ -9810,6 +9772,7 @@ Pre-compiled Pattern:      0.066 seconds
 - `re.compile()` is **more efficient** whenever the same pattern will be used **repeatedly** — for instance inside a loop that processes many lines of a file, or inside a function that gets called over and over. For a pattern used only once, the difference is negligible and either style is fine.
 
 </details>
+
 <h3 id="some-questions-scripts-based-on-re-module">Some questions/ scripts based on re module<a class="headerlink" href="#some-questions-scripts-based-on-re-module" title="Permanent link">&para;</a></h3>
 <details>
 <summary>  Some questions/ scripts based on re module (Click to Expand)</summary>
@@ -10088,12 +10051,7 @@ This is really **two separate patterns joined by `|` (OR)**, matching any string
 
 Because `re.match()` only reports success when *some* choice of block size makes the whole string a clean, repeated sequence of that block, a match means "composite (or 0 or 1)" and no match means "prime."
 
-<div class="highlight"><pre><span></span><code>flowchart TD
-    A["Start: number n"] --&gt; B["Build unary string: '1' repeated n times"]
-    B --&gt; C{"Does the regex\n^1?$ or ^(11+?)\1+$\nmatch the whole string?"}
-    C -- "Yes, it matches" --&gt; D["n is 0, 1, or composite\nreturn False (not prime)"]
-    C -- "No match found" --&gt; E["No repeating block exists\nreturn True (prime)"]
-</code></pre></div>
+![Flowchart](../resources/ch-13-august-2026-check-primality-regex.png)
 
 ##### An improved, fully-commented version of the same script
 
@@ -10562,7 +10520,7 @@ Ab1@xy?         -&gt; BAD
 
 This diagram is only a *conceptual* picture of the five rules — in the actual compiled pattern, the four lookaheads are checked essentially together (all starting from position 0), not strictly one after another as separate steps; the flowchart is drawn sequentially purely to make each rule easy to follow.
 
-> 🔎 **Extra practice question (not in the printed book):** The allowed special-character set here is deliberately small: `!@#$%^&*`. What would you need to change in the pattern if the rules instead allowed *any* punctuation character, not just those eight? (One approach: replace `[!@#$%^&*]` with a broader class such as `[!-/:-@\[-`{-~]`, or use Python's `string.punctuation` to build the character class programmatically instead of typing it by hand.)
+>  **Extra practice question (not in the printed book):** The allowed special-character set here is deliberately small: `!@#$%^&*`. What would you need to change in the pattern if the rules instead allowed *any* punctuation character, not just those eight? (One approach: replace `[!@#$%^&*]` with a broader class such as `[!-/:-@\[-`{-~]`, or use Python's `string.punctuation` to build the character class programmatically instead of typing it by hand.)
 
 </details>
 
@@ -10830,7 +10788,7 @@ upper to pascal-&gt;  UpperCaseExample
 pascal to upper-&gt;  PASCAL_CASE_EXAMPLE
 </code></pre></div>
 
-*(The extra `camel_to_snake("XMLFile")` demonstration line has been added here to verify, with real output, the exact "XMLFile -> XML_File" example promised in that function's own docstring — and it is confirmed correct: `xml_file`.)*
+
 
 </details>
 
@@ -11078,6 +11036,7 @@ These engines are called *regex-directed* because:
 ![Flowchart](../resources/ch-13-august-2026-DFA-NFA-01.png)
 
 </details>
+
 <h3 id="mini-project-simulating-a-regular-expression-matcher-in-python">Mini Project: Simulating a Regular Expression Matcher in Python<a class="headerlink" href="#mini-project-simulating-a-regular-expression-matcher-in-python" title="Permanent link">&para;</a></h3>
 <p><a href="#table-of-contents">Back to Table of Contents</a></p>
 <details>
@@ -11285,22 +11244,11 @@ Your final script should contain:
 
 The following figure (from the printed book) shows how the regex works:
 
+![Flowchart](../resources/ch-13-regex-project-flow-chart.png)
+
 ![](https://github.com/ag999git/Python-Programming-book-2026/blob/main/book-extra/regex-project-flow-chart.png)
 
-The same flow is redrawn below as a diagram you can render directly on this page (and, if you like, open in a diagramming tool such as [draw.io](https://app.diagrams.net/), which can import Mermaid flowcharts like this one):
 
-<div class="highlight"><pre><span></span><code>flowchart TD
-    N1(["1. Start"]) --&gt; N2["2. Initialize:&lt;br/&gt;index = 0, length = len(text)"]
-    N2 --&gt; N3{"3. text[index] == 'a' ?"}
-    N3 -- Yes --&gt; N4["4. Consume 'a':&lt;br/&gt;index += 1"]
-    N4 --&gt; N3
-    N3 -- No --&gt; N5{"5. text[index] == 'b' ?"}
-    N5 -- No --&gt; N9(["9. Return False"])
-    N5 -- Yes --&gt; N6["6. Consume 'b':&lt;br/&gt;index += 1"]
-    N6 --&gt; N7{"7. index == length ?"}
-    N7 -- Yes --&gt; N8(["8. Return True"])
-    N7 -- No --&gt; N9
-</code></pre></div>
 
 | **Number** | **Shape**     | **Meaning**              |
 | ---------- | ------------- | ------------------------ |
@@ -11654,6 +11602,7 @@ Learning point:
 9. Beyond regex itself, this project also teaches **test-driven thinking**: separating "what should happen" (the test cases) from "what actually happens" (the function under test) is a habit worth carrying into every program you write, regex or otherwise.
 
 </details>
+
 <h3 id="extension-assignment-tracing-character-consumption-in-a-manual-regex-engine">Extension Assignment: Tracing Character Consumption in a Manual Regex Engine<a class="headerlink" href="#extension-assignment-tracing-character-consumption-in-a-manual-regex-engine" title="Permanent link">&para;</a></h3>
 <p><a href="#table-of-contents">Back to Table of Contents</a></p>
 <details>
@@ -11683,12 +11632,7 @@ This task helps you understand:
 
 The four tasks below build on each other in a straight line, each one adding a little more visibility into what the matcher is doing internally, and the Optional Challenge at the end turns the whole thing into a small, genuinely useful regex debugger:
 
-<div class="highlight"><pre><span></span><code>flowchart LR
-    T1["Task 1&lt;br/&gt;Record a trace list&lt;br/&gt;(what + where)"] --&gt; T2["Task 2&lt;br/&gt;Return (result, count, trace)&lt;br/&gt;as a tuple"]
-    T2 --&gt; T3["Task 3&lt;br/&gt;Print the trace neatly&lt;br/&gt;in the test runner"]
-    T3 --&gt; T4["Task 4&lt;br/&gt;Explain WHY partial&lt;br/&gt;progress still fails"]
-    T4 --&gt; T5["Optional Challenge&lt;br/&gt;Add failure reasons +&lt;br/&gt;a visual '^' pointer"]
-</code></pre></div>
+![Flowchart](../resources/ch-13-august-2026-visualizing-regex-consume-character.png)
 
 </details>
 
@@ -13269,7 +13213,7 @@ Find these two specific lines in the source code:
 
 4.  **The Experiment:** What happens if you try to call `re.Pattern()` directly in your code like a normal constructor? Why does it fail?
 
-> 🔎 **Extra follow-up question (not in the printed book):** try `hasattr(_sre, 'Pattern')` and `from _sre import Pattern` for yourself (import the private `_sre` module first). What does this tell you about *why* the `type(...)` trick is genuinely necessary here, rather than just being a stylistic choice?
+>  **Extra follow-up question (not in the printed book):** try `hasattr(_sre, 'Pattern')` and `from _sre import Pattern` for yourself (import the private `_sre` module first). What does this tell you about *why* the `type(...)` trick is genuinely necessary here, rather than just being a stylistic choice?
 
 ----------
 
@@ -13434,188 +13378,6 @@ This avoids errors, avoids edge cases, and avoids any real performance cost — 
 > **When a class cannot be imported, Python creates an instance and asks it who it is.**
 
 </details>
-
-<h3 id="summary-of-changes-made-to-this-page">Summary of changes made to this page<a class="headerlink" href="#summary-of-changes-made-to-this-page" title="Permanent link">&para;</a></h3>
-<p><a href="#table-of-contents">Back to Table of Contents</a></p>
-<p>This page is a substantial rewrite of the original GitHub file, done in response to a specific set of instructions: improve the writing and explanations; keep every printed research/assignment question unchanged; use plain language with technical terms explained or linked; give step-by-step, logically ordered answers; comment scripts step by step; show verified output for every script; add tables and Mermaid diagrams where they help; give a combined script after any step-by-step script; and never shorten a clear, correct explanation just to save space. The table below documents what changed, organised by section, with a separate table underneath specifically listing every factual <strong>correction</strong> — genuine errors found in the original text, each one confirmed by actually running the code before it was corrected here.</p>
-<p>Every script on this page (all eighteen "Scripts from the book," every Q&amp;A example, every practice question, the primality checker, the password validator, all twelve naming-style converters, both regex-engine mini-projects, and every extension task) was re-run on Python 3.12 while preparing this page, and its output was checked against what is printed here.</p>
-<h4 id="section-by-section-summary">Section-by-section summary<a class="headerlink" href="#section-by-section-summary" title="Permanent link">&para;</a></h4>
-<table>
-<thead>
-<tr>
-<th>Section</th>
-<th>What was in the original</th>
-<th>What changed here</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>Page opening</td>
-<td>Cover image, badges, and a table of contents with no introduction</td>
-<td><strong>Added:</strong> a new title, a "What this page contains" introduction explaining the page's purpose and its relation to the printed book, a short glossary table of regex terms with links, and a "how this page is organised" outline. <strong>Modified:</strong> the table of contents gained an "Introduction" entry, a "Summary of changes" entry, and two corrected internal links (see the corrections table below).</td>
-</tr>
-<tr>
-<td>Scripts from book (18 scripts)</td>
-<td>Runnable code with inline <code>#</code> comments and a mix of trailing-comment and separate-comment output notation</td>
-<td><strong>Modified:</strong> every script now has <code># Step N</code> comments explaining each line's purpose, plus its own fenced text-output block (rather than output only as trailing <code>#</code> comments). <strong>Added:</strong> a one-line "What this shows" summary above each script, and a version note about f-strings containing backslashes (Python 3.12+ only). <strong>Fixed:</strong> three genuine bugs — see the corrections table.</td>
-</tr>
-<tr>
-<td>Q&amp;A (Beginner / Intermediate / Advanced, Q1–Q21)</td>
-<td>Bullet-point answers, a few small code snippets, some with formatting damage (statements run together on one line)</td>
-<td><strong>Modified:</strong> every answer expanded into fuller prose, every code snippet turned into a complete, runnable, commented script with verified output; two entries gained small reference tables (Q14, Q16). <strong>Added:</strong> two "extra practice question" call-outs (Q1, Q16), and a short demonstration of <code>re.escape()</code> under Q7. <strong>Fixed:</strong> two genuine bugs — see the corrections table (Q1's and Q10's and Q18's squashed one-liners were also split back into proper multi-line code; Q20's example was rebuilt as genuinely multi-line VERBOSE regex).</td>
-</tr>
-<tr>
-<td>Six practice questions (Q1–Q6)</td>
-<td>Solutions given as fragmented snippets under sub-headings, mixed with prose</td>
-<td><strong>Modified:</strong> each solution reassembled into one clean, combined, step-commented script with its own verified output block; no wording of the task/hint text was changed.</td>
-</tr>
-<tr>
-<td>Primality mini-project</td>
-<td>The book's original script, a "detailed" version, an empty placeholder <code>&lt;details&gt;</code> block, and the assignment/hints text</td>
-<td><strong>Added:</strong> a plain-language "core idea in four steps" walkthrough, a table explaining each piece of the regex, a Mermaid flowchart of the algorithm, a wider verified test sweep (0–23, including both edge cases), and an extra follow-up question (with real, measured timings) comparing the greedy and non-greedy versions of the pattern. <strong>Deleted:</strong> the empty, content-free <code>&lt;details&gt;</code> stub that had no body. <strong>Kept verbatim:</strong> the objective, restrictions, hints, suggested test cases, and deliverables exactly as printed.</td>
-</tr>
-<tr>
-<td>Password validation</td>
-<td>One script, one output block, a line-by-line explanation</td>
-<td><strong>Added:</strong> a rules-to-regex reference table, a Mermaid flowchart of the five checks, and an extra practice question about widening the special-character set. <strong>Fixed:</strong> one mislabelled test case — see the corrections table. <strong>Kept:</strong> the problem statement, the script's logic, and the full test list unchanged.</td>
-</tr>
-<tr>
-<td>Naming styles (12 converters)</td>
-<td>One long script covering all 12 conversions, no framing text</td>
-<td><strong>Added:</strong> a styles-reference table, a Mermaid diagram mapping all 12 conversion functions to each other, <code># Step</code> comments throughout, and one extra verification line (<code>camel_to_snake("XMLFile")</code>) to confirm the example already written in that function's own docstring. No logic was changed — all 12 functions were verified to already produce the documented output.</td>
-</tr>
-<tr>
-<td>DFA / NFA discussion</td>
-<td>Bullet-point explanations, one "extremely slow" example with no measured numbers, a comparison table</td>
-<td><strong>Added:</strong> a real, measured timing demonstration of the catastrophic-backtracking example (on safely small inputs), a "why" column added to the comparison table, links to Wikipedia/PEP references for DFA, NFA, Big-O notation, and the pumping lemma, and a Mermaid side-by-side diagram of how a DFA and an NFA each process a pattern. <strong>Fixed:</strong> one inconsistent bullet ("They are Lazy quantifiers" reworded to match its sibling bullets' "cannot support" phrasing).</td>
-</tr>
-<tr>
-<td>Mini Project: <code>a*b</code> matcher</td>
-<td>Step-by-step task description, a flowchart image + table, a combined script, a line-by-line explanation</td>
-<td><strong>Added:</strong> a Mermaid version of the flowchart (redrawn from the table, alongside the original image), a short "why build this by hand?" motivating paragraph. <strong>Kept verbatim:</strong> every task/hint/Dos-and-Don'ts line, and the script's logic (already correct and already fully verified).</td>
-</tr>
-<tr>
-<td>Extension Tasks 1–4 + Optional Challenge</td>
-<td>Four extension tasks and a "hard mode" challenge, each with a script, output, and line-by-line explanation</td>
-<td><strong>Added:</strong> a Mermaid diagram showing how the five stages (Tasks 1–4 plus the Optional Challenge) build on each other, <code># Step N</code> comments added throughout every script (most already had partial comments), light copy-editing of the line-by-line explanations for consistent formatting. <strong>Kept:</strong> every task description, hint, checklist, and the conceptual Q&amp;A in Task 4 verbatim — all five scripts were re-verified and produced output identical to the original.</td>
-</tr>
-<tr>
-<td>"Missing classes" investigation</td>
-<td>The investigation, its questions, a cheat sheet, and a claim that the internal C class is named <code>_sre.SRE_Pattern</code> / <code>_sre.SRE_Match</code></td>
-<td><strong>Fixed:</strong> the specific internal-naming claim — see the corrections table. <strong>Added:</strong> a verified table of what is actually observable on Python 3.12, an extra follow-up question suggesting readers try <code>hasattr(_sre, 'Pattern')</code> themselves, and a link to the CPython C source file involved. <strong>Kept verbatim:</strong> the four numbered "Questions for the Student," the framing of the exercise, and its one-sentence summary.</td>
-</tr>
-<tr>
-<td>This section</td>
-<td>Did not exist</td>
-<td><strong>Added:</strong> new, per point 13 of the request that produced this rewrite.</td>
-</tr>
-</tbody>
-</table>
-<h4 id="corrections-genuine-errors-found-and-fixed-each-verified-by-running-the-code">Corrections — genuine errors found and fixed (each verified by running the code)<a class="headerlink" href="#corrections-genuine-errors-found-and-fixed-each-verified-by-running-the-code" title="Permanent link">&para;</a></h4>
-<table>
-<thead>
-<tr>
-<th>#</th>
-<th>Location</th>
-<th>What the original said</th>
-<th>What was verified to actually happen</th>
-<th>Fix applied</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>1</td>
-<td>Script 5 (Pattern instance methods)</td>
-<td>The last two <code>print()</code> lines use <code>r'\\d+'</code> (a double backslash), with comments claiming the output reads <code>Sub \d+ With ...</code></td>
-<td>Running it prints <code>Sub \\d+ With ...</code> (with two backslashes) instead</td>
-<td>Changed to <code>r'\d+'</code>, matching script 4's convention and the intended, single-backslash output</td>
-</tr>
-<tr>
-<td>2</td>
-<td>Script 7 (flags)</td>
-<td>A prose sentence and a second <code>import re</code> were left inside the first Python code fence, and the text claimed <code>p.flags</code> prints <code>10</code></td>
-<td>The stray prose makes the block invalid Python; and <code>p.flags</code> actually prints <code>42</code>, because Python 3 automatically adds the <code>re.UNICODE</code> flag (32) to patterns compiled from <code>str</code></td>
-<td>Split into two separate, valid code blocks; corrected the printed value to <code>42</code> with an explanation of the automatic <code>re.UNICODE</code> flag</td>
-</tr>
-<tr>
-<td>3</td>
-<td>Script 11 (alternation)</td>
-<td>Claimed a capturing group <code>(cat\|dog\|rat)</code> makes <code>findall()</code> return <code>[('cat',), ('dog',), ('rat',)]</code> (tuples)</td>
-<td>With exactly <strong>one</strong> capturing group, <code>findall()</code> returns a plain list of strings, identical to the non-capturing version — Python's own documentation confirms tuples only appear with two or more groups</td>
-<td>Corrected the claimed output to the verified list of strings, and explained the one-group-vs-many-groups rule</td>
-</tr>
-<tr>
-<td>4</td>
-<td>Script 13 (file extensions)</td>
-<td>Claimed <code>m1.group(1)</code> is <code>"docx"</code> and <code>m2.group(1)</code> / <code>m3.group(1)</code> are <code>"notes"</code></td>
-<td><code>re.search()</code> returns the <strong>first</strong> (leftmost) match, and <code>"report.pdf"</code> appears before <code>"notes.docx"</code> in the sentence, so the true results are <code>"pdf"</code> and <code>"report"</code></td>
-<td>Corrected the claimed outputs, and added a note explaining why <code>re.search()</code> found <code>report.pdf</code>, not <code>notes.docx</code></td>
-</tr>
-<tr>
-<td>5</td>
-<td>Q1 code snippet</td>
-<td><code>import re print(re.match(...))</code> printed as one run-together line</td>
-<td>This is invalid Python syntax as written (two statements with no separator)</td>
-<td>Reformatted onto separate lines</td>
-</tr>
-<tr>
-<td>6</td>
-<td>Q10 code snippet</td>
-<td><code>text = "&lt;tag&gt;content&lt;/tag&gt;" re.search(...)</code> printed as one run-together line, with no <code>import re</code> and no <code>print()</code> around the <code>.group()</code> calls</td>
-<td>As written, this cannot run (invalid syntax, and no output would print even if it could)</td>
-<td>Reformatted onto separate lines, added the missing <code>import re</code>, and wrapped both calls in <code>print()</code></td>
-</tr>
-<tr>
-<td>7</td>
-<td>Q18 code snippet</td>
-<td><code>p = re.compile(r"\d+") p.findall(...)</code> printed as one run-together line, with no <code>import re</code> or <code>print()</code></td>
-<td>Same class of problem as items 5 and 6</td>
-<td>Reformatted onto separate lines, added the missing <code>import re</code> and <code>print()</code></td>
-</tr>
-<tr>
-<td>8</td>
-<td>Q20 (<code>re.VERBOSE</code> example)</td>
-<td>The whole verbose pattern was written on a single line: <code>re.compile(r""" \d+     # digits \s*     # optional space """, re.VERBOSE)</code></td>
-<td>Because everything sits on one line, the first <code>#</code> turns <em>everything after it</em> — including <code>\s*</code> and the second <code>#</code> — into one long VERBOSE-mode comment. The pattern Python actually compiles only ever matches <code>\d+</code>; the "optional space" part silently never applies</td>
-<td>Rewrote the example as genuinely multi-line, and added a note explaining exactly why the one-line version was quietly broken</td>
-</tr>
-<tr>
-<td>9</td>
-<td>Password validation test list</td>
-<td><code>"Ab1@xy!"</code> was listed among the "invalid" passwords, with a comment second-guessing its own length ("Too long (7 but extra special allowed? no length OK — keep for discussion)")</td>
-<td>At 7 characters, with one of each required character type, <code>"Ab1@xy!"</code> satisfies every rule and is correctly reported as <code>GOOD</code> by the script</td>
-<td>Replaced the uncertain comment with an explanation confirming <code>"Ab1@xy!"</code> is genuinely a valid password under the stated rules, and added a note distinguishing it from the very similar-looking (but genuinely invalid) <code>"Ab1@xy "</code> two lines below it</td>
-</tr>
-<tr>
-<td>10</td>
-<td>DFA/NFA comparison bullets</td>
-<td>"They are Lazy (non-greedy) quantifiers" listed as a "feature NOT supported by DFA," inconsistent in phrasing with its two sibling bullets</td>
-<td>Purely a wording inconsistency, not a factual error</td>
-<td>Reworded to "They cannot support lazy (non-greedy) quantifiers in the general case," matching the phrasing of the two bullets above it</td>
-</tr>
-<tr>
-<td>11</td>
-<td>"Missing classes" investigation</td>
-<td>States the internal C class is named <code>_sre.SRE_Pattern</code> / <code>_sre.SRE_Match</code>, and that the "hack" renames this cryptic name to the friendly <code>re.Pattern</code> / <code>re.Match</code></td>
-<td>On Python 3.12, <code>type(re.compile('')).__module__</code> is already <code>'re'</code> and <code>.__qualname__</code> is already <code>'Pattern'</code> — the C type is already named and displayed as <code>re.Pattern</code> before the "hack" lines even run. What <em>is</em> still true and verified: <code>_sre</code> never exposes this class under any attribute name (<code>hasattr(_sre, 'Pattern')</code> is <code>False</code>), so <code>type(...)</code> extraction remains the only way to obtain a usable reference to it</td>
-<td>Corrected the specific internal-name claim, added a verified before/after table, while keeping the core "you can't import it, so extract it via <code>type()</code>" lesson intact (that part was, and remains, correct)</td>
-</tr>
-<tr>
-<td>12</td>
-<td>TOC link for the primality mini-project</td>
-<td>Pointed to <code>#mini-project-simulating-a-regular-expression-matcher-in-python</code> — the anchor for the <em>other</em>, later mini-project (the <code>a*b</code> matcher), not the primality section</td>
-<td>Following the original link lands on the wrong section</td>
-<td>Corrected to <code>#using-regular-expression-re-to-check-for-primality</code>, the primality section's own anchor</td>
-</tr>
-<tr>
-<td>13</td>
-<td>TOC link for "The Complete Python script..."</td>
-<td>Pointed to an anchor that GitHub never generates, because the target text lives inside a <code>&lt;summary&gt;</code> tag, not a real Markdown heading</td>
-<td>Following the original link does nothing, since GitHub does not create clickable anchors for <code>&lt;summary&gt;</code> text</td>
-<td>Added an explicit <code>&lt;a id="..."&gt;</code> anchor immediately above that <code>&lt;summary&gt;</code>, so the link now genuinely works</td>
-</tr>
-</tbody>
-</table>
 
 
 
