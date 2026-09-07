@@ -5501,45 +5501,6 @@
   
 </li>
       
-        <li class="md-nav__item">
-  <a href="#summary-of-changes-made-to-this-page" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Summary of changes made to this page
-      
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="Summary of changes made to this page">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#section-by-section-summary" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Section-by-section summary
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#corrections-genuine-errors-found-and-fixed-each-verified-by-running-the-code" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Corrections — genuine errors found and fixed (each verified by running the code)
-      
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-      
     </ul>
   
 </nav>
@@ -8879,26 +8840,6 @@ XMLFile -&gt; x_m_l_file
 <p><img alt="Flowchart" src="../../resources/ch-13-august-2026-UPPER-case-to-Pascal-case_11.png" /></p>
 <h3 id="pascal-case-to-upper-case">Pascal Case to UPPER Case<a class="headerlink" href="#pascal-case-to-upper-case" title="Permanent link">&para;</a></h3>
 <p><img alt="Flowchart" src="../../resources/ch-13-august-2026-Pascal-case-to-UPPER-case_12.png" /></p>
-<div class="highlight"><pre><span></span><code>flowchart LR
-    SNAKE(("snake_case"))
-    CAMEL(("camelCase"))
-    PASCAL(("PascalCase"))
-    UPPER(("UPPER_CASE"))
-
-    SNAKE --&gt;|"1: direct (split + capitalize)"| CAMEL
-    CAMEL --&gt;|"2: direct (regex, 2 steps)"| SNAKE
-    PASCAL --&gt;|"3: direct (regex lookahead)"| SNAKE
-    SNAKE --&gt;|"4: direct (split + capitalize all)"| PASCAL
-    CAMEL --&gt;|"5: direct (first letter only)"| PASCAL
-    PASCAL --&gt;|"6: direct (first letter only)"| CAMEL
-    UPPER --&gt;|"7: direct (.lower)"| SNAKE
-    SNAKE --&gt;|"8: direct (.upper)"| UPPER
-    UPPER -.-&gt;|"9: via snake_case (7 then 1)"| CAMEL
-    CAMEL -.-&gt;|"10: via snake_case (2 then 8)"| UPPER
-    UPPER -.-&gt;|"11: via snake_case (7 then 4)"| PASCAL
-    PASCAL -.-&gt;|"12: via snake_case (3 then 8)"| UPPER
-</code></pre></div>
-<p><em>(Solid arrows are the eight directly-implemented conversions; dashed arrows are the four conversions built by composing two solid-arrow functions together, routed through <code>snake_case</code>. This diagram uses plain round nodes and labelled arrows, so it should render correctly if pasted into <a href="https://app.diagrams.net/">draw.io</a>'s Mermaid import as well as on GitHub.)</em></p>
 <h2 id="combined-script-all-twelve-conversions-together">Combined script: all twelve conversions together<a class="headerlink" href="#combined-script-all-twelve-conversions-together" title="Permanent link">&para;</a></h2>
 <p>Since each conversion was introduced separately above, here is the complete script combining all twelve functions in one place — exactly matching how the original file presented them, and reproducing every one of its verified results in a single run.</p>
 <div class="highlight"><pre><span></span><code><span class="c1"># Step 1: Import re, needed by camel_to_snake and pascal_to_snake</span>
@@ -9005,58 +8946,6 @@ camel to upper -&gt; CAMEL_CASE_EXAMPLE
 upper to pascal -&gt; UpperCaseExample
 pascal to upper -&gt; PASCAL_CASE_EXAMPLE
 </code></pre></div>
-<h2 id="summary-of-changes-made-to-this-page">Summary of changes made to this page<a class="headerlink" href="#summary-of-changes-made-to-this-page" title="Permanent link">&para;</a></h2>
-<p><a href="#table-of-contents">Back to Table of Contents</a></p>
-<p>This page is a rewrite of the original <code>75-ch13-naming-styles.md</code>, carried out under the same set of instructions used for the other four companion pages for this chapter: improve the writing and explanations; use plain language with technical terms explained or linked; give step-by-step, logically ordered explanations; comment scripts step by step; show verified output for every script; add tables and diagrams where they help; give a combined script after any script that was built up in separate steps; and never shorten a clear, correct explanation just to save space. The original file contained no printed research or assignment questions to preserve verbatim — it was a single, unbroken code block with no surrounding heading, introduction, or explanatory prose at all — so this rewrite's job was to build a complete teaching page <em>around</em> that existing, working code, without changing what any of the twelve functions actually do. Every one of the twelve functions was re-run individually, and the combined script was re-run as a whole, on Python 3.12 while preparing this page; all outputs shown here were verified this way.</p>
-<h4 id="section-by-section-summary">Section-by-section summary<a class="headerlink" href="#section-by-section-summary" title="Permanent link">&para;</a></h4>
-<table>
-<thead>
-<tr>
-<th>Section</th>
-<th>What was in the original</th>
-<th>What changed here</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>Page opening</td>
-<td>A single <code>###</code>-level heading ("Naming styles in Python programming") with no introduction, immediately followed by one large code block</td>
-<td><strong>Added:</strong> a new page title, a "What this page contains, and why it matters" introduction explaining the four naming styles and linking this page to the printed book and to the other four companion pages for this chapter, a glossary table, and a table of contents.</td>
-</tr>
-<tr>
-<td>The twelve functions</td>
-<td>Presented together as one continuous script, each function preceded only by a one-line numbered comment (e.g. <code># 1. snake_case to camelCase conversion</code>) and its own docstring</td>
-<td><strong>Modified:</strong> each of the twelve conversions was given its own numbered subsection with a heading, <code># Step</code> comments added throughout its code, its own fenced verified output block, and a prose explanation underneath describing <em>why</em> the code works, not just <em>what</em> it does. No function's logic was changed — all twelve were verified to already produce the output originally claimed in their trailing comments.</td>
-</tr>
-<tr>
-<td><code>camel_to_snake()</code> and <code>pascal_to_snake()</code></td>
-<td>Two separate, differently-implemented functions for superficially similar jobs, with no comparison drawn between them</td>
-<td><strong>Added:</strong> an extra verification line under each — running both functions on the same acronym-containing input, <code>"XMLFile"</code> — to make visible, with real output, exactly <em>why</em> <code>camel_to_snake()</code> needs a second regex substitution that <code>pascal_to_snake()</code> does not attempt: <code>camel_to_snake("XMLFile")</code> correctly gives <code>"xml_file"</code>, while <code>pascal_to_snake("XMLFile")</code> gives <code>"x_m_l_file"</code>, fragmenting the acronym letter by letter. An extra practice question was added inviting the reader to try fixing <code>pascal_to_snake()</code> the same way.</td>
-</tr>
-<tr>
-<td>Functions 9–12 (the four composed conversions)</td>
-<td>Presented with no comment on the fact that each one calls two other functions defined earlier in the same file</td>
-<td><strong>Added:</strong> a note under each of these four functions explaining that it depends on two specific, named functions defined earlier on the page, and that running it in isolation (copying just that one code block) will raise a <code>NameError</code> unless those dependencies are pasted in above it first, or the combined script is used instead.</td>
-</tr>
-<tr>
-<td>No equivalent section in the original</td>
-<td>—</td>
-<td><strong>Added:</strong> a "How the twelve functions fit together" section explaining that twelve is exactly the number of ordered pairs among four naming styles, and a Mermaid flowchart showing all twelve conversions as a directed graph, with solid arrows for the eight directly-implemented conversions and dashed arrows for the four that are composed by routing through <code>snake_case</code> as a hub.</td>
-</tr>
-<tr>
-<td>End of the original script</td>
-<td>No combined summary; the file simply ended after the twelfth function's demonstration <code>print()</code></td>
-<td><strong>Added:</strong> an explicit "Combined script" section, per point 10 of the request that produced this rewrite, reproducing the original's own idea of running all twelve functions and their twelve demonstration prints together in one script, now with <code># Step</code> numbering and its own verified output block.</td>
-</tr>
-<tr>
-<td>This section</td>
-<td>Did not exist</td>
-<td><strong>Added:</strong> new, per point 13 of the request that produced this rewrite.</td>
-</tr>
-</tbody>
-</table>
-<h4 id="corrections-genuine-errors-found-and-fixed-each-verified-by-running-the-code">Corrections — genuine errors found and fixed (each verified by running the code)<a class="headerlink" href="#corrections-genuine-errors-found-and-fixed-each-verified-by-running-the-code" title="Permanent link">&para;</a></h4>
-<p>None. Every one of the twelve functions in the original file ran successfully exactly as printed, and every claimed output (shown as a trailing <code>#</code> comment after each demonstration <code>print()</code> call) was verified to be genuinely correct, including the <code>camel_to_snake("XMLFile")</code> example already promised in that function's own docstring. This page's changes are therefore all <strong>additions</strong> — headings, explanations, step comments, a diagram, and cross-references — rather than corrections to any factual error, unlike the other companion pages for this chapter, each of which required at least one genuine fix.</p>
 
 
 
