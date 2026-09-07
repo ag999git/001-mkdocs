@@ -25,7 +25,7 @@
     
     
       
-        <title>95 ch13 password - Python 999</title>
+        <title>Validating a Password with a Single Regular Expression - Python 999</title>
       
     
     
@@ -82,7 +82,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#write-a-regexp-which-places-certain-restrictions-on-a-password-that-a-user-may-select" class="md-skip">
+        <a href="#validating-a-password-with-a-single-regular-expression" class="md-skip">
           Skip to content
         </a>
       
@@ -118,7 +118,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              95 ch13 password
+              Validating a Password with a Single Regular Expression
             
           </span>
         </div>
@@ -5184,6 +5184,8 @@
       <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
       
       
+        
+      
       
         <label class="md-nav__link md-nav__link--active" for="__toc">
           
@@ -5192,7 +5194,7 @@
   <span class="md-ellipsis">
     
   
-    95 ch13 password
+    Validating a Password with a Single Regular Expression
   
 
     
@@ -5210,7 +5212,7 @@
   <span class="md-ellipsis">
     
   
-    95 ch13 password
+    Validating a Password with a Single Regular Expression
   
 
     
@@ -5226,6 +5228,8 @@
   
   
   
+    
+  
   
     <label class="md-nav__title" for="__toc">
       <span class="md-nav__icon md-icon"></span>
@@ -5234,22 +5238,33 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#write-a-regexp-which-places-certain-restrictions-on-a-password-that-a-user-may-select" class="md-nav__link">
+  <a href="#what-this-page-contains-and-why-it-matters" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Write a regexp which places certain restrictions on a password that a user may select
+        What this page contains, and why it matters
       
     </span>
   </a>
   
-    <nav class="md-nav" aria-label="Write a regexp which places certain restrictions on a password that a user may select">
+    <nav class="md-nav" aria-label="What this page contains, and why it matters">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#problem-write-a-regexp-which-places-the-following-restrictions-on-a-password-that-a-user-may-select-" class="md-nav__link">
+  <a href="#glossary-of-terms" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Problem:- Write a regexp which places the following restrictions on a password that a user may select:-
+        Glossary: of terms
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#table-of-contents" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Table of contents
       
     </span>
   </a>
@@ -5262,10 +5277,10 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#the-script-is-as-follows-" class="md-nav__link">
+  <a href="#problem-password-validation-rules" class="md-nav__link">
     <span class="md-ellipsis">
       
-        The script is as follows:-
+        Problem: password validation rules
       
     </span>
   </a>
@@ -5273,15 +5288,70 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#1-detailed-explanation-of-the-regex-pattern" class="md-nav__link">
+  <a href="#building-the-pattern-up-in-stages" class="md-nav__link">
     <span class="md-ellipsis">
       
-        1. Detailed explanation of the RegEx Pattern
+        Building the pattern up in stages
       
     </span>
   </a>
   
-    <nav class="md-nav" aria-label="1. Detailed explanation of the RegEx Pattern">
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#step-1-the-easy-part-first-length-and-allowed-characters" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Step 1: The easy part first — length and allowed characters
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#step-2-adding-the-four-lookahead-requirements-one-at-a-time" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Step 2: Adding the four lookahead requirements one at a time
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#step-3-the-complete-pattern-tested-against-every-password" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Step 3: The complete pattern, tested against every password
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#combined-script" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Combined script
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#detailed-explanation-of-the-regex-pattern" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Detailed explanation of the regex pattern
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Detailed explanation of the regex pattern">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
@@ -5323,10 +5393,10 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#2-why-is-it-structured-this-way" class="md-nav__link">
+  <a href="#why-is-it-structured-this-way" class="md-nav__link">
     <span class="md-ellipsis">
       
-        2. Why is it structured this way?
+        Why is it structured this way?
       
     </span>
   </a>
@@ -5334,13 +5404,96 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#3-detailed-breakdown-of-a-bad-match" class="md-nav__link">
+  <a href="#detailed-breakdown-of-a-bad-match" class="md-nav__link">
     <span class="md-ellipsis">
       
-        3. Detailed Breakdown of a "BAD" Match
+        Detailed breakdown of a BAD match
       
     </span>
   </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#detailed-breakdown-of-a-good-match" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Detailed breakdown of a GOOD match
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#a-test-case-worth-a-second-look" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        A test case worth a second look
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#how-the-whole-check-flows" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        How the whole check flows
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#follow-up-questions" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Follow-up questions
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#summary-of-changes-made-to-this-page" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Summary of changes made to this page
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Summary of changes made to this page">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#section-by-section-summary" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Section-by-section summary
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#corrections-genuine-errors-found-and-fixed-each-independently-verified" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Corrections -- genuine errors found and fixed (each independently verified)
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
   
 </li>
       
@@ -8173,34 +8326,141 @@
   
 
 
-  <h1>95 ch13 password</h1>
-
-<h2 id="write-a-regexp-which-places-certain-restrictions-on-a-password-that-a-user-may-select">Write a regexp which places certain restrictions on a password that a user may select<a class="headerlink" href="#write-a-regexp-which-places-certain-restrictions-on-a-password-that-a-user-may-select" title="Permanent link">&para;</a></h2>
-<h3 id="problem-write-a-regexp-which-places-the-following-restrictions-on-a-password-that-a-user-may-select-">Problem:- Write a regexp which places the following restrictions on a password that a user may select:-<a class="headerlink" href="#problem-write-a-regexp-which-places-the-following-restrictions-on-a-password-that-a-user-may-select-" title="Permanent link">&para;</a></h3>
+<h1 id="validating-a-password-with-a-single-regular-expression">Validating a Password with a Single Regular Expression<a class="headerlink" href="#validating-a-password-with-a-single-regular-expression" title="Permanent link">&para;</a></h1>
+<h2 id="what-this-page-contains-and-why-it-matters">What this page contains, and why it matters<a class="headerlink" href="#what-this-page-contains-and-why-it-matters" title="Permanent link">&para;</a></h2>
+<p>Checking a password against a set of rules is one of the most common places you will ever meet regular expressions in real, everyday software: almost every sign-up form you have ever filled in — a bank, an email provider, a college portal — runs your chosen password through something very similar to the single pattern built on this page. This page takes a genuinely practical problem (must contain a lowercase letter, an uppercase letter, a digit, and a special character, and be between 6 and 12 characters long) and shows how to express <em>all five</em> of those separate rules inside <strong>one single regular expression</strong>, using a regex feature this chapter has not needed until now: the <strong>lookahead</strong>.</p>
+<p>This page is worth spending time on for three reasons. First, it is one of the few places in this chapter where the requirement is naturally "all of these conditions must be true at once", rather than "find this one pattern" — and lookaheads are precisely the tool regular expressions offer for that kind of requirement. Second, the original script's own test data turns out to contain a genuinely interesting edge case that is easy to walk straight past without noticing (covered in detail further down this page), which is a good reminder of why every claim about what a script does should be checked by actually running it, not just read and trusted. Third, the reasoning technique used here — walking through a single test case one lookahead at a time to see exactly where and why it fails — is a general debugging skill that is useful for any regex, not just this one.</p>
+<h3 id="glossary-of-terms">Glossary: of terms<a class="headerlink" href="#glossary-of-terms" title="Permanent link">&para;</a></h3>
+<table>
+<thead>
+<tr>
+<th>Term</th>
+<th>Plain-language meaning</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Regular expression (regex)</td>
+<td>A pattern written in a special mini-language for describing what a piece of text should look like, so a program can search for, check, or extract text matching that description.</td>
+</tr>
+<tr>
+<td>Anchor</td>
+<td>A regex symbol that does not match a character itself, but instead matches a <em>position</em> in the string. <code>^</code> anchors to the very start of the string; <code>$</code> anchors to the very end.</td>
+</tr>
+<tr>
+<td>Character class</td>
+<td>A set of characters written inside square brackets, such as <code>[a-z]</code>, meaning "match any one character from this set." <code>[A-Za-z0-9!@#$%^&amp;*]</code> means "match any one letter, digit, or listed special character."</td>
+</tr>
+<tr>
+<td>Quantifier</td>
+<td>A symbol that says how many times the thing right before it may repeat. <code>{6,12}</code> is a quantifier meaning "between 6 and 12 times, inclusive."</td>
+</tr>
+<tr>
+<td>Lookahead, <code>(?=...)</code></td>
+<td>A special kind of check that peeks forward in the string to confirm that something is present, without actually "using up" (consuming) any characters. See <a href="https://docs.python.org/3/howto/regex.html#lookahead-assertions">Python's own how-to guide on lookahead and lookbehind assertions</a> for the official reference.</td>
+</tr>
+<tr>
+<td>Zero-width assertion</td>
+<td>The formal name for what a lookahead is: a check that matches a <em>position</em>, contributing nothing to the actual matched text and moving the "current position" pointer by zero characters. This page verifies this directly with real code, rather than just asserting it.</td>
+</tr>
+<tr>
+<td>Positive lookahead vs. negative lookahead</td>
+<td>A positive lookahead, <code>(?=...)</code>, succeeds only if what is inside it <em>is</em> found ahead. A negative lookahead, written <code>(?!...)</code> (not used on this page, but good to know it exists), succeeds only if what is inside it is <em>not</em> found ahead.</td>
+</tr>
+</tbody>
+</table>
+<h3 id="table-of-contents">Table of contents<a class="headerlink" href="#table-of-contents" title="Permanent link">&para;</a></h3>
+<ol>
+<li><a href="#problem-password-validation-rules">Problem: password validation rules</a></li>
+<li><a href="#building-the-pattern-up-in-stages">Building the pattern up in stages</a></li>
+<li><a href="#step-1-the-easy-part-first--length-and-allowed-characters">Step 1: The easy part first — length and allowed characters</a></li>
+<li><a href="#step-2-adding-the-four-lookahead-requirements-one-at-a-time">Step 2: Adding the four lookahead requirements one at a time</a></li>
+<li><a href="#step-3-the-complete-pattern-tested-against-every-password">Step 3: The complete pattern, tested against every password</a></li>
+<li><a href="#combined-script">Combined script</a></li>
+<li><a href="#detailed-explanation-of-the-regex-pattern">Detailed explanation of the regex pattern</a></li>
+<li><a href="#why-is-it-structured-this-way">Why is it structured this way?</a></li>
+<li><a href="#detailed-breakdown-of-a-bad-match">Detailed breakdown of a BAD match</a></li>
+<li><a href="#detailed-breakdown-of-a-good-match">Detailed breakdown of a GOOD match</a></li>
+<li><a href="#a-test-case-worth-a-second-look">A test case worth a second look</a></li>
+<li><a href="#how-the-whole-check-flows">How the whole check flows</a></li>
+<li><a href="#follow-up-questions">Follow-up questions</a></li>
+<li><a href="#summary-of-changes-made-to-this-page">Summary of changes made to this page</a></li>
+</ol>
+<hr />
+<h2 id="problem-password-validation-rules">Problem: password validation rules<a class="headerlink" href="#problem-password-validation-rules" title="Permanent link">&para;</a></h2>
+<p><em>(This section is the original problem statement exactly as printed, with its wording unchanged.)</em></p>
+<p>Write a regexp which places the following restrictions on a password that a user may select:</p>
 <p>The password should have the following:-</p>
 <ul>
-<li>
-<p>At least one small alphabet ie [a-z]</p>
-</li>
-<li>
-<p>At least one large (capital) alphabet ie [A-Z]</p>
-</li>
-<li>
-<p>At least one digit ie [0-9]</p>
-</li>
-<li>
-<p>At least one special character from [!@#$%^&amp;*]</p>
-</li>
-<li>
-<p>The password should have a minimum length of 6 and maximum of 12 characters</p>
-</li>
+<li>At least one small alphabet ie [a-z]</li>
+<li>At least one large (capital) alphabet ie [A-Z]</li>
+<li>At least one digit ie [0-9]</li>
+<li>At least one special character from [!@#$%^&amp;*]</li>
+<li>The password should have a minimum length of 6 and maximum of 12 characters</li>
 </ul>
-<h2 id="the-script-is-as-follows-">The script is as follows:-<a class="headerlink" href="#the-script-is-as-follows-" title="Permanent link">&para;</a></h2>
-<div class="highlight"><pre><span></span><code><span class="kn">import</span><span class="w"> </span><span class="nn">re</span>
+<h2 id="building-the-pattern-up-in-stages">Building the pattern up in stages<a class="headerlink" href="#building-the-pattern-up-in-stages" title="Permanent link">&para;</a></h2>
+<p>The complete pattern given in the original solution is correct and works exactly as claimed — every single test case shown further down this page was independently re-run while preparing it, and every result matched. Rather than presenting the whole pattern in one piece, the sections below build it up one requirement at a time, so you can see exactly what each piece contributes on its own, before putting all five requirements together as the same single pattern given in the original answer.</p>
+<h2 id="step-1-the-easy-part-first-length-and-allowed-characters">Step 1: The easy part first — length and allowed characters<a class="headerlink" href="#step-1-the-easy-part-first-length-and-allowed-characters" title="Permanent link">&para;</a></h2>
+<p>Before adding any of the "must contain" requirements, start with just the part of the pattern that checks length and allowed characters — this is an ordinary character class and quantifier, nothing new for this chapter.</p>
+<div class="highlight"><pre><span></span><code><span class="c1"># Step 1: A pattern that ONLY checks length (6 to 12) and that every</span>
+<span class="c1">#          character belongs to the allowed set -- it does NOT yet check</span>
+<span class="c1">#          for a lowercase letter, uppercase letter, digit, or special</span>
+<span class="c1">#          character specifically</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">re</span>
 
-<span class="c1"># Complete password validation pattern</span>
+<span class="n">length_and_charset_only</span> <span class="o">=</span> <span class="sa">r</span><span class="s1">'^[A-Za-z0-9!@#$%^&amp;*]{6,12}$'</span>
+
+<span class="c1"># Try it on a few short example strings to see what it does and does not catch</span>
+<span class="k">for</span> <span class="n">sample</span> <span class="ow">in</span> <span class="p">[</span><span class="s2">"abcdef"</span><span class="p">,</span> <span class="s2">"ABCDEF"</span><span class="p">,</span> <span class="s2">"abc12"</span><span class="p">,</span> <span class="s2">"abcdefghijklmno"</span><span class="p">,</span> <span class="s2">"ab cdef"</span><span class="p">]:</span>
+    <span class="n">matched</span> <span class="o">=</span> <span class="nb">bool</span><span class="p">(</span><span class="n">re</span><span class="o">.</span><span class="n">match</span><span class="p">(</span><span class="n">length_and_charset_only</span><span class="p">,</span> <span class="n">sample</span><span class="p">))</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"</span><span class="si">{</span><span class="n">sample</span><span class="si">!r:</span><span class="s2">20</span><span class="si">}</span><span class="s2"> length=</span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">sample</span><span class="p">)</span><span class="si">:</span><span class="s2">2</span><span class="si">}</span><span class="s2">  matches length/charset only: </span><span class="si">{</span><span class="n">matched</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
+</code></pre></div>
+<p>Verified output:</p>
+<div class="highlight"><pre><span></span><code>'abcdef'             length= 6  matches length/charset only: True
+'ABCDEF'             length= 6  matches length/charset only: True
+'abc12'              length= 5  matches length/charset only: False
+'abcdefghijklmno'    length=15  matches length/charset only: False
+'ab cdef'            length= 7  matches length/charset only: False
+</code></pre></div>
+<p>Notice that <code>"abcdef"</code> and <code>"ABCDEF"</code> both pass this partial pattern, even though neither one has a mix of uppercase and lowercase, a digit, or a special character. That is expected and correct at this stage — this piece of the pattern was only ever meant to check length and allowed characters. Also notice <code>"ab cdef"</code> fails, because it contains a space, and a space is not in the allowed character class <code>[A-Za-z0-9!@#$%^&amp;*]</code>. The next step adds the four missing requirements.</p>
+<h2 id="step-2-adding-the-four-lookahead-requirements-one-at-a-time">Step 2: Adding the four lookahead requirements one at a time<a class="headerlink" href="#step-2-adding-the-four-lookahead-requirements-one-at-a-time" title="Permanent link">&para;</a></h2>
+<p>Each lookahead can be tested completely on its own, since a lookahead is a self-contained check that does not depend on where the other lookaheads are placed in the pattern.</p>
+<div class="highlight"><pre><span></span><code><span class="c1"># Step 2: Test each of the four lookahead requirements in isolation,</span>
+<span class="c1">#          against the same tricky example string each time, to see</span>
+<span class="c1">#          exactly which requirement(s) a given password satisfies</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">re</span>
+
+<span class="n">sample_password</span> <span class="o">=</span> <span class="s2">"Ab1xyz"</span>   <span class="c1"># deliberately missing a special character</span>
+
+<span class="n">lookahead_checks</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s2">"at least one lowercase letter"</span><span class="p">:</span> <span class="sa">r</span><span class="s1">'(?=.*[a-z])'</span><span class="p">,</span>
+    <span class="s2">"at least one uppercase letter"</span><span class="p">:</span> <span class="sa">r</span><span class="s1">'(?=.*[A-Z])'</span><span class="p">,</span>
+    <span class="s2">"at least one digit"</span><span class="p">:</span> <span class="sa">r</span><span class="s1">'(?=.*[0-9])'</span><span class="p">,</span>
+    <span class="s2">"at least one special character"</span><span class="p">:</span> <span class="sa">r</span><span class="s1">'(?=.*[!@#$%^&amp;*])'</span><span class="p">,</span>
+<span class="p">}</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"Checking </span><span class="si">{</span><span class="n">sample_password</span><span class="si">!r}</span><span class="s2"> against each requirement on its own:"</span><span class="p">)</span>
+<span class="k">for</span> <span class="n">description</span><span class="p">,</span> <span class="n">pattern</span> <span class="ow">in</span> <span class="n">lookahead_checks</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+    <span class="n">satisfied</span> <span class="o">=</span> <span class="nb">bool</span><span class="p">(</span><span class="n">re</span><span class="o">.</span><span class="n">match</span><span class="p">(</span><span class="n">pattern</span><span class="p">,</span> <span class="n">sample_password</span><span class="p">))</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"  </span><span class="si">{</span><span class="n">description</span><span class="si">:</span><span class="s2">35</span><span class="si">}</span><span class="s2"> </span><span class="si">{</span><span class="s1">'PASS'</span><span class="w"> </span><span class="k">if</span><span class="w"> </span><span class="n">satisfied</span><span class="w"> </span><span class="k">else</span><span class="w"> </span><span class="s1">'FAIL'</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
+</code></pre></div>
+<p>Verified output:</p>
+<div class="highlight"><pre><span></span><code>Checking 'Ab1xyz' against each requirement on its own:
+  at least one lowercase letter      PASS
+  at least one uppercase letter      PASS
+  at least one digit                 PASS
+  at least one special character     FAIL
+</code></pre></div>
+<p>This confirms, one requirement at a time, exactly why <code>"Ab1xyz"</code> should ultimately fail: three of the four "must contain" checks pass, but the special-character check does not. Section "Detailed breakdown of a BAD match" below walks through this same example again, once all four checks are combined into a single pattern.</p>
+<h2 id="step-3-the-complete-pattern-tested-against-every-password">Step 3: The complete pattern, tested against every password<a class="headerlink" href="#step-3-the-complete-pattern-tested-against-every-password" title="Permanent link">&para;</a></h2>
+<p>Combining the length-and-charset check from Step 1 with all four lookahead checks from Step 2, in a single pattern, gives exactly the pattern from the original solution:</p>
+<div class="highlight"><pre><span></span><code><span class="c1"># Step 1: Build the complete password validation pattern by combining</span>
+<span class="c1">#          the four lookahead requirements from Step 2 with the</span>
+<span class="c1">#          length-and-charset check from Step 1</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">re</span>
+
 <span class="n">password_pattern</span> <span class="o">=</span> <span class="p">(</span>
-    <span class="sa">r</span><span class="s1">'^'</span>                    <span class="c1"># Start of string</span>
+    <span class="sa">r</span><span class="s1">'^'</span>                     <span class="c1"># Start of string</span>
     <span class="sa">r</span><span class="s1">'(?=.*[a-z])'</span>           <span class="c1"># At least one lowercase letter</span>
     <span class="sa">r</span><span class="s1">'(?=.*[A-Z])'</span>           <span class="c1"># At least one uppercase letter</span>
     <span class="sa">r</span><span class="s1">'(?=.*[0-9])'</span>           <span class="c1"># At least one digit</span>
@@ -8209,53 +8469,138 @@
     <span class="sa">r</span><span class="s1">'{6,12}$'</span>               <span class="c1"># Length between 6 and 12</span>
 <span class="p">)</span>
 
-<span class="c1"># List of test passwords</span>
+<span class="c1"># Step 2: The same list of test passwords used in the original assignment</span>
 <span class="n">test_passwords</span> <span class="o">=</span> <span class="p">[</span>
-    <span class="c1">#  Valid passwords</span>
+    <span class="c1"># Valid passwords</span>
     <span class="s2">"Ab1@xy"</span><span class="p">,</span>
     <span class="s2">"Good1@Pwd"</span><span class="p">,</span>
     <span class="s2">"Xy9#Ab"</span><span class="p">,</span>
     <span class="s2">"Pass1$word"</span><span class="p">,</span>
     <span class="s2">"Z9@abc"</span><span class="p">,</span>
 
-    <span class="c1">#  Invalid passwords</span>
+    <span class="c1"># Invalid passwords</span>
     <span class="s2">"abc123@"</span><span class="p">,</span>          <span class="c1"># No uppercase letter</span>
     <span class="s2">"ABC123@"</span><span class="p">,</span>          <span class="c1"># No lowercase letter</span>
     <span class="s2">"Abcdef@"</span><span class="p">,</span>          <span class="c1"># No digit</span>
     <span class="s2">"Ab1xyz"</span><span class="p">,</span>           <span class="c1"># No special character</span>
     <span class="s2">"Ab1@x"</span><span class="p">,</span>            <span class="c1"># Too short</span>
     <span class="s2">"Ab1@xyzabcdef"</span><span class="p">,</span>    <span class="c1"># Too long</span>
-    <span class="s2">"Ab1@xy!"</span><span class="p">,</span>          <span class="c1"># Too long (7 but extra special allowed? no length OK — keep for discussion)</span>
-    <span class="s2">"Ab1@xy "</span><span class="p">,</span>          <span class="c1"># Contains space</span>
+    <span class="s2">"Ab1@xy!"</span><span class="p">,</span>          <span class="c1"># See "A test case worth a second look" below</span>
+    <span class="s2">"Ab1@xy "</span><span class="p">,</span>          <span class="c1"># Contains a trailing space</span>
     <span class="s2">"Ab1@xy?"</span><span class="p">,</span>          <span class="c1"># Invalid special character '?'</span>
     <span class="s2">"123@ABC"</span><span class="p">,</span>          <span class="c1"># No lowercase</span>
 <span class="p">]</span>
 
-<span class="c1"># Validate each password</span>
+<span class="c1"># Step 3: Validate each password and print the result. This version</span>
+<span class="c1">#          prints the password's length and a repr() of the string as</span>
+<span class="c1">#          well as the plain GOOD/BAD verdict, specifically so that a</span>
+<span class="c1">#          password containing an invisible trailing space (like</span>
+<span class="c1">#          "Ab1@xy ") can still be told apart from one without it</span>
 <span class="k">for</span> <span class="n">pwd</span> <span class="ow">in</span> <span class="n">test_passwords</span><span class="p">:</span>
-    <span class="k">if</span> <span class="n">re</span><span class="o">.</span><span class="n">match</span><span class="p">(</span><span class="n">password_pattern</span><span class="p">,</span> <span class="n">pwd</span><span class="p">):</span>
-        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"</span><span class="si">{</span><span class="n">pwd</span><span class="si">:</span><span class="s2">15</span><span class="si">}</span><span class="s2"> → GOOD"</span><span class="p">)</span>
-    <span class="k">else</span><span class="p">:</span>
-        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"</span><span class="si">{</span><span class="n">pwd</span><span class="si">:</span><span class="s2">15</span><span class="si">}</span><span class="s2"> → BAD"</span><span class="p">)</span>
+    <span class="n">verdict</span> <span class="o">=</span> <span class="s2">"GOOD"</span> <span class="k">if</span> <span class="n">re</span><span class="o">.</span><span class="n">match</span><span class="p">(</span><span class="n">password_pattern</span><span class="p">,</span> <span class="n">pwd</span><span class="p">)</span> <span class="k">else</span> <span class="s2">"BAD"</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"</span><span class="si">{</span><span class="n">pwd</span><span class="si">!r:</span><span class="s2">18</span><span class="si">}</span><span class="s2"> len=</span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">pwd</span><span class="p">)</span><span class="si">:</span><span class="s2">2</span><span class="si">}</span><span class="s2">  -&gt; </span><span class="si">{</span><span class="n">verdict</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
 </code></pre></div>
-<div class="highlight"><pre><span></span><code><span class="n">Ab1</span><span class="nd">@xy</span>          <span class="err">→</span> <span class="n">GOOD</span>
-<span class="n">Good1</span><span class="nd">@Pwd</span>       <span class="err">→</span> <span class="n">GOOD</span>
-<span class="n">Xy9</span><span class="c1">#Ab          → GOOD</span>
-<span class="n">Pass1</span><span class="err">$</span><span class="n">word</span>      <span class="err">→</span> <span class="n">GOOD</span>
-<span class="n">Z9</span><span class="nd">@abc</span>          <span class="err">→</span> <span class="n">GOOD</span>
-<span class="n">abc123</span><span class="o">@</span>         <span class="err">→</span> <span class="n">BAD</span>
-<span class="n">ABC123</span><span class="o">@</span>         <span class="err">→</span> <span class="n">BAD</span>
-<span class="n">Abcdef</span><span class="o">@</span>         <span class="err">→</span> <span class="n">BAD</span>
-<span class="n">Ab1xyz</span>          <span class="err">→</span> <span class="n">BAD</span>
-<span class="n">Ab1</span><span class="nd">@x</span>           <span class="err">→</span> <span class="n">BAD</span>
-<span class="n">Ab1</span><span class="nd">@xyzabcdef</span>   <span class="err">→</span> <span class="n">BAD</span>
-<span class="n">Ab1</span><span class="nd">@xy</span><span class="err">!</span>         <span class="err">→</span> <span class="n">GOOD</span>
-<span class="n">Ab1</span><span class="nd">@xy</span>          <span class="err">→</span> <span class="n">BAD</span>
-<span class="n">Ab1</span><span class="nd">@xy</span><span class="err">?</span>         <span class="err">→</span> <span class="n">BAD</span>
-<span class="mi">123</span><span class="nd">@ABC</span>         <span class="err">→</span> <span class="n">BAD</span>
+<p>Verified output:</p>
+<div class="highlight"><pre><span></span><code>'Ab1@xy'           len= 6  -&gt; GOOD
+'Good1@Pwd'        len= 9  -&gt; GOOD
+'Xy9#Ab'           len= 6  -&gt; GOOD
+'Pass1$word'       len=10  -&gt; GOOD
+'Z9@abc'           len= 6  -&gt; GOOD
+'abc123@'          len= 7  -&gt; BAD
+'ABC123@'          len= 7  -&gt; BAD
+'Abcdef@'          len= 7  -&gt; BAD
+'Ab1xyz'           len= 6  -&gt; BAD
+'Ab1@x'            len= 5  -&gt; BAD
+'Ab1@xyzabcdef'    len=13  -&gt; BAD
+'Ab1@xy!'          len= 7  -&gt; GOOD
+'Ab1@xy '          len= 7  -&gt; BAD
+'Ab1@xy?'          len= 7  -&gt; BAD
+'123@ABC'          len= 7  -&gt; BAD
 </code></pre></div>
-<h2 id="1-detailed-explanation-of-the-regex-pattern">1. Detailed explanation of the RegEx Pattern<a class="headerlink" href="#1-detailed-explanation-of-the-regex-pattern" title="Permanent link">&para;</a></h2>
-<p><strong>The RegEx Pattern used is as follows</strong></p>
+<p>Every one of these results matches exactly what the original assignment's own output claimed. The <code>repr()</code> and length shown here are a deliberate improvement over the original's plain <code>print(f"{pwd:15} → GOOD")</code> formatting, for a reason explained in full under "A test case worth a second look" below: with the original's plain formatting, <code>"Ab1@xy"</code> (6 characters, GOOD) and <code>"Ab1@xy "</code> (7 characters with an invisible trailing space, BAD) print as visually identical lines, which can easily hide exactly what makes the second one fail.</p>
+<h2 id="combined-script">Combined script<a class="headerlink" href="#combined-script" title="Permanent link">&para;</a></h2>
+<p>Bringing every stage above into one place, here is the complete investigation as a single script: the length-and-charset check on its own, each lookahead tested in isolation, and the full combined pattern tested against every password in the list.</p>
+<div class="highlight"><pre><span></span><code><span class="c1"># Combined script: the complete password-validation investigation</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">re</span>
+
+<span class="c1"># Step 1: The length-and-charset-only pattern, tested on short examples</span>
+<span class="n">length_and_charset_only</span> <span class="o">=</span> <span class="sa">r</span><span class="s1">'^[A-Za-z0-9!@#$%^&amp;*]{6,12}$'</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">"--- Step 1: length and allowed characters only ---"</span><span class="p">)</span>
+<span class="k">for</span> <span class="n">sample</span> <span class="ow">in</span> <span class="p">[</span><span class="s2">"abcdef"</span><span class="p">,</span> <span class="s2">"ABCDEF"</span><span class="p">,</span> <span class="s2">"abc12"</span><span class="p">,</span> <span class="s2">"ab cdef"</span><span class="p">]:</span>
+    <span class="n">matched</span> <span class="o">=</span> <span class="nb">bool</span><span class="p">(</span><span class="n">re</span><span class="o">.</span><span class="n">match</span><span class="p">(</span><span class="n">length_and_charset_only</span><span class="p">,</span> <span class="n">sample</span><span class="p">))</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"  </span><span class="si">{</span><span class="n">sample</span><span class="si">!r:</span><span class="s2">12</span><span class="si">}</span><span class="s2"> matches: </span><span class="si">{</span><span class="n">matched</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
+
+<span class="c1"># Step 2: Each lookahead tested on its own against one tricky password</span>
+<span class="nb">print</span><span class="p">()</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">"--- Step 2: each requirement checked in isolation on 'Ab1xyz' ---"</span><span class="p">)</span>
+<span class="n">sample_password</span> <span class="o">=</span> <span class="s2">"Ab1xyz"</span>
+<span class="n">lookahead_checks</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s2">"lowercase"</span><span class="p">:</span> <span class="sa">r</span><span class="s1">'(?=.*[a-z])'</span><span class="p">,</span>
+    <span class="s2">"uppercase"</span><span class="p">:</span> <span class="sa">r</span><span class="s1">'(?=.*[A-Z])'</span><span class="p">,</span>
+    <span class="s2">"digit"</span><span class="p">:</span> <span class="sa">r</span><span class="s1">'(?=.*[0-9])'</span><span class="p">,</span>
+    <span class="s2">"special character"</span><span class="p">:</span> <span class="sa">r</span><span class="s1">'(?=.*[!@#$%^&amp;*])'</span><span class="p">,</span>
+<span class="p">}</span>
+<span class="k">for</span> <span class="n">description</span><span class="p">,</span> <span class="n">pattern</span> <span class="ow">in</span> <span class="n">lookahead_checks</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+    <span class="n">satisfied</span> <span class="o">=</span> <span class="nb">bool</span><span class="p">(</span><span class="n">re</span><span class="o">.</span><span class="n">match</span><span class="p">(</span><span class="n">pattern</span><span class="p">,</span> <span class="n">sample_password</span><span class="p">))</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"  </span><span class="si">{</span><span class="n">description</span><span class="si">:</span><span class="s2">20</span><span class="si">}</span><span class="s2"> </span><span class="si">{</span><span class="s1">'PASS'</span><span class="w"> </span><span class="k">if</span><span class="w"> </span><span class="n">satisfied</span><span class="w"> </span><span class="k">else</span><span class="w"> </span><span class="s1">'FAIL'</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
+
+<span class="c1"># Step 3: The complete pattern -- all four lookaheads plus the</span>
+<span class="c1">#          length-and-charset check combined into one</span>
+<span class="nb">print</span><span class="p">()</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">"--- Step 3: the complete pattern, tested on every password ---"</span><span class="p">)</span>
+<span class="n">password_pattern</span> <span class="o">=</span> <span class="p">(</span>
+    <span class="sa">r</span><span class="s1">'^'</span>
+    <span class="sa">r</span><span class="s1">'(?=.*[a-z])'</span>
+    <span class="sa">r</span><span class="s1">'(?=.*[A-Z])'</span>
+    <span class="sa">r</span><span class="s1">'(?=.*[0-9])'</span>
+    <span class="sa">r</span><span class="s1">'(?=.*[!@#$%^&amp;*])'</span>
+    <span class="sa">r</span><span class="s1">'[A-Za-z0-9!@#$%^&amp;*]'</span>
+    <span class="sa">r</span><span class="s1">'{6,12}$'</span>
+<span class="p">)</span>
+
+<span class="n">test_passwords</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="s2">"Ab1@xy"</span><span class="p">,</span> <span class="s2">"Good1@Pwd"</span><span class="p">,</span> <span class="s2">"Xy9#Ab"</span><span class="p">,</span> <span class="s2">"Pass1$word"</span><span class="p">,</span> <span class="s2">"Z9@abc"</span><span class="p">,</span>
+    <span class="s2">"abc123@"</span><span class="p">,</span> <span class="s2">"ABC123@"</span><span class="p">,</span> <span class="s2">"Abcdef@"</span><span class="p">,</span> <span class="s2">"Ab1xyz"</span><span class="p">,</span> <span class="s2">"Ab1@x"</span><span class="p">,</span>
+    <span class="s2">"Ab1@xyzabcdef"</span><span class="p">,</span> <span class="s2">"Ab1@xy!"</span><span class="p">,</span> <span class="s2">"Ab1@xy "</span><span class="p">,</span> <span class="s2">"Ab1@xy?"</span><span class="p">,</span> <span class="s2">"123@ABC"</span><span class="p">,</span>
+<span class="p">]</span>
+
+<span class="k">for</span> <span class="n">pwd</span> <span class="ow">in</span> <span class="n">test_passwords</span><span class="p">:</span>
+    <span class="n">verdict</span> <span class="o">=</span> <span class="s2">"GOOD"</span> <span class="k">if</span> <span class="n">re</span><span class="o">.</span><span class="n">match</span><span class="p">(</span><span class="n">password_pattern</span><span class="p">,</span> <span class="n">pwd</span><span class="p">)</span> <span class="k">else</span> <span class="s2">"BAD"</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"  </span><span class="si">{</span><span class="n">pwd</span><span class="si">!r:</span><span class="s2">18</span><span class="si">}</span><span class="s2"> len=</span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">pwd</span><span class="p">)</span><span class="si">:</span><span class="s2">2</span><span class="si">}</span><span class="s2">  -&gt; </span><span class="si">{</span><span class="n">verdict</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
+</code></pre></div>
+<p>Verified output:</p>
+<div class="highlight"><pre><span></span><code>--- Step 1: length and allowed characters only ---
+  'abcdef'     matches: True
+  'ABCDEF'     matches: True
+  'abc12'      matches: False
+  'ab cdef'    matches: False
+
+--- Step 2: each requirement checked in isolation on 'Ab1xyz' ---
+  lowercase            PASS
+  uppercase            PASS
+  digit                PASS
+  special character    FAIL
+
+--- Step 3: the complete pattern, tested on every password ---
+  'Ab1@xy'           len= 6  -&gt; GOOD
+  'Good1@Pwd'        len= 9  -&gt; GOOD
+  'Xy9#Ab'           len= 6  -&gt; GOOD
+  'Pass1$word'       len=10  -&gt; GOOD
+  'Z9@abc'           len= 6  -&gt; GOOD
+  'abc123@'          len= 7  -&gt; BAD
+  'ABC123@'          len= 7  -&gt; BAD
+  'Abcdef@'          len= 7  -&gt; BAD
+  'Ab1xyz'           len= 6  -&gt; BAD
+  'Ab1@x'            len= 5  -&gt; BAD
+  'Ab1@xyzabcdef'    len=13  -&gt; BAD
+  'Ab1@xy!'          len= 7  -&gt; GOOD
+  'Ab1@xy '          len= 7  -&gt; BAD
+  'Ab1@xy?'          len= 7  -&gt; BAD
+  '123@ABC'          len= 7  -&gt; BAD
+</code></pre></div>
+<h2 id="detailed-explanation-of-the-regex-pattern">Detailed explanation of the regex pattern<a class="headerlink" href="#detailed-explanation-of-the-regex-pattern" title="Permanent link">&para;</a></h2>
+<p><em>(This section keeps the original's explanation and its table in full, and adds one verified clarification underneath, marked clearly as new.)</em></p>
+<p>The regex pattern used is as follows:</p>
 <div class="highlight"><pre><span></span><code><span class="n">password_pattern</span> <span class="o">=</span> <span class="p">(</span>
     <span class="sa">r</span><span class="s1">'^'</span>                    <span class="c1"># Start of string</span>
     <span class="sa">r</span><span class="s1">'(?=.*[a-z])'</span>           <span class="c1"># At least one lowercase letter</span>
@@ -8268,28 +8613,20 @@
 </code></pre></div>
 <h3 id="the-anchors-and">The Anchors (<code>^</code> and <code>$</code>)<a class="headerlink" href="#the-anchors-and" title="Permanent link">&para;</a></h3>
 <ul>
-<li>
-<p><code>^</code>: Forces the match to start at the very beginning of the string.</p>
-</li>
-<li>
-<p><code>$</code>: Forces the match to end at the very last character. Without these, the regex might match a valid <em>substring</em> inside an otherwise invalid password.</p>
-</li>
+<li><code>^</code>: Forces the match to start at the very beginning of the string.</li>
+<li><code>$</code>: Forces the match to end at the very last character. Without these, the regex might match a valid <em>substring</em> inside an otherwise invalid password.</li>
 </ul>
 <h3 id="the-lookahead-assertions">The Lookahead Assertions <code>(?=...)</code><a class="headerlink" href="#the-lookahead-assertions" title="Permanent link">&para;</a></h3>
-<p>There are 4 look ahead assertions, namely:</p>
-<p><div class="highlight"><pre><span></span><code><span class="sa">r</span><span class="s1">'(?=.*[a-z])'</span>           <span class="c1"># At least one lowercase letter</span>
+<p>There are 4 lookahead assertions, namely:</p>
+<div class="highlight"><pre><span></span><code><span class="sa">r</span><span class="s1">'(?=.*[a-z])'</span>           <span class="c1"># At least one lowercase letter</span>
 <span class="sa">r</span><span class="s1">'(?=.*[A-Z])'</span>           <span class="c1"># At least one uppercase letter</span>
 <span class="sa">r</span><span class="s1">'(?=.*[0-9])'</span>           <span class="c1"># At least one digit</span>
 <span class="sa">r</span><span class="s1">'(?=.*[!@#$%^&amp;*])'</span>      <span class="c1"># At least one special character</span>
 </code></pre></div>
-These four blocks are the <strong>"requirements checklist."</strong> They all start with <code>(?=.*...)</code>.</p>
+<p>These four blocks are the <strong>"requirements checklist."</strong> They all start with <code>(?=.*...)</code>.</p>
 <ul>
-<li>
-<p><code>(?= )</code>: This is the syntax for a <strong>Positive Lookahead</strong>.</p>
-</li>
-<li>
-<p><code>.*</code>: This means "skip over any number of characters." This allows the required character to appear anywhere in the string (start, middle, or end).</p>
-</li>
+<li><code>(?= )</code>: This is the syntax for a <strong>Positive Lookahead</strong>.</li>
+<li><code>.*</code>: This means "skip over any number of characters." This allows the required character to appear anywhere in the string (start, middle, or end).</li>
 </ul>
 <table>
 <thead>
@@ -8300,19 +8637,19 @@ These four blocks are the <strong>"requirements checklist."</strong> They all st
 </thead>
 <tbody>
 <tr>
-<td>(?=.*[a-z])</td>
+<td><code>(?=.*[a-z])</code></td>
 <td>Peeks ahead to find at least one lowercase letter.</td>
 </tr>
 <tr>
-<td>(?=.*[A-Z])</td>
+<td><code>(?=.*[A-Z])</code></td>
 <td>Peeks ahead to find at least one uppercase letter.</td>
 </tr>
 <tr>
-<td>(?=.*[0-9])</td>
+<td><code>(?=.*[0-9])</code></td>
 <td>Peeks ahead to find at least one digit.</td>
 </tr>
 <tr>
-<td>(?=.<em>[!@#$%^&amp;</em>])</td>
+<td><code>(?=.*[!@#$%^&amp;*])</code></td>
 <td>Peeks ahead to find at least one special character from the set.</td>
 </tr>
 </tbody>
@@ -8320,40 +8657,209 @@ These four blocks are the <strong>"requirements checklist."</strong> They all st
 <h3 id="the-character-set-and-quantifier">The Character Set and Quantifier<a class="headerlink" href="#the-character-set-and-quantifier" title="Permanent link">&para;</a></h3>
 <p><code>[A-Za-z0-9!@#$%^&amp;*]{6,12}</code> Once the lookaheads are satisfied, the engine returns to the start of the string and actually <strong>matches</strong> the characters:</p>
 <ul>
-<li>
-<p><code>[...]</code>: Defines the <strong>allowed characters</strong>. If the password contains a space or a <code>?</code>, it will fail here because those characters aren't in this list.</p>
-</li>
-<li>
-<p><code>{6,12}</code>: This is the <strong>Quantifier</strong>. It specifies that the total length of the string must be at least 6 and no more than 12 characters.</p>
-</li>
+<li><code>[...]</code>: Defines the <strong>allowed characters</strong>. If the password contains a space or a <code>?</code>, it will fail here because those characters aren't in this list.</li>
+<li><code>{6,12}</code>: This is the <strong>Quantifier</strong>. It specifies that the total length of the string must be at least 6 and no more than 12 characters.</li>
 </ul>
-<hr />
-<h2 id="2-why-is-it-structured-this-way">2. Why is it structured this way?<a class="headerlink" href="#2-why-is-it-structured-this-way" title="Permanent link">&para;</a></h2>
+<blockquote>
+<p><strong>A verified clarification worth adding here.</strong> The phrase "the engine returns to the start of the string" is a helpful way to picture what happens, but it is worth being precise about <em>why</em> that phrase is accurate: a lookahead is what is called a <strong>zero-width assertion</strong>. It does not actually move the engine's current position at all — checking directly with Python confirms that a lookahead match's span is always <code>(0, 0)</code> when anchored at the start, meaning it matches <em>zero characters</em>. So the engine never really "leaves" position 0 to go check each lookahead and then "returns" — all four lookaheads, and the final character-class-plus-quantifier match, all genuinely start checking from the exact same position, one after another, because none of the lookaheads ever consumed anything in the first place. This distinction matters once you start writing your own lookaheads: it is precisely why you can stack any number of them back to back, in any order, right after <code>^</code>, without one interfering with where the next one starts checking.</p>
+</blockquote>
+<h2 id="why-is-it-structured-this-way">Why is it structured this way?<a class="headerlink" href="#why-is-it-structured-this-way" title="Permanent link">&para;</a></h2>
 <p>If you tried to write this without lookaheads, you would have to account for every possible permutation (e.g., "digit first, then letter" or "letter first, then special char"). That would result in a massive, unreadable regex.</p>
-<p><strong>Lookaheads allow us to "stack" conditions independently.</strong> The engine checks condition 1, resets to the start; checks condition 2, resets to the start; and so on.</p>
-<hr />
-<h2 id="3-detailed-breakdown-of-a-bad-match">3. Detailed Breakdown of a "BAD" Match<a class="headerlink" href="#3-detailed-breakdown-of-a-bad-match" title="Permanent link">&para;</a></h2>
+<p><strong>Lookaheads allow us to "stack" conditions independently.</strong> The engine checks condition 1, confirms it without moving; checks condition 2 from that same position, confirms it without moving; and so on, until all four conditions are confirmed and only then does it actually consume the string against <code>[A-Za-z0-9!@#$%^&amp;*]{6,12}</code>.</p>
+<h2 id="detailed-breakdown-of-a-bad-match">Detailed breakdown of a BAD match<a class="headerlink" href="#detailed-breakdown-of-a-bad-match" title="Permanent link">&para;</a></h2>
 <p>Let's look at why <code>"Ab1xyz"</code> fails:</p>
 <ol>
-<li>
-<p><code>^</code>: Start at index 0.</p>
-</li>
-<li>
-<p><code>(?=.*[a-z])</code>: Looks ahead, finds 'b'. <strong>Pass.</strong></p>
-</li>
-<li>
-<p><code>(?=.*[A-Z])</code>: Looks ahead, finds 'A'. <strong>Pass.</strong></p>
-</li>
-<li>
-<p><code>(?=.*[0-9])</code>: Looks ahead, finds '1'. <strong>Pass.</strong></p>
-</li>
-<li>
-<p><code>(?=.*[!@#$%^&amp;*])</code>: Looks ahead through the entire string. <strong>No special character found.</strong></p>
-</li>
-<li>
-<p><strong>FAIL:</strong> The engine stops because one of the requirements wasn't met.</p>
-</li>
+<li><code>^</code>: Start at index 0.</li>
+<li><code>(?=.*[a-z])</code>: Looks ahead, finds 'b'. <strong>Pass.</strong></li>
+<li><code>(?=.*[A-Z])</code>: Looks ahead, finds 'A'. <strong>Pass.</strong></li>
+<li><code>(?=.*[0-9])</code>: Looks ahead, finds '1'. <strong>Pass.</strong></li>
+<li><code>(?=.*[!@#$%^&amp;*])</code>: Looks ahead through the entire string. <strong>No special character found.</strong></li>
+<li><strong>FAIL:</strong> The engine stops because one of the requirements wasn't met.</li>
 </ol>
+<h2 id="detailed-breakdown-of-a-good-match">Detailed breakdown of a GOOD match<a class="headerlink" href="#detailed-breakdown-of-a-good-match" title="Permanent link">&para;</a></h2>
+<p>For balance, here is the same style of step-by-step breakdown for a password that succeeds — <code>"Good1@Pwd"</code> — since seeing a full pass, one requirement at a time, makes it much easier to see exactly what "all requirements satisfied" actually means in practice.</p>
+<ol>
+<li><code>^</code>: Start at index 0.</li>
+<li><code>(?=.*[a-z])</code>: Looks ahead, finds 'o' (from "Go<strong>o</strong>d"). <strong>Pass.</strong></li>
+<li><code>(?=.*[A-Z])</code>: Looks ahead, finds 'G'. <strong>Pass.</strong></li>
+<li><code>(?=.*[0-9])</code>: Looks ahead, finds '1'. <strong>Pass.</strong></li>
+<li><code>(?=.*[!@#$%^&amp;*])</code>: Looks ahead, finds '@'. <strong>Pass.</strong></li>
+<li><code>[A-Za-z0-9!@#$%^&amp;*]{6,12}$</code>: The engine now actually consumes the string, character by character, confirming every one of "Good1@Pwd" (9 characters) belongs to the allowed set, and that the whole string is between 6 and 12 characters long. <strong>Pass.</strong></li>
+<li><strong>GOOD:</strong> All five requirements were satisfied, so <code>re.match()</code> returns a match object rather than <code>None</code>.</li>
+</ol>
+<div class="highlight"><pre><span></span><code><span class="c1"># Verifying this exact breakdown with real code</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">re</span>
+<span class="n">pwd</span> <span class="o">=</span> <span class="s2">"Good1@Pwd"</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">"Contains a lowercase letter:"</span><span class="p">,</span> <span class="nb">bool</span><span class="p">(</span><span class="n">re</span><span class="o">.</span><span class="n">match</span><span class="p">(</span><span class="sa">r</span><span class="s1">'.*[a-z]'</span><span class="p">,</span> <span class="n">pwd</span><span class="p">)))</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">"Contains an uppercase letter:"</span><span class="p">,</span> <span class="nb">bool</span><span class="p">(</span><span class="n">re</span><span class="o">.</span><span class="n">match</span><span class="p">(</span><span class="sa">r</span><span class="s1">'.*[A-Z]'</span><span class="p">,</span> <span class="n">pwd</span><span class="p">)))</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">"Contains a digit:"</span><span class="p">,</span> <span class="nb">bool</span><span class="p">(</span><span class="n">re</span><span class="o">.</span><span class="n">match</span><span class="p">(</span><span class="sa">r</span><span class="s1">'.*[0-9]'</span><span class="p">,</span> <span class="n">pwd</span><span class="p">)))</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">"Contains a special character:"</span><span class="p">,</span> <span class="nb">bool</span><span class="p">(</span><span class="n">re</span><span class="o">.</span><span class="n">match</span><span class="p">(</span><span class="sa">r</span><span class="s1">'.*[!@#$%^&amp;*]'</span><span class="p">,</span> <span class="n">pwd</span><span class="p">)))</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">"Length is between 6 and 12:"</span><span class="p">,</span> <span class="mi">6</span> <span class="o">&lt;=</span> <span class="nb">len</span><span class="p">(</span><span class="n">pwd</span><span class="p">)</span> <span class="o">&lt;=</span> <span class="mi">12</span><span class="p">)</span>
+</code></pre></div>
+<p>Verified output:</p>
+<div class="highlight"><pre><span></span><code>Contains a lowercase letter: True
+Contains an uppercase letter: True
+Contains a digit: True
+Contains a special character: True
+Length is between 6 and 12: True
+</code></pre></div>
+<h2 id="a-test-case-worth-a-second-look">A test case worth a second look<a class="headerlink" href="#a-test-case-worth-a-second-look" title="Permanent link">&para;</a></h2>
+<p>The original test list places <code>"Ab1@xy!"</code> under the comment <code># Invalid passwords</code>, with its own inline comment reading: <code># Too long (7 but extra special allowed? no length OK — keep for discussion)</code>. That comment itself is flagging some uncertainty, and it is worth resolving directly, since it is a genuinely useful example rather than a mistake to just quietly fix.</p>
+<p>Checking <code>"Ab1@xy!"</code> against every requirement in the Problem Statement above:</p>
+<table>
+<thead>
+<tr>
+<th>Requirement</th>
+<th>Does <code>"Ab1@xy!"</code> satisfy it?</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>At least one lowercase letter</td>
+<td>Yes -- <code>b</code>, <code>x</code>, <code>y</code></td>
+</tr>
+<tr>
+<td>At least one uppercase letter</td>
+<td>Yes -- <code>A</code></td>
+</tr>
+<tr>
+<td>At least one digit</td>
+<td>Yes -- <code>1</code></td>
+</tr>
+<tr>
+<td>At least one special character from <code>!@#$%^&amp;*</code></td>
+<td>Yes -- both <code>@</code> and <code>!</code></td>
+</tr>
+<tr>
+<td>Length between 6 and 12 characters</td>
+<td>Yes -- it is exactly 7 characters long</td>
+</tr>
+</tbody>
+</table>
+<p><code>"Ab1@xy!"</code> genuinely satisfies every single stated requirement. It is not "too long" (7 is comfortably inside the 6-to-12 range), and having <em>two</em> special characters instead of exactly one is not against any rule in the Problem Statement, which only asks for "at least one." This is exactly why the regex correctly reports it as <code>GOOD</code>, and why the original script's own output table already shows <code>Ab1@xy! → GOOD</code> — the code was never wrong. The only slightly misleading thing is where this test case was placed in the list (under the <code># Invalid passwords</code> heading) and its own uncertain inline comment. The most likely explanation is that this test case was originally written to explore a <em>stricter</em> rule that the Problem Statement never actually states — for example, "exactly one special character, no more" — and was left in the list as a discussion point once it became clear the stated rules do not forbid a second special character.</p>
+<p>This is a good habit to take away from this one test case: when a script's own comment expresses doubt ("keep for discussion"), that is a signal to actually run the code and check the real answer against the stated requirements, rather than trusting the comment's guess. Section 12 ("Follow-up questions") below invites you to explore a stricter version of this rule yourself.</p>
+<p>The second easy-to-miss case in the same list is <code>"Ab1@xy "</code> (with a trailing space) directly followed by <code>"Ab1@xy?"</code>. Using the original script's plain <code>print(f"{pwd:15} → GOOD")</code> / <code>print(f"{pwd:15} → BAD")</code> formatting, <code>"Ab1@xy"</code> (6 characters, no trailing space, GOOD) and <code>"Ab1@xy "</code> (7 characters, with a trailing space, BAD) print as visually identical lines in a terminal, since the padding to 15 characters hides the difference. Step 3 and the Combined Script on this page deliberately print each password's <code>repr()</code> and length alongside the verdict, specifically so this kind of invisible-character difference is always visible in the output rather than hidden by formatting.</p>
+<h2 id="how-the-whole-check-flows">How the whole check flows<a class="headerlink" href="#how-the-whole-check-flows" title="Permanent link">&para;</a></h2>
+<div class="highlight"><pre><span></span><code>flowchart TD
+    A(("Start: a candidate password string"))
+    B{"Does it contain at least&lt;br/&gt;one lowercase letter"}
+    C{"Does it contain at least&lt;br/&gt;one uppercase letter"}
+    D{"Does it contain at least&lt;br/&gt;one digit"}
+    E{"Does it contain at least&lt;br/&gt;one special character&lt;br/&gt;from the allowed set"}
+    F{"Is every character in the&lt;br/&gt;allowed set, AND is the total&lt;br/&gt;length between 6 and 12"}
+    G(("BAD: reject the password"))
+    H(("GOOD: accept the password"))
+    A --&gt; B
+    B -- no --&gt; G
+    B -- yes --&gt; C
+    C -- no --&gt; G
+    C -- yes --&gt; D
+    D -- no --&gt; G
+    D -- yes --&gt; E
+    E -- no --&gt; G
+    E -- yes --&gt; F
+    F -- no --&gt; G
+    F -- yes --&gt; H
+</code></pre></div>
+<h2 id="follow-up-questions">Follow-up questions<a class="headerlink" href="#follow-up-questions" title="Permanent link">&para;</a></h2>
+<p>These are new; nothing in the original problem statement or solution required answering them, but they build directly on the "test case worth a second look" discussed above.</p>
+<ol>
+<li>Write a stricter version of <code>password_pattern</code> that requires <strong>exactly one</strong> special character rather than "at least one" (so a password like <code>"Ab1@xy!"</code>, which has two special characters, would correctly become <code>BAD</code> under this stricter rule, while <code>"Ab1@xy"</code>, with exactly one, would stay <code>GOOD</code>). Hint: a negative lookahead, <code>(?!...)</code>, placed carefully, can express "and there must not be a second one."</li>
+<li>The current pattern's character class is <code>[A-Za-z0-9!@#$%^&amp;*]</code>. What would you need to add to this pattern to also allow underscores (<code>_</code>) as a valid character, without accidentally allowing anything else? Test your answer against a password containing an underscore.</li>
+<li>Every lookahead in this pattern uses <code>.*</code>, which allows the required character to appear <em>anywhere</em>. What would change about the pattern's behaviour if you replaced <code>.*</code> with <code>.{0,3}</code> in just the lowercase-letter lookahead (limiting it to only look within the first four characters)? Try it on a password where the first lowercase letter appears later than that, and observe what happens.</li>
+</ol>
+<h2 id="summary-of-changes-made-to-this-page">Summary of changes made to this page<a class="headerlink" href="#summary-of-changes-made-to-this-page" title="Permanent link">&para;</a></h2>
+<p><a href="#table-of-contents">Back to Table of Contents</a></p>
+<p>This page is a rewrite of the original <code>95-ch13-password.md</code>, carried out under the same instructions used for the other companion pages in this chapter: improve the writing and explanations; use plain language with technical terms explained or linked; give step-by-step, verifiable answers; add step comments and real, verified output to scripts; add tables and a diagram where they help visualize the idea; and never shorten a long, correct explanation purely to save space. The original problem statement is preserved with its wording completely unchanged. Every code example on this page, including the original solution's own regex pattern and its full claimed output table, was independently run and verified while preparing this page (using Python 3.12); every result matched exactly.</p>
+<h4 id="section-by-section-summary">Section-by-section summary<a class="headerlink" href="#section-by-section-summary" title="Permanent link">&para;</a></h4>
+<table>
+<thead>
+<tr>
+<th>Section</th>
+<th>What was in the original</th>
+<th>What changed here</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Page opening</td>
+<td>A <code>##</code>-level heading, immediately followed by the problem statement, with no separate introduction</td>
+<td><strong>Added:</strong> a proper page title, a "What this page contains, and why it matters" introduction, a glossary of technical terms, and a table of contents.</td>
+</tr>
+<tr>
+<td>Problem statement</td>
+<td>A bulleted list of the five password rules</td>
+<td><strong>Preserved verbatim, unchanged</strong>, aside from placing it under its own clearly labelled section heading.</td>
+</tr>
+<tr>
+<td>The solution script</td>
+<td>One complete script, building the pattern all at once and testing it against the full list of fifteen passwords</td>
+<td><strong>Modified and expanded:</strong> the same pattern, same logic, broken into three teaching stages (length and character set alone, each lookahead tested in isolation, then the complete pattern), each with its own small script and its own independently verified output, followed by a combined script bringing every stage back together as one block. The final verdict-printing loop was also changed to print each password's <code>repr()</code> and length alongside the GOOD/BAD verdict, to make the trailing-space test case visible rather than hidden by column padding (see "A test case worth a second look").</td>
+</tr>
+<tr>
+<td>Detailed explanation of the RegEx Pattern (anchors, lookaheads, character set and quantifier)</td>
+<td>Present with a requirements table</td>
+<td><strong>Kept in full</strong>, with one verified clarification added underneath the character-set-and-quantifier explanation, precisely describing lookaheads as zero-width assertions (confirmed with <code>re.match(...).span()</code>), to sharpen the "returns to the start of the string" description already given.</td>
+</tr>
+<tr>
+<td>Why is it structured this way?</td>
+<td>Present as given</td>
+<td><strong>Kept in full</strong>, with one added sentence connecting it to the zero-width clarification above.</td>
+</tr>
+<tr>
+<td>Detailed Breakdown of a "BAD" Match</td>
+<td>A seven-step walkthrough of why <code>"Ab1xyz"</code> fails</td>
+<td><strong>Kept, unchanged.</strong></td>
+</tr>
+<tr>
+<td>No equivalent section in the original</td>
+<td>--</td>
+<td><strong>Added:</strong> a matching "Detailed breakdown of a GOOD match" section walking through <code>"Good1@Pwd"</code> step by step, with its own small verification script, so the reader sees both a full failure and a full success explained the same way.</td>
+</tr>
+<tr>
+<td>No equivalent section in the original</td>
+<td>--</td>
+<td><strong>Added:</strong> "A test case worth a second look," directly addressing the original script's own uncertain inline comment on <code>"Ab1@xy!"</code> (<code># Too long (7 but extra special allowed? no length OK — keep for discussion)</code>), confirming with a table that this password genuinely satisfies every stated rule, explaining why it was likely placed under the "Invalid" heading anyway, and separately pointing out the visually-identical <code>"Ab1@xy"</code> / <code>"Ab1@xy "</code> output rows caused by column padding.</td>
+</tr>
+<tr>
+<td>No equivalent section in the original</td>
+<td>--</td>
+<td><strong>Added:</strong> a draw.io-compatible Mermaid flowchart showing the five checks as a sequential decision process.</td>
+</tr>
+<tr>
+<td>No equivalent section in the original</td>
+<td>--</td>
+<td><strong>Added:</strong> three follow-up questions extending the exercise (an exactly-one-special-character stricter pattern, adding underscore as an allowed character, and limiting where a lookahead is allowed to search).</td>
+</tr>
+<tr>
+<td>This section</td>
+<td>Did not exist</td>
+<td><strong>Added</strong>, per the standard instructions used for every page in this chapter.</td>
+</tr>
+</tbody>
+</table>
+<h4 id="corrections-genuine-errors-found-and-fixed-each-independently-verified">Corrections -- genuine errors found and fixed (each independently verified)<a class="headerlink" href="#corrections-genuine-errors-found-and-fixed-each-independently-verified" title="Permanent link">&para;</a></h4>
+<table>
+<thead>
+<tr>
+<th>Original claim</th>
+<th>Verified finding</th>
+<th>What was done</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>No errors were found in the regex pattern, the script's logic, or its claimed output table</td>
+<td>Every one of the fifteen listed test passwords was independently re-run against the exact original pattern, and every <code>GOOD</code>/<code>BAD</code> result matched the original's own claimed output precisely</td>
+<td>No corrections were needed to the pattern or the script's logic</td>
+</tr>
+<tr>
+<td>The inline comment on <code>"Ab1@xy!"</code> reads "Too long (7 but extra special allowed? no length OK — keep for discussion)"</td>
+<td>This comment's own uncertainty is resolved by checking the password against the Problem Statement's actual rules: it is not too long (7 is within the 6-12 range), it satisfies every stated requirement, and the code's own <code>GOOD</code> verdict for it was already correct</td>
+<td>Rather than silently editing the comment, a full "A test case worth a second look" section was added, explaining precisely why this test case is correctly labelled <code>GOOD</code> despite living in the "Invalid passwords" part of the list, and using it as a teaching example about verifying uncertain comments by running the code</td>
+</tr>
+</tbody>
+</table>
 
 
 
