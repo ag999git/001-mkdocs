@@ -8664,13 +8664,7 @@ IndexError
 <p><a href="#table-of-contents">Back to Table of Contents</a></p>
 <h3 id="a2-how-does-python-normally-respond-to-unhandled-exceptions">A2. How Does Python Normally Respond to Unhandled Exceptions?<a class="headerlink" href="#a2-how-does-python-normally-respond-to-unhandled-exceptions" title="Permanent link">&para;</a></h3>
 <p>By default, Python follows this sequence:</p>
-<div class="highlight"><pre><span></span><code>flowchart TD
-    A[An error occurs] --&gt; B[Python searches for a matching try-except]
-    B --&gt; C[No handler is found anywhere]
-    C --&gt; D[Python calls sys.excepthook]
-    D --&gt; E[The default hook prints a traceback to stderr]
-    E --&gt; F[The program stops with exit status 1]
-</code></pre></div>
+<p><img alt="Flowchart" src="../../resources/ch14-tkinter-September-2026-uncaught-exceptions-001.png" /></p>
 <p>Notice the fourth box, which the short version of this story usually leaves out. Printing the traceback is not something Python does directly — it is done <em>by</em> <code>sys.excepthook</code>, which is simply the function Python happens to have installed there by default. That is exactly why replacing it changes what happens.</p>
 <p>Example:</p>
 <div class="highlight"><pre><span></span><code><span class="n">x</span> <span class="o">=</span> <span class="mi">10</span> <span class="o">/</span> <span class="mi">0</span>
@@ -8703,10 +8697,7 @@ ZeroDivisionError: division by zero
 <p><strong>what Python should do when an uncaught exception occurs</strong></p>
 </blockquote>
 <p>By default:</p>
-<div class="highlight"><pre><span></span><code>flowchart LR
-    A[Uncaught error] --&gt; B[Traceback shown]
-    B --&gt; C[Program crashes]
-</code></pre></div>
+<p><img alt="Flowchart" src="../../resources/ch14-tkinter-September-2026-uncaught-exceptions-002.png" /></p>
 <p>However, programmers can replace Python’s default behaviour:</p>
 <div class="highlight"><pre><span></span><code><span class="n">sys</span><span class="o">.</span><span class="n">excepthook</span> <span class="o">=</span> <span class="n">handle_uncaught</span>
 </code></pre></div>
@@ -8824,16 +8815,9 @@ ZeroDivisionError: division by zero
 <p>Hence: <strong>global exception handling</strong>.</p>
 <p><strong>Visual difference</strong></p>
 <p>Local handling:</p>
-<div class="highlight"><pre><span></span><code>flowchart LR
-    A1[Error occurs] --&gt; B1[A try-except surrounds this code]
-    B1 --&gt; C1[Handled right here]
-</code></pre></div>
+<p>![Flowchart}(../resources/ch14-tkinter-September-2026-uncaught-exceptions-003.png)</p>
 <p>Global handling:</p>
-<div class="highlight"><pre><span></span><code>flowchart LR
-    A2[Error occurs] --&gt; B2[No try-except is found anywhere]
-    B2 --&gt; C2[sys.excepthook is called]
-    C2 --&gt; D2[Your global handler runs]
-</code></pre></div>
+<p><img alt="Flowchart" src="../../resources/ch14-tkinter-September-2026-uncaught-exceptions-004.png" /></p>
 <p><strong>They are partners, not rivals.</strong> It is tempting to conclude that a global handler makes <code>try-except</code> unnecessary. It does not, and it is worth understanding why. A <code>try-except</code> block knows exactly what went wrong and exactly where, so it can recover intelligently — ask the user to retype a number, fall back to a default setting, retry a download. A global handler knows only that <em>something</em> failed <em>somewhere</em>, so all it can sensibly do is record the problem and apologise. Use <code>try-except</code> wherever you can foresee a failure, and treat the global handler as the safety net for everything you could not foresee.</p>
 <p><a href="#table-of-contents">Back to Table of Contents</a></p>
 <h3 id="a5-why-do-gui-applications-prefer-friendly-popup-messages">A5. Why Do GUI Applications Prefer Friendly Popup Messages?<a class="headerlink" href="#a5-why-do-gui-applications-prefer-friendly-popup-messages" title="Permanent link">&para;</a></h3>
