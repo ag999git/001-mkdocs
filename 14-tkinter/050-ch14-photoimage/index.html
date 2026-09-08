@@ -25,7 +25,7 @@
     
     
       
-        <title>Research / Project Question - Python 999</title>
+        <title>Why Tkinter Images Disappear: PhotoImage, Variables, and Garbage Collection - Python 999</title>
       
     
     
@@ -82,7 +82,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#research-project-question" class="md-skip">
+        <a href="#why-tkinter-images-disappear-photoimage-variables-and-garbage-collection" class="md-skip">
           Skip to content
         </a>
       
@@ -118,7 +118,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              Research / Project Question
+              Why Tkinter Images Disappear: PhotoImage, Variables, and Garbage Collection
             
           </span>
         </div>
@@ -5400,7 +5400,7 @@
   <span class="md-ellipsis">
     
   
-    Research / Project Question
+    Why Tkinter Images Disappear: PhotoImage, Variables, and Garbage Collection
   
 
     
@@ -5418,7 +5418,7 @@
   <span class="md-ellipsis">
     
   
-    Research / Project Question
+    Why Tkinter Images Disappear: PhotoImage, Variables, and Garbage Collection
   
 
     
@@ -5444,83 +5444,22 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#investigating-image-persistence-in-tkinter-photoimage-bug" class="md-nav__link">
+  <a href="#about-this-page" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Investigating Image Persistence in Tkinter (PhotoImage Bug)
+        About This Page
       
     </span>
   </a>
   
-    <nav class="md-nav" aria-label="Investigating Image Persistence in Tkinter (PhotoImage Bug)">
+    <nav class="md-nav" aria-label="About This Page">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#your-task" class="md-nav__link">
+  <a href="#key-terms-used-on-this-page" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Your Task
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#part-a-theory-research-component" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Part A — Theory (Research Component)
-      
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="Part A — Theory (Research Component)">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#incorrect-approach" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Incorrect approach
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#correct-approach" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Correct approach
-      
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#part-b-script-writing" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Part B — Script Writing
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#part-c-reflection" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Part C — Reflection
+        Key Terms Used On This Page
       
     </span>
   </a>
@@ -8155,6 +8094,61 @@
   
 
 
+<h1 id="why-tkinter-images-disappear-photoimage-variables-and-garbage-collection">Why Tkinter Images Disappear: <code>PhotoImage</code>, Variables, and Garbage Collection<a class="headerlink" href="#why-tkinter-images-disappear-photoimage-variables-and-garbage-collection" title="Permanent link">&para;</a></h1>
+<h2 id="about-this-page">About This Page<a class="headerlink" href="#about-this-page" title="Permanent link">&para;</a></h2>
+<p>This page is part of the extended, GitHub-only material that accompanies <strong>Chapter 14 (Tkinter and GUI Programming)</strong> of the printed textbook. It contains one of the chapter's research and project questions exactly as it appears in the book, followed by a full worked answer: the theory behind the problem, a complete model program, and a reflection.</p>
+<p>The problem itself is a famous one. A student writes what looks like perfectly correct code to put a picture in a window, runs it, and gets a window with an empty gap where the picture should be. Nothing crashes. No error message appears. The picture is simply not there. Because there is no error to search for, this can cost a beginner an entire evening.</p>
+<p><strong>Why this matters for Python in general:</strong> the cause has almost nothing to do with pictures, and everything to do with two ideas at the heart of the Python language — <strong>references</strong> (which names are currently pointing at an object) and <strong>garbage collection</strong> (Python automatically throwing away objects that nothing points at any more). Most of the time Python's automatic cleanup is invisible and helpful, and you never have to think about it. This is one of the rare, instructive cases where you can actually <em>see</em> it happen. Understanding it here will make you a better Python programmer everywhere else too.</p>
+<p><strong>Why this matters for this chapter in particular:</strong> the printed chapter shows how to place text, buttons, and frames in a window. Adding a picture looks like it should be just as easy, and in terms of typing it is — but it is the first place in the chapter where the invisible link between a Python object and what is drawn on the screen can quietly break. Once you understand why, you will also understand why experienced Tkinter programmers write <code>self.logo = tk.PhotoImage(...)</code> inside classes, a line that otherwise looks pointlessly verbose.</p>
+<p>Every claim, error message, and block of output on this page was produced by actually running the code on Python 3.12 with Tk 8.6.14. </p>
+<h3 id="key-terms-used-on-this-page">Key Terms Used On This Page<a class="headerlink" href="#key-terms-used-on-this-page" title="Permanent link">&para;</a></h3>
+<table>
+<thead>
+<tr>
+<th>Term</th>
+<th>In plain words</th>
+<th>Learn more</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Object</td>
+<td>Any value Python is holding in memory — a number, a list, a window, or in this case a loaded picture.</td>
+<td><a href="https://docs.python.org/3/reference/datamodel.html">Python docs: Data model</a></td>
+</tr>
+<tr>
+<td>Reference / variable</td>
+<td>A name that points at an object. Writing <code>img = tk.PhotoImage(...)</code> makes the name <code>img</code> point at the picture object. An object can have several names pointing at it, or none.</td>
+<td><a href="https://docs.python.org/3/reference/datamodel.html">Python docs: Data model</a></td>
+</tr>
+<tr>
+<td>Reference count</td>
+<td>The number of names (and other objects) currently pointing at an object. When this drops to zero, Python knows nothing can reach the object any more.</td>
+<td><a href="https://docs.python.org/3/extending/extending.html#reference-counts">Python docs: Reference counts</a></td>
+</tr>
+<tr>
+<td>Garbage collection</td>
+<td>Python's automatic cleanup: it frees the memory used by objects that nothing points at any more, without you having to ask.</td>
+<td><a href="https://en.wikipedia.org/wiki/Garbage_collection_%28computer_science%29">Wikipedia: Garbage collection</a></td>
+</tr>
+<tr>
+<td>Tcl/Tk</td>
+<td>Tkinter is a Python layer sitting on top of an older toolkit called Tk. Tk actually draws the window. Understanding that there are <em>two</em> systems involved — Python and Tk — is the key to this whole page.</td>
+<td><a href="https://docs.python.org/3/library/tkinter.html">Python docs: tkinter</a></td>
+</tr>
+<tr>
+<td><code>TclError</code></td>
+<td>The error Tkinter raises when Tk cannot do what it was asked — for example, when it is told to draw an image that no longer exists.</td>
+<td><a href="https://docs.python.org/3/library/tkinter.html">Python docs: tkinter</a></td>
+</tr>
+<tr>
+<td>Pillow (PIL)</td>
+<td>A separate, widely used Python imaging library, installed with <code>pip install pillow</code>. Tkinter's own <code>PhotoImage</code> handles only a few file formats; Pillow handles almost all of them.</td>
+<td><a href="https://pillow.readthedocs.io/">Pillow documentation</a></td>
+</tr>
+</tbody>
+</table>
+<hr />
 <h1 id="research-project-question">Research / Project Question<a class="headerlink" href="#research-project-question" title="Permanent link">&para;</a></h1>
 <h2 id="investigating-image-persistence-in-tkinter-photoimage-bug">Investigating Image Persistence in Tkinter (<code>PhotoImage</code> Bug)<a class="headerlink" href="#investigating-image-persistence-in-tkinter-photoimage-bug" title="Permanent link">&para;</a></h2>
 <p>When beginners use images in Tkinter, they sometimes observe a strange problem:</p>
@@ -8207,105 +8201,642 @@
 </blockquote>
 <p>Explain briefly.</p>
 <hr />
-<h1 id="answer-theory-write-up">Answer (Theory/ Write-up)<a class="headerlink" href="#answer-theory-write-up" title="Permanent link">&para;</a></h1>
+<h3 id="optional-follow-up-questions-not-part-of-the-printed-book">Optional Follow-Up Questions (not part of the printed book)<a class="headerlink" href="#optional-follow-up-questions-not-part-of-the-printed-book" title="Permanent link">&para;</a></h3>
+<p>These extra questions are included only on this online page, for readers who want to push the investigation further. They are not required in order to answer the question above.</p>
+<ul>
+<li><strong>F1.</strong> A <code>Label</code> does not store the picture itself — it stores only a short name such as <code>pyimage1</code>. Print that name with <code>print(my_label.cget("image"))</code> for both a working and a broken image, and explain what the two results tell you.</li>
+<li><strong>F2.</strong> Move the image-loading code inside a function, so that the image is created as a local variable. Does the picture still appear after the function returns? Explain your result using the idea of reference counts.</li>
+<li><strong>F3.</strong> Try loading a <code>.jpg</code> file with <code>tk.PhotoImage()</code>. Write down the exact error message you get, and explain what it means. What would you need to install in order to display JPEG images?</li>
+<li><strong>F4.</strong> Suppose you want to show ten different pictures in ten different labels. What would go wrong if you reused the same variable name <code>img</code> in a loop for all ten, and how would you fix it?</li>
+</ul>
+<hr />
+<h1 id="answer-theory-write-up">Answer (Theory / Write-Up)<a class="headerlink" href="#answer-theory-write-up" title="Permanent link">&para;</a></h1>
 <h2 id="understanding-photoimage-persistence-in-tkinter">Understanding <code>PhotoImage()</code> Persistence in Tkinter<a class="headerlink" href="#understanding-photoimage-persistence-in-tkinter" title="Permanent link">&para;</a></h2>
-<p>Tkinter allows images to be displayed in GUI applications using the <code>PhotoImage()</code> class.</p>
+<p>Tkinter lets a program display pictures inside a window using the <code>PhotoImage()</code> class. The class does two jobs at once, and keeping them separate in your mind is the key to this whole topic:</p>
+<ol>
+<li>It reads a picture file from your disk and loads it into memory.</li>
+<li>It registers that loaded picture with Tk, the drawing engine underneath Tkinter, under a short internal name such as <code>pyimage1</code>.</li>
+</ol>
+<p>A basic example:</p>
+<div class="highlight"><pre><span></span><code><span class="n">img</span> <span class="o">=</span> <span class="n">tk</span><span class="o">.</span><span class="n">PhotoImage</span><span class="p">(</span><span class="n">file</span><span class="o">=</span><span class="s2">"flower.png"</span><span class="p">)</span>
+</code></pre></div>
+<p>This loads the image into memory and makes it available for any widget to display.</p>
+<h2 id="answer-to-part-a-theory">Answer to Part A — Theory<a class="headerlink" href="#answer-to-part-a-theory" title="Permanent link">&para;</a></h2>
+<h3 id="a1-what-is-photoimage-in-tkinter">A1. What is <code>PhotoImage()</code> in Tkinter?<a class="headerlink" href="#a1-what-is-photoimage-in-tkinter" title="Permanent link">&para;</a></h3>
+<p><code>PhotoImage</code> is Tkinter's built-in class for holding a picture that a widget can display. You create one by giving it a file to read:</p>
+<div class="highlight"><pre><span></span><code><span class="n">img</span> <span class="o">=</span> <span class="n">tk</span><span class="o">.</span><span class="n">PhotoImage</span><span class="p">(</span><span class="n">file</span><span class="o">=</span><span class="s2">"flower.png"</span><span class="p">)</span>
+</code></pre></div>
+<p>You can also create a blank picture of a given size and paint colours onto it yourself, without any file at all:</p>
+<div class="highlight"><pre><span></span><code><span class="n">img</span> <span class="o">=</span> <span class="n">tk</span><span class="o">.</span><span class="n">PhotoImage</span><span class="p">(</span><span class="n">width</span><span class="o">=</span><span class="mi">120</span><span class="p">,</span> <span class="n">height</span><span class="o">=</span><span class="mi">90</span><span class="p">)</span>
+<span class="n">img</span><span class="o">.</span><span class="n">put</span><span class="p">(</span><span class="s2">"lightblue"</span><span class="p">,</span> <span class="n">to</span><span class="o">=</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">120</span><span class="p">,</span> <span class="mi">90</span><span class="p">))</span>
+</code></pre></div>
+<p>Two useful details that beginners frequently trip over:</p>
+<p><strong>It supports only a few file formats.</strong> Tkinter's own <code>PhotoImage</code> is not a general-purpose image library. The table below was confirmed by actually loading each format on Tk version 8.6.14:</p>
+<table>
+<thead>
+<tr>
+<th>Format</th>
+<th>Typical extension</th>
+<th>Works with <code>tk.PhotoImage</code>?</th>
+<th>Notes</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>PNG</td>
+<td><code>.png</code></td>
+<td>Yes (Tk 8.6 and later)</td>
+<td>The best everyday choice. Supports transparency.</td>
+</tr>
+<tr>
+<td>GIF</td>
+<td><code>.gif</code></td>
+<td>Yes</td>
+<td>An animated GIF loads as a single frame at a time, not as an animation.</td>
+</tr>
+<tr>
+<td>PGM / PPM</td>
+<td><code>.pgm</code>, <code>.ppm</code></td>
+<td>Yes</td>
+<td>Very old, very simple formats; rarely used today.</td>
+</tr>
+<tr>
+<td>JPEG</td>
+<td><code>.jpg</code>, <code>.jpeg</code></td>
+<td><strong>No</strong></td>
+<td>Raises <code>_tkinter.TclError: couldn't recognize data in image file "flower.jpg"</code>.</td>
+</tr>
+<tr>
+<td>BMP, TIFF, WEBP, SVG</td>
+<td>various</td>
+<td><strong>No</strong></td>
+<td>Not supported by <code>PhotoImage</code> at all.</td>
+</tr>
+</tbody>
+</table>
+<p>If you need JPEG or any other format, either convert the file to PNG first, or install the <a href="https://pillow.readthedocs.io/">Pillow</a> library and use its drop-in replacement:</p>
+<div class="highlight"><pre><span></span><code><span class="c1"># Requires: pip install pillow</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">PIL</span><span class="w"> </span><span class="kn">import</span> <span class="n">Image</span><span class="p">,</span> <span class="n">ImageTk</span>
+<span class="n">pil_image</span> <span class="o">=</span> <span class="n">Image</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="s2">"flower.jpg"</span><span class="p">)</span>
+<span class="n">img</span> <span class="o">=</span> <span class="n">ImageTk</span><span class="o">.</span><span class="n">PhotoImage</span><span class="p">(</span><span class="n">pil_image</span><span class="p">)</span>     <span class="c1"># this variable must still be kept alive</span>
+</code></pre></div>
+<p>Note carefully: Pillow solves the <em>file format</em> problem. It does <strong>not</strong> solve the disappearing-image problem discussed on this page. Everything below applies to <code>ImageTk.PhotoImage</code> exactly as it applies to <code>tk.PhotoImage</code>.</p>
+<p><strong>It needs a window to exist first.</strong> A <code>PhotoImage</code> can only be created after you have created your root window with <code>tk.Tk()</code>. Creating one before that raises an error, because there is no Tk engine yet to register the picture with.</p>
+<h3 id="a2-which-widgets-can-display-images">A2. Which widgets can display images?<a class="headerlink" href="#a2-which-widgets-can-display-images" title="Permanent link">&para;</a></h3>
 <p>Images can be shown inside widgets such as:</p>
 <ul>
 <li><code>Label</code></li>
 <li><code>Button</code></li>
 <li><code>Canvas</code></li>
 </ul>
-<p>Example:
-<div class="highlight"><pre><span></span><code><span class="n">img</span> <span class="o">=</span> <span class="n">tk</span><span class="o">.</span><span class="n">PhotoImage</span><span class="p">(</span><span class="n">file</span><span class="o">=</span><span class="s2">"flower.png"</span><span class="p">)</span>
-</code></pre></div></p>
-<p>This loads an image into memory.</p>
-<h2 id="the-common-beginner-problem">The Common Beginner Problem<a class="headerlink" href="#the-common-beginner-problem" title="Permanent link">&para;</a></h2>
-<p>Sometimes the image:
-- does not appear. or
-- appears briefly and disappears even though the code looks correct.</p>
-<p>Example of problematic code:</p>
-<p><div class="highlight"><pre><span></span><code><span class="n">label</span> <span class="o">=</span> <span class="n">tk</span><span class="o">.</span><span class="n">Label</span><span class="p">(</span><span class="n">root</span><span class="p">,</span> <span class="n">image</span><span class="o">=</span><span class="n">tk</span><span class="o">.</span><span class="n">PhotoImage</span><span class="p">(</span><span class="n">file</span><span class="o">=</span><span class="s2">"flower.png"</span><span class="p">))</span> 
+<p>Those three cover almost everything a beginner needs. For completeness, here is the fuller list, with the way each one attaches the picture:</p>
+<table>
+<thead>
+<tr>
+<th>Widget</th>
+<th>How the image is attached</th>
+<th>Typical use</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>tk.Label</code></td>
+<td><code>image=img</code> option</td>
+<td>Displaying a picture, logo, or icon. The most common choice.</td>
+</tr>
+<tr>
+<td><code>tk.Button</code></td>
+<td><code>image=img</code> option, optionally with <code>compound="left"</code> to show text and picture together</td>
+<td>Toolbar buttons and icon buttons.</td>
+</tr>
+<tr>
+<td><code>tk.Canvas</code></td>
+<td><code>canvas.create_image(x, y, image=img)</code></td>
+<td>Placing a picture at exact coordinates, or drawing lines and shapes on top of it.</td>
+</tr>
+<tr>
+<td><code>tk.Checkbutton</code>, <code>tk.Radiobutton</code></td>
+<td><code>image=img</code> and <code>selectimage=img2</code></td>
+<td>Custom-looking toggles that change picture when selected.</td>
+</tr>
+<tr>
+<td><code>tk.Menu</code></td>
+<td><code>image=img</code> on a menu entry</td>
+<td>Small icons beside menu commands.</td>
+</tr>
+<tr>
+<td><code>tk.Text</code></td>
+<td><code>text_widget.image_create(index, image=img)</code></td>
+<td>Inserting a picture inline, in the middle of flowing text.</td>
+</tr>
+<tr>
+<td>The window itself</td>
+<td><code>root.iconphoto(True, img)</code></td>
+<td>Setting the application's own icon in the title bar and taskbar.</td>
+</tr>
+</tbody>
+</table>
+<p>Every single one of these is affected by the disappearing-image problem, because they all work the same way internally, as explained next.</p>
+<h3 id="a3-why-does-the-image-sometimes-disappear">A3. Why does the image sometimes disappear?<a class="headerlink" href="#a3-why-does-the-image-sometimes-disappear" title="Permanent link">&para;</a></h3>
+<p>This is the heart of the question, so it is worth going slowly.</p>
+<p><strong>The one-sentence answer:</strong> a widget does not store the picture — it stores only the picture's <em>name</em>. Nothing on the Tkinter side counts as a reference for Python's purposes, so if your own code does not keep a variable pointing at the <code>PhotoImage</code> object, Python throws the object away, which also destroys the picture that the widget was relying on.</p>
+<p>Here is the problematic code:</p>
+<div class="highlight"><pre><span></span><code><span class="n">label</span> <span class="o">=</span> <span class="n">tk</span><span class="o">.</span><span class="n">Label</span><span class="p">(</span><span class="n">root</span><span class="p">,</span> <span class="n">image</span><span class="o">=</span><span class="n">tk</span><span class="o">.</span><span class="n">PhotoImage</span><span class="p">(</span><span class="n">file</span><span class="o">=</span><span class="s2">"flower.png"</span><span class="p">))</span> 
 </code></pre></div>
-Why? Because:</p>
-<div class="highlight"><pre><span></span><code><span class="n">Image</span> <span class="n">created</span><span class="err">→</span> <span class="n">No</span> <span class="n">variable</span> <span class="n">stores</span> <span class="n">it</span><span class="err">→</span> <span class="n">Python</span> <span class="n">removes</span> <span class="nb">object</span> <span class="kn">from</span><span class="w"> </span><span class="nn">memory</span><span class="err">→</span> <span class="n">Image</span> <span class="n">disappears</span>
-</code></pre></div>
-<p>This automatic memory cleanup is called:</p>
-<h2 id="what-is-garbage-collection">What is Garbage Collection?<a class="headerlink" href="#what-is-garbage-collection" title="Permanent link">&para;</a></h2>
-<p>Python automatically removes unused objects from memory to save resources. If an object is not referenced by any variable: Python assumes it is no longer needed and deletes it.</p>
-<p>This causes problems with <code>PhotoImage()</code> if the image object is not stored properly.</p>
-<h2 id="correct-solution">Correct Solution<a class="headerlink" href="#correct-solution" title="Permanent link">&para;</a></h2>
-<p>Always store the image in a variable.</p>
-<p>Correct approach:</p>
-<p><div class="highlight"><pre><span></span><code><span class="n">img</span> <span class="o">=</span> <span class="n">tk</span><span class="o">.</span><span class="n">PhotoImage</span><span class="p">(</span><span class="n">file</span><span class="o">=</span><span class="s2">"flower.png"</span><span class="p">)</span>
-</code></pre></div>
-Then attach it to a widget. Example:</p>
-<div class="highlight"><pre><span></span><code><span class="n">label</span> <span class="o">=</span> <span class="n">tk</span><span class="o">.</span><span class="n">Label</span><span class="p">(</span><span class="n">root</span><span class="p">,</span> <span class="n">image</span><span class="o">=</span><span class="n">img</span><span class="p">)</span>
-</code></pre></div>
-<p>Now Python keeps the image alive because:
-<div class="highlight"><pre><span></span><code><span class="n">variable</span> <span class="n">img</span> <span class="n">still</span> <span class="n">references</span> <span class="n">it</span>
-</code></pre></div></p>
-<h2 id="best-practices">Best Practices<a class="headerlink" href="#best-practices" title="Permanent link">&para;</a></h2>
-<ol>
-<li>Always store <code>PhotoImage()</code> in a variable.</li>
-<li>Keep image files in the same folder as the script.</li>
-<li>Use meaningful variable names such as: <code>logo_imgprofile_imgflower_img</code></li>
-</ol>
-<p>instead of something like: <code>img_temp1</code></p>
-<hr />
-<h1 id="model-script-solution">Model Script Solution<a class="headerlink" href="#model-script-solution" title="Permanent link">&para;</a></h1>
+<p>Read that line the way Python reads it, one step at a time:</p>
+<table>
+<thead>
+<tr>
+<th>Step</th>
+<th>What happens</th>
+<th>Is anything pointing at the image object?</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td><code>tk.PhotoImage(file="flower.png")</code> runs. A picture object is created and registered with Tk under the name <code>pyimage1</code>.</td>
+<td>Yes — temporarily, while the line is still being evaluated.</td>
+</tr>
+<tr>
+<td>2</td>
+<td>That object is passed into <code>tk.Label(...)</code> as the <code>image</code> argument. Tkinter converts it to the text string <code>"pyimage1"</code> and hands <em>that string</em> to Tk.</td>
+<td>Yes — still, for a moment longer.</td>
+</tr>
+<tr>
+<td>3</td>
+<td>The <code>tk.Label(...)</code> call finishes and the result is assigned to <code>label</code>. The temporary picture object is now finished with.</td>
+<td><strong>No.</strong> Nothing points at it.</td>
+</tr>
+<tr>
+<td>4</td>
+<td>Python's cleanup runs. The <code>PhotoImage</code> object is deleted, and as it is deleted it tells Tk to delete image <code>pyimage1</code> too.</td>
+<td>The object no longer exists.</td>
+</tr>
+<tr>
+<td>5</td>
+<td>The window is drawn. The label still holds the text <code>"pyimage1"</code>, but there is no longer any image by that name.</td>
+<td>Blank space where the picture should be.</td>
+</tr>
+</tbody>
+</table>
+<p>The crucial point is Step 2. The label never holds the Python object. It holds a short piece of text. From Python's point of view, that text is not a reference to anything, so the object looks completely unused — even though your window visibly depends on it.</p>
+<p>The same idea as a diagram:</p>
+<p><img alt="Flowchart" src="../../resources/ch14-tkinter-September-2026-photoimage-001.png" /></p>
+<p><strong>Seeing it happen for yourself.</strong> The short program below puts the wrong way and the right way side by side in one window, then asks Tkinter directly what each label is holding. This is the most convincing way to understand the problem, because you do not have to take anyone's word for it.</p>
 <div class="highlight"><pre><span></span><code><span class="kn">import</span><span class="w"> </span><span class="nn">tkinter</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">tk</span>
 
-<span class="c1"># Create main window</span>
+<span class="c1"># Step 1: Create the window that will hold both test labels.</span>
 <span class="n">root</span> <span class="o">=</span> <span class="n">tk</span><span class="o">.</span><span class="n">Tk</span><span class="p">()</span>
-<span class="n">root</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s2">"Tkinter Image Demo"</span><span class="p">)</span>
+<span class="n">root</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s2">"Why images disappear - a demonstration"</span><span class="p">)</span>
 
-<span class="c1"># Create a frame to hold image + caption</span>
-<span class="c1"># frame is like a container to group widgets together</span>
-<span class="n">frame</span> <span class="o">=</span> <span class="n">tk</span><span class="o">.</span><span class="n">Frame</span><span class="p">(</span><span class="n">root</span><span class="p">)</span>
-<span class="n">frame</span><span class="o">.</span><span class="n">pack</span><span class="p">(</span><span class="n">padx</span><span class="o">=</span><span class="mi">20</span><span class="p">,</span> <span class="n">pady</span><span class="o">=</span><span class="mi">20</span><span class="p">)</span>
+<span class="c1"># Step 2: THE WRONG WAY - the image is never stored in a variable.</span>
+<span class="c1"># The PhotoImage object is created, handed to the Label, and then</span>
+<span class="c1"># immediately forgotten by Python, because nothing refers to it.</span>
+<span class="n">label_wrong</span> <span class="o">=</span> <span class="n">tk</span><span class="o">.</span><span class="n">Label</span><span class="p">(</span><span class="n">root</span><span class="p">,</span> <span class="n">image</span><span class="o">=</span><span class="n">tk</span><span class="o">.</span><span class="n">PhotoImage</span><span class="p">(</span><span class="n">file</span><span class="o">=</span><span class="s2">"flower.png"</span><span class="p">))</span>
+<span class="n">label_wrong</span><span class="o">.</span><span class="n">pack</span><span class="p">()</span>
+<span class="n">tk</span><span class="o">.</span><span class="n">Label</span><span class="p">(</span><span class="n">root</span><span class="p">,</span> <span class="n">text</span><span class="o">=</span><span class="s2">"Wrong way - blank space above"</span><span class="p">)</span><span class="o">.</span><span class="n">pack</span><span class="p">()</span>
 
-<span class="c1"># Create tiny image in code (50 × 50)</span>
-<span class="n">img</span> <span class="o">=</span> <span class="n">tk</span><span class="o">.</span><span class="n">PhotoImage</span><span class="p">(</span><span class="n">width</span><span class="o">=</span><span class="mi">50</span><span class="p">,</span> <span class="n">height</span><span class="o">=</span><span class="mi">50</span><span class="p">)</span>
+<span class="c1"># Step 3: THE RIGHT WAY - the image is stored in a variable first,</span>
+<span class="c1"># so Python keeps the object alive for as long as the variable exists.</span>
+<span class="n">flower_img</span> <span class="o">=</span> <span class="n">tk</span><span class="o">.</span><span class="n">PhotoImage</span><span class="p">(</span><span class="n">file</span><span class="o">=</span><span class="s2">"flower.png"</span><span class="p">)</span>
+<span class="n">label_right</span> <span class="o">=</span> <span class="n">tk</span><span class="o">.</span><span class="n">Label</span><span class="p">(</span><span class="n">root</span><span class="p">,</span> <span class="n">image</span><span class="o">=</span><span class="n">flower_img</span><span class="p">)</span>
+<span class="n">label_right</span><span class="o">.</span><span class="n">pack</span><span class="p">()</span>
+<span class="n">tk</span><span class="o">.</span><span class="n">Label</span><span class="p">(</span><span class="n">root</span><span class="p">,</span> <span class="n">text</span><span class="o">=</span><span class="s2">"Right way - picture visible above"</span><span class="p">)</span><span class="o">.</span><span class="n">pack</span><span class="p">()</span>
 
-<span class="c1"># Fill image with color</span>
-<span class="n">img</span><span class="o">.</span><span class="n">put</span><span class="p">(</span><span class="s2">"lightblue"</span><span class="p">,</span> <span class="n">to</span><span class="o">=</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">50</span><span class="p">,</span> <span class="mi">50</span><span class="p">))</span>
+<span class="c1"># Step 4: Ask Tkinter what each Label is actually holding.</span>
+<span class="c1"># A Label stores only the image's NAME, never the Python object.</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">"Wrong-way label holds the image name:"</span><span class="p">,</span> <span class="nb">repr</span><span class="p">(</span><span class="n">label_wrong</span><span class="o">.</span><span class="n">cget</span><span class="p">(</span><span class="s2">"image"</span><span class="p">)))</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">"Right-way label holds the image name:"</span><span class="p">,</span> <span class="nb">repr</span><span class="p">(</span><span class="n">label_right</span><span class="o">.</span><span class="n">cget</span><span class="p">(</span><span class="s2">"image"</span><span class="p">)))</span>
 
-<span class="c1"># Display image</span>
-<span class="c1"># Note: The image object (img) must be kept referenced in the code because Tkinter </span>
-<span class="c1"># needs it to display the image. If we create the image inside the Label without </span>
-<span class="c1"># keeping a reference, it may not show up.</span>
-<span class="n">img_label</span> <span class="o">=</span> <span class="n">tk</span><span class="o">.</span><span class="n">Label</span><span class="p">(</span><span class="n">frame</span><span class="p">,</span>
-                     <span class="n">image</span><span class="o">=</span><span class="n">img</span><span class="p">)</span>
+<span class="c1"># Step 5: Ask Tk which image names still exist behind the scenes.</span>
+<span class="n">live_names</span> <span class="o">=</span> <span class="n">root</span><span class="o">.</span><span class="n">tk</span><span class="o">.</span><span class="n">call</span><span class="p">(</span><span class="s2">"image"</span><span class="p">,</span> <span class="s2">"names"</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">"Is the wrong-way image still alive?"</span><span class="p">,</span> <span class="n">label_wrong</span><span class="o">.</span><span class="n">cget</span><span class="p">(</span><span class="s2">"image"</span><span class="p">)</span> <span class="ow">in</span> <span class="n">live_names</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">"Is the right-way image still alive?"</span><span class="p">,</span> <span class="n">label_right</span><span class="o">.</span><span class="n">cget</span><span class="p">(</span><span class="s2">"image"</span><span class="p">)</span> <span class="ow">in</span> <span class="n">live_names</span><span class="p">)</span>
 
-<span class="n">img_label</span><span class="o">.</span><span class="n">pack</span><span class="p">()</span>
+<span class="c1"># Step 6: Prove it by asking Tk to use each name again.</span>
+<span class="k">for</span> <span class="n">label</span><span class="p">,</span> <span class="n">description</span> <span class="ow">in</span> <span class="p">[(</span><span class="n">label_wrong</span><span class="p">,</span> <span class="s2">"wrong way"</span><span class="p">),</span> <span class="p">(</span><span class="n">label_right</span><span class="p">,</span> <span class="s2">"right way"</span><span class="p">)]:</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="n">label</span><span class="o">.</span><span class="n">config</span><span class="p">(</span><span class="n">image</span><span class="o">=</span><span class="n">label</span><span class="o">.</span><span class="n">cget</span><span class="p">(</span><span class="s2">"image"</span><span class="p">))</span>
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"Re-using the </span><span class="si">{</span><span class="n">description</span><span class="si">}</span><span class="s2"> image name: worked fine"</span><span class="p">)</span>
+    <span class="k">except</span> <span class="n">tk</span><span class="o">.</span><span class="n">TclError</span> <span class="k">as</span> <span class="n">error</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"Re-using the </span><span class="si">{</span><span class="n">description</span><span class="si">}</span><span class="s2"> image name: TclError: </span><span class="si">{</span><span class="n">error</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
 
-<span class="c1"># Caption below image </span>
-<span class="c1"># We ensure the caption is created after the image and is packed below it in the frame.</span>
-<span class="n">caption</span> <span class="o">=</span> <span class="n">tk</span><span class="o">.</span><span class="n">Label</span><span class="p">(</span><span class="n">frame</span><span class="p">,</span>
-                   <span class="n">text</span><span class="o">=</span><span class="s2">"Generated Image"</span><span class="p">)</span>
-
-<span class="n">caption</span><span class="o">.</span><span class="n">pack</span><span class="p">(</span><span class="n">pady</span><span class="o">=</span><span class="mi">5</span><span class="p">)</span>  <span class="c1"># No padx needed since it's centered in the frame</span>
-
-<span class="c1"># Start GUI</span>
 <span class="n">root</span><span class="o">.</span><span class="n">mainloop</span><span class="p">()</span>
 </code></pre></div>
-<h2 id="expected-output">Expected Output<a class="headerlink" href="#expected-output" title="Permanent link">&para;</a></h2>
-<p>A window opens displaying:</p>
-<div class="highlight"><pre><span></span><code>Flower Image
-
-(The actual picture depends on the image file used.)
+<p>Running that program prints the following, which is the whole problem captured in six lines:</p>
+<div class="highlight"><pre><span></span><code>Wrong-way label holds the image name: 'pyimage1'
+Right-way label holds the image name: 'pyimage2'
+Is the wrong-way image still alive? False
+Is the right-way image still alive? True
+Re-using the wrong way image name: TclError: image "pyimage1" doesn't exist
+Re-using the right way image name: worked fine
 </code></pre></div>
-<h2 id="reflection-answer">Reflection Answer<a class="headerlink" href="#reflection-answer" title="Permanent link">&para;</a></h2>
-<p>If the image is not stored in a variable:</p>
-<blockquote>
-<p>Python may remove it from memory</p>
-</blockquote>
-<p>through <strong>garbage collection</strong>, causing the image to disappear or fail to display.</p>
+<p>Notice the second-to-last line. The label is confidently holding the name <code>pyimage1</code>, and Tk is equally confident that no such image exists. That mismatch is exactly what an empty gap in your window looks like from the inside.</p>
+<p>One further detail worth knowing, observed in the same test run: the broken label kept the <em>size</em> the picture had given it when it was first created — it simply drew nothing inside that space. So the usual symptom is not a collapsed or missing widget, but an empty rectangle of roughly the right size. That is why the problem is so confusing: the layout looks correct, and only the picture is missing.</p>
+<p><strong>Why "sometimes" and not "always".</strong> The question says images <em>sometimes</em> disappear, and that wording is accurate. The picture survives for exactly as long as something is pointing at it, so the timing of the disappearance depends on where you wrote the code:</p>
+<table>
+<thead>
+<tr>
+<th>Where the image is created</th>
+<th>What the user sees</th>
+<th>Why</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Directly inside the widget call, as in the example above</td>
+<td>Never appears at all</td>
+<td>The object is discarded on the very same line.</td>
+</tr>
+<tr>
+<td>In a variable inside a function, with no other reference</td>
+<td>Appears if the window is drawn before the function returns; otherwise never appears</td>
+<td>Local variables are discarded when the function ends.</td>
+</tr>
+<tr>
+<td>In a variable inside a loop, reusing the same name each time</td>
+<td>Only the last picture survives</td>
+<td>Each new assignment stops the previous object from being pointed at.</td>
+</tr>
+<tr>
+<td>In a normal variable at the top level of the script</td>
+<td>Appears and stays</td>
+<td>The variable lives until the program ends.</td>
+</tr>
+<tr>
+<td>In <code>self.img</code> inside a class, or attached to the widget</td>
+<td>Appears and stays</td>
+<td>The object stays alive as long as the class instance or widget does.</td>
+</tr>
+</tbody>
+</table>
+<p>The second row is the most common real-world version of this bug, and it is worth its own short demonstration:</p>
+<div class="highlight"><pre><span></span><code><span class="c1"># Step 1: A function that loads an image into a LOCAL variable only.</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">make_broken_label</span><span class="p">(</span><span class="n">parent</span><span class="p">):</span>
+    <span class="n">local_img</span> <span class="o">=</span> <span class="n">tk</span><span class="o">.</span><span class="n">PhotoImage</span><span class="p">(</span><span class="n">file</span><span class="o">=</span><span class="s2">"flower.png"</span><span class="p">)</span>   <span class="c1"># only reference to the picture</span>
+    <span class="n">lbl</span> <span class="o">=</span> <span class="n">tk</span><span class="o">.</span><span class="n">Label</span><span class="p">(</span><span class="n">parent</span><span class="p">,</span> <span class="n">image</span><span class="o">=</span><span class="n">local_img</span><span class="p">)</span>
+    <span class="n">lbl</span><span class="o">.</span><span class="n">pack</span><span class="p">()</span>
+    <span class="k">return</span> <span class="n">lbl</span>
+    <span class="c1"># Step 2: The moment this function returns, local_img disappears,</span>
+    <span class="c1"># and the picture is deleted along with it.</span>
+
+<span class="c1"># Step 3: The same function, with one extra line that fixes it.</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">make_working_label</span><span class="p">(</span><span class="n">parent</span><span class="p">):</span>
+    <span class="n">local_img</span> <span class="o">=</span> <span class="n">tk</span><span class="o">.</span><span class="n">PhotoImage</span><span class="p">(</span><span class="n">file</span><span class="o">=</span><span class="s2">"flower.png"</span><span class="p">)</span>
+    <span class="n">lbl</span> <span class="o">=</span> <span class="n">tk</span><span class="o">.</span><span class="n">Label</span><span class="p">(</span><span class="n">parent</span><span class="p">,</span> <span class="n">image</span><span class="o">=</span><span class="n">local_img</span><span class="p">)</span>
+    <span class="n">lbl</span><span class="o">.</span><span class="n">image</span> <span class="o">=</span> <span class="n">local_img</span>      <span class="c1"># Step 4: attach a second reference to the widget</span>
+    <span class="n">lbl</span><span class="o">.</span><span class="n">pack</span><span class="p">()</span>                 <span class="c1"># The widget outlives the function, so now the picture does too.</span>
+    <span class="k">return</span> <span class="n">lbl</span>
+</code></pre></div>
+<p>Verified output when both labels are created and then checked:</p>
+<div class="highlight"><pre><span></span><code>broken label's image name still registered? False
+fixed  label's image name still registered? True
+</code></pre></div>
+<p>The line <code>lbl.image = local_img</code> looks strange, because <code>image</code> is not a real Tkinter attribute and Tkinter never reads it. That is exactly the point. It is just an ordinary Python attribute being used as a place to park a reference, so that the picture stays alive for as long as the widget does. This small trick is used constantly in real Tkinter code.</p>
+<h3 id="a4-what-is-garbage-collection">A4. What is garbage collection?<a class="headerlink" href="#a4-what-is-garbage-collection" title="Permanent link">&para;</a></h3>
+<p>Python automatically removes unused objects from memory to save resources. If an object is not referenced by any variable, Python assumes it is no longer needed and deletes it.</p>
+<p>In slightly more detail: Python keeps a count, for every object, of how many names and containers are currently pointing at it. This is called the <strong>reference count</strong>. Every time you make a new name point at an object the count goes up; every time a name is reassigned, deleted, or goes out of scope, the count goes down. The moment the count reaches zero, the object is unreachable — no code anywhere could ever use it again — so Python frees it immediately, without waiting to be asked.</p>
+<p>This is normally an excellent arrangement, and it is the reason Python programmers almost never have to think about memory at all. Compare it to a library: if no reader has a book on loan and it is not on any shelf list, the library can safely dispose of it.</p>
+<p>The trouble in this particular case is that Tk is holding the picture in a way Python cannot see. Tk knows about the image, and your window depends on it, but Python's count says nobody is pointing at it. So Python does exactly what it was designed to do, and throws away something you very much still needed.</p>
+<p><img alt="Flowchart" src="../../resources/ch14-tkinter-September-2026-photoimage-002.png" /></p>
+<p>This causes problems with <code>PhotoImage()</code> if the image object is not stored properly.</p>
+<h3 id="a5-why-is-storing-the-image-in-a-variable-important">A5. Why is storing the image in a variable important?<a class="headerlink" href="#a5-why-is-storing-the-image-in-a-variable-important" title="Permanent link">&para;</a></h3>
+<p>Because the variable is the only thing standing between your picture and Python's automatic cleanup.</p>
+<p>Storing the image in a variable does one job and one job only: it keeps the reference count above zero. As long as at least one name points at the <code>PhotoImage</code> object, Python will not delete it, so Tk's copy of the picture stays alive, so the widget that names that picture can keep drawing it.</p>
+<p>Read the rule the other way round, because that is the version that will save you time later: <strong>the picture must stay alive for as long as it is on screen, so the variable holding it must live at least as long as the widget showing it.</strong> A variable that disappears at the end of a function is therefore not good enough, unless you park a second reference somewhere longer-lived.</p>
+<h3 id="a6-the-difference-between-the-two-approaches">A6. The difference between the two approaches<a class="headerlink" href="#a6-the-difference-between-the-two-approaches" title="Permanent link">&para;</a></h3>
+<p><strong>Incorrect approach</strong></p>
+<div class="highlight"><pre><span></span><code><span class="n">image</span><span class="o">=</span><span class="n">tk</span><span class="o">.</span><span class="n">PhotoImage</span><span class="p">(</span><span class="n">file</span><span class="o">=</span><span class="s2">"pic.png"</span><span class="p">)</span>
+</code></pre></div>
+<p><strong>Correct approach</strong></p>
+<div class="highlight"><pre><span></span><code><span class="n">img</span> <span class="o">=</span> <span class="n">tk</span><span class="o">.</span><span class="n">PhotoImage</span><span class="p">(</span><span class="n">file</span><span class="o">=</span><span class="s2">"pic.png"</span><span class="p">)</span>
+</code></pre></div>
+<p>The two lines create exactly the same object. The difference is what happens next:</p>
+<table>
+<thead>
+<tr>
+<th></th>
+<th>Incorrect: <code>image=tk.PhotoImage(file="pic.png")</code></th>
+<th>Correct: <code>img = tk.PhotoImage(file="pic.png")</code></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>What the line does</td>
+<td>Creates the picture and passes it straight into a widget as an argument.</td>
+<td>Creates the picture and gives it a name.</td>
+</tr>
+<tr>
+<td>Reference count afterwards</td>
+<td>Zero — the object is unnamed and unreachable.</td>
+<td>One — the name <code>img</code> points at it.</td>
+</tr>
+<tr>
+<td>What Python does next</td>
+<td>Deletes the object immediately.</td>
+<td>Keeps the object.</td>
+</tr>
+<tr>
+<td>What Tk does next</td>
+<td>Deletes the registered picture along with it.</td>
+<td>Keeps the registered picture.</td>
+</tr>
+<tr>
+<td>What the widget holds</td>
+<td>The name of a picture that no longer exists.</td>
+<td>The name of a picture that is alive and well.</td>
+</tr>
+<tr>
+<td>What appears on screen</td>
+<td>Blank space.</td>
+<td>The picture.</td>
+</tr>
+<tr>
+<td>Can you change the picture later?</td>
+<td>No — you have no way to refer to it.</td>
+<td>Yes — <code>img.put(...)</code>, <code>img.width()</code>, and so on all still work.</td>
+</tr>
+</tbody>
+</table>
+<p>The second-to-last row is the visible symptom; the second row is the actual cause. Fixing the second row fixes everything below it.</p>
+<p>Note that the correct version needs one more line to be useful — the widget still has to be told to use it:</p>
+<div class="highlight"><pre><span></span><code><span class="n">img</span> <span class="o">=</span> <span class="n">tk</span><span class="o">.</span><span class="n">PhotoImage</span><span class="p">(</span><span class="n">file</span><span class="o">=</span><span class="s2">"pic.png"</span><span class="p">)</span>
+<span class="n">label</span> <span class="o">=</span> <span class="n">tk</span><span class="o">.</span><span class="n">Label</span><span class="p">(</span><span class="n">root</span><span class="p">,</span> <span class="n">image</span><span class="o">=</span><span class="n">img</span><span class="p">)</span>
+</code></pre></div>
+<p>Now Python keeps the image alive, because the variable <code>img</code> still refers to it.</p>
+<h3 id="a7-three-rules-and-best-practices-for-displaying-images-in-tkinter">A7. Three rules and best practices for displaying images in Tkinter<a class="headerlink" href="#a7-three-rules-and-best-practices-for-displaying-images-in-tkinter" title="Permanent link">&para;</a></h3>
+<ol>
+<li><strong>Always store <code>PhotoImage()</code> in a variable</strong> — and make sure that variable lives at least as long as the widget showing the picture. Inside a function, add <code>widget.image = img</code>; inside a class, use <code>self.img = ...</code>.</li>
+<li>
+<p><strong>Keep image files in the same folder as the script</strong>, or build a reliable path instead of trusting the current working directory. A program started by double-clicking, or run from a different folder, does not always look where you expect. The safe pattern is:</p>
+<div class="highlight"><pre><span></span><code><span class="kn">import</span><span class="w"> </span><span class="nn">os</span>
+<span class="n">here</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">dirname</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">abspath</span><span class="p">(</span><span class="vm">__file__</span><span class="p">))</span>   <span class="c1"># the folder this script is in</span>
+<span class="n">img</span> <span class="o">=</span> <span class="n">tk</span><span class="o">.</span><span class="n">PhotoImage</span><span class="p">(</span><span class="n">file</span><span class="o">=</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">here</span><span class="p">,</span> <span class="s2">"flower.png"</span><span class="p">))</span>
+</code></pre></div>
+</li>
+<li>
+<p><strong>Use meaningful variable names</strong> such as <code>logo_img</code>, <code>profile_img</code>, or <code>flower_img</code>, instead of something like <code>img_temp1</code>. This matters more than usual here: because these variables exist purely to keep pictures alive, a vague name makes it far too easy for someone later to "tidy up" what looks like an unused variable and silently break the display.</p>
+</li>
+</ol>
+<p>Three more rules, once the first three are second nature:</p>
+<ol>
+<li><strong>Use PNG (or GIF) files with <code>tk.PhotoImage</code>.</strong> For JPEG or anything else, install Pillow and use <code>ImageTk.PhotoImage</code>, remembering that the reference rule still applies.</li>
+<li><strong>Create the root window before creating any image.</strong> <code>tk.PhotoImage</code> needs a live Tk engine to register itself with.</li>
+<li><strong>When showing many pictures, store them in a list or dictionary</strong> rather than reusing one variable name in a loop — otherwise each new assignment discards the previous picture, and only the last one survives.</li>
+</ol>
+<hr />
+<h2 id="answer-to-part-b-the-model-script">Answer to Part B — The Model Script<a class="headerlink" href="#answer-to-part-b-the-model-script" title="Permanent link">&para;</a></h2>
+<p>The question asks for a program that loads <code>flower.png</code> from the same folder, shows it in a <code>Label</code>, keeps it in a variable, and puts a caption underneath. The script is built up step by step below, and then given as one complete file in Section B.6.</p>
+<p>Teaching-only <code>print()</code> statements have been added at each step. A window with a picture in it does not normally print anything, so these lines let you watch the program's progress in the terminal you launched it from, and confirm that the image really is alive.</p>
+<h3 id="b1-imports-and-the-main-window">B.1 Imports and the Main Window<a class="headerlink" href="#b1-imports-and-the-main-window" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code><span class="c1"># Step 1: Import the modules we need.</span>
+<span class="c1"># tkinter builds the window; os is used to check that the image file exists.</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">os</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">tkinter</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">tk</span>
+
+<span class="c1"># Step 2: Create the main application window and give it a title.</span>
+<span class="n">root</span> <span class="o">=</span> <span class="n">tk</span><span class="o">.</span><span class="n">Tk</span><span class="p">()</span>
+<span class="n">root</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s2">"Tkinter Image Demo"</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">"Step 1 complete: main window created"</span><span class="p">)</span>
+</code></pre></div>
+<h3 id="b2-a-frame-to-group-the-image-and-its-caption">B.2 A Frame to Group the Image and Its Caption<a class="headerlink" href="#b2-a-frame-to-group-the-image-and-its-caption" title="Permanent link">&para;</a></h3>
+<p>A <code>Frame</code> is a container widget: an invisible box used to group related widgets so they can be positioned together. Putting the picture and its caption in the same frame keeps them tied to each other.</p>
+<div class="highlight"><pre><span></span><code><span class="c1"># Step 3: Create a Frame to hold the image and its caption together,</span>
+<span class="c1"># with some breathing space around the outside.</span>
+<span class="n">frame</span> <span class="o">=</span> <span class="n">tk</span><span class="o">.</span><span class="n">Frame</span><span class="p">(</span><span class="n">root</span><span class="p">)</span>
+<span class="n">frame</span><span class="o">.</span><span class="n">pack</span><span class="p">(</span><span class="n">padx</span><span class="o">=</span><span class="mi">20</span><span class="p">,</span> <span class="n">pady</span><span class="o">=</span><span class="mi">20</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">"Step 2 complete: frame created to group the image and caption"</span><span class="p">)</span>
+</code></pre></div>
+<h3 id="b3-checking-the-file-before-loading-it">B.3 Checking the File Before Loading It<a class="headerlink" href="#b3-checking-the-file-before-loading-it" title="Permanent link">&para;</a></h3>
+<p>This step is not strictly required by the question, but it turns a confusing failure into a clear message. If <code>flower.png</code> is missing, <code>tk.PhotoImage</code> raises a <code>TclError</code> that beginners often misread as a problem with their code rather than a missing file.</p>
+<div class="highlight"><pre><span></span><code><span class="c1"># Step 4: Check that the image file is actually there before loading it.</span>
+<span class="c1"># This turns a confusing error into a clear, readable message.</span>
+<span class="n">image_file</span> <span class="o">=</span> <span class="s2">"flower.png"</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"Step 3: looking for '</span><span class="si">{</span><span class="n">image_file</span><span class="si">}</span><span class="s2">' in </span><span class="si">{</span><span class="n">os</span><span class="o">.</span><span class="n">getcwd</span><span class="p">()</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
+<span class="k">if</span> <span class="ow">not</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">image_file</span><span class="p">):</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"Step 3 FAILED: '</span><span class="si">{</span><span class="n">image_file</span><span class="si">}</span><span class="s2">' was not found in this folder."</span><span class="p">)</span>
+    <span class="k">raise</span> <span class="ne">SystemExit</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"Step 3 complete: found '</span><span class="si">{</span><span class="n">image_file</span><span class="si">}</span><span class="s2">'"</span><span class="p">)</span>
+</code></pre></div>
+<h3 id="b4-loading-the-image-into-a-variable">B.4 Loading the Image Into a Variable<a class="headerlink" href="#b4-loading-the-image-into-a-variable" title="Permanent link">&para;</a></h3>
+<p>This is the step the whole research question is about. The name <code>flower_img</code> is what keeps the picture alive.</p>
+<div class="highlight"><pre><span></span><code><span class="c1"># Step 5: Load the image AND STORE IT IN A VARIABLE.</span>
+<span class="c1"># This variable is what keeps the picture alive. If the PhotoImage were</span>
+<span class="c1"># created directly inside the Label call instead, Python would delete it</span>
+<span class="c1"># immediately and the label would show blank space.</span>
+<span class="n">flower_img</span> <span class="o">=</span> <span class="n">tk</span><span class="o">.</span><span class="n">PhotoImage</span><span class="p">(</span><span class="n">file</span><span class="o">=</span><span class="n">image_file</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"Step 4 complete: image loaded, size = </span><span class="si">{</span><span class="n">flower_img</span><span class="o">.</span><span class="n">width</span><span class="p">()</span><span class="si">}</span><span class="s2"> x </span><span class="si">{</span><span class="n">flower_img</span><span class="o">.</span><span class="n">height</span><span class="p">()</span><span class="si">}</span><span class="s2"> pixels"</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"           Tk's internal name for this image is '</span><span class="si">{</span><span class="n">flower_img</span><span class="si">}</span><span class="s2">'"</span><span class="p">)</span>
+</code></pre></div>
+<h3 id="b5-the-label-the-caption-and-the-proof">B.5 The Label, the Caption, and the Proof<a class="headerlink" href="#b5-the-label-the-caption-and-the-proof" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code><span class="c1"># Step 6: Display the image inside a Label widget.</span>
+<span class="n">img_label</span> <span class="o">=</span> <span class="n">tk</span><span class="o">.</span><span class="n">Label</span><span class="p">(</span><span class="n">frame</span><span class="p">,</span> <span class="n">image</span><span class="o">=</span><span class="n">flower_img</span><span class="p">)</span>
+<span class="n">img_label</span><span class="o">.</span><span class="n">pack</span><span class="p">()</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">"Step 5 complete: image placed inside a Label widget"</span><span class="p">)</span>
+
+<span class="c1"># Step 7: Add the text caption BELOW the image.</span>
+<span class="c1"># Because it is packed after the image and into the same frame,</span>
+<span class="c1"># pack() places it underneath by default.</span>
+<span class="n">caption</span> <span class="o">=</span> <span class="n">tk</span><span class="o">.</span><span class="n">Label</span><span class="p">(</span><span class="n">frame</span><span class="p">,</span> <span class="n">text</span><span class="o">=</span><span class="s2">"Flower Image"</span><span class="p">,</span> <span class="n">font</span><span class="o">=</span><span class="p">(</span><span class="s2">"Helvetica"</span><span class="p">,</span> <span class="mi">12</span><span class="p">))</span>
+<span class="n">caption</span><span class="o">.</span><span class="n">pack</span><span class="p">(</span><span class="n">pady</span><span class="o">=</span><span class="mi">5</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">"Step 6 complete: caption added below the image"</span><span class="p">)</span>
+
+<span class="c1"># Step 8: Prove that the reference is doing its job by asking Tk</span>
+<span class="c1"># whether it still knows about our image.</span>
+<span class="n">still_alive</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">flower_img</span><span class="p">)</span> <span class="ow">in</span> <span class="n">root</span><span class="o">.</span><span class="n">tk</span><span class="o">.</span><span class="n">call</span><span class="p">(</span><span class="s2">"image"</span><span class="p">,</span> <span class="s2">"names"</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"Step 7: is the image still registered with Tk? </span><span class="si">{</span><span class="n">still_alive</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
+
+<span class="c1"># Step 9: Hand control to Tkinter's event loop so the window stays open.</span>
+<span class="n">root</span><span class="o">.</span><span class="n">mainloop</span><span class="p">()</span>
+</code></pre></div>
+<h3 id="b6-the-complete-script">B.6 The Complete Script<a class="headerlink" href="#b6-the-complete-script" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code><span class="c1"># Step 1: Import the modules we need.</span>
+<span class="c1"># tkinter builds the window; os is used to check that the image file exists.</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">os</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">tkinter</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">tk</span>
+
+<span class="c1"># Step 2: Create the main application window and give it a title.</span>
+<span class="n">root</span> <span class="o">=</span> <span class="n">tk</span><span class="o">.</span><span class="n">Tk</span><span class="p">()</span>
+<span class="n">root</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s2">"Tkinter Image Demo"</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">"Step 1 complete: main window created"</span><span class="p">)</span>
+
+<span class="c1"># Step 3: Create a Frame to hold the image and its caption together.</span>
+<span class="c1"># A Frame is an invisible container used to group related widgets.</span>
+<span class="n">frame</span> <span class="o">=</span> <span class="n">tk</span><span class="o">.</span><span class="n">Frame</span><span class="p">(</span><span class="n">root</span><span class="p">)</span>
+<span class="n">frame</span><span class="o">.</span><span class="n">pack</span><span class="p">(</span><span class="n">padx</span><span class="o">=</span><span class="mi">20</span><span class="p">,</span> <span class="n">pady</span><span class="o">=</span><span class="mi">20</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">"Step 2 complete: frame created to group the image and caption"</span><span class="p">)</span>
+
+<span class="c1"># Step 4: Check that the image file is actually there before loading it.</span>
+<span class="n">image_file</span> <span class="o">=</span> <span class="s2">"flower.png"</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"Step 3: looking for '</span><span class="si">{</span><span class="n">image_file</span><span class="si">}</span><span class="s2">' in </span><span class="si">{</span><span class="n">os</span><span class="o">.</span><span class="n">getcwd</span><span class="p">()</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
+<span class="k">if</span> <span class="ow">not</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">image_file</span><span class="p">):</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"Step 3 FAILED: '</span><span class="si">{</span><span class="n">image_file</span><span class="si">}</span><span class="s2">' was not found in this folder."</span><span class="p">)</span>
+    <span class="k">raise</span> <span class="ne">SystemExit</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"Step 3 complete: found '</span><span class="si">{</span><span class="n">image_file</span><span class="si">}</span><span class="s2">'"</span><span class="p">)</span>
+
+<span class="c1"># Step 5: Load the image AND STORE IT IN A VARIABLE.</span>
+<span class="c1"># This variable is what keeps the picture alive. If the PhotoImage were</span>
+<span class="c1"># created directly inside the Label call instead, Python would delete it</span>
+<span class="c1"># immediately and the label would show blank space.</span>
+<span class="n">flower_img</span> <span class="o">=</span> <span class="n">tk</span><span class="o">.</span><span class="n">PhotoImage</span><span class="p">(</span><span class="n">file</span><span class="o">=</span><span class="n">image_file</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"Step 4 complete: image loaded, size = </span><span class="si">{</span><span class="n">flower_img</span><span class="o">.</span><span class="n">width</span><span class="p">()</span><span class="si">}</span><span class="s2"> x </span><span class="si">{</span><span class="n">flower_img</span><span class="o">.</span><span class="n">height</span><span class="p">()</span><span class="si">}</span><span class="s2"> pixels"</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"           Tk's internal name for this image is '</span><span class="si">{</span><span class="n">flower_img</span><span class="si">}</span><span class="s2">'"</span><span class="p">)</span>
+
+<span class="c1"># Step 6: Display the image inside a Label widget.</span>
+<span class="n">img_label</span> <span class="o">=</span> <span class="n">tk</span><span class="o">.</span><span class="n">Label</span><span class="p">(</span><span class="n">frame</span><span class="p">,</span> <span class="n">image</span><span class="o">=</span><span class="n">flower_img</span><span class="p">)</span>
+<span class="n">img_label</span><span class="o">.</span><span class="n">pack</span><span class="p">()</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">"Step 5 complete: image placed inside a Label widget"</span><span class="p">)</span>
+
+<span class="c1"># Step 7: Add the text caption BELOW the image.</span>
+<span class="n">caption</span> <span class="o">=</span> <span class="n">tk</span><span class="o">.</span><span class="n">Label</span><span class="p">(</span><span class="n">frame</span><span class="p">,</span> <span class="n">text</span><span class="o">=</span><span class="s2">"Flower Image"</span><span class="p">,</span> <span class="n">font</span><span class="o">=</span><span class="p">(</span><span class="s2">"Helvetica"</span><span class="p">,</span> <span class="mi">12</span><span class="p">))</span>
+<span class="n">caption</span><span class="o">.</span><span class="n">pack</span><span class="p">(</span><span class="n">pady</span><span class="o">=</span><span class="mi">5</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">"Step 6 complete: caption added below the image"</span><span class="p">)</span>
+
+<span class="c1"># Step 8: Prove that the reference is doing its job by asking Tk</span>
+<span class="c1"># whether it still knows about our image.</span>
+<span class="n">still_alive</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">flower_img</span><span class="p">)</span> <span class="ow">in</span> <span class="n">root</span><span class="o">.</span><span class="n">tk</span><span class="o">.</span><span class="n">call</span><span class="p">(</span><span class="s2">"image"</span><span class="p">,</span> <span class="s2">"names"</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"Step 7: is the image still registered with Tk? </span><span class="si">{</span><span class="n">still_alive</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
+
+<span class="c1"># Step 9: Hand control to Tkinter's event loop so the window stays open.</span>
+<span class="n">root</span><span class="o">.</span><span class="n">mainloop</span><span class="p">()</span>
+</code></pre></div>
+<h3 id="b7-expected-output">B.7 Expected Output<a class="headerlink" href="#b7-expected-output" title="Permanent link">&para;</a></h3>
+<p>A window opens showing the picture, with the words <strong>Flower Image</strong> centred underneath it.</p>
+<p>In the terminal, the program prints the following. This is real output, captured by running the script with a 120 by 90 pixel <code>flower.png</code> in the same folder:</p>
+<div class="highlight"><pre><span></span><code>Step 1 complete: main window created
+Step 2 complete: frame created to group the image and caption
+Step 3: looking for 'flower.png' in /home/student/tkinter-practice
+Step 3 complete: found 'flower.png'
+Step 4 complete: image loaded, size = 120 x 90 pixels
+           Tk's internal name for this image is 'pyimage1'
+Step 5 complete: image placed inside a Label widget
+Step 6 complete: caption added below the image
+Step 7: is the image still registered with Tk? True
+</code></pre></div>
+<p>The folder path and the picture's size will of course differ on your own machine. The two lines that matter are the last one — <code>True</code> confirms the picture is still alive — and the <code>pyimage1</code> line, which shows you the internal name that the whole disappearing-image problem revolves around.</p>
+<p>If <code>flower.png</code> is missing, the check added in Step 4 produces this instead of a confusing error:</p>
+<div class="highlight"><pre><span></span><code>Step 1 complete: main window created
+Step 2 complete: frame created to group the image and caption
+Step 3: looking for 'flower.png' in /home/student/tkinter-practice
+Step 3 FAILED: 'flower.png' was not found in this folder.
+</code></pre></div>
+<h3 id="b8-a-version-that-needs-no-image-file">B.8 A Version That Needs No Image File<a class="headerlink" href="#b8-a-version-that-needs-no-image-file" title="Permanent link">&para;</a></h3>
+<p>If you do not have a <code>flower.png</code> to hand, this variant creates its own picture in code instead of loading one from disk, so it runs anywhere. Everything else — the frame, the label, the caption, and above all the variable keeping the picture alive — works in exactly the same way.</p>
+<div class="highlight"><pre><span></span><code><span class="kn">import</span><span class="w"> </span><span class="nn">tkinter</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">tk</span>
+
+<span class="c1"># Step 1: Create the main window.</span>
+<span class="n">root</span> <span class="o">=</span> <span class="n">tk</span><span class="o">.</span><span class="n">Tk</span><span class="p">()</span>
+<span class="n">root</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s2">"Tkinter Image Demo (no image file needed)"</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">"Step 1 complete: main window created"</span><span class="p">)</span>
+
+<span class="c1"># Step 2: Create a Frame to group the image and its caption.</span>
+<span class="n">frame</span> <span class="o">=</span> <span class="n">tk</span><span class="o">.</span><span class="n">Frame</span><span class="p">(</span><span class="n">root</span><span class="p">)</span>
+<span class="n">frame</span><span class="o">.</span><span class="n">pack</span><span class="p">(</span><span class="n">padx</span><span class="o">=</span><span class="mi">20</span><span class="p">,</span> <span class="n">pady</span><span class="o">=</span><span class="mi">20</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">"Step 2 complete: frame created"</span><span class="p">)</span>
+
+<span class="c1"># Step 3: Create a blank 120 x 90 image in memory and store it in a variable.</span>
+<span class="c1"># Note that width and height are used here instead of file.</span>
+<span class="n">generated_img</span> <span class="o">=</span> <span class="n">tk</span><span class="o">.</span><span class="n">PhotoImage</span><span class="p">(</span><span class="n">width</span><span class="o">=</span><span class="mi">120</span><span class="p">,</span> <span class="n">height</span><span class="o">=</span><span class="mi">90</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"Step 3 complete: blank image created, size = </span><span class="si">{</span><span class="n">generated_img</span><span class="o">.</span><span class="n">width</span><span class="p">()</span><span class="si">}</span><span class="s2"> x </span><span class="si">{</span><span class="n">generated_img</span><span class="o">.</span><span class="n">height</span><span class="p">()</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
+
+<span class="c1"># Step 4: Paint the blank image.</span>
+<span class="c1"># put() fills a rectangle given as (left, top, right, bottom).</span>
+<span class="n">generated_img</span><span class="o">.</span><span class="n">put</span><span class="p">(</span><span class="s2">"lightblue"</span><span class="p">,</span> <span class="n">to</span><span class="o">=</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">120</span><span class="p">,</span> <span class="mi">90</span><span class="p">))</span>
+<span class="n">generated_img</span><span class="o">.</span><span class="n">put</span><span class="p">(</span><span class="s2">"steelblue"</span><span class="p">,</span> <span class="n">to</span><span class="o">=</span><span class="p">(</span><span class="mi">30</span><span class="p">,</span> <span class="mi">20</span><span class="p">,</span> <span class="mi">90</span><span class="p">,</span> <span class="mi">70</span><span class="p">))</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">"Step 4 complete: image painted with two coloured rectangles"</span><span class="p">)</span>
+
+<span class="c1"># Step 5: Show the image inside a Label.</span>
+<span class="c1"># generated_img must stay in scope for this to remain visible.</span>
+<span class="n">img_label</span> <span class="o">=</span> <span class="n">tk</span><span class="o">.</span><span class="n">Label</span><span class="p">(</span><span class="n">frame</span><span class="p">,</span> <span class="n">image</span><span class="o">=</span><span class="n">generated_img</span><span class="p">)</span>
+<span class="n">img_label</span><span class="o">.</span><span class="n">pack</span><span class="p">()</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">"Step 5 complete: image placed inside a Label widget"</span><span class="p">)</span>
+
+<span class="c1"># Step 6: Add the caption below the image.</span>
+<span class="n">caption</span> <span class="o">=</span> <span class="n">tk</span><span class="o">.</span><span class="n">Label</span><span class="p">(</span><span class="n">frame</span><span class="p">,</span> <span class="n">text</span><span class="o">=</span><span class="s2">"Generated Image"</span><span class="p">,</span> <span class="n">font</span><span class="o">=</span><span class="p">(</span><span class="s2">"Helvetica"</span><span class="p">,</span> <span class="mi">12</span><span class="p">))</span>
+<span class="n">caption</span><span class="o">.</span><span class="n">pack</span><span class="p">(</span><span class="n">pady</span><span class="o">=</span><span class="mi">5</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">"Step 6 complete: caption added below the image"</span><span class="p">)</span>
+
+<span class="c1"># Step 7: Start the event loop.</span>
+<span class="n">root</span><span class="o">.</span><span class="n">mainloop</span><span class="p">()</span>
+</code></pre></div>
+<p>Verified output:</p>
+<div class="highlight"><pre><span></span><code>Step 1 complete: main window created
+Step 2 complete: frame created
+Step 3 complete: blank image created, size = 120 x 90
+Step 4 complete: image painted with two coloured rectangles
+Step 5 complete: image placed inside a Label widget
+Step 6 complete: caption added below the image
+</code></pre></div>
+<hr />
+<h2 id="answer-to-part-c-reflection">Answer to Part C — Reflection<a class="headerlink" href="#answer-to-part-c-reflection" title="Permanent link">&para;</a></h2>
+<p><strong>What would happen if the image were not stored in a variable?</strong></p>
+<p>If the image is not stored in a variable, Python removes it from memory through <strong>garbage collection</strong>, causing the image to disappear or fail to display.</p>
+<p>Step by step, this is the chain of events:</p>
+<ol>
+<li>The <code>PhotoImage</code> object is created and registers a picture with Tk under a name such as <code>pyimage1</code>.</li>
+<li>The widget is given that picture, but stores only the <em>name</em> — a short piece of text — not the object itself.</li>
+<li>Because no variable in your program points at the object, its reference count immediately falls to zero.</li>
+<li>Python deletes the object, and as it does so, the picture registered with Tk is deleted too.</li>
+<li>The widget is left holding the name of a picture that no longer exists, so it draws nothing. The window still reserves the space, so what you see is an empty gap rather than an error.</li>
+<li>Nothing is printed, nothing crashes, and no exception is raised — which is precisely why this bug is so hard for a beginner to diagnose.</li>
+</ol>
 <p>Therefore:</p>
 <blockquote>
-<p><strong>Always store <code>PhotoImage()</code> in a variable before displaying it in Tkinter.</strong></p>
+<p><strong>Always store <code>PhotoImage()</code> in a variable before displaying it in Tkinter — and make sure that variable stays alive for as long as the picture needs to be on screen.</strong></p>
 </blockquote>
+<hr />
+<h2 id="quick-troubleshooting-guide-my-image-is-not-showing">Quick Troubleshooting Guide: "My Image Is Not Showing"<a class="headerlink" href="#quick-troubleshooting-guide-my-image-is-not-showing" title="Permanent link">&para;</a></h2>
+<p>Work down this list in order; the first item is by far the most common cause.</p>
+<table>
+<thead>
+<tr>
+<th>Symptom</th>
+<th>Likely cause</th>
+<th>Fix</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Empty gap of about the right size, no error message</td>
+<td>The <code>PhotoImage</code> was not stored in a variable.</td>
+<td>Assign it to a variable first, then pass the variable to the widget.</td>
+</tr>
+<tr>
+<td>Picture works in a small script but not once moved into a function or class</td>
+<td>The variable was local and disappeared when the function returned.</td>
+<td>Add <code>widget.image = img</code>, or store it as <code>self.img</code> in a class.</td>
+</tr>
+<tr>
+<td>Only the last of several pictures appears</td>
+<td>One variable name was reused in a loop.</td>
+<td>Store the images in a list or dictionary instead.</td>
+</tr>
+<tr>
+<td><code>TclError: couldn't recognize data in image file</code></td>
+<td>The file is a JPEG or another unsupported format.</td>
+<td>Convert it to PNG, or use Pillow's <code>ImageTk.PhotoImage</code>.</td>
+</tr>
+<tr>
+<td><code>TclError: couldn't open "flower.png": no such file or directory</code></td>
+<td>The file is not where the program is looking.</td>
+<td>Check the spelling, or build a path with <code>os.path.join</code> based on <code>__file__</code>.</td>
+</tr>
+<tr>
+<td><code>TclError: image "pyimage1" doesn't exist</code></td>
+<td>The picture was deleted while a widget was still using it.</td>
+<td>Same as the first row — keep a reference alive.</td>
+</tr>
+<tr>
+<td>Error when creating the image, before any window appears</td>
+<td><code>PhotoImage</code> was created before <code>tk.Tk()</code>.</td>
+<td>Create the root window first.</td>
+</tr>
+</tbody>
+</table>
+<p>The same guide as a decision flowchart:</p>
+<p><img alt="Flowchart" src="../../resources/ch14-tkinter-September-2026-photoimage-003.png" /></p>
+<hr />
 
 
 
