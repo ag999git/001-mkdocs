@@ -8740,27 +8740,7 @@ Length is between 6 and 12: True
 <p>This is a good habit to take away from this one test case: when a script's own comment expresses doubt ("keep for discussion"), that is a signal to actually run the code and check the real answer against the stated requirements, rather than trusting the comment's guess. Section 12 ("Follow-up questions") below invites you to explore a stricter version of this rule yourself.</p>
 <p>The second easy-to-miss case in the same list is <code>"Ab1@xy "</code> (with a trailing space) directly followed by <code>"Ab1@xy?"</code>. Using the original script's plain <code>print(f"{pwd:15} → GOOD")</code> / <code>print(f"{pwd:15} → BAD")</code> formatting, <code>"Ab1@xy"</code> (6 characters, no trailing space, GOOD) and <code>"Ab1@xy "</code> (7 characters, with a trailing space, BAD) print as visually identical lines in a terminal, since the padding to 15 characters hides the difference. Step 3 and the Combined Script on this page deliberately print each password's <code>repr()</code> and length alongside the verdict, specifically so this kind of invisible-character difference is always visible in the output rather than hidden by formatting.</p>
 <h2 id="how-the-whole-check-flows">How the whole check flows<a class="headerlink" href="#how-the-whole-check-flows" title="Permanent link">&para;</a></h2>
-<div class="highlight"><pre><span></span><code>flowchart TD
-    A(("Start: a candidate password string"))
-    B{"Does it contain at least&lt;br/&gt;one lowercase letter"}
-    C{"Does it contain at least&lt;br/&gt;one uppercase letter"}
-    D{"Does it contain at least&lt;br/&gt;one digit"}
-    E{"Does it contain at least&lt;br/&gt;one special character&lt;br/&gt;from the allowed set"}
-    F{"Is every character in the&lt;br/&gt;allowed set, AND is the total&lt;br/&gt;length between 6 and 12"}
-    G(("BAD: reject the password"))
-    H(("GOOD: accept the password"))
-    A --&gt; B
-    B -- no --&gt; G
-    B -- yes --&gt; C
-    C -- no --&gt; G
-    C -- yes --&gt; D
-    D -- no --&gt; G
-    D -- yes --&gt; E
-    E -- no --&gt; G
-    E -- yes --&gt; F
-    F -- no --&gt; G
-    F -- yes --&gt; H
-</code></pre></div>
+<p><img alt="Flowchart" src="../../resources/ch-13-august-2026-exercise-password-with-regex.png" /></p>
 <h2 id="follow-up-questions">Follow-up questions<a class="headerlink" href="#follow-up-questions" title="Permanent link">&para;</a></h2>
 <p>These are new; nothing in the original problem statement or solution required answering them, but they build directly on the "test case worth a second look" discussed above.</p>
 <ol>
