@@ -8952,15 +8952,7 @@ Test 2: report_callback_exception installed as well
 </tr>
 </tbody>
 </table>
-<div class="highlight"><pre><span></span><code>flowchart TD
-    A[An exception is raised in a Tkinter program] --&gt; B{Was it raised inside a Tkinter callback}
-    B --&gt;|Yes - a button click or after job| C[Tkinter catches it first]
-    C --&gt; D[root.report_callback_exception is called]
-    B --&gt;|No - ordinary top level code| E[The exception travels up the call chain]
-    E --&gt; F[sys.excepthook is called]
-    D --&gt; G[Point BOTH at the same handler function to cover every case]
-    F --&gt; G
-</code></pre></div>
+<p><img alt="Flowchart" src="../../resources/ch14-tkinter-September-2026-uncaught-exceptions-005.png" /></p>
 <p><strong>The conclusion for Part B.</strong> The question asks you to override Python's default exception route using <code>sys.excepthook</code>, and the model program below does exactly that. But it also assigns the same function to <code>root.report_callback_exception</code>, because that is the only way the button in requirement 7 can produce the friendly popup in requirement 8. Pointing both names at one handler function costs one extra line and makes the program behave the way the question describes.</p>
 <p><a href="#table-of-contents">Back to Table of Contents</a></p>
 <hr />
