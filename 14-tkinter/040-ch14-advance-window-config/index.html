@@ -5774,17 +5774,6 @@
   
 </li>
       
-        <li class="md-nav__item">
-  <a href="#summary-of-changes-made-to-this-page" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Summary of Changes Made to This Page
-      
-    </span>
-  </a>
-  
-</li>
-      
     </ul>
   
 </nav>
@@ -9288,14 +9277,7 @@
 </table>
 <h3 id="23-visualizing-the-window-lifecycle">2.3 Visualizing the Window Lifecycle<a class="headerlink" href="#23-visualizing-the-window-lifecycle" title="Permanent link">&para;</a></h3>
 <p>The four states controlled by <code>state()</code> (plus the special "withdrawn" state controlled by <code>withdraw()</code>/<code>deiconify()</code>) form a small cycle. The diagram below shows how a window moves between them. It uses plain flowchart syntax so that it can also be opened and edited inside diagramming tools such as draw.io.</p>
-<div class="highlight"><pre><span></span><code>flowchart LR
-    A[Normal - a regular visible window] --&gt;|state iconic| B[Iconic - minimized to the taskbar]
-    B --&gt;|state normal, or deiconify| A
-    A --&gt;|state zoomed| C[Zoomed - maximized to fill the screen]
-    C --&gt;|state normal| A
-    A --&gt;|withdraw| D[Withdrawn - fully hidden, not even in the taskbar]
-    D --&gt;|deiconify| A
-</code></pre></div>
+<p><img alt="Flowchart" src="../../resources/ch14-tkinter-September-2026-window-configuration-lifecycle-management.png" /></p>
 <p>Reading this diagram: a window starts out <strong>Normal</strong>. Calling <code>state("iconic")</code> sends it to <strong>Iconic</strong> (minimized); calling <code>deiconify()</code> or <code>state("normal")</code> brings it back. Calling <code>state("zoomed")</code> sends it to <strong>Zoomed</strong> (maximized); calling <code>state("normal")</code> restores it. Calling <code>withdraw()</code> sends it to <strong>Withdrawn</strong>, the most complete form of hiding — the window disappears from the taskbar entirely — and only <code>deiconify()</code> can bring it back.</p>
 <hr />
 <h2 id="3-bringing-it-all-together-the-complete-example-script">3. Bringing It All Together: The Complete Example Script<a class="headerlink" href="#3-bringing-it-all-together-the-complete-example-script" title="Permanent link">&para;</a></h2>
@@ -9639,15 +9621,7 @@
 </code></pre></div>
 <h3 id="36-visualizing-the-hide-parent-show-auxiliary-flow">3.6 Visualizing the "Hide Parent, Show Auxiliary" Flow<a class="headerlink" href="#36-visualizing-the-hide-parent-show-auxiliary-flow" title="Permanent link">&para;</a></h3>
 <p>The <code>open_auxiliary()</code> method above is a good example of <code>withdraw()</code> and <code>deiconify()</code> working as a pair. The flowchart below traces that sequence of events from the moment the user clicks the button to the moment the main window reappears.</p>
-<div class="highlight"><pre><span></span><code>flowchart TD
-    S[Main window is open] --&gt; T[User clicks Open Aux Window button]
-    T --&gt; U[Main window calls withdraw - it disappears]
-    U --&gt; V[A Toplevel auxiliary window is created and centered]
-    V --&gt; W[User closes the auxiliary window]
-    W --&gt; X[on_aux_close runs]
-    X --&gt; Y[Auxiliary window is destroyed]
-    Y --&gt; Z[Main window calls deiconify - it reappears]
-</code></pre></div>
+<p><img alt="Flowchart" src="../../resources/ch14-tkinter-September-2026-window-configuration-lifecycle-management-02.png" /></p>
 <h3 id="37-starting-the-application">3.7 Starting the Application<a class="headerlink" href="#37-starting-the-application" title="Permanent link">&para;</a></h3>
 <p>Finally, the standard <code>if __name__ == "__main__":</code> guard creates one instance of the class and starts the event loop.</p>
 <div class="highlight"><pre><span></span><code><span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s2">"__main__"</span><span class="p">:</span>
@@ -10015,74 +9989,6 @@ Event loop has ended - the application has closed.
 <h2 id="4-a-note-on-style-tklabeltkbutton-vs-ttk">4. A Note on Style: <code>tk.Label</code>/<code>tk.Button</code> vs. <code>ttk</code><a class="headerlink" href="#4-a-note-on-style-tklabeltkbutton-vs-ttk" title="Permanent link">&para;</a></h2>
 <p>The example script above intentionally uses the classic <code>tk.Label</code> and <code>tk.Button</code> widgets (as in the printed chapter) rather than the newer, more modern-looking <code>ttk.Label</code> and <code>ttk.Button</code> widgets, so that the window-management techniques on this page stay the clear focus, without mixing in a separate styling topic. If you would like your own windows to also pick up your operating system's native visual theme, you can generally swap <code>tk.Button(...)</code> for <code>ttk.Button(...)</code> (after <code>from tkinter import ttk</code>) without changing any of the window-configuration code discussed above — the two topics are independent of each other.</p>
 <hr />
-<h2 id="summary-of-changes-made-to-this-page">Summary of Changes Made to This Page<a class="headerlink" href="#summary-of-changes-made-to-this-page" title="Permanent link">&para;</a></h2>
-<p>The table below documents every change made while revising this page, for transparency. Nothing in the printed book's material or in any research question wording was altered — this page contained no research questions to begin with, only reference material and a script.</p>
-<table>
-<thead>
-<tr>
-<th>Element</th>
-<th>Original</th>
-<th>Change made</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>Overall structure</td>
-<td>Title, two short paragraphs, one very wide 10-column table, and one code block.</td>
-<td>Added an "About This Page" introduction, a "Key Terms" glossary table, a quick-reference summary table, a mermaid lifecycle diagram, a mermaid sequence diagram for the auxiliary-window flow, a step-by-step script walkthrough with sample outputs, a short note on <code>tk</code> vs <code>ttk</code>, and this change-log table.</td>
-</tr>
-<tr>
-<td>Title</td>
-<td><code># Advanced Window Configuration &amp; Lifecycle Management in Tkinter</code></td>
-<td>Kept the same title, with "&amp;" spelled out as "and" for readability; wording otherwise unchanged.</td>
-</tr>
-<tr>
-<td>Introductory paragraphs (Section "Architectural Overview" intro)</td>
-<td>Two paragraphs describing the Window Manager concept and the "structural requests" idea, in dense technical language.</td>
-<td>Retained all original content and meaning; added plain-language framing, a link to further reading on Window Managers, and moved the "why this matters" material into the new "About This Page" section instead of leaving it implicit.</td>
-</tr>
-<tr>
-<td>"Comprehensive Window Configuration Matrix"</td>
-<td>One 10-column, 14-row table (Method, Syntax, Purpose, Parameters, Default, Mechanic, Use Case, Return Value, Pitfalls, Cross-Platform Note) that required horizontal scrolling to read.</td>
-<td>Content fully preserved — every cell of the original table is represented — but reorganized into (a) a new one-line-per-method quick-reference table for orientation, and (b) one clearly headed subsection per method with a plain-language explanation plus a compact two-column details table, for readability.</td>
-</tr>
-<tr>
-<td>Technical jargon (Window Manager, Z-order, Tcl interpreter, compositor, decoration flags, and similar terms)</td>
-<td>Used without definition, assuming reader familiarity.</td>
-<td>Added a "Key Terms Used On This Page" glossary with plain-language definitions and external reference links; cross-referenced from the relevant sections.</td>
-</tr>
-<tr>
-<td>Diagrams</td>
-<td>None.</td>
-<td>Added two mermaid flowcharts: one showing the window lifecycle states (<code>normal</code>/<code>iconic</code>/<code>zoomed</code>/<code>withdrawn</code>), and one tracing the <code>withdraw()</code>/<code>deiconify()</code> sequence used by <code>open_auxiliary()</code>. Both use plain flowchart syntax for compatibility with draw.io's mermaid import.</td>
-</tr>
-<tr>
-<td>Script comments</td>
-<td>Already contained numbered comments inside <code>__init__</code> (for example, "1. BASE INITIALIZATION") but no equivalent step-by-step comments in <code>center_window()</code>, <code>create_widgets()</code>, or the event-handler methods, and no comments at all around the <code>if __name__ == "__main__":</code> block.</td>
-<td>Standardized every numbered comment to the format <code># Step N: &lt;description&gt;</code> and extended step comments to every method in the class, including <code>center_window()</code>, <code>create_widgets()</code>, all five event handlers, and the <code>__main__</code> block. Code logic and behavior were not altered.</td>
-</tr>
-<tr>
-<td>Print statements / visible output</td>
-<td>None — the original script produced no console output at all.</td>
-<td>Added teaching-only <code>print()</code> statements after each major step and inside every event handler, plus a new "Sample Console Output" section showing representative output in a fenced text block. These prints do not change the application's visible GUI behavior.</td>
-</tr>
-<tr>
-<td>Script presentation</td>
-<td>Single combined code block only.</td>
-<td>Added individual code blocks for each logical section (imports/class skeleton, constructor, <code>center_window()</code>, <code>create_widgets()</code>, event handlers, the <code>__main__</code> block), each with its own explanation, followed by one final combined script block containing the complete, runnable program — matching the individually explained versions.</td>
-</tr>
-<tr>
-<td>Styling note (<code>tk</code> vs <code>ttk</code>)</td>
-<td>Not present.</td>
-<td>Added a short closing section noting that the script deliberately uses classic <code>tk</code> widgets rather than <code>ttk</code>, and how a reader could switch to <code>ttk</code> independently of the window-management concepts taught here.</td>
-</tr>
-<tr>
-<td>Emojis</td>
-<td>None used.</td>
-<td>None used (unchanged).</td>
-</tr>
-</tbody>
-</table>
 
 
 
