@@ -8784,14 +8784,7 @@
 <p>When you write <code>lbl = tk.Label(root, text=self.text_var)</code>, you are performing a one-time string read at the moment the widget is created. Since <code>self.text_var</code> is a <code>StringVar</code> object rather than a plain string, Tkinter converts it to text and displays its internal name, such as <code>PY_VAR0</code>. That value never changes, because the label is not wired to the variable — it simply took a snapshot.</p>
 <p>When you write <code>lbl = tk.Label(root, textvariable=self.text_var)</code>, you create a lasting connection. The label subscribes to the variable, and whenever the <code>StringVar</code>'s value changes — through <code>.set()</code>, or because the user typed into a bound <code>Entry</code> — the engine pushes the new content to the label, which repaints immediately.</p>
 <p>The key rule is: <strong><code>text=</code> is a static assignment; <code>textvariable=</code> is a live binding.</strong></p>
-<div class="highlight"><pre><span></span><code>flowchart TD
-    A[You call var.set with a new value] --&gt; B{How was the label created}
-    B --&gt;|text equals var| C[The label kept a copy of the old text]
-    C --&gt; D[It still shows PY_VAR0 and never changes]
-    B --&gt;|textvariable equals var| E[The label is subscribed to the variable]
-    E --&gt; F[Tkinter pushes the new value to the label]
-    F --&gt; G[The label repaints straight away]
-</code></pre></div>
+<p><img alt="Flowchart" src="../../resources/ch14-tkinter-September-2026-conceptual-QA-001.png" /></p>
 <p>A short demonstration, with its real output:</p>
 <div class="highlight"><pre><span></span><code><span class="c1"># Step 1: One variable, two labels built in the two different ways.</span>
 <span class="kn">import</span><span class="w"> </span><span class="nn">tkinter</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">tk</span>
