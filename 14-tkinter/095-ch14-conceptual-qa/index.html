@@ -8944,6 +8944,7 @@ TclError: cannot use geometry manager grid inside .!frame which already has slav
 <p>The error names the problem precisely: this container already has children managed by <code>pack</code>, so <code>grid</code> will not touch it. There is no loop and no hang; the exception is raised in a few thousandths of a second. If it happens while your program is starting up, the uncaught error stops the script, which can look like a crash. If it happens inside a button's handler, Tkinter prints the error to the console and the window carries on.</p>
 <p><code>pack()</code> stacks children in blocks, top to bottom or side to side. <code>grid()</code> places them in a table of rows and columns. The two use completely different bookkeeping for the same container, which is why Tk refuses to combine them rather than trying.</p>
 <p>What you <strong>can</strong> do — and should — is use different managers in <em>different</em> containers:</p>
+<p><img alt="Flowchart" src="../../resources/ch14-tkinter-September-2026-conceptual-QA-004.png" /></p>
 <div class="highlight"><pre><span></span><code>flowchart TD
     A[root window] --&gt; B[frame_one placed with pack]
     A --&gt; C[frame_two placed with pack]
