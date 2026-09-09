@@ -8460,7 +8460,6 @@
 </li>
 <li><a href="#answer-to-part-c--reflection">Answer to Part C — Reflection</a></li>
 <li><a href="#common-errors-and-how-to-fix-them">Common Errors and How to Fix Them</a></li>
-<li><a href="#summary-of-changes-made-to-this-page">Summary of Changes Made to This Page</a></li>
 </ul>
 <h2 id="about-this-page">About This Page<a class="headerlink" href="#about-this-page" title="Permanent link">&para;</a></h2>
 <p>This page is part of the extended, GitHub-only material that accompanies <strong>Chapter 14 (Tkinter and GUI Programming)</strong> of the printed textbook. It contains one of the chapter's research and project questions, followed by a complete worked answer: the theory, a full model program, a reflection, and a troubleshooting guide.</p>
@@ -8566,7 +8565,7 @@
 <li>
 <p>Defines a custom function to handle uncaught exceptions.</p>
 </li>
-<li>Overrides Python’s default exception route using: <code>sys.excepthook</code></li>
+<li>Overrides Python’s default exception route using: <code>sys.excepthook</code> together with Tkinter’s <code>report_callback_exception</code></li>
 <li>Adds a button with label: <code>Trigger NameError</code></li>
 <li>Intentionally creates an uncaught exception when the button is clicked.</li>
 <li>Displays a friendly popup message instead of crashing.</li>
@@ -8804,7 +8803,7 @@ ZeroDivisionError: division by zero
 <p>Hence: <strong>global exception handling</strong>.</p>
 <p><strong>Visual difference</strong></p>
 <p>Local handling:</p>
-<p>![Flowchart}(../resources/ch14-tkinter-September-2026-uncaught-exceptions-003.png)</p>
+<p><img alt="Flowchart" src="../../resources/ch14-tkinter-September-2026-uncaught-exceptions-003.png" /></p>
 <p>Global handling:</p>
 <p><img alt="Flowchart" src="../../resources/ch14-tkinter-September-2026-uncaught-exceptions-004.png" /></p>
 <p><strong>They are partners, not rivals.</strong> It is tempting to conclude that a global handler makes <code>try-except</code> unnecessary. It does not, and it is worth understanding why. A <code>try-except</code> block knows exactly what went wrong and exactly where, so it can recover intelligently — ask the user to retype a number, fall back to a default setting, retry a download. A global handler knows only that <em>something</em> failed <em>somewhere</em>, so all it can sensibly do is record the problem and apologise. Use <code>try-except</code> wherever you can foresee a failure, and treat the global handler as the safety net for everything you could not foresee.</p>
