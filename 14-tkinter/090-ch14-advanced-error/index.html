@@ -8734,16 +8734,10 @@
 </blockquote>
 <p>It controls what Python does when an uncaught exception happens.</p>
 <p>Normally the sequence of execution is as follows:</p>
-<div class="highlight"><pre><span></span><code>flowchart TD
-    A[Error] --&gt; B[Traceback shown]
-    B --&gt; C[Program crashes]
-</code></pre></div>
+<p><img alt="Flowchart" src="../../resources/ch14-tkinter-September-2026-professional-error-handling-001.png" /></p>
 <p>But <code>sys.excepthook = handle_error</code> changes the route.</p>
 <p>Now the sequence is as follows:</p>
-<div class="highlight"><pre><span></span><code>flowchart TD
-    A[Error] --&gt; B[Custom function runs]
-    B --&gt; C[Popup and log entry]
-</code></pre></div>
+<p><img alt="Flowchart" src="../../resources/ch14-tkinter-September-2026-professional-error-handling-002.png" /></p>
 <p>This improves application safety.</p>
 <p><strong>The shape your function must have.</strong> Python does not pass a single error object to the hook. It passes exactly three values, so your replacement must accept three:</p>
 <div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">handle_error</span><span class="p">(</span><span class="n">exc_type</span><span class="p">,</span> <span class="n">exc_value</span><span class="p">,</span> <span class="n">exc_traceback</span><span class="p">):</span>
