@@ -6064,17 +6064,6 @@
   
 </li>
       
-        <li class="md-nav__item">
-  <a href="#summary-of-changes-made-to-this-page" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Summary of Changes Made to This Page
-      
-    </span>
-  </a>
-  
-</li>
-      
     </ul>
   
 </nav>
@@ -9004,12 +8993,7 @@ separate variables hold: ['S', 'M', ''] - two buttons selected at the same time
 </tr>
 </tbody>
 </table>
-<div class="highlight"><pre><span></span><code>flowchart TD
-    A[Your Python code creates a Button] --&gt; B[Tkinter translates it into a Tcl command]
-    B --&gt; C[The Tcl interpreter passes it to the Tk toolkit]
-    C --&gt; D[Tk asks the operating system to draw a window]
-    D --&gt; E[The OS renders the actual pixels on screen]
-</code></pre></div>
+<p><img alt="Flowchart" src="../../resources/ch14-tkinter-September-2026-conceptual-QA-005.png" /></p>
 <p><strong>On the appearance question</strong>, one clarification is worth making. The difference is not really macOS against Windows — it is which widget family you used.</p>
 <ul>
 <li>A <strong><code>ttk</code> widget</strong> asks the operating system's own theming system to draw it, so it takes on the native appearance of whatever platform it runs on. A <code>ttk.Button</code> looks like a macOS button on macOS and like a modern Windows button on Windows.</li>
@@ -9334,6 +9318,7 @@ columnspan=3, sticky='ew' -&gt; 360 pixels wide
 <span class="n">root</span><span class="o">.</span><span class="n">report_callback_exception</span> <span class="o">=</span> <span class="n">handle_error</span>
 </code></pre></div>
 <p>Why this matters so much in a GUI is that the default behaviour for a callback error is close to the worst possible one for a user. The program does not crash — Tkinter prints a traceback to the console and carries on — so the user clicks a button, absolutely nothing happens, no message appears, and the only explanation is in a terminal they are probably not looking at. A global handler converts that silence into a clear message.</p>
+<p><img alt="Flowchart" src="../../resources/ch14-tkinter-September-2026-conceptual-QA-006.png" /></p>
 <div class="highlight"><pre><span></span><code>flowchart TD
     A[An exception is raised somewhere in your program] --&gt; B{Was it raised inside a Tkinter callback}
     B --&gt;|Yes - a button click or after job or bind or trace| C[Tkinter catches it first]
@@ -9638,13 +9623,7 @@ second mainloop() returned after 0.0000s, no error
 <h3 id="28-why-does-the-document-say-dont-dump-dozens-of-input-controls-directly-onto-the-root-level-what-is-the-recommended-organizational-pattern">28. Why does the document say "Don't dump dozens of input controls directly onto the root level"? What is the recommended organizational pattern?<a class="headerlink" href="#28-why-does-the-document-say-dont-dump-dozens-of-input-controls-directly-onto-the-root-level-what-is-the-recommended-organizational-pattern" title="Permanent link">&para;</a></h3>
 <p>Putting every widget straight onto the root window produces a flat layout with no structure. It causes three practical problems: the arrangement is hard to change later, because everything is one long list of placements; it resizes badly, since there are no groups that can grow or stay fixed independently; and you are forced to use a single geometry manager for the whole interface, because of the rule in question 6.</p>
 <p>The recommended pattern is to build a small hierarchy of containers first, then place the actual controls inside them:</p>
-<div class="highlight"><pre><span></span><code>flowchart TD
-    A[root window] --&gt; B[header frame - title and status]
-    A --&gt; C[body frame - the data entry fields]
-    A --&gt; D[footer frame - the action buttons]
-    C --&gt; E[labels and entry boxes arranged with grid]
-    D --&gt; F[buttons arranged with pack]
-</code></pre></div>
+<p><img alt="Flowchart" src="../../resources/ch14-tkinter-September-2026-conceptual-QA-007.png" /></p>
 <div class="highlight"><pre><span></span><code><span class="c1"># Step 1: Create the zones and place them in the window.</span>
 <span class="n">header</span> <span class="o">=</span> <span class="n">ttk</span><span class="o">.</span><span class="n">Frame</span><span class="p">(</span><span class="n">root</span><span class="p">);</span> <span class="n">header</span><span class="o">.</span><span class="n">pack</span><span class="p">(</span><span class="n">fill</span><span class="o">=</span><span class="s2">"x"</span><span class="p">)</span>
 <span class="n">body</span> <span class="o">=</span> <span class="n">ttk</span><span class="o">.</span><span class="n">LabelFrame</span><span class="p">(</span><span class="n">root</span><span class="p">,</span> <span class="n">text</span><span class="o">=</span><span class="s2">"Details"</span><span class="p">);</span> <span class="n">body</span><span class="o">.</span><span class="n">pack</span><span class="p">(</span><span class="n">fill</span><span class="o">=</span><span class="s2">"both"</span><span class="p">,</span> <span class="n">expand</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
@@ -9942,140 +9921,6 @@ CHECK 11 - changing a Canvas item
 <p>The widths in CHECK 8 depend on your screen and font, and the pixel numbers will differ. What matters is the relationship between the two: without <code>sticky</code> the label keeps its natural width, and with it the label fills the whole span.</p>
 <p><a href="#table-of-contents">Back to Table of Contents</a></p>
 <hr />
-<h2 id="summary-of-changes-made-to-this-page">Summary of Changes Made to This Page<a class="headerlink" href="#summary-of-changes-made-to-this-page" title="Permanent link">&para;</a></h2>
-<p>The table below documents every change made while revising this page, for transparency. <strong>The thirty questions have been reproduced word for word, with three deliberate exceptions: question 17 named a method that its own answer never discussed, and questions 5 and 23 each contained a mis-placed backtick that made them render incorrectly. All three are listed individually below.</strong> All other question wording, punctuation and code samples are unchanged.</p>
-<table>
-<thead>
-<tr>
-<th>Element</th>
-<th>Original</th>
-<th>Change made</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>Overall structure</td>
-<td>An untitled list of thirty questions and answers separated by horizontal rules, with no heading, introduction, contents or navigation.</td>
-<td>Added a page title, a clickable table of contents, an "About This Page" introduction, a "How to Use These Questions" guide with a topic-finder table, a "Key Terms" glossary, three grouped sections of ten questions, a combined self-check script with its real output, and this change-log table.</td>
-</tr>
-<tr>
-<td>Table of contents</td>
-<td>None.</td>
-<td>Added at the top, with each question nested as a <code>###</code> entry under a <code>##</code> band of ten, and every entry linked to its heading. A "Back to Table of Contents" link was added after each question and each section.</td>
-</tr>
-<tr>
-<td>Question wording</td>
-<td>Thirty questions.</td>
-<td>Reproduced word for word apart from the amendment in the next row.</td>
-</tr>
-<tr>
-<td><strong>Question 17</strong></td>
-<td>Asked "What does <code>trace_add()</code> return, and how do you cancel a scheduled delayed task?" — but the answer that followed was entirely about <code>after()</code> and <code>after_cancel()</code> and never mentioned <code>trace_add()</code> at all, so question and answer did not match.</td>
-<td><strong>Amended in the question text</strong> to ask what <code>after()</code> returns, matching the answer it introduces. Nothing was lost: the answer now also states what <code>trace_add()</code> returns, and that it is cancelled with <code>trace_remove()</code> rather than <code>after_cancel()</code>.</td>
-</tr>
-<tr>
-<td><strong>Question 5</strong></td>
-<td>The backticks were mis-paired, so the question read as a single code span covering <code>command=, bind("&lt;Button-1&gt;")</code> — a comma and two different mechanisms inside one span.</td>
-<td><strong>Corrected in the question text</strong> so that <code>command=</code> and <code>bind("&lt;Button-1&gt;")</code> are two separate code spans, as clearly intended. No words were changed.</td>
-</tr>
-<tr>
-<td><strong>Question 23</strong></td>
-<td>Contained <code>`ttk `widgets</code> — the closing backtick fell after the space, so it rendered as a code span containing "ttk " followed by plain text.</td>
-<td><strong>Corrected in the question text</strong> to <code>`ttk` widgets</code>. No words were changed.</td>
-</tr>
-<tr>
-<td><strong>Answer 6, mixing geometry managers</strong></td>
-<td>Stated that mixing <code>.pack()</code> and <code>.grid()</code> in one parent makes "Tkinter enter an infinite calculation loop", "causing the window to lock up and become unresponsive".</td>
-<td><strong>Corrected.</strong> Verified by running it: a <code>TclError</code> is raised immediately, in about three thousandths of a second, reading <code>cannot use geometry manager grid inside .!frame which already has slaves managed by pack</code>. There is no loop and no freeze. The Golden Rule itself was kept, with the real error message, the timing, and an explanation of what happens depending on where the mistake occurs.</td>
-</tr>
-<tr>
-<td><strong>Answer 19 and answer 30, <code>sys.excepthook</code></strong></td>
-<td>Both stated that <code>sys.excepthook</code> "catches all uncaught exceptions", implying it would catch an error raised by a button click.</td>
-<td><strong>Corrected.</strong> Verified: with both handlers installed and an error raised from a button click, only <code>root.report_callback_exception</code> ran. Tkinter intercepts callback errors before they can reach <code>sys.excepthook</code>. Both answers now explain that the two must be installed together, and that <code>report_callback_exception</code> has to be set on the root window because setting it on a <code>Toplevel</code> has no effect.</td>
-</tr>
-<tr>
-<td><strong>Answer 20, read-only widgets</strong></td>
-<td>Stated that calling <code>.delete()</code>, <code>.insert()</code> or <code>.set()</code> on a read-only widget means "Python will raise an error".</td>
-<td><strong>Corrected.</strong> Verified: no exception is raised in any of the tested cases. A read-only <code>Entry</code> or <code>Spinbox</code> silently ignores the edit, and <code>ttk.Combobox.set()</code> works normally on a read-only combobox. The Unlock-Edit-Lock pattern was kept, with the reason restated: the danger is a silent no-op rather than an error, and a table of the tested cases was added.</td>
-</tr>
-<tr>
-<td><strong>Answer 3, the trace mode string</strong></td>
-<td>Gave the third argument passed to a trace callback as <code>"w"</code> for write.</td>
-<td><strong>Corrected</strong> to <code>'write'</code>. Verified: the callback receives <code>('PY_VAR1', '', 'write')</code>. The single-letter form belongs to the older, deprecated <code>trace()</code> method.</td>
-</tr>
-<tr>
-<td><strong>Answer 3, the missing-parameter error</strong></td>
-<td>Stated that a zero-parameter callback means "Python will crash with a <code>TypeError</code>".</td>
-<td><strong>Corrected.</strong> The <code>TypeError</code> is raised, but Tkinter catches it and the program keeps running, so the real symptom is a validation function that silently never works with an explanation only in the console. Also added that <code>trace_add()</code> returns a handle usable with <code>trace_remove()</code>.</td>
-</tr>
-<tr>
-<td><strong>Answer 11, <code>Text.get()</code> with no arguments</strong></td>
-<td>Called it "a syntax error".</td>
-<td><strong>Corrected</strong> to a <code>TypeError</code> raised at run time; the code is valid Python. The real message is quoted, along with the note that <code>Text.get("1.0", "end")</code> returns a trailing newline that was never typed, and how to avoid it with <code>"end-1c"</code>.</td>
-</tr>
-<tr>
-<td><strong>Answer 26, calling <code>mainloop()</code> twice</strong></td>
-<td>Said the second call "is unreachable—it would cause an error", which is self-contradictory.</td>
-<td><strong>Corrected.</strong> Verified: once the window is destroyed the first call returns, the second call then runs and returns immediately, and no error is raised. A second <code>mainloop()</code> is pointless rather than harmful; the genuine mistake is expecting code after it to run while the window is open.</td>
-</tr>
-<tr>
-<td><strong>Answers 1 and 23, ttk styling</strong></td>
-<td>Stated that ttk widgets "reject direct color and styling parameters" as a blanket rule, and that changing a <code>ttk.Label</code>'s foreground requires defining a custom style.</td>
-<td><strong>Corrected and made more precise.</strong> Verified: the <code>tk</code> shorthands <code>fg</code>, <code>bg</code> and <code>bd</code> are always rejected, but the full option <code>foreground=</code> is accepted by <code>ttk.Label</code> and <code>ttk.Entry</code>, at creation or through <code>.config()</code>, with no custom style needed. It is rejected by <code>ttk.Button</code> and <code>ttk.Checkbutton</code>, which do need a named style. A table of the tested cases was added.</td>
-</tr>
-<tr>
-<td><strong>Answer 14, <code>.after()</code> and events</strong></td>
-<td>Stated that <code>.after()</code> "does NOT process events during the wait", which reads as though the interface stops responding during the delay.</td>
-<td><strong>Corrected.</strong> The event loop continues running normally throughout the delay; it is <code>.after()</code> itself that does not block. The distinction that matters was kept and sharpened: <code>.update()</code> delivers pending user events, while <code>.update_idletasks()</code> deliberately does not, which was confirmed by test.</td>
-</tr>
-<tr>
-<td><strong>Answer 8, native appearance</strong></td>
-<td>Attributed the difference in appearance to the operating system, contrasting a <code>ttk.Button</code> on macOS with a <code>tk.Button</code> on Windows.</td>
-<td>Clarified that the difference is which widget family is used, not which operating system: classic <code>tk</code> widgets look dated on every platform, while <code>ttk</code> widgets adopt the native appearance wherever they run. The four-layer table was kept and a diagram added.</td>
-</tr>
-<tr>
-<td><strong>Answer 12, terminology</strong></td>
-<td>Described keeping a reference as "reference counting".</td>
-<td>Kept the advice and tightened the wording: reference counting is the mechanism by which Python frees the object, and the fix is to keep a reference so the count never reaches zero. Added the explanation that the widget stores only the image's registered name, which is why Python cannot see the connection.</td>
-</tr>
-<tr>
-<td>Dangling references to "the document"</td>
-<td>Answer 4 began "This is the 'INCORRECT PARADIGM' described in the document", referring to material not present on this page.</td>
-<td>The answer was made self-contained. The same phrase appears inside the wording of questions 23, 26 and 28, which has been left exactly as printed.</td>
-</tr>
-<tr>
-<td>Broken formatting in answer 5</td>
-<td>The code spans were mis-paired, so the text read <code>command=my_func (no parentheses!). bind("&lt;Button-1&gt;")</code> with the closing backtick in the wrong place, and later showed <code>bind("&lt;&gt;")</code> and <code>bind("&lt;&lt;&gt;&gt;")</code> with the event names missing.</td>
-<td>Reformatted with correct code spans and the full event names restored. A comparison table of the three mechanisms was added, along with the note that <code>command=</code> takes the function without brackets.</td>
-</tr>
-<tr>
-<td>Grammar in answer 27</td>
-<td>Read "Combobox (from ttk) is a dropdown shows one item at a time".</td>
-<td>Corrected to a complete sentence, and the comparison expanded into a table.</td>
-</tr>
-<tr>
-<td>Worked demonstrations</td>
-<td>None. The answers described behaviour without showing it.</td>
-<td>Added short runnable examples with <code># Step</code> comments to twenty-one of the answers, each followed by its real captured output, plus one combined self-check script at the end that performs eleven of the checks in a single run. All output shown was produced by actually running the code.</td>
-</tr>
-<tr>
-<td>Tables</td>
-<td>Only prose.</td>
-<td>Added comparison tables to answers 1, 4, 5, 8, 11, 13, 14, 16, 18, 20, 21, 22, 23, 24, 27, 29 and 30, plus a topic-finder table in the introduction.</td>
-</tr>
-<tr>
-<td>Diagrams</td>
-<td>None.</td>
-<td>Added five Mermaid flowcharts: the <code>text=</code> versus <code>textvariable=</code> binding, the geometry-manager rule, the four-layer architecture, where an exception travels in Tkinter, and the recommended container hierarchy. All use plain flowchart syntax with no brackets or quotation marks inside node labels, so they can be imported into draw.io.</td>
-</tr>
-<tr>
-<td>Emojis</td>
-<td>None used.</td>
-<td>None used (unchanged).</td>
-</tr>
-</tbody>
-</table>
-<p><a href="#table-of-contents">Back to Table of Contents</a></p>
 
 
 
