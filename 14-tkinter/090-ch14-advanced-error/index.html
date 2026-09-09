@@ -5937,17 +5937,6 @@
   
 </li>
       
-        <li class="md-nav__item">
-  <a href="#summary-of-changes-made-to-this-page" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Summary of Changes Made to This Page
-      
-    </span>
-  </a>
-  
-</li>
-      
     </ul>
   
 </nav>
@@ -8807,12 +8796,7 @@
 </tbody>
 </table>
 <p>Miss any one of the three and nothing happens: a <code>StringVar</code> with no <code>textvariable</code> is never updated, and an Entry with no trace is never watched.</p>
-<div class="highlight"><pre><span></span><code>flowchart LR
-    A[User presses a key] --&gt; B[Entry writes the new text into input_var]
-    B --&gt; C[trace_add notices the write]
-    C --&gt; D[validate runs automatically]
-    D --&gt; E[The status label is updated]
-</code></pre></div>
+<p><img alt="Flowchart" src="../../resources/ch14-tkinter-September-2026-professional-error-handling-003.png" /></p>
 <p><strong>Two details that surprise beginners:</strong></p>
 <p>First, <code>"write"</code> is the mode. Tkinter also offers <code>"read"</code> and <code>"unset"</code>, but <code>"write"</code> is the one used for validation.</p>
 <p>Second, Tkinter passes three arguments to the traced function, which is why it is normally written as <code>def validate(*args):</code>. Printing them shows what they are:</p>
@@ -9005,15 +8989,7 @@ program bug appears
 </tr>
 </tbody>
 </table>
-<div class="highlight"><pre><span></span><code>flowchart TD
-    A[An exception is raised in a Tkinter program] --&gt; B{Was it raised inside a callback such as a button click}
-    B --&gt;|Yes| C[Tkinter catches it before anything else can]
-    C --&gt; D[root.report_callback_exception is called]
-    B --&gt;|No| E[The exception travels up the call chain]
-    E --&gt; F[sys.excepthook is called]
-    D --&gt; G[Point BOTH names at one handler to cover every case]
-    F --&gt; G
-</code></pre></div>
+<p><img alt="Flowchart" src="../../resources/ch14-tkinter-September-2026-professional-error-handling-004.png" /></p>
 <p>Note the fourth row of the table above. The validation function attached with <code>trace_add()</code> is also a callback, so if a bug ever crept into <code>validate()</code>, the same rule would apply to it.</p>
 <p><a href="#table-of-contents">Back to Table of Contents</a></p>
 <hr />
@@ -9417,22 +9393,8 @@ NameError: name 'unknown_variable' is not defined
 <p>The flowchart shows the steps in execution of the given script:</p>
 <p><img alt="Flowchart" src="/001-mkdocs/resources/ch14-tkinter-professional-error-handling.png" /></p>
 <p>The same two journeys through the program in text form — typing into the box, and clicking the button:</p>
-<div class="highlight"><pre><span></span><code>flowchart TD
-    T1[User presses a key in the Entry box] --&gt; T2[The text is written into input_var]
-    T2 --&gt; T3[trace_add notices the change and runs validate]
-    T3 --&gt; T4{Is the box empty}
-    T4 --&gt;|Yes| T5[Status shows Waiting]
-    T4 --&gt;|No| T6{Can the text be turned into a whole number}
-    T6 --&gt;|Yes| T7[Status shows Valid input and the activity is logged]
-    T6 --&gt;|No| T8[Status shows Numbers only and the activity is logged]
-
-    B1[User clicks Trigger Error] --&gt; B2[trigger_error logs the click]
-    B2 --&gt; B3[The line print unknown_variable raises a NameError]
-    B3 --&gt; B4[No try-except here so Tkinter catches it]
-    B4 --&gt; B5[report_callback_exception calls handle_error]
-    B5 --&gt; B6[The error and its traceback are written to app_log.txt]
-    B6 --&gt; B7[A friendly popup is shown and the window stays open]
-</code></pre></div>
+<p><img alt="Flowchart" src="../../resources/ch14-tkinter-September-2026-professional-error-handling-005.png" /></p>
+<p><img alt="Flowchart" src="../../resources/ch14-tkinter-September-2026-professional-error-handling-006.png" /></p>
 <p><a href="#table-of-contents">Back to Table of Contents</a></p>
 <hr />
 <h2 id="common-errors-and-how-to-fix-them">Common Errors and How to Fix Them<a class="headerlink" href="#common-errors-and-how-to-fix-them" title="Permanent link">&para;</a></h2>
@@ -9497,178 +9459,9 @@ NameError: name 'unknown_variable' is not defined
 </tr>
 </tbody>
 </table>
-<div class="highlight"><pre><span></span><code>flowchart TD
-    S[Something is not working] --&gt; Q1{Is it the error button that does nothing}
-    Q1 --&gt;|Yes| F1[Install the handler on root.report_callback_exception too]
-    Q1 --&gt;|No| Q2{Does typing fail to trigger validation}
-    Q2 --&gt;|Yes| F2[Check textvariable on the Entry and trace_add on the variable]
-    Q2 --&gt;|No| Q3{Is there a TypeError about arguments}
-    Q3 --&gt;|Yes| F3[Write def validate with star args]
-    Q3 --&gt;|No| Q4{Is the log file empty or missing timestamps}
-    Q4 --&gt;|Yes| F4[Call basicConfig once near the top and set a format]
-    Q4 --&gt;|No| F5[Check the log level and whether exc_info was passed]
-</code></pre></div>
+<p><img alt="Flowchart" src="../../resources/ch14-tkinter-September-2026-professional-error-handling-007.png" /></p>
 <p><a href="#table-of-contents">Back to Table of Contents</a></p>
 <hr />
-<h2 id="summary-of-changes-made-to-this-page">Summary of Changes Made to This Page<a class="headerlink" href="#summary-of-changes-made-to-this-page" title="Permanent link">&para;</a></h2>
-<p>The table below documents every change made while revising this page, for transparency. <strong>The printed research question has been reproduced word for word, with three deliberate exceptions: a typographical error has been corrected, one requirement in Part B has been amended, and the list of tools in the preamble has been completed. All three are listed individually in the table below.</strong> Apart from those changes, the wording, lists and punctuation of the question are unchanged. All new material has been added in clearly separate, clearly labelled sections.</p>
-<table>
-<thead>
-<tr>
-<th>Element</th>
-<th>Original</th>
-<th>Change made</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>Overall structure</td>
-<td>An untitled page containing the research question, a theory solution, a large accidentally duplicated block, and a script, with no worked output.</td>
-<td>Added a page title, a clickable table of contents, an "About This Page" introduction, a "Key Terms" glossary, answers labelled A1 to A5 matching the five Part A questions, a new section on the Tkinter hook problem, answers labelled B1 to B7 for the script, a common-errors section, and this change-log table.</td>
-</tr>
-<tr>
-<td>Table of contents</td>
-<td>None.</td>
-<td>Added at the top, with <code>###</code> subtopics nested as a sub-list under their <code>##</code> topics, and every entry linked to its heading. A "Back to Table of Contents" link was added at the end of each topic and subtopic.</td>
-</tr>
-<tr>
-<td><strong>Duplicated block</strong></td>
-<td>Lines 157 to 277 of the original contained a second, degraded copy of the entire research question and theory solution, pasted in by accident. Its formatting had been stripped: block quotes had become plain lines, code spans had lost their backticks, and list markers had disappeared. It ended with a line of text copied from an editor's status bar: <code>Markdown 3076 bytes 461 words 163 lines Ln 157, Col 24HTML 2272 characters 393 words 85 paragraphs</code>.</td>
-<td><strong>The duplicate block and the editor status-bar line were removed.</strong> Before removing it, it was checked for anything the properly formatted version did not already contain. It held one unique item — a three-row table comparing <code>print()</code> with <code>logging</code> — which has been preserved and expanded in the answer to question 1, so nothing was lost.</td>
-</tr>
-<tr>
-<td><code>loggingsys.excepthooktrace_add()</code></td>
-<td>The three tool names had run together into a single unreadable code span in the question preamble.</td>
-<td><strong>Corrected in the question text</strong> to the three separate names it was always meant to be: <code>logging</code>, <code>sys.excepthook</code> and <code>trace_add()</code>.</td>
-</tr>
-<tr>
-<td>Printed research question</td>
-<td>Present.</td>
-<td>Reproduced word for word, verified line by line against the original file, apart from the correction above. Heading levels were adjusted: <code># Research / Project Question</code> became <code>##</code>, and its inner <code>##</code> and <code>###</code> headings each moved down one level, so that the whole question sits as one topic in the table of contents.</td>
-</tr>
-<tr>
-<td><strong>Part B requirement 5</strong></td>
-<td>The requirement read: Uses <code>sys.excepthook</code> for global exception handling. As printed, it cannot be met together with requirements 6 and 7, because an error raised by a button click never reaches <code>sys.excepthook</code>. Following the question literally therefore produces a program that shows no popup and records no error.</td>
-<td><strong>Amended in the question text</strong> to read <code>sys.excepthook</code> together with Tkinter’s <code>report_callback_exception</code>, so that the task the question sets is achievable. The original wording is otherwise untouched.</td>
-</tr>
-<tr>
-<td>Tool list in the question preamble</td>
-<td>Named <code>logging</code>, <code>sys.excepthook</code> and <code>trace_add()</code> as the tools supporting the three listed abilities, one of which is handling unexpected failures safely. In a Tkinter program that list is incomplete.</td>
-<td><strong>Amended in the question text</strong> to include <code>report_callback_exception</code> alongside the other three.</td>
-</tr>
-<tr>
-<td>Related pages</td>
-<td>No links to the other pages on this topic.</td>
-<td>Added a "Related Pages in This Series" table linking this page to the two companion pages on the same theme, so the three can be read as one sequence.</td>
-</tr>
-<tr>
-<td>The "which hook is used" table</td>
-<td>Not present.</td>
-<td>Added a table listing which of the two hooks Python actually uses for each kind of error, including the row noting that a <code>trace_add()</code> variable callback is handled the same way as a button click.</td>
-</tr>
-<tr>
-<td>Follow-up questions</td>
-<td>None.</td>
-<td>Added five optional follow-up questions (F1 to F5), clearly marked as additional online material and not part of the printed book.</td>
-</tr>
-<tr>
-<td><strong>Model script: the Trigger Error button did not work</strong></td>
-<td>The script installed <code>sys.excepthook = handle_error</code> and relied on it to catch the <code>NameError</code> raised by the button. Running it confirmed the handler never ran: no popup appeared, the log panel stopped after "Trigger Error clicked", <code>app_log.txt</code> contained the INFO line about the click but no ERROR entry at all, and the only output was <code>Exception in Tkinter callback</code> plus a traceback in the terminal. Requirement 7 of Part B was therefore not met.</td>
-<td><strong>Corrected.</strong> The same handler is now also assigned to <code>root.report_callback_exception</code>, the hook Tkinter actually uses for callback errors. The <code>sys.excepthook</code> line required by the question is kept as well. Verified: the popup now appears, the panel reports the error, and the log file receives a timestamped ERROR entry with the full traceback.</td>
-</tr>
-<tr>
-<td>Explanation of the above</td>
-<td>Not mentioned; the page assumed <code>sys.excepthook</code> was sufficient.</td>
-<td>Added a new section, "The Tkinter Trap", with a table of what Part B asks for against what actually happens, the one-line fix, a table of which hook applies to which kind of error, and a flowchart. It also notes that a <code>trace_add()</code> callback is subject to the same rule.</td>
-</tr>
-<tr>
-<td>A1, <code>logging</code> versus <code>print()</code></td>
-<td>Gave a definition, a one-line example, and the observation that logs remain saved. The <code>print()</code> versus <code>logging</code> comparison table existed only inside the duplicated block.</td>
-<td>Original content kept. The comparison table was rescued from the duplicate, kept in full, and extended from three rows to seven. Added a worked <code>basicConfig()</code> example with <code># Step</code> comments, a sample of the resulting file lines, and an explanation of log levels.</td>
-</tr>
-<tr>
-<td>A2, <code>sys.excepthook</code></td>
-<td>Gave a definition and two arrow sequences.</td>
-<td>Original content and both sequences kept, with the arrow diagrams redrawn as Mermaid flowcharts. Added the required three-argument signature with a table explaining each argument, a warning about the resulting error if the signature is wrong, and a pointer to the Tkinter limitation.</td>
-</tr>
-<tr>
-<td>A3, <code>trace_add()</code></td>
-<td>Three sentences and one example.</td>
-<td>Original content kept. Added a three-step table showing the chain that must be connected (<code>StringVar</code>, <code>textvariable</code>, <code>trace_add</code>), a Mermaid flowchart of a keystroke's journey, an explanation of the <code>"write"</code> mode, and the verified output showing the three arguments Tkinter passes, which explains why <code>*args</code> is needed.</td>
-</tr>
-<tr>
-<td>A4, live validation</td>
-<td>A definition and two short examples.</td>
-<td>Original content kept, including both examples. Added measured evidence that typing <code>abc</code> runs the validation three times with values <code>a</code>, <code>ab</code>, <code>abc</code>; a five-row comparison of Submit-time against live validation; and the design point that "not finished yet" should be treated differently from "wrong".</td>
-</tr>
-<tr>
-<td>A5, why professional apps log errors</td>
-<td>Listed three causes and three benefits.</td>
-<td>All original content kept. Added a four-row table contrasting who reads a popup with who reads a log entry and what each needs, plus four further reasons, including that scheduled or background failures have no user to see them.</td>
-</tr>
-<tr>
-<td>Script comments</td>
-<td>Numbered <code># 1.</code> to <code># 14.</code>, with <code># 3. CREATE LOG PANEL</code> containing the typo "mini consolel", and one comment reading <code># Meaning: Whenever variable changes,run validate()</code> with a missing space.</td>
-<td>Renumbered to the <code># Step N:</code> format with sub-steps such as <code># Step 5a:</code>. The typo and the missing space were corrected, and several very long trailing comments were moved onto their own lines above the code they describe.</td>
-</tr>
-<tr>
-<td>Script: <code>logging.basicConfig()</code></td>
-<td>Called without a <code>format</code>, so entries appeared as <code>INFO:root:message</code> with no timestamp.</td>
-<td>Added <code>format="%(asctime)s - %(levelname)s - %(message)s"</code>, so every entry records when it happened and how serious it is.</td>
-</tr>
-<tr>
-<td>Script: errors recorded twice, at the wrong level</td>
-<td><code>write_log()</code> recorded everything with <code>logging.info()</code>, so when <code>handle_error</code> called it the error text was written to the file as INFO; <code>handle_error</code> then called <code>logging.error()</code> separately, producing a second, duplicate entry.</td>
-<td><code>write_log()</code> now takes a <code>level</code> argument, so activity is recorded as INFO and errors as ERROR, each exactly once. An optional <code>exc</code> argument attaches the full traceback to the error entry.</td>
-</tr>
-<tr>
-<td>Script: no traceback in the log</td>
-<td><code>logging.error(error_msg)</code> recorded only the one-line summary.</td>
-<td>The traceback is now passed through with <code>exc_info</code>, so the file keeps the complete stack trace while the popup still shows only the short message.</td>
-</tr>
-<tr>
-<td>Script: minor style points</td>
-<td><code>error_msg = (f"{exc_type.__name__}: "f"{exc_value}")</code> concatenated two f-strings with no space between them; the log message used a Unicode arrow character that renders inconsistently across editors and fonts; <code>number = int(text)</code> assigned a value that was then never used.</td>
-<td>Simplified to a single f-string; the arrow was replaced with plain wording; and the converted number is now included in the log message, so the conversion result is actually used.</td>
-</tr>
-<tr>
-<td>Script: empty input</td>
-<td>Handled correctly, showing <code>Waiting...</code>.</td>
-<td>Kept unchanged, and the reasoning behind it is now explained in section A4 as an example of distinguishing "not finished yet" from "wrong".</td>
-</tr>
-<tr>
-<td>Script: output</td>
-<td>The script printed messages to the terminal but the page showed no output at all.</td>
-<td>Added teaching <code>print()</code> statements at every step. Added a new "Expected Output" section with genuine captured output for start-up, for typing a valid number, for typing letters, for clicking the button, and for the full contents of <code>app_log.txt</code>, with three observations drawing the sections together.</td>
-</tr>
-<tr>
-<td>Script: presentation</td>
-<td>A single code block.</td>
-<td>Split into explained sections B1 to B5, followed by the complete combined script in B6, so it can be read either way.</td>
-</tr>
-<tr>
-<td>Flowchart image</td>
-<td><code>![Flowchart](/001-mkdocs/resources/ch14-tkinter-professional-error-handling.png)</code> with a one-line caption.</td>
-<td>The original image link and caption were kept unchanged, and a Mermaid flowchart tracing both journeys through the program was added beneath it, so the flow is visible even if the image resource is unavailable to a reader.</td>
-</tr>
-<tr>
-<td>Troubleshooting guidance</td>
-<td>None.</td>
-<td>Added a ten-row table mapping each symptom to its cause and fix, including the silent-button symptom produced by the original script and the <code>TypeError</code> caused by omitting <code>*args</code>, plus a decision flowchart of the same checklist.</td>
-</tr>
-<tr>
-<td>Diagrams</td>
-<td>None.</td>
-<td>Added six Mermaid diagrams: Python's default error route, the custom route, the keystroke journey, the routing of exceptions in Tkinter, the two journeys through the script, and the troubleshooting flowchart. All use plain flowchart syntax with no brackets or quotation marks inside node labels, so they can be imported into draw.io.</td>
-</tr>
-<tr>
-<td>Emojis</td>
-<td>None used.</td>
-<td>None used (unchanged).</td>
-</tr>
-</tbody>
-</table>
-<p><a href="#table-of-contents">Back to Table of Contents</a></p>
 
 
 
