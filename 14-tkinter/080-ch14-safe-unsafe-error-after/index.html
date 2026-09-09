@@ -5920,17 +5920,6 @@
   
 </li>
       
-        <li class="md-nav__item">
-  <a href="#summary-of-changes-made-to-this-page" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Summary of Changes Made to This Page
-      
-    </span>
-  </a>
-  
-</li>
-      
     </ul>
   
 </nav>
@@ -9321,20 +9310,7 @@ ZeroDivisionError: division by zero
 <p>The flowchart shows the steps in the execution of the above script:</p>
 <p><img alt="Unsafe vs Safe after Callback" src="/001-mkdocs/resources/ch14-tkinter-safe-unsafe-after.png" /></p>
 <p>The same two journeys in text form, side by side:</p>
-<div class="highlight"><pre><span></span><code>flowchart TD
-    U1[User clicks Unsafe after Error] --&gt; U2[start_unsafe writes to the log and calls after 2000]
-    U2 --&gt; U3[Two seconds pass while the window stays usable]
-    U3 --&gt; U4[unsafe_task runs and divides by zero]
-    U4 --&gt; U5[No try-except here so the error escapes]
-    U5 --&gt; U6[Tkinter routes it to report_callback_exception]
-    U6 --&gt; U7[handle_uncaught logs the error and shows an error popup]
-
-    S1[User clicks Safe after Error] --&gt; S2[start_safe writes to the log and calls after 2000]
-    S2 --&gt; S3[Two seconds pass while the window stays usable]
-    S3 --&gt; S4[safe_task runs and divides by zero]
-    S4 --&gt; S5[The try-except catches it immediately]
-    S5 --&gt; S6[A warning popup is shown and nothing is logged]
-</code></pre></div>
+<p><img alt="Flowchart" src="../../resources/ch14-tkinter-September-2026-safe-unsafe-callbacks-004.png" /></p>
 <p><a href="#table-of-contents">Back to Table of Contents</a></p>
 <hr />
 <h2 id="common-errors-and-how-to-fix-them">Common Errors and How to Fix Them<a class="headerlink" href="#common-errors-and-how-to-fix-them" title="Permanent link">&para;</a></h2>
@@ -9399,162 +9375,7 @@ ZeroDivisionError: division by zero
 </tr>
 </tbody>
 </table>
-<div class="highlight"><pre><span></span><code>flowchart TD
-    S[My delayed error handling is not working] --&gt; Q1{Did the error come from an after job or a button click}
-    Q1 --&gt;|Yes| F1[Install the handler on root.report_callback_exception too]
-    Q1 --&gt;|No| Q2{Did the task run instantly instead of waiting}
-    Q2 --&gt;|Yes| F2[Pass the function name without brackets]
-    Q2 --&gt;|No| Q3{Did the window freeze during the wait}
-    Q3 --&gt;|Yes| F3[Replace time.sleep with after]
-    Q3 --&gt;|No| Q4{Is error_log.txt empty}
-    Q4 --&gt;|Yes| F4[The handler never ran - check both hooks are installed]
-    Q4 --&gt;|No| F5[Check the except clause names the error actually raised]
-</code></pre></div>
-<p><a href="#table-of-contents">Back to Table of Contents</a></p>
-<hr />
-<h2 id="summary-of-changes-made-to-this-page">Summary of Changes Made to This Page<a class="headerlink" href="#summary-of-changes-made-to-this-page" title="Permanent link">&para;</a></h2>
-<p>The table below documents every change made while revising this page, for transparency. <strong>The printed research question — the whole block from "Research / Project Question" through Part A and Part B — has been reproduced word for word, with one deliberate exception: a single typographical error in the printed text has been corrected, and it is listed individually in the table below.</strong> Apart from that correction, its wording, its lists, its code samples and its punctuation are unchanged. All new material has been added in clearly separate, clearly labelled sections.</p>
-<table>
-<thead>
-<tr>
-<th>Element</th>
-<th>Original</th>
-<th>Change made</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>Overall structure</td>
-<td>An untitled page starting directly with the research question, followed by a "Model Theory Solution" and a script, with no worked output and no explanation of how the two buttons differ in practice.</td>
-<td>Added a page title, a clickable table of contents, an "About This Page" introduction, a "Key Terms" glossary, answers labelled A1 to A6 matching the six Part A questions, a new section on the Tkinter hook problem, answers labelled B1 to B7 for the script, a common-errors section, and this change-log table.</td>
-</tr>
-<tr>
-<td>Table of contents</td>
-<td>None.</td>
-<td>Added at the top, with <code>###</code> subtopics nested as a sub-list under their <code>##</code> topics, and every entry linked to its heading. A "Back to Table of Contents" link was added at the end of each topic and subtopic.</td>
-</tr>
-<tr>
-<td>Printed research question</td>
-<td>Present.</td>
-<td>Reproduced word for word, verified line by line against the original file, apart from the correction listed in the next row. Heading levels were adjusted: <code># Research / Project Question</code> became <code>##</code>, and its inner <code>##</code> and <code>###</code> headings each moved down one level, so that the whole question sits as one topic in the table of contents. No other wording was altered.</td>
-</tr>
-<tr>
-<td>Broken code span in the question preamble</td>
-<td>The sentence ended <code>programmers must understand the difference between:</code> followed by an opening backtick at the end of the line, with <code>unsafe callback</code> beginning on the next line. The code span was split across a line break, so it rendered awkwardly.</td>
-<td><strong>Corrected in the question text</strong> so the phrase reads as one line, with <code>unsafe callback</code> and <code>safe callback</code> each in their own code span as clearly intended. A stray whitespace-only line inside the Part A question 5 list was also removed; no visible text was affected.</td>
-</tr>
-<tr>
-<td>Follow-up questions</td>
-<td>None.</td>
-<td>Added five optional follow-up questions (F1 to F5), clearly marked as additional online material and not part of the printed book.</td>
-</tr>
-<tr>
-<td><strong>Model script: the unsafe button did not work</strong></td>
-<td>The script installed <code>sys.excepthook = handle_uncaught</code> and relied on it to catch the <code>ZeroDivisionError</code> raised inside an <code>after()</code> callback. Running it confirmed that the handler never ran: no popup appeared, the log panel stopped after "Unsafe task running...", <code>error_log.txt</code> stayed <strong>completely empty</strong>, and the only output was <code>Exception in Tkinter callback</code> plus a traceback in the terminal. The script's own comments described in detail a sequence of events that does not occur. Requirement 3 of Part B was therefore not met.</td>
-<td><strong>Corrected.</strong> The same handler is now also assigned to <code>root.report_callback_exception</code>, which is the hook Tkinter actually uses for <code>after()</code> errors. The <code>sys.excepthook</code> line is kept as well, so both routes lead to one handler. Verified: the unsafe button now activates the global hook, shows the popup, and writes a full entry to <code>error_log.txt</code>, while the safe button still writes nothing to the file.</td>
-</tr>
-<tr>
-<td>Explanation of the above</td>
-<td>Not mentioned anywhere; the page assumed <code>sys.excepthook</code> was sufficient.</td>
-<td>Added a new section, "The Tkinter Trap", with a table of what Part B asks for against what actually happens without the fix, the one-line correction, a table of which hook applies to which kind of error, and a flowchart.</td>
-</tr>
-<tr>
-<td>A1, <code>after()</code></td>
-<td>Gave the syntax and one example.</td>
-<td>Original content kept. Added an explanation of its real purpose (waiting without stopping everything else), a table breaking down each part of the call, the millisecond warning, and the returned job identifier used by <code>after_cancel()</code>.</td>
-</tr>
-<tr>
-<td>A2, callback functions</td>
-<td>Gave a definition and one example.</td>
-<td>Original content kept. Added an everyday analogy, and the very common <code>task</code> versus <code>task()</code> mistake with an explanation of its confusing symptom.</td>
-</tr>
-<tr>
-<td>A3, delayed execution</td>
-<td>Gave a definition and one example.</td>
-<td>Original content kept. Added an explanation of what the program is doing during the wait, a list of real uses, and a Mermaid flowchart of the sequence.</td>
-</tr>
-<tr>
-<td>A4, what happens if a delayed callback fails</td>
-<td>Gave a short example and the observation that the error happens later, making debugging harder.</td>
-<td>Original content kept in full. Added the reason it is harder: a <code>try-except</code> placed around the <code>after()</code> call catches nothing, because that block has already finished by the time the callback runs. Included a worked counter-example, a table of the only two places protection can live, and three further consequences of the delay.</td>
-</tr>
-<tr>
-<td>A5, unsafe versus safe</td>
-<td>A four-row comparison table and two examples.</td>
-<td>All four original rows kept, with five further rows added. The unsafe example, which was written as <code>def task():    x = 10 / 0</code> on a single line inside a fence with no language tag, was reformatted as proper indented Python. Added a Mermaid flowchart and a closing paragraph explaining that the two approaches are partners rather than alternatives.</td>
-</tr>
-<tr>
-<td>A6, why <code>time.sleep()</code> is avoided</td>
-<td>Two lines stating that <code>sleep()</code> freezes the GUI and <code>after()</code> does not.</td>
-<td>Original statement kept. Added the reason (the event loop is part of the program that <code>sleep()</code> stops), a measured demonstration showing two <code>after()</code> jobs booked for 0.5s and 1.0s both actually running at 2.00s because <code>sleep(2)</code> blocked them, and a seven-row comparison table.</td>
-</tr>
-<tr>
-<td>Script comments</td>
-<td>Numbered <code># 1.</code> to <code># 10.</code>. Several comments were also misplaced relative to the code they described: in <code>handle_uncaught()</code> the comment about saving to the file sat above the <code>write_log()</code> call rather than above <code>logging.error()</code>, and the comment about updating the log panel sat above <code>messagebox.showerror()</code>. One comment, <code># Save errors to file named</code>, was left unfinished.</td>
-<td>Renumbered to the <code># Step N:</code> format with sub-steps such as <code># Step 5a:</code>. Every comment was moved to sit directly above the code it describes, and the unfinished comment was completed.</td>
-</tr>
-<tr>
-<td>Script: very long trailing comments</td>
-<td>Two comments ran to several hundred characters on a single line, extending far past the width of the code, including one attached to <code>root.after(2000, safe_task)</code>.</td>
-<td>Rewritten as short comments placed above the relevant lines, so the code remains readable without horizontal scrolling.</td>
-</tr>
-<tr>
-<td>Script: <code>logging.basicConfig()</code></td>
-<td>Called without a <code>format</code>, so log entries had no timestamp.</td>
-<td>Added <code>format="%(asctime)s - %(levelname)s - %(message)s"</code>, so each entry records when it happened.</td>
-</tr>
-<tr>
-<td>Script: <code>logging.error(error_msg)</code></td>
-<td>Recorded only the one-line summary, so the log file lost the traceback.</td>
-<td>Changed to <code>logging.error(error_msg, exc_info=(exc_type, exc_value, exc_traceback))</code>, so the file receives the complete stack trace.</td>
-</tr>
-<tr>
-<td>Script: minor style points</td>
-<td><code>sys.excepthook = (handle_uncaught)</code> used unnecessary brackets; <code>error_msg = (f"{exc_type.__name__}: "f"{exc_value}")</code> concatenated two f-strings with no space between them; <code>print(error_msg)  #</code> ended with an empty comment.</td>
-<td>Simplified to <code>sys.excepthook = handle_uncaught</code> and a single f-string. The stray empty comment was removed, and the separate <code>print()</code> is no longer needed because <code>write_log()</code> now prints to the terminal as well.</td>
-</tr>
-<tr>
-<td>Script: an arrow symbol in output text</td>
-<td>The log message built in <code>write_log()</code> and one of the section comments used a Unicode arrow character, which can render inconsistently across editors, terminals and fonts.</td>
-<td>Replaced with a plain hyphen in the log message, and the comment was rewritten in words.</td>
-</tr>
-<tr>
-<td>Script: output</td>
-<td>No <code>print()</code> statements at all, and no sample output anywhere on the page.</td>
-<td>Added teaching <code>print()</code> statements at every step, and made <code>write_log()</code> echo to the terminal as well as the window. Added a new "Expected Output" section with genuine captured output for start-up, for each button, for the final log panel, and for the contents of <code>error_log.txt</code>, plus a table comparing what each button produced.</td>
-</tr>
-<tr>
-<td>Script: evidence of the difference</td>
-<td>The page asserted that the safe callback does not reach the global handler, but showed nothing to demonstrate it.</td>
-<td>The captured <code>error_log.txt</code> now shows exactly one entry after both buttons have been clicked, which is direct proof that only the unsafe error escaped. This is called out explicitly as the clearest evidence of the lesson.</td>
-</tr>
-<tr>
-<td>Script: unreachable line</td>
-<td>Not present.</td>
-<td>Added a deliberate line after the division in <code>unsafe_task()</code>, with a comment explaining that it never runs, to demonstrate that the rest of a function is abandoned once an exception is raised.</td>
-</tr>
-<tr>
-<td>Flowchart image</td>
-<td><code>![Unsafe vs Safe after Callback](/001-mkdocs/resources/ch14-tkinter-safe-unsafe-after.png)</code> with a one-line caption.</td>
-<td>The original image link and caption were kept unchanged, and a Mermaid flowchart tracing both journeys side by side was added beneath it, so the flow is visible even if the image resource is unavailable to a reader.</td>
-</tr>
-<tr>
-<td>Troubleshooting guidance</td>
-<td>None.</td>
-<td>Added a ten-row table mapping each symptom to its cause and fix, including the empty-log-file symptom produced by the original script and the ineffective <code>try-except</code> around <code>after()</code>, plus a decision flowchart of the same checklist.</td>
-</tr>
-<tr>
-<td>Diagrams</td>
-<td>None.</td>
-<td>Added five Mermaid diagrams: delayed execution, the safe-versus-unsafe decision, the routing of exceptions in Tkinter, the two button journeys, and the troubleshooting flowchart. All use plain flowchart syntax with no brackets or quotation marks inside node labels, so they can be imported into draw.io.</td>
-</tr>
-<tr>
-<td>Emojis</td>
-<td>None used.</td>
-<td>None used (unchanged).</td>
-</tr>
-</tbody>
-</table>
+<p><img alt="Flowchart" src="../../resources/ch14-tkinter-September-2026-safe-unsafe-callbacks-005.png" /></p>
 <p><a href="#table-of-contents">Back to Table of Contents</a></p>
 
 
