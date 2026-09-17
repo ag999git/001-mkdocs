@@ -2366,7 +2366,7 @@ Step 7: Plot saved as bill_vs_tip_scatterplot.png
 
 ### The Resulting Plot of Script 4
 
-![Scatter plot](/001-mkdocs/resources/ch15-scatter-plot.png)
+![Scatter plot](../resources/ch15-scatter-plot.png)
 
 [Back to the Table of Contents](#table-of-contents)
 
