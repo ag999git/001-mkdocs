@@ -25,7 +25,7 @@
     
     
       
-        <title>Advanced Fixture Lifecycles and Optimization - Python 999</title>
+        <title>Advanced Fixture Lifecycles and Optimization: Session Scope in Pytest - Python 999</title>
       
     
     
@@ -82,7 +82,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#advanced-fixture-lifecycles-and-optimization" class="md-skip">
+        <a href="#advanced-fixture-lifecycles-and-optimization-session-scope-in-pytest" class="md-skip">
           Skip to content
         </a>
       
@@ -118,7 +118,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              Advanced Fixture Lifecycles and Optimization
+              Advanced Fixture Lifecycles and Optimization: Session Scope in Pytest
             
           </span>
         </div>
@@ -6822,7 +6822,7 @@
   <span class="md-ellipsis">
     
   
-    Advanced Fixture Lifecycles and Optimization
+    Advanced Fixture Lifecycles and Optimization: Session Scope in Pytest
   
 
     
@@ -6840,7 +6840,7 @@
   <span class="md-ellipsis">
     
   
-    Advanced Fixture Lifecycles and Optimization
+    Advanced Fixture Lifecycles and Optimization: Session Scope in Pytest
   
 
     
@@ -6870,6 +6870,17 @@
     <span class="md-ellipsis">
       
         Table of Contents
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#key-terms-used-on-this-page" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Key Terms Used on This Page
       
     </span>
   </a>
@@ -6938,6 +6949,17 @@
   
 </li>
         
+          <li class="md-nav__item">
+  <a href="#scripts-for-this-page-and-how-to-run-them" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Scripts for This Page and How to Run Them
+      
+    </span>
+  </a>
+  
+</li>
+        
       </ul>
     </nav>
   
@@ -7000,6 +7022,17 @@
   
 </li>
         
+          <li class="md-nav__item">
+  <a href="#4-comparing-session-scope-with-function-scope" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4. Comparing Session Scope with Function Scope
+      
+    </span>
+  </a>
+  
+</li>
+        
       </ul>
     </nav>
   
@@ -7034,10 +7067,10 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#2-thread-safety-and-concurrency-violations" class="md-nav__link">
+  <a href="#2-parallel-test-runs-and-shared-resources" class="md-nav__link">
     <span class="md-ellipsis">
       
-        2. Thread Safety and Concurrency Violations
+        2. Parallel Test Runs and Shared Resources
       
     </span>
   </a>
@@ -7055,8 +7088,113 @@
   
 </li>
         
+          <li class="md-nav__item">
+  <a href="#4-keeping-secrets-out-of-test-code" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4. Keeping Secrets Out of Test Code
+      
+    </span>
+  </a>
+  
+</li>
+        
       </ul>
     </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#choosing-the-right-scope" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Choosing the Right Scope
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#follow-up-questions" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Follow-Up Questions
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Follow-Up Questions">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#question-1-counting-setups" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Question 1: Counting Setups
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#question-2-when-does-teardown-run" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Question 2: When Does Teardown Run?
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#question-3-why-did-a-correct-test-fail" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Question 3: Why Did a Correct Test Fail?
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#question-4-session-scope-in-one-file" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Question 4: Session Scope in One File
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#summary" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Summary
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#further-reading" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Further Reading
+      
+    </span>
+  </a>
   
 </li>
       
@@ -8261,138 +8399,337 @@
   
 
 
-<h1 id="advanced-fixture-lifecycles-and-optimization">Advanced Fixture Lifecycles and Optimization<a class="headerlink" href="#advanced-fixture-lifecycles-and-optimization" title="Permanent link">&para;</a></h1>
+<h1 id="advanced-fixture-lifecycles-and-optimization-session-scope-in-pytest">Advanced Fixture Lifecycles and Optimization: Session Scope in Pytest<a class="headerlink" href="#advanced-fixture-lifecycles-and-optimization-session-scope-in-pytest" title="Permanent link">&para;</a></h1>
+<p>Some things that tests need are slow to prepare. Connecting to a database, logging in to an online service or starting a server can take seconds each time. If every test repeats this work, a large test suite can take a very long time to run.</p>
+<p>This page shows how pytest solves this problem with <strong>fixture scopes</strong>, and in particular with the widest scope of all, the <strong>session scope</strong>. A session-scoped fixture is prepared once, shared by every test that asks for it, and cleaned up once at the very end.</p>
+<p>We use a small simulation of an online payment gateway (a service such as Stripe or PayPal that processes card payments). No real network or money is involved. The page contains:</p>
+<ol>
+<li>An explanation of the four main fixture scopes, with a numbered flowchart.</li>
+<li>The gateway simulation (<code>payment_gateway.py</code>) and a test suite that uses a session-scoped fixture (<code>test_payments.py</code>), with their actual output.</li>
+<li>A side-by-side comparison with the default function scope, showing the time saved.</li>
+<li>The risks of session scope, each shown with a runnable example: shared state, parallel test runs and where to place shared fixtures (<code>conftest.py</code>).</li>
+<li>Guidance on choosing the right scope, follow-up questions and links for further reading.</li>
+</ol>
+<p>In the earlier pages of this chapter we used fixtures with the default scope, where setup runs again for every test. This page builds on that. Knowing when to share a fixture, and when not to, is an important skill for writing test suites that are both fast and reliable.</p>
 <h2 id="table-of-contents">Table of Contents<a class="headerlink" href="#table-of-contents" title="Permanent link">&para;</a></h2>
 <ul>
-<li><a href="./#theoretical-foundation-session-scope">Theoretical Foundation: Session Scope</a></li>
-<li><a href="./#application-simulation-architectural-design">Application Simulation Architectural Design</a></li>
+<li><a href="./#advanced-fixture-lifecycles-and-optimization-session-scope-in-pytest">Advanced Fixture Lifecycles and Optimization: Session Scope in Pytest</a><ul>
+<li><a href="./#key-terms-used-on-this-page">Key Terms Used on This Page</a></li>
+<li><a href="./#theoretical-foundation-session-scope">Theoretical Foundation: Session Scope</a><ul>
+<li><a href="./#the-fixture-lifecycle-hierarchy">The Fixture Lifecycle Hierarchy</a></li>
+</ul>
+</li>
+<li><a href="./#application-simulation-architectural-design">Application Simulation Architectural Design</a><ul>
 <li><a href="./#1-target-implementation-payment_gatewaypy">1. Target Implementation: payment_gateway.py</a></li>
 <li><a href="./#2-automated-test-suite-test_paymentspy">2. Automated Test Suite: test_payments.py</a></li>
-<li><a href="./#discussion">Discussion</a></li>
-<li><a href="./#architectural--core-concepts">Architectural &amp; Core Concepts</a></li>
-<li><a href="./#precautions--concerns-in-using-session-scope">Precautions &amp; Concerns in using session scope</a></li>
+<li><a href="./#scripts-for-this-page-and-how-to-run-them">Scripts for This Page and How to Run Them</a></li>
 </ul>
+</li>
+<li><a href="./#discussion">Discussion</a><ul>
+<li><a href="./#architectural--core-concepts">Architectural &amp; Core Concepts</a><ul>
+<li><a href="./#1-defensive-programming--state-verification">1. Defensive Programming &amp; State Verification</a></li>
+<li><a href="./#2-the-mechanics-of-yield-statements">2. The Mechanics of yield Statements</a></li>
+<li><a href="./#3-output-of-the-pytest-with-flag--s-shows-that-resources-are-optimized">3. Output of the pytest (with flag -s) shows that resources are optimized</a></li>
+<li><a href="./#4-comparing-session-scope-with-function-scope">4. Comparing Session Scope with Function Scope</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="./#precautions--concerns-in-using-session-scope">Precautions &amp; Concerns in using session scope</a><ul>
+<li><a href="./#1-shared-state-contamination-test-interdependence">1. Shared State Contamination (Test Interdependence)</a></li>
+<li><a href="./#2-parallel-test-runs-and-shared-resources">2. Parallel Test Runs and Shared Resources</a></li>
+<li><a href="./#3-structural-scaling-and-file-placement">3. Structural Scaling and File Placement</a></li>
+<li><a href="./#4-keeping-secrets-out-of-test-code">4. Keeping Secrets Out of Test Code</a></li>
+</ul>
+</li>
+<li><a href="./#choosing-the-right-scope">Choosing the Right Scope</a></li>
+<li><a href="./#follow-up-questions">Follow-Up Questions</a><ul>
+<li><a href="./#question-1-counting-setups">Question 1: Counting Setups</a></li>
+<li><a href="./#question-2-when-does-teardown-run">Question 2: When Does Teardown Run?</a></li>
+<li><a href="./#question-3-why-did-a-correct-test-fail">Question 3: Why Did a Correct Test Fail?</a></li>
+<li><a href="./#question-4-session-scope-in-one-file">Question 4: Session Scope in One File</a></li>
+</ul>
+</li>
+<li><a href="./#summary">Summary</a></li>
+<li><a href="./#further-reading">Further Reading</a></li>
+</ul>
+</li>
+</ul>
+<h2 id="key-terms-used-on-this-page">Key Terms Used on This Page<a class="headerlink" href="#key-terms-used-on-this-page" title="Permanent link">&para;</a></h2>
+<table>
+<thead>
+<tr>
+<th>Term</th>
+<th>Simple Meaning</th>
+<th>Learn More</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Fixture</td>
+<td>A function marked with <code>@pytest.fixture</code> that prepares something a test needs and hands it to the test</td>
+<td><a href="https://docs.pytest.org/en/stable/how-to/fixtures.html">pytest: How to use fixtures</a></td>
+</tr>
+<tr>
+<td>Setup and teardown</td>
+<td>Setup is the work done before a test (for example, connecting). Teardown is the cleanup done after it (for example, disconnecting)</td>
+<td><a href="https://docs.pytest.org/en/stable/how-to/fixtures.html#yield-fixtures-recommended">pytest: yield fixtures</a></td>
+</tr>
+<tr>
+<td>Scope</td>
+<td>How widely a fixture is shared, and so how often its setup runs: per test, per class, per file, per package or once for the whole run</td>
+<td><a href="https://docs.pytest.org/en/stable/how-to/fixtures.html#fixture-scopes">pytest: fixture scopes</a></td>
+</tr>
+<tr>
+<td>Session</td>
+<td>One complete run of the <code>pytest</code> command, from start to finish, covering every test file it collects</td>
+<td></td>
+</tr>
+<tr>
+<td>API</td>
+<td>Application Programming Interface: a set of rules that lets one program ask another program (often over the internet) to do something</td>
+<td><a href="https://en.wikipedia.org/wiki/API">API on Wikipedia</a></td>
+</tr>
+<tr>
+<td>API key</td>
+<td>A secret code that identifies your program to an online service, a bit like a password</td>
+<td></td>
+</tr>
+<tr>
+<td>Payment gateway</td>
+<td>An online service that takes card or bank payments on behalf of a shop or app</td>
+<td></td>
+</tr>
+<tr>
+<td>Latency</td>
+<td>The waiting time before a response arrives, for example the delay while a remote server answers</td>
+<td></td>
+</tr>
+<tr>
+<td>Handshake</td>
+<td>The first exchange of messages when two computers connect, used to check identity and agree on how to talk</td>
+<td></td>
+</tr>
+<tr>
+<td>State</td>
+<td>The current values stored inside an object. For our gateway, the state is whether it is connected and which API key it uses</td>
+<td></td>
+</tr>
+<tr>
+<td>Generator</td>
+<td>A function that uses <code>yield</code>. It can pause in the middle and continue later from the same point</td>
+<td><a href="https://docs.python.org/3/glossary.html#term-generator">Python glossary: generator</a></td>
+</tr>
+<tr>
+<td><code>conftest.py</code></td>
+<td>A special file where you can put fixtures that are shared by all the test files in its folder</td>
+<td><a href="https://docs.pytest.org/en/stable/reference/fixtures.html#conftest-py-sharing-fixtures-across-multiple-files">pytest: conftest.py</a></td>
+</tr>
+</tbody>
+</table>
+<p><a href="./#table-of-contents">Back to the Table of Contents</a></p>
 <h2 id="theoretical-foundation-session-scope">Theoretical Foundation: Session Scope<a class="headerlink" href="#theoretical-foundation-session-scope" title="Permanent link">&para;</a></h2>
-<p>In real world software development, test suites may have hundreds or thousands of test cases. When executing these tests, certain infrastructure requirements—such as establishing database connections, or authenticating with external APIs— create heavy burdern on the computational resources.
-If a test had to do setup and teardown for example for an API call or a Database connection for each test, it would be extremely expensive and time consuming. 
-Pytest resolves this problem through <strong>Fixture Scoping</strong>. Fixtures are scoped as per the need of the test.
-The highest and most persistent tier of this hierarchy is the <strong>Session Scope</strong> (<code>scope="session"</code>).</p>
+<p>In real-world software development, a test suite may have hundreds or thousands of tests. Some of these tests need expensive resources, such as a database connection or a login to an external API. Setting these up takes time and uses a lot of computer resources.</p>
+<p>If every test had to set up and tear down its own API login or database connection, the test run would be extremely slow. For example, if one login takes 2 seconds and 1,000 tests each need one, the logins alone would take more than 30 minutes.</p>
+<p>Pytest solves this problem through <strong>fixture scoping</strong>. When you write a fixture, you can choose how widely it is shared, based on what the tests need. The widest and longest-lasting scope is the <strong>session scope</strong> (<code>scope="session"</code>).</p>
+<p><a href="./#table-of-contents">Back to the Table of Contents</a></p>
 <h3 id="the-fixture-lifecycle-hierarchy">The Fixture Lifecycle Hierarchy<a class="headerlink" href="#the-fixture-lifecycle-hierarchy" title="Permanent link">&para;</a></h3>
-<ul>
-<li>
-<p><strong>Function Scope (Default):</strong> The fixture is set up before, and torn down after, <em>each individual test function</em>.</p>
-</li>
-<li>
-<p><strong>Class Scope:</strong> The fixture is set up once per test class, regardless of the number of methods within that class.</p>
-</li>
-<li>
-<p><strong>Module Scope:</strong> The fixture is set up once per Python file (<code>.py</code>), sharing state among all test functions inside that file.</p>
-</li>
-<li>
-<p><strong>Session Scope:</strong> The fixture is set up exactly <strong>once</strong> at the inception of the entire test invocation and is torn down only after all discovered test files have finished executing.</p>
-</li>
-</ul>
-<p>Code snippet</p>
-<div class="highlight"><pre><span></span><code>graph TD
-    subgraph Session Scope Lifecycle
-        A[Start: pytest execution] --&gt; B[Initialize Session-Scoped Fixture]
-        B --&gt; C[File 1: Module Scope]
-        C --&gt; D[test_1_a]
-        C --&gt; E[test_1_b]
-        B --&gt; F[File 2: Module Scope]
-        F --&gt; G[test_2_a]
-        F --&gt; H[test_2_b]
-        D --&gt; I[Teardown Session-Scoped Fixture]
-        E --&gt; I
-        G --&gt; I
-        H --&gt; I
-        I --&gt; J[End: pytest execution]
-    end
-
-    style B fill:#d4edda,stroke:#28a745,stroke-width:2px
-    style I fill:#f8d7da,stroke:#dc3545,stroke-width:2px
+<p>A fixture's <strong>lifecycle</strong> is the period from its setup to its teardown. The scope decides how long that period is.</p>
+<table>
+<thead>
+<tr>
+<th>Scope</th>
+<th>How to Write It</th>
+<th>When Setup Runs</th>
+<th>When Teardown Runs</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Function (default)</td>
+<td><code>@pytest.fixture</code> or <code>@pytest.fixture(scope="function")</code></td>
+<td>Before <strong>each</strong> test that uses it</td>
+<td>After that test</td>
+</tr>
+<tr>
+<td>Class</td>
+<td><code>@pytest.fixture(scope="class")</code></td>
+<td>Once per test class, no matter how many methods the class has</td>
+<td>After the last test in that class</td>
+</tr>
+<tr>
+<td>Module</td>
+<td><code>@pytest.fixture(scope="module")</code></td>
+<td>Once per Python test file (<code>.py</code>), shared by all the tests in that file</td>
+<td>After the last test in that file</td>
+</tr>
+<tr>
+<td>Package</td>
+<td><code>@pytest.fixture(scope="package")</code></td>
+<td>Once per folder (package) of tests</td>
+<td>After the last test in that folder</td>
+</tr>
+<tr>
+<td>Session</td>
+<td><code>@pytest.fixture(scope="session")</code></td>
+<td>Only <strong>once</strong> in the whole test run: the first time any test asks for it</td>
+<td>After <strong>all</strong> the collected test files have finished running</td>
+</tr>
+</tbody>
+</table>
+<p>Two points are worth remembering:</p>
+<ol>
+<li>A fixture is set up only when a test actually asks for it. If no test asks for a session-scoped fixture, it never runs.</li>
+<li>Pytest runs tests one after another, not at the same time (unless you use a plugin for parallel runs, discussed later). So "shared" means the same object is handed to one test after another.</li>
+</ol>
+<p>The flowchart below shows the order of events when a run has one session-scoped fixture, and two test files that each have a module-scoped fixture.</p>
+<div class="highlight"><pre><span></span><code>flowchart TD
+    A["1. Start the pytest run"] --&gt; B["2. Session fixture: setup (once)"]
+    B --&gt; C["3. File 1: module fixture setup"]
+    C --&gt; D["4. Run test_1_a"]
+    D --&gt; E["5. Run test_1_b"]
+    E --&gt; F["6. File 1: module fixture teardown"]
+    F --&gt; G["7. File 2: module fixture setup"]
+    G --&gt; H["8. Run test_2_a"]
+    H --&gt; I["9. Run test_2_b"]
+    I --&gt; J["10. File 2: module fixture teardown"]
+    J --&gt; K["11. Session fixture: teardown (once)"]
+    K --&gt; L["12. End of the pytest run"]
 </code></pre></div>
+<p>Notice that the session fixture wraps around everything. It is set up at step 2 and not torn down until step 11, after both files have finished. The module fixtures are set up and torn down once for each file.</p>
+<p><a href="./#table-of-contents">Back to the Table of Contents</a></p>
 <h2 id="application-simulation-architectural-design">Application Simulation Architectural Design<a class="headerlink" href="#application-simulation-architectural-design" title="Permanent link">&para;</a></h2>
-<p>To understand the practical implications of session scoping without relying on live external networks, we implement an application simulation representing an external financial gateway (e.g., Stripe or PayPal).</p>
+<p>To understand session scope in practice without using a real network, we build a small <strong>simulation</strong> of an external payment gateway (such as Stripe or PayPal). A simulation (also called an <strong>emulator</strong>) is a stand-in that behaves like the real thing in the ways that matter for our tests, but runs entirely on your own computer.</p>
+<p>The example has two files, which must be saved in the same folder:</p>
+<table>
+<thead>
+<tr>
+<th>File</th>
+<th>Role</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>payment_gateway.py</code></td>
+<td>The code being tested: a simulated payment gateway</td>
+</tr>
+<tr>
+<td><code>test_payments.py</code></td>
+<td>The tests, with a session-scoped fixture that connects to the gateway once</td>
+</tr>
+</tbody>
+</table>
 <p><a href="./#table-of-contents">Back to the Table of Contents</a></p>
 <h3 id="1-target-implementation-payment_gatewaypy">1. Target Implementation: <code>payment_gateway.py</code><a class="headerlink" href="#1-target-implementation-payment_gatewaypy" title="Permanent link">&para;</a></h3>
-<p>This module acts as a stateful emulator. It enforces linear state progression (Connection <span class="arithmatex">\(\rightarrow\)</span> Processing <span class="arithmatex">\(\rightarrow\)</span> Disconnection) and introduces simulated network latency.</p>
+<p>This module acts as a <strong>stateful</strong> simulation, which means it remembers whether it is connected. It must be used in a fixed order: connect first, then process payments, then disconnect. It also adds a deliberate delay of 1 second to the connection step, to imitate the waiting time (latency) of a real network login.</p>
 <div class="highlight"><pre><span></span><code><span class="c1"># payment_gateway.py</span>
 <span class="sd">"""</span>
 <span class="sd">Module: payment_gateway</span>
-<span class="sd">Description: Simulates a stateful, high-latency third-party Payment API gateway</span>
-<span class="sd">             to demonstrate infrastructure mocking and Pytest scoping efficiency.</span>
+<span class="sd">Description: Simulates a slow, third-party payment gateway (such as Stripe or</span>
+<span class="sd">             PayPal) so that we can see how pytest fixture scopes save time.</span>
+<span class="sd">             No real network or money is involved.</span>
 <span class="sd">"""</span>
 
+<span class="kn">import</span><span class="w"> </span><span class="nn">time</span>
+
+
 <span class="k">class</span><span class="w"> </span><span class="nc">PaymentGateway</span><span class="p">:</span>
+
+    <span class="c1"># Step 1 - Start in a "not connected" state</span>
     <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">is_connected</span> <span class="o">=</span> <span class="kc">False</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">api_key</span> <span class="o">=</span> <span class="kc">None</span>
 
+    <span class="c1"># Step 2 - Connect to the gateway (the slow, expensive part)</span>
     <span class="k">def</span><span class="w"> </span><span class="nf">connect</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">api_key</span><span class="p">:</span> <span class="nb">str</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">"""</span>
-<span class="sd">        Simulates an expensive cryptographic and network handshake with a remote server.</span>
-<span class="sd">        In a production environment, this latency typically ranges from 1 to 3 seconds.</span>
+<span class="sd">        Simulates the login ("handshake") with a remote payment server.</span>
+<span class="sd">        With a real gateway this usually takes 1 to 3 seconds.</span>
+<span class="sd">        Here, time.sleep(1) makes the program wait for 1 second</span>
+<span class="sd">        so that we can feel the cost of connecting.</span>
 <span class="sd">        """</span>
         <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"</span><span class="se">\n</span><span class="s2">[APP] Authenticating with API Key: </span><span class="si">{</span><span class="n">api_key</span><span class="si">}</span><span class="s2">... (Simulated Latency)"</span><span class="p">)</span>
+        <span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">is_connected</span> <span class="o">=</span> <span class="kc">True</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">api_key</span> <span class="o">=</span> <span class="n">api_key</span>
 
+    <span class="c1"># Step 3 - Close the connection</span>
     <span class="k">def</span><span class="w"> </span><span class="nf">close</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-<span class="w">        </span><span class="sd">"""Simulates gracefully terminating the open network socket connections."""</span>
+<span class="w">        </span><span class="sd">"""Simulates closing the network connection cleanly."""</span>
         <span class="nb">print</span><span class="p">(</span><span class="s2">"</span><span class="se">\n</span><span class="s2">[APP] Terminating network connection safely..."</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">is_connected</span> <span class="o">=</span> <span class="kc">False</span>
 
+    <span class="c1"># Step 4 - Process a payment (only allowed while connected)</span>
     <span class="k">def</span><span class="w"> </span><span class="nf">process_payment</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">amount</span><span class="p">:</span> <span class="nb">float</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
 <span class="w">        </span><span class="sd">"""</span>
-<span class="sd">        Executes core business logic. Enforces defensive guards requiring active connection state.</span>
+<span class="sd">        The main job of the gateway. It first checks that there is an</span>
+<span class="sd">        active connection. If not, it refuses to continue by raising an error.</span>
 <span class="sd">        """</span>
         <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">is_connected</span><span class="p">:</span>
             <span class="k">raise</span> <span class="ne">ConnectionError</span><span class="p">(</span><span class="s2">"Transaction Failed: Gateway connection is not established!"</span><span class="p">)</span>
 
         <span class="k">return</span> <span class="sa">f</span><span class="s2">"Payment of $</span><span class="si">{</span><span class="n">amount</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2"> Processed Successfully."</span>
 </code></pre></div>
+<p>How the class works, step by step:</p>
+<ol>
+<li>A new <code>PaymentGateway</code> starts with <code>is_connected = False</code>.</li>
+<li><code>connect()</code> prints a message, waits for 1 second with <code>time.sleep(1)</code> and then sets <code>is_connected = True</code>. This 1-second wait stands for the slow login to a real server.</li>
+<li><code>close()</code> sets <code>is_connected</code> back to <code>False</code>.</li>
+<li><code>process_payment()</code> first checks <code>is_connected</code>. If the gateway is not connected, it raises a <code>ConnectionError</code> and stops. If it is connected, it returns a success message such as <code>Payment of $15.50 Processed Successfully.</code></li>
+</ol>
 <p><a href="./#table-of-contents">Back to the Table of Contents</a></p>
 <h3 id="2-automated-test-suite-test_paymentspy">2. Automated Test Suite: <code>test_payments.py</code><a class="headerlink" href="#2-automated-test-suite-test_paymentspy" title="Permanent link">&para;</a></h3>
-<p>This suite verifies the transaction capabilities of the gateway. It integrates a global tracking metric (<code>session_count</code>) to prove empirical verification of the fixture lifecycle.</p>
+<p>This test suite checks that the gateway can process payments. It uses a session-scoped fixture, so the slow connection happens only once. It also keeps a counter (<code>SESSION_FIXTURE_INSTANTIATIONS</code>) that goes up by one every time the fixture runs. The counter gives us clear proof of how many times the setup actually happened.</p>
 <div class="highlight"><pre><span></span><code><span class="c1"># test_payments.py</span>
 <span class="sd">"""</span>
 <span class="sd">Suite: test_payments</span>
-<span class="sd">Description: Demonstrates Pytest session-scope optimization using the PaymentGateway emulator.</span>
-<span class="sd">Execution Note: Run using 'pytest -s test_payments.py' to capture standard output streams.</span>
+<span class="sd">Description: Shows how a session-scoped fixture creates and connects the</span>
+<span class="sd">             PaymentGateway only once, and shares it with every test.</span>
+<span class="sd">Execution Note: Run using 'pytest -v -s test_payments.py'.</span>
+<span class="sd">                The -s flag turns off output capturing, so the print()</span>
+<span class="sd">                messages from the fixture and the tests appear on the screen.</span>
 <span class="sd">"""</span>
 
+<span class="c1"># Step 1 - Import pytest and the class we want to test</span>
 <span class="kn">import</span><span class="w"> </span><span class="nn">pytest</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">payment_gateway</span><span class="w"> </span><span class="kn">import</span> <span class="n">PaymentGateway</span>
 
-<span class="c1"># Global metric used strictly for pedagogical verification of instantiation lifecycles</span>
+<span class="c1"># Step 2 - A counter that records how many times the fixture runs.</span>
+<span class="c1"># It is used only for teaching, to prove how often setup happens.</span>
 <span class="n">SESSION_FIXTURE_INSTANTIATIONS</span> <span class="o">=</span> <span class="mi">0</span>
 
+
+<span class="c1"># Step 3 - The session-scoped fixture</span>
 <span class="nd">@pytest</span><span class="o">.</span><span class="n">fixture</span><span class="p">(</span><span class="n">scope</span><span class="o">=</span><span class="s2">"session"</span><span class="p">)</span>
 <span class="k">def</span><span class="w"> </span><span class="nf">gateway_session</span><span class="p">():</span>
 <span class="w">    </span><span class="sd">"""</span>
-<span class="sd">    Session-scoped fixture. Instantiates, authenticates, and tears down the</span>
-<span class="sd">    PaymentGateway resource exactly once across the global test execution context.</span>
+<span class="sd">    Session-scoped fixture. It creates, connects and later closes the</span>
+<span class="sd">    PaymentGateway exactly once for the whole test run, no matter how</span>
+<span class="sd">    many tests ask for it.</span>
 <span class="sd">    """</span>
+    <span class="c1"># 'global' lets this function change the counter defined outside it</span>
     <span class="k">global</span> <span class="n">SESSION_FIXTURE_INSTANTIATIONS</span>
     <span class="n">SESSION_FIXTURE_INSTANTIATIONS</span> <span class="o">+=</span> <span class="mi">1</span>
 
     <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"</span><span class="se">\n</span><span class="s2">[SETUP] GLOBAL SESSION START (Initialization Count: </span><span class="si">{</span><span class="n">SESSION_FIXTURE_INSTANTIATIONS</span><span class="si">}</span><span class="s2">)"</span><span class="p">)</span>
 
-    <span class="c1"># Setup Phase</span>
+    <span class="c1"># Setup phase: create the gateway and connect (the slow part)</span>
     <span class="n">gateway_instance</span> <span class="o">=</span> <span class="n">PaymentGateway</span><span class="p">()</span>
     <span class="n">gateway_instance</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="n">api_key</span><span class="o">=</span><span class="s2">"SECRET_AUTH_KEY_99X"</span><span class="p">)</span>
 
-    <span class="c1"># Yield control to the test collection context</span>
+    <span class="c1"># Hand the connected gateway to every test that asks for it.</span>
+    <span class="c1"># The fixture pauses here until the last test in the session has finished.</span>
     <span class="k">yield</span> <span class="n">gateway_instance</span>
 
-    <span class="c1"># Teardown Phase (Invoked precisely once prior to process termination)</span>
+    <span class="c1"># Teardown phase: runs once, after the last test in the session</span>
     <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"</span><span class="se">\n</span><span class="s2">[TEARDOWN] GLOBAL SESSION END (Final Verification Count: </span><span class="si">{</span><span class="n">SESSION_FIXTURE_INSTANTIATIONS</span><span class="si">}</span><span class="s2">)"</span><span class="p">)</span>
     <span class="n">gateway_instance</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
 
 
+<span class="c1"># Step 4 - The tests. Each one asks for 'gateway_session' by name.</span>
+
 <span class="k">def</span><span class="w"> </span><span class="nf">test_low_value_transaction</span><span class="p">(</span><span class="n">gateway_session</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">"""Verifies gateway processing capabilities for standard nominal values."""</span>
+<span class="w">    </span><span class="sd">"""Checks that the gateway can process a small, normal payment."""</span>
     <span class="nb">print</span><span class="p">(</span><span class="s2">"</span><span class="se">\n</span><span class="s2">   [TEST 1] Dispatching $15.50 payment payload..."</span><span class="p">)</span>
     <span class="n">response</span> <span class="o">=</span> <span class="n">gateway_session</span><span class="o">.</span><span class="n">process_payment</span><span class="p">(</span><span class="mf">15.50</span><span class="p">)</span>
     <span class="k">assert</span> <span class="s2">"Successfully"</span> <span class="ow">in</span> <span class="n">response</span>
@@ -8400,7 +8737,7 @@ The highest and most persistent tier of this hierarchy is the <strong>Session Sc
 
 
 <span class="k">def</span><span class="w"> </span><span class="nf">test_high_value_transaction</span><span class="p">(</span><span class="n">gateway_session</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">"""Verifies gateway risk handling processing capabilities for large values."""</span>
+<span class="w">    </span><span class="sd">"""Checks that the gateway can process a large payment."""</span>
     <span class="nb">print</span><span class="p">(</span><span class="s2">"</span><span class="se">\n</span><span class="s2">   [TEST 2] Dispatching $7500.00 payment payload..."</span><span class="p">)</span>
     <span class="n">response</span> <span class="o">=</span> <span class="n">gateway_session</span><span class="o">.</span><span class="n">process_payment</span><span class="p">(</span><span class="mf">7500.00</span><span class="p">)</span>
     <span class="k">assert</span> <span class="s2">"Successfully"</span> <span class="ow">in</span> <span class="n">response</span>
@@ -8408,62 +8745,670 @@ The highest and most persistent tier of this hierarchy is the <strong>Session Sc
 
 
 <span class="k">def</span><span class="w"> </span><span class="nf">test_gateway_persistence</span><span class="p">(</span><span class="n">gateway_session</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">"""Validates that the connection state remains open and uninterrupted across test executions."""</span>
+<span class="w">    </span><span class="sd">"""Checks that the same connection is still open after the earlier tests."""</span>
     <span class="nb">print</span><span class="p">(</span><span class="s2">"</span><span class="se">\n</span><span class="s2">   [TEST 3] Auditing state persistence of active network socket..."</span><span class="p">)</span>
     <span class="k">assert</span> <span class="n">gateway_session</span><span class="o">.</span><span class="n">is_connected</span> <span class="ow">is</span> <span class="kc">True</span>
     <span class="nb">print</span><span class="p">(</span><span class="s2">"   [TEST 3] Assertion Verified: State Persistence Confirmed."</span><span class="p">)</span>
 </code></pre></div>
+<p>What happens when this file runs:</p>
+<ol>
+<li>Pytest collects the three tests.</li>
+<li>The first test, <code>test_low_value_transaction</code>, asks for <code>gateway_session</code>. Since this is the first request, pytest runs the fixture up to <code>yield</code>. The counter becomes 1, and the gateway connects (taking 1 second).</li>
+<li>The connected gateway is handed to the first test.</li>
+<li>The second and third tests also ask for <code>gateway_session</code>. Because the scope is <code>"session"</code>, pytest does <strong>not</strong> run the fixture again. It hands the same, already-connected gateway to these tests.</li>
+<li>After the last test in the session has finished, pytest runs the code after <code>yield</code>. The gateway is closed, once.</li>
+</ol>
+<p>The output of this script is shown and explained in <a href="./#3-output-of-the-pytest-with-flag--s-shows-that-resources-are-optimized">Output of the pytest (with flag -s) shows that resources are optimized</a>.</p>
+<p><a href="./#table-of-contents">Back to the Table of Contents</a></p>
+<h3 id="scripts-for-this-page-and-how-to-run-them">Scripts for This Page and How to Run Them<a class="headerlink" href="#scripts-for-this-page-and-how-to-run-them" title="Permanent link">&para;</a></h3>
+<p>All the scripts on this page are available in the <a href="https://github.com/ag999git/001-Python-book-2026/tree/main/20-unittest/payment-demo">payment-demo folder</a>.</p>
+<table>
+<thead>
+<tr>
+<th>File</th>
+<th>What It Contains</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><a href="https://github.com/ag999git/001-Python-book-2026/blob/main/20-unittest/payment-demo/payment_gateway.py">payment_gateway.py</a></td>
+<td>The simulated payment gateway</td>
+</tr>
+<tr>
+<td><a href="https://github.com/ag999git/001-Python-book-2026/blob/main/20-unittest/payment-demo/test_payments.py">test_payments.py</a></td>
+<td>Tests using a session-scoped fixture</td>
+</tr>
+<tr>
+<td><a href="https://github.com/ag999git/001-Python-book-2026/blob/main/20-unittest/payment-demo/test_payments_function_scope.py">test_payments_function_scope.py</a></td>
+<td>The same tests using a function-scoped fixture, for comparison</td>
+</tr>
+<tr>
+<td><a href="https://github.com/ag999git/001-Python-book-2026/blob/main/20-unittest/payment-demo/test_gateway_guard.py">test_gateway_guard.py</a></td>
+<td>A test that checks the gateway refuses payments when not connected</td>
+</tr>
+<tr>
+<td><a href="https://github.com/ag999git/001-Python-book-2026/blob/main/20-unittest/payment-demo/test_contamination.py">test_contamination.py</a></td>
+<td>Shows how one test can break a shared session fixture (one test fails on purpose)</td>
+</tr>
+<tr>
+<td><a href="https://github.com/ag999git/001-Python-book-2026/blob/main/20-unittest/payment-demo/conftest-demo/conftest.py">conftest-demo/conftest.py</a></td>
+<td>A session-scoped fixture shared by two test files</td>
+</tr>
+<tr>
+<td><a href="https://github.com/ag999git/001-Python-book-2026/blob/main/20-unittest/payment-demo/conftest-demo/test_orders.py">conftest-demo/test_orders.py</a></td>
+<td>First test file that uses the shared fixture</td>
+</tr>
+<tr>
+<td><a href="https://github.com/ag999git/001-Python-book-2026/blob/main/20-unittest/payment-demo/conftest-demo/test_refunds.py">conftest-demo/test_refunds.py</a></td>
+<td>Second test file that uses the same shared fixture</td>
+</tr>
+<tr>
+<td><a href="https://github.com/ag999git/001-Python-book-2026/blob/main/20-unittest/payment-demo/conftest-demo/payment_gateway.py">conftest-demo/payment_gateway.py</a></td>
+<td>A copy of the gateway, so that the conftest-demo folder can be run on its own</td>
+</tr>
+</tbody>
+</table>
+<p>To run them on your computer:</p>
+<ol>
+<li>Create a folder, for example <code>payment-demo</code>, and save the first five files in it. Inside it, create a subfolder <code>conftest-demo</code> and save the last four files there.</li>
+<li>Open the <code>payment-demo</code> folder in VS Code (<strong>File &gt; Open Folder...</strong>) and open the terminal (<strong>Terminal &gt; New Terminal</strong>).</li>
+<li>Check that pytest is installed:</li>
+</ol>
+<div class="highlight"><pre><span></span><code>python<span class="w"> </span>-m<span class="w"> </span>pytest<span class="w"> </span>--version
+</code></pre></div>
+<ol>
+<li>If you see <code>No module named pytest</code>, install it with <code>python -m pip install pytest</code>.</li>
+<li>Run each file with the command given in its section, for example:</li>
+</ol>
+<div class="highlight"><pre><span></span><code>python<span class="w"> </span>-m<span class="w"> </span>pytest<span class="w"> </span>-v<span class="w"> </span>-s<span class="w"> </span>test_payments.py
+</code></pre></div>
+<p>Detailed, step-by-step instructions (installing Python and VS Code, downloading files from GitHub and fixing common errors) are given in <a href="../020-ch20-unittest-disadvantage-rigid-oop-style/#running-the-scripts-on-your-computer">Running the Scripts on Your Computer</a>.</p>
+<p><code>python -m pytest</code> and <code>pytest</code> do the same job. This page shows the shorter <code>pytest</code> form in its commands.</p>
+<p><a href="./#table-of-contents">Back to the Table of Contents</a></p>
 <h2 id="discussion">Discussion<a class="headerlink" href="#discussion" title="Permanent link">&para;</a></h2>
 <h3 id="architectural-core-concepts">Architectural &amp; Core Concepts<a class="headerlink" href="#architectural-core-concepts" title="Permanent link">&para;</a></h3>
 <h4 id="1-defensive-programming-state-verification">1. Defensive Programming &amp; State Verification<a class="headerlink" href="#1-defensive-programming-state-verification" title="Permanent link">&para;</a></h4>
-<p>The <code>PaymentGateway</code> architecture exhibits defensive design behavior. By raising a <code>ConnectionError</code> when <code>process_payment</code> is triggered without a validated <code>is_connected</code> flag, the system fails cleanly. Testing stateful objects requires structured setups, making it an optimal candidate for Pytest fixtures.</p>
+<p>The <code>PaymentGateway</code> class follows a style called <strong>defensive programming</strong>. This means the code checks that things are in a valid condition before it does its work, instead of assuming everything is fine.</p>
+<p>Here, <code>process_payment()</code> checks the <code>is_connected</code> flag first. If the gateway is not connected, it raises a <code>ConnectionError</code> straight away. The program fails cleanly, with a clear message, instead of carrying on and producing a wrong or confusing result.</p>
+<p>Because the gateway must be connected before it can be used, every test that processes a payment needs a connected gateway to start with. Preparing this starting state in the same way for many tests is exactly the job a pytest fixture is designed for.</p>
+<p>We can also test the defensive check itself. Save this as <code>test_gateway_guard.py</code>:</p>
+<div class="highlight"><pre><span></span><code><span class="c1"># test_gateway_guard.py</span>
+<span class="sd">"""</span>
+<span class="sd">Checks the defensive guard in process_payment():</span>
+<span class="sd">a gateway that was never connected must refuse to take a payment.</span>
+<span class="sd">Run using 'pytest -v -s test_gateway_guard.py'.</span>
+<span class="sd">"""</span>
+
+<span class="c1"># Step 1 - Import pytest and the class we want to test</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">pytest</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">payment_gateway</span><span class="w"> </span><span class="kn">import</span> <span class="n">PaymentGateway</span>
+
+
+<span class="k">def</span><span class="w"> </span><span class="nf">test_payment_without_connection_is_refused</span><span class="p">():</span>
+    <span class="c1"># Step 2 - Create a gateway but do NOT connect it.</span>
+    <span class="c1">#          No fixture is needed, and no slow connection is made.</span>
+    <span class="n">gateway</span> <span class="o">=</span> <span class="n">PaymentGateway</span><span class="p">()</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">"</span><span class="se">\n</span><span class="s2">   Gateway created. is_connected ="</span><span class="p">,</span> <span class="n">gateway</span><span class="o">.</span><span class="n">is_connected</span><span class="p">)</span>
+
+    <span class="c1"># Step 3 - pytest.raises passes only if the code inside</span>
+    <span class="c1">#          the 'with' block raises ConnectionError</span>
+    <span class="k">with</span> <span class="n">pytest</span><span class="o">.</span><span class="n">raises</span><span class="p">(</span><span class="ne">ConnectionError</span><span class="p">)</span> <span class="k">as</span> <span class="n">error_info</span><span class="p">:</span>
+        <span class="n">gateway</span><span class="o">.</span><span class="n">process_payment</span><span class="p">(</span><span class="mf">50.00</span><span class="p">)</span>
+
+    <span class="c1"># Step 4 - Show and check the error message</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">"   Error raised:"</span><span class="p">,</span> <span class="n">error_info</span><span class="o">.</span><span class="n">value</span><span class="p">)</span>
+    <span class="k">assert</span> <span class="s2">"not established"</span> <span class="ow">in</span> <span class="nb">str</span><span class="p">(</span><span class="n">error_info</span><span class="o">.</span><span class="n">value</span><span class="p">)</span>
+</code></pre></div>
+<p>Run:</p>
+<div class="highlight"><pre><span></span><code>pytest<span class="w"> </span>-v<span class="w"> </span>-s<span class="w"> </span>test_gateway_guard.py
+</code></pre></div>
+<p>Output:</p>
+<div class="highlight"><pre><span></span><code>============================= test session starts ==============================
+platform win32 -- Python 3.10.10, pytest-9.0.3, pluggy-1.6.0 -- C:\Users\Anurag Gupta\AppData\Local\Programs\Python\Python310\python.exe
+cachedir: .pytest_cache
+rootdir: C:\payment-demo
+plugins: anyio-4.12.1
+collected 1 item
+
+test_gateway_guard.py::test_payment_without_connection_is_refused
+   Gateway created. is_connected = False
+   Error raised: Transaction Failed: Gateway connection is not established!
+PASSED
+
+============================== 1 passed in 0.00s ===============================
+</code></pre></div>
+<p>This test does not use the session fixture at all, because it needs a gateway that is <strong>not</strong> connected. It also runs almost instantly, since it never calls the slow <code>connect()</code> method. <code>pytest.raises</code> is explained in the pytest guide on <a href="https://docs.pytest.org/en/stable/how-to/assert.html#assertions-about-expected-exceptions">assertions about expected exceptions</a>.</p>
+<p><a href="./#table-of-contents">Back to the Table of Contents</a></p>
 <h4 id="2-the-mechanics-of-yield-statements">2. The Mechanics of <code>yield</code> Statements<a class="headerlink" href="#2-the-mechanics-of-yield-statements" title="Permanent link">&para;</a></h4>
-<p>In standard Python, a <code>return</code> statement hands back control and completely destroys the local execution frame. Conversely, Pytest utilizes generators via the <code>yield</code> keyword:</p>
-<ul>
-<li>
-<p>Everything <strong>before</strong> <code>yield</code> is treated as the <strong>Setup Phase</strong> (Resource allocation).</p>
-</li>
-<li>
-<p>The object passed by <code>yield</code> is injected into dependent test cases.</p>
-</li>
-<li>
-<p>Execution pauses until all discovered tests complete.</p>
-</li>
-<li>
-<p>Everything <strong>after</strong> <code>yield</code> is executed as the <strong>Teardown Phase</strong> (Resource cleanup).</p>
-</li>
-</ul>
+<p>In a normal Python function, a <code>return</code> statement ends the function. Its local variables are gone, and it cannot continue from where it stopped.</p>
+<p>A function that contains <code>yield</code> is different. It is a <strong>generator</strong>: it can hand back a value, <strong>pause</strong>, and later <strong>continue</strong> from the same point with all its local variables still in place. Pytest uses this to split a fixture into two parts:</p>
+<ol>
+<li>Everything <strong>before</strong> <code>yield</code> is the <strong>setup phase</strong>, where resources are created (here, the gateway is created and connected).</li>
+<li>The object after <code>yield</code> is handed (injected) into every test that asks for the fixture.</li>
+<li>The fixture then pauses while the tests run. How long it pauses depends on its scope: for a function-scoped fixture, until that one test ends; for a session-scoped fixture, until the last test of the whole run ends.</li>
+<li>Everything <strong>after</strong> <code>yield</code> is the <strong>teardown phase</strong>, where resources are released (here, the gateway is closed). This part runs even if a test fails.</li>
+</ol>
+<div class="highlight"><pre><span></span><code>flowchart TD
+    A["1. First test asks for gateway_session"] --&gt; B["2. Fixture runs up to yield: create and connect the gateway"]
+    B --&gt; C["3. yield hands the gateway to the test and the fixture pauses"]
+    C --&gt; D["4. Test 1 runs"]
+    D --&gt; E["5. Test 2 runs with the same gateway"]
+    E --&gt; F["6. Test 3 runs with the same gateway"]
+    F --&gt; G["7. Last test of the session has finished"]
+    G --&gt; H["8. Fixture continues after yield: close the gateway"]
+</code></pre></div>
 <p><a href="./#table-of-contents">Back to the Table of Contents</a></p>
 <h4 id="3-output-of-the-pytest-with-flag-s-shows-that-resources-are-optimized">3. Output of the pytest (with flag -s) shows that resources are optimized<a class="headerlink" href="#3-output-of-the-pytest-with-flag-s-shows-that-resources-are-optimized" title="Permanent link">&para;</a></h4>
-<p>When executing this test file with standard output capturing enabled (<code>pytest -s</code>), the console logs prove the lifecycle behavior:</p>
-<p>Plaintext</p>
-<div class="highlight"><pre><span></span><code>[SETUP] GLOBAL SESSION START (Initialization Count: 1)
+<p>When this test file is run with the <code>-s</code> flag, output capturing is turned off. The <code>print()</code> messages then appear on the screen, and they show the fixture's lifecycle clearly. We also add <code>-v</code> to see the name of each test.</p>
+<p>Run:</p>
+<div class="highlight"><pre><span></span><code>pytest<span class="w"> </span>-v<span class="w"> </span>-s<span class="w"> </span>test_payments.py
+</code></pre></div>
+<p>Output:</p>
+<div class="highlight"><pre><span></span><code>============================= test session starts ==============================
+platform win32 -- Python 3.10.10, pytest-9.0.3, pluggy-1.6.0 -- C:\Users\Anurag Gupta\AppData\Local\Programs\Python\Python310\python.exe
+cachedir: .pytest_cache
+rootdir: C:\payment-demo
+plugins: anyio-4.12.1
+collected 3 items
+
+test_payments.py::test_low_value_transaction
+[SETUP] GLOBAL SESSION START (Initialization Count: 1)
+
 [APP] Authenticating with API Key: SECRET_AUTH_KEY_99X... (Simulated Latency)
 
    [TEST 1] Dispatching $15.50 payment payload...
    [TEST 1] Assertion Verified Successfully.
-
+PASSED
+test_payments.py::test_high_value_transaction
    [TEST 2] Dispatching $7500.00 payment payload...
    [TEST 2] Assertion Verified Successfully.
-
+PASSED
+test_payments.py::test_gateway_persistence
    [TEST 3] Auditing state persistence of active network socket...
    [TEST 3] Assertion Verified: State Persistence Confirmed.
-
+PASSED
 [TEARDOWN] GLOBAL SESSION END (Final Verification Count: 1)
+
 [APP] Terminating network connection safely...
+
+
+============================== 3 passed in 1.01s ===============================
 </code></pre></div>
-<p>Observe that <code>SESSION_FIXTURE_INSTANTIATIONS</code> never increments beyond <code>1</code>. If this fixture were scoped at the default <code>function</code> level, the time-consuming <code>[APP] Authenticating...</code> process would trigger three distinct times. In real-world enterprise architectures consisting of thousands of test modules, this single optimization trims runtimes from hours down to minutes.</p>
+<p>Read the output in steps:</p>
+<ol>
+<li><code>[SETUP] GLOBAL SESSION START (Initialization Count: 1)</code> and the <code>[APP] Authenticating...</code> line appear <strong>once</strong>, just before the first test.</li>
+<li>All three tests print their messages and pass. Tests 2 and 3 show no setup lines at all. They simply reuse the gateway that is already connected.</li>
+<li><code>[TEARDOWN] GLOBAL SESSION END (Final Verification Count: 1)</code> and <code>[APP] Terminating network connection safely...</code> appear <strong>once</strong>, after the last test.</li>
+<li>The whole run took about 1 second, which is the time of a single connection.</li>
+</ol>
+<p>Observe that <code>SESSION_FIXTURE_INSTANTIATIONS</code> never goes beyond <code>1</code>. If this fixture used the default <code>function</code> scope, the slow <code>[APP] Authenticating...</code> step would run three times, once for each test. The next section shows this.</p>
+<p>In large real-world projects with thousands of tests, sharing expensive setup in this way can cut the total test time dramatically, often from many minutes (or even hours) down to a small fraction of that.</p>
+<p><a href="./#table-of-contents">Back to the Table of Contents</a></p>
+<h4 id="4-comparing-session-scope-with-function-scope">4. Comparing Session Scope with Function Scope<a class="headerlink" href="#4-comparing-session-scope-with-function-scope" title="Permanent link">&para;</a></h4>
+<p>To see the saving clearly, here are the same three tests with a function-scoped fixture. Save this as <code>test_payments_function_scope.py</code>:</p>
+<div class="highlight"><pre><span></span><code><span class="c1"># test_payments_function_scope.py</span>
+<span class="sd">"""</span>
+<span class="sd">The same three tests as test_payments.py, but the fixture uses the</span>
+<span class="sd">default function scope. Compare the output and the total time.</span>
+<span class="sd">Run using 'pytest -v -s test_payments_function_scope.py'.</span>
+<span class="sd">"""</span>
+
+<span class="c1"># Step 1 - Import pytest and the class we want to test</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">pytest</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">payment_gateway</span><span class="w"> </span><span class="kn">import</span> <span class="n">PaymentGateway</span>
+
+<span class="c1"># Step 2 - Counter to show how many times the fixture runs</span>
+<span class="n">FUNCTION_FIXTURE_INSTANTIATIONS</span> <span class="o">=</span> <span class="mi">0</span>
+
+
+<span class="c1"># Step 3 - A function-scoped fixture (scope="function" is the default,</span>
+<span class="c1">#          so writing @pytest.fixture alone would do the same thing)</span>
+<span class="nd">@pytest</span><span class="o">.</span><span class="n">fixture</span><span class="p">(</span><span class="n">scope</span><span class="o">=</span><span class="s2">"function"</span><span class="p">)</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">gateway_function</span><span class="p">():</span>
+    <span class="k">global</span> <span class="n">FUNCTION_FIXTURE_INSTANTIATIONS</span>
+    <span class="n">FUNCTION_FIXTURE_INSTANTIATIONS</span> <span class="o">+=</span> <span class="mi">1</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"</span><span class="se">\n</span><span class="s2">[SETUP] FUNCTION START (Initialization Count: </span><span class="si">{</span><span class="n">FUNCTION_FIXTURE_INSTANTIATIONS</span><span class="si">}</span><span class="s2">)"</span><span class="p">)</span>
+
+    <span class="n">gateway_instance</span> <span class="o">=</span> <span class="n">PaymentGateway</span><span class="p">()</span>
+    <span class="n">gateway_instance</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="n">api_key</span><span class="o">=</span><span class="s2">"SECRET_AUTH_KEY_99X"</span><span class="p">)</span>
+
+    <span class="k">yield</span> <span class="n">gateway_instance</span>
+
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"</span><span class="se">\n</span><span class="s2">[TEARDOWN] FUNCTION END (Count so far: </span><span class="si">{</span><span class="n">FUNCTION_FIXTURE_INSTANTIATIONS</span><span class="si">}</span><span class="s2">)"</span><span class="p">)</span>
+    <span class="n">gateway_instance</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+
+
+<span class="c1"># Step 4 - The same three tests, now using the function-scoped fixture</span>
+
+<span class="k">def</span><span class="w"> </span><span class="nf">test_low_value_transaction</span><span class="p">(</span><span class="n">gateway_function</span><span class="p">):</span>
+    <span class="n">response</span> <span class="o">=</span> <span class="n">gateway_function</span><span class="o">.</span><span class="n">process_payment</span><span class="p">(</span><span class="mf">15.50</span><span class="p">)</span>
+    <span class="k">assert</span> <span class="s2">"Successfully"</span> <span class="ow">in</span> <span class="n">response</span>
+
+
+<span class="k">def</span><span class="w"> </span><span class="nf">test_high_value_transaction</span><span class="p">(</span><span class="n">gateway_function</span><span class="p">):</span>
+    <span class="n">response</span> <span class="o">=</span> <span class="n">gateway_function</span><span class="o">.</span><span class="n">process_payment</span><span class="p">(</span><span class="mf">7500.00</span><span class="p">)</span>
+    <span class="k">assert</span> <span class="s2">"Successfully"</span> <span class="ow">in</span> <span class="n">response</span>
+
+
+<span class="k">def</span><span class="w"> </span><span class="nf">test_gateway_persistence</span><span class="p">(</span><span class="n">gateway_function</span><span class="p">):</span>
+    <span class="k">assert</span> <span class="n">gateway_function</span><span class="o">.</span><span class="n">is_connected</span> <span class="ow">is</span> <span class="kc">True</span>
+</code></pre></div>
+<p>Run:</p>
+<div class="highlight"><pre><span></span><code>pytest<span class="w"> </span>-v<span class="w"> </span>-s<span class="w"> </span>test_payments_function_scope.py
+</code></pre></div>
+<p>Output:</p>
+<div class="highlight"><pre><span></span><code>============================= test session starts ==============================
+platform win32 -- Python 3.10.10, pytest-9.0.3, pluggy-1.6.0 -- C:\Users\Anurag Gupta\AppData\Local\Programs\Python\Python310\python.exe
+cachedir: .pytest_cache
+rootdir: C:\payment-demo
+plugins: anyio-4.12.1
+collected 3 items
+
+test_payments_function_scope.py::test_low_value_transaction
+[SETUP] FUNCTION START (Initialization Count: 1)
+
+[APP] Authenticating with API Key: SECRET_AUTH_KEY_99X... (Simulated Latency)
+PASSED
+[TEARDOWN] FUNCTION END (Count so far: 1)
+
+[APP] Terminating network connection safely...
+
+test_payments_function_scope.py::test_high_value_transaction
+[SETUP] FUNCTION START (Initialization Count: 2)
+
+[APP] Authenticating with API Key: SECRET_AUTH_KEY_99X... (Simulated Latency)
+PASSED
+[TEARDOWN] FUNCTION END (Count so far: 2)
+
+[APP] Terminating network connection safely...
+
+test_payments_function_scope.py::test_gateway_persistence
+[SETUP] FUNCTION START (Initialization Count: 3)
+
+[APP] Authenticating with API Key: SECRET_AUTH_KEY_99X... (Simulated Latency)
+PASSED
+[TEARDOWN] FUNCTION END (Count so far: 3)
+
+[APP] Terminating network connection safely...
+
+
+============================== 3 passed in 3.01s ===============================
+</code></pre></div>
+<p>Now the fixture runs before every test. The counter goes to 3, the gateway connects and disconnects three times, and the run takes about 3 seconds instead of 1.</p>
+<table>
+<thead>
+<tr>
+<th></th>
+<th>Session Scope (<code>test_payments.py</code>)</th>
+<th>Function Scope (<code>test_payments_function_scope.py</code>)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Times the fixture setup ran</td>
+<td>1</td>
+<td>3</td>
+</tr>
+<tr>
+<td>Times the gateway connected</td>
+<td>1</td>
+<td>3</td>
+</tr>
+<tr>
+<td>Times the gateway closed</td>
+<td>1</td>
+<td>3</td>
+</tr>
+<tr>
+<td>Total run time (approximately)</td>
+<td>1 second</td>
+<td>3 seconds</td>
+</tr>
+<tr>
+<td>Does each test get a fresh gateway?</td>
+<td>No, all tests share one</td>
+<td>Yes</td>
+</tr>
+</tbody>
+</table>
+<p>With 3 tests the saving is 2 seconds. With 1,000 tests and a 2-second login, the function scope would spend over 30 minutes just logging in, while the session scope would spend 2 seconds.</p>
+<p>But notice the last row. The function scope gives every test a fresh gateway, so no test can be affected by another. The session scope gives up this safety in exchange for speed. The next section explains why that matters.</p>
+<p><a href="./#table-of-contents">Back to the Table of Contents</a></p>
 <h2 id="precautions-concerns-in-using-session-scope">Precautions &amp; Concerns in using session scope<a class="headerlink" href="#precautions-concerns-in-using-session-scope" title="Permanent link">&para;</a></h2>
-<p>While session scoping provides substantial performance gains, it introduces definitive structural risks that engineers must actively mitigate.</p>
+<p>Session scope can save a great deal of time, but it also brings real risks. You need to understand them and guard against them.</p>
+<p><a href="./#table-of-contents">Back to the Table of Contents</a></p>
 <h3 id="1-shared-state-contamination-test-interdependence">1. Shared State Contamination (Test Interdependence)<a class="headerlink" href="#1-shared-state-contamination-test-interdependence" title="Permanent link">&para;</a></h3>
-<p>Because every test function across the entire test runner process interacts with the exact same instance of the <code>PaymentGateway</code>, state modifications pose an immediate threat.</p>
+<p>With a session-scoped fixture, every test in the whole run works with the <strong>exact same</strong> <code>PaymentGateway</code> object. If one test changes that object, every test that runs after it sees the change. This is called <strong>shared state contamination</strong>.</p>
 <blockquote>
-<p><strong>The Risk:</strong> If <code>test_high_value_transaction</code> explicitly drops or corrupts the internal state of the gateway instance (e.g., changing <code>gateway_session.is_connected = False</code> during a failure injection test), every subsequent test execution following it will fail cascadingly. Tests lose their isolation guarantees (<span class="arithmatex">\(I\)</span> in the standard <strong>FIRST</strong> testing principles).</p>
+<p><strong>The Risk:</strong> If <code>test_high_value_transaction</code> changes or damages the gateway's state (for example, by setting <code>gateway_session.is_connected = False</code> to simulate a network failure), every test that runs after it will fail one after another. The tests lose their <strong>independence</strong>, which is the "I" in the well-known <strong>FIRST</strong> principles of good unit tests: Fast, <strong>Independent</strong>, Repeatable, Self-validating and Timely. (Some authors write "Isolated" for the "I".)</p>
 </blockquote>
-<h3 id="2-thread-safety-and-concurrency-violations">2. Thread Safety and Concurrency Violations<a class="headerlink" href="#2-thread-safety-and-concurrency-violations" title="Permanent link">&para;</a></h3>
-<p>If you accelerate test execution using parallel execution plugins such as <code>pytest-xdist</code>, a session-scoped fixture can introduce race conditions. Multiple parallel processes attempting to alter or read internal attributes of a shared singleton object concurrently will induce flaky, non-deterministic test behavior.</p>
+<p>Let us see this happen. Save this as <code>test_contamination.py</code>:</p>
+<div class="highlight"><pre><span></span><code><span class="c1"># test_contamination.py</span>
+<span class="sd">"""</span>
+<span class="sd">Shows the main danger of a session-scoped fixture: one test changes the</span>
+<span class="sd">shared object, and a later test fails because of it.</span>
+<span class="sd">Run using 'pytest -v -s test_contamination.py'.</span>
+<span class="sd">The second test FAILS on purpose.</span>
+<span class="sd">"""</span>
+
+<span class="c1"># Step 1 - Import pytest and the class we want to test</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">pytest</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">payment_gateway</span><span class="w"> </span><span class="kn">import</span> <span class="n">PaymentGateway</span>
+
+
+<span class="c1"># Step 2 - One shared gateway for the whole session</span>
+<span class="nd">@pytest</span><span class="o">.</span><span class="n">fixture</span><span class="p">(</span><span class="n">scope</span><span class="o">=</span><span class="s2">"session"</span><span class="p">)</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">shared_gateway</span><span class="p">():</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">"</span><span class="se">\n</span><span class="s2">[SETUP] Connecting shared gateway once"</span><span class="p">)</span>
+    <span class="n">gateway</span> <span class="o">=</span> <span class="n">PaymentGateway</span><span class="p">()</span>
+    <span class="n">gateway</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="n">api_key</span><span class="o">=</span><span class="s2">"SECRET_AUTH_KEY_99X"</span><span class="p">)</span>
+    <span class="k">yield</span> <span class="n">gateway</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">"</span><span class="se">\n</span><span class="s2">[TEARDOWN] Closing shared gateway"</span><span class="p">)</span>
+    <span class="n">gateway</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+
+
+<span class="c1"># Step 3 - A test that changes the shared object.</span>
+<span class="c1">#          It simulates a network failure by closing the connection,</span>
+<span class="c1">#          and it does not reconnect afterwards.</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">test_simulated_network_failure</span><span class="p">(</span><span class="n">shared_gateway</span><span class="p">):</span>
+    <span class="n">shared_gateway</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">"   Connection closed by test 1. is_connected ="</span><span class="p">,</span> <span class="n">shared_gateway</span><span class="o">.</span><span class="n">is_connected</span><span class="p">)</span>
+    <span class="k">with</span> <span class="n">pytest</span><span class="o">.</span><span class="n">raises</span><span class="p">(</span><span class="ne">ConnectionError</span><span class="p">):</span>
+        <span class="n">shared_gateway</span><span class="o">.</span><span class="n">process_payment</span><span class="p">(</span><span class="mf">10.00</span><span class="p">)</span>
+
+
+<span class="c1"># Step 4 - A perfectly correct test that now fails,</span>
+<span class="c1">#          because it receives the gateway that test 1 closed.</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">test_normal_payment</span><span class="p">(</span><span class="n">shared_gateway</span><span class="p">):</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">"</span><span class="se">\n</span><span class="s2">   Test 2 receives is_connected ="</span><span class="p">,</span> <span class="n">shared_gateway</span><span class="o">.</span><span class="n">is_connected</span><span class="p">)</span>
+    <span class="n">response</span> <span class="o">=</span> <span class="n">shared_gateway</span><span class="o">.</span><span class="n">process_payment</span><span class="p">(</span><span class="mf">20.00</span><span class="p">)</span>
+    <span class="k">assert</span> <span class="s2">"Successfully"</span> <span class="ow">in</span> <span class="n">response</span>
+</code></pre></div>
+<p>Run:</p>
+<div class="highlight"><pre><span></span><code>pytest<span class="w"> </span>-v<span class="w"> </span>-s<span class="w"> </span>test_contamination.py
+</code></pre></div>
+<p>Output:</p>
+<div class="highlight"><pre><span></span><code>============================= test session starts ==============================
+platform win32 -- Python 3.10.10, pytest-9.0.3, pluggy-1.6.0 -- C:\Users\Anurag Gupta\AppData\Local\Programs\Python\Python310\python.exe
+cachedir: .pytest_cache
+rootdir: C:\payment-demo
+plugins: anyio-4.12.1
+collected 2 items
+
+test_contamination.py::test_simulated_network_failure
+[SETUP] Connecting shared gateway once
+
+[APP] Authenticating with API Key: SECRET_AUTH_KEY_99X... (Simulated Latency)
+
+[APP] Terminating network connection safely...
+   Connection closed by test 1. is_connected = False
+PASSED
+test_contamination.py::test_normal_payment
+   Test 2 receives is_connected = False
+FAILED
+[TEARDOWN] Closing shared gateway
+
+[APP] Terminating network connection safely...
+
+
+=================================== FAILURES ===================================
+_____________________________ test_normal_payment ______________________________
+
+shared_gateway = &lt;payment_gateway.PaymentGateway object at 0x0000021F4C8B7D90&gt;
+
+    def test_normal_payment(shared_gateway):
+        print("\n   Test 2 receives is_connected =", shared_gateway.is_connected)
+&gt;       response = shared_gateway.process_payment(20.00)
+
+test_contamination.py:39:
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+self = &lt;payment_gateway.PaymentGateway object at 0x0000021F4C8B7D90&gt;, amount = 20.0
+
+    def process_payment(self, amount: float) -&gt; str:
+        """
+        The main job of the gateway. It first checks that there is an
+        active connection. If not, it refuses to continue by raising an error.
+        """
+        if not self.is_connected:
+&gt;           raise ConnectionError("Transaction Failed: Gateway connection is not established!")
+E           ConnectionError: Transaction Failed: Gateway connection is not established!
+
+payment_gateway.py:45: ConnectionError
+=========================== short test summary info ============================
+FAILED test_contamination.py::test_normal_payment - ConnectionError: Transact...
+========================= 1 failed, 1 passed in 1.01s ==========================
+</code></pre></div>
+<p>The memory address shown after <code>object at</code> will be different on your computer.</p>
+<p>Read the output in steps:</p>
+<ol>
+<li>The shared gateway connects once.</li>
+<li><code>test_simulated_network_failure</code> closes the connection and checks that a payment is refused. This test passes.</li>
+<li><code>test_normal_payment</code> is a perfectly correct test. But it receives the <strong>same</strong> gateway, which test 1 left closed. So it fails with <code>ConnectionError</code>.</li>
+<li>The failure is not caused by a bug in the gateway or in test 2. It is caused by test 1. Such failures are hard to track down, because the test that fails is not the test that caused the problem. If you ran <code>test_normal_payment</code> on its own, it would pass.</li>
+</ol>
+<p>How to avoid this problem:</p>
+<ol>
+<li>Use session scope only for resources that tests <strong>read</strong> or use without changing, such as a connection or a large set of read-only data.</li>
+<li>If a test needs to change the shared object (for example, to simulate a failure), give that test its own function-scoped fixture or create its own object inside the test, as <code>test_gateway_guard.py</code> does.</li>
+<li>If a test must change shared state, make it put things back the way they were before it ends (for example, by reconnecting).</li>
+</ol>
+<p><a href="./#table-of-contents">Back to the Table of Contents</a></p>
+<h3 id="2-parallel-test-runs-and-shared-resources">2. Parallel Test Runs and Shared Resources<a class="headerlink" href="#2-parallel-test-runs-and-shared-resources" title="Permanent link">&para;</a></h3>
+<p>To finish large test suites faster, some teams run tests in parallel with the plugin <a href="https://pytest-xdist.readthedocs.io/">pytest-xdist</a>. It starts several <strong>worker processes</strong> (separate running copies of pytest) and shares the tests out among them. For example, <code>pytest -n 4</code> uses 4 workers.</p>
+<p>This changes how session-scoped fixtures behave, in two ways that often surprise people:</p>
+<ol>
+<li><strong>The fixture runs once per worker, not once in total.</strong> Each worker is a separate process with its own memory, so each one runs its own copy of the session fixture. With <code>-n 4</code>, the gateway would connect 4 times, and the counter would reach 1 in each of the 4 workers.</li>
+<li><strong>The workers can clash over the same outside resource.</strong> The Python objects are not shared between workers, but the real resource behind them often is: the same test database, the same file or the same test account on an external service. If two workers change the same record at the same moment, the result depends on which one gets there first. This is called a <strong>race condition</strong>. It leads to <strong>flaky tests</strong>: tests that pass on one run and fail on the next, with no change to the code.</li>
+</ol>
+<p>To stay safe, make sure that parallel workers do not change the same outside data. For example, give each worker its own test database or its own set of test records. The pytest-xdist documentation explains how to <a href="https://pytest-xdist.readthedocs.io/en/stable/how-to.html#making-session-scoped-fixtures-execute-only-once">make session-scoped fixtures run only once</a> when this is really needed.</p>
+<p><a href="./#table-of-contents">Back to the Table of Contents</a></p>
 <h3 id="3-structural-scaling-and-file-placement">3. Structural Scaling and File Placement<a class="headerlink" href="#3-structural-scaling-and-file-placement" title="Permanent link">&para;</a></h3>
-<p>In scaled multi-directory testing frameworks, declaring a session fixture inside a single test file restricts its accessibility. To expose session-scoped setups globally without explicit imports, they must be housed within a centralized, specialized orchestration file named <code>conftest.py</code> positioned at the project's root directory.</p>
+<p>In our example, the session fixture is written inside <code>test_payments.py</code>. A fixture defined inside a test file can be used <strong>only</strong> by the tests in that file. In a project with many test files, other files could not use it.</p>
+<p>To share a fixture across many test files without importing it, put it in a special file named <code>conftest.py</code>. Pytest finds this file automatically. Every test file in the same folder as <code>conftest.py</code>, and in all the folders inside it, can use its fixtures. To make a fixture available to the whole project, place <code>conftest.py</code> in the top-level test folder (or the project's root folder).</p>
+<p>Here is a small example with two test files that share one gateway. The folder looks like this:</p>
+<div class="highlight"><pre><span></span><code>conftest-demo
+    conftest.py
+    payment_gateway.py
+    test_orders.py
+    test_refunds.py
+</code></pre></div>
+<p><code>conftest.py</code>:</p>
+<div class="highlight"><pre><span></span><code><span class="c1"># conftest.py</span>
+<span class="sd">"""</span>
+<span class="sd">Fixtures placed in a file named conftest.py are shared automatically with</span>
+<span class="sd">every test file in this folder (and in the folders inside it).</span>
+<span class="sd">The test files do not need to import them.</span>
+<span class="sd">"""</span>
+
+<span class="c1"># Step 1 - Import pytest and the class we want to test</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">pytest</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">payment_gateway</span><span class="w"> </span><span class="kn">import</span> <span class="n">PaymentGateway</span>
+
+
+<span class="c1"># Step 2 - One session-scoped gateway for all the test files</span>
+<span class="nd">@pytest</span><span class="o">.</span><span class="n">fixture</span><span class="p">(</span><span class="n">scope</span><span class="o">=</span><span class="s2">"session"</span><span class="p">)</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">shared_gateway</span><span class="p">():</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">"</span><span class="se">\n</span><span class="s2">[SETUP] conftest.py: connecting shared gateway (once for all files)"</span><span class="p">)</span>
+    <span class="n">gateway</span> <span class="o">=</span> <span class="n">PaymentGateway</span><span class="p">()</span>
+    <span class="n">gateway</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="n">api_key</span><span class="o">=</span><span class="s2">"SECRET_AUTH_KEY_99X"</span><span class="p">)</span>
+    <span class="k">yield</span> <span class="n">gateway</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">"</span><span class="se">\n</span><span class="s2">[TEARDOWN] conftest.py: closing shared gateway"</span><span class="p">)</span>
+    <span class="n">gateway</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+</code></pre></div>
+<p><code>test_orders.py</code>:</p>
+<div class="highlight"><pre><span></span><code><span class="c1"># test_orders.py</span>
+<span class="c1"># No import of shared_gateway is needed. Pytest finds it in conftest.py.</span>
+
+<span class="k">def</span><span class="w"> </span><span class="nf">test_order_payment</span><span class="p">(</span><span class="n">shared_gateway</span><span class="p">):</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">"</span><span class="se">\n</span><span class="s2">   [ORDERS] Paying for an order of $120.00"</span><span class="p">)</span>
+    <span class="n">response</span> <span class="o">=</span> <span class="n">shared_gateway</span><span class="o">.</span><span class="n">process_payment</span><span class="p">(</span><span class="mf">120.00</span><span class="p">)</span>
+    <span class="k">assert</span> <span class="s2">"Successfully"</span> <span class="ow">in</span> <span class="n">response</span>
+
+
+<span class="k">def</span><span class="w"> </span><span class="nf">test_order_gateway_is_connected</span><span class="p">(</span><span class="n">shared_gateway</span><span class="p">):</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">"</span><span class="se">\n</span><span class="s2">   [ORDERS] Checking the connection"</span><span class="p">)</span>
+    <span class="k">assert</span> <span class="n">shared_gateway</span><span class="o">.</span><span class="n">is_connected</span> <span class="ow">is</span> <span class="kc">True</span>
+</code></pre></div>
+<p><code>test_refunds.py</code>:</p>
+<div class="highlight"><pre><span></span><code><span class="c1"># test_refunds.py</span>
+<span class="c1"># This second file uses the SAME gateway object as test_orders.py.</span>
+
+<span class="k">def</span><span class="w"> </span><span class="nf">test_refund_payment</span><span class="p">(</span><span class="n">shared_gateway</span><span class="p">):</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">"</span><span class="se">\n</span><span class="s2">   [REFUNDS] Processing a refund of $45.00"</span><span class="p">)</span>
+    <span class="n">response</span> <span class="o">=</span> <span class="n">shared_gateway</span><span class="o">.</span><span class="n">process_payment</span><span class="p">(</span><span class="mf">45.00</span><span class="p">)</span>
+    <span class="k">assert</span> <span class="s2">"Successfully"</span> <span class="ow">in</span> <span class="n">response</span>
+
+
+<span class="k">def</span><span class="w"> </span><span class="nf">test_refund_gateway_is_connected</span><span class="p">(</span><span class="n">shared_gateway</span><span class="p">):</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">"</span><span class="se">\n</span><span class="s2">   [REFUNDS] Checking the connection"</span><span class="p">)</span>
+    <span class="k">assert</span> <span class="n">shared_gateway</span><span class="o">.</span><span class="n">is_connected</span> <span class="ow">is</span> <span class="kc">True</span>
+</code></pre></div>
+<p>Open a terminal in the <code>conftest-demo</code> folder and run:</p>
+<div class="highlight"><pre><span></span><code>pytest<span class="w"> </span>-v<span class="w"> </span>-s
+</code></pre></div>
+<p>Output:</p>
+<div class="highlight"><pre><span></span><code>============================= test session starts ==============================
+platform win32 -- Python 3.10.10, pytest-9.0.3, pluggy-1.6.0 -- C:\Users\Anurag Gupta\AppData\Local\Programs\Python\Python310\python.exe
+cachedir: .pytest_cache
+rootdir: C:\payment-demo\conftest-demo
+plugins: anyio-4.12.1
+collected 4 items
+
+test_orders.py::test_order_payment
+[SETUP] conftest.py: connecting shared gateway (once for all files)
+
+[APP] Authenticating with API Key: SECRET_AUTH_KEY_99X... (Simulated Latency)
+
+   [ORDERS] Paying for an order of $120.00
+PASSED
+test_orders.py::test_order_gateway_is_connected
+   [ORDERS] Checking the connection
+PASSED
+test_refunds.py::test_refund_payment
+   [REFUNDS] Processing a refund of $45.00
+PASSED
+test_refunds.py::test_refund_gateway_is_connected
+   [REFUNDS] Checking the connection
+PASSED
+[TEARDOWN] conftest.py: closing shared gateway
+
+[APP] Terminating network connection safely...
+
+
+============================== 4 passed in 1.01s ===============================
+</code></pre></div>
+<p>The gateway connects <strong>once</strong> and closes <strong>once</strong>, even though the four tests are spread over two files. Neither test file imports <code>shared_gateway</code>. Pytest found it in <code>conftest.py</code>. This is session scope working across the whole test run, as described in <a href="./#the-fixture-lifecycle-hierarchy">The Fixture Lifecycle Hierarchy</a>.</p>
+<p><a href="./#table-of-contents">Back to the Table of Contents</a></p>
+<h3 id="4-keeping-secrets-out-of-test-code">4. Keeping Secrets Out of Test Code<a class="headerlink" href="#4-keeping-secrets-out-of-test-code" title="Permanent link">&para;</a></h3>
+<p>Our example writes the API key <code>"SECRET_AUTH_KEY_99X"</code> directly in the test file and even prints it. That is fine for a simulation, but never do this with a real key. Code is often shared, uploaded to GitHub or copied into logs, and anyone who sees a real key can use it.</p>
+<p>For real projects, keep keys out of the code. A common way is to store the key in an <strong>environment variable</strong> (a named value kept by the operating system, outside your program) and read it in the fixture with <code>os.environ["PAYMENT_API_KEY"]</code>. You can read about this in the Python documentation for <a href="https://docs.python.org/3/library/os.html#os.environ">os.environ</a>.</p>
+<p><a href="./#table-of-contents">Back to the Table of Contents</a></p>
+<h2 id="choosing-the-right-scope">Choosing the Right Scope<a class="headerlink" href="#choosing-the-right-scope" title="Permanent link">&para;</a></h2>
+<p>A simple rule: <strong>start with the default function scope, and widen the scope only when setup is slow and the tests do not change the shared object.</strong></p>
+<table>
+<thead>
+<tr>
+<th>Situation</th>
+<th>Suggested Scope</th>
+<th>Reason</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Cheap setup, such as a small object or a list</td>
+<td>Function (default)</td>
+<td>Every test gets a fresh copy, so tests cannot affect each other</td>
+</tr>
+<tr>
+<td>The test changes the object (deposits, deletes, closes)</td>
+<td>Function (default)</td>
+<td>Changes must not leak into other tests</td>
+</tr>
+<tr>
+<td>Slow setup, used by the tests of one class</td>
+<td>Class</td>
+<td>Shared only inside that class</td>
+</tr>
+<tr>
+<td>Slow setup, such as loading a large data file, used by the tests of one file</td>
+<td>Module</td>
+<td>Shared only inside that file</td>
+</tr>
+<tr>
+<td>Very slow setup, such as a login or a database connection, used across many files, and the tests do not change it</td>
+<td>Session (in <code>conftest.py</code>)</td>
+<td>Paid for only once in the whole run</td>
+</tr>
+</tbody>
+</table>
+<div class="highlight"><pre><span></span><code>flowchart TD
+    A["1. Is the setup slow?"] -- No --&gt; B["2. Use function scope"]
+    A -- Yes --&gt; C{"3. Do the tests change the object?"}
+    C -- Yes --&gt; D["4. Use function scope, or reset the object after each test"]
+    C -- No --&gt; E{"5. Is it needed in many files?"}
+    E -- No --&gt; F["6. Use module or class scope"]
+    E -- Yes --&gt; G["7. Use session scope and put the fixture in conftest.py"]
+</code></pre></div>
+<p><a href="./#table-of-contents">Back to the Table of Contents</a></p>
+<h2 id="follow-up-questions">Follow-Up Questions<a class="headerlink" href="#follow-up-questions" title="Permanent link">&para;</a></h2>
+<h3 id="question-1-counting-setups">Question 1: Counting Setups<a class="headerlink" href="#question-1-counting-setups" title="Permanent link">&para;</a></h3>
+<p>A test run has 5 test files with 20 tests in each. Every test asks for a fixture called <code>db_connection</code>. How many times does the fixture's setup run if its scope is (a) <code>"function"</code>, (b) <code>"module"</code>, (c) <code>"session"</code>?</p>
+<p><strong>Answer:</strong></p>
+<ol>
+<li>Function scope: once per test, so 5 × 20 = <strong>100</strong> times.</li>
+<li>Module scope: once per file, so <strong>5</strong> times.</li>
+<li>Session scope: once for the whole run, so <strong>1</strong> time. (This assumes the fixture is in a <code>conftest.py</code> that all 5 files can see.)</li>
+</ol>
+<p><a href="./#table-of-contents">Back to the Table of Contents</a></p>
+<h3 id="question-2-when-does-teardown-run">Question 2: When Does Teardown Run?<a class="headerlink" href="#question-2-when-does-teardown-run" title="Permanent link">&para;</a></h3>
+<p>In <code>test_payments.py</code>, when exactly does the line <code>[TEARDOWN] GLOBAL SESSION END</code> appear?</p>
+<p><strong>Answer:</strong></p>
+<ol>
+<li>The fixture has <code>scope="session"</code>.</li>
+<li>So the code after <code>yield</code> runs only after the <strong>last</strong> test of the whole run has finished.</li>
+<li>In the output, it appears after the third test has <code>PASSED</code>, not after each test.</li>
+</ol>
+<p><a href="./#table-of-contents">Back to the Table of Contents</a></p>
+<h3 id="question-3-why-did-a-correct-test-fail">Question 3: Why Did a Correct Test Fail?<a class="headerlink" href="#question-3-why-did-a-correct-test-fail" title="Permanent link">&para;</a></h3>
+<p>In <code>test_contamination.py</code>, <code>test_normal_payment</code> fails. The test itself has no mistake. Why does it fail, and give two ways to fix the problem.</p>
+<p><strong>Answer:</strong></p>
+<ol>
+<li>Both tests share one session-scoped gateway.</li>
+<li>The first test closes the connection and leaves it closed.</li>
+<li>The second test receives the closed gateway, so <code>process_payment()</code> raises <code>ConnectionError</code>.</li>
+<li>Fix 1: in the first test, create a separate <code>PaymentGateway()</code> of its own instead of using the shared one.</li>
+<li>Fix 2: at the end of the first test, reconnect the shared gateway with <code>shared_gateway.connect(api_key="SECRET_AUTH_KEY_99X")</code>, so the next test gets it back in a good state.</li>
+</ol>
+<p><a href="./#table-of-contents">Back to the Table of Contents</a></p>
+<h3 id="question-4-session-scope-in-one-file">Question 4: Session Scope in One File<a class="headerlink" href="#question-4-session-scope-in-one-file" title="Permanent link">&para;</a></h3>
+<p>If a session-scoped fixture is defined inside <code>test_payments.py</code>, can a test in another file, <code>test_refunds.py</code>, use it?</p>
+<p><strong>Answer:</strong></p>
+<ol>
+<li>No. A fixture defined in a test file is visible only to the tests in that file.</li>
+<li>If <code>test_refunds.py</code> asks for it, pytest reports the error <code>fixture 'gateway_session' not found</code>.</li>
+<li>To share it, move the fixture into a <code>conftest.py</code> file in the same folder (or a parent folder).</li>
+</ol>
+<p><a href="./#table-of-contents">Back to the Table of Contents</a></p>
+<h2 id="summary">Summary<a class="headerlink" href="#summary" title="Permanent link">&para;</a></h2>
+<ul>
+<li>A fixture's <strong>scope</strong> decides how often its setup and teardown run: per test (function), per class, per file (module), per folder (package) or once per run (session).</li>
+<li>A <strong>session-scoped</strong> fixture is set up the first time a test asks for it and torn down after the last test of the whole run.</li>
+<li>It saves a lot of time when setup is slow. In our example, 3 tests took about 1 second instead of 3.</li>
+<li>The price is <strong>shared state</strong>. If one test changes the shared object, later tests can fail for no fault of their own.</li>
+<li>With parallel runs (pytest-xdist), each worker gets its own copy of the session fixture, and workers can clash over shared outside resources.</li>
+<li>To share a fixture across files, put it in <code>conftest.py</code>.</li>
+<li>Start with function scope, and widen the scope only when setup is slow and the tests leave the object unchanged.</li>
+</ul>
+<p><a href="./#table-of-contents">Back to the Table of Contents</a></p>
+<h2 id="further-reading">Further Reading<a class="headerlink" href="#further-reading" title="Permanent link">&para;</a></h2>
+<ul>
+<li><a href="https://docs.pytest.org/en/stable/how-to/fixtures.html">pytest: How to use fixtures</a></li>
+<li><a href="https://docs.pytest.org/en/stable/how-to/fixtures.html#fixture-scopes">pytest: Fixture scopes</a></li>
+<li><a href="https://docs.pytest.org/en/stable/reference/fixtures.html">pytest: Fixtures reference, including conftest.py</a></li>
+<li><a href="https://pytest-xdist.readthedocs.io/">pytest-xdist documentation</a></li>
+<li><a href="https://docs.python.org/3/glossary.html#term-generator">Python glossary: generator</a></li>
+</ul>
 <p><a href="./#table-of-contents">Back to the Table of Contents</a></p>
 
 
