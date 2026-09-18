@@ -6913,6 +6913,23 @@
     </span>
   </a>
   
+    <nav class="md-nav" aria-label="Research Question">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#key-terms-used-on-this-page" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Key Terms Used on This Page
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
 </li>
       
         <li class="md-nav__item">
@@ -6949,6 +6966,17 @@
   
 </li>
         
+          <li class="md-nav__item">
+  <a href="#running-the-example" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Running the Example
+      
+    </span>
+  </a>
+  
+</li>
+        
       </ul>
     </nav>
   
@@ -6978,10 +7006,43 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#2-how-pytest-uses-dependency-injection" class="md-nav__link">
+  <a href="#2-why-is-it-useful-in-testing" class="md-nav__link">
     <span class="md-ellipsis">
       
-        2. How pytest uses dependency injection
+        2. Why Is It Useful in Testing?
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#3-how-pytest-uses-dependency-injection" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3. How pytest uses dependency injection
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#4-why-must-the-names-match" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4. Why Must the Names Match?
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#5-how-does-this-help-simplify-test-writing" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5. How Does This Help Simplify Test Writing?
       
     </span>
   </a>
@@ -7011,10 +7072,21 @@
 </li>
         
           <li class="md-nav__item">
+  <a href="#for-test_connectdb" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        For test_connect(db)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
   <a href="#for-test_statedb" class="md-nav__link">
     <span class="md-ellipsis">
       
-        For test_state(db):
+        For test_state(db)
       
     </span>
   </a>
@@ -7023,6 +7095,100 @@
         
       </ul>
     </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#scripts-for-this-page-and-how-to-run-them" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Scripts for This Page and How to Run Them
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#follow-up-questions" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Follow-Up Questions
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Follow-Up Questions">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#question-1-how-many-objects" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Question 1: How Many Objects?
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#question-2-sharing-one-object" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Question 2: Sharing One Object
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#question-3-error-or-failed" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Question 3: ERROR or FAILED?
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#question-4-seeing-the-available-fixtures" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Question 4: Seeing the Available Fixtures
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#summary" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Summary
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#further-reading" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Further Reading
+      
+    </span>
+  </a>
   
 </li>
       
@@ -8200,13 +8366,54 @@
 
 
 <h1 id="dependency-injection-in-pytest-fixtures">Dependency Injection in Pytest Fixtures<a class="headerlink" href="#dependency-injection-in-pytest-fixtures" title="Permanent link">&para;</a></h1>
+<p>Almost every test needs something to work with before it can check anything: an object, a connection, a file or some sample data. The code a test depends on in this way is called a <strong>dependency</strong>. There are two ways a test can get its dependencies. It can build them itself, or it can receive them ready-made from outside. The second way is called <strong>dependency injection</strong>, and it is the idea at the heart of pytest fixtures.</p>
+<p>This page answers a research question on dependency injection. It explains:</p>
+<ol>
+<li>What dependency injection means in general programming, with a small plain-Python example.</li>
+<li>Why it is so useful in testing.</li>
+<li>How pytest uses <code>@pytest.fixture</code> to inject objects into test functions.</li>
+<li>Why the fixture name and the test parameter name must match, and what happens when they do not.</li>
+<li>How the mechanism makes tests simpler to write.</li>
+</ol>
+<p>It then walks through a practical example (<code>database.py</code> and <code>test_database.py</code>) step by step, with the actual output, flowcharts and tables.</p>
+<p>This topic ties together much of what you have seen in this chapter. Fixtures, setup and teardown, and fixture scopes all rest on the same idea: a test declares what it needs, and pytest supplies it. Dependency injection is also widely used outside testing, in web frameworks and large Python applications, so the idea will be useful well beyond this chapter.</p>
 <h2 id="table-of-contents">Table of Contents<a class="headerlink" href="#table-of-contents" title="Permanent link">&para;</a></h2>
 <ul>
-<li><a href="./#research-question">Research Question</a></li>
-<li><a href="./#practical-example">Practical Example</a></li>
-<li><a href="./#further-discussion">Further discussion</a></li>
+<li><a href="./#dependency-injection-in-pytest-fixtures">Dependency Injection in Pytest Fixtures</a><ul>
+<li><a href="./#research-question">Research Question</a><ul>
+<li><a href="./#key-terms-used-on-this-page">Key Terms Used on This Page</a></li>
+</ul>
+</li>
+<li><a href="./#practical-example">Practical Example</a><ul>
+<li><a href="./#databasepy">database.py</a></li>
+<li><a href="./#test_databasepy">test_database.py</a></li>
+<li><a href="./#running-the-example">Running the Example</a></li>
+</ul>
+</li>
+<li><a href="./#further-discussion">Further discussion</a><ul>
+<li><a href="./#1-what-is-dependency-injection">1. What is Dependency Injection?</a></li>
+<li><a href="./#2-why-is-it-useful-in-testing">2. Why Is It Useful in Testing?</a></li>
+<li><a href="./#3-how-pytest-uses-dependency-injection">3. How pytest uses dependency injection</a></li>
+<li><a href="./#4-why-must-the-names-match">4. Why Must the Names Match?</a></li>
+<li><a href="./#5-how-does-this-help-simplify-test-writing">5. How Does This Help Simplify Test Writing?</a></li>
 <li><a href="./#flow-for-each-test-test_injection--test_connect--test_state">Flow for EACH test (test_injection / test_connect / test_state)</a></li>
 <li><a href="./#same-flow-applies-to-all-3-tests">SAME FLOW applies to all 3 tests</a></li>
+<li><a href="./#for-test_connectdb">For test_connect(db)</a></li>
+<li><a href="./#for-test_statedb">For test_state(db)</a></li>
+</ul>
+</li>
+<li><a href="./#scripts-for-this-page-and-how-to-run-them">Scripts for This Page and How to Run Them</a></li>
+<li><a href="./#follow-up-questions">Follow-Up Questions</a><ul>
+<li><a href="./#question-1-how-many-objects">Question 1: How Many Objects?</a></li>
+<li><a href="./#question-2-sharing-one-object">Question 2: Sharing One Object</a></li>
+<li><a href="./#question-3-error-or-failed">Question 3: ERROR or FAILED?</a></li>
+<li><a href="./#question-4-seeing-the-available-fixtures">Question 4: Seeing the Available Fixtures</a></li>
+</ul>
+</li>
+<li><a href="./#summary">Summary</a></li>
+<li><a href="./#further-reading">Further Reading</a></li>
+</ul>
+</li>
 </ul>
 <h2 id="research-question">Research Question<a class="headerlink" href="#research-question" title="Permanent link">&para;</a></h2>
 <p>What is <strong>dependency injection</strong>, and how does pytest use fixtures to automatically provide objects to test functions?</p>
@@ -8220,30 +8427,109 @@
 <li>How does this mechanism help simplify test writing?</li>
 </ol>
 <p>Then, analyze the following code and explain how dependency injection is happening step by step.</p>
-<hr />
+<p><a href="./#table-of-contents">Back to the Table of Contents</a></p>
+<h3 id="key-terms-used-on-this-page">Key Terms Used on This Page<a class="headerlink" href="#key-terms-used-on-this-page" title="Permanent link">&para;</a></h3>
+<table>
+<thead>
+<tr>
+<th>Term</th>
+<th>Simple Meaning</th>
+<th>Learn More</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Dependency</td>
+<td>Something a piece of code needs in order to work, such as an object, a connection or some data</td>
+<td></td>
+</tr>
+<tr>
+<td>Dependency injection</td>
+<td>Giving a function the things it needs from outside, instead of letting the function create them itself</td>
+<td><a href="https://en.wikipedia.org/wiki/Dependency_injection">Dependency injection on Wikipedia</a></td>
+</tr>
+<tr>
+<td>Tight coupling</td>
+<td>When one piece of code is so closely tied to another that you cannot change or replace one without changing the other</td>
+<td><a href="https://en.wikipedia.org/wiki/Coupling_(computer_programming)">Coupling on Wikipedia</a></td>
+</tr>
+<tr>
+<td>Design pattern</td>
+<td>A well-known, reusable way of solving a common programming problem</td>
+<td><a href="https://en.wikipedia.org/wiki/Software_design_pattern">Software design pattern on Wikipedia</a></td>
+</tr>
+<tr>
+<td>Fixture</td>
+<td>A function marked with <code>@pytest.fixture</code> that prepares something a test needs</td>
+<td><a href="https://docs.pytest.org/en/stable/how-to/fixtures.html">pytest: How to use fixtures</a></td>
+</tr>
+<tr>
+<td>Decorator</td>
+<td>A line starting with <code>@</code> placed above a function to give it extra behaviour. <code>@pytest.fixture</code> is a decorator</td>
+<td><a href="https://docs.python.org/3/glossary.html#term-decorator">Python glossary: decorator</a></td>
+</tr>
+<tr>
+<td>Parameter</td>
+<td>A name listed inside the brackets of a function definition, such as <code>db</code> in <code>def test_one(db):</code></td>
+<td><a href="https://docs.python.org/3/glossary.html#term-parameter">Python glossary: parameter</a></td>
+</tr>
+<tr>
+<td>Fake (test double)</td>
+<td>A simple stand-in object used in tests in place of a real, slow or costly one</td>
+<td><a href="https://en.wikipedia.org/wiki/Test_double">Test double on Wikipedia</a></td>
+</tr>
+<tr>
+<td>State</td>
+<td>The data stored inside an object at a given moment</td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<p><a href="./#table-of-contents">Back to the Table of Contents</a></p>
 <h2 id="practical-example">Practical Example<a class="headerlink" href="#practical-example" title="Permanent link">&para;</a></h2>
-<h4 id="databasepy">database.py<a class="headerlink" href="#databasepy" title="Permanent link">&para;</a></h4>
-<p>The file which is to be tested</p>
-<p><div class="highlight"><pre><span></span><code><span class="c1"># database.py</span>
+<p>The example has two files. Save both in the same folder.</p>
+<p><a href="./#table-of-contents">Back to the Table of Contents</a></p>
+<h3 id="databasepy">database.py<a class="headerlink" href="#databasepy" title="Permanent link">&para;</a></h3>
+<p>The file which is to be tested.</p>
+<div class="highlight"><pre><span></span><code><span class="c1"># database.py</span>
 <span class="c1"># This is a simple database module that simulates connecting to a database.</span>
+<span class="c1"># No real database is used. The print() messages let us see</span>
+<span class="c1"># exactly when each part of the code runs.</span>
+
+
 <span class="k">class</span><span class="w"> </span><span class="nc">Database</span><span class="p">:</span>
+
+    <span class="c1"># Step 1 - Runs every time a new Database object is created</span>
     <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="nb">print</span><span class="p">(</span><span class="s2">"[DB] Database object created"</span><span class="p">)</span>
 
-    <span class="k">def</span><span class="w"> </span><span class="nf">connect</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>  <span class="c1"># simulates an expensive connection setup</span>
+    <span class="c1"># Step 2 - Pretends to connect to a database.</span>
+    <span class="c1"># In a real program this would be the slow, expensive part</span>
+    <span class="c1"># (opening a network connection, logging in, and so on).</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">connect</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="nb">print</span><span class="p">(</span><span class="s2">"[DB] connect called"</span><span class="p">)</span>
         <span class="k">return</span> <span class="s2">"connected"</span>
 </code></pre></div>
-<a href="./#table-of-contents">Back to Table of Contents</a></p>
-<h4 id="test_databasepy">test_database.py<a class="headerlink" href="#test_databasepy" title="Permanent link">&para;</a></h4>
-<p>The file used for testing database.py</p>
+<p>The class has only two parts, and each one prints a message so that we can see when it runs:</p>
+<ol>
+<li><code>__init__()</code> runs whenever a new <code>Database</code> object is created and prints <code>[DB] Database object created</code>.</li>
+<li><code>connect()</code> pretends to connect and returns the text <code>"connected"</code>.</li>
+</ol>
+<p><a href="./#table-of-contents">Back to the Table of Contents</a></p>
+<h3 id="test_databasepy">test_database.py<a class="headerlink" href="#test_databasepy" title="Permanent link">&para;</a></h3>
+<p>The file used for testing <code>database.py</code>.</p>
 <div class="highlight"><pre><span></span><code><span class="c1"># test_database.py</span>
+<span class="c1"># The file used for testing database.py.</span>
+<span class="c1"># Run it with:  pytest -v -s test_database.py</span>
+
+<span class="c1"># Step 1 - Import pytest and the class to be tested</span>
 <span class="kn">import</span><span class="w"> </span><span class="nn">pytest</span>
 <span class="c1"># The file to be tested is database.py, which contains the Database class.</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">database</span><span class="w"> </span><span class="kn">import</span> <span class="n">Database</span>
 
-<span class="c1"># Fixture (Dependency Provider)</span>
-<span class="c1"># -----------------------------</span>
+
+<span class="c1"># Step 2 - The fixture (the dependency provider)</span>
+<span class="c1"># -----------------------------------------------</span>
 <span class="c1"># The fixture named 'db' creates a new Database object for each test that requests it.</span>
 
 <span class="nd">@pytest</span><span class="o">.</span><span class="n">fixture</span>
@@ -8251,13 +8537,17 @@
     <span class="nb">print</span><span class="p">(</span><span class="s2">"</span><span class="se">\n</span><span class="s2">[FIXTURE] creating database object"</span><span class="p">)</span>
     <span class="k">return</span> <span class="n">Database</span><span class="p">()</span>
 
+
+<span class="c1"># Step 3 - The tests (the dependency users)</span>
+<span class="c1"># -----------------------------------------------</span>
+
 <span class="c1"># -----------------------------</span>
 <span class="c1"># TEST 1: Injection Check</span>
 <span class="c1"># -----------------------------</span>
 
-<span class="c1"># The fixture function  is named 'db', </span>
-<span class="c1"># in test_injection() we are requesting it by including 'db' as a parameter.</span>
-<span class="c1"># Now pytest will create a new Database object by calling the db() fixture function </span>
+<span class="c1"># The fixture function is named 'db',</span>
+<span class="c1"># and in test_injection() we are requesting it by including 'db' as a parameter.</span>
+<span class="c1"># Pytest will create a new Database object by calling the db() fixture function</span>
 <span class="c1"># and pass it to the test.</span>
 <span class="c1"># The passing is done by injecting the fixture's return value into the test function's parameter.</span>
 <span class="c1"># So inside test_injection() the variable name 'db' refers to the Database object created by the fixture.</span>
@@ -8266,22 +8556,27 @@
 <span class="c1"># 2. It is the name of the parameter in the test function that receives the injected Database object.</span>
 <span class="k">def</span><span class="w"> </span><span class="nf">test_injection</span><span class="p">(</span><span class="n">db</span><span class="p">):</span>
     <span class="nb">print</span><span class="p">(</span><span class="s2">"[TEST 1] test_injection started"</span><span class="p">)</span>
-    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"[TEST 1] injected type = </span><span class="si">{</span><span class="nb">type</span><span class="p">(</span><span class="n">db</span><span class="p">)</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>  <span class="c1"># This should show &lt;class 'database.Database'&gt; if injection worked correctly.</span>
+    <span class="c1"># This should show &lt;class 'database.Database'&gt; if injection worked correctly.</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"[TEST 1] injected type = </span><span class="si">{</span><span class="nb">type</span><span class="p">(</span><span class="n">db</span><span class="p">)</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
 
-    <span class="k">assert</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">db</span><span class="p">,</span> <span class="n">Database</span><span class="p">)</span>  <span class="c1"># Check if the injected object is an instance of Database</span>
+    <span class="c1"># Check that the injected object is an instance of Database</span>
+    <span class="k">assert</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">db</span><span class="p">,</span> <span class="n">Database</span><span class="p">)</span>
 
     <span class="nb">print</span><span class="p">(</span><span class="s2">"[TEST 1] injection successful"</span><span class="p">)</span>
+
 
 <span class="c1"># -----------------------------</span>
 <span class="c1"># TEST 2: Method Call Check</span>
 <span class="c1"># -----------------------------</span>
 <span class="k">def</span><span class="w"> </span><span class="nf">test_connect</span><span class="p">(</span><span class="n">db</span><span class="p">):</span>
-    <span class="nb">print</span><span class="p">(</span><span class="s2">"</span><span class="se">\n</span><span class="s2">[TEST 2] test_connect started"</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">"[TEST 2] test_connect started"</span><span class="p">)</span>
 
-    <span class="n">result</span> <span class="o">=</span> <span class="n">db</span><span class="o">.</span><span class="n">connect</span><span class="p">()</span>  <span class="c1"># Call the connect method of the injected Database object</span>
+    <span class="c1"># Call the connect method of the injected Database object</span>
+    <span class="n">result</span> <span class="o">=</span> <span class="n">db</span><span class="o">.</span><span class="n">connect</span><span class="p">()</span>
     <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"[TEST 2] result = </span><span class="si">{</span><span class="n">result</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
 
-    <span class="k">assert</span> <span class="n">result</span> <span class="o">==</span> <span class="s2">"connected"</span>  <span class="c1"># Check if the connect method returns the expected value</span>
+    <span class="c1"># Check that the connect method returns the expected value</span>
+    <span class="k">assert</span> <span class="n">result</span> <span class="o">==</span> <span class="s2">"connected"</span>
 
     <span class="nb">print</span><span class="p">(</span><span class="s2">"[TEST 2] connect successful"</span><span class="p">)</span>
 
@@ -8290,116 +8585,651 @@
 <span class="c1"># TEST 3: State Check</span>
 <span class="c1"># -----------------------------</span>
 <span class="k">def</span><span class="w"> </span><span class="nf">test_state</span><span class="p">(</span><span class="n">db</span><span class="p">):</span>
-    <span class="nb">print</span><span class="p">(</span><span class="s2">"</span><span class="se">\n</span><span class="s2">[TEST 3] test_state started"</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">"[TEST 3] test_state started"</span><span class="p">)</span>
 
-    <span class="n">db</span><span class="o">.</span><span class="n">new_flag</span> <span class="o">=</span> <span class="s2">"set in test_state"</span>  <span class="c1"># Modify the state of the injected Database object</span>
+    <span class="c1"># Modify the state of the injected Database object by adding a new attribute</span>
+    <span class="n">db</span><span class="o">.</span><span class="n">new_flag</span> <span class="o">=</span> <span class="s2">"set in test_state"</span>
     <span class="nb">print</span><span class="p">(</span><span class="s2">"[TEST 3] modified object state"</span><span class="p">)</span>
 
-    <span class="k">assert</span> <span class="n">db</span><span class="o">.</span><span class="n">new_flag</span> <span class="o">==</span> <span class="s2">"set in test_state"</span>  <span class="c1"># Check if the state modification is successful</span>
+    <span class="c1"># Check that the state modification is successful</span>
+    <span class="k">assert</span> <span class="n">db</span><span class="o">.</span><span class="n">new_flag</span> <span class="o">==</span> <span class="s2">"set in test_state"</span>
 
     <span class="nb">print</span><span class="p">(</span><span class="s2">"[TEST 3] state modification successful"</span><span class="p">)</span>
+
+
+<span class="c1"># -----------------------------</span>
+<span class="c1"># TEST 4: Fresh Object Check</span>
+<span class="c1"># -----------------------------</span>
+<span class="c1"># test_state() added 'new_flag' to its Database object.</span>
+<span class="c1"># This test runs after it. If it received the same object,</span>
+<span class="c1"># 'new_flag' would still be there. It is not, because the fixture</span>
+<span class="c1"># has the default function scope and creates a new object for every test.</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">test_fresh_object</span><span class="p">(</span><span class="n">db</span><span class="p">):</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">"[TEST 4] test_fresh_object started"</span><span class="p">)</span>
+
+    <span class="n">has_flag</span> <span class="o">=</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">db</span><span class="p">,</span> <span class="s2">"new_flag"</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"[TEST 4] does this object have new_flag? </span><span class="si">{</span><span class="n">has_flag</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
+
+    <span class="k">assert</span> <span class="n">has_flag</span> <span class="ow">is</span> <span class="kc">False</span>
+
+    <span class="nb">print</span><span class="p">(</span><span class="s2">"[TEST 4] each test received its own fresh object"</span><span class="p">)</span>
 </code></pre></div>
-<p><a href="./#table-of-contents">Back to Table of Contents</a></p>
+<p>The file has two kinds of code:</p>
+<table>
+<thead>
+<tr>
+<th>Part</th>
+<th>Role in Dependency Injection</th>
+<th>What It Does</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>db()</code> with <code>@pytest.fixture</code></td>
+<td>The <strong>provider</strong></td>
+<td>Creates a <code>Database</code> object and returns it</td>
+</tr>
+<tr>
+<td><code>test_injection(db)</code>, <code>test_connect(db)</code>, <code>test_state(db)</code>, <code>test_fresh_object(db)</code></td>
+<td>The <strong>users</strong> (consumers)</td>
+<td>Ask for <code>db</code> by naming it as a parameter, then use it</td>
+</tr>
+</tbody>
+</table>
+<p>None of the four tests contains the line <code>Database()</code>. They never create the object themselves. They only say that they need <code>db</code>.</p>
+<p><a href="./#table-of-contents">Back to the Table of Contents</a></p>
+<h3 id="running-the-example">Running the Example<a class="headerlink" href="#running-the-example" title="Permanent link">&para;</a></h3>
+<p>Run the tests with <code>-v</code> (show each test name) and <code>-s</code> (show the <code>print()</code> output):</p>
+<div class="highlight"><pre><span></span><code>pytest<span class="w"> </span>-v<span class="w"> </span>-s<span class="w"> </span>test_database.py
+</code></pre></div>
+<p>Output:</p>
+<div class="highlight"><pre><span></span><code>============================= test session starts ==============================
+platform win32 -- Python 3.10.10, pytest-9.0.3, pluggy-1.6.0 -- C:\Users\Anurag Gupta\AppData\Local\Programs\Python\Python310\python.exe
+cachedir: .pytest_cache
+rootdir: C:\di-demo
+collected 4 items
+
+test_database.py::test_injection
+[FIXTURE] creating database object
+[DB] Database object created
+[TEST 1] test_injection started
+[TEST 1] injected type = &lt;class 'database.Database'&gt;
+[TEST 1] injection successful
+PASSED
+test_database.py::test_connect
+[FIXTURE] creating database object
+[DB] Database object created
+[TEST 2] test_connect started
+[DB] connect called
+[TEST 2] result = connected
+[TEST 2] connect successful
+PASSED
+test_database.py::test_state
+[FIXTURE] creating database object
+[DB] Database object created
+[TEST 3] test_state started
+[TEST 3] modified object state
+[TEST 3] state modification successful
+PASSED
+test_database.py::test_fresh_object
+[FIXTURE] creating database object
+[DB] Database object created
+[TEST 4] test_fresh_object started
+[TEST 4] does this object have new_flag? False
+[TEST 4] each test received its own fresh object
+PASSED
+
+============================== 4 passed in 0.00s ===============================
+</code></pre></div>
+<p>Read the output in steps:</p>
+<ol>
+<li>For <strong>each</strong> test, the lines <code>[FIXTURE] creating database object</code> and <code>[DB] Database object created</code> appear <strong>before</strong> the test's own messages. This shows that pytest runs the fixture first and only then starts the test.</li>
+<li><code>[TEST 1] injected type = &lt;class 'database.Database'&gt;</code> shows that the parameter <code>db</code> inside the test really holds a <code>Database</code> object, supplied by the fixture.</li>
+<li>In test 2, <code>[DB] connect called</code> shows that the test used the injected object's method.</li>
+<li>In test 3, the test adds a new attribute <code>new_flag</code> to its object.</li>
+<li>In test 4, <code>does this object have new_flag? False</code> shows that test 4 received a <strong>different, fresh</strong> object. The change made in test 3 did not carry over, because the fixture runs again for every test.</li>
+</ol>
+<p>The scripts for this page are listed in <a href="./#scripts-for-this-page-and-how-to-run-them">Scripts for This Page and How to Run Them</a>.</p>
+<p><a href="./#table-of-contents">Back to the Table of Contents</a></p>
 <h2 id="further-discussion">Further discussion<a class="headerlink" href="#further-discussion" title="Permanent link">&para;</a></h2>
+<p>The following sections answer the five parts of the research question in order.</p>
+<p><a href="./#table-of-contents">Back to the Table of Contents</a></p>
 <h3 id="1-what-is-dependency-injection">1. What is Dependency Injection?<a class="headerlink" href="#1-what-is-dependency-injection" title="Permanent link">&para;</a></h3>
-<p>Dependency Injection is a design pattern where an object (dependency) is created outside a function and provided to it automatically or externally instead of being created inside the function.</p>
-<p>This helps:</p>
+<p>Dependency injection is a <strong>design pattern</strong> in which an object that a function needs (its <strong>dependency</strong>) is created outside the function and provided to it, instead of being created inside the function.</p>
+<p>Think of a chef in a restaurant kitchen. A chef who had to grow the vegetables, catch the fish and make the plates before every meal would be very slow, and would be stuck with whatever the garden produced. Instead, the ingredients are delivered to the kitchen, and the chef only cooks. If the supplier changes, the chef's recipes do not need to change. The ingredients are "injected" into the chef's work.</p>
+<p>Here is the same idea in plain Python, without pytest. Save it as <code>di_without_pytest.py</code>:</p>
+<div class="highlight"><pre><span></span><code><span class="c1"># di_without_pytest.py</span>
+<span class="c1"># Dependency injection in plain Python, without pytest.</span>
+<span class="c1"># Run it with:  python di_without_pytest.py</span>
+
+
+<span class="c1"># Step 1 - Two classes that can play the role of "a database"</span>
+<span class="k">class</span><span class="w"> </span><span class="nc">RealDatabase</span><span class="p">:</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">get_user_count</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">"   [RealDatabase] Pretending to query a slow, real database..."</span><span class="p">)</span>
+        <span class="k">return</span> <span class="mi">1520</span>
+
+
+<span class="k">class</span><span class="w"> </span><span class="nc">FakeDatabase</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">"""A simple stand-in used for testing. It always returns a fixed value."""</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">get_user_count</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">"   [FakeDatabase] Returning a fixed test value instantly"</span><span class="p">)</span>
+        <span class="k">return</span> <span class="mi">3</span>
+
+
+<span class="c1"># Step 2 - WITHOUT dependency injection:</span>
+<span class="c1"># the function creates its own database inside itself,</span>
+<span class="c1"># so it is tied (coupled) to RealDatabase and cannot use anything else.</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">report_without_di</span><span class="p">():</span>
+    <span class="n">database</span> <span class="o">=</span> <span class="n">RealDatabase</span><span class="p">()</span>
+    <span class="k">return</span> <span class="sa">f</span><span class="s2">"Total users: </span><span class="si">{</span><span class="n">database</span><span class="o">.</span><span class="n">get_user_count</span><span class="p">()</span><span class="si">}</span><span class="s2">"</span>
+
+
+<span class="c1"># Step 3 - WITH dependency injection:</span>
+<span class="c1"># the function receives the database as a parameter.</span>
+<span class="c1"># It does not know or care which kind of database it gets.</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">report_with_di</span><span class="p">(</span><span class="n">database</span><span class="p">):</span>
+    <span class="k">return</span> <span class="sa">f</span><span class="s2">"Total users: </span><span class="si">{</span><span class="n">database</span><span class="o">.</span><span class="n">get_user_count</span><span class="p">()</span><span class="si">}</span><span class="s2">"</span>
+
+
+<span class="c1"># Step 4 - Use the functions</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">"1. Without dependency injection:"</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">"  "</span><span class="p">,</span> <span class="n">report_without_di</span><span class="p">())</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s2">"2. With dependency injection, given a real database:"</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">"  "</span><span class="p">,</span> <span class="n">report_with_di</span><span class="p">(</span><span class="n">RealDatabase</span><span class="p">()))</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s2">"3. With dependency injection, given a fake database (for a test):"</span><span class="p">)</span>
+<span class="n">result</span> <span class="o">=</span> <span class="n">report_with_di</span><span class="p">(</span><span class="n">FakeDatabase</span><span class="p">())</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">"  "</span><span class="p">,</span> <span class="n">result</span><span class="p">)</span>
+
+<span class="c1"># Step 5 - A simple check, like a test would do</span>
+<span class="k">assert</span> <span class="n">result</span> <span class="o">==</span> <span class="s2">"Total users: 3"</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">"4. Check passed: the report works correctly with the fake database"</span><span class="p">)</span>
+</code></pre></div>
+<p>Run it with Python (not pytest, because it is not a test file):</p>
+<div class="highlight"><pre><span></span><code>python<span class="w"> </span>di_without_pytest.py
+</code></pre></div>
+<p>Output:</p>
+<div class="highlight"><pre><span></span><code>1. Without dependency injection:
+   [RealDatabase] Pretending to query a slow, real database...
+   Total users: 1520
+2. With dependency injection, given a real database:
+   [RealDatabase] Pretending to query a slow, real database...
+   Total users: 1520
+3. With dependency injection, given a fake database (for a test):
+   [FakeDatabase] Returning a fixed test value instantly
+   Total users: 3
+4. Check passed: the report works correctly with the fake database
+</code></pre></div>
+<p>What this shows:</p>
+<ol>
+<li><code>report_without_di()</code> creates its own <code>RealDatabase()</code> inside itself. It is <strong>tightly coupled</strong> to that class. There is no way to make it use anything else.</li>
+<li><code>report_with_di(database)</code> receives its database as a parameter. The same function works with the real database and with the fake one.</li>
+<li>Because we could pass in <code>FakeDatabase</code>, we could check the function quickly with a known value (3), without touching a slow real database.</li>
+</ol>
+<p>This approach helps to:</p>
 <ul>
 <li>reduce repeated setup code</li>
 <li>improve test readability</li>
-<li>separate creation logic from usage logic</li>
+<li>separate the code that creates an object from the code that uses it</li>
+<li>make it easy to swap a real object for a simple stand-in during testing</li>
 </ul>
-<hr />
-<h3 id="2-how-pytest-uses-dependency-injection">2. How pytest uses dependency injection<a class="headerlink" href="#2-how-pytest-uses-dependency-injection" title="Permanent link">&para;</a></h3>
+<p><a href="./#table-of-contents">Back to the Table of Contents</a></p>
+<h3 id="2-why-is-it-useful-in-testing">2. Why Is It Useful in Testing?<a class="headerlink" href="#2-why-is-it-useful-in-testing" title="Permanent link">&para;</a></h3>
+<p>Dependency injection is especially helpful in testing, for these reasons:</p>
+<table>
+<thead>
+<tr>
+<th>Benefit</th>
+<th>Explanation</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Less repeated code</td>
+<td>The setup is written once, in the fixture, instead of being copied into every test</td>
+</tr>
+<tr>
+<td>Fresh objects for every test</td>
+<td>Each test can receive a brand-new object, so one test cannot spoil the data of another (as test 4 above shows)</td>
+</tr>
+<tr>
+<td>Easy to swap in fakes</td>
+<td>A test can receive a fake or simple object instead of a real database or network service, so it runs fast and gives predictable results</td>
+</tr>
+<tr>
+<td>Clear, readable tests</td>
+<td>The parameter list shows at a glance what each test depends on. The body of the test contains only the checks</td>
+</tr>
+<tr>
+<td>One place to change</td>
+<td>If the way a <code>Database</code> is created changes, only the fixture needs updating, not every test</td>
+</tr>
+<tr>
+<td>Automatic cleanup</td>
+<td>With <code>yield</code>, the fixture can also clean up after the test, so tests do not have to remember to do it</td>
+</tr>
+</tbody>
+</table>
+<p><a href="./#table-of-contents">Back to the Table of Contents</a></p>
+<h3 id="3-how-pytest-uses-dependency-injection">3. How pytest uses dependency injection<a class="headerlink" href="#3-how-pytest-uses-dependency-injection" title="Permanent link">&para;</a></h3>
 <p>In pytest, dependency injection happens through <strong>fixtures</strong>.</p>
 <p>When a test function declares a parameter:</p>
-<div class="highlight"><pre><span></span><code>def test_one(db):
+<div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">test_one</span><span class="p">(</span><span class="n">db</span><span class="p">):</span>
 </code></pre></div>
 <p>pytest performs the following steps:</p>
 <ol>
-<li>It sees the parameter name <code>db</code></li>
-<li>It looks for a fixture with the same name <code>db</code></li>
-<li>It executes the fixture function</li>
-<li>It receives the returned object</li>
-<li>It injects that object into the test function parameter</li>
+<li>It reads the test function's parameter list and sees the name <code>db</code>.</li>
+<li>It looks for a fixture with the same name, <code>db</code>.</li>
+<li>Before the body of the test runs, it calls the fixture function <code>db()</code>.</li>
+<li>It takes the object that the fixture returns.</li>
+<li>It calls the test function and passes that object in as the <code>db</code> argument.</li>
+<li>The test's code runs, using <code>db</code> like any normal variable.</li>
 </ol>
-<p><a href="./#table-of-contents">Back to Table of Contents</a></p>
+<p>A fixture can itself ask for other fixtures in exactly the same way. Pytest then works out the right order and builds the whole chain. Save this as <code>test_fixture_chain.py</code>:</p>
+<div class="highlight"><pre><span></span><code><span class="c1"># test_fixture_chain.py</span>
+<span class="c1"># A fixture can ask for another fixture, in exactly the same way</span>
+<span class="c1"># a test does. Pytest builds the whole chain automatically.</span>
+<span class="c1"># Run it with:  pytest -v -s test_fixture_chain.py</span>
+
+<span class="c1"># Step 1 - Import pytest and the class to be tested</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">pytest</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">database</span><span class="w"> </span><span class="kn">import</span> <span class="n">Database</span>
+
+
+<span class="c1"># Step 2 - First fixture: creates the Database object</span>
+<span class="nd">@pytest</span><span class="o">.</span><span class="n">fixture</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">db</span><span class="p">():</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">"</span><span class="se">\n</span><span class="s2">[FIXTURE db] creating database object"</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">Database</span><span class="p">()</span>
+
+
+<span class="c1"># Step 3 - Second fixture: asks for 'db', connects it, and returns both</span>
+<span class="nd">@pytest</span><span class="o">.</span><span class="n">fixture</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">connected_db</span><span class="p">(</span><span class="n">db</span><span class="p">):</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">"[FIXTURE connected_db] received db, now connecting"</span><span class="p">)</span>
+    <span class="n">status</span> <span class="o">=</span> <span class="n">db</span><span class="o">.</span><span class="n">connect</span><span class="p">()</span>
+    <span class="k">return</span> <span class="n">db</span><span class="p">,</span> <span class="n">status</span>
+
+
+<span class="c1"># Step 4 - The test asks only for 'connected_db'.</span>
+<span class="c1">#          Pytest sees that connected_db needs db, so it runs db first.</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">test_ready_to_use</span><span class="p">(</span><span class="n">connected_db</span><span class="p">):</span>
+    <span class="n">database</span><span class="p">,</span> <span class="n">status</span> <span class="o">=</span> <span class="n">connected_db</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"[TEST] status = </span><span class="si">{</span><span class="n">status</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
+    <span class="k">assert</span> <span class="n">status</span> <span class="o">==</span> <span class="s2">"connected"</span>
+    <span class="k">assert</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">database</span><span class="p">,</span> <span class="n">Database</span><span class="p">)</span>
+</code></pre></div>
+<p>Run:</p>
+<div class="highlight"><pre><span></span><code>pytest<span class="w"> </span>-v<span class="w"> </span>-s<span class="w"> </span>test_fixture_chain.py
+</code></pre></div>
+<p>Output:</p>
+<div class="highlight"><pre><span></span><code>============================= test session starts ==============================
+platform win32 -- Python 3.10.10, pytest-9.0.3, pluggy-1.6.0 -- C:\Users\Anurag Gupta\AppData\Local\Programs\Python\Python310\python.exe
+cachedir: .pytest_cache
+rootdir: C:\di-demo
+collected 1 item
+
+test_fixture_chain.py::test_ready_to_use
+[FIXTURE db] creating database object
+[DB] Database object created
+[FIXTURE connected_db] received db, now connecting
+[DB] connect called
+[TEST] status = connected
+PASSED
+
+============================== 1 passed in 0.00s ===============================
+</code></pre></div>
+<p>The test asked only for <code>connected_db</code>. Pytest saw that <code>connected_db</code> needs <code>db</code>, so it ran <code>db</code> first, then <code>connected_db</code>, and then the test. The pytest documentation calls this <a href="https://docs.pytest.org/en/stable/how-to/fixtures.html#fixtures-can-request-other-fixtures">fixtures requesting other fixtures</a>.</p>
+<p><a href="./#table-of-contents">Back to the Table of Contents</a></p>
+<h3 id="4-why-must-the-names-match">4. Why Must the Names Match?<a class="headerlink" href="#4-why-must-the-names-match" title="Permanent link">&para;</a></h3>
+<p>Pytest has no other way of knowing which fixture a test wants. There is no import and no function call in the test that points to the fixture. The <strong>only</strong> link between the two is the name. Pytest reads the parameter name and looks up a fixture registered under that same name.</p>
+<p>If the names do not match, pytest cannot find the fixture. Save this as <code>test_name_mismatch.py</code>:</p>
+<div class="highlight"><pre><span></span><code><span class="c1"># test_name_mismatch.py</span>
+<span class="c1"># What happens when the parameter name does NOT match any fixture name?</span>
+<span class="c1"># Run it with:  pytest -v test_name_mismatch.py</span>
+<span class="c1"># This test ERRORS on purpose.</span>
+
+<span class="c1"># Step 1 - Import pytest and the class to be tested</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">pytest</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">database</span><span class="w"> </span><span class="kn">import</span> <span class="n">Database</span>
+
+
+<span class="c1"># Step 2 - The fixture is called 'db'</span>
+<span class="nd">@pytest</span><span class="o">.</span><span class="n">fixture</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">db</span><span class="p">():</span>
+    <span class="k">return</span> <span class="n">Database</span><span class="p">()</span>
+
+
+<span class="c1"># Step 3 - The test asks for 'database', which is not the name of any fixture</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">test_wrong_name</span><span class="p">(</span><span class="n">database</span><span class="p">):</span>
+    <span class="k">assert</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">database</span><span class="p">,</span> <span class="n">Database</span><span class="p">)</span>
+</code></pre></div>
+<p>Run:</p>
+<div class="highlight"><pre><span></span><code>pytest<span class="w"> </span>-v<span class="w"> </span>test_name_mismatch.py
+</code></pre></div>
+<p>Output:</p>
+<div class="highlight"><pre><span></span><code>============================= test session starts ==============================
+platform win32 -- Python 3.10.10, pytest-9.0.3, pluggy-1.6.0 -- C:\Users\Anurag Gupta\AppData\Local\Programs\Python\Python310\python.exe
+cachedir: .pytest_cache
+rootdir: C:\di-demo
+collected 1 item
+
+test_name_mismatch.py::test_wrong_name ERROR                             [100%]
+
+==================================== ERRORS ====================================
+______________________ ERROR at setup of test_wrong_name _______________________
+file C:\di-demo\test_name_mismatch.py, line 18
+  def test_wrong_name(database):
+E       fixture 'database' not found
+&gt;       available fixtures: capfd, capfdbinary, caplog, capsys, capsysbinary, capteesys, db, doctest_namespace, monkeypatch, pytestconfig, record_property, record_testsuite_property, record_xml_attribute, recwarn, subtests, tmp_path, tmp_path_factory, tmpdir, tmpdir_factory
+&gt;       use 'pytest --fixtures [testpath]' for help on them.
+
+C:\di-demo\test_name_mismatch.py:18
+=========================== short test summary info ============================
+ERROR test_name_mismatch.py::test_wrong_name
+=============================== 1 error in 0.01s ===============================
+</code></pre></div>
+<p>Notice three things:</p>
+<ol>
+<li>The result is <code>ERROR</code>, not <code>FAILED</code>. The test never started, because its setup could not be completed.</li>
+<li>The message <code>fixture 'database' not found</code> names the missing fixture exactly.</li>
+<li>Pytest lists the fixtures that <strong>are</strong> available, and <code>db</code> is among them. This is a strong hint that the parameter name was misspelled or chosen wrongly. The other names in the list are fixtures built into pytest, and the list may be longer on your computer if you have pytest plugins installed.</li>
+</ol>
+<p><strong>A useful detail:</strong> strictly speaking, it is the fixture's <strong>name</strong> that must match the parameter, not the Python function's name. By default they are the same. But you can give a fixture a different name with the <code>name</code> argument. Save this as <code>test_fixture_name.py</code>:</p>
+<div class="highlight"><pre><span></span><code><span class="c1"># test_fixture_name.py</span>
+<span class="c1"># The fixture's NAME must match the parameter, but the Python function</span>
+<span class="c1"># can have a different name if we use the 'name' argument.</span>
+<span class="c1"># Run it with:  pytest -v -s test_fixture_name.py</span>
+
+<span class="c1"># Step 1 - Import pytest and the class to be tested</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">pytest</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">database</span><span class="w"> </span><span class="kn">import</span> <span class="n">Database</span>
+
+
+<span class="c1"># Step 2 - The function is called make_database, but the fixture's</span>
+<span class="c1">#          name is 'db', because of name="db"</span>
+<span class="nd">@pytest</span><span class="o">.</span><span class="n">fixture</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s2">"db"</span><span class="p">)</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">make_database</span><span class="p">():</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">"</span><span class="se">\n</span><span class="s2">[FIXTURE] make_database() running as fixture 'db'"</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">Database</span><span class="p">()</span>
+
+
+<span class="c1"># Step 3 - The test asks for 'db' (the fixture name), not 'make_database'</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">test_uses_fixture_name</span><span class="p">(</span><span class="n">db</span><span class="p">):</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">"[TEST] received:"</span><span class="p">,</span> <span class="nb">type</span><span class="p">(</span><span class="n">db</span><span class="p">)</span><span class="o">.</span><span class="vm">__name__</span><span class="p">)</span>
+    <span class="k">assert</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">db</span><span class="p">,</span> <span class="n">Database</span><span class="p">)</span>
+</code></pre></div>
+<p>Run:</p>
+<div class="highlight"><pre><span></span><code>pytest<span class="w"> </span>-v<span class="w"> </span>-s<span class="w"> </span>test_fixture_name.py
+</code></pre></div>
+<p>Output:</p>
+<div class="highlight"><pre><span></span><code>============================= test session starts ==============================
+platform win32 -- Python 3.10.10, pytest-9.0.3, pluggy-1.6.0 -- C:\Users\Anurag Gupta\AppData\Local\Programs\Python\Python310\python.exe
+cachedir: .pytest_cache
+rootdir: C:\di-demo
+collected 1 item
+
+test_fixture_name.py::test_uses_fixture_name
+[FIXTURE] make_database() running as fixture 'db'
+[DB] Database object created
+[TEST] received: Database
+PASSED
+
+============================== 1 passed in 0.00s ===============================
+</code></pre></div>
+<p>The Python function is called <code>make_database</code>, but the test asks for <code>db</code>, and it works. In everyday code, most people simply give the fixture function the same name that tests will use, as in <code>test_database.py</code>.</p>
+<p><a href="./#table-of-contents">Back to the Table of Contents</a></p>
+<h3 id="5-how-does-this-help-simplify-test-writing">5. How Does This Help Simplify Test Writing?<a class="headerlink" href="#5-how-does-this-help-simplify-test-writing" title="Permanent link">&para;</a></h3>
+<p>Compare a test that creates its own object with one that receives it:</p>
+<table>
+<thead>
+<tr>
+<th>Without a Fixture</th>
+<th>With a Fixture (Dependency Injection)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>def test_connect():</code></td>
+<td><code>def test_connect(db):</code></td>
+</tr>
+<tr>
+<td><code>db = Database()</code></td>
+<td>(not needed)</td>
+</tr>
+<tr>
+<td><code>result = db.connect()</code></td>
+<td><code>result = db.connect()</code></td>
+</tr>
+<tr>
+<td><code>assert result == "connected"</code></td>
+<td><code>assert result == "connected"</code></td>
+</tr>
+</tbody>
+</table>
+<p>With one test, the saving is one line. With 50 tests, it is 50 copies of the same setup line, and if creating a <code>Database</code> later needs extra steps (a password, a server address, a cleanup step), all 50 would have to change. With a fixture, only the fixture changes.</p>
+<p>In short, dependency injection lets each test do just one job: <strong>check</strong> something. Preparing the objects is somebody else's job (the fixture's), and connecting the two is pytest's job.</p>
+<p><a href="./#table-of-contents">Back to the Table of Contents</a></p>
 <h3 id="flow-for-each-test-test_injection-test_connect-test_state">Flow for EACH test (test_injection / test_connect / test_state)<a class="headerlink" href="#flow-for-each-test-test_injection-test_connect-test_state" title="Permanent link">&para;</a></h3>
-<div class="highlight"><pre><span></span><code><span class="n">test_injection</span><span class="p">(</span><span class="n">db</span><span class="p">)</span>
-        <span class="err">↓</span>
-<span class="n">pytest</span> <span class="n">starts</span> <span class="n">executing</span> <span class="n">test_injection</span>
-        <span class="err">↓</span>
-<span class="n">pytest</span> <span class="n">detects</span> <span class="n">parameter</span> <span class="n">name</span><span class="p">:</span> <span class="s2">"db"</span>
-        <span class="err">↓</span>
-<span class="n">pytest</span> <span class="n">searches</span> <span class="k">for</span> <span class="n">a</span> <span class="n">fixture</span> <span class="n">named</span> <span class="s2">"db"</span>
-        <span class="err">↓</span>
-<span class="n">finds</span><span class="p">:</span>
-
-    <span class="nd">@pytest</span><span class="o">.</span><span class="n">fixture</span>
-    <span class="k">def</span><span class="w"> </span><span class="nf">db</span><span class="p">():</span>
-        <span class="k">return</span> <span class="n">Database</span><span class="p">()</span>
-
-        <span class="err">↓</span>
-<span class="n">pytest</span> <span class="n">calls</span> <span class="n">db</span><span class="p">()</span> <span class="n">fixture</span> <span class="n">function</span>
-        <span class="err">↓</span>
-<span class="n">inside</span> <span class="n">fixture</span><span class="p">:</span>
-    <span class="n">Database</span><span class="p">()</span> <span class="nb">object</span> <span class="ow">is</span> <span class="n">created</span>
-        <span class="err">↓</span>
-<span class="n">fixture</span> <span class="n">returns</span> <span class="n">Database</span> <span class="nb">object</span>
-        <span class="err">↓</span>
-<span class="n">pytest</span> <span class="n">injects</span> <span class="n">returned</span> <span class="nb">object</span> <span class="n">into</span> <span class="n">test_injection</span><span class="p">(</span><span class="n">db</span><span class="p">)</span>
-        <span class="err">↓</span>
-<span class="n">NOW</span> <span class="n">inside</span> <span class="n">test_injection</span><span class="p">:</span>
-    <span class="n">db</span> <span class="err">→</span> <span class="n">refers</span> <span class="n">to</span> <span class="n">Database</span> <span class="nb">object</span>
-        <span class="err">↓</span>
-<span class="n">test</span> <span class="n">code</span> <span class="n">executes</span><span class="p">:</span>
-    <span class="o">-</span> <span class="nb">type</span><span class="p">(</span><span class="n">db</span><span class="p">)</span>
-    <span class="o">-</span> <span class="nb">isinstance</span> <span class="n">check</span>
-        <span class="err">↓</span>
-<span class="n">test</span> <span class="n">completes</span>
+<p>The flowchart below shows what happens for <code>test_injection</code>. The order of events is the same for every test in the file.</p>
+<div class="highlight"><pre><span></span><code>flowchart TD
+    A["1. pytest collects test_injection"] --&gt; B["2. pytest reads its parameter name: db"]
+    B --&gt; C["3. pytest searches for a fixture named db"]
+    C --&gt; D{"4. Fixture found?"}
+    D -- No --&gt; E["5. Report ERROR: fixture 'db' not found"]
+    D -- Yes --&gt; F["6. pytest calls the db() fixture function"]
+    F --&gt; G["7. Inside the fixture: Database() object is created"]
+    G --&gt; H["8. Fixture returns the Database object"]
+    H --&gt; I["9. pytest calls test_injection and passes the object in as db"]
+    I --&gt; J["10. Test code runs: type(db) and the isinstance check"]
+    J --&gt; K["11. Test completes: PASSED or FAILED"]
 </code></pre></div>
-<p><a href="./#table-of-contents">Back to Table of Contents</a></p>
+<p>In words:</p>
+<ol>
+<li>Pytest collects the test function <code>test_injection(db)</code>.</li>
+<li>It reads the parameter name <code>db</code>.</li>
+<li>It searches for a fixture named <code>db</code>.</li>
+<li>It finds the fixture:</li>
+</ol>
+<div class="highlight"><pre><span></span><code><span class="nd">@pytest</span><span class="o">.</span><span class="n">fixture</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">db</span><span class="p">():</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">"</span><span class="se">\n</span><span class="s2">[FIXTURE] creating database object"</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">Database</span><span class="p">()</span>
+</code></pre></div>
+<ol>
+<li>It calls the fixture function <code>db()</code>.</li>
+<li>Inside the fixture, a <code>Database()</code> object is created.</li>
+<li>The fixture returns the <code>Database</code> object.</li>
+<li>Pytest now starts the test, passing the returned object in as the <code>db</code> argument.</li>
+<li>Inside <code>test_injection</code>, the name <code>db</code> refers to that <code>Database</code> object.</li>
+<li>The test code runs: it prints <code>type(db)</code> and checks <code>isinstance(db, Database)</code>.</li>
+<li>The test completes.</li>
+</ol>
+<p>Note the order: the fixture runs <strong>before</strong> the first line of the test, not in the middle of it. That is why, in the output, the fixture's messages always appear before the test's own messages.</p>
+<p><a href="./#table-of-contents">Back to the Table of Contents</a></p>
 <h3 id="same-flow-applies-to-all-3-tests">SAME FLOW applies to all 3 tests<a class="headerlink" href="#same-flow-applies-to-all-3-tests" title="Permanent link">&para;</a></h3>
-<div class="highlight"><pre><span></span><code><span class="n">test_connect</span><span class="p">(</span><span class="n">db</span><span class="p">)</span>
-        <span class="err">↓</span>
-<span class="n">pytest</span> <span class="n">sees</span> <span class="s2">"db"</span> <span class="n">parameter</span>
-        <span class="err">↓</span>
-<span class="n">find</span> <span class="n">db</span> <span class="n">fixture</span>
-        <span class="err">↓</span>
-<span class="n">call</span> <span class="n">db</span><span class="p">()</span>
-        <span class="err">↓</span>
-<span class="n">create</span> <span class="n">Database</span> <span class="nb">object</span>
-        <span class="err">↓</span>
-<span class="k">return</span> <span class="n">Database</span> <span class="nb">object</span>
-        <span class="err">↓</span>
-<span class="n">inject</span> <span class="n">into</span> <span class="n">test_connect</span><span class="p">(</span><span class="n">db</span><span class="p">)</span>
-        <span class="err">↓</span>
-<span class="n">run</span><span class="p">:</span>
-    <span class="n">db</span><span class="o">.</span><span class="n">connect</span><span class="p">()</span>
-        <span class="err">↓</span>
-<span class="k">assert</span> <span class="n">result</span> <span class="o">==</span> <span class="s2">"connected"</span>
+<p>Steps 1 to 9 of the flow above are exactly the same for every test that asks for <code>db</code>. Only the test's own code (steps 10 and 11) is different. The table sets this out side by side.</p>
+<table>
+<thead>
+<tr>
+<th>Step</th>
+<th><code>test_injection(db)</code></th>
+<th><code>test_connect(db)</code></th>
+<th><code>test_state(db)</code></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1. Pytest sees the parameter</td>
+<td><code>db</code></td>
+<td><code>db</code></td>
+<td><code>db</code></td>
+</tr>
+<tr>
+<td>2. Pytest finds the fixture</td>
+<td><code>db()</code></td>
+<td><code>db()</code></td>
+<td><code>db()</code></td>
+</tr>
+<tr>
+<td>3. Pytest calls the fixture</td>
+<td>Yes</td>
+<td>Yes, again</td>
+<td>Yes, again</td>
+</tr>
+<tr>
+<td>4. Object created</td>
+<td>A new <code>Database</code> object</td>
+<td>Another new <code>Database</code> object</td>
+<td>Another new <code>Database</code> object</td>
+</tr>
+<tr>
+<td>5. Object injected into</td>
+<td><code>test_injection</code></td>
+<td><code>test_connect</code></td>
+<td><code>test_state</code></td>
+</tr>
+<tr>
+<td>6. Test code run</td>
+<td><code>type(db)</code> and <code>isinstance(db, Database)</code></td>
+<td><code>result = db.connect()</code></td>
+<td><code>db.new_flag = "set in test_state"</code></td>
+</tr>
+<tr>
+<td>7. Check made</td>
+<td><code>assert isinstance(db, Database)</code></td>
+<td><code>assert result == "connected"</code></td>
+<td><code>assert db.new_flag == "set in test_state"</code></td>
+</tr>
+</tbody>
+</table>
+<p>The key row is step 4. Because the fixture has the default <strong>function scope</strong>, it runs once for <strong>each</strong> test, and each test gets its own new object. The fourth test in the file, <code>test_fresh_object</code>, proves this: the <code>new_flag</code> added in <code>test_state</code> is not present in the object that <code>test_fresh_object</code> receives.</p>
+<p><a href="./#table-of-contents">Back to the Table of Contents</a></p>
+<h3 id="for-test_connectdb">For test_connect(db)<a class="headerlink" href="#for-test_connectdb" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code>flowchart TD
+    A["1. pytest sees the db parameter"] --&gt; B["2. Find the db fixture"]
+    B --&gt; C["3. Call db()"]
+    C --&gt; D["4. Create a new Database object"]
+    D --&gt; E["5. Return the Database object"]
+    E --&gt; F["6. Inject it into test_connect(db)"]
+    F --&gt; G["7. Run db.connect()"]
+    G --&gt; H["8. Check: assert result == 'connected'"]
 </code></pre></div>
-<h3 id="for-test_statedb">For test_state(db):<a class="headerlink" href="#for-test_statedb" title="Permanent link">&para;</a></h3>
-<div class="highlight"><pre><span></span><code><span class="n">test_state</span><span class="p">(</span><span class="n">db</span><span class="p">)</span>
-        <span class="err">↓</span>
-<span class="n">pytest</span> <span class="n">sees</span> <span class="s2">"db"</span>
-        <span class="err">↓</span>
-<span class="n">find</span> <span class="n">db</span> <span class="n">fixture</span>
-        <span class="err">↓</span>
-<span class="n">call</span> <span class="n">db</span><span class="p">()</span>
-        <span class="err">↓</span>
-<span class="n">create</span> <span class="n">Database</span> <span class="nb">object</span>
-        <span class="err">↓</span>
-<span class="k">return</span> <span class="n">Database</span> <span class="nb">object</span>
-        <span class="err">↓</span>
-<span class="n">inject</span> <span class="n">into</span> <span class="n">test_state</span><span class="p">(</span><span class="n">db</span><span class="p">)</span>
-        <span class="err">↓</span>
-<span class="n">run</span><span class="p">:</span>
-    <span class="n">db</span><span class="o">.</span><span class="n">new_flag</span> <span class="o">=</span> <span class="s2">"set in test_state"</span>
-        <span class="err">↓</span>
-<span class="k">assert</span> <span class="n">db</span><span class="o">.</span><span class="n">new_flag</span>
+<p><a href="./#table-of-contents">Back to the Table of Contents</a></p>
+<h3 id="for-test_statedb">For test_state(db)<a class="headerlink" href="#for-test_statedb" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code>flowchart TD
+    A["1. pytest sees the db parameter"] --&gt; B["2. Find the db fixture"]
+    B --&gt; C["3. Call db()"]
+    C --&gt; D["4. Create a new Database object"]
+    D --&gt; E["5. Return the Database object"]
+    E --&gt; F["6. Inject it into test_state(db)"]
+    F --&gt; G["7. Run db.new_flag = 'set in test_state'"]
+    G --&gt; H["8. Check: assert db.new_flag == 'set in test_state'"]
 </code></pre></div>
-<p><a href="./#table-of-contents">Back to Table of Contents</a></p>
+<p><a href="./#table-of-contents">Back to the Table of Contents</a></p>
+<h2 id="scripts-for-this-page-and-how-to-run-them">Scripts for This Page and How to Run Them<a class="headerlink" href="#scripts-for-this-page-and-how-to-run-them" title="Permanent link">&para;</a></h2>
+<p>All the scripts on this page are available in the <a href="https://github.com/ag999git/001-Python-book-2026/tree/main/20-unittest/di-demo">di-demo folder</a>.</p>
+<table>
+<thead>
+<tr>
+<th>File</th>
+<th>What It Contains</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><a href="https://github.com/ag999git/001-Python-book-2026/blob/main/20-unittest/di-demo/database.py">database.py</a></td>
+<td>The simple Database class being tested</td>
+</tr>
+<tr>
+<td><a href="https://github.com/ag999git/001-Python-book-2026/blob/main/20-unittest/di-demo/test_database.py">test_database.py</a></td>
+<td>The four tests that receive <code>db</code> from a fixture</td>
+</tr>
+<tr>
+<td><a href="https://github.com/ag999git/001-Python-book-2026/blob/main/20-unittest/di-demo/di_without_pytest.py">di_without_pytest.py</a></td>
+<td>Dependency injection in plain Python (run with <code>python</code>, not pytest)</td>
+</tr>
+<tr>
+<td><a href="https://github.com/ag999git/001-Python-book-2026/blob/main/20-unittest/di-demo/test_fixture_chain.py">test_fixture_chain.py</a></td>
+<td>A fixture that asks for another fixture</td>
+</tr>
+<tr>
+<td><a href="https://github.com/ag999git/001-Python-book-2026/blob/main/20-unittest/di-demo/test_name_mismatch.py">test_name_mismatch.py</a></td>
+<td>What happens when the names do not match (gives an ERROR on purpose)</td>
+</tr>
+<tr>
+<td><a href="https://github.com/ag999git/001-Python-book-2026/blob/main/20-unittest/di-demo/test_fixture_name.py">test_fixture_name.py</a></td>
+<td>Giving a fixture a different name with <code>name=</code></td>
+</tr>
+</tbody>
+</table>
+<p>To run them on your computer:</p>
+<ol>
+<li>Create a folder, for example <code>di-demo</code>, and save all six files in it.</li>
+<li>Open the folder in VS Code (<strong>File &gt; Open Folder...</strong>) and open the terminal (<strong>Terminal &gt; New Terminal</strong>).</li>
+<li>Check that pytest is installed with <code>python -m pytest --version</code>. If you see <code>No module named pytest</code>, install it with <code>python -m pip install pytest</code>.</li>
+<li>Run each file with the command given in its section, for example <code>python -m pytest -v -s test_database.py</code>. Run <code>di_without_pytest.py</code> with <code>python di_without_pytest.py</code>.</li>
+</ol>
+<p>If you run all the test files together with <code>python -m pytest -v -s</code>, expect the summary <code>6 passed, 1 error</code>. The error comes from <code>test_name_mismatch.py</code>, which is meant to show the error.</p>
+<p>Detailed, step-by-step instructions (installing Python and VS Code, downloading files from GitHub and fixing common errors) are given in <a href="../020-ch20-unittest-disadvantage-rigid-oop-style/#running-the-scripts-on-your-computer">Running the Scripts on Your Computer</a>.</p>
+<p><a href="./#table-of-contents">Back to the Table of Contents</a></p>
+<h2 id="follow-up-questions">Follow-Up Questions<a class="headerlink" href="#follow-up-questions" title="Permanent link">&para;</a></h2>
+<h3 id="question-1-how-many-objects">Question 1: How Many Objects?<a class="headerlink" href="#question-1-how-many-objects" title="Permanent link">&para;</a></h3>
+<p><code>test_database.py</code> contains four tests, and each one asks for <code>db</code>. How many <code>Database</code> objects are created when the file runs? How can you tell from the output?</p>
+<p><strong>Answer:</strong></p>
+<ol>
+<li>The <code>db</code> fixture has the default function scope.</li>
+<li>So pytest calls it once for each test that asks for it: 4 times.</li>
+<li>Therefore <strong>4</strong> <code>Database</code> objects are created.</li>
+<li>In the output, the line <code>[DB] Database object created</code> appears 4 times, once before each test.</li>
+</ol>
+<p><a href="./#table-of-contents">Back to the Table of Contents</a></p>
+<h3 id="question-2-sharing-one-object">Question 2: Sharing One Object<a class="headerlink" href="#question-2-sharing-one-object" title="Permanent link">&para;</a></h3>
+<p>What single change to the fixture would make all four tests share one <code>Database</code> object? Which test would then fail, and why?</p>
+<p><strong>Answer:</strong></p>
+<ol>
+<li>Change the decorator to <code>@pytest.fixture(scope="module")</code> (or <code>scope="session"</code>).</li>
+<li>The fixture would then run only once for the whole file, and all four tests would receive the same object.</li>
+<li><code>test_fresh_object</code> would fail. <code>test_state</code> runs before it and adds <code>new_flag</code> to the shared object, so <code>hasattr(db, "new_flag")</code> would now be <code>True</code>.</li>
+<li>This shows why sharing an object between tests must be done with care: one test's changes become visible to the next.</li>
+</ol>
+<p><a href="./#table-of-contents">Back to the Table of Contents</a></p>
+<h3 id="question-3-error-or-failed">Question 3: ERROR or FAILED?<a class="headerlink" href="#question-3-error-or-failed" title="Permanent link">&para;</a></h3>
+<p>When the parameter name does not match any fixture, pytest reports <code>ERROR</code>, not <code>FAILED</code>. What is the difference?</p>
+<p><strong>Answer:</strong></p>
+<ol>
+<li><strong>FAILED</strong> means the test ran, but an <code>assert</code> (or other check) inside it was not true.</li>
+<li><strong>ERROR</strong> means something went wrong outside the test's own checks, for example during its setup. The test body never ran.</li>
+<li>A missing fixture is a setup problem. Pytest cannot build the test's arguments, so it cannot even start the test. That is why it reports <code>ERROR at setup of test_wrong_name</code>.</li>
+</ol>
+<p><a href="./#table-of-contents">Back to the Table of Contents</a></p>
+<h3 id="question-4-seeing-the-available-fixtures">Question 4: Seeing the Available Fixtures<a class="headerlink" href="#question-4-seeing-the-available-fixtures" title="Permanent link">&para;</a></h3>
+<p>How can you get a list of all the fixtures that a test file can use?</p>
+<p><strong>Answer:</strong> Run:</p>
+<div class="highlight"><pre><span></span><code>pytest<span class="w"> </span>--fixtures<span class="w"> </span>test_database.py
+</code></pre></div>
+<p>Pytest prints every fixture available to that file, including the built-in ones and your own fixtures (such as <code>db</code>), together with their docstrings (the description in triple quotes, if the fixture has one). This is also the command that pytest suggests in the error message when a fixture is not found.</p>
+<p><a href="./#table-of-contents">Back to the Table of Contents</a></p>
+<h2 id="summary">Summary<a class="headerlink" href="#summary" title="Permanent link">&para;</a></h2>
+<ul>
+<li>A <strong>dependency</strong> is something code needs in order to work. <strong>Dependency injection</strong> means handing that dependency to the code from outside, instead of letting the code create it.</li>
+<li>In pytest, a <strong>fixture</strong> is the provider and a <strong>test</strong> is the user. The test asks for a fixture simply by naming it as a parameter.</li>
+<li>Pytest reads the parameter names, finds the fixtures with the same names, runs them <strong>before</strong> the test and passes their results in.</li>
+<li>The <strong>name</strong> is the only link between a test and a fixture. A wrong name gives the error <code>fixture '...' not found</code>.</li>
+<li>Fixtures can ask for other fixtures, and pytest builds the whole chain in the right order.</li>
+<li>With the default function scope, each test gets a fresh object, so tests stay independent.</li>
+</ul>
+<p><a href="./#table-of-contents">Back to the Table of Contents</a></p>
+<h2 id="further-reading">Further Reading<a class="headerlink" href="#further-reading" title="Permanent link">&para;</a></h2>
+<ul>
+<li><a href="https://docs.pytest.org/en/stable/how-to/fixtures.html">pytest: How to use fixtures</a></li>
+<li><a href="https://docs.pytest.org/en/stable/explanation/fixtures.html">pytest: About fixtures</a></li>
+<li><a href="https://docs.pytest.org/en/stable/how-to/fixtures.html#fixtures-can-request-other-fixtures">pytest: Fixtures can request other fixtures</a></li>
+<li><a href="https://en.wikipedia.org/wiki/Dependency_injection">Dependency injection on Wikipedia</a></li>
+</ul>
+<p><a href="./#table-of-contents">Back to the Table of Contents</a></p>
 
 
 
