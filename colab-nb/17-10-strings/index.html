@@ -8,13 +8,13 @@
       
       
       
-        <link rel="canonical" href="https://ag999git.github.io/001-mkdocs/colab-nb/18_design_patterns/">
+        <link rel="canonical" href="https://ag999git.github.io/001-mkdocs/colab-nb/17-10-strings/">
       
       
         <link rel="prev" href="../16-10-language-supported-api/">
       
       
-        <link rel="next" href="../19_strings_beyond_basics/">
+        <link rel="next" href="../18-10-lists/">
       
       
         
@@ -25,7 +25,7 @@
     
     
       
-        <title>18 design patterns - Python 999</title>
+        <title>17 10 strings - Python 999</title>
       
     
     
@@ -113,7 +113,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              18 design patterns
+              17 10 strings
             
           </span>
         </div>
@@ -7274,8 +7274,6 @@
       
         
       
-        
-      
     
     
     
@@ -7827,7 +7825,7 @@
   <span class="md-ellipsis">
     
   
-    18 design patterns
+    17 10 strings
   
 
     
@@ -7849,14 +7847,14 @@
   
   
     <li class="md-nav__item">
-      <a href="../19_strings_beyond_basics/" class="md-nav__link">
+      <a href="../18-10-lists/" class="md-nav__link">
         
   
   
   <span class="md-ellipsis">
     
   
-    19 strings beyond basics
+    18 10 lists
   
 
     
@@ -7877,14 +7875,14 @@
   
   
     <li class="md-nav__item">
-      <a href="../20_lists/" class="md-nav__link">
+      <a href="../19-10-tuples-dicts-sets/" class="md-nav__link">
         
   
   
   <span class="md-ellipsis">
     
   
-    20 lists
+    19 10 tuples dicts sets
   
 
     
@@ -7905,42 +7903,14 @@
   
   
     <li class="md-nav__item">
-      <a href="../21_tuples_dictionaries_sets/" class="md-nav__link">
+      <a href="../21-10-design-patterns/" class="md-nav__link">
         
   
   
   <span class="md-ellipsis">
     
   
-    21 tuples dictionaries sets
-  
-
-    
-  </span>
-  
-  
-
-      </a>
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../chapter2-basics-part2/" class="md-nav__link">
-        
-  
-  
-  <span class="md-ellipsis">
-    
-  
-    Chapter2 basics part2
+    21 10 design patterns
   
 
     
@@ -8052,7 +8022,7 @@
   
 
 
-  <h1>18 design patterns</h1>
+  <h1>17 10 strings</h1>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
 <script>
@@ -8087,41 +8057,37 @@
 <div class="cell border-box-sizing text_cell rendered">
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p><a href="https://colab.research.google.com/github/ag999git/001-Python-book-2026/blob/main/colab-nb/18_design_patterns.ipynb" target="_parent"><img alt="Open In Colab" src="https://colab.research.google.com/assets/colab-badge.svg"/></a></p>
+<p><a href="https://colab.research.google.com/github/ag999git/001-Python-book-2026/blob/main/colab-nb/20_strings_beyond_basics.ipynb" target="_parent"><img alt="Open In Colab" src="https://colab.research.google.com/assets/colab-badge.svg"/></a></p>
 </div>
 </div>
 </div>
 <div class="cell border-box-sizing text_cell rendered">
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p>CHAPTER 18 DESIGN PATTERNS IN PYTHON</p>
+<p>CHAPTER 19 STRINGS (BEYOND BASICS)</p>
 </div>
 </div>
 </div>
 <div class="cell border-box-sizing text_cell rendered">
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p>18.1.1 Singleton: The Lone Instance
-The Singleton pattern ensures that a class has only one instance and provides a global point of access to it. This is invaluable when managing shared resources, such as a single connection to a database or a configuration manager that must remain consistent across your entire application.</p>
+<p>19.4 String indexing and immutability
+Strings in Python are an ordered collection of characters. "Ordered" means that it is a sequence of characters.
+In Python, the individual characters are accessed by their index, which starts from 0 and ends at one less than the length of the string. Thus, if the length of a string is n, then its index will be from 0 to n-1. (This is similar to C++). However, in Python, we can also access the individual characters of a string using negative indices as well.
+The last character in the string has a negative index of -1, and the first character (For a string of n characters) has an index of –n.
+The indexing applies to string variables as well as string literals.
+The other important characteristic of a string sequence is its immutability, which means you cannot change any character appearing at a particular index (position) of the string.
+This is clear from the following:</p>
 </div>
 </div>
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
 
-<div class="highlight"><pre><span></span><code><span class="k">class</span><span class="w"> </span><span class="nc">Singleton</span><span class="p">:</span>
-    <span class="n">_instance</span> <span class="o">=</span> <span class="kc">None</span>  <span class="c1"># Class variable to store the single instance</span>
-    <span class="k">def</span><span class="w"> </span><span class="fm">__new__</span><span class="p">(</span><span class="bp">cls</span><span class="p">):</span>
-        <span class="k">if</span> <span class="bp">cls</span><span class="o">.</span><span class="n">_instance</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
-            <span class="c1"># Create the instance only if it does not exist</span>
-            <span class="bp">cls</span><span class="o">.</span><span class="n">_instance</span> <span class="o">=</span> <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__new__</span><span class="p">(</span><span class="bp">cls</span><span class="p">)</span>
-        <span class="k">return</span> <span class="bp">cls</span><span class="o">.</span><span class="n">_instance</span>
-
-<span class="n">s1</span> <span class="o">=</span> <span class="n">Singleton</span><span class="p">()</span>  <span class="c1"># Create the first instance of Singleton</span>
-<span class="n">s2</span> <span class="o">=</span> <span class="n">Singleton</span><span class="p">()</span> <span class="c1"># Create the second instance of Singleton</span>
-<span class="c1"># s1 and s2 should point to the same instance of Singleton</span>
-<span class="c1"># 'is' checks if both variables point to the exact same memory object</span>
-<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"Are s1 &amp;amp; s2 same? </span><span class="si">{</span><span class="n">s1</span><span class="w"> </span><span class="ow">is</span><span class="w"> </span><span class="n">s2</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>  <span class="c1"># Output: Are s1 &amp;amp; s2 same? True</span>
+<div class="highlight"><pre><span></span><code><span class="c1"># String immutability and indexing</span>
+<span class="n">myString</span> <span class="o">=</span> <span class="s2">"Hello World!"</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">myString</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>  <span class="c1">#'H'. Indexing starts at 0</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">myString</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">])</span> <span class="c1">#'!'. Negative indexing starts from the end</span>
 </code></pre></div>
 
 </div>
@@ -8130,7 +8096,8 @@ The Singleton pattern ensures that a class has only one instance and provides a 
 <div class="output_area">
 <div class="output_subarea output_stream output_stdout output_text">
 <pre>
-<code>Are s1 &amp; s2 same? True
+<code>H
+!
 </code>
 </pre>
 </div>
@@ -8141,33 +8108,23 @@ The Singleton pattern ensures that a class has only one instance and provides a 
 <div class="cell border-box-sizing text_cell rendered">
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p>18.1.2 Factory Method: Choosing the Blueprint
-The Factory Method provides an interface for creating objects but allows subclasses or methods to decide which class to instantiate. Instead of calling MyClass() directly, you call a method that returns the appropriate object based on the input parameters provided.</p>
+<p>19.5 Escape sequence
+In Python, inside a string literal (which begins with a single, double, or triple quote), a backslash, i.e., \ has the magical power of an "escape character". This means that a backslash isn't interpreted as a backslash, but as a signal that the next character is to be given a special interpretation.</p>
 </div>
 </div>
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
 
-<div class="highlight"><pre><span></span><code><span class="k">class</span><span class="w"> </span><span class="nc">Dog</span><span class="p">:</span>
-    <span class="k">def</span><span class="w"> </span><span class="nf">greet</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="k">return</span> <span class="s2">"Woof!"</span>  <span class="c1"># Dog's greeting</span>
-<span class="k">class</span><span class="w"> </span><span class="nc">Cat</span><span class="p">:</span>
-    <span class="k">def</span><span class="w"> </span><span class="nf">greet</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="k">return</span> <span class="s2">"Meow!"</span>  <span class="c1"># Cat's greeting</span>
-
-<span class="c1"># get_pet()→ factory function that returns pet instance based on the pet type</span>
-<span class="k">def</span><span class="w"> </span><span class="nf">get_pet</span><span class="p">(</span><span class="n">pet_type</span><span class="p">):</span>
-    <span class="k">if</span> <span class="n">pet_type</span> <span class="o">==</span> <span class="s2">"dog"</span><span class="p">:</span> <span class="c1"># Return a Dog instance if the pet type is "dog"</span>
-        <span class="k">return</span> <span class="n">Dog</span><span class="p">()</span>
-    <span class="k">return</span> <span class="n">Cat</span><span class="p">()</span>  <span class="c1"># Return a Cat instance for any other pet type</span>
-
-<span class="c1"># Create instances of Dog and Cat using the get_pet function</span>
-<span class="n">pet_dog</span> <span class="o">=</span> <span class="n">get_pet</span><span class="p">(</span><span class="s2">"dog"</span><span class="p">)</span>  <span class="c1"># Create a dog instance</span>
-<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"dog→ </span><span class="si">{</span><span class="n">pet_dog</span><span class="o">.</span><span class="n">greet</span><span class="p">()</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>  <span class="c1"># Output: dog→ Woof!</span>
-
-<span class="n">pet_cat</span> <span class="o">=</span> <span class="n">get_pet</span><span class="p">(</span><span class="s2">"cat"</span><span class="p">)</span>  <span class="c1"># Create a cat instance</span>
-<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"cat→ </span><span class="si">{</span><span class="n">pet_cat</span><span class="o">.</span><span class="n">greet</span><span class="p">()</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>  <span class="c1"># Output: cat→ Meow!</span>
+<div class="highlight"><pre><span></span><code><span class="c1"># Escape Sequences Demonstration Script</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">"I want a Backslash: </span><span class="se">\\</span><span class="s2">"</span><span class="p">)</span>  <span class="c1"># Backslash character</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">'It</span><span class="se">\'</span><span class="s1">s a cold day!'</span><span class="p">)</span>  <span class="c1"># Single quote inside string</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">"He said, </span><span class="se">\"</span><span class="s2">Good Morning</span><span class="se">\"</span><span class="s2">"</span><span class="p">)</span>  <span class="c1"># Double quotes inside string</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">"Hello</span><span class="se">\n</span><span class="s2">World!"</span><span class="p">)</span>  <span class="c1"># New line between Hello and World</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">"Hello</span><span class="se">\t</span><span class="s2">World!"</span><span class="p">)</span>  <span class="c1"># Tab space between Hello and World</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">"First Line</span><span class="se">\r</span><span class="s2">Second Line"</span><span class="p">)</span>  <span class="c1"># Carriage return</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">"Column1</span><span class="se">\b</span><span class="s2">Column2"</span><span class="p">)</span>  <span class="c1"># Backspace character</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">"Unicode Character: </span><span class="se">\u03A9</span><span class="s2">"</span><span class="p">)</span>  <span class="c1"># Greek capital letter Omega (Ω)</span>
 </code></pre></div>
 
 </div>
@@ -8176,8 +8133,16 @@ The Factory Method provides an interface for creating objects but allows subclas
 <div class="output_area">
 <div class="output_subarea output_stream output_stdout output_text">
 <pre>
-<code>dog→ Woof!
-cat→ Meow!
+<code>I want a Backslash: \
+It's a cold day!
+He said, "Good Morning"
+Hello
+World!
+Hello   World!
+First Line
+Second Line
+Column1Column2
+Unicode Character: Ω
 </code>
 </pre>
 </div>
@@ -8188,94 +8153,21 @@ cat→ Meow!
 <div class="cell border-box-sizing text_cell rendered">
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p>18.1.3 Abstract Factory Pattern—Creating Related Objects Together</p>
-<p>Problem Without Abstract Factory: Suppose we create objects directly:
-<div class="highlight"><pre><span></span><code><span class="n">button</span> <span class="o">=</span> <span class="n">WindowsButton</span><span class="p">()</span>
-<span class="n">checkbox</span> <span class="o">=</span> <span class="n">MacCheckbox</span><span class="p">()</span>
-</code></pre></div>
-This creates a problem.
-The program now contains objects from different families:
-•   Windows button
-•   Mac checkbox
-They may not look or behave consistently.
-We need a way to ensure that all objects belong to the same family.
-Abstract Factory Solution: We create a factory for each family.</p>
+<p>19.7 Traversing Strings: Iterating Through Characters
+Traversing a string means visiting each character in it, one by one, from the first index to the last. Since a string is a sequence with every character sitting at a known index, traversal lets you print characters individually, count them, search for specific ones, or apply logic to each one in turn — for example, counting vowels or checking for uppercase letters. In Python, this is typically done using either a for loop or a while loop.
+Method 1: Direct Character Iteration (The for Loop)
+The most common and clean way to traverse a string is by using a for loop. This pattern treats the string directly as an iterable sequence. Python automatically extracts each character, assignment-by-assignment, without requiring you to manually manage index numbers.</p>
 </div>
 </div>
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
 
-<div class="highlight"><pre><span></span><code><span class="c1"># ----- Objects/ Products Created by Factories -----</span>
-
-<span class="c1"># Step 1: Create WindowsButton product class</span>
-<span class="k">class</span><span class="w"> </span><span class="nc">WindowsButton</span><span class="p">:</span>
-    <span class="k">def</span><span class="w"> </span><span class="nf">display</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="nb">print</span><span class="p">(</span><span class="s2">"Displaying Windows Button"</span><span class="p">)</span>
-
-<span class="c1"># Step 2: Create WindowsCheckbox product class</span>
-<span class="k">class</span><span class="w"> </span><span class="nc">WindowsCheckbox</span><span class="p">:</span>
-    <span class="k">def</span><span class="w"> </span><span class="nf">display</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="nb">print</span><span class="p">(</span><span class="s2">"Displaying Windows Checkbox"</span><span class="p">)</span>
-
-<span class="c1"># Step 3: Create MacButton product class</span>
-<span class="k">class</span><span class="w"> </span><span class="nc">MacButton</span><span class="p">:</span>
-    <span class="k">def</span><span class="w"> </span><span class="nf">display</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="nb">print</span><span class="p">(</span><span class="s2">"Displaying Mac Button"</span><span class="p">)</span>
-
-<span class="c1"># Step 4: Create MacCheckbox product class</span>
-<span class="k">class</span><span class="w"> </span><span class="nc">MacCheckbox</span><span class="p">:</span>
-    <span class="k">def</span><span class="w"> </span><span class="nf">display</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="nb">print</span><span class="p">(</span><span class="s2">"Displaying Mac Checkbox"</span><span class="p">)</span>
-
-<span class="c1"># ----- Abstract Factories -----</span>
-
-<span class="c1"># Step 5: Create WindowsFactory class that creates Windows objects/products</span>
-<span class="k">class</span><span class="w"> </span><span class="nc">WindowsFactory</span><span class="p">:</span>
-
-    <span class="k">def</span><span class="w"> </span><span class="nf">create_button</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="k">return</span> <span class="n">WindowsButton</span><span class="p">()</span>
-
-    <span class="k">def</span><span class="w"> </span><span class="nf">create_checkbox</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="k">return</span> <span class="n">WindowsCheckbox</span><span class="p">()</span>
-
-<span class="c1"># Step 6: Create MacFactory class that creates Mac objects/products</span>
-<span class="k">class</span><span class="w"> </span><span class="nc">MacFactory</span><span class="p">:</span>
-
-    <span class="k">def</span><span class="w"> </span><span class="nf">create_button</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="k">return</span> <span class="n">MacButton</span><span class="p">()</span>
-
-    <span class="k">def</span><span class="w"> </span><span class="nf">create_checkbox</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="k">return</span> <span class="n">MacCheckbox</span><span class="p">()</span>
-
-<span class="c1"># ----- Client Code -----</span>
-
-<span class="c1"># Step 7: Create client function that uses factory to create objects/products</span>
-<span class="k">def</span><span class="w"> </span><span class="nf">create_screen</span><span class="p">(</span><span class="n">factory</span><span class="p">):</span>
-
-    <span class="c1"># Step 8: Create button using the received factory</span>
-    <span class="n">button</span> <span class="o">=</span> <span class="n">factory</span><span class="o">.</span><span class="n">create_button</span><span class="p">()</span>
-
-    <span class="c1"># Step 9: Create checkbox using the received factory</span>
-    <span class="n">checkbox</span> <span class="o">=</span> <span class="n">factory</span><span class="o">.</span><span class="n">create_checkbox</span><span class="p">()</span>
-
-    <span class="c1"># Step 10: Display the created button</span>
-    <span class="n">button</span><span class="o">.</span><span class="n">display</span><span class="p">()</span>
-
-    <span class="c1"># Step 11: Display the created checkbox</span>
-    <span class="n">checkbox</span><span class="o">.</span><span class="n">display</span><span class="p">()</span>
-
-<span class="c1"># Step 12: Create WindowsFactory object</span>
-<span class="n">windows_factory</span> <span class="o">=</span> <span class="n">WindowsFactory</span><span class="p">()</span>
-
-<span class="c1"># Step 13: Create MacFactory object</span>
-<span class="n">mac_factory</span> <span class="o">=</span> <span class="n">MacFactory</span><span class="p">()</span>
-
-<span class="c1"># Step 14: Use WindowsFactory to create Windows family products</span>
-<span class="n">create_screen</span><span class="p">(</span><span class="n">windows_factory</span><span class="p">)</span>
-
-<span class="c1"># Step 15: Use MacFactory to create Mac family products</span>
-<span class="n">create_screen</span><span class="p">(</span><span class="n">mac_factory</span><span class="p">)</span>
+<div class="highlight"><pre><span></span><code><span class="n">msg</span> <span class="o">=</span> <span class="s2">"Python"</span>
+<span class="c1"># Iterating directly over the characters</span>
+<span class="k">for</span> <span class="n">char</span> <span class="ow">in</span> <span class="n">msg</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">char</span><span class="p">,</span> <span class="n">end</span><span class="o">=</span><span class="s2">"-"</span><span class="p">)</span>
+<span class="c1"># Output: P-y-t-h-o-n-</span>
 </code></pre></div>
 
 </div>
@@ -8284,10 +8176,45 @@ Abstract Factory Solution: We create a factory for each family.</p>
 <div class="output_area">
 <div class="output_subarea output_stream output_stdout output_text">
 <pre>
-<code>Displaying Windows Button
-Displaying Windows Checkbox
-Displaying Mac Button
-Displaying Mac Checkbox
+<code>P-y-t-h-o-n-</code>
+</pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>Method 2: Index-Based Iteration (The while Loop)
+Alternatively, you can traverse a string by combining its index sequence with a loop counter variable. This approach is highly useful when your application needs to know the exact position index of a character while processing it, or when you need to skip characters dynamically.</p>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="highlight"><pre><span></span><code><span class="n">msg</span> <span class="o">=</span> <span class="s2">"Python"</span>
+<span class="n">index</span> <span class="o">=</span> <span class="mi">0</span>
+<span class="c1"># Iterating using index boundaries</span>
+<span class="k">while</span> <span class="n">index</span> <span class="o">&amp;</span><span class="n">lt</span><span class="p">;</span> <span class="nb">len</span><span class="p">(</span><span class="n">msg</span><span class="p">):</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"Index </span><span class="si">{</span><span class="n">index</span><span class="si">}</span><span class="s2">: </span><span class="si">{</span><span class="n">msg</span><span class="p">[</span><span class="n">index</span><span class="p">]</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
+    <span class="n">index</span> <span class="o">+=</span> <span class="mi">1</span>
+<span class="c1"># Output: Index 0: P Index 1: y Index 2: t Index 3: h Index 4: o Index 5: n</span>
+</code></pre></div>
+
+</div>
+<div class="output_wrapper">
+<div class="output">
+<div class="output_area">
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>
+<code>Index 0: P
+Index 1: y
+Index 2: t
+Index 3: h
+Index 4: o
+Index 5: n
 </code>
 </pre>
 </div>
@@ -8298,28 +8225,34 @@ Displaying Mac Checkbox
 <div class="cell border-box-sizing text_cell rendered">
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p>18.1.4 Builder: Constructing Piece-by-Piece
-The Builder pattern is used when an object requires many steps to construct. Instead of a massive constructor with twenty parameters, you use a "builder" object. You call methods like .set_color(), .set_engine(), and .add_features(), and finally call .build() to receive your fully formed object.</p>
+<p>19.8 String operations (+, *, in, not in)
+String Concatenation using the + Operator</p>
+<p>•   The + operator joins  two strings together.</p>
+<p>•   This operation is called concatenation.</p>
+<p>•   Only string + string is allowed.</p>
+<p>String Repetition using <code>*</code> Operator</p>
+<p>•   You can multiply a string × integer.</p>
+<p>•   This repeats the string multiple times.</p>
+<p>•   You cannot do string × string.</p>
+<p>Membership Operators: <code>in</code> and <code>not in</code></p>
+<p>•   Used to check whether a value exists inside a string, list, tuple, set, or dictionary.</p>
+<p>•   The result is Boolean → True or False.</p>
 </div>
 </div>
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
 
-<div class="highlight"><pre><span></span><code><span class="k">class</span><span class="w"> </span><span class="nc">Robot</span><span class="p">:</span>
-    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">parts</span> <span class="o">=</span> <span class="p">[]</span>  <span class="c1"># Initialize an empty list to hold the robot's parts</span>
-    <span class="k">def</span><span class="w"> </span><span class="nf">add_arm</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">parts</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s2">"Arm"</span><span class="p">)</span>  <span class="c1"># Add an "Arm" to the robot's parts list</span>
-        <span class="k">return</span> <span class="bp">self</span>  <span class="c1"># Return self→ allows chaining: .add_arm().add_arm()</span>
+<div class="highlight"><pre><span></span><code><span class="c1"># 1. String Concatenation using '+' Operator</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">"Hello"</span> <span class="o">+</span> <span class="s2">" "</span> <span class="o">+</span> <span class="s2">"World!"</span><span class="p">)</span>  <span class="c1"># Output: Hello World!</span>
 
-<span class="c1"># Create a Robot instance and add two arms to it</span>
-<span class="n">bot</span> <span class="o">=</span> <span class="n">Robot</span><span class="p">()</span><span class="o">.</span><span class="n">add_arm</span><span class="p">()</span><span class="o">.</span><span class="n">add_arm</span><span class="p">()</span>  <span class="c1"># Adds two arms to the robot</span>
-<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"Robot parts: </span><span class="si">{</span><span class="n">bot</span><span class="o">.</span><span class="n">parts</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>  <span class="c1"># ['Arm', 'Arm']</span>
+<span class="c1"># 2. String Repetition using '*' Operator</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">"Hi there "</span> <span class="o">*</span> <span class="mi">3</span><span class="p">)</span>  <span class="c1"># Output: Hi there Hi there Hi there</span>
 
-<span class="c1"># Can add another arm to the Robot instance</span>
-<span class="n">bot</span><span class="o">.</span><span class="n">add_arm</span><span class="p">()</span>  <span class="c1"># Adds another arm to the robot</span>
-<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"After adding another arm: </span><span class="si">{</span><span class="n">bot</span><span class="o">.</span><span class="n">parts</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>  <span class="c1"># ['Arm', 'Arm', 'Arm']</span>
+<span class="c1"># 3. String Membership using 'in' and 'not in' Operators</span>
+<span class="n">message</span> <span class="o">=</span> <span class="s2">"Welcome to Python programming."</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">"Python"</span> <span class="ow">in</span> <span class="n">message</span><span class="p">)</span>      <span class="c1"># Output: True</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">"Java"</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">message</span><span class="p">)</span>    <span class="c1"># Output: True</span>
 </code></pre></div>
 
 </div>
@@ -8328,8 +8261,10 @@ The Builder pattern is used when an object requires many steps to construct. Ins
 <div class="output_area">
 <div class="output_subarea output_stream output_stdout output_text">
 <pre>
-<code>Robot parts: ['Arm', 'Arm']
-After adding another arm: ['Arm', 'Arm', 'Arm']
+<code>Hello World!
+Hi there Hi there Hi there 
+True
+True
 </code>
 </pre>
 </div>
@@ -8340,29 +8275,31 @@ After adding another arm: ['Arm', 'Arm', 'Arm']
 <div class="cell border-box-sizing text_cell rendered">
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p>18.1.5 Prototype: Cloning Efficiency
-The Prototype pattern creates new objects by copying (cloning) an existing instance. This is highly efficient when the cost of initializing a new object from scratch is expensive (e.g., loading large datasets or querying a database).</p>
+<p>Let us look at how Python extracts sub-segments from our standard string s1 = "Hello World!" using different slicing syntax patterns.</p>
 </div>
 </div>
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
 
-<div class="highlight"><pre><span></span><code><span class="k">class</span><span class="w"> </span><span class="nc">Prototype</span><span class="p">:</span>  <span class="c1"># Prototype class→ shows Prototype design pattern</span>
-    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">data</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">]</span> <span class="c1"># Complex data</span>
-    <span class="k">def</span><span class="w"> </span><span class="nf">clone</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>  <span class="c1"># Clone method→ creates a copy of the object</span>
-        <span class="c1"># Create a new instance and copy internal data manually</span>
-        <span class="n">new_obj</span> <span class="o">=</span> <span class="n">Prototype</span><span class="p">()</span>  <span class="c1"># Create a new instance of Prototype</span>
-        <span class="n">new_obj</span><span class="o">.</span><span class="n">data</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="p">)</span>  <span class="c1"># Copy the data</span>
-        <span class="k">return</span> <span class="n">new_obj</span>  <span class="c1"># Return the new object</span>
+<div class="highlight"><pre><span></span><code><span class="n">s1</span> <span class="o">=</span> <span class="s2">"Hello World!"</span>
 
-<span class="n">original_obj</span> <span class="o">=</span> <span class="n">Prototype</span><span class="p">()</span>  <span class="c1"># Create an instance of Prototype</span>
-<span class="n">copy_obj</span> <span class="o">=</span> <span class="n">original_obj</span><span class="o">.</span><span class="n">clone</span><span class="p">()</span>  <span class="c1"># Clone the original object</span>
-<span class="c1"># 'original_obj.data == copy_obj.data' checks if their data is the same</span>
-<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"Data match: </span><span class="si">{</span><span class="n">original_obj</span><span class="o">.</span><span class="n">data</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="n">copy_obj</span><span class="o">.</span><span class="n">data</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
-<span class="c1"># 'original_obj is not copy_obj' verifies they are different objects in memory</span>
-<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"Are they different objects? </span><span class="si">{</span><span class="n">original_obj</span><span class="w"> </span><span class="ow">is</span><span class="w"> </span><span class="ow">not</span><span class="w"> </span><span class="n">copy_obj</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
+<span class="c1"># Category 1: Standard Forward Slicing (Step = 1)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">s1</span><span class="p">[</span><span class="mi">0</span><span class="p">:</span><span class="mi">5</span><span class="p">])</span>   <span class="c1"># Output: 'Hello'. Extracts indices 0 to 4</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">s1</span><span class="p">[:</span><span class="mi">5</span><span class="p">])</span>    <span class="c1"># Output: 'Hello'. Omitted start defaults to 0</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">s1</span><span class="p">[</span><span class="mi">6</span><span class="p">:])</span>    <span class="c1"># Output: 'World!'. Omitted end goes to the absolute end</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">s1</span><span class="p">[:])</span>     <span class="c1"># Output: 'Hello World!'. Creates complete copy of the string</span>
+
+<span class="c1"># Category 2: Extended Slicing (Skipping and Reversing with Steps)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">s1</span><span class="p">[::</span><span class="mi">2</span><span class="p">])</span>   <span class="c1"># Output: 'HloWrd'. Takes every 2nd character: 0, 2, 4...</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">s1</span><span class="p">[::</span><span class="o">-</span><span class="mi">1</span><span class="p">])</span>  <span class="c1"># Output: '!dlroW olleH'. Reverses the entire string</span>
+
+<span class="c1"># Category 3: Negative Index Slicing</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">s1</span><span class="p">[</span><span class="o">-</span><span class="mi">6</span><span class="p">:</span><span class="o">-</span><span class="mi">1</span><span class="p">])</span> <span class="c1"># Output: 'World'. Extracts from index -6 up to -2</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">s1</span><span class="p">[</span><span class="o">-</span><span class="mi">7</span><span class="p">:])</span>   <span class="c1"># Output: 'World!'. From 7th last character to the very end</span>
+
+<span class="c1"># Category 4: Reverse Slicing with Explicit Bounds</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">s1</span><span class="p">[</span><span class="mi">11</span><span class="p">:</span><span class="mi">5</span><span class="p">:</span><span class="o">-</span><span class="mi">1</span><span class="p">])</span>  <span class="c1"># Output: '!dlroW'. Steps backward from index 11 down to 6</span>
 </code></pre></div>
 
 </div>
@@ -8371,8 +8308,15 @@ The Prototype pattern creates new objects by copying (cloning) an existing insta
 <div class="output_area">
 <div class="output_subarea output_stream output_stdout output_text">
 <pre>
-<code>Data match: True
-Are they different objects? True
+<code>Hello
+Hello
+World!
+Hello World!
+HloWrd
+!dlroW olleH
+World
+ World!
+!dlroW
 </code>
 </pre>
 </div>
@@ -8383,48 +8327,27 @@ Are they different objects? True
 <div class="cell border-box-sizing text_cell rendered">
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p>18.2.1 Decorator
-The Decorator pattern allows you to "wrap" an object to add new behaviors dynamically. Instead of changing the original class, you create a decorator that adds functionality before or after the original method runs. It's like adding a leather case to a smartphone—the phone still works, but now it has new features.
-The following script shows the use of decorators in two different forms: (1) Form 1: The manual wrapper, (2) Form 2: Using the @ decorator.</p>
+<ol>
+<li>The ord() Function (Character to Integer)
+The ord() function takes a single-character string as an argument and returns its corresponding integer Unicode code point.</li>
+</ol>
 </div>
 </div>
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
 
-<div class="highlight"><pre><span></span><code><span class="c1"># --- THE DECORATOR LOGIC ---</span>
-<span class="k">class</span><span class="w"> </span><span class="nc">FrameDecorator</span><span class="p">:</span>
-<span class="w">    </span><span class="sd">"""This class adds a decorative frame around a greeting."""</span>
-    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">target</span><span class="p">):</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">target</span> <span class="o">=</span> <span class="n">target</span>
+<div class="highlight"><pre><span></span><code><span class="c1"># Finding the code points of English letters</span>
+<span class="nb">print</span><span class="p">(</span><span class="nb">ord</span><span class="p">(</span><span class="s1">'A'</span><span class="p">))</span>    <span class="c1"># Output: 65</span>
+<span class="nb">print</span><span class="p">(</span><span class="nb">ord</span><span class="p">(</span><span class="s1">'B'</span><span class="p">))</span>    <span class="c1"># Output: 66</span>
+<span class="nb">print</span><span class="p">(</span><span class="nb">ord</span><span class="p">(</span><span class="s1">'a'</span><span class="p">))</span>    <span class="c1"># Output: 97</span>
 
-    <span class="c1"># Form 1: Explicit method call. Adds a frame around the greeting.</span>
-    <span class="k">def</span><span class="w"> </span><span class="nf">render</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="k">return</span> <span class="sa">f</span><span class="s2">"*** Welcome, </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">target</span><span class="p">()</span><span class="si">}</span><span class="s2">! ***"</span>
+<span class="c1"># Finding the code point of a space and a symbol</span>
+<span class="nb">print</span><span class="p">(</span><span class="nb">ord</span><span class="p">(</span><span class="s1">' '</span><span class="p">))</span>    <span class="c1"># Output: 32</span>
+<span class="nb">print</span><span class="p">(</span><span class="nb">ord</span><span class="p">(</span><span class="s1">'$'</span><span class="p">))</span>    <span class="c1"># Output: 36</span>
 
-    <span class="c1"># Form 2: Magic method for @ syntax. Also adds a frame around the greeting.</span>
-    <span class="k">def</span><span class="w"> </span><span class="fm">__call__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="k">return</span> <span class="sa">f</span><span class="s2">"*** Welcome, </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">target</span><span class="p">()</span><span class="si">}</span><span class="s2">! ***"</span>
-
-<span class="c1"># --- FORM 1: MANUAL PATTERN (Object Wrapping) ---</span>
-<span class="k">def</span><span class="w"> </span><span class="nf">get_user_name</span><span class="p">():</span>
-    <span class="k">return</span> <span class="s2">"Alice"</span>
-
-<span class="c1"># Manually wrapping the function</span>
-<span class="n">manual_wrapper</span> <span class="o">=</span> <span class="n">FrameDecorator</span><span class="p">(</span><span class="n">get_user_name</span><span class="p">)</span>
-
-<span class="c1"># --- FORM 2: @ SYNTAX (Automatic Wrapping) ---</span>
-<span class="nd">@FrameDecorator</span>
-<span class="k">def</span><span class="w"> </span><span class="nf">get_user_name_syntax</span><span class="p">():</span>
-    <span class="k">return</span> <span class="s2">"Bob"</span>
-
-<span class="c1"># --- EXECUTION ---</span>
-<span class="nb">print</span><span class="p">(</span><span class="s2">"Form 1 (Manual):"</span><span class="p">,</span> <span class="n">manual_wrapper</span><span class="o">.</span><span class="n">render</span><span class="p">())</span>
-<span class="nb">print</span><span class="p">(</span><span class="s2">"Form 2 (Syntax):"</span><span class="p">,</span> <span class="n">get_user_name_syntax</span><span class="p">())</span>
-
-<span class="c1"># Output:</span>
-<span class="c1"># Form 1 (Manual): *** Welcome, Alice! ***</span>
-<span class="c1"># Form 2 (Syntax): *** Welcome, Bob! ***</span>
+<span class="c1"># Finding the code point of an emoji</span>
+<span class="nb">print</span><span class="p">(</span><span class="nb">ord</span><span class="p">(</span><span class="s1">'🐍'</span><span class="p">))</span>   <span class="c1"># Output: 128013</span>
 </code></pre></div>
 
 </div>
@@ -8433,8 +8356,12 @@ The following script shows the use of decorators in two different forms: (1) For
 <div class="output_area">
 <div class="output_subarea output_stream output_stdout output_text">
 <pre>
-<code>Form 1 (Manual): *** Welcome, Alice! ***
-Form 2 (Syntax): *** Welcome, Bob! ***
+<code>65
+66
+97
+32
+36
+128013
 </code>
 </pre>
 </div>
@@ -8445,38 +8372,22 @@ Form 2 (Syntax): *** Welcome, Bob! ***
 <div class="cell border-box-sizing text_cell rendered">
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p>18.2.2 Adapter
-The Adapter pattern acts as a bridge between two incompatible interfaces. If you have a legacy system that returns data in XML format, but your new application only understands JSON, an Adapter sits in the middle, converts the format, and allows the systems to talk to each other.
-The following script shows how the Adapter pattern allows two incompatible classes to work together by creating a "translator" class.</p>
+<p>Why This Matters for String Comparisons
+Understanding code points explains why string comparison results can sometimes surprise beginners. Let us look at two common rules:
+1.  Uppercase letters are "smaller" than lowercase letters: Because ord('A') is 65 and ord('a') is 97, evaluating 'A' &lt; 'a' results in True.
+2.  Alphabetical comparison is strictly index-by-index: Python compares strings starting from index 0. If characters match, it moves to index 1, and so on, until it finds a difference.</p>
 </div>
 </div>
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
 
-<div class="highlight"><pre><span></span><code><span class="c1"># The incompatible legacy class (expects a specific method name)</span>
-<span class="k">class</span><span class="w"> </span><span class="nc">OldPrinter</span><span class="p">:</span>
-    <span class="k">def</span><span class="w"> </span><span class="nf">print_legacy_format</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">text</span><span class="p">):</span>
-        <span class="k">return</span> <span class="sa">f</span><span class="s2">"Old format: </span><span class="si">{</span><span class="n">text</span><span class="si">}</span><span class="s2">"</span>
+<div class="highlight"><pre><span></span><code><span class="c1"># Comparing case</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">"Is 'Apple' &amp;lt; 'apple'?"</span><span class="p">,</span> <span class="s1">'Apple'</span> <span class="o">&amp;</span><span class="n">lt</span><span class="p">;</span> <span class="s1">'apple'</span><span class="p">)</span>  <span class="c1"># Output: True (as 65 &amp;lt; 97)</span>
 
-<span class="c1"># The Adapter: Bridges the gap</span>
-<span class="k">class</span><span class="w"> </span><span class="nc">PrinterAdapter</span><span class="p">:</span>
-    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">old_printer</span><span class="p">):</span>  <span class="c1"># Store the old printer instance</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">printer</span> <span class="o">=</span> <span class="n">old_printer</span>
-
-    <span class="c1"># New method name that the client expects. Refers to old method internally.</span>
-    <span class="k">def</span><span class="w"> </span><span class="nf">print_new_format</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">text</span><span class="p">):</span>  <span class="c1"># Returns result of old printer's method</span>
-        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"Adapter: Converts to old printer's method for text: '</span><span class="si">{</span><span class="n">text</span><span class="si">}</span><span class="s2">'"</span><span class="p">)</span>
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">printer</span><span class="o">.</span><span class="n">print_legacy_format</span><span class="p">(</span><span class="n">text</span><span class="p">)</span>
-
-<span class="c1"># Usage</span>
-<span class="n">old_machine</span> <span class="o">=</span> <span class="n">OldPrinter</span><span class="p">()</span>  <span class="c1"># Create an instance of the old printer</span>
-<span class="c1"># Use adapter to call new method name, which internally calls the old method</span>
-<span class="n">adapter</span> <span class="o">=</span> <span class="n">PrinterAdapter</span><span class="p">(</span><span class="n">old_machine</span><span class="p">)</span>
-<span class="c1"># print_new_format()→ calls print_legacy_format() of OldPrinter</span>
-<span class="c1"># Text "Hello World" internally passed to print_legacy_format()</span>
-<span class="n">output</span> <span class="o">=</span> <span class="n">adapter</span><span class="o">.</span><span class="n">print_new_format</span><span class="p">(</span><span class="s2">"Hello World"</span><span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span><span class="n">output</span><span class="p">)</span>  <span class="c1"># Output: "Old format: Hello World"</span>
+<span class="c1"># Step-by-step comparison</span>
+<span class="c1"># 'B' (66) is greater than 'A' (65), so Python stops immediately</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">"Is 'Blue' greater than 'Apple'?"</span><span class="p">,</span> <span class="s1">'Blue'</span> <span class="o">&amp;</span><span class="n">gt</span><span class="p">;</span> <span class="s1">'Apple'</span><span class="p">)</span>   <span class="c1"># Output: True</span>
 </code></pre></div>
 
 </div>
@@ -8485,8 +8396,8 @@ The following script shows how the Adapter pattern allows two incompatible class
 <div class="output_area">
 <div class="output_subarea output_stream output_stdout output_text">
 <pre>
-<code>Adapter: Converts to old printer's method for text: 'Hello World'
-Old format: Hello World
+<code>Is 'Apple' &lt; 'apple'? True
+Is 'Blue' greater than 'Apple'? True
 </code>
 </pre>
 </div>
@@ -8497,34 +8408,21 @@ Old format: Hello World
 <div class="cell border-box-sizing text_cell rendered">
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p>18.2.3 Facade
-The Facade pattern provides a simple, unified interface to a complex set of subsystems. Rather than a client having to interact with five different classes to get a result, the Facade provides a single "one-stop-shop" method that handles the complexity behind the scenes.
-The following script implements the Facade pattern by providing a simple "front door" to a complex set of internal classes.</p>
+<p>Important Unicode Ordering Rules
+•   Uppercase letters come before lowercase letters → "A" &lt; "a"
+•   Digits (0–9) come before letters → "1" &lt; "A"
+•   Space ' ' has a smaller value than digits or letters → " " &lt; "0" &lt; "A" &lt; "a"
+Some examples are given below:-</p>
 </div>
 </div>
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
 
-<div class="highlight"><pre><span></span><code><span class="c1"># Internal complex subsystems</span>
-<span class="k">class</span><span class="w"> </span><span class="nc">Lights</span><span class="p">:</span>
-    <span class="k">def</span><span class="w"> </span><span class="nf">turn_on</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span> <span class="c1"># Turn on the lights</span>
-        <span class="k">return</span> <span class="s2">"Lights are on."</span>
-
-<span class="k">class</span><span class="w"> </span><span class="nc">Heater</span><span class="p">:</span>
-    <span class="k">def</span><span class="w"> </span><span class="nf">turn_on</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span> <span class="c1"># Turn on the heater</span>
-        <span class="k">return</span> <span class="s2">"Heater is on."</span>
-
-<span class="c1"># The Facade: Provides a simple interface to the complex subsystems</span>
-<span class="k">class</span><span class="w"> </span><span class="nc">SmartHomeFacade</span><span class="p">:</span>
-    <span class="k">def</span><span class="w"> </span><span class="nf">start_morning</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>  <span class="c1"># Start the morning routine</span>
-        <span class="c1"># The client only calls this one method</span>
-        <span class="c1"># returns a simple string indicating the actions taken</span>
-        <span class="k">return</span> <span class="sa">f</span><span class="s2">"</span><span class="si">{</span><span class="n">Lights</span><span class="p">()</span><span class="o">.</span><span class="n">turn_on</span><span class="p">()</span><span class="si">}</span><span class="s2"> </span><span class="si">{</span><span class="n">Heater</span><span class="p">()</span><span class="o">.</span><span class="n">turn_on</span><span class="p">()</span><span class="si">}</span><span class="s2">"</span>
-
-<span class="c1"># Usage</span>
-<span class="n">home</span> <span class="o">=</span> <span class="n">SmartHomeFacade</span><span class="p">()</span>  <span class="c1"># Create a facade instance</span>
-<span class="nb">print</span><span class="p">(</span><span class="n">home</span><span class="o">.</span><span class="n">start_morning</span><span class="p">())</span>  <span class="c1"># Output: "Lights are on. Heater is on."</span>
+<div class="highlight"><pre><span></span><code><span class="c1"># Comparing strings in Python</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">'boy'</span><span class="o">&amp;</span><span class="n">lt</span><span class="p">;</span><span class="s1">'girl'</span><span class="p">)</span>  <span class="c1"># True. Alphabetic order</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">'Boy'</span><span class="o">&amp;</span><span class="n">lt</span><span class="p">;</span><span class="s1">'boy'</span><span class="p">)</span>  <span class="c1"># True. Uppercase before lowercase</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">'Girl'</span><span class="o">&amp;</span><span class="n">lt</span><span class="p">;</span><span class="s1">'boy'</span><span class="p">)</span>  <span class="c1"># True. Uppercase before lowercase so G before b</span>
 </code></pre></div>
 
 </div>
@@ -8533,7 +8431,9 @@ The following script implements the Facade pattern by providing a simple "front 
 <div class="output_area">
 <div class="output_subarea output_stream output_stdout output_text">
 <pre>
-<code>Lights are on. Heater is on.
+<code>True
+True
+True
 </code>
 </pre>
 </div>
@@ -8544,50 +8444,19 @@ The following script implements the Facade pattern by providing a simple "front 
 <div class="cell border-box-sizing text_cell rendered">
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p>18.2.4 Composite
-The Composite pattern allows you to treat individual objects and groups of objects the same way. Think of a file system: a folder can contain files or other folders. By treating them uniformly, you can calculate the size of a folder by simply asking every item inside it (whether it's a file or another folder) for its size.
-The following script shows how the Composite pattern allows you to treat a single object and a group of objects the same way by using a tree structure.</p>
+<p><code>.capitalize()</code> vs <code>.title()</code>—Don't Get These Confused</p>
+<p><code>.capitalize()</code> and <code>.title()</code> sound similar but behave very differently, and beginners frequently mix them up.</p>
+<p><code>.capitalize()</code> capitalizes only the very first character of the entire string and forces every other character to lowercase.</p>
+<p><code>.title()</code>, on the other hand, capitalizes the first letter of every word in the string.</p>
 </div>
 </div>
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
 
-<div class="highlight"><pre><span></span><code><span class="k">class</span><span class="w"> </span><span class="nc">File</span><span class="p">:</span>  <span class="c1"># class File represents a file with a given size</span>
-    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">size</span><span class="p">):</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">size</span> <span class="o">=</span> <span class="n">size</span>  <span class="c1"># size of the file</span>
-
-    <span class="k">def</span><span class="w"> </span><span class="nf">get_size</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>  <span class="c1"># This method returns the size of the file</span>
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">size</span>
-
-<span class="k">class</span><span class="w"> </span><span class="nc">Folder</span><span class="p">:</span> <span class="c1"># class Folder can contain files and other folders</span>
-    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="c1"># We start with an empty list; we don't know the count yet</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">contents</span> <span class="o">=</span> <span class="p">[]</span>
-
-    <span class="c1"># First add all the items to the folder</span>
-    <span class="k">def</span><span class="w"> </span><span class="nf">add</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">item</span><span class="p">):</span>
-        <span class="c1"># This adds any object that has a 'get_size' method</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">contents</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">item</span><span class="p">)</span>  <span class="c1"># Add the item to the folder's contents</span>
-
-    <span class="c1"># Now we need to calculate the total size of the folder</span>
-    <span class="k">def</span><span class="w"> </span><span class="nf">get_size</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>  <span class="c1"># This method returns the total size of the folder</span>
-        <span class="n">total</span> <span class="o">=</span> <span class="mi">0</span>  <span class="c1"># Initialize total size to 0</span>
-        <span class="c1"># The folder iterates over whatever is inside</span>
-        <span class="k">for</span> <span class="n">item</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">contents</span><span class="p">:</span>
-            <span class="n">total</span> <span class="o">=</span> <span class="n">total</span> <span class="o">+</span> <span class="n">item</span><span class="o">.</span><span class="n">get_size</span><span class="p">()</span>
-        <span class="k">return</span> <span class="n">total</span>  <span class="c1"># Return the total size of all items in the folder</span>
-
-<span class="c1"># Usage</span>
-<span class="n">my_folder</span> <span class="o">=</span> <span class="n">Folder</span><span class="p">()</span>  <span class="c1"># Creating a new folder</span>
-<span class="c1"># Now add some files to folder. Use add() to add files of different sizes</span>
-<span class="n">my_folder</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">File</span><span class="p">(</span><span class="mi">10</span><span class="p">))</span> <span class="c1"># Adding a file of size 10</span>
-<span class="n">my_folder</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">File</span><span class="p">(</span><span class="mi">50</span><span class="p">))</span> <span class="c1"># Adding a file of size 50</span>
-<span class="n">my_folder</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">File</span><span class="p">(</span><span class="mi">5</span><span class="p">))</span>  <span class="c1"># Adding a file of size 5</span>
-
-<span class="c1"># Now get the total size of the folder. Use get_size()</span>
-<span class="n">total_size</span> <span class="o">=</span> <span class="n">my_folder</span><span class="o">.</span><span class="n">get_size</span><span class="p">()</span>  <span class="c1"># Calculate the total size of the folder</span>
-<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"Total size: </span><span class="si">{</span><span class="n">total_size</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>  <span class="c1"># Total size: 65</span>
+<div class="highlight"><pre><span></span><code><span class="n">phrase</span> <span class="o">=</span> <span class="s2">"the quick BROWN fox"</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">phrase</span><span class="o">.</span><span class="n">capitalize</span><span class="p">())</span>  <span class="c1"># Output: The quick brown fox</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">phrase</span><span class="o">.</span><span class="n">title</span><span class="p">())</span>       <span class="c1"># Output: The Quick Brown Fox</span>
 </code></pre></div>
 
 </div>
@@ -8596,7 +8465,8 @@ The following script shows how the Composite pattern allows you to treat a singl
 <div class="output_area">
 <div class="output_subarea output_stream output_stdout output_text">
 <pre>
-<code>Total size: 65
+<code>The quick brown fox
+The Quick Brown Fox
 </code>
 </pre>
 </div>
@@ -8607,72 +8477,20 @@ The following script shows how the Composite pattern allows you to treat a singl
 <div class="cell border-box-sizing text_cell rendered">
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p>18.2.5 18.3.5 Proxy
-The Proxy pattern acts as a "placeholder" for another object. It controls access to the original object, allowing you to perform actions like lazy-loading (waiting until the object is actually needed), caching (saving results), or security checks before the real object is ever touched.</p>
+<ol>
+<li>Changing Case: .lower() and .upper()
+These methods return a copy of the string with all characters converted to lowercase or uppercase, respectively. They are incredibly useful for normalizing user input (e.g., making text comparisons case-insensitive).</li>
+</ol>
 </div>
 </div>
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
 
-<div class="highlight"><pre><span></span><code><span class="kn">from</span><span class="w"> </span><span class="nn">abc</span><span class="w"> </span><span class="kn">import</span> <span class="n">ABC</span><span class="p">,</span> <span class="n">abstractmethod</span>
-
-<span class="c1"># Abstract Base Class (ABC)</span>
-<span class="c1"># Defines the common interface that every image class must follow.</span>
-<span class="k">class</span><span class="w"> </span><span class="nc">Image</span><span class="p">(</span><span class="n">ABC</span><span class="p">):</span>
-    <span class="c1"># Every subclass must provide its own implementation of display()</span>
-    <span class="nd">@abstractmethod</span>
-    <span class="k">def</span><span class="w"> </span><span class="nf">display</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="k">pass</span>
-
-<span class="c1"># Internal class that performs the actual work</span>
-<span class="c1"># The leading underscore (_) indicates that this class is intended</span>
-<span class="c1"># for internal use and should normally not be used directly.</span>
-<span class="k">class</span><span class="w"> </span><span class="nc">_RealImage</span><span class="p">(</span><span class="n">Image</span><span class="p">):</span>
-    <span class="c1"># Load the image from disk</span>
-    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">filename</span><span class="p">):</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">filename</span> <span class="o">=</span> <span class="n">filename</span>
-        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"Loading '</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">filename</span><span class="si">}</span><span class="s2">' from disk..."</span><span class="p">)</span>
-
-    <span class="c1"># Display the image</span>
-    <span class="k">def</span><span class="w"> </span><span class="nf">display</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="nb">print</span><span class="p">(</span><span class="s2">"display() method of _RealImage called."</span><span class="p">)</span>
-        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"Displaying '</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">filename</span><span class="si">}</span><span class="s2">'"</span><span class="p">)</span>
-
-<span class="c1"># Proxy class→ Controls access to the real image object.</span>
-<span class="k">class</span><span class="w"> </span><span class="nc">ImageProxy</span><span class="p">(</span><span class="n">Image</span><span class="p">):</span>
-    <span class="c1"># Store the filename without loading the image</span>
-    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">filename</span><span class="p">):</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">filename</span> <span class="o">=</span> <span class="n">filename</span>
-        <span class="c1"># Initially, the real image is not loaded, so we set it to None</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">real_image</span> <span class="o">=</span> <span class="kc">None</span>
-
-    <span class="c1"># Display the image</span>
-    <span class="k">def</span><span class="w"> </span><span class="nf">display</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="nb">print</span><span class="p">(</span><span class="s2">"display() method of ImageProxy called."</span><span class="p">)</span>
-
-        <span class="c1"># Has the real image already been created?</span>
-        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">real_image</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span> <span class="c1"># None means real image not created yet</span>
-            <span class="nb">print</span><span class="p">(</span><span class="s2">"Proxy: Image not loaded yet."</span><span class="p">)</span>
-            <span class="c1"># Lazy Loading: Load real image only when it is actually needed.</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">real_image</span> <span class="o">=</span> <span class="n">_RealImage</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">filename</span><span class="p">)</span>
-
-        <span class="k">else</span><span class="p">:</span>  <span class="c1"># Means real image already created→ skip the loading step</span>
-            <span class="nb">print</span><span class="p">(</span><span class="s2">"Proxy: Image already loaded. Skipping loading step."</span><span class="p">)</span>
-
-        <span class="c1"># Forward the request to the real object</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">real_image</span><span class="o">.</span><span class="n">display</span><span class="p">()</span>
-
-<span class="c1"># Client Code→ client interacts with the proxy instead of the real object.</span>
-<span class="n">photo</span> <span class="o">=</span> <span class="n">ImageProxy</span><span class="p">(</span><span class="s2">"holiday.jpg"</span><span class="p">)</span>
-
-<span class="c1"># First request</span>
-<span class="nb">print</span><span class="p">(</span><span class="s2">"First request:"</span><span class="p">)</span>
-<span class="n">photo</span><span class="o">.</span><span class="n">display</span><span class="p">()</span>
-
-<span class="c1"># Second request</span>
-<span class="nb">print</span><span class="p">(</span><span class="s2">"Second request:"</span><span class="p">)</span>
-<span class="n">photo</span><span class="o">.</span><span class="n">display</span><span class="p">()</span>
+<div class="highlight"><pre><span></span><code><span class="n">msg</span> <span class="o">=</span> <span class="s2">"Python Programming"</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">msg</span><span class="o">.</span><span class="n">lower</span><span class="p">())</span>  <span class="c1"># Output: python programming</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">msg</span><span class="o">.</span><span class="n">upper</span><span class="p">())</span>  <span class="c1"># Output: PYTHON PROGRAMMING</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">msg</span><span class="p">)</span>          <span class="c1"># Output: Python Programming (Original remains unchanged!)</span>
 </code></pre></div>
 
 </div>
@@ -8681,17 +8499,9 @@ The Proxy pattern acts as a "placeholder" for another object. It controls access
 <div class="output_area">
 <div class="output_subarea output_stream output_stdout output_text">
 <pre>
-<code>First request:
-display() method of ImageProxy called.
-Proxy: Image not loaded yet.
-Loading 'holiday.jpg' from disk...
-display() method of _RealImage called.
-Displaying 'holiday.jpg'
-Second request:
-display() method of ImageProxy called.
-Proxy: Image already loaded. Skipping loading step.
-display() method of _RealImage called.
-Displaying 'holiday.jpg'
+<code>python programming
+PYTHON PROGRAMMING
+Python Programming
 </code>
 </pre>
 </div>
@@ -8702,77 +8512,457 @@ Displaying 'holiday.jpg'
 <div class="cell border-box-sizing text_cell rendered">
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p>18.4.1 Observer: The Pub-Sub Model
-The Observer pattern defines a one-to-many dependency. When one object (the Subject) changes state, all its dependents (Observers) are notified and updated automatically.
-In the Observer Pattern, there are two main participants:
-Subject/Publisher  ─────────►  Observer/Subscribers
-The Subject is the object whose state changes. It is also called Publisher because it "publishes" the information, that is, it sends the information to all who are registered with it.
-The Observers are interested in those changes. The observers are called Subscribers because they have subscribed to receive updates.</p>
+<ol>
+<li>Cleaning Text: .strip()
+When reading data from files or user inputs, strings often arrive with accidental leading or trailing whitespaces (spaces, tabs, or newlines). The .strip() method removes these leading and trailing whitespaces cleanly.</li>
+</ol>
 </div>
 </div>
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
 
-<div class="highlight"><pre><span></span><code><span class="kn">from</span><span class="w"> </span><span class="nn">abc</span><span class="w"> </span><span class="kn">import</span> <span class="n">ABC</span><span class="p">,</span> <span class="n">abstractmethod</span>
+<div class="highlight"><pre><span></span><code><span class="n">user_input</span> <span class="o">=</span> <span class="s2">"</span><span class="se">\n</span><span class="s2">   clean_username123   </span><span class="se">\n</span><span class="s2">"</span>
+<span class="n">cleaned_input</span> <span class="o">=</span> <span class="n">user_input</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span>  <span class="c1"># Remove leading and trailing whitespace</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"Original length: </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">user_input</span><span class="p">)</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>   <span class="c1"># Output: 24</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">"After cleaning:"</span><span class="p">,</span> <span class="n">cleaned_input</span><span class="p">)</span>                            <span class="c1"># Output: 'clean_username123'</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"Cleaned length: </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">cleaned_input</span><span class="p">)</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span> <span class="c1"># Output: 18</span>
+</code></pre></div>
 
-<span class="c1"># Subject (Publisher)</span>
-<span class="c1"># Maintains a list of observers and notifies them of changes.</span>
-<span class="k">class</span><span class="w"> </span><span class="nc">WeatherStation</span><span class="p">:</span>
-    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="c1"># Initially, no observers are registered.</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_observers</span> <span class="o">=</span> <span class="p">[]</span>
+</div>
+<div class="output_wrapper">
+<div class="output">
+<div class="output_area">
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>
+<code>Original length: 25
+After cleaning: clean_username123
+Cleaned length: 17
+</code>
+</pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>Breaking Text Apart: .split()
+The .split() method breaks a single string into a list of substrings based on a specified delimiter (separator). If no delimiter is specified, it automatically splits by any whitespace.</p>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
 
-    <span class="c1"># Register a new observer.</span>
-    <span class="k">def</span><span class="w"> </span><span class="nf">attach</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">observer</span><span class="p">):</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_observers</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">observer</span><span class="p">)</span>
+<div class="highlight"><pre><span></span><code><span class="c1"># Splitting by space (default)</span>
+<span class="n">sentence</span> <span class="o">=</span> <span class="s2">"All is well"</span>
+<span class="n">words</span> <span class="o">=</span> <span class="n">sentence</span><span class="o">.</span><span class="n">split</span><span class="p">()</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">words</span><span class="p">)</span>  <span class="c1"># Output: ['All', 'is', 'well']</span>
 
-    <span class="c1"># Remove an observer.</span>
-    <span class="k">def</span><span class="w"> </span><span class="nf">detach</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">observer</span><span class="p">):</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_observers</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span><span class="n">observer</span><span class="p">)</span>
+<span class="c1"># Splitting a filename by a dot (.)</span>
+<span class="n">filename</span> <span class="o">=</span> <span class="s2">"photo.jpg"</span>
+<span class="n">parts</span> <span class="o">=</span> <span class="n">filename</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">"."</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">parts</span><span class="p">)</span>  <span class="c1"># Output: ['photo', 'jpg']</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"File extension: </span><span class="si">{</span><span class="n">parts</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span> <span class="c1"># Output: jpg</span>
+</code></pre></div>
 
-    <span class="c1"># Notify every registered observer.</span>
-    <span class="k">def</span><span class="w"> </span><span class="nf">notify</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">temperature</span><span class="p">):</span>
-        <span class="nb">print</span><span class="p">(</span><span class="s2">"</span><span class="se">\n</span><span class="s2">WeatherStation: Temperature changed.</span><span class="se">\n</span><span class="s2">"</span><span class="p">)</span>
-        <span class="k">for</span> <span class="n">observer</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_observers</span><span class="p">:</span>
-            <span class="n">observer</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">temperature</span><span class="p">)</span>
+</div>
+<div class="output_wrapper">
+<div class="output">
+<div class="output_area">
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>
+<code>['All', 'is', 'well']
+['photo', 'jpg']
+File extension: jpg
+</code>
+</pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<ol>
+<li>Gluing/ Concatenating Text Together: .join()
+The .join() method is the exact inverse of .split(). It takes an iterable (like a list of strings) and glues them together into a single string, using the string it is called on as the connector.</li>
+</ol>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
 
-<span class="c1"># Abstract Base Class (ABC)</span>
-<span class="k">class</span><span class="w"> </span><span class="nc">Observer</span><span class="p">(</span><span class="n">ABC</span><span class="p">):</span>
-    <span class="nd">@abstractmethod</span>
-    <span class="k">def</span><span class="w"> </span><span class="nf">update</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">temperature</span><span class="p">):</span>
-        <span class="k">pass</span>
+<div class="highlight"><pre><span></span><code><span class="n">word_list</span> <span class="o">=</span> <span class="p">[</span><span class="s1">'All'</span><span class="p">,</span> <span class="s1">'is'</span><span class="p">,</span> <span class="s1">'well'</span><span class="p">]</span>
+<span class="c1"># Glue them together using a space as a connector</span>
+<span class="n">combined_space</span> <span class="o">=</span> <span class="s2">" "</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">word_list</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">combined_space</span><span class="p">)</span>  <span class="c1"># Output: All is well</span>
 
-<span class="c1"># Observer 1. Must implement the update() method.</span>
-<span class="k">class</span><span class="w"> </span><span class="nc">PhoneDisplay</span><span class="p">(</span><span class="n">Observer</span><span class="p">):</span>
-    <span class="k">def</span><span class="w"> </span><span class="nf">update</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">temperature</span><span class="p">):</span>
-        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"Phone Display: Temperature = </span><span class="si">{</span><span class="n">temperature</span><span class="si">}</span><span class="s2">°C"</span><span class="p">)</span>
+<span class="c1"># Glue them together with no space</span>
+<span class="n">combined_flat</span> <span class="o">=</span> <span class="s2">""</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">word_list</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">combined_flat</span><span class="p">)</span>   <span class="c1"># Output: Alliswell</span>
+</code></pre></div>
 
-<span class="c1"># Observer 2. Must implement the update() method.</span>
-<span class="k">class</span><span class="w"> </span><span class="nc">LaptopDisplay</span><span class="p">(</span><span class="n">Observer</span><span class="p">):</span>
-    <span class="k">def</span><span class="w"> </span><span class="nf">update</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">temperature</span><span class="p">):</span>
-        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"Laptop Display: Temperature = </span><span class="si">{</span><span class="n">temperature</span><span class="si">}</span><span class="s2">°C"</span><span class="p">)</span>
+</div>
+<div class="output_wrapper">
+<div class="output">
+<div class="output_area">
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>
+<code>All is well
+Alliswell
+</code>
+</pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<ol>
+<li>Modifying Content: .replace()
+Because strings are immutable, you cannot change a character or substring in place. Instead, you use .replace(old, new) to generate a completely new string where all occurrences of the old substring are replaced by the new substring.</li>
+</ol>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
 
-<span class="c1"># Observer 3. Must implement the update() method.</span>
-<span class="k">class</span><span class="w"> </span><span class="nc">WeatherLogger</span><span class="p">(</span><span class="n">Observer</span><span class="p">):</span>
-    <span class="k">def</span><span class="w"> </span><span class="nf">update</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">temperature</span><span class="p">):</span>
-        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"From WeatherLogger: Recorded </span><span class="si">{</span><span class="n">temperature</span><span class="si">}</span><span class="s2">°C"</span><span class="p">)</span>
+<div class="highlight"><pre><span></span><code><span class="n">phrase</span> <span class="o">=</span> <span class="s2">"I am ok"</span>
+<span class="n">new_phrase</span> <span class="o">=</span> <span class="n">phrase</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">"ok"</span><span class="p">,</span> <span class="s2">"not ok"</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">"Original:"</span><span class="p">,</span> <span class="n">phrase</span><span class="p">)</span>      <span class="c1"># Output: I am ok</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">"Modified:"</span><span class="p">,</span> <span class="n">new_phrase</span><span class="p">)</span>  <span class="c1"># Output: I am not ok</span>
+</code></pre></div>
 
-<span class="c1"># Client Code</span>
-<span class="n">station</span> <span class="o">=</span> <span class="n">WeatherStation</span><span class="p">()</span>  <span class="c1"># Create the subject.</span>
+</div>
+<div class="output_wrapper">
+<div class="output">
+<div class="output_area">
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>
+<code>Original: I am ok
+Modified: I am not ok
+</code>
+</pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<ol>
+<li>Searching for Substrings: .find()
+The .find() method searches a string for a specified substring. If it finds the substring, it returns the index of its very first occurrence. If the substring is not found, it returns -1.</li>
+</ol>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
 
-<span class="c1"># Create three observers.</span>
-<span class="n">phone</span> <span class="o">=</span> <span class="n">PhoneDisplay</span><span class="p">()</span>
-<span class="n">laptop</span> <span class="o">=</span> <span class="n">LaptopDisplay</span><span class="p">()</span>
-<span class="n">logger</span> <span class="o">=</span> <span class="n">WeatherLogger</span><span class="p">()</span>
+<div class="highlight"><pre><span></span><code><span class="n">text</span> <span class="o">=</span> <span class="s2">"abracadabra"</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">text</span><span class="o">.</span><span class="n">find</span><span class="p">(</span><span class="s2">"rac"</span><span class="p">))</span>  <span class="c1"># Output: 2 (The substring starts at index 2)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">text</span><span class="o">.</span><span class="n">find</span><span class="p">(</span><span class="s2">"xyz"</span><span class="p">))</span>  <span class="c1"># Output: -1 (Not found)</span>
+</code></pre></div>
 
-<span class="c1"># Register all observers.</span>
-<span class="n">station</span><span class="o">.</span><span class="n">attach</span><span class="p">(</span><span class="n">phone</span><span class="p">)</span>
-<span class="n">station</span><span class="o">.</span><span class="n">attach</span><span class="p">(</span><span class="n">laptop</span><span class="p">)</span>
-<span class="n">station</span><span class="o">.</span><span class="n">attach</span><span class="p">(</span><span class="n">logger</span><span class="p">)</span>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>A Word of Caution: .find() vs .index(): Python actually gives you two ways to search for a substring: .find() and .index(). Both search left to right, and both return the index of the first match. The difference is entirely in how they handle failure.
+•   .find() returns -1 if the substring isn't found.
+•   .index() raises a ValueError and crashes your program if the substring isn't found.</p>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
 
-<span class="c1"># Notify all observers.</span>
-<span class="n">station</span><span class="o">.</span><span class="n">notify</span><span class="p">(</span><span class="mi">32</span><span class="p">)</span>
+<div class="highlight"><pre><span></span><code><span class="n">text</span> <span class="o">=</span> <span class="s2">"abracadabra"</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">text</span><span class="o">.</span><span class="n">find</span><span class="p">(</span><span class="s2">"xyz"</span><span class="p">))</span>   <span class="c1"># Output: -1. Returns quietly</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">text</span><span class="o">.</span><span class="n">index</span><span class="p">(</span><span class="s2">"xyz"</span><span class="p">))</span>  <span class="c1"># Raises: ValueError: substring not found</span>
+</code></pre></div>
+
+</div>
+<div class="output_wrapper">
+<div class="output">
+<div class="output_area">
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>
+<code>-1
+</code>
+</pre>
+</div>
+</div>
+<div class="output_area">
+<div class="output_subarea output_text output_error">
+<pre>
+<span class="ansi-red-fg">---------------------------------------------------------------------------</span>
+<span class="ansi-red-fg">ValueError</span>                                Traceback (most recent call last)
+<span class="ansi-green-fg">/tmp/ipykernel_1685/3649933045.py</span> in <span class="ansi-cyan-fg">&lt;cell line: 0&gt;</span><span class="ansi-blue-fg">()</span>
+<span class="ansi-green-intense-fg ansi-bold">      1</span> text <span class="ansi-blue-fg">=</span> <span class="ansi-blue-fg">"abracadabra"</span>
+<span class="ansi-green-intense-fg ansi-bold">      2</span> print<span class="ansi-blue-fg">(</span>text<span class="ansi-blue-fg">.</span>find<span class="ansi-blue-fg">(</span><span class="ansi-blue-fg">"xyz"</span><span class="ansi-blue-fg">)</span><span class="ansi-blue-fg">)</span>   <span class="ansi-red-fg"># Output: -1. Returns quietly</span>
+<span class="ansi-green-fg">----&gt; 3</span><span class="ansi-red-fg"> </span>print<span class="ansi-blue-fg">(</span>text<span class="ansi-blue-fg">.</span>index<span class="ansi-blue-fg">(</span><span class="ansi-blue-fg">"xyz"</span><span class="ansi-blue-fg">)</span><span class="ansi-blue-fg">)</span>  <span class="ansi-red-fg"># Raises: ValueError: substring not found</span>
+
+<span class="ansi-red-fg">ValueError</span>: substring not found</pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<ol>
+<li>Checking Beginnings and Endings: .startswith() and .endswith()
+Often you don't need to search for a substring anywhere in a string—you only care whether it appears at a specific end. Checking a file's extension, verifying a URL's protocol, or confirming that a command begins with a particular keyword are all "edge" checks rather than "anywhere" checks. Python provides .startswith() and .endswith() for exactly this, and both return a Boolean.</li>
+</ol>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="highlight"><pre><span></span><code><span class="c1"># Demonstrating .startswith() and .endswith()</span>
+
+<span class="n">filename</span> <span class="o">=</span> <span class="s2">"report_2026.pdf"</span>
+<span class="n">url</span> <span class="o">=</span> <span class="s2">"https://www.python.org"</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="n">filename</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s2">"report"</span><span class="p">))</span>  <span class="c1"># Output: True</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">filename</span><span class="o">.</span><span class="n">endswith</span><span class="p">(</span><span class="s2">".pdf"</span><span class="p">))</span>      <span class="c1"># Output: True</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">filename</span><span class="o">.</span><span class="n">endswith</span><span class="p">(</span><span class="s2">".docx"</span><span class="p">))</span>     <span class="c1"># Output: False</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="n">url</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s2">"https"</span><span class="p">))</span>        <span class="c1"># Output: True</span>
+
+<span class="c1"># A common real-world use: routing based on file type</span>
+<span class="k">if</span> <span class="n">filename</span><span class="o">.</span><span class="n">endswith</span><span class="p">(</span><span class="s2">".pdf"</span><span class="p">):</span>  <span class="c1"># True if the filename ends with ".pdf"</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">"Opening as a PDF document."</span><span class="p">)</span>
+<span class="k">elif</span> <span class="n">filename</span><span class="o">.</span><span class="n">endswith</span><span class="p">(</span><span class="s2">".docx"</span><span class="p">):</span>  <span class="c1"># True if the filename ends with ".docx"</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">"Opening as a Word document."</span><span class="p">)</span>
+<span class="k">else</span><span class="p">:</span>                             <span class="c1"># If the filename doesn't match known types</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">"Unsupported file type."</span><span class="p">)</span>
+</code></pre></div>
+
+</div>
+<div class="output_wrapper">
+<div class="output">
+<div class="output_area">
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>
+<code>True
+True
+False
+True
+Opening as a PDF document.
+</code>
+</pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<ol>
+<li>Counting Occurrences: .count()
+Sometimes you don't need the position of a substring at all—you just need to know how many times it appears. The .count() method scans the entire string and returns the total number of non-overlapping occurrences of the substring you're looking for.</li>
+</ol>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="highlight"><pre><span></span><code><span class="c1"># Demonstrating .count()</span>
+<span class="n">sentence</span> <span class="o">=</span> <span class="s2">"The cat, the dog, the rat, and the bat sell hot dogs."</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">sentence</span><span class="o">.</span><span class="n">count</span><span class="p">(</span><span class="s2">"the"</span><span class="p">))</span>   <span class="c1"># Output: 3. "the" but not "The" are counted</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">sentence</span><span class="o">.</span><span class="n">count</span><span class="p">(</span><span class="s2">"a"</span><span class="p">))</span>     <span class="c1"># Output: 5</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">sentence</span><span class="o">.</span><span class="n">count</span><span class="p">(</span><span class="s2">"owl"</span><span class="p">))</span>   <span class="c1"># Output: 0. Not found, so count is 0</span>
+</code></pre></div>
+
+</div>
+<div class="output_wrapper">
+<div class="output">
+<div class="output_area">
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>
+<code>3
+4
+0
+</code>
+</pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>•   <code>.isalpha()</code> — Returns True if the string contains only letters (a–z, A–Z) and has at least one character.</p>
+<p>•   <code>.isdigit()</code> — Returns True if the string contains only digits (0–9) and has at least one character.</p>
+<p>•   <code>.isalnum()</code> — Returns True if the string contains only letters and/or digits (no spaces, no punctuation) and has at least one character.</p>
+<p>•   <code>.isspace()</code> — Returns True if the string contains only whitespace characters (spaces, tabs, newlines) and has at least one character.</p>
+<p>•   <code>.isupper()</code> — Returns True if all the cased characters in the string are uppercase (a string with no cased characters at all returns False).</p>
+<p>•   <code>.islower()</code> — Returns True if all the cased characters in the string are lowercase.</p>
+<p>Example script showing implementation of these string methods:</p>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="highlight"><pre><span></span><code><span class="nb">print</span><span class="p">(</span><span class="s2">"abcd"</span><span class="o">.</span><span class="n">isalpha</span><span class="p">())</span>   <span class="c1"># Output: True. Only letters</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">"1234"</span><span class="o">.</span><span class="n">isdigit</span><span class="p">())</span>   <span class="c1"># Output: True. Only digits</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">"abc123"</span><span class="o">.</span><span class="n">isalnum</span><span class="p">())</span>   <span class="c1"># Output: True. Letters and digits, no space</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">"   "</span><span class="o">.</span><span class="n">isspace</span><span class="p">())</span>   <span class="c1"># Output: True. Only whitespace</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">"HELLO"</span><span class="o">.</span><span class="n">isupper</span><span class="p">())</span>   <span class="c1"># Output: True. All cased characters are uppercase</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">"hello"</span><span class="o">.</span><span class="n">islower</span><span class="p">())</span>   <span class="c1"># Output: True. All cased characters are lowercase</span>
+
+<span class="c1"># A common real-world use: validating input before conversion</span>
+<span class="n">age_input</span> <span class="o">=</span> <span class="nb">input</span><span class="p">(</span><span class="s2">"Enter your age: "</span><span class="p">)</span>
+
+<span class="k">if</span> <span class="n">age_input</span><span class="o">.</span><span class="n">isdigit</span><span class="p">():</span>
+    <span class="n">age</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">age_input</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"You are </span><span class="si">{</span><span class="n">age</span><span class="si">}</span><span class="s2"> years old."</span><span class="p">)</span>
+<span class="k">else</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">"Please enter a valid number."</span><span class="p">)</span>
+</code></pre></div>
+
+</div>
+<div class="output_wrapper">
+<div class="output">
+<div class="output_area">
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>
+<code>True
+True
+True
+True
+True
+True
+Enter your age: 22
+You are 22 years old.
+</code>
+</pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>The use of f- strings for various purposes like (A) string formatting, (B) evaluating expressions, (C) calling a function, and (D) formatting floating-point numbers. It is shown in the script below:</p>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="highlight"><pre><span></span><code><span class="c1"># 1. Basic Variable Interpolation</span>
+<span class="n">name</span><span class="p">,</span> <span class="n">age</span> <span class="o">=</span> <span class="s2">"Alice"</span><span class="p">,</span> <span class="mi">30</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"My name is </span><span class="si">{</span><span class="n">name</span><span class="si">}</span><span class="s2"> and I am </span><span class="si">{</span><span class="n">age</span><span class="si">}</span><span class="s2"> years old."</span><span class="p">)</span>
+<span class="c1"># Output: My name is Alice and I am 30 years old.</span>
+
+<span class="c1"># 2. Dynamic Expression Evaluation</span>
+<span class="n">x</span><span class="p">,</span> <span class="n">y</span> <span class="o">=</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">10</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"The sum of </span><span class="si">{</span><span class="n">x</span><span class="si">}</span><span class="s2"> and </span><span class="si">{</span><span class="n">y</span><span class="si">}</span><span class="s2"> is </span><span class="si">{</span><span class="n">x</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">y</span><span class="si">}</span><span class="s2">."</span><span class="p">)</span>
+<span class="c1"># Output: The sum of 5 and 10 is 15.</span>
+
+<span class="c1"># 3. Direct Function Execution</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">get_shoutout</span><span class="p">(</span><span class="n">text</span><span class="p">):</span>
+    <span class="k">return</span> <span class="n">text</span><span class="o">.</span><span class="n">upper</span><span class="p">()</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"Announcement: </span><span class="si">{</span><span class="n">get_shoutout</span><span class="p">(</span><span class="s1">'system online'</span><span class="p">)</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
+<span class="c1"># Output: Announcement: SYSTEM ONLINE</span>
+
+<span class="c1"># 4. Precision Control &amp;amp; Floating-Point Formatting</span>
+<span class="n">pi</span> <span class="o">=</span> <span class="mf">3.141592653589793</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"Pi to 3 decimal places: </span><span class="si">{</span><span class="n">pi</span><span class="si">:</span><span class="s2">.3f</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
+<span class="c1"># Output: Pi to 3 decimal places: 3.142</span>
+</code></pre></div>
+
+</div>
+<div class="output_wrapper">
+<div class="output">
+<div class="output_area">
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>
+<code>My name is Alice and I am 30 years old.
+The sum of 5 and 10 is 15.
+Announcement: SYSTEM ONLINE
+Pi to 3 decimal places: 3.142
+</code>
+</pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>19.13 Checking for Palindromes
+Algorithmic Execution Steps (Using Negative Indexing)
+-  Step 1: Calculate the absolute length of the input string (n).
+-  Step 2: Compute the comparison limit endpoint: "comp"=n//2.</p>
+<ul>
+<li>Step 3: Initialize a loop tracking counter variable i=0.</li>
+<li>Step 4: While i&lt;"comp" , systematically extract and compare the forward position character at index i with its mirror negative index relative position at -(i + 1).</li>
+<li>Step 5: Evaluate the match condition:
+    If a pair mismatch is detected, terminate immediately and return False.
+    If the pair matches, increment the loop counter (i=i+1) and check the next inner layer.</li>
+<li>Step 6: If the loop exits naturally without hitting a mismatch, the string is verified as symmetrical. Return True.
+Python Implementation Script</li>
+</ul>
+<p>This implementation mirrors the exact tracking variables, conditional diamond checks, and counter increments defined in our algorithmic flowchart.
+The script (Using negative index) to check for a palindrome is given below:</p>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">is_palindrome</span><span class="p">(</span><span class="n">in_string</span><span class="p">):</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"</span><span class="se">\n</span><span class="s2">Evaluating Input String: '</span><span class="si">{</span><span class="n">in_string</span><span class="si">}</span><span class="s2">'"</span><span class="p">)</span>
+    <span class="n">n</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">in_string</span><span class="p">)</span>  <span class="c1"># Length of the input string</span>
+    <span class="n">comp</span> <span class="o">=</span> <span class="n">n</span> <span class="o">//</span> <span class="mi">2</span>  <span class="c1"># Number of comparisons needed (half the length of string)</span>
+
+    <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span>  <span class="c1"># Initialize the loop counter for comparisons</span>
+    <span class="k">while</span> <span class="n">i</span> <span class="o">&amp;</span><span class="n">lt</span><span class="p">;</span> <span class="n">comp</span><span class="p">:</span>  <span class="c1"># Loop until we reach the midpoint of the string</span>
+        <span class="n">forward_char</span> <span class="o">=</span> <span class="n">in_string</span><span class="p">[</span><span class="n">i</span><span class="p">]</span>  <span class="c1"># Character from start of string</span>
+        <span class="n">backward_char</span> <span class="o">=</span> <span class="n">in_string</span><span class="p">[</span><span class="o">-</span><span class="p">(</span><span class="n">i</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)]</span>  <span class="c1"># Character from end of string</span>
+        <span class="k">if</span> <span class="n">forward_char</span> <span class="o">!=</span> <span class="n">backward_char</span><span class="p">:</span>  <span class="c1"># Mismatch found, not a palindrome</span>
+            <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"In iteration </span><span class="si">{</span><span class="n">i</span><span class="si">}</span><span class="s2">: '</span><span class="si">{</span><span class="n">forward_char</span><span class="si">}</span><span class="s2">' != '</span><span class="si">{</span><span class="n">backward_char</span><span class="si">}</span><span class="s2">'"</span><span class="p">)</span>
+            <span class="k">return</span> <span class="kc">False</span>  <span class="c1"># Return False immediately if a mismatch is found</span>
+
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">" -&amp;gt; Iteration </span><span class="si">{</span><span class="n">i</span><span class="si">}</span><span class="s2">: '</span><span class="si">{</span><span class="n">forward_char</span><span class="si">}</span><span class="s2">' matches '</span><span class="si">{</span><span class="n">backward_char</span><span class="si">}</span><span class="s2">'"</span><span class="p">)</span>
+
+        <span class="n">i</span> <span class="o">=</span> <span class="n">i</span> <span class="o">+</span> <span class="mi">1</span>  <span class="c1"># Increment the loop counter for the next comparison</span>
+
+    <span class="c1"># 8. Executed if the loop finishes cleanly (No path taken)</span>
+    <span class="c1"># Flowchart Block: Result = True</span>
+    <span class="k">return</span> <span class="kc">True</span>
+
+<span class="c1"># EXECUTION AND VERIFICATION TEST CASES</span>
+
+<span class="c1"># Case 1: Valid Palindrome (Odd length)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">"Is racecar a palindrome?:"</span><span class="p">,</span> <span class="n">is_palindrome</span><span class="p">(</span><span class="s2">"racecar"</span><span class="p">))</span>
+
+<span class="c1"># Case 2: Invalid Palindrome (Mismatched central character)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">"Is racexar a palindrome?:"</span><span class="p">,</span> <span class="n">is_palindrome</span><span class="p">(</span><span class="s2">"racexar"</span><span class="p">))</span>
 </code></pre></div>
 
 </div>
@@ -8782,11 +8972,17 @@ The Observers are interested in those changes. The observers are called Subscrib
 <div class="output_subarea output_stream output_stdout output_text">
 <pre>
 <code>
-WeatherStation: Temperature changed.
+Evaluating Input String: 'racecar'
+ -&gt; Iteration 0: 'r' matches 'r'
+ -&gt; Iteration 1: 'a' matches 'a'
+ -&gt; Iteration 2: 'c' matches 'c'
+Is racecar a palindrome?: True
 
-Phone Display: Temperature = 32°C
-Laptop Display: Temperature = 32°C
-From WeatherLogger: Recorded 32°C
+Evaluating Input String: 'racexar'
+ -&gt; Iteration 0: 'r' matches 'r'
+ -&gt; Iteration 1: 'a' matches 'a'
+In iteration 2: 'c' != 'x'
+Is racexar a palindrome?: False
 </code>
 </pre>
 </div>
@@ -8797,74 +8993,59 @@ From WeatherLogger: Recorded 32°C
 <div class="cell border-box-sizing text_cell rendered">
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p>18.4.2 Strategy: Swapping Algorithms
-The Strategy pattern allows you to define a family of algorithms, encapsulate each one, and make them interchangeable. This lets the algorithm vary independently from the clients that use it.</p>
+<p>19.14 Method 2: Slicing and Direct Equality Comparison.</p>
+<p>An alternative, highly "Pythonic" strategy to check for a palindrome is to generate a reversed copy of the entire string in memory and compare it directly to the original using the equality operator (==).</p>
+<p>Rather than walking through index pairs using a loop, we leverage extended slicing with a negative step ([::-1]) to reverse the sequence in a single operational step.
+Algorithmic Execution Steps (Using String Reversal)</p>
+<ul>
+<li>Step 1: Accept the input string (s).</li>
+<li>Step 2: Generate a fully reversed copy of the string using the expression rev = s[::-1].</li>
+<li>
+<p>Step 3: Evaluate the conditional equality check (s == rev):</p>
+<ul>
+<li>If the strings are identical (Yes), categorize the input as a Palindrome.</li>
+<li>If the strings do not match (No), categorize it as Not a Palindrome.</li>
+</ul>
+</li>
+</ul>
+<p>Python Implementation Script (Matching the Reversal Flowchart)
+This script perfectly mirrors the linear logic and direct equality branch of your second flowchart.</p>
 </div>
 </div>
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
 
-<div class="highlight"><pre><span></span><code><span class="kn">from</span><span class="w"> </span><span class="nn">abc</span><span class="w"> </span><span class="kn">import</span> <span class="n">ABC</span><span class="p">,</span> <span class="n">abstractmethod</span>
+<div class="highlight"><pre><span></span><code><span class="c1"># SCRIPT: PALINDROME VALIDATION ALGORITHM (STRING REVERSAL METHOD)</span>
+<span class="c1"># This script checks for a palindrome by creating a mirrored copy of the input</span>
+<span class="c1"># string using extended slicing and performing a direct equality comparison.</span>
 
-<span class="c1"># Abstract Base Class (ABC) Every payment strategy must implement pay() method</span>
-<span class="k">class</span><span class="w"> </span><span class="nc">PaymentStrategy</span><span class="p">(</span><span class="n">ABC</span><span class="p">):</span>
-    <span class="nd">@abstractmethod</span>
-    <span class="k">def</span><span class="w"> </span><span class="nf">pay</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">amount</span><span class="p">):</span>
-        <span class="k">pass</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">check_palindrome_reversal</span><span class="p">(</span><span class="n">s</span><span class="p">):</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"</span><span class="se">\n</span><span class="s2">Evaluating Input String (s): '</span><span class="si">{</span><span class="n">s</span><span class="si">}</span><span class="s2">'"</span><span class="p">)</span>
 
-<span class="c1"># Concrete Strategy 1</span>
-<span class="k">class</span><span class="w"> </span><span class="nc">CreditCardPayment</span><span class="p">(</span><span class="n">PaymentStrategy</span><span class="p">):</span>
-    <span class="c1"># Pay using a credit card</span>
-    <span class="k">def</span><span class="w"> </span><span class="nf">pay</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">amount</span><span class="p">):</span>
-        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"Paid ₹</span><span class="si">{</span><span class="n">amount</span><span class="si">}</span><span class="s2"> using Credit Card."</span><span class="p">)</span>
 
-<span class="c1"># Concrete Strategy 2</span>
-<span class="k">class</span><span class="w"> </span><span class="nc">BitcoinPayment</span><span class="p">(</span><span class="n">PaymentStrategy</span><span class="p">):</span>
-    <span class="c1"># Pay using Bitcoin</span>
-    <span class="k">def</span><span class="w"> </span><span class="nf">pay</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">amount</span><span class="p">):</span>
-        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"Paid ₹</span><span class="si">{</span><span class="n">amount</span><span class="si">}</span><span class="s2"> using Bitcoin."</span><span class="p">)</span>
+    <span class="c1"># Creates a reversed copy of the string using a stride/step of -1</span>
+    <span class="n">rev</span> <span class="o">=</span> <span class="n">s</span><span class="p">[::</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">" -&amp;gt; Generated Reversed String (rev): '</span><span class="si">{</span><span class="n">rev</span><span class="si">}</span><span class="s2">'"</span><span class="p">)</span>
 
-<span class="c1"># Concrete Strategy 3</span>
-<span class="k">class</span><span class="w"> </span><span class="nc">UPIPayment</span><span class="p">(</span><span class="n">PaymentStrategy</span><span class="p">):</span>
-    <span class="c1"># Pay using UPI</span>
-    <span class="k">def</span><span class="w"> </span><span class="nf">pay</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">amount</span><span class="p">):</span>
-        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"Paid ₹</span><span class="si">{</span><span class="n">amount</span><span class="si">}</span><span class="s2"> using UPI."</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">s</span> <span class="o">==</span> <span class="n">rev</span><span class="p">:</span>
+        <span class="c1"># Flowchart Block: Palindrome</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">" -&amp;gt; Decision: Strings match! Result = True"</span><span class="p">)</span>
+        <span class="k">return</span> <span class="s2">"Palindrome"</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="c1"># Flowchart Block: Not Palindrome</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">" -&amp;gt; Decision: Strings mismatch! Result = False"</span><span class="p">)</span>
+        <span class="k">return</span> <span class="s2">"Not Palindrome"</span>
 
-<span class="c1"># Context. Uses whichever payment strategy is currently selected.</span>
-<span class="c1"># strategy is passed to the ShoppingCart at runtime, allowing the client to</span>
-<span class="c1"># change the payment method without modifying the ShoppingCart class.</span>
-<span class="k">class</span><span class="w"> </span><span class="nc">ShoppingCart</span><span class="p">:</span>
-    <span class="c1"># Store the initial payment strategy</span>
-    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">strategy</span><span class="p">):</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">strategy</span> <span class="o">=</span> <span class="n">strategy</span>
+<span class="c1"># EXECUTION AND VERIFICATION TEST CASES</span>
 
-    <span class="c1"># Change the payment strategy at runtime</span>
-    <span class="k">def</span><span class="w"> </span><span class="nf">set_strategy</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">strategy</span><span class="p">):</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">strategy</span> <span class="o">=</span> <span class="n">strategy</span>
+<span class="c1"># Case 1: Valid Palindrome Match</span>
+<span class="n">result_1</span> <span class="o">=</span> <span class="n">check_palindrome_reversal</span><span class="p">(</span><span class="s2">"level"</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"Is 'level' a palindrome? </span><span class="si">{</span><span class="n">result_1</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
 
-    <span class="c1"># Complete the payment</span>
-    <span class="k">def</span><span class="w"> </span><span class="nf">checkout</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">amount</span><span class="p">):</span>
-        <span class="nb">print</span><span class="p">(</span><span class="s2">"ShoppingCart: Processing payment..."</span><span class="p">)</span>
-        <span class="c1"># Delegate the payment to the selected strategy</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">strategy</span><span class="o">.</span><span class="n">pay</span><span class="p">(</span><span class="n">amount</span><span class="p">)</span>
-
-<span class="c1"># Client Code</span>
-
-<span class="c1"># Create a shopping cart that initially uses a credit card.</span>
-<span class="n">cart</span> <span class="o">=</span> <span class="n">ShoppingCart</span><span class="p">(</span><span class="n">CreditCardPayment</span><span class="p">())</span>
-<span class="nb">print</span><span class="p">(</span><span class="s2">"First Checkout"</span><span class="p">)</span>
-<span class="n">cart</span><span class="o">.</span><span class="n">checkout</span><span class="p">(</span><span class="mi">1000</span><span class="p">)</span>
-
-<span class="c1"># Switch to another payment method.</span>
-<span class="n">cart</span><span class="o">.</span><span class="n">set_strategy</span><span class="p">(</span><span class="n">BitcoinPayment</span><span class="p">())</span>
-<span class="nb">print</span><span class="p">(</span><span class="s2">"Second Checkout"</span><span class="p">)</span>
-<span class="n">cart</span><span class="o">.</span><span class="n">checkout</span><span class="p">(</span><span class="mi">1000</span><span class="p">)</span>
-
-<span class="c1"># Switch again without changing the ShoppingCart class.</span>
-<span class="n">cart</span><span class="o">.</span><span class="n">set_strategy</span><span class="p">(</span><span class="n">UPIPayment</span><span class="p">())</span>
-<span class="nb">print</span><span class="p">(</span><span class="s2">"Third Checkout"</span><span class="p">)</span>
-<span class="n">cart</span><span class="o">.</span><span class="n">checkout</span><span class="p">(</span><span class="mi">1000</span><span class="p">)</span>
+<span class="c1"># Case 2: Mismatched Case Sincerity (Python is case-sensitive!)</span>
+<span class="n">result_2</span> <span class="o">=</span> <span class="n">check_palindrome_reversal</span><span class="p">(</span><span class="s2">"madams"</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"Is 'madams' a palindrome? </span><span class="si">{</span><span class="n">result_2</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
 </code></pre></div>
 
 </div>
@@ -8873,356 +9054,16 @@ The Strategy pattern allows you to define a family of algorithms, encapsulate ea
 <div class="output_area">
 <div class="output_subarea output_stream output_stdout output_text">
 <pre>
-<code>First Checkout
-ShoppingCart: Processing payment...
-Paid ₹1000 using Credit Card.
-Second Checkout
-ShoppingCart: Processing payment...
-Paid ₹1000 using Bitcoin.
-Third Checkout
-ShoppingCart: Processing payment...
-Paid ₹1000 using UPI.
-</code>
-</pre>
-</div>
-</div>
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing text_cell rendered">
-<div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<p>18.4.3 Command Method
-Command: Turns a request into a stand-alone object. This allows you to parameterize objects with different requests, queue operations, and support undoable operations.</p>
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
+<code>
+Evaluating Input String (s): 'level'
+ -&gt; Generated Reversed String (rev): 'level'
+ -&gt; Decision: Strings match! Result = True
+Is 'level' a palindrome? Palindrome
 
-<div class="highlight"><pre><span></span><code><span class="kn">from</span><span class="w"> </span><span class="nn">abc</span><span class="w"> </span><span class="kn">import</span> <span class="n">ABC</span><span class="p">,</span> <span class="n">abstractmethod</span>
-
-<span class="c1"># Abstract Base Class (ABC). Every command must implement execute().</span>
-<span class="k">class</span><span class="w"> </span><span class="nc">Command</span><span class="p">(</span><span class="n">ABC</span><span class="p">):</span>
-    <span class="nd">@abstractmethod</span>
-    <span class="k">def</span><span class="w"> </span><span class="nf">execute</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="k">pass</span>
-
-<span class="c1"># Receiver. The object that actually performs the work.</span>
-<span class="k">class</span><span class="w"> </span><span class="nc">Bulb</span><span class="p">:</span>
-    <span class="c1"># Turn the bulb on</span>
-    <span class="k">def</span><span class="w"> </span><span class="nf">turn_on</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="nb">print</span><span class="p">(</span><span class="s2">"bulb is ON."</span><span class="p">)</span>
-
-    <span class="c1"># Turn the bulb off</span>
-    <span class="k">def</span><span class="w"> </span><span class="nf">turn_off</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="nb">print</span><span class="p">(</span><span class="s2">"bulb is OFF."</span><span class="p">)</span>
-
-<span class="c1"># Concrete Command (TurnOnCommand gets receiver (bulb) as a parameter)</span>
-<span class="k">class</span><span class="w"> </span><span class="nc">TurnOnCommand</span><span class="p">(</span><span class="n">Command</span><span class="p">):</span>
-    <span class="c1"># Store the receiver (bulb)</span>
-    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">bulb</span><span class="p">):</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">bulb</span> <span class="o">=</span> <span class="n">bulb</span>
-
-    <span class="c1"># Execute the request</span>
-    <span class="k">def</span><span class="w"> </span><span class="nf">execute</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">bulb</span><span class="o">.</span><span class="n">turn_on</span><span class="p">()</span>  <span class="c1"># Call the receiver's (bulb) turn_on() method</span>
-
-<span class="c1"># Concrete Command (TurnOffCommand gets receiver (bulb) as a parameter)</span>
-<span class="k">class</span><span class="w"> </span><span class="nc">TurnOffCommand</span><span class="p">(</span><span class="n">Command</span><span class="p">):</span>
-    <span class="c1"># Store the receiver (bulb)</span>
-    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">bulb</span><span class="p">):</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">bulb</span> <span class="o">=</span> <span class="n">bulb</span>
-
-    <span class="c1"># Execute the request</span>
-    <span class="k">def</span><span class="w"> </span><span class="nf">execute</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">bulb</span><span class="o">.</span><span class="n">turn_off</span><span class="p">()</span>  <span class="c1"># Call the receiver's (bulb) turn_off() method</span>
-
-<span class="c1"># Invoker</span>
-<span class="c1"># Executes whichever command it receives.</span>
-<span class="k">class</span><span class="w"> </span><span class="nc">RemoteControl</span><span class="p">:</span>
-    <span class="k">def</span><span class="w"> </span><span class="nf">press_button</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">command</span><span class="p">):</span>
-        <span class="n">command</span><span class="o">.</span><span class="n">execute</span><span class="p">()</span>
-
-<span class="c1"># Client Code</span>
-
-<span class="c1"># Create the receiver.</span>
-<span class="n">my_bulb</span> <span class="o">=</span> <span class="n">Bulb</span><span class="p">()</span>
-
-<span class="c1"># Create the commands.</span>
-<span class="n">turn_on</span> <span class="o">=</span> <span class="n">TurnOnCommand</span><span class="p">(</span><span class="n">my_bulb</span><span class="p">)</span>
-<span class="n">turn_off</span> <span class="o">=</span> <span class="n">TurnOffCommand</span><span class="p">(</span><span class="n">my_bulb</span><span class="p">)</span>
-
-<span class="c1"># Create the invoker.</span>
-<span class="n">remote</span> <span class="o">=</span> <span class="n">RemoteControl</span><span class="p">()</span>
-
-<span class="c1"># Execute different commands.</span>
-<span class="n">remote</span><span class="o">.</span><span class="n">press_button</span><span class="p">(</span><span class="n">turn_on</span><span class="p">)</span>
-<span class="n">remote</span><span class="o">.</span><span class="n">press_button</span><span class="p">(</span><span class="n">turn_off</span><span class="p">)</span>
-</code></pre></div>
-
-</div>
-<div class="output_wrapper">
-<div class="output">
-<div class="output_area">
-<div class="output_subarea output_stream output_stdout output_text">
-<pre>
-<code>bulb is ON.
-bulb is OFF.
-</code>
-</pre>
-</div>
-</div>
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing text_cell rendered">
-<div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<p>18.4.4 Iterator:
-Provides a way to access the elements of an aggregate object sequentially without exposing its underlying representation.</p>
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-
-<div class="highlight"><pre><span></span><code><span class="c1"># Iterator class. Returns one element at a time.</span>
-<span class="k">class</span><span class="w"> </span><span class="nc">NumberIterator</span><span class="p">:</span>
-
-    <span class="c1"># Step 1: Store the collection and initialise the position.</span>
-    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">numbers</span><span class="p">):</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">numbers</span> <span class="o">=</span> <span class="n">numbers</span>  <span class="c1"># Store the collection of numbers</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">index</span> <span class="o">=</span> <span class="mi">0</span>  <span class="c1"># Initialize the position to first element (index 0)</span>
-
-    <span class="c1"># Step 2: Return the next element.</span>
-    <span class="k">def</span><span class="w"> </span><span class="fm">__next__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="c1"># Stop when every element has been visited.</span>
-        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">index</span> <span class="o">&amp;</span><span class="n">gt</span><span class="p">;</span><span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">numbers</span><span class="p">):</span>  <span class="c1"># Check if index is out of bounds</span>
-            <span class="k">raise</span> <span class="ne">StopIteration</span>    <span class="c1"># Raise StopIteration→ iteration complete</span>
-        <span class="c1"># Retrieve the current element.</span>
-        <span class="n">value</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">numbers</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">index</span><span class="p">]</span>  <span class="c1"># Get the current element</span>
-        <span class="c1"># Move to the next position.</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">index</span> <span class="o">+=</span> <span class="mi">1</span>  <span class="c1"># Increment the index to point to the next element</span>
-        <span class="k">return</span> <span class="n">value</span>
-
-<span class="c1"># Collection class</span>
-<span class="k">class</span><span class="w"> </span><span class="nc">NumberCollection</span><span class="p">:</span>
-
-    <span class="c1"># Step 3: Store the collection.</span>
-    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">data</span> <span class="o">=</span> <span class="p">[</span><span class="mi">10</span><span class="p">,</span> <span class="mi">20</span><span class="p">,</span> <span class="mi">30</span><span class="p">,</span> <span class="mi">40</span><span class="p">]</span>  <span class="c1"># Initialize collection with some numbers</span>
-
-    <span class="c1"># Step 4: Return an iterator object.</span>
-    <span class="k">def</span><span class="w"> </span><span class="fm">__iter__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="c1"># Return an instance of NumberIterator initialized with collection data</span>
-        <span class="k">return</span> <span class="n">NumberIterator</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="p">)</span>
-
-<span class="c1"># Client Code</span>
-
-<span class="c1"># Step 5: Create the collection.</span>
-<span class="n">numbers</span> <span class="o">=</span> <span class="n">NumberCollection</span><span class="p">()</span>
-
-<span class="c1"># Step 6: Iterate through the collection.</span>
-<span class="k">for</span> <span class="n">value</span> <span class="ow">in</span> <span class="n">numbers</span><span class="p">:</span>
-    <span class="nb">print</span><span class="p">(</span><span class="n">value</span><span class="p">)</span>
-</code></pre></div>
-
-</div>
-<div class="output_wrapper">
-<div class="output">
-<div class="output_area">
-<div class="output_subarea output_stream output_stdout output_text">
-<pre>
-<code>10
-20
-30
-40
-</code>
-</pre>
-</div>
-</div>
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing text_cell rendered">
-<div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<p>18.4.5 Template Method:
-Defines the program skeleton of an algorithm in a method, called the template method, which defers some steps to subclasses.</p>
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-
-<div class="highlight"><pre><span></span><code><span class="kn">from</span><span class="w"> </span><span class="nn">abc</span><span class="w"> </span><span class="kn">import</span> <span class="n">ABC</span><span class="p">,</span> <span class="n">abstractmethod</span>
-
-<span class="c1"># Abstract Base Class (ABC)</span>
-<span class="k">class</span><span class="w"> </span><span class="nc">ReportGenerator</span><span class="p">(</span><span class="n">ABC</span><span class="p">):</span>
-
-    <span class="c1"># Step 1: Template Method. Defines the overall algorithm.</span>
-    <span class="k">def</span><span class="w"> </span><span class="nf">generate_report</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">open_report</span><span class="p">()</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">write_content</span><span class="p">()</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">save_report</span><span class="p">()</span>
-
-    <span class="c1"># Step 2: Common step. Opens the report.</span>
-    <span class="k">def</span><span class="w"> </span><span class="nf">open_report</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="nb">print</span><span class="p">(</span><span class="s2">"Opening report (common step)..."</span><span class="p">)</span>
-
-    <span class="c1"># Step 3: Common step. Saves the report.</span>
-    <span class="k">def</span><span class="w"> </span><span class="nf">save_report</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="nb">print</span><span class="p">(</span><span class="s2">"Saving report (common step)..."</span><span class="p">)</span>
-
-    <span class="c1"># Step 4: Step that subclasses must implement (abstract method)</span>
-    <span class="nd">@abstractmethod</span>
-    <span class="k">def</span><span class="w"> </span><span class="nf">write_content</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="k">pass</span>
-
-<span class="c1"># 1st Concrete subclass. Overrides the write_content() method</span>
-<span class="c1"># to provide specific behavior for sales reports.</span>
-<span class="k">class</span><span class="w"> </span><span class="nc">SalesReport</span><span class="p">(</span><span class="n">ReportGenerator</span><span class="p">):</span>
-
-    <span class="c1"># Step 5: Write sales-specific content</span>
-    <span class="k">def</span><span class="w"> </span><span class="nf">write_content</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="nb">print</span><span class="p">(</span><span class="s2">"Writing sales data (Specific to SalesReport)..."</span><span class="p">)</span>
-
-<span class="c1"># 2nd Concrete subclass. Overrides the write_content() method</span>
-<span class="c1"># to provide specific behavior for student reports.</span>
-<span class="k">class</span><span class="w"> </span><span class="nc">StudentReport</span><span class="p">(</span><span class="n">ReportGenerator</span><span class="p">):</span>
-
-    <span class="c1"># Step 6: Write student-specific content</span>
-    <span class="k">def</span><span class="w"> </span><span class="nf">write_content</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="nb">print</span><span class="p">(</span><span class="s2">"Writing student marks (Specific to StudentReport)..."</span><span class="p">)</span>
-
-<span class="c1"># Client Code</span>
-
-<span class="c1"># Step 7: Create a SalesReport object.</span>
-<span class="n">sales_report</span> <span class="o">=</span> <span class="n">SalesReport</span><span class="p">()</span>  <span class="c1"># Create an instance of SalesReport</span>
-
-<span class="c1"># Step 8: Execute the template method. call→ generate_report()→ which calls</span>
-<span class="c1"># open_report(), write_content(), and save_report(). The write_content() method</span>
-<span class="c1"># will be the one defined in SalesReport, so→ print "Writing sales data...".</span>
-<span class="n">sales_report</span><span class="o">.</span><span class="n">generate_report</span><span class="p">()</span>
-<span class="c1"># Step 9: Create a StudentReport object.</span>
-<span class="n">student_report</span> <span class="o">=</span> <span class="n">StudentReport</span><span class="p">()</span>  <span class="c1"># Create an instance of StudentReport</span>
-
-<span class="c1"># Step 10: Execute the same template method. call→ generate_report()→ which calls</span>
-<span class="c1"># open_report(), write_content(), and save_report(). The write_content() method</span>
-<span class="c1"># will be the one defined in StudentReport, so→ print "Writing student marks...".</span>
-<span class="n">student_report</span><span class="o">.</span><span class="n">generate_report</span><span class="p">()</span>
-</code></pre></div>
-
-</div>
-<div class="output_wrapper">
-<div class="output">
-<div class="output_area">
-<div class="output_subarea output_stream output_stdout output_text">
-<pre>
-<code>Opening report (common step)...
-Writing sales data (Specific to SalesReport)...
-Saving report (common step)...
-Opening report (common step)...
-Writing student marks (Specific to StudentReport)...
-Saving report (common step)...
-</code>
-</pre>
-</div>
-</div>
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing text_cell rendered">
-<div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<p>18.5.3 Mixins and Multiple Inheritance
-A mixin is a small class that provides a specific feature. It is not usually designed to exist independently. Instead, it adds reusable behavior to another class.
-Example:
-A class may need: (1) logging ability, (2) serialization ability (Saving to disk), (3) validation ability.
-Instead of creating a huge parent class, we can create small mixins.
-Example script</p>
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-
-<div class="highlight"><pre><span></span><code><span class="k">class</span><span class="w"> </span><span class="nc">LoggingMixin</span><span class="p">:</span>
-    <span class="c1"># Mixin class that provides logging functionality</span>
-    <span class="k">def</span><span class="w"> </span><span class="nf">log</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">message</span><span class="p">):</span>
-        <span class="nb">print</span><span class="p">(</span><span class="s2">"LOG:"</span><span class="p">,</span> <span class="n">message</span><span class="p">)</span>
-
-<span class="c1"># class "User" has its own responsibility: managing user-related operations</span>
-<span class="c1"># Logging is added as an extra capability using mixin</span>
-<span class="k">class</span><span class="w"> </span><span class="nc">User</span><span class="p">(</span><span class="n">LoggingMixin</span><span class="p">):</span>  <span class="c1"># Inherits from LoggingMixin to gain logging ability</span>
-
-    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">):</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="n">name</span>
-
-    <span class="k">def</span><span class="w"> </span><span class="nf">register</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span> <span class="c1"># Use log method of LoggingMixin→ log user registration</span>
-        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"Registering user: </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="s2">"User registration completed"</span><span class="p">)</span>
-
-    <span class="k">def</span><span class="w"> </span><span class="nf">greet</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>  <span class="c1"># Own responsibility of "User": greeting the user</span>
-        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"Hello </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
-
-<span class="n">user</span> <span class="o">=</span> <span class="n">User</span><span class="p">(</span><span class="s2">"Alex"</span><span class="p">)</span>
-<span class="n">user</span><span class="o">.</span><span class="n">register</span><span class="p">()</span>
-<span class="n">user</span><span class="o">.</span><span class="n">greet</span><span class="p">()</span>
-</code></pre></div>
-
-</div>
-<div class="output_wrapper">
-<div class="output">
-<div class="output_area">
-<div class="output_subarea output_stream output_stdout output_text">
-<pre>
-<code>Registering user: Alex
-LOG: User registration completed
-Hello Alex
-</code>
-</pre>
-</div>
-</div>
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing text_cell rendered">
-<div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<p>18.5.5 Duck Typing as an Alternative to Formal Interfaces
-Many languages require explicit interfaces. Python often follows: "If it behaves like the required object, use it." This idea is called duck typing. The famous explanation: If something walks like a duck and talks like a duck, treat it as a duck.</p>
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-
-<div class="highlight"><pre><span></span><code><span class="k">class</span><span class="w"> </span><span class="nc">Dog</span><span class="p">:</span>
-    <span class="k">def</span><span class="w"> </span><span class="nf">speak</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>  <span class="c1"># Dog's speak method returns "Bark"</span>
-        <span class="k">return</span> <span class="s2">"Bark"</span>
-
-<span class="k">class</span><span class="w"> </span><span class="nc">Cat</span><span class="p">:</span>
-    <span class="k">def</span><span class="w"> </span><span class="nf">speak</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>  <span class="c1"># Cat's speak method returns "Meow"</span>
-        <span class="k">return</span> <span class="s2">"Meow"</span>
-
-<span class="k">def</span><span class="w"> </span><span class="nf">make_sound</span><span class="p">(</span><span class="n">obj</span><span class="p">):</span>  <span class="c1"># make_sound() takes an object→ calls its speak() method</span>
-    <span class="nb">print</span><span class="p">(</span><span class="nb">type</span><span class="p">(</span><span class="n">obj</span><span class="p">)</span><span class="o">.</span><span class="vm">__name__</span><span class="p">,</span> <span class="s2">"says"</span><span class="p">,</span> <span class="n">obj</span><span class="o">.</span><span class="n">speak</span><span class="p">())</span>
-
-<span class="n">make_sound</span><span class="p">(</span><span class="n">Dog</span><span class="p">())</span>  <span class="c1"># Output: Dog says Bark</span>
-<span class="n">make_sound</span><span class="p">(</span><span class="n">Cat</span><span class="p">())</span>  <span class="c1"># Output: Cat says Meow</span>
-<span class="c1"># Both objects work because they provide: speak()</span>
-</code></pre></div>
-
-</div>
-<div class="output_wrapper">
-<div class="output">
-<div class="output_area">
-<div class="output_subarea output_stream output_stdout output_text">
-<pre>
-<code>Dog says Bark
-Cat says Meow
+Evaluating Input String (s): 'madams'
+ -&gt; Generated Reversed String (rev): 'smadam'
+ -&gt; Decision: Strings mismatch! Result = False
+Is 'madams' a palindrome? Not Palindrome
 </code>
 </pre>
 </div>
