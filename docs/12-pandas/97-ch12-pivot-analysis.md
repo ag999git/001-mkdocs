@@ -676,7 +676,7 @@ A data scientist reshapes data depending on the task:
 
 ### Flowchart showing steps in the script
 
-![Flowchart showing steps in the script](../.gitbook/assets/ch12-pivot-table2.png)
+![Flowchart showing steps in the script](/001-mkdocs/gitbook-assets/ch12-pivot-table2.png)
 
 ---
 

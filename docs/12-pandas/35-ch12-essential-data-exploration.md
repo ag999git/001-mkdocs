@@ -20,7 +20,7 @@ You will learn to:
 
 ## Flowchart showing the steps of Essential Data Exploration in Pandas
 
-![Essential Data Exploration in Pandas](../.gitbook/assets/ch12-Essential-Data-Exploration.png)
+![Essential Data Exploration in Pandas](/001-mkdocs/gitbook-assets/ch12-Essential-Data-Exploration.png)
 
 ## Script showing usage of Pandas DataFrame exploration methods such as `.head()`, `.tail()`, `.sample()`, `.info()`, `.describe()`, `.value_counts()`, and `.nunique()`
 

@@ -66,7 +66,7 @@ The DataFrame is not actually copied into separate variables; it is **virtually 
 
 **Flowchart of Grouping:**
 
-![Flowchart of Grouping](../.gitbook/assets/ch12-grouping.png)
+![Flowchart of Grouping](/001-mkdocs/gitbook-assets/ch12-grouping.png)
 
 ### The Three Stages in a Table
 

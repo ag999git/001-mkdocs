@@ -190,7 +190,7 @@ print(repr(pet1))
 
 **The following figure shows how str() and repr() interact:**
 
-![Figure](../.gitbook/assets/ch-7-oop-str-vs-repr.png)
+![Figure](/001-mkdocs/gitbook-assets/ch-7-oop-str-vs-repr.png)
 
 ## Comparing all four cases
 

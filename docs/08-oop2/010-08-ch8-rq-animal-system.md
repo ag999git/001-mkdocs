@@ -258,7 +258,7 @@ The table below maps every requirement from Part A/B to the specific tool used, 
 
 It also shows the attributes and methods of each class.
 
-![Diagram](../.gitbook/assets/ch8-inheritence-cat-dog.png)
+![Diagram](/001-mkdocs/gitbook-assets/ch8-inheritence-cat-dog.png)
 
 
 

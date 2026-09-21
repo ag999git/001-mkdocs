@@ -135,7 +135,7 @@ End of script.
 
 ### Another way of visualizing how `__del__()` operates is as follows:
 
-![Figure: How del works](../.gitbook/assets/ch07-oop-del.png)
+![Figure: How del works](/001-mkdocs/gitbook-assets/ch07-oop-del.png)
 
 ---
 

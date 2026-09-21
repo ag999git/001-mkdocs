@@ -427,7 +427,7 @@ Notice this correctly stops at row 19 (position 20 is excluded), and only 3 colu
 
 The following diagram illustrates the overall indexing decision process:
 
-![FlowChart](../.gitbook/assets/ch12-pandas-indexing.png)
+![FlowChart](/001-mkdocs/gitbook-assets/ch12-pandas-indexing.png)
 
 ---
 

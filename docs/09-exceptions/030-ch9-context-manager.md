@@ -396,7 +396,7 @@ The same three cases, as a flowchart (plain Mermaid `flowchart TD` syntax, which
 
 The following flowchart (from the printed book) shows the same flow of execution for the script above:
 
-![Diagram](../.gitbook/assets/ch9-exceptions-context-manager.png)
+![Diagram](/001-mkdocs/gitbook-assets/ch9-exceptions-context-manager.png)
 
 ---
 

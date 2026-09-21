@@ -535,11 +535,11 @@ plt.show()
 
 ### Flowchart showing flow of execution of above script
 
-![Project1](../.gitbook/assets/ch12-project1-palmer-penguin.png)
+![Project1](/001-mkdocs/gitbook-assets/ch12-project1-palmer-penguin.png)
 
 ### The resulting plot is as follows
 
-![Plot](../.gitbook/assets/ch12-project1-palmer-penguin-image.png)
+![Plot](/001-mkdocs/gitbook-assets/ch12-project1-palmer-penguin-image.png)
 
 With `plt.show()`, you should see a bar chart with three bars — Biscoe, Dream, and Torgersen along the x-axis, and the penguin count on the y-axis — matching the `df_penguins` table printed in Step 8.
 

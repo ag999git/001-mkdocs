@@ -100,7 +100,7 @@ The index is the "address" of a row — the label Pandas uses to look it up.
 
 The full flow of this project is shown below (from the book's own resources):
 
-![Flow chart Data cleaning Structural change](../.gitbook/assets/ch12-data-cleaning-structural-change.png)
+![Flow chart Data cleaning Structural change](/001-mkdocs/gitbook-assets/ch12-data-cleaning-structural-change.png)
 
 ---
 

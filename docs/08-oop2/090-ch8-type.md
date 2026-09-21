@@ -134,7 +134,7 @@ print(dog_instance.speak())   # -> Woof!
 
 ## Diagram showing the flow of execution of above script
 
-![Diagram](../.gitbook/assets/ch-8-type-explain.png)
+![Diagram](/001-mkdocs/gitbook-assets/ch-8-type-explain.png)
 
 ### What this script demonstrates
 

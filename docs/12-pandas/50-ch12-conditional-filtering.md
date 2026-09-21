@@ -343,7 +343,7 @@ Use clear and well-structured conditions for readability and correctness
 
 The following diagram (from the book's own resources) shows the full sequence of steps in this project:
 
-![Filtering Flowchart](../.gitbook/assets/ch12-filtering.png)
+![Filtering Flowchart](/001-mkdocs/gitbook-assets/ch12-filtering.png)
 
 ---
 

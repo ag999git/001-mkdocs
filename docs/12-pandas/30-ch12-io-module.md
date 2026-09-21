@@ -36,7 +36,7 @@ The `io` module is Python's built-in toolkit for handling input and output — r
 
 **Visual hierarchy of the `io` module:**
 
-![Visual Hierarchy of io Module](../.gitbook/assets/ch12-io-module.png)
+![Visual Hierarchy of io Module](/001-mkdocs/gitbook-assets/ch12-io-module.png)
 
 ---
 

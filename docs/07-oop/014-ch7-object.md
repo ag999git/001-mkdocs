@@ -92,7 +92,7 @@ You can see the complete list yourself at any time with `dir(object)`.
 
 The following flowchart shows the hierarchy of some inbuilt and user created classes. Note:- Exceptions as a class are discussed in the chapter on exceptions
 
-![Diagram](../.gitbook/assets/ch-7-oop-object-base.png)
+![Diagram](/001-mkdocs/gitbook-assets/ch-7-oop-object-base.png)
 
 Whether a class explicitly writes `(object)`, writes nothing at all, or is one of Python's own built-in types, the destination is always the same single root.
 

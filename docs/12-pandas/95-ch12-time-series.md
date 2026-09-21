@@ -403,7 +403,7 @@ BEST PRACTICES:
 
 <summary>Flowchart of the script</summary>
 
-![Flowchart of the script](../.gitbook/assets/ch12-timeline.png)
+![Flowchart of the script](/001-mkdocs/gitbook-assets/ch12-timeline.png)
 
 ### Another flow chart
 

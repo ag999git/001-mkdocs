@@ -299,7 +299,7 @@ Each class contributes its message exactly once, in MRO order — **no duplicati
 
 \*\*The following diagram shows how the MRO works for `__init__()` and `super()`
 
-![Diagram](../.gitbook/assets/ch8-multiple-inherit-super2.png)
+![Diagram](/001-mkdocs/gitbook-assets/ch8-multiple-inherit-super2.png)
 
 
 ## Quick recap

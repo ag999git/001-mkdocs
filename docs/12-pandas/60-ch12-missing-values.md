@@ -33,7 +33,7 @@ Real-world data is never perfect. When you encounter missing or incorrect values
 
 Dropping data has real consequences: dropping *columns* reduces the number of "features" available in your dataset; dropping *rows* can introduce **bias**, if the rows you happen to lose aren't a fair, random sample of the whole dataset.
 
-![Missing data small/ large](../.gitbook/assets/ch12-missing-data-small-large.png)
+![Missing data small/ large](/001-mkdocs/gitbook-assets/ch12-missing-data-small-large.png)
 
 ### A follow-up question worth exploring
 
@@ -106,7 +106,7 @@ This is genuinely risky on a dataset like this one: since almost every column ha
 
 The full six-step flow is shown below (from the book's own resources):
 
-![Script flow chart- Missing data](../.gitbook/assets/ch12-handling-missing-data-script-6steps.png)
+![Script flow chart- Missing data](/001-mkdocs/gitbook-assets/ch12-handling-missing-data-script-6steps.png)
 
 ---
 

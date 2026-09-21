@@ -274,7 +274,7 @@ print(d1.name, "collar is d2's collar?", d1.collar is d2.collar)   # -> True
 
 ## The following diagram shows the relationships between the classes for the above script
 
-![Diagram](../.gitbook/assets/ch8-composition.png)
+![Diagram](/001-mkdocs/gitbook-assets/ch8-composition.png)
 
 ---
 

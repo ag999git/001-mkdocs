@@ -165,7 +165,7 @@ bark()
 
 
 
-![Diagram shows situation without and with using functools](../.gitbook/assets/ch-6-using-functools.png)
+![Diagram shows situation without and with using functools](/001-mkdocs/gitbook-assets/ch-6-using-functools.png)
 
 ---
 
