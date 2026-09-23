@@ -58,7 +58,7 @@ File handling matters in essentially every real Python program beyond the smalle
 
 ## The file lifecycle, visualized
 
-![Flowchart](/001-mkdocs/resources/ch-10-file-handling-1.png)
+![Flowchart](../resources/ch-10-file-handling-1.png)
 
 
 
