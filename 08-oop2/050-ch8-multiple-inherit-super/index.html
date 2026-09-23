@@ -8260,7 +8260,7 @@
 <hr />
 <h2 id="the-diamond-structure">The diamond structure<a class="headerlink" href="#the-diamond-structure" title="Permanent link">&para;</a></h2>
 <p>A very common shape in multiple inheritance looks like this: two classes (<code>Walker</code> and <code>Swimmer</code>) both inherit from the same base class (<code>Pet</code>), and a further class (<code>Dog</code>) inherits from both of them.</p>
-<p><img alt="Flowchart" src="/001-mkdocs/resources/ch-8-august-2026-11-diamond-structure.png" /></p>
+<p><img alt="Flowchart" src="../../resources/ch-8-august-2026-11-diamond-structure.png" /></p>
 <p>The shape gives this pattern its name: <code>Pet</code> sits at the top, <code>Walker</code> and <code>Swimmer</code> form the two "sides," and <code>Dog</code> sits at the bottom — a diamond. The natural question this raises: <strong>when <code>Dog</code> is created, does <code>Pet.__init__</code> run once, or twice (once via each side)?</strong> The rules below explain exactly how Python guarantees it only ever runs once.</p>
 <hr />
 <h2 id="correct-way-using-super-cooperative-design">Correct way using <code>super()</code> (cooperative design)<a class="headerlink" href="#correct-way-using-super-cooperative-design" title="Permanent link">&para;</a></h2>
@@ -8470,10 +8470,10 @@ Write code to:
 </blockquote>
 <hr />
 <h2 id="constructor-flow-for-dog1-visualized">Constructor flow for <code>Dog1</code>, visualized<a class="headerlink" href="#constructor-flow-for-dog1-visualized" title="Permanent link">&para;</a></h2>
-<p><img alt="Flowchart" src="/001-mkdocs/resources/ch-8-august-2026-dog1-constructor.png" /></p>
+<p><img alt="Flowchart" src="../../resources/ch-8-august-2026-dog1-constructor.png" /></p>
 <p><strong>Why this order?</strong> Because <code>Dog1</code>'s MRO is <code>Dog1 → Walker → Swimmer → Pet → object</code>, and each <code>__init__</code> call chains to <code>super().__init__()</code>, which walks straight down this exact sequence, one step at a time.</p>
 <h2 id="method-flow-for-dog1action-visualized">Method flow for <code>Dog1.action()</code>, visualized<a class="headerlink" href="#method-flow-for-dog1action-visualized" title="Permanent link">&para;</a></h2>
-<p><img alt="Flowchart" src="/001-mkdocs/resources/ch-8-august-2026-11-dog1-action.png" /></p>
+<p><img alt="Flowchart" src="../../resources/ch-8-august-2026-11-dog1-action.png" /></p>
 <p>Each class contributes its message exactly once, in MRO order — <strong>no duplication</strong>, even though <code>Pet</code> is technically an ancestor reachable through <em>two</em> different paths (via <code>Walker</code> and via <code>Swimmer</code>). This is the diamond problem being correctly resolved: without the MRO's cooperation rules, a naive design might have printed <code>"Pet action"</code> (or run <code>Pet.__init__</code>) twice.</p>
 <hr />
 <h2 id="flow-chart-alternate">Flow chart (Alternate)<a class="headerlink" href="#flow-chart-alternate" title="Permanent link">&para;</a></h2>

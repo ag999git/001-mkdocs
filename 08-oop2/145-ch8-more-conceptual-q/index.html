@@ -8137,7 +8137,7 @@
 <hr />
 <p><strong>10. How does the C3 Linearization algorithm fix the problems of a simpler "depth-first" search?</strong></p>
 <p><strong>C3 Linearization</strong> is the specific algorithm Python actually uses to calculate the MRO. It guarantees two things: a child class is always checked <em>before</em> any of its parents, and multiple parents are checked in the exact order they were listed. This matters because a simpler, older-style "pure depth-first" search (used by Python 2's old-style classes) could accidentally check a shared grandparent class <em>before</em> fully finishing the second parent — visiting an ancestor too early, out of order. C3 Linearization fixes this by strictly guaranteeing "child before parent, left parent before right parent" at every single step.</p>
-<p><img alt="Flowchart" src="/001-mkdocs/resources/ch-8-august-2026-conceptual-question-II-10.png" /></p>
+<p><img alt="Flowchart" src="../../resources/ch-8-august-2026-conceptual-question-II-10.png" /></p>
 <p>With C3 Linearization, <code>Dog</code>'s MRO is <code>Dog → Walker → Swimmer → Pet → object</code> — <code>Pet</code> (the shared grandparent) is correctly checked <em>last</em>, only after both <code>Walker</code> and <code>Swimmer</code> have had their turn, exactly as the earlier "Diamond Problem" chapter page demonstrated with real code.</p>
 <hr />
 <p><strong>11. What is the significance of the <code>__mro__</code> attribute?</strong></p>
@@ -8194,7 +8194,7 @@
 <span class="n">a</span> <span class="o">=</span> <span class="n">Airplane</span><span class="p">()</span>
 <span class="nb">print</span><span class="p">(</span><span class="nb">isinstance</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">Flyer</span><span class="p">))</span>          <span class="c1"># -&gt; True</span>
 </code></pre></div>
-<p><img alt="Flowchart" src="/001-mkdocs/resources/ch-8-august-2026-conceptual-question-II-22.png" /></p>
+<p><img alt="Flowchart" src="../../resources/ch-8-august-2026-conceptual-question-II-22.png" /></p>
 <p>This allows for <strong>loose coupling</strong>: a class can satisfy a type check without needing to physically fit into a rigid inheritance tree at all.</p>
 <hr />
 <p><strong>23. When should you use the <code>register()</code> method?</strong></p>
@@ -8223,7 +8223,7 @@
 <span class="n">reg</span><span class="p">[</span><span class="s2">"car1"</span><span class="p">]</span> <span class="o">=</span> <span class="s2">"Toyota"</span>   <span class="c1"># calls __setitem__ automatically</span>
 <span class="nb">print</span><span class="p">(</span><span class="n">reg</span><span class="p">[</span><span class="s2">"car1"</span><span class="p">])</span>       <span class="c1"># -&gt; Toyota  (calls __getitem__ automatically)</span>
 </code></pre></div>
-<p><img alt="Flowchart" src="/001-mkdocs/resources/ch-8-august-2026-conceptual-question-II-25.png" /></p>
+<p><img alt="Flowchart" src="../../resources/ch-8-august-2026-conceptual-question-II-25.png" /></p>
 <hr />
 <p><strong>26. What is a Namespace, in the context of object identity?</strong></p>
 <p>A namespace is a dictionary-like structure mapping variable names to the objects (technically, the <code>id()</code>s of the objects — see the earlier chapter page, "Proving That <code>self</code> Is Just the Object Itself") they refer to. Because each namespace is separate, two completely different parts of a program can use the exact same variable name to mean two completely different things, without any conflict — this is a big part of what makes Python code modular.</p>
