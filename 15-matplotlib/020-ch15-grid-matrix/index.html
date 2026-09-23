@@ -9673,20 +9673,7 @@ Temperature in Ranchi in Mar = 22
 <p><a href="#table-of-contents">Back to the Table of Contents</a></p>
 <h4 id="flowchart-types-of-plot-data">Flowchart: Types of Plot Data<a class="headerlink" href="#flowchart-types-of-plot-data" title="Permanent link">&para;</a></h4>
 <p>The flowchart below shows how to decide which kind of data you have and which method to use.</p>
-<div class="highlight"><pre><span></span><code>flowchart TD
-    A[Look at how the values are arranged] --&gt; B{Is each reading a pair of x and y values}
-    B --&gt;|Yes| C[Coordinate data]
-    B --&gt;|No| D{Are the values arranged in rows and columns}
-    D --&gt;|Yes| E[Grid or matrix data]
-    D --&gt;|No| F[Reorganize the data first, for example with pivot]
-    F --&gt; E
-    C --&gt; G{What should the graph show}
-    G --&gt;|Trend or change over time| H[Use plot]
-    G --&gt;|Separate points or a relationship| I[Use scatter]
-    E --&gt; J{What should the graph show}
-    J --&gt;|Each value as a colored cell| K[Use imshow]
-    J --&gt;|Lines or bands of equal value| L[Use contour or contourf]
-</code></pre></div>
+<p><img alt="Deciding whether your data is coordinate data or grid data, and which method to use" src="../../resources/ch-15-fig-07-coordinate-or-grid-data.png" /></p>
 <p><a href="#table-of-contents">Back to the Table of Contents</a></p>
 <h4 id="important-note-on-two-variables">Important Note on Two Variables<a class="headerlink" href="#important-note-on-two-variables" title="Permanent link">&para;</a></h4>
 <blockquote>
@@ -10264,17 +10251,7 @@ Reshaped data:
 </code></pre></div>
 <p><a href="#table-of-contents">Back to the Table of Contents</a></p>
 <h4 id="flowchart-matrix-slicing">Flowchart: Matrix Slicing<a class="headerlink" href="#flowchart-matrix-slicing" title="Permanent link">&para;</a></h4>
-<div class="highlight"><pre><span></span><code>flowchart TD
-    A[Start with a matrix] --&gt; B[Decide the first and last row needed]
-    B --&gt; C[row_start = first row index]
-    C --&gt; D[row_end = last row index plus 1]
-    D --&gt; E{Are all columns needed}
-    E --&gt;|Yes| F[Use a single colon for the columns]
-    E --&gt;|No| G[column_start = first column index and column_end = last column index plus 1]
-    F --&gt; H[Write matrix with row part, comma, column part inside square brackets]
-    G --&gt; H
-    H --&gt; I[Print the result and check its shape]
-</code></pre></div>
+<p><img alt="Writing a matrix slice, one decision at a time" src="../../resources/ch-15-fig-08-matrix-slicing-steps.png" /></p>
 <p><a href="#table-of-contents">Back to the Table of Contents</a></p>
 <h4 id="small-concept-script">Small Concept Script<a class="headerlink" href="#small-concept-script" title="Permanent link">&para;</a></h4>
 <div class="highlight"><pre><span></span><code><span class="c1"># Step 1 - Import NumPy</span>
@@ -10506,16 +10483,7 @@ A[::2, ::2] =
 <p><a href="#table-of-contents">Back to the Table of Contents</a></p>
 <h2 id="solution-to-part-b">Solution to Part B<a class="headerlink" href="#solution-to-part-b" title="Permanent link">&para;</a></h2>
 <p>The six tasks follow one path. The flights data starts as a long table, is reshaped into a matrix, is sliced, and is then plotted in two different ways.</p>
-<div class="highlight"><pre><span></span><code>flowchart TD
-    A[Task 1 - Load the flights table with 144 rows] --&gt; B[Task 2 - Pivot into a 12 by 12 matrix]
-    B --&gt; C[Task 3 - Convert to a NumPy array and slice the years 1952 to 1958]
-    A --&gt; D[Task 4 - Pick one year and plot it as coordinate data]
-    D --&gt; E[Line plot and scatter plot]
-    C --&gt; F[Task 5 - Plot the sliced matrix as grid data]
-    F --&gt; G[imshow and contourf]
-    E --&gt; H[Task 6 - Compare the graphs]
-    G --&gt; H
-</code></pre></div>
+<p><img alt="The six tasks of the flights script, and how the two routes meet again at the comparison" src="../../resources/ch-15-fig-09-flights-script-tasks.png" /></p>
 <p><a href="#table-of-contents">Back to the Table of Contents</a></p>
 <h3 id="solution-to-task-1-load-the-dataset">Solution to Task 1: Load the Dataset<a class="headerlink" href="#solution-to-task-1-load-the-dataset" title="Permanent link">&para;</a></h3>
 <p><strong>Objective</strong></p>
@@ -10686,10 +10654,7 @@ Most passengers in a month  : 622
 <li>values → passengers</li>
 </ul>
 <p>The pandas method <code>pivot()</code> does this. It takes one column for the row labels, one column for the column labels, and one column for the values that fill the cells. See <a href="https://pandas.pydata.org/docs/reference/api/pandas.DataFrame.pivot.html">pandas DataFrame.pivot</a>.</p>
-<div class="highlight"><pre><span></span><code>flowchart LR
-    A[Long table - year, month, passengers - 144 rows] --&gt; B[pivot with index year, columns month, values passengers]
-    B --&gt; C[Matrix - 12 rows of years by 12 columns of months]
-</code></pre></div>
+<p><img alt="A long table becomes a matrix when it is pivoted" src="../../resources/ch-15-fig-10-pivot-long-to-matrix.png" /></p>
 <p>The small table below shows what <code>pivot()</code> does with the first two months of 1949 and 1950.</p>
 <table>
 <thead>
