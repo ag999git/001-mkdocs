@@ -8611,13 +8611,14 @@
 <li>If there is a comma, Python creates a tuple.</li>
 <li>If there is no comma, the brackets only group the value. The value keeps its own type, such as <code>int</code> or <code>str</code>.</li>
 </ol>
-<div class="highlight"><pre><span></span><code>flowchart TD
+<div class="highlight"><pre><span></span><code>flowchart LR
     A["Step 1: Python reads the value on the right of ="] --&gt; B{"Step 2: Is it an empty pair of brackets ( ) ?"}
     B -- Yes --&gt; C["Step 3: An empty tuple is created"]
     B -- No --&gt; D{"Step 4: Is there at least one comma?"}
     D -- Yes --&gt; E["Step 5: A tuple is created"]
     D -- No --&gt; F["Step 6: The brackets only group the value. It keeps its own type, for example int"]
 </code></pre></div>
+<p><img alt="Q1. Define syntactic criteria for tuples. Why does x = (5) fail to produce a tuple?" src="../../resources/ch19-tuples-conceptual-qa-fig-01.png" /></p>
 <p><strong>Script: the comma makes the tuple</strong></p>
 <div class="highlight"><pre><span></span><code><span class="c1"># Step 1 - Brackets around a single value only group it</span>
 <span class="n">x</span> <span class="o">=</span> <span class="p">(</span><span class="mi">5</span><span class="p">)</span>
@@ -9015,6 +9016,7 @@ AttributeError: 'tuple' object has no attribute 'append'
     E -- Yes --&gt; F["Step 6: The old tuple stays in memory, unchanged"]
     E -- No --&gt; G["Step 7: Python frees the memory of the old tuple"]
 </code></pre></div>
+<p><img alt="Q5. Explain how t1 = t1 + (4, 5) modifies a variable. Trace memory via id()." src="../../resources/ch19-tuples-conceptual-qa-fig-02.png" /></p>
 <p><strong>Script: tracing memory with <code>id()</code></strong></p>
 <div class="highlight"><pre><span></span><code><span class="c1"># Step 1 - Create a tuple and note its id</span>
 <span class="n">t1</span> <span class="o">=</span> <span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span>
@@ -9302,7 +9304,7 @@ Read lst[2] 1,000,000 times: 0.012 seconds
 </ul>
 <p>In Python 3.14 and later the first message also tells you how many items there were: <code>too many values to unpack (expected 2, got 3)</code>.</p>
 <p><strong>How unpacking works, step by step</strong></p>
-<div class="highlight"><pre><span></span><code>flowchart TD
+<div class="highlight"><pre><span></span><code>flowchart LR
     A["Step 1: Python evaluates the right-hand side, for example (10, 20, 30)"] --&gt; B["Step 2: Count the items on the right"]
     B --&gt; C["Step 3: Count the variables on the left"]
     C --&gt; D{"Step 4: Are the two counts equal?"}
@@ -9310,6 +9312,7 @@ Read lst[2] 1,000,000 times: 0.012 seconds
     D -- "No, too many items" --&gt; F["Step 6: ValueError - too many values to unpack"]
     D -- "No, too few items" --&gt; G["Step 7: ValueError - not enough values to unpack"]
 </code></pre></div>
+<p><img alt="Q8. Detail tuple packing vs. unpacking. What happens during structural mismatches?" src="../../resources/ch19-tuples-conceptual-qa-fig-03.png" /></p>
 <p><strong>Summary table</strong></p>
 <table>
 <thead>
@@ -9779,7 +9782,7 @@ No results found.
 </code></pre></div>
 <p>Notice that the first line, <code>invalid_key = (1, [2, 3])</code>, works without any problem. You are allowed to create such a tuple. The error comes only on the second line, when Python tries to use the tuple as a key.</p>
 <p><strong>How Python checks a key, step by step</strong></p>
-<div class="highlight"><pre><span></span><code>flowchart TD
+<div class="highlight"><pre><span></span><code>flowchart LR
     A["Step 1: Python is asked to use an object as a dictionary key"] --&gt; B{"Step 2: Is the object a tuple?"}
     B -- No --&gt; C{"Step 3: Is the object itself hashable? For example int or str"}
     C -- Yes --&gt; D["Step 4: The key is accepted"]
@@ -9789,6 +9792,7 @@ No results found.
     G -- Yes --&gt; H["Step 8: The tuple is accepted as a key"]
     G -- No --&gt; I["Step 9: TypeError - unhashable type: list"]
 </code></pre></div>
+<p><img alt="Q13. State requirements for dictionary keys. Can a tuple containing a list be a key?" src="../../resources/ch19-tuples-conceptual-qa-fig-04.png" /></p>
 <p>In this chart, the "not a tuple" branch uses steps 3 to 5, and the "tuple" branch uses steps 6 to 9. Note that the check in Step 6 goes all the way down. A tuple inside a tuple is checked item by item as well.</p>
 <p><strong>Which tuples can be keys?</strong></p>
 <table>
@@ -9967,6 +9971,7 @@ Lowest: 45 | Highest: 92
     D --&gt; E["Step 5: Unpack: b gets 5"]
     E --&gt; F["Step 6: Result: a = 10, b = 5"]
 </code></pre></div>
+<p><img alt="Q15. Explain Pythonic variable swapping via a, b = b, a without temporary storage." src="../../resources/ch19-tuples-conceptual-qa-fig-05.png" /></p>
 <p>A technical note for the curious: for two or three names, CPython is clever enough to skip building a real tuple and swaps the values directly. The result is exactly the same, so it is still correct to think of it as packing and unpacking.</p>
 <p><strong>Script: swapping values</strong></p>
 <div class="highlight"><pre><span></span><code><span class="c1"># Step 1 - The traditional way, with a temporary variable</span>
@@ -10018,7 +10023,7 @@ List after swapping first and last: ['blue', 'green', 'red']
 <li>The loop goes back to Step 2 for the next pair.</li>
 <li>When no pairs are left, the loop ends.</li>
 </ol>
-<div class="highlight"><pre><span></span><code>flowchart TD
+<div class="highlight"><pre><span></span><code>flowchart LR
     A["Step 1: d.items() provides the key-value pairs"] --&gt; B{"Step 2: Is there another pair?"}
     B -- Yes --&gt; C["Step 3: Take the next pair, for example ('apple', 40)"]
     C --&gt; D["Step 4: Unpack: key = 'apple'"]
@@ -10027,6 +10032,7 @@ List after swapping first and last: ['blue', 'green', 'red']
     F --&gt; B
     B -- No --&gt; G["Step 7: The loop ends"]
 </code></pre></div>
+<p><img alt="Q16. How does loop unpacking operate on dict.items() collections? Detail the steps." src="../../resources/ch19-tuples-conceptual-qa-fig-06.png" /></p>
 <p>This built-in unpacking means you do not need to write <code>pair[0]</code> and <code>pair[1]</code> inside the loop. Your loops become shorter, cleaner and much easier to read.</p>
 <p><strong>Script: looping with and without unpacking</strong></p>
 <div class="highlight"><pre><span></span><code><span class="n">prices</span> <span class="o">=</span> <span class="p">{</span><span class="s2">"apple"</span><span class="p">:</span> <span class="mi">40</span><span class="p">,</span> <span class="s2">"banana"</span><span class="p">:</span> <span class="mi">10</span><span class="p">,</span> <span class="s2">"mango"</span><span class="p">:</span> <span class="mi">60</span><span class="p">}</span>
@@ -10090,7 +10096,7 @@ mango costs 60
 <li>If no case matches, nothing happens, unless there is a final <code>case _:</code>, which catches everything that is left.</li>
 </ol>
 <p>In the example, the first case fails at Step 3 (<code>404</code> is not <code>200</code>). The second case passes all the checks, so <code>msg</code> becomes <code>"Not Found"</code> and the program prints <code>Error Alert: Not Found</code>.</p>
-<div class="highlight"><pre><span></span><code>flowchart TD
+<div class="highlight"><pre><span></span><code>flowchart LR
     A["Step 1: Take the next case pattern, from top to bottom"] --&gt; B{"Step 2: Is the value a sequence of the right length?"}
     B -- No --&gt; F{"Step 6: Are there more case patterns?"}
     B -- Yes --&gt; C{"Step 3: Do the fixed values match, for example 404?"}
@@ -10100,6 +10106,7 @@ mango costs 60
     F -- Yes --&gt; A
     F -- No --&gt; G["Step 7: No match - nothing runs, unless case _ is present"]
 </code></pre></div>
+<p><img alt="Q17. Explain structural pattern matching (match-case) on tuples. Detail the flow." src="../../resources/ch19-tuples-conceptual-qa-fig-07.png" /></p>
 <p><strong>Script: matching HTTP status tuples</strong></p>
 <p>An HTTP status code is the number a web server sends back to your browser. For example, <code>200</code> means "OK" and <code>404</code> means "page not found".</p>
 <div class="highlight"><pre><span></span><code><span class="c1"># Step 1 - A function that reacts to a (code, message) tuple</span>
@@ -10185,6 +10192,7 @@ Not a (code, message) pair
     B --&gt; C["Step 3: [0] picks its first item"]
     C --&gt; D["Step 4: Result is 3"]
 </code></pre></div>
+<p><img alt="Q18. Explain nested tuple indexing. How do you extract 3 from ((1, 2), (3, 4))?" src="../../resources/ch19-tuples-conceptual-qa-fig-08.png" /></p>
 <p><strong>Script: nested indexing</strong></p>
 <div class="highlight"><pre><span></span><code><span class="c1"># Step 1 - Create a nested tuple</span>
 <span class="n">t</span> <span class="o">=</span> <span class="p">((</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">),</span> <span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">))</span>
@@ -10338,7 +10346,7 @@ t3 is t1: True | t3 == t1: True
 <span class="n">new_t</span> <span class="o">=</span> <span class="n">t</span><span class="p">[:</span><span class="mi">2</span><span class="p">]</span> <span class="o">+</span> <span class="n">t</span><span class="p">[</span><span class="mi">3</span><span class="p">:]</span>
 <span class="nb">print</span><span class="p">(</span><span class="n">new_t</span><span class="p">)</span>  <span class="c1"># Output: ('a', 'b', 'd')</span>
 </code></pre></div>
-<div class="highlight"><pre><span></span><code>flowchart TD
+<div class="highlight"><pre><span></span><code>flowchart LR
     A["Step 1: Start with t = ('a', 'b', 'c', 'd') and remove position 2"] --&gt; B["Step 2: Slice before it: t[:2] gives ('a', 'b')"]
     A --&gt; C["Step 3: Slice after it: t[3:] gives ('d',)"]
     B --&gt; D["Step 4: Join the two slices with +"]
@@ -10346,6 +10354,7 @@ t3 is t1: True | t3 == t1: True
     D --&gt; E["Step 5: New tuple ('a', 'b', 'd')"]
     A --&gt; F["Step 6: The original t is still ('a', 'b', 'c', 'd')"]
 </code></pre></div>
+<p><img alt="Q20. Detail how to simulate element removal from an immutable tuple using slicing." src="../../resources/ch19-tuples-conceptual-qa-fig-09.png" /></p>
 <p>This approach keeps the original tuple <code>t</code> completely safe and unchanged in memory. Any other part of the program that uses <code>t</code> will not be affected.</p>
 <p><strong>Script: removing an item by building a new tuple</strong></p>
 <div class="highlight"><pre><span></span><code><span class="c1"># Step 1 - The original tuple</span>
