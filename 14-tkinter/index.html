@@ -81,6 +81,11 @@
     <label class="md-overlay" for="__drawer"></label>
     <div data-md-component="skip">
       
+        
+        <a href="#chapter-14-gui-programming-with-tkinter" class="md-skip">
+          Skip to content
+        </a>
+      
     </div>
     <div data-md-component="announce">
       
@@ -8014,9 +8019,82 @@
   
 
 
-  <h1>Overview</h1>
-
-
+<h1 id="chapter-14-gui-programming-with-tkinter">Chapter 14: GUI Programming with Tkinter<a class="headerlink" href="#chapter-14-gui-programming-with-tkinter" title="Permanent link">&para;</a></h1>
+<p>The online companion to Chapter 14 of the book. Tkinter ships with every standard Python installation, so it needs no separate install. It is the natural way to turn a script that only prints to a console into a program with a window, buttons and menus that anyone can use.</p>
+<p>The printed chapter covers the widgets and the main loop. These pages go further: the window itself and its lifecycle, the container widgets in full, the one mistake that makes images vanish, delayed callbacks, and error handling in a program that must not simply stop. They also carry the full answers to every question at the end of the chapter.</p>
+<p>You need Chapters 7 and 8 (object-oriented programming) first, and Chapter 9 (exceptions) for the error-handling pages.</p>
+<h2 id="the-pages">The Pages<a class="headerlink" href="#the-pages" title="Permanent link">&para;</a></h2>
+<table>
+<thead>
+<tr>
+<th>Page</th>
+<th>What it covers</th>
+<th>Best for</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><a href="040-ch14-advance-window-config/">Advanced Window Configuration and Lifecycle</a></td>
+<td>Sizing, position, resizing rules, full screen, and closing a window properly</td>
+<td>After the printed chapter</td>
+</tr>
+<tr>
+<td><a href="045-ch14-container-widgets/">Container Widgets: A Reference</a></td>
+<td>Every Tkinter and ttk container in one place: Frame, LabelFrame, PanedWindow, Notebook and the rest</td>
+<td>Look-up while building</td>
+</tr>
+<tr>
+<td><a href="050-ch14-photoimage/">Why Tkinter Images Disappear</a></td>
+<td><code>PhotoImage</code>, variables and garbage collection: the single most confusing bug for beginners</td>
+<td>The first time an image will not show</td>
+</tr>
+<tr>
+<td><a href="060-ch14-tkinter-errors2/">Delayed Tasks, Safe Callbacks and Extra Windows</a></td>
+<td><code>after()</code>, callbacks that outlive their window, and Toplevel windows</td>
+<td>When your program uses a timer</td>
+</tr>
+<tr>
+<td><a href="070-ch14-global-error/">Uncaught Exceptions and sys.excepthook</a></td>
+<td>Catching the errors that would otherwise vanish into the console</td>
+<td>Read with the page below</td>
+</tr>
+<tr>
+<td><a href="080-ch14-safe-unsafe-error-after/">Safe and Unsafe Delayed Callbacks</a></td>
+<td>What goes wrong when an <code>after()</code> job fires after its widget is gone, and how to cancel cleanly</td>
+<td>After the <code>after()</code> page</td>
+</tr>
+<tr>
+<td><a href="090-ch14-advanced-error/">Professional Error Handling</a></td>
+<td>Logging, global hooks and live validation together in one worked program</td>
+<td>The whole picture</td>
+</tr>
+<tr>
+<td><a href="095-ch14-conceptual-qa/">Conceptual Questions and Answers</a></td>
+<td>Twenty questions with full answers, on widgets, geometry managers, variables and events</td>
+<td>Revision</td>
+</tr>
+<tr>
+<td><a href="097-ch14-scripting-qa/">Scripting Questions and Answers</a></td>
+<td>Worked programs, topic by topic, each complete and ready to run</td>
+<td>Practice</td>
+</tr>
+</tbody>
+</table>
+<h2 id="suggested-reading-order">Suggested Reading Order<a class="headerlink" href="#suggested-reading-order" title="Permanent link">&para;</a></h2>
+<ol>
+<li><strong>Window Configuration</strong>, to get a window behaving the way you want before you put anything in it.</li>
+<li><strong>Container Widgets</strong> as a reference rather than a read-through. Come back to it when you need a particular container.</li>
+<li><strong>Why Tkinter Images Disappear</strong> early, even if you are not using images yet. The bug it explains wastes more beginner hours than any other in Tkinter.</li>
+<li><strong>The three error-handling pages in order</strong>: delayed tasks, then <code>sys.excepthook</code>, then safe and unsafe callbacks, then the professional page that puts them together.</li>
+<li><strong>Conceptual and Scripting Questions</strong> for revision and practice.</li>
+</ol>
+<h2 id="three-points-worth-extra-care">Three Points Worth Extra Care<a class="headerlink" href="#three-points-worth-extra-care" title="Permanent link">&para;</a></h2>
+<p><strong>Keep a reference to every <code>PhotoImage</code>.</strong> If the only reference is a local variable inside a function, Python collects the image the moment the function returns, and the label shows nothing — with no error at all. Store it on the widget or on <code>self</code>.</p>
+<p><strong>Never mix <code>pack()</code> and <code>grid()</code> in the same container.</strong> Tk raises <code>TclError</code> at once. Different containers may use different managers, so a frame can be packed into the root while everything inside that frame uses grid.</p>
+<p><strong>An error inside a callback does not stop the program.</strong> Tkinter catches it, prints a traceback to a console the user is probably not looking at, and carries on. The user clicks a button and nothing happens. Point both <code>root.report_callback_exception</code> and <code>sys.excepthook</code> at one handler so that every error reaches the user.</p>
+<h2 id="using-the-code">Using the Code<a class="headerlink" href="#using-the-code" title="Permanent link">&para;</a></h2>
+<p>Every script is complete and ready to run. Copy it into a <code>.py</code> file and run it from a terminal.</p>
+<p>These scripts open a window, so they will not run inside a notebook cell or in Google Colab. Run them on your own computer. Where a page shows what the window looks like, that is a screenshot, not printed output.</p>
 
 
 
