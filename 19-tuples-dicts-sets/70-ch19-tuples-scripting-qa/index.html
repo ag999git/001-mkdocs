@@ -8709,6 +8709,7 @@ Flag:  True | type: &lt;class 'bool'&gt;
     C --&gt; E["Step 5: year = 2026"]
     C --&gt; F["Step 6: flag = True"]
 </code></pre></div>
+<p><img alt="Q2. Write a script that puts three values (&quot;Data&quot;, 2026, True) into one tuple. Then, unpack those values into three separate variables and print them." src="../../resources/ch19-tuples-scripting-qa-fig-01.png" /></p>
 <p><strong>Try this next</strong></p>
 <p>What happens if you try to unpack the three values into only two variables?</p>
 <div class="highlight"><pre><span></span><code><span class="n">packed_data</span> <span class="o">=</span> <span class="s2">"Data"</span><span class="p">,</span> <span class="mi">2026</span><span class="p">,</span> <span class="kc">True</span>
@@ -8766,6 +8767,7 @@ Tuple after:  (10, 20, 30)
     D --&gt; E["Step 5: except block catches it and prints the message"]
     E --&gt; F["Step 6: The tuple is still (10, 20, 30)"]
 </code></pre></div>
+<p><img alt="Q3. Write a script that shows you cannot change a tuple element. Try to change the first item of a tuple and print the error message." src="../../resources/ch19-tuples-scripting-qa-fig-02.png" /></p>
 <p><strong>Try this next</strong></p>
 <p>Try the same with a list, and try deleting an item from the tuple.</p>
 <div class="highlight"><pre><span></span><code><span class="c1"># Step 1 - A list CAN be changed</span>
@@ -8919,12 +8921,13 @@ Same object as before? False
 <li>What happens to the old tuple <code>(10, 20, 30)</code>? If no other variable refers to it, Python frees its memory automatically.</li>
 <li>You can only join a tuple to another tuple. That is why the script uses <code>(40,)</code> with a comma. Writing <code>my_tuple + 40</code> or <code>my_tuple + (40)</code> raises <code>TypeError: can only concatenate tuple (not "int") to tuple</code>.</li>
 </ul>
-<div class="highlight"><pre><span></span><code>flowchart TD
+<div class="highlight"><pre><span></span><code>flowchart LR
     A["Step 1: my_tuple points to (10, 20, 30)"] --&gt; B["Step 2: Python evaluates my_tuple + (40,)"]
     B --&gt; C["Step 3: A new tuple (10, 20, 30, 40) is built at a new memory address"]
     C --&gt; D["Step 4: The name my_tuple now points to the new tuple"]
     D --&gt; E["Step 5: The old tuple is unchanged, and is freed if nothing else uses it"]
 </code></pre></div>
+<p><img alt="Q5. Write a script that adds the number 40 to the end of the tuple (10, 20, 30) using the + operator. Print the tuple and its memory ID before and after the change." src="../../resources/ch19-tuples-scripting-qa-fig-03.png" /></p>
 <p><strong>Try this next</strong></p>
 <p>Keep a second name pointing to the original tuple before you join. Does the original change?</p>
 <div class="highlight"><pre><span></span><code><span class="c1"># Step 1 - Two names for the same tuple</span>
@@ -9215,12 +9218,13 @@ Type of rest_of_items: &lt;class 'list'&gt;
 <li>Only one starred name is allowed in a single assignment. If nothing is left over, the starred name gets an empty list <code>[]</code>.</li>
 <li>Extended unpacking was added to Python by <a href="https://peps.python.org/pep-3132/">PEP 3132</a>. (A PEP is a document that proposes a new feature for Python.)</li>
 </ul>
-<div class="highlight"><pre><span></span><code>flowchart TD
+<div class="highlight"><pre><span></span><code>flowchart LR
     A["Step 1: data = (10, 20, 30, 40, 50)"] --&gt; B["Step 2: Normal name first_item takes the first item"]
     B --&gt; C["Step 3: first_item = 10"]
     C --&gt; D["Step 4: Starred name collects every item that is left"]
     D --&gt; E["Step 5: rest_of_items = [20, 30, 40, 50], always a list"]
 </code></pre></div>
+<p><img alt="Q9. Write a script to unpack the tuple (10, 20, 30, 40, 50). Capture the first item in a normal variable, and use the  operator to collect the rest of the items." src="../../resources/ch19-tuples-scripting-qa-fig-04.png" /></p>
 <p><strong>Try this next</strong></p>
 <p>The starred name does not have to come last. Try keeping the first and last items and collecting the middle.</p>
 <div class="highlight"><pre><span></span><code><span class="n">data</span> <span class="o">=</span> <span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">20</span><span class="p">,</span> <span class="mi">30</span><span class="p">,</span> <span class="mi">40</span><span class="p">,</span> <span class="mi">50</span><span class="p">)</span>
@@ -9460,11 +9464,12 @@ bool(0):    False
 <li>So <code>(0,)</code> is <code>True</code>, because it holds one item, while the number <code>0</code> on its own is <code>False</code>. The last two lines of the output show this difference.</li>
 <li>Values that count as <code>False</code> are often called <strong>falsy</strong>, and values that count as <code>True</code> are called <strong>truthy</strong>. See <a href="https://docs.python.org/3/library/stdtypes.html#truth-value-testing">Python docs: Truth value testing</a>.</li>
 </ul>
-<div class="highlight"><pre><span></span><code>flowchart TD
+<div class="highlight"><pre><span></span><code>flowchart LR
     A["Step 1: A tuple is used in an if statement"] --&gt; B{"Step 2: Does the tuple have any items?"}
     B -- "No, it is empty" --&gt; C["Step 3: It counts as False, so the else branch runs"]
     B -- "Yes, one or more" --&gt; D["Step 4: It counts as True, so the if branch runs. The values inside are not checked"]
 </code></pre></div>
+<p><img alt="Q12. Write a script that tests an empty tuple () and a single-item tuple (0,) inside an if statement to check if Python sees them as True or False." src="../../resources/ch19-tuples-scripting-qa-fig-05.png" /></p>
 <table>
 <thead>
 <tr>
@@ -9561,6 +9566,7 @@ Orange is not available
     E -- Yes --&gt; B
     E -- No --&gt; F["Step 6: Return False"]
 </code></pre></div>
+<p><img alt="Q13. Write a script that uses the in operator to check if the item &quot;Apple&quot; exists inside the tuple (&quot;Apple&quot;, &quot;Banana&quot;, &quot;Cherry&quot;). Then check for &quot;Orange&quot;." src="../../resources/ch19-tuples-scripting-qa-fig-06.png" /></p>
 <p><strong>Try this next</strong></p>
 <p>Check a value with different capital letters, and try a case-insensitive search.</p>
 <div class="highlight"><pre><span></span><code><span class="n">fruits</span> <span class="o">=</span> <span class="p">(</span><span class="s2">"Apple"</span><span class="p">,</span> <span class="s2">"Banana"</span><span class="p">,</span> <span class="s2">"Cherry"</span><span class="p">)</span>
@@ -9626,6 +9632,7 @@ After swap:  t1 = (2, 'Beta') | t2 = (1, 'Alpha')
     D --&gt; E["Step 5: Unpack: second item goes to t2"]
     E --&gt; F["Step 6: t1 = (2, Beta), t2 = (1, Alpha)"]
 </code></pre></div>
+<p><img alt="Q14. Write a script that swaps the values of two tuple variables t1 and t2 in a single line without using any temporary storage variables." src="../../resources/ch19-tuples-scripting-qa-fig-07.png" /></p>
 <p><strong>Try this next</strong></p>
 <p>Rotate three variables in one line, so that each one takes the value of the next.</p>
 <div class="highlight"><pre><span></span><code><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">,</span> <span class="n">c</span> <span class="o">=</span> <span class="s2">"red"</span><span class="p">,</span> <span class="s2">"green"</span><span class="p">,</span> <span class="s2">"blue"</span>
@@ -9864,6 +9871,7 @@ Extracted nested value: 3
     B --&gt; C["Step 3: [0] picks its first item"]
     C --&gt; D["Step 4: Result is 3"]
 </code></pre></div>
+<p><img alt="Q17. Write a script to extract the number 3 out of the nested data tuple ((1, 2), (3, 4)) using index brackets." src="../../resources/ch19-tuples-scripting-qa-fig-08.png" /></p>
 <p><strong>Try this next</strong></p>
 <p>Get the number <code>4</code> in two different ways, and unpack the whole nested tuple in one line.</p>
 <div class="highlight"><pre><span></span><code><span class="n">nested_data</span> <span class="o">=</span> <span class="p">((</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">),</span> <span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">))</span>
@@ -9925,12 +9933,13 @@ Min: 10 | Max: 30 | Total sum: 60
 <li>The line in triple quotes inside the function is a <strong>docstring</strong>. It describes what the function does. You can see it by running <code>help(analyze_sequence)</code>.</li>
 <li><code>min()</code>, <code>max()</code> and <code>sum()</code> are built-in functions that work on any tuple or list of numbers.</li>
 </ul>
-<div class="highlight"><pre><span></span><code>flowchart TD
+<div class="highlight"><pre><span></span><code>flowchart LR
     A["Step 1: Call analyze_sequence((10, 20, 30))"] --&gt; B["Step 2: Work out min = 10, max = 30, sum = 60"]
     B --&gt; C["Step 3: return packs them into one tuple (10, 30, 60)"]
     C --&gt; D["Step 4: The tuple is sent back to the caller"]
     D --&gt; E["Step 5: Unpack: low = 10, high = 30, total = 60"]
 </code></pre></div>
+<p><img alt="Q18. Write a function that takes a tuple and returns its minimum value, maximum value, and total sum all at once. Call the function with the tuple (10, 20, 30) and unpack the results." src="../../resources/ch19-tuples-scripting-qa-fig-09.png" /></p>
 <p><strong>Try this next</strong></p>
 <p>Add the average to the function, and use <code>_</code> for a value you do not need.</p>
 <div class="highlight"><pre><span></span><code><span class="c1"># Step 1 - The function now returns four values</span>
@@ -9983,7 +9992,7 @@ Student name: Bob | Exam grade: 92
 <li>This saves you from pulling the items out by index yourself, as in <code>pair[0]</code> and <code>pair[1]</code>. The loop is shorter and much easier to read.</li>
 <li>The loop variables can have any names. <code>name</code> and <code>score</code> are chosen because they describe the data.</li>
 </ul>
-<div class="highlight"><pre><span></span><code>flowchart TD
+<div class="highlight"><pre><span></span><code>flowchart LR
     A["Step 1: grades.items() provides the pairs"] --&gt; B{"Step 2: Is there another pair?"}
     B -- Yes --&gt; C["Step 3: Take the next pair, for example (Alice, 85)"]
     C --&gt; D["Step 4: Unpack it: name = Alice, score = 85"]
@@ -9991,6 +10000,7 @@ Student name: Bob | Exam grade: 92
     E --&gt; B
     B -- No --&gt; F["Step 6: The loop ends"]
 </code></pre></div>
+<p><img alt="Q19. Write a script that loops through the dictionary items {&quot;Alice&quot;: 85, &quot;Bob&quot;: 92} and automatically unpacks the keys and values during each pass of the loop." src="../../resources/ch19-tuples-scripting-qa-fig-10.png" /></p>
 <p><strong>Try this next</strong></p>
 <p>Use the unpacked values to do some work: find the class average and the top scorer.</p>
 <div class="highlight"><pre><span></span><code><span class="n">grades</span> <span class="o">=</span> <span class="p">{</span><span class="s2">"Alice"</span><span class="p">:</span> <span class="mi">85</span><span class="p">,</span> <span class="s2">"Bob"</span><span class="p">:</span> <span class="mi">92</span><span class="p">}</span>
@@ -10050,13 +10060,14 @@ Top scorer: Bob with 92
 <li>Python runs only the <strong>first</strong> case that matches, then leaves the <code>match</code> statement.</li>
 <li><strong>Line <code>case _:</code></strong> uses the wildcard <code>_</code>, which matches anything. It is a good habit to include it as the last case, so that unexpected values do not pass by silently.</li>
 </ul>
-<div class="highlight"><pre><span></span><code>flowchart TD
+<div class="highlight"><pre><span></span><code>flowchart LR
     A["Step 1: status = (404, Not Found)"] --&gt; B{"Step 2: case (200, message) - two items and first item 200?"}
     B -- Yes --&gt; C["Step 3: Print the success message"]
     B -- No --&gt; D{"Step 4: case (404, message) - two items and first item 404?"}
     D -- Yes --&gt; E["Step 5: message = Not Found, print the error message"]
     D -- No --&gt; F["Step 6: case _ matches anything, print Unknown status"]
 </code></pre></div>
+<p><img alt="Q20. Write a script that uses a match-case statement to check the tuple variable status = (404, &quot;Not Found&quot;) and print a custom message based on its contents." src="../../resources/ch19-tuples-scripting-qa-fig-11.png" /></p>
 <p>Read more in the <a href="https://docs.python.org/3/tutorial/controlflow.html#match-statements">Python tutorial on match statements</a>.</p>
 <p><strong>Try this next</strong></p>
 <p>Put the <code>match</code> inside a function and test several status values, including a list and a tuple of the wrong length. The third case below uses a <strong>guard</strong> (<code>if code &gt;= 500</code>): the case matches only if the condition is also true.</p>

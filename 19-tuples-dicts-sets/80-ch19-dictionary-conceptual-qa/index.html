@@ -8572,7 +8572,7 @@
 <li>If it is a <strong>sequence</strong> (such as a list), <code>x</code> must be a whole number. Python goes to position <code>x</code>. If there is no such position, it raises <code>IndexError</code>.</li>
 <li>If it is a <strong>mapping</strong> (a dictionary), <code>x</code> can be any hashable value. Python looks for a key equal to <code>x</code>. If there is no such key, it raises <code>KeyError</code>.</li>
 </ol>
-<div class="highlight"><pre><span></span><code>flowchart TD
+<div class="highlight"><pre><span></span><code>flowchart LR
     A["Step 1: Python sees something[x]"] --&gt; B{"Step 2: Is something a sequence or a mapping?"}
     B -- Sequence --&gt; C["Step 3: Treat x as a position number"]
     C --&gt; D{"Step 4: Does position x exist?"}
@@ -8583,6 +8583,7 @@
     H -- Yes --&gt; I["Step 9: Return the value for that key"]
     H -- No --&gt; J["Step 10: Raise KeyError"]
 </code></pre></div>
+<p><img alt="Q1. What makes a dictionary a &quot;mapping&quot; rather than a &quot;sequence,&quot; and how does this affect the way you access its elements?" src="../../resources/ch19-dictionary-conceptual-qa-fig-01.png" /></p>
 <p>In this chart, steps 3 to 6 are the sequence branch and steps 7 to 10 are the mapping branch.</p>
 <p><strong>Script: position versus key</strong></p>
 <div class="highlight"><pre><span></span><code><span class="c1"># Step 1 - A list (a sequence) and a dictionary (a mapping)</span>
@@ -8850,7 +8851,7 @@ List as a key -&gt; TypeError: unhashable type: 'list'
 <li>Note that the rule works in one direction only. Equal objects must have equal hashes, but two <strong>different</strong> objects are allowed to have the same hash by chance. This is called a <strong>collision</strong>, and Python handles it by then checking the keys with <code>==</code>.</li>
 </ol>
 <p><strong>How a dictionary uses the three rules to find a key</strong></p>
-<div class="highlight"><pre><span></span><code>flowchart TD
+<div class="highlight"><pre><span></span><code>flowchart LR
     A["Step 1: Look up d[key]"] --&gt; B["Step 2: Work out hash(key). Rule 1 makes sure it is the same number as when the key was stored"]
     B --&gt; C["Step 3: Go to the place in the table that this hash points to"]
     C --&gt; D{"Step 4: Is a stored key there with the same hash?"}
@@ -8860,6 +8861,7 @@ List as a key -&gt; TypeError: unhashable type: 'list'
     F -- No --&gt; H["Step 8: A collision. Keep checking the next candidate place"]
     H --&gt; D
 </code></pre></div>
+<p><img alt="Q4. What is a &quot;hashable&quot; object? State the three formal criteria an object must satisfy to be considered hashable." src="../../resources/ch19-dictionary-conceptual-qa-fig-02.png" /></p>
 <p>This picture is simplified, but it shows why each rule is needed.</p>
 <p><strong>Script: seeing the rules in action</strong></p>
 <div class="highlight"><pre><span></span><code><span class="c1"># Step 1 - Rule 1: the same object gives the same hash every time in one run</span>
@@ -8998,7 +9000,7 @@ hash(42) in a new run:       42 42
 <li>The check goes all the way down. A tuple inside a tuple is checked item by item too, so <code>(1, (2, [3]))</code> is also unhashable.</li>
 </ul>
 <p><strong>How Python decides, step by step</strong></p>
-<div class="highlight"><pre><span></span><code>flowchart TD
+<div class="highlight"><pre><span></span><code>flowchart LR
     A["Step 1: hash(t) is called on a tuple"] --&gt; B["Step 2: Take the next item of the tuple"]
     B --&gt; C{"Step 3: Is this item hashable?"}
     C -- No --&gt; D["Step 4: Stop. Raise TypeError: unhashable type"]
@@ -9007,6 +9009,7 @@ hash(42) in a new run:       42 42
     F -- Yes --&gt; B
     F -- No --&gt; G["Step 7: Return the combined hash. The tuple is hashable"]
 </code></pre></div>
+<p><img alt="Q7. Tuples are described as &quot;conditionally hashable.&quot; Explain what this means, with one example each of a hashable and an unhashable tuple." src="../../resources/ch19-dictionary-conceptual-qa-fig-03.png" /></p>
 <p><strong>Script: hashable and unhashable tuples</strong></p>
 <div class="highlight"><pre><span></span><code><span class="c1"># Step 1 - A tuple of numbers and a string: hashable</span>
 <span class="n">good</span> <span class="o">=</span> <span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="s2">"hello"</span><span class="p">)</span>
@@ -9250,7 +9253,7 @@ Separate lists: {'a': [1], 'b': []}
 </tbody>
 </table>
 <p><strong>How it runs, step by step</strong></p>
-<div class="highlight"><pre><span></span><code>flowchart TD
+<div class="highlight"><pre><span></span><code>flowchart LR
     A["Step 1: Start with an empty dictionary"] --&gt; B{"Step 2: Is there another item in the iterable?"}
     B -- No --&gt; H["Step 8: Return the finished dictionary"]
     B -- Yes --&gt; C["Step 3: Put the next item into the loop variable"]
@@ -9261,6 +9264,7 @@ Separate lists: {'a': [1], 'b': []}
     F --&gt; G["Step 7: Store key: value in the dictionary"]
     G --&gt; B
 </code></pre></div>
+<p><img alt="Q10. Write out the general syntax of a dictionary comprehension and identify its four mandatory components plus the one optional component." src="../../resources/ch19-dictionary-conceptual-qa-fig-04.png" /></p>
 <p><strong>Script: a comprehension and the loop it replaces</strong></p>
 <div class="highlight"><pre><span></span><code><span class="n">words</span> <span class="o">=</span> <span class="p">[</span><span class="s2">"apple"</span><span class="p">,</span> <span class="s2">"fig"</span><span class="p">,</span> <span class="s2">"kiwi"</span><span class="p">]</span>
 
@@ -9588,6 +9592,7 @@ First key: a | or: a
     B -- "A snapshot: list(my_dict)" --&gt; E["Step 5: del changes only the dictionary, not the snapshot"]
     E --&gt; F["Step 6: The loop finishes safely"]
 </code></pre></div>
+<p><img alt="Q14. What error occurs if you try to delete a key from a dictionary while directly looping over it, and what is the recommended safe technique to avoid it?" src="../../resources/ch19-dictionary-conceptual-qa-fig-05.png" /></p>
 <p><strong>Script: the error and two safe fixes</strong></p>
 <div class="highlight"><pre><span></span><code><span class="c1"># Step 1 - Deleting while looping over the live dictionary fails</span>
 <span class="n">my_dict</span> <span class="o">=</span> <span class="p">{</span><span class="s2">"a"</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span> <span class="s2">"b"</span><span class="p">:</span> <span class="mi">2</span><span class="p">,</span> <span class="s2">"c"</span><span class="p">:</span> <span class="mi">3</span><span class="p">}</span>
@@ -9906,13 +9911,14 @@ d3 is d1: True | d1 now: {'a': 1, 'b': 2, 'c': 3}
 <li>This makes <code>.get()</code> the better choice whenever you cannot be sure in advance that a key will exist, such as when working with user input, data from files, or optional settings. It lets your program use a sensible fallback instead of wrapping every lookup in a <code>try</code>/<code>except KeyError</code> block.</li>
 </ul>
 <p><strong>What happens for a missing key, step by step</strong></p>
-<div class="highlight"><pre><span></span><code>flowchart TD
+<div class="highlight"><pre><span></span><code>flowchart LR
     A["Step 1: Read a value for a key"] --&gt; B{"Step 2: Does the key exist?"}
     B -- Yes --&gt; C["Step 3: Both d[key] and d.get(key) return the value"]
     B -- No --&gt; D{"Step 4: Which way was used?"}
     D -- "d[key]" --&gt; E["Step 5: Raise KeyError. The program stops unless it is caught"]
     D -- "d.get(key, default)" --&gt; F["Step 6: Return the default, or None if no default was given"]
 </code></pre></div>
+<p><img alt="Q18. Why is dict.get(key, default) generally preferred over dict[key] for reading values? Illustrate with what happens for a missing key in each case." src="../../resources/ch19-dictionary-conceptual-qa-fig-06.png" /></p>
 <table>
 <thead>
 <tr>
@@ -10120,13 +10126,14 @@ After d = d.update(...), d is: None
 </tr>
 </tbody>
 </table>
-<div class="highlight"><pre><span></span><code>flowchart TD
+<div class="highlight"><pre><span></span><code>flowchart LR
     A["Step 1: original = {scores: [10, 20, 30]}"] --&gt; B["Step 2: shallow = original.copy()"]
     B --&gt; C["Step 3: A new outer dictionary is made"]
     C --&gt; D["Step 4: Its scores key points to the SAME list as the original"]
     D --&gt; E["Step 5: shallow[scores].append(40) changes that one shared list"]
     E --&gt; F["Step 6: original[scores] shows 40 as well"]
 </code></pre></div>
+<p><img alt="Q20. What does dict.copy() actually copy, and why is it described as a &quot;shallow&quot; copy? Give an example showing where this limitation causes unexpected behaviour." src="../../resources/ch19-dictionary-conceptual-qa-fig-07.png" /></p>
 <p><strong>Script: shallow copy versus deep copy</strong></p>
 <div class="highlight"><pre><span></span><code><span class="kn">import</span><span class="w"> </span><span class="nn">copy</span>     <span class="c1"># the standard module that provides deepcopy()</span>
 
