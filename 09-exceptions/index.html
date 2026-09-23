@@ -81,6 +81,11 @@
     <label class="md-overlay" for="__drawer"></label>
     <div data-md-component="skip">
       
+        
+        <a href="#chapter-9-exceptions" class="md-skip">
+          Skip to content
+        </a>
+      
     </div>
     <div data-md-component="announce">
       
@@ -8014,9 +8019,73 @@
   
 
 
-  <h1>Overview</h1>
-
-
+<h1 id="chapter-9-exceptions">Chapter 9: Exceptions<a class="headerlink" href="#chapter-9-exceptions" title="Permanent link">&para;</a></h1>
+<p>The online companion to Chapter 9 of the book. The printed chapter covers <code>try</code>, <code>except</code>, <code>else</code> and <code>finally</code>, the exception hierarchy, and raising your own. These pages carry a bank of conceptual questions, forty script exercises, and four pages on the topics the chapter opens but has no room to finish: context managers, reading a traceback, and fetching data from the internet, where things go wrong for real.</p>
+<p>By the end of these pages you should be able to catch the right exception rather than a bare <code>except</code>, read a traceback from the bottom up and know what it is telling you, write your own context manager, and handle a failed network request without the program simply stopping.</p>
+<p>You need Chapters 7 and 8 (object-oriented programming) first, because an exception is an object and a context manager is a class.</p>
+<h2 id="the-pages">The Pages<a class="headerlink" href="#the-pages" title="Permanent link">&para;</a></h2>
+<table>
+<thead>
+<tr>
+<th>Page</th>
+<th>What it covers</th>
+<th>Best for</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><a href="050-ch9-conceptual-q/">Conceptual Question Bank</a></td>
+<td>The conceptual questions from the end of the chapter, each answered in full</td>
+<td>Start here</td>
+</tr>
+<tr>
+<td><a href="060-ch9-scripts-q/">Forty Script-Based Exercises</a></td>
+<td>Forty programs to write, each with a complete worked answer</td>
+<td>Practice</td>
+</tr>
+<tr>
+<td><a href="030-ch9-context-manager/">Context Managers: with, __enter__ and __exit__</a></td>
+<td>What <code>with</code> really does, and how to write a class that works with it</td>
+<td>After the chapter's section on <code>finally</code></td>
+</tr>
+<tr>
+<td><a href="040-ch9-traceback/">Digging Into Exceptions: sys and traceback</a></td>
+<td>Getting at the details of an exception while the program is still running</td>
+<td>When a traceback is not enough</td>
+</tr>
+<tr>
+<td><a href="041-ch9-traceback/">Exceptions as Objects: __traceback__</a></td>
+<td>The traceback is an object too, and what you can do with it</td>
+<td>After the page above</td>
+</tr>
+<tr>
+<td><a href="010-ch9-urlib/">Reading Files from the Internet with urllib</a></td>
+<td>Fetching a file with the standard library, and the errors that come with it</td>
+<td>A real use for exceptions</td>
+</tr>
+<tr>
+<td><a href="020-ch9-requests/">Reading Files from the Internet with requests</a></td>
+<td>The same job with the <code>requests</code> library, and how its errors differ</td>
+<td>After the <code>urllib</code> page</td>
+</tr>
+</tbody>
+</table>
+<h2 id="suggested-reading-order">Suggested Reading Order<a class="headerlink" href="#suggested-reading-order" title="Permanent link">&para;</a></h2>
+<ol>
+<li><strong>Conceptual Question Bank</strong>, in order. It follows the printed chapter.</li>
+<li><strong>Context Managers.</strong> <code>with</code> is the tidiest answer to "make sure this gets cleaned up", and you have already been using it for files without knowing how it works.</li>
+<li><strong>The two traceback pages</strong>, in order. Together they explain what the wall of text on a crash actually contains.</li>
+<li><strong>The two internet pages.</strong> These are where exception handling stops being an exercise: a network request can fail in a dozen ways, and none of them are your program's fault.</li>
+<li><strong>The forty exercises</strong> throughout, as practice.</li>
+</ol>
+<h2 id="three-points-worth-extra-care">Three Points Worth Extra Care<a class="headerlink" href="#three-points-worth-extra-care" title="Permanent link">&para;</a></h2>
+<p><strong>Catch the exception you expect, not all of them.</strong> A bare <code>except:</code> hides typing mistakes, keyboard interrupts and bugs you have not found yet. Name the exception: <code>except FileNotFoundError:</code>.</p>
+<p><strong><code>finally</code> runs whatever happens</strong> — after a <code>return</code>, after an exception, after a <code>break</code>. That is what makes it the right place for cleanup, and it is also why a <code>return</code> inside <code>finally</code> can quietly swallow an exception.</p>
+<p><strong><code>with</code> is a context manager, and you can write your own.</strong> Any class with <code>__enter__</code> and <code>__exit__</code> works with <code>with</code>. Once you have written one, <code>with open(...)</code> stops looking like special syntax.</p>
+<h2 id="using-the-code">Using the Code<a class="headerlink" href="#using-the-code" title="Permanent link">&para;</a></h2>
+<p>Every script is complete and ready to run. Copy it into a <code>.py</code> file or a notebook cell. Where a script produces output, that output is shown underneath.</p>
+<p>Two things will differ on your machine. The two internet pages need a working connection, and the sites they fetch may answer differently or not at all; the point is how your program behaves when that happens. And tracebacks show file paths and line numbers from your own copy of the script, so those lines will not match the page exactly.</p>
+<p>The <code>requests</code> library does not come with Python. Install it once with <code>pip install requests</code>. The <code>urllib</code> page needs nothing extra.</p>
 
 
 
