@@ -8436,7 +8436,7 @@
 <span class="c1"># example -- even though the seed is identical, simply swapping which</span>
 <span class="c1"># line runs first changes which numbers end up in which variable.</span>
 </code></pre></div>
-<p><img alt="Flowchart" src="/001-mkdocs/resources/ch-11-numpy-august-2026-prng1.png" /></p>
+<p><img alt="Flowchart" src="../../resources/ch-11-numpy-august-2026-prng1.png" /></p>
 <p><strong>This is the core problem with the old API:</strong> a shared global sequence means the <em>order</em> in which different parts of your program happen to call random functions can change your results — a subtle, easy-to-introduce bug, especially in larger programs where you might not even realize two unrelated functions are both quietly drawing from the same global sequence.</p>
 <h4 id="new-api-independent-generators">New API → independent generators<a class="headerlink" href="#new-api-independent-generators" title="Permanent link">&para;</a></h4>
 <p>Each <code>rng</code> object created with <code>default_rng()</code> is its own, completely separate random-number machine.</p>
@@ -8461,7 +8461,7 @@
 <span class="c1"># sync, because each one only ever tracks its OWN separate progress,</span>
 <span class="c1"># completely unaffected by anything happening to the other generator.</span>
 </code></pre></div>
-<p><img alt="Flowchart" src="/001-mkdocs/resources/ch-11-numpy-august-2026-prng2.png" /></p>
+<p><img alt="Flowchart" src="../../resources/ch-11-numpy-august-2026-prng2.png" /></p>
 <p><strong>Key insight:</strong> each generator runs its own, completely independent sequence — nothing that happens to <code>rng2</code> can ever affect <code>rng1</code>, and vice versa, no matter what order you call them in, or how many other generators exist elsewhere in your program.</p>
 <hr />
 <h2 id="part-b-a-complete-practical-solution">Part B: A complete practical solution<a class="headerlink" href="#part-b-a-complete-practical-solution" title="Permanent link">&para;</a></h2>
