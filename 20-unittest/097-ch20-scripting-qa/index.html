@@ -8704,6 +8704,7 @@ PASSED
     C --&gt; D["4. test_three (same object)"]
     D --&gt; E["5. Fixture teardown (once)"]
 </code></pre></div>
+<p><img alt="Modify the fixture example to use session scope so that the object is created only once for all tests." src="../../resources/ch20-scripting-qa-fig-01.png" /></p>
 <p>The setup and teardown happen only once. In the output, <code>[FIXTURE] session setup</code> and <code>[FIXTURE] session teardown</code> each appear a single time, even though there are three tests.</p>
 <p>The second <code>[DB] connecting</code> line comes from <code>test_three</code> itself, which calls <code>db.connect()</code> in its <code>assert</code>. It is not a second setup.</p>
 <p><a href="./#table-of-contents">Back to the Table of Contents</a></p>
@@ -8764,6 +8765,7 @@ PASSED
     D --&gt; E["5. The object is placed into the test parameter user"]
     E --&gt; F["6. The test body runs"]
 </code></pre></div>
+<p><img alt="Write a pytest script demonstrating dependency injection. Show how pytest injects a fixture object into a test function parameter." src="../../resources/ch20-scripting-qa-fig-02.png" /></p>
 <p>Note that steps 2 to 5 all happen <strong>before</strong> the first line of the test runs. That is why <code>[FIXTURE] creating User object</code> is printed before <code>[TEST] received object</code>.</p>
 <p><a href="./#table-of-contents">Back to the Table of Contents</a></p>
 <h3 id="5-write-a-pytest-test-using-pytestraises-to-verify-that-a-function-correctly-raises-an-exception">5. Write a pytest test using pytest.raises() to verify that a function correctly raises an exception.<a class="headerlink" href="#5-write-a-pytest-test-using-pytestraises-to-verify-that-a-function-correctly-raises-an-exception" title="Permanent link">&para;</a></h3>
@@ -9167,6 +9169,7 @@ PASSED
     C --&gt; D["4. The fixture continues after yield"]
     D --&gt; E["5. Teardown: stop the Resource"]
 </code></pre></div>
+<p><img alt="Write a pytest fixture using yield to perform setup and teardown operations." src="../../resources/ch20-scripting-qa-fig-03.png" /></p>
 <p><strong>Important:</strong></p>
 <ul>
 <li>The code before <code>yield</code> is the setup.</li>
@@ -9264,6 +9267,7 @@ PASSED
     B --&gt; C["3. The Mock answers, not the internet"]
     C --&gt; D["4. The test checks the result"]
 </code></pre></div>
+<p><img alt="Write a pytest example that uses a mock object instead of calling a real external service." src="../../resources/ch20-scripting-qa-fig-04.png" /></p>
 <p>Mocking helps create:</p>
 <ul>
 <li>fast tests</li>
@@ -9354,6 +9358,7 @@ PASSED
     B -- No --&gt; C{"3. Is it defined in conftest.py in this folder?"}
     C -- Yes --&gt; D["4. Run the fixture and inject the object"]
 </code></pre></div>
+<p><img alt="Create a conftest.py file containing a fixture and use it in a test file without importing it." src="../../resources/ch20-scripting-qa-fig-05.png" /></p>
 <p>Any other test file in this folder, or in a folder inside it, could use the <code>calculator</code> fixture in the same way.</p>
 <p><a href="./#table-of-contents">Back to the Table of Contents</a></p>
 <h3 id="12-demonstrate-the-difference-between-function-scope-and-module-scope-fixtures">12. Demonstrate the difference between function scope and module scope fixtures.<a class="headerlink" href="#12-demonstrate-the-difference-between-function-scope-and-module-scope-fixtures" title="Permanent link">&para;</a></h3>
@@ -9597,6 +9602,7 @@ PASSED
     B --&gt; C["3. The changed value is still there"]
     C --&gt; D["4. test_status passes, but only because test_login ran first"]
 </code></pre></div>
+<p><img alt="Demonstrate the shared state problem with a session-scoped fixture." src="../../resources/ch20-scripting-qa-fig-06.png" /></p>
 <p>Now run <code>test_status</code> <strong>on its own</strong>:</p>
 <div class="highlight"><pre><span></span><code>pytest<span class="w"> </span>-v<span class="w"> </span>-s<span class="w"> </span>test_shared_state.py::test_status
 </code></pre></div>
@@ -9713,6 +9719,7 @@ PASSED
     C -- No exception --&gt; G["7. FAIL: DID NOT RAISE"]
     C -- A different exception --&gt; H["8. FAIL: that exception is reported"]
 </code></pre></div>
+<p><img alt="Test exceptions and floating point values using pytest tools." src="../../resources/ch20-scripting-qa-fig-07.png" /></p>
 <p><strong>Part B: Testing floating-point values</strong></p>
 <p>The output shows that <code>calculate_tax(1.10)</code> returns <code>0.11000000000000001</code>, not <code>0.11</code>.</p>
 <p>Why? Computers store most decimal numbers approximately, in binary. For example:</p>
@@ -9974,6 +9981,7 @@ PASSED
     G --&gt; H["8. Fixture creates another new LoginSystem"]
     H --&gt; I["9. Test runs with abc"]
 </code></pre></div>
+<p><img alt="Combine parameterized testing and fixtures to test multiple cases." src="../../resources/ch20-scripting-qa-fig-08.png" /></p>
 <p>Note that the fixture runs <strong>three times</strong>, once for each parameter set, as the output shows. Each parameter set is a separate test, and a function-scoped fixture is created fresh for every test. If you wanted one shared <code>LoginSystem</code>, you would give the fixture a wider scope, such as <code>scope="module"</code>.</p>
 <p>Advantages:</p>
 <ul>
