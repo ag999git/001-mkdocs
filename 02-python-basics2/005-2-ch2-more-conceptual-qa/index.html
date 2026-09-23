@@ -8919,13 +8919,14 @@ AttributeError: attribute 'real' of 'int' objects is not writable
 hello! | same object: False
 TypeError: 'tuple' object does not support item assignment
 </code></pre></div>
-<div class="highlight"><pre><span></span><code>flowchart TD
+<div class="highlight"><pre><span></span><code>flowchart LR
     A["1. You change a value, for example add an item"] --&gt; B{"2. Is the object mutable?"}
     B --&gt;|Yes| C["3. Python changes the same object in place"]
     C --&gt; D["4. id() stays the same, and every name pointing to it sees the change"]
     B --&gt;|No| E["5. Python creates a new object with the new value"]
     E --&gt; F["6. The name now points to the new object, and id() changes"]
 </code></pre></div>
+<p><img alt="What is the difference between mutable and immutable objects in Python?" src="../../resources/ch02-2-ch2-more-conceptual-qa-fig-01.png" /></p>
 <p><a href="#table-of-contents">Back to the Table of Contents</a></p>
 <h3 id="3-why-does-the-expression-5-2-return-a-float-in-python">3. Why does the expression 5 / 2 return a float in Python?<a class="headerlink" href="#3-why-does-the-expression-5-2-return-a-float-in-python" title="Permanent link">&para;</a></h3>
 <p>In Python 3, the division operator <code>/</code> always performs floating-point division. Even when both operands are integers, the result is a floating-point number. Therefore, <code>5 / 2</code> returns <code>2.5</code> instead of <code>2</code>. This avoids accidentally losing the fractional part and gives the mathematically correct answer. If you want a whole-number answer, use floor division <code>//</code> instead.</p>
@@ -9308,6 +9309,7 @@ not known
     D --&gt;|Yes| E["5. Return its value"]
     D --&gt;|No| F["6. KeyError"]
 </code></pre></div>
+<p><img alt="Why must dictionary keys be immutable?" src="../../resources/ch02-2-ch2-more-conceptual-qa-fig-02.png" /></p>
 <p>If the key could change after being stored, its hash at step 2 would no longer point to the slot where it was stored, and the lookup would fail.</p>
 <div class="highlight"><pre><span></span><code><span class="c1"># Step 1: Strings, numbers and tuples work as keys</span>
 <span class="n">d</span> <span class="o">=</span> <span class="p">{</span><span class="s2">"a"</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">:</span> <span class="s2">"two"</span><span class="p">,</span> <span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">):</span> <span class="s2">"pair"</span><span class="p">}</span>
@@ -9555,6 +9557,7 @@ In five years you will be 30
     E --&gt; F["6. Explicit: the programmer converts, for example int() or str()"]
     F --&gt; G["7. The operation runs with the converted value"]
 </code></pre></div>
+<p><img alt="What is the difference between implicit and explicit type conversion?" src="../../resources/ch02-2-ch2-more-conceptual-qa-fig-03.png" /></p>
 <p><a href="#table-of-contents">Back to the Table of Contents</a></p>
 <h3 id="26-why-is-converting-a-float-to-an-integer-called-narrowing-conversion">26. Why is converting a <code>float</code> to an integer called narrowing conversion?<a class="headerlink" href="#26-why-is-converting-a-float-to-an-integer-called-narrowing-conversion" title="Permanent link">&para;</a></h3>
 <p>Converting a float to an integer removes the fractional part of the number. An <code>int</code> cannot hold a fractional part, so the conversion goes from a "wider" type to a "narrower" one, and some information is lost. That is why it is called a narrowing conversion. For example, <code>int(7.9)</code> gives <code>7</code>. The decimal part is cut off (truncated), not rounded. For negative numbers, cutting off moves toward zero, so <code>int(-7.9)</code> gives <code>-7</code>.</p>
@@ -9629,13 +9632,14 @@ set() -&gt; False
 None -&gt; False
 </code></pre></div>
 <p>Notice that <code>[0]</code> and <code>"0"</code> are <strong>true</strong>. They are not empty: one holds a zero and the other holds the character "0".</p>
-<div class="highlight"><pre><span></span><code>flowchart TD
+<div class="highlight"><pre><span></span><code>flowchart LR
     A["1. Python needs to know if x is true or false"] --&gt; B{"2. Does x define its own truth rule, __bool__?"}
     B --&gt;|Yes| C["3. Use that rule, for example 0 is False"]
     B --&gt;|No| D{"4. Does x have a length, __len__?"}
     D --&gt;|Yes| E["5. Length 0 means False, otherwise True"]
     D --&gt;|No| F["6. True"]
 </code></pre></div>
+<p><img alt="Why are empty containers considered False in Boolean contexts?" src="../../resources/ch02-2-ch2-more-conceptual-qa-fig-04.png" /></p>
 <p><a href="#table-of-contents">Back to the Table of Contents</a></p>
 <h3 id="28-why-is-if-my_list-considered-better-than-if-lenmy_list-0">28. Why is <code>if my_list:</code> considered better than <code>if len(my_list) &gt; 0:</code>?<a class="headerlink" href="#28-why-is-if-my_list-considered-better-than-if-lenmy_list-0" title="Permanent link">&para;</a></h3>
 <p>The shorter form is more readable and follows the Pythonic style. Python already knows how to treat a container as true or false, so checking the length yourself is unnecessary in most cases. Using the truth value directly also reduces clutter and makes the code clearer. PEP 8 recommends this style.</p>
@@ -9795,6 +9799,7 @@ True
     C --&gt; J["10. Bind the name in your program"]
     I --&gt; J
 </code></pre></div>
+<p><img alt="Why does Python cache imported modules in sys.modules?" src="../../resources/ch02-2-ch2-more-conceptual-qa-fig-05.png" /></p>
 <p>Python stores the module in <code>sys.modules</code> (step 8) just before running its code (step 9). So if two modules import each other, the second import finds the half-built module in the cache instead of starting an endless loop.</p>
 <p>If you edit a module while a program is running, a new <code>import</code> will not pick up the change, because of the cache. <code>importlib.reload()</code> forces a fresh load.</p>
 <p><a href="#table-of-contents">Back to the Table of Contents</a></p>
