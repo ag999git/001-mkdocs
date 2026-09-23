@@ -81,6 +81,11 @@
     <label class="md-overlay" for="__drawer"></label>
     <div data-md-component="skip">
       
+        
+        <a href="#chapter-6-functions-part-ii" class="md-skip">
+          Skip to content
+        </a>
+      
     </div>
     <div data-md-component="announce">
       
@@ -8014,9 +8019,104 @@
   
 
 
-  <h1>Overview</h1>
-
-
+<h1 id="chapter-6-functions-part-ii">Chapter 6: Functions, Part II<a class="headerlink" href="#chapter-6-functions-part-ii" title="Permanent link">&para;</a></h1>
+<p>The online companion to Chapter 6 of the book. Where Chapter 5 introduced the function, this chapter takes it further: recursion, the five kinds of parameter, <code>lambda</code>, <code>map()</code>, <code>filter()</code>, <code>zip()</code>, generators and decorators. These pages carry the full answers to all thirty-four questions at the end of the chapter, plus separate pages on the topics that need more room.</p>
+<p>By the end of these pages you should be able to write a recursive function and say why it stops, choose between a loop and <code>map()</code> without guessing, write a generator instead of building a list you do not need, and write a decorator that does not break the function it wraps.</p>
+<p>You need Chapter 5 first.</p>
+<h2 id="the-pages">The Pages<a class="headerlink" href="#the-pages" title="Permanent link">&para;</a></h2>
+<table>
+<thead>
+<tr>
+<th>Page</th>
+<th>What it covers</th>
+<th>Best for</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><a href="008-ch6-q-a/">Questions and Answers</a></td>
+<td>All thirty-four questions from the end of the chapter: arguments and parameters, the five parameter types, <code>*args</code> and <code>**kwargs</code>, recursion, memoization, the functional tools, generators, and a set of worked programs</td>
+<td>Start here</td>
+</tr>
+<tr>
+<td><a href="006-ch6-zip/">zip(), lambda, map() and filter()</a></td>
+<td>The four functional tools, one at a time, then combined</td>
+<td>After questions 10 to 15</td>
+</tr>
+<tr>
+<td><a href="007-ch6-generators-advanced/">Advanced Generators</a></td>
+<td>What happens when a generator finishes, how <code>for</code> drives one, and two worked generators</td>
+<td>After questions 16 and 17</td>
+</tr>
+<tr>
+<td><a href="009-ch6-functools-decorators/">functools.wraps in Decorators</a></td>
+<td>Why a decorator quietly loses the name and docstring of the function it wraps, and the one line that fixes it</td>
+<td>When you write your first decorator</td>
+</tr>
+<tr>
+<td><a href="004-ch6-additional-recursion-problems/">Additional Problems on Recursion</a></td>
+<td>Five worked recursive problems: powers, palindromes, GCD, Tower of Hanoi, and testing for even</td>
+<td>Practice</td>
+</tr>
+<tr>
+<td><a href="005-beyond-text-ch6-functions2/">Beyond the Text: Research Tasks</a></td>
+<td>Eight open-ended tasks, from reading real library source to writing a pseudo-random generator</td>
+<td>Going further</td>
+</tr>
+<tr>
+<td><a href="001-ch6-colab/">Interactive Notebook</a></td>
+<td>Opens this chapter's exercises in Google Colab</td>
+<td>Running code in a browser</td>
+</tr>
+</tbody>
+</table>
+<h2 id="what-is-on-the-questions-page">What Is on the Questions Page<a class="headerlink" href="#what-is-on-the-questions-page" title="Permanent link">&para;</a></h2>
+<table>
+<thead>
+<tr>
+<th>Questions</th>
+<th>Topic</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1 to 5</td>
+<td>How arguments are passed, arguments against parameters, lambda, and the five kinds of parameter</td>
+</tr>
+<tr>
+<td>6 to 9</td>
+<td>Looping styles, the module search path, the three laws of recursion, and memoization</td>
+</tr>
+<tr>
+<td>10 to 15</td>
+<td><code>*args</code>, <code>**kwargs</code>, <code>zip()</code>, anonymous functions, <code>map()</code>, <code>filter()</code></td>
+</tr>
+<tr>
+<td>16, 17</td>
+<td>Generator functions and generator iterators, and why they are worth using</td>
+</tr>
+<tr>
+<td>18 to 34</td>
+<td>Seventeen worked programs, including the quadratic formula, numerical integration by the trapezoidal rule, the power set, and recursion without the <code>*</code> operator</td>
+</tr>
+</tbody>
+</table>
+<h2 id="suggested-reading-order">Suggested Reading Order<a class="headerlink" href="#suggested-reading-order" title="Permanent link">&para;</a></h2>
+<ol>
+<li><strong>Questions 1 to 9.</strong> Question 5, on the five kinds of parameter, is the one to learn properly — positional, keyword, default, <code>*args</code> and <code>**kwargs</code> — because every later page uses them.</li>
+<li><strong>Questions 10 to 15</strong>, then the <strong>zip, lambda, map and filter</strong> page, which covers the same ground more slowly.</li>
+<li><strong>Questions 16 and 17</strong>, then the <strong>Advanced Generators</strong> page.</li>
+<li><strong>Additional Problems on Recursion.</strong> The Tower of Hanoi is the classic; work it by hand for three discs before reading the answer.</li>
+<li><strong>functools.wraps</strong> when you first write a decorator.</li>
+<li><strong>Beyond the Text</strong> last, as project work rather than reading.</li>
+</ol>
+<h2 id="three-points-worth-extra-care">Three Points Worth Extra Care<a class="headerlink" href="#three-points-worth-extra-care" title="Permanent link">&para;</a></h2>
+<p><strong>Recursion needs a base case, and the recursive call must move towards it.</strong> The three laws in question 8 say this precisely. A recursive function without a base case does not loop forever in Python; it raises <code>RecursionError</code>.</p>
+<p><strong><code>map()</code> and <code>filter()</code> return an iterator, not a list.</strong> Printing one shows something like <code>&lt;map object at 0x...&gt;</code>. Wrap it in <code>list()</code> to see the values.</p>
+<p><strong>A decorator replaces your function with a different one.</strong> Without <code>functools.wraps</code>, the new function carries the wrapper's name and docstring, so <code>help()</code> and debugging show the wrong thing. It is one line to fix and easy to forget.</p>
+<h2 id="using-the-code">Using the Code<a class="headerlink" href="#using-the-code" title="Permanent link">&para;</a></h2>
+<p>Every script is complete and ready to run. Copy it into a <code>.py</code> file or a notebook cell. Where a script produces output, that output is shown underneath.</p>
+<p>Two cautions. Scripts that print the address of an object, such as <code>&lt;map object at 0x...&gt;</code>, will show a different number on your machine. And the pseudo-random generator in the research tasks is there to show how such a generator works, not for anything that needs real randomness.</p>
 
 
 
