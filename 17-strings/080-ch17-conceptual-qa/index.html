@@ -8451,7 +8451,7 @@
 </ul>
 <h2 id="how-strings-fit-into-python">How Strings Fit Into Python<a class="headerlink" href="#how-strings-fit-into-python" title="Permanent link">&para;</a></h2>
 <p>Before the questions, here is a short map of the ideas that follow. Each box is explained by one or more questions on this page.</p>
-<div class="highlight"><pre><span></span><code>flowchart TD
+<div class="highlight"><pre><span></span><code>flowchart LR
     A["1. A string is a built-in type: an ordered sequence of characters"] --&gt; B["2. Create it with single, double or triple quotes"]
     B --&gt; C["3. Reach one character by index, many by slicing"]
     C --&gt; D["4. Strings are immutable, so every operation returns a NEW string"]
@@ -8459,6 +8459,7 @@
     E --&gt; F["6. Built-in methods do the common jobs: case, search, split, join"]
     F --&gt; G["7. f-strings put values neatly into text for display"]
 </code></pre></div>
+<p><img alt="How Strings Fit Into Python" src="../../resources/ch17-conceptual-qa-fig-01.png" /></p>
 <p><a href="#table-of-contents">Back to the Table of Contents</a></p>
 <h2 id="part-1-what-a-string-is">Part 1: What a String Is<a class="headerlink" href="#part-1-what-a-string-is" title="Permanent link">&para;</a></h2>
 <p>The first five questions build the base. They explain the type itself, how to create one, how characters are numbered, and why a string cannot be changed after it is made.</p>
@@ -9035,6 +9036,7 @@ Error message: string index out of range
     D --&gt; E["o (4, -2)"]
     E --&gt; F["n (5, -1)"]
 </code></pre></div>
+<p><img alt="Question 4. Positive and Negative String Indexing" src="../../resources/ch17-conceptual-qa-fig-02.png" /></p>
 <p><strong>Follow-up questions</strong></p>
 <p><strong>4.1 What does a single character returned by indexing look like to Python?</strong></p>
 <p>It is itself a string, of length one. Python has no separate character type.</p>
@@ -9193,6 +9195,7 @@ Rebuilt from a list: Jython
     B --&gt; C["3. New string created: HELLO"]
     A --&gt; D["4. Original string still Hello"]
 </code></pre></div>
+<p><img alt="Question 5. String Immutability" src="../../resources/ch17-conceptual-qa-fig-03.png" /></p>
 <p><strong>Follow-up questions</strong></p>
 <p><strong>5.1 How can I prove that a new object is created?</strong></p>
 <p>Every object has an identity number, which <code>id()</code> reports. If the number changes, the object is not the same one.</p>
@@ -9414,7 +9417,7 @@ He said "Hello"
 Are both the same string? True
 </code></pre></div>
 <p><strong>Flowchart</strong></p>
-<div class="highlight"><pre><span></span><code>flowchart LR
+<div class="highlight"><pre><span></span><code>flowchart TD
     A["1. Python reads the string character by character"] --&gt; B{"2. Is the character a backslash?"}
     B --&gt;|"No"| C["3. Store the character as it is"]
     B --&gt;|"Yes"| D["4. Read the next character too"]
@@ -9422,6 +9425,7 @@ Are both the same string? True
     C --&gt; F["6. Move to the next character"]
     E --&gt; F
 </code></pre></div>
+<p><img alt="Question 6. Escape Sequences" src="../../resources/ch17-conceptual-qa-fig-04.png" /></p>
 <p><strong>Common beginner mistakes</strong></p>
 <table>
 <thead>
@@ -9580,13 +9584,14 @@ Stored form: 'a\\tb'
 </ul>
 <p>Regular expressions are the most common use of all. There the backslash has its own meaning, for example <code>\d</code> for "any digit", and that meaning must survive untouched into the pattern. You will meet them in the chapter on regular expressions, and the <a href="https://docs.python.org/3/library/re.html">Python documentation on the <code>re</code> module</a> recommends raw strings for exactly this reason.</p>
 <p><strong>Diagram</strong></p>
-<div class="highlight"><pre><span></span><code>flowchart LR
+<div class="highlight"><pre><span></span><code>flowchart TD
     A["1. Python meets a backslash inside a string"] --&gt; B{"2. Does the literal have an r prefix?"}
     B --&gt;|"Yes"| C["3. Keep the backslash as an ordinary character"]
     B --&gt;|"No"| D["4. Read the next character and form an escape sequence"]
     C --&gt; E["5. Continue with the rest of the string"]
     D --&gt; E
 </code></pre></div>
+<p><img alt="Question 7. Raw Strings" src="../../resources/ch17-conceptual-qa-fig-05.png" /></p>
 <p><strong>One limitation worth knowing</strong></p>
 <p>A raw string cannot end with a single backslash. Python still uses the backslash to find the closing quote, so <code>r"C:\"</code> is an error.</p>
 <div class="highlight"><pre><span></span><code><span class="c1"># Step 1: A raw string that ends with one backslash is not allowed</span>
@@ -9827,15 +9832,16 @@ Number of vowels: 3
     D --&gt; E["5. Process the character"]
     E --&gt; F{"6. Any characters left?"}
     F --&gt;|"Yes"| D
-    F --&gt;|"No"| L["11. End"]
+    F --&gt;|"No"| L["12. End"]
     C --&gt;|"while"| G["7. Set the index to 0"]
     G --&gt; H["8. Read the character at the index"]
     H --&gt; I["9. Process the character"]
     I --&gt; J["10. Add 1 to the index"]
-    J --&gt; K{"Index still less than the length?"}
+    J --&gt; K{"11. Index still less than the length?"}
     K --&gt;|"Yes"| H
     K --&gt;|"No"| L
 </code></pre></div>
+<p><img alt="Question 8. Traversing a String With for and while" src="../../resources/ch17-conceptual-qa-fig-06.png" /></p>
 <p><strong>Common beginner mistakes</strong></p>
 <table>
 <thead>
@@ -10123,7 +10129,7 @@ marks.csv looks like a comma separated file
 Does the message contain a banned word? False
 </code></pre></div>
 <p><strong>Flowchart</strong></p>
-<div class="highlight"><pre><span></span><code>flowchart TD
+<div class="highlight"><pre><span></span><code>flowchart LR
     A["1. Original string"] --&gt; B{"2. Which operator?"}
     B --&gt;|"+"| C["3. New joined string"]
     B --&gt;|"*"| D["4. New repeated string"]
@@ -10132,6 +10138,7 @@ Does the message contain a banned word? False
     D --&gt; F
     E --&gt; F
 </code></pre></div>
+<p><img alt="Question 9. Concatenation, Repetition and Membership" src="../../resources/ch17-conceptual-qa-fig-07.png" /></p>
 <p><strong>Common beginner mistakes</strong></p>
 <table>
 <thead>
@@ -10295,13 +10302,14 @@ Pormig
 <li>Repeats until the stop index is reached or passed.</li>
 </ol>
 <p><strong>Flowchart</strong></p>
-<div class="highlight"><pre><span></span><code>flowchart LR
+<div class="highlight"><pre><span></span><code>flowchart TD
     A["1. Go to the start index"] --&gt; B["2. Copy the character"]
     B --&gt; C["3. Move forward by the step"]
     C --&gt; D{"4. Has the stop index been reached?"}
     D --&gt;|"No"| B
     D --&gt;|"Yes"| E["5. Return the new string"]
 </code></pre></div>
+<p><img alt="Question 10. String Slicing" src="../../resources/ch17-conceptual-qa-fig-08.png" /></p>
 <p><strong>Examples</strong></p>
 <div class="highlight"><pre><span></span><code><span class="c1"># Step 1: A string whose characters are easy to follow</span>
 <span class="n">text</span> <span class="o">=</span> <span class="s2">"ABCDEFGHIJ"</span>
@@ -10671,6 +10679,7 @@ The character at 9731 is: ☃
     A["1. A character, for example A"] --&gt;|"2. ord()"| B["3. Its code point, 65"]
     B --&gt;|"4. chr()"| C["5. The character again, A"]
 </code></pre></div>
+<p><img alt="Question 11. ASCII, Unicode, ord() and chr()" src="../../resources/ch17-conceptual-qa-fig-09.png" /></p>
 <p><strong>Practical applications</strong></p>
 <p><code>ord()</code> and <code>chr()</code> are useful in</p>
 <ul>
@@ -10955,16 +10964,17 @@ Case-free sort:   ['Apple', 'banana', 'cherry']
 </code></pre></div>
 <p>In this example both sorts happen to agree. Change <code>"Apple"</code> to <code>"apple"</code> and <code>"banana"</code> to <code>"Banana"</code>, and the two results will differ, because all capitals sort before all small letters.</p>
 <p><strong>Flowchart</strong></p>
-<div class="highlight"><pre><span></span><code>flowchart TD
-    A["1. Compare two strings"] --&gt; B["2. Look at the first character of each"]
+<div class="highlight"><pre><span></span><code>flowchart LR
+    A["1. Compare two strings"] --&gt; B["2. Look at the first pair of characters"]
     B --&gt; C{"3. Are they equal?"}
     C --&gt;|"No"| D["4. The one with the smaller code point is the smaller string"]
     C --&gt;|"Yes"| E["5. Move to the next pair of characters"]
     E --&gt; F{"6. Has either string ended?"}
-    F --&gt;|"No"| B
+    F --&gt;|"No"| C
     F --&gt;|"Yes, both together"| G["7. The strings are equal"]
     F --&gt;|"Yes, one of them"| H["8. The shorter string is the smaller one"]
 </code></pre></div>
+<p><img alt="Question 12. Comparing Strings" src="../../resources/ch17-conceptual-qa-fig-10.png" /></p>
 <p><strong>Common beginner mistakes</strong></p>
 <table>
 <thead>
@@ -11141,6 +11151,7 @@ Step by step: 'PyThOn' 'python' 'java'
     C --&gt; D["4. replace() swaps one word for another"]
     D --&gt; E["5. Final string"]
 </code></pre></div>
+<p><img alt="Question 13. String Methods as Object Methods" src="../../resources/ch17-conceptual-qa-fig-11.png" /></p>
 <p><strong>Why are methods preferable to ordinary functions?</strong></p>
 <p>Methods improve</p>
 <ul>
@@ -11477,7 +11488,7 @@ After assigning the result back: PYTHON
 </code></pre></div>
 <p>Step 4 is one of the most frequent beginner errors. Nothing goes wrong, no error appears, and the string simply stays as it was.</p>
 <p><strong>Flowchart</strong></p>
-<div class="highlight"><pre><span></span><code>flowchart TD
+<div class="highlight"><pre><span></span><code>flowchart LR
     A["1. Original string"] --&gt; B["2. lower() returns a new string"]
     A --&gt; C["3. replace() returns a new string"]
     A --&gt; D["4. split() returns a list"]
@@ -11486,6 +11497,7 @@ After assigning the result back: PYTHON
     D --&gt; E
     A --&gt; F["6. The original object is never changed"]
 </code></pre></div>
+<p><img alt="Question 14. The Common String Methods" src="../../resources/ch17-conceptual-qa-fig-12.png" /></p>
 <p><strong>Choosing the appropriate method</strong></p>
 <table>
 <thead>
@@ -11752,6 +11764,7 @@ Invalid input. Please type digits only.
     C --&gt;|"Yes"| D["4. Convert and process the value"]
     C --&gt;|"No"| E["5. Show an error message and ask again"]
 </code></pre></div>
+<p><img alt="Question 15. The is Family of Methods" src="../../resources/ch17-conceptual-qa-fig-13.png" /></p>
 <p><strong>Comparison table</strong></p>
 <table>
 <thead>
@@ -12093,6 +12106,7 @@ average=68.5
     C --&gt; D["4. Any format code after the colon is applied"]
     D --&gt; E["5. The finished string is produced"]
 </code></pre></div>
+<p><img alt="Question 16. f-Strings" src="../../resources/ch17-conceptual-qa-fig-14.png" /></p>
 <p><strong>Common beginner mistakes</strong></p>
 <table>
 <thead>
@@ -12320,6 +12334,7 @@ Result: Palindrome
     G --&gt;|"No"| C
     G --&gt;|"Yes"| H["8. Palindrome"]
 </code></pre></div>
+<p><img alt="Question 17. Palindrome Using Indexing" src="../../resources/ch17-conceptual-qa-fig-15.png" /></p>
 <p><strong>Advantages</strong></p>
 <ul>
 <li>Efficient, because it stops at the first mismatch.</li>
@@ -12456,6 +12471,7 @@ Are they equal? False
     D --&gt;|"Yes"| E["5. Palindrome"]
     D --&gt;|"No"| F["6. Not a palindrome"]
 </code></pre></div>
+<p><img alt="Question 18. Palindrome Using Slicing" src="../../resources/ch17-conceptual-qa-fig-16.png" /></p>
 <p><strong>Advantages</strong></p>
 <ul>
 <li>Extremely concise.</li>
@@ -12636,6 +12652,7 @@ ab       indexing: False, slicing: False, agree: True
     F --&gt; G["7. One line, easy to read"]
     G --&gt; H["8. Add a cleaning step if needed"]
 </code></pre></div>
+<p><img alt="Question 19. Comparing the Two Palindrome Methods" src="../../resources/ch17-conceptual-qa-fig-17.png" /></p>
 <p><strong>Key points</strong></p>
 <ul>
 <li>Both algorithms are correct.</li>
@@ -12650,7 +12667,7 @@ ab       indexing: False, slicing: False, agree: True
 <p>A string is much more than a collection of characters. It is an immutable Unicode sequence object that supports indexing, slicing, iteration, comparison, formatting, and a large collection of built-in methods.</p>
 <p>Understanding strings requires connecting several independent concepts. Each of them was the subject of an earlier question on this page; the purpose here is to see them working together.</p>
 <p><strong>Concept map</strong></p>
-<div class="highlight"><pre><span></span><code>flowchart TD
+<div class="highlight"><pre><span></span><code>flowchart LR
     A["String"] --&gt; B["Unicode, Question 11"]
     A --&gt; C["Indexing, Question 4"]
     A --&gt; D["Slicing, Question 10"]
@@ -12660,6 +12677,7 @@ ab       indexing: False, slicing: False, agree: True
     A --&gt; H["Comparison, Question 12"]
     A --&gt; I["Immutability, Question 5"]
 </code></pre></div>
+<p><img alt="Question 20. Strings, a Comprehensive Review" src="../../resources/ch17-conceptual-qa-fig-18.png" /></p>
 <p><strong>How the concepts work together</strong></p>
 <p>Suppose a program accepts a user's name and prints a greeting. Look at how many ideas from this chapter appear in five short steps.</p>
 <p><strong>Step 1. Input.</strong> Read the text. <code>input()</code> always returns a string, whatever the user types.</p>
