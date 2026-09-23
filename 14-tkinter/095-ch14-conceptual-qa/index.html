@@ -8934,11 +8934,11 @@ TclError: cannot use geometry manager grid inside .!frame which already has slav
 <p>What you <strong>can</strong> do — and should — is use different managers in <em>different</em> containers:</p>
 <p><img alt="Flowchart" src="../../resources/ch14-tkinter-September-2026-conceptual-QA-004.png" /></p>
 <div class="highlight"><pre><span></span><code>flowchart TD
-    A[root window] --&gt; B[frame_one placed with pack]
-    A --&gt; C[frame_two placed with pack]
-    B --&gt; D[its children all use grid - allowed]
-    C --&gt; E[its children all use pack - allowed]
-    F[One container mixing pack and grid] --&gt; G[TclError raised at once]
+    A["GOOD: the root window"] --&gt; B["frame_one placed with pack"]
+    A --&gt; C["frame_two placed with pack"]
+    B --&gt; D["its children all use grid - allowed"]
+    C --&gt; E["its children all use pack - allowed"]
+    F["BAD: one container mixing pack and grid"] --&gt; G["TclError raised at once"]
 </code></pre></div>
 <p>Each container is judged on its own, so a frame can be packed into the root while everything inside that frame uses grid. The rule only forbids two managers competing for the same parent.</p>
 <p><a href="#table-of-contents">Back to Table of Contents</a></p>
@@ -9319,12 +9319,12 @@ columnspan=3, sticky='ew' -&gt; 360 pixels wide
 <p>Why this matters so much in a GUI is that the default behaviour for a callback error is close to the worst possible one for a user. The program does not crash — Tkinter prints a traceback to the console and carries on — so the user clicks a button, absolutely nothing happens, no message appears, and the only explanation is in a terminal they are probably not looking at. A global handler converts that silence into a clear message.</p>
 <p><img alt="Flowchart" src="../../resources/ch14-tkinter-September-2026-conceptual-QA-006.png" /></p>
 <div class="highlight"><pre><span></span><code>flowchart TD
-    A[An exception is raised somewhere in your program] --&gt; B{Was it raised inside a Tkinter callback}
-    B --&gt;|Yes - a button click or after job or bind or trace| C[Tkinter catches it first]
-    C --&gt; D[root.report_callback_exception is called]
-    B --&gt;|No - ordinary top level code| E[It travels up the call chain]
-    E --&gt; F[sys.excepthook is called]
-    D --&gt; G[Point both names at one handler to cover every case]
+    A["An exception is raised somewhere in your program"] --&gt; B{"Was it raised inside a Tkinter callback?"}
+    B --&gt;|"Yes: a button click, after job, bind or trace"| C["Tkinter catches it first"]
+    C --&gt; D["root.report_callback_exception is called"]
+    B --&gt;|"No: ordinary top level code"| E["It travels up the call chain"]
+    E --&gt; F["sys.excepthook is called"]
+    D --&gt; G["Point both names at one handler to cover every case"]
     F --&gt; G
 </code></pre></div>
 <p><a href="#table-of-contents">Back to Table of Contents</a></p>
