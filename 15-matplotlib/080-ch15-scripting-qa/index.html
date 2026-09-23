@@ -8465,13 +8465,7 @@
 <p><strong>How to use this page:</strong> read the question and try to write the script yourself first. Then compare your script with the answer, run it, and check that your printed output and graph match the ones shown. Finally, try the follow-up question. Its answer is hidden; click "Show answer" to see it.</p>
 <p><strong>About the scripts:</strong> every script was run with Python 3.11, Matplotlib 3.10, NumPy 2 and pandas 3.0. <code>print()</code> statements have been added so that you can check the numbers behind each graph. When a script calls <code>plt.show()</code>, a graph window opens; the picture below the output shows what that window contains.</p>
 <p><strong>The basic pattern that every script follows:</strong></p>
-<div class="highlight"><pre><span></span><code>flowchart TD
-    A[Step 1 - Import matplotlib and any other libraries] --&gt; B[Step 2 - Prepare the data]
-    B --&gt; C[Step 3 - Create the plot]
-    C --&gt; D[Step 4 - Add title, labels, legend and grid]
-    D --&gt; E[Step 5 - Save the figure if needed]
-    E --&gt; F[Step 6 - Show the figure]
-</code></pre></div>
+<p><img alt="The skeleton that every script in this chapter follows" src="../../resources/ch-15-fig-26-script-skeleton.png" /></p>
 <h2 id="table-of-contents">Table of Contents<a class="headerlink" href="#table-of-contents" title="Permanent link">&para;</a></h2>
 <ul>
 <li><a href="#matplotlib-scripting-questions-and-answers">Matplotlib: Scripting Questions and Answers</a></li>
@@ -9234,19 +9228,7 @@ Series plotted x = [0, 1, 2, 3, 4], y = [10, 15, 20, 25, 30]
 </tbody>
 </table>
 <p><strong>How data reaches the finished graph:</strong></p>
-<div class="highlight"><pre><span></span><code>flowchart TD
-    A[1 - Choose the input data]
-    A --&gt; B[2a - Python list]
-    A --&gt; C[2b - NumPy array]
-    A --&gt; D[2c - pandas Series]
-    B --&gt; E[3 - ax.plot draws the line]
-    C --&gt; E
-    D --&gt; E
-    E --&gt; F[4 - Add title]
-    F --&gt; G[5 - Add axis labels]
-    G --&gt; H[6 - Add grid]
-    H --&gt; I[7 - Final figure with three subplots]
-</code></pre></div>
+<p><img alt="A list, a NumPy array and a pandas Series all reach ax.plot() the same way" src="../../resources/ch-15-fig-27-list-array-series.png" /></p>
 <p><strong>Follow-up question:</strong> If the Series were created as <code>pd.Series([10, 15, 20, 25, 30], index=[2020, 2021, 2022, 2023, 2024])</code>, what would the third subplot show on its x-axis?</p>
 <details>
 <summary>Show answer</summary>
@@ -9712,14 +9694,7 @@ The height of the plot always stays the same. A narrow y-range spreads a small c
 <p><strong>Answer</strong></p>
 <p>A combined chart uses bars for one variable and a line for another. The bars show sales month by month and the line shows how profit moves.</p>
 <p>Sales (120 to 260) are much larger than profit (15 to 45). If both are drawn on the same y-axis, the profit line is squashed near the bottom of the chart and its changes are hard to see. So the script draws the profit line on a <strong>second y-axis</strong> created with <code>twinx()</code>. The two charts share the same months along the bottom, but each has its own scale: sales on the left and profit on the right. See <a href="https://matplotlib.org/stable/api/_as_gen/matplotlib.axes.Axes.twinx.html">matplotlib.axes.Axes.twinx</a>.</p>
-<div class="highlight"><pre><span></span><code>flowchart TD
-    A[Step 1 - Create figure and axes for sales] --&gt; B[Step 2 - Draw sales as bars]
-    B --&gt; C[Step 3 - Create a twin axes with twinx]
-    C --&gt; D[Step 4 - Draw profit as a line on the twin axes]
-    D --&gt; E[Step 5 - Label both y-axes]
-    E --&gt; F[Step 6 - Join the legends of both axes]
-    F --&gt; G[Step 7 - Add grid and show]
-</code></pre></div>
+<p><img alt="The seven steps that put two different scales on one chart" src="../../resources/ch-15-fig-28-twinx-steps.png" /></p>
 <div class="highlight"><pre><span></span><code><span class="c1"># ==========================================================</span>
 <span class="c1"># COMBINED BAR + LINE CHART</span>
 <span class="c1"># ==========================================================</span>
@@ -10052,15 +10027,7 @@ Create three plotting areas and draw one line in each:
 <h3 id="11-create-a-bar-chart-project-showing-the-number-of-books-issued-by-different-departments-in-a-college-library-add-data-labels-title-labels-legend-and-gridlines">11. Create a bar chart project showing the number of books issued by different departments in a college library. Add data labels, title, labels, legend, and gridlines.<a class="headerlink" href="#11-create-a-bar-chart-project-showing-the-number-of-books-issued-by-different-departments-in-a-college-library-add-data-labels-title-labels-legend-and-gridlines" title="Permanent link">&para;</a></h3>
 <p><strong>Answer</strong></p>
 <p>A bar chart compares amounts across separate categories, here the college departments. <strong>Data labels</strong> are numbers written on or above each bar so that the reader does not have to estimate the value from the axis. <code>plt.bar()</code> returns a container of bar objects. Looping over it gives the position and height of each bar, which tells us where to place its label. See <a href="https://matplotlib.org/stable/api/_as_gen/matplotlib.pyplot.bar.html">matplotlib.pyplot.bar</a>.</p>
-<div class="highlight"><pre><span></span><code>flowchart TD
-    A[Step 1 - Prepare department names and book counts] --&gt; B[Step 2 - Draw the bars and keep them in a variable]
-    B --&gt; C[Step 3 - Take the next bar]
-    C --&gt; D[Step 4 - Find its centre and its height]
-    D --&gt; E[Step 5 - Write the height just above the bar]
-    E --&gt; F{Step 6 - Any bars left}
-    F --&gt;|Yes| C
-    F --&gt;|No| G[Step 7 - Add title, labels, grid and legend, then show]
-</code></pre></div>
+<p><img alt="The loop that writes a value above each bar" src="../../resources/ch-15-fig-29-labelling-every-bar.png" /></p>
 <div class="highlight"><pre><span></span><code><span class="c1"># ==========================================================</span>
 <span class="c1"># BAR CHART PROJECT</span>
 <span class="c1"># ==========================================================</span>
@@ -11031,14 +10998,7 @@ Colors are good for spotting patterns, but it is hard to read an exact number fr
 <p><strong>Answer</strong></p>
 <p>A <strong>surface</strong> gives a height z for every point (x, y). To draw it, we need z values on a grid of points. <code>np.meshgrid()</code> builds that grid from two 1-D ranges. <code>contour()</code> then draws <strong>contour lines</strong> joining points of equal z, like height lines on a map, and <code>contourf()</code> fills the bands between levels with color. See <a href="https://numpy.org/doc/stable/reference/generated/numpy.meshgrid.html">numpy.meshgrid</a>, <a href="https://matplotlib.org/stable/api/_as_gen/matplotlib.pyplot.contour.html">matplotlib.pyplot.contour</a> and <a href="https://matplotlib.org/stable/api/_as_gen/matplotlib.pyplot.contourf.html">matplotlib.pyplot.contourf</a>.</p>
 <p>Since x² + y² is the squared distance from the centre, every point at the same distance from (0, 0) has the same z. That is why both plots show <strong>rings</strong>. The rings get closer together further out, because x² + y² grows faster and faster, so the sine wave goes up and down more quickly.</p>
-<div class="highlight"><pre><span></span><code>flowchart TD
-    A[Step 1 - Make 200 x-values and 200 y-values] --&gt; B[Step 2 - Build a 200 by 200 grid with meshgrid]
-    B --&gt; C[Step 3 - Calculate z at every grid point]
-    C --&gt; D[Step 4a - contour draws lines of equal z]
-    C --&gt; E[Step 4b - contourf fills bands between levels]
-    D --&gt; F[Step 5 - Add labels, color bar and show]
-    E --&gt; F
-</code></pre></div>
+<p><img alt="contour() and contourf() draw the same grid in two different ways" src="../../resources/ch-15-fig-30-contour-and-contourf.png" /></p>
 <div class="highlight"><pre><span></span><code><span class="c1"># ==========================================================</span>
 <span class="c1"># CONTOUR AND CONTOURF VISUALIZATION</span>
 <span class="c1"># ==========================================================</span>
@@ -11574,15 +11534,7 @@ It would still have the dark_background style, because `plt.style.use()` changes
 </tr>
 </tbody>
 </table>
-<div class="highlight"><pre><span></span><code>flowchart TD
-    A[Step 1 - Create the graph and add labels] --&gt; B[Step 2 - Save as PNG, PDF and SVG]
-    B --&gt; C[Step 3 - Check each file exists and is not empty]
-    C --&gt; D{Step 4 - All files saved}
-    D --&gt;|Yes| E[Step 5 - Print a success message]
-    D --&gt;|No| F[Step 6 - Print a warning]
-    E --&gt; G[Step 7 - Show the graph]
-    F --&gt; G
-</code></pre></div>
+<p><img alt="Saving a figure in three formats and checking that each file really exists" src="../../resources/ch-15-fig-31-saving-and-checking-files.png" /></p>
 <div class="highlight"><pre><span></span><code><span class="c1"># ==========================================================</span>
 <span class="c1"># SAVING GRAPHS USING savefig()</span>
 <span class="c1"># ==========================================================</span>

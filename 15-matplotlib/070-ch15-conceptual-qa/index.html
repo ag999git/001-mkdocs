@@ -8744,14 +8744,7 @@ Right title: Object-oriented: cubes
 <p>The top container is the <strong>Figure</strong> (usually stored in the variable <code>fig</code>). It is the outer frame. It handles the window, the overall background, the size of the image and the layout of everything inside it. It can also hold a figure-wide title.</p>
 <p>Inside the Figure sit one or more <strong>Axes</strong> objects (usually stored in <code>ax</code>). An Axes is the actual drawing area. It contains the coordinate plane, the grid lines, the title of that plot and the plotted data. Note the spelling: an <strong>Axes</strong> is a whole plot area, while an <strong>Axis</strong> is a single number line. Every Axes owns an x-<strong>Axis</strong> and a y-<strong>Axis</strong>, and each Axis manages its own ticks, tick labels and axis label.</p>
 <p>Everything that is drawn, from lines and bars to text, is called an <strong>Artist</strong>. Lines are <code>Line2D</code> artists, bars are <code>Rectangle</code> artists (a kind of patch), and labels are <code>Text</code> artists. See <a href="https://matplotlib.org/stable/gallery/showcase/anatomy.html">Anatomy of a figure (Matplotlib)</a>.</p>
-<div class="highlight"><pre><span></span><code>graph TD
-    A[1 - Figure - the outer frame and window] --&gt; B[2 - Axes 1 - a plotting area]
-    A --&gt; C[7 - Axes 2 - another plotting area]
-    B --&gt; D[3 - X-Axis - ticks, tick labels and axis label]
-    B --&gt; E[4 - Y-Axis - ticks, tick labels and axis label]
-    B --&gt; F[5 - Artists - lines, bars, markers and text]
-    B --&gt; G[6 - Axes title, grid and legend]
-</code></pre></div>
+<p><img alt="How a Figure, its Axes and the objects inside them fit together" src="../../resources/ch-15-fig-21-anatomy-of-a-figure.png" /></p>
 <p>Axes 2 contains the same kinds of parts (x-axis, y-axis, artists, title) as Axes 1.</p>
 <table>
 <thead>
@@ -9191,13 +9184,7 @@ A green line drawn as a dotted line, with triangle markers at the data points.
 <li><strong>Render</strong> (draw) one rectangle per bin, with its height equal to the count. The rectangles touch because the bins are next to each other on the number line.</li>
 </ol>
 <p>"Sorting" here means placing each value into the right bin, not arranging the values in order. The counting is done by NumPy's <code>histogram()</code> function. See <a href="https://matplotlib.org/stable/api/_as_gen/matplotlib.axes.Axes.hist.html">matplotlib.axes.Axes.hist</a> and <a href="https://numpy.org/doc/stable/reference/generated/numpy.histogram.html">numpy.histogram</a>.</p>
-<div class="highlight"><pre><span></span><code>flowchart TD
-    A[Step 1 - Read the raw values] --&gt; B[Step 2 - Find the minimum and maximum]
-    B --&gt; C[Step 3 - Split the range into equal bins]
-    C --&gt; D[Step 4 - Place each value in its bin and count]
-    D --&gt; E[Step 5 - Draw one touching bar per bin]
-    E --&gt; F[Step 6 - Return counts, bin edges and bar objects]
-</code></pre></div>
+<p><img alt="The six things ax.hist() does for you" src="../../resources/ch-15-fig-22-what-hist-does.png" /></p>
 <div class="highlight"><pre><span></span><code><span class="c1"># Description: Demonstrates how ax.hist() places values into bins and counts them</span>
 
 <span class="c1"># Step 1 - Import pyplot</span>
@@ -9403,14 +9390,19 @@ Colors       : ['#1f77b4', '#ff7f0e']
 Lines drawn in total: 3
 Legend text  : ['Revenue', 'Costs']
 </code></pre></div>
-<p><img alt="Plot with a legend showing only the labelled lines" src="../../resources/ch15-qa2-q12-legend.png" /></p>
-<div class="highlight"><pre><span></span><code>flowchart TD
-    A[Step 1 - Plot lines, giving some of them a label] --&gt; B[Step 2 - Call ax.legend]
-    B --&gt; C[Step 3 - Collect artists that have a label]
-    C --&gt; D[Step 4 - Skip lines with no label]
-    D --&gt; E[Step 5 - Draw a small sample of each line with its label]
-    E --&gt; F[Step 6 - Place the legend box using loc]
+<p><strong>A note on the colour line.</strong> On Matplotlib 3.10 and later you will see the two colours printed as triples of decimal numbers instead of as text:</p>
+<div class="highlight"><pre><span></span><code>Colors       : [(0.12156862745098039, 0.4666666666666667, 0.7058823529411765),
+                (1.0, 0.4980392156862745, 0.054901960784313725)]
 </code></pre></div>
+<p>These are the same two colours. <code>#1f77b4</code> is simply the hexadecimal way of writing red 0.1216, green 0.4667, blue 0.7059, and <code>#ff7f0e</code> is the same for the second colour. Newer versions of Matplotlib store the default colour cycle as numbers, so <code>get_color()</code> hands back numbers. If you prefer the short hexadecimal form, convert it:</p>
+<div class="highlight"><pre><span></span><code><span class="c1"># Add this import at the top of the script, then use this line</span>
+<span class="c1"># in place of the "Colors" line in Step 3.</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">matplotlib.colors</span><span class="w"> </span><span class="kn">import</span> <span class="n">to_hex</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">"Colors       :"</span><span class="p">,</span> <span class="p">[</span><span class="n">to_hex</span><span class="p">(</span><span class="n">h</span><span class="o">.</span><span class="n">get_color</span><span class="p">())</span> <span class="k">for</span> <span class="n">h</span> <span class="ow">in</span> <span class="n">handles</span><span class="p">])</span>
+</code></pre></div>
+<p>Written that way, the output reads <code>Colors       : ['#1f77b4', '#ff7f0e']</code> on every version of Matplotlib.</p>
+<p><img alt="Plot with a legend showing only the labelled lines" src="../../resources/ch15-qa2-q12-legend.png" /></p>
+<p><img alt="What ax.legend() does behind the scenes" src="../../resources/ch-15-fig-23-how-a-legend-is-built.png" /></p>
 <p><strong>Follow-up question:</strong> How can you give a line a label but still keep it out of the legend?</p>
 <details>
 <summary>Show answer</summary>
@@ -9712,13 +9704,7 @@ Step 17: Figure closed. Open figures: []
 <li><strong>Map to a color:</strong> it looks up each 0-to-1 number in a <strong>colormap</strong>, a smooth scale of colors. In the default colormap, "viridis", 0 is dark purple and 1 is bright yellow.</li>
 </ol>
 <p>In this way a table of raw numbers becomes a picture of color intensities, called a <strong>heat map</strong>. See <a href="https://en.wikipedia.org/wiki/Heat_map">Heat map (Wikipedia)</a>, <a href="https://matplotlib.org/stable/users/explain/colors/colormapnorms.html">Colormap normalization (Matplotlib)</a> and <a href="https://matplotlib.org/stable/users/explain/colors/colormaps.html">Choosing colormaps (Matplotlib)</a>.</p>
-<div class="highlight"><pre><span></span><code>graph TD
-    A[1 - Matrix of values in rows and columns] --&gt; B[2 - Find the smallest and largest values]
-    B --&gt; C[3 - Normalize each value to a number from 0 to 1]
-    C --&gt; D[4 - Look up that number in the colormap]
-    D --&gt; E[5 - Draw one colored square per cell]
-    E --&gt; F[6 - Add a color bar as the key]
-</code></pre></div>
+<p><img alt="How a number in a matrix becomes a coloured square" src="../../resources/ch-15-fig-24-how-imshow-colours-a-matrix.png" /></p>
 <div class="highlight"><pre><span></span><code><span class="c1"># Step 1 - Import the libraries</span>
 <span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
 <span class="kn">import</span><span class="w"> </span><span class="nn">matplotlib.pyplot</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">plt</span>
@@ -10185,15 +10171,7 @@ Use `ax.text()` with axes coordinates:
 </tr>
 </tbody>
 </table>
-<div class="highlight"><pre><span></span><code>flowchart TD
-    A[Step 1 - Start the loop] --&gt; B[Step 2 - Create a figure]
-    B --&gt; C[Step 3 - Draw the plot]
-    C --&gt; D[Step 4 - Save the figure to a file]
-    D --&gt; E[Step 5 - Close the figure with plt.close fig]
-    E --&gt; F{Step 6 - More plots to make}
-    F --&gt;|Yes| B
-    F --&gt;|No| G[Step 7 - Finish]
-</code></pre></div>
+<p><img alt="Why a figure must be closed each time round a loop that saves many plots" src="../../resources/ch-15-fig-25-closing-figures-in-a-loop.png" /></p>
 <div class="highlight"><pre><span></span><code><span class="c1"># =====================================================================</span>
 <span class="c1"># Example: Clearing Memory When Generating Many Plots</span>
 <span class="c1">#</span>
@@ -10277,6 +10255,12 @@ Finished generating plots.
 Files in batch_plots: 50
 </code></pre></div>
 <p>This script does not show any graph on screen. It only saves image files into a folder called <code>batch_plots</code>.</p>
+<p><strong>A warning you should expect to see.</strong> While Step 2 is running, Matplotlib itself prints a message something like this:</p>
+<div class="highlight"><pre><span></span><code>RuntimeWarning: More than 20 figures have been opened. Figures created through
+the pyplot interface (matplotlib.pyplot.figure) are retained until explicitly
+closed and may consume too much memory.
+</code></pre></div>
+<p>Do not be alarmed. This warning is not a mistake in the script; it is the whole point of Step 2. Matplotlib counts the figures you leave open, and once the count passes 20 it warns you that memory is being used up. Step 2 opens 25 figures on purpose so that you can see this happen. Step 3 then shows the cure, and the warning never appears again, because no more than one figure is ever open at a time. If you want to change the limit at which Matplotlib warns you, it is the <code>figure.max_open_warning</code> setting.</p>
 <p><strong>What the output proves:</strong></p>
 <ol>
 <li>Creating 25 figures without closing them left 25 figures open in memory.</li>
