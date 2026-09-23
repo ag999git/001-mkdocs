@@ -9548,6 +9548,7 @@ True
     E --&gt; F["6. Stored value: 0.1000000000000000055511..."]
     F --&gt; G["7. print() shows the shortest text that gives back the same float: 0.1"]
 </code></pre></div>
+<p><img alt="Why 0.1 Cannot Be Stored Exactly" src="../../resources/ch02-float-data-fig-01.png" /></p>
 <p>Step 7 explains why <code>print(0.1)</code> still shows <code>0.1</code>. Python hides the tiny error when it prints a single number. The error shows up only after arithmetic, as in <code>0.1 + 0.2</code>, which prints <code>0.30000000000000004</code>.</p>
 <p>Learn more: <a href="https://docs.python.org/3/tutorial/floatingpoint.html">Floating-point arithmetic: issues and limitations</a>.</p>
 <p><a href="#table-of-contents">Back to the Table of Contents</a></p>
@@ -9761,7 +9762,7 @@ OverflowError: int too large to convert to float
 </code></pre></div>
 <p>Note that <code>float("3,5")</code> fails. Python always uses a point, never a comma, as the decimal separator.</p>
 <p>The flowchart shows how <code>float()</code> decides what to do.</p>
-<div class="highlight"><pre><span></span><code>flowchart TD
+<div class="highlight"><pre><span></span><code>flowchart LR
     A["1. Call float(x)"] --&gt; B{"2. What type is x?"}
     B --&gt;|int or bool| C{"3. Is the int too large, more than about 309 digits?"}
     C --&gt;|Yes| D["4. OverflowError"]
@@ -9773,6 +9774,7 @@ OverflowError: int too large to convert to float
     E --&gt; J["10. Return the new float"]
     G --&gt; J
 </code></pre></div>
+<p><img alt="All the Conversions in One Script" src="../../resources/ch02-float-data-fig-02.png" /></p>
 <p>Branch numbers: the int branch is steps 3 to 5, the string branch is steps 6 to 8 and the other branch is step 9. The two successful branches meet at step 10.</p>
 <p><a href="#table-of-contents">Back to the Table of Contents</a></p>
 <h3 id="8-floats-vs-decimal-vs-fraction-advanced">8. Floats vs Decimal vs Fraction (Advanced)<a class="headerlink" href="#8-floats-vs-decimal-vs-fraction-advanced" title="Permanent link">&para;</a></h3>
@@ -9869,7 +9871,7 @@ OverflowError: int too large to convert to float
 </tr>
 </tbody>
 </table>
-<div class="highlight"><pre><span></span><code>flowchart TD
+<div class="highlight"><pre><span></span><code>flowchart LR
     A["1. What kind of numbers do you need?"] --&gt; B{"2. Only whole numbers?"}
     B --&gt;|Yes| C["3. Use int"]
     B --&gt;|No| D{"4. Money or exact decimal places?"}
@@ -9878,6 +9880,7 @@ OverflowError: int too large to convert to float
     F --&gt;|Yes| G["7. Use Fraction"]
     F --&gt;|No| H["8. Use float"]
 </code></pre></div>
+<p><img alt="Comparing the Three Types" src="../../resources/ch02-float-data-fig-03.png" /></p>
 <p><a href="#table-of-contents">Back to the Table of Contents</a></p>
 <h3 id="9-common-float-pitfalls">9. Common Float Pitfalls<a class="headerlink" href="#9-common-float-pitfalls" title="Permanent link">&para;</a></h3>
 <p>These are the mistakes that learners most often make with floats. The combined script at the end of this section shows all of them.</p>
@@ -10022,6 +10025,7 @@ True
     E --&gt; G["7. Use the True or False result in your program"]
     F --&gt; G
 </code></pre></div>
+<p><img alt="Using math.isclose() Correctly" src="../../resources/ch02-float-data-fig-04.png" /></p>
 <p><a href="#table-of-contents">Back to the Table of Contents</a></p>
 <h3 id="11-summary">11. Summary<a class="headerlink" href="#11-summary" title="Permanent link">&para;</a></h3>
 <ul>
@@ -10340,6 +10344,7 @@ round(2.675, 2)-&gt; 2.67
     D --&gt; F["6. Return the result"]
     E --&gt; F
 </code></pre></div>
+<p><img alt="Block 4: isinteger() and round()" src="../../resources/ch02-float-data-fig-05.png" /></p>
 <p>Step 2 is the key to the <code>round(2.675, 2)</code> surprise. The stored value is slightly less than 2.675, so at step 3 it is <strong>not</strong> exactly halfway, and step 4 picks the nearer choice, 2.67.</p>
 <p>Learn more: <a href="https://docs.python.org/3/library/functions.html#round">round() in the Python documentation</a>.</p>
 <p><a href="#table-of-contents">Back to the Table of Contents</a></p>
