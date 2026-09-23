@@ -76,7 +76,7 @@ The assignment has `Cat` inherit from `Animal` only, while `Dog` inherits from b
 
 ## Visualizing the class hierarchy
 
-![Flowchart](/001-mkdocs/resources/ch8-inheritene-august2026-animal-management-system.png)
+![Flowchart](../resources/ch8-inheritene-august2026-animal-management-system.png)
 
 
 

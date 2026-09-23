@@ -53,7 +53,7 @@ The script below defines `Dog(Walker)` and `Fish(Swimmer)` as single-inheritance
 
 ## Visualizing the hierarchy
 
-![Flowchart](/001-mkdocs/resources/ch-8-august-2026-ABC-pet-abstract-base-class.png)
+![Flowchart](../resources/ch-8-august-2026-ABC-pet-abstract-base-class.png)
 
 
 
