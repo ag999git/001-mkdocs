@@ -81,6 +81,11 @@
     <label class="md-overlay" for="__drawer"></label>
     <div data-md-component="skip">
       
+        
+        <a href="#chapter-10-file-handling" class="md-skip">
+          Skip to content
+        </a>
+      
     </div>
     <div data-md-component="announce">
       
@@ -8014,9 +8019,124 @@
   
 
 
-  <h1>Overview</h1>
-
-
+<h1 id="chapter-10-file-handling">Chapter 10: File Handling<a class="headerlink" href="#chapter-10-file-handling" title="Permanent link">&para;</a></h1>
+<p>The online companion to Chapter 10 of the book. The printed chapter covers opening a file, the modes, reading and writing, and closing properly. These pages carry forty conceptual questions and thirty script exercises, a full reference for <code>open()</code> and the file object, and a series of research projects on the parts that repay a closer look: <code>seek()</code>, pickling, JSON, the <code>os</code> module and the standard streams.</p>
+<p>By the end of these pages you should know which mode to open a file in without guessing, understand why a text file and a binary file behave differently under <code>seek()</code>, be able to choose between JSON and pickle for saving data, and know how to walk a folder tree.</p>
+<p>You need Chapter 9 (exceptions) first, because almost every file operation can fail.</p>
+<h2 id="the-reference-pages">The Reference Pages<a class="headerlink" href="#the-reference-pages" title="Permanent link">&para;</a></h2>
+<table>
+<thead>
+<tr>
+<th>Page</th>
+<th>What it covers</th>
+<th>Best for</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><a href="010-ch10-concepts/">File Handling: A Concepts Reference</a></td>
+<td>Every term in one table, the life of a file from open to close, and worked examples of the important ones</td>
+<td>Start here</td>
+</tr>
+<tr>
+<td><a href="020-ch10-text-binary/">Text Files versus Binary Files</a></td>
+<td>How the two differ, a comparison table, and how to decide which mode you need</td>
+<td>Early</td>
+</tr>
+<tr>
+<td><a href="030-ch10-file-open/">A Comprehensive Study of open()</a></td>
+<td>Every parameter of <code>open()</code>, what the file object gives you, and which exception to expect when</td>
+<td>Reference</td>
+</tr>
+<tr>
+<td><a href="050-ch10-file-capability/">File Capability Methods</a></td>
+<td><code>readable()</code>, <code>writable()</code>, <code>seekable()</code> and what they tell you about an open file</td>
+<td>After <code>open()</code></td>
+</tr>
+</tbody>
+</table>
+<h2 id="the-question-pages">The Question Pages<a class="headerlink" href="#the-question-pages" title="Permanent link">&para;</a></h2>
+<table>
+<thead>
+<tr>
+<th>Page</th>
+<th>What it covers</th>
+<th>Best for</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><a href="110-ch10-conceptual/">Conceptual Questions</a></td>
+<td>Forty questions in two parts, the second on best practice</td>
+<td>Revision</td>
+</tr>
+<tr>
+<td><a href="120-ch10-scripts/">Script Questions</a></td>
+<td>Twenty programs from the chapter, plus ten on advanced topics</td>
+<td>Practice</td>
+</tr>
+</tbody>
+</table>
+<h2 id="the-research-projects">The Research Projects<a class="headerlink" href="#the-research-projects" title="Permanent link">&para;</a></h2>
+<p>Each of these is a complete small project: a question, the reasoning, then a script.</p>
+<table>
+<thead>
+<tr>
+<th>Project</th>
+<th>What it investigates</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><a href="040-ch10-seek/">seek(offset, whence)</a></td>
+<td>Why seeking works freely in a binary file but is restricted in a text one</td>
+</tr>
+<tr>
+<td><a href="060-ch10-os-module/">The os Module</a></td>
+<td>Working with paths, folders and the file system itself</td>
+</tr>
+<tr>
+<td><a href="070-ch10-standard-streams/">Standard Streams</a></td>
+<td><code>stdin</code>, <code>stdout</code> and <code>stderr</code>, and how data flows through a program</td>
+</tr>
+<tr>
+<td><a href="080-ch10-pickling/">Advanced Pickling</a></td>
+<td>Saving Python objects to disk and reading them back</td>
+</tr>
+<tr>
+<td><a href="090-ch10-json-pickle/">JSON versus Pickle</a></td>
+<td>A comparison with a table and worked examples, and how to choose</td>
+</tr>
+<tr>
+<td><a href="100-ch10-file-insertion/">Inserting Data at Any Position in a File</a></td>
+<td>Why you cannot simply insert into the middle of a file, and the algorithms that get round it</td>
+</tr>
+<tr>
+<td><a href="130-ch10-lbyl-eafp/">LBYL versus EAFP</a></td>
+<td>"Look before you leap" against "easier to ask forgiveness", and which Python prefers</td>
+</tr>
+<tr>
+<td><a href="140-ch10-oswalk/">Walking a Folder Tree with os.walk</a></td>
+<td>Visiting every file in every subfolder</td>
+</tr>
+</tbody>
+</table>
+<h2 id="suggested-reading-order">Suggested Reading Order<a class="headerlink" href="#suggested-reading-order" title="Permanent link">&para;</a></h2>
+<ol>
+<li><strong>The Concepts Reference</strong>, then <strong>Text versus Binary</strong>. These two settle the vocabulary.</li>
+<li><strong>The study of open()</strong>, at least the modes table. Opening a file in the wrong mode is the commonest file bug there is, and <code>'w'</code> destroys the file's contents the moment it succeeds.</li>
+<li><strong>The Conceptual Questions</strong>, Part 1.</li>
+<li><strong>The Script Questions</strong>, Part 1, as practice.</li>
+<li><strong>The research projects</strong>, in whatever order interests you. <code>seek()</code>, then pickling and JSON, is a natural path.</li>
+<li><strong>LBYL versus EAFP</strong> once you have written a few file programs and met the errors for yourself.</li>
+</ol>
+<h2 id="three-points-worth-extra-care">Three Points Worth Extra Care<a class="headerlink" href="#three-points-worth-extra-care" title="Permanent link">&para;</a></h2>
+<p><strong>Mode <code>'w'</code> empties the file immediately.</strong> Not when you write, but when you open. If you meant to add to the file, you wanted <code>'a'</code>.</p>
+<p><strong>Always close the file, and the reliable way is <code>with</code>.</strong> A file left open may not have your data on disk yet, because the write is buffered. <code>with open(...) as f:</code> closes it for you even if something goes wrong inside the block.</p>
+<p><strong>Pickle will run code from the file it loads.</strong> It is fine for data your own program saved. Never unpickle a file you did not create yourself. The JSON page explains when JSON is the safer choice.</p>
+<h2 id="using-the-code">Using the Code<a class="headerlink" href="#using-the-code" title="Permanent link">&para;</a></h2>
+<p>Every script is complete and ready to run. Copy it into a <code>.py</code> file or a notebook cell.</p>
+<p>These scripts create, change and delete files in whatever folder you run them from. Run them in a scratch folder, not among files you care about. A few of the <code>os</code> examples print paths from your own machine, so those lines will not match the page.</p>
 
 
 
