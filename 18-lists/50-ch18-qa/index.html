@@ -9029,7 +9029,7 @@
 <p><a href="#table-of-contents">Back to the Table of Contents</a></p>
 <h2 id="a-quick-map-of-python-containers">A Quick Map of Python Containers<a class="headerlink" href="#a-quick-map-of-python-containers" title="Permanent link">&para;</a></h2>
 <p>Before the questions begin, here is the family picture. It is worth looking at this map whenever an answer below mentions a container, a sequence or a mapping.</p>
-<div class="highlight"><pre><span></span><code>flowchart TD
+<div class="highlight"><pre><span></span><code>flowchart LR
     A["1. Object - any piece of data"] --&gt; B["2. Container - an object that holds other objects"]
     B --&gt; C["3. Sequence - items in a fixed order, reached by index"]
     B --&gt; D["4. Mapping - items reached by a key"]
@@ -9039,6 +9039,7 @@
     C --&gt; H["8. str - ordered, immutable, characters only"]
     D --&gt; I["9. dict - key and value pairs"]
 </code></pre></div>
+<p><img alt="A Quick Map of Python Containers" src="../resources/ch18-qa-fig-01.png" /></p>
 <p>The same picture as a table:</p>
 <table>
 <thead>
@@ -9871,6 +9872,7 @@ A Python variable does not hold an object. It holds a reference, which is the ad
     F --&gt; G["Step 7 - two lists, one name each"]
     G --&gt; H["Step 8 - a change made through b is not seen through a"]
 </code></pre></div>
+<p><img alt="Q11. Assigning a list versus copying a list" src="../resources/ch18-qa-fig-02.png" /></p>
 <p><strong>Step 5. Prove it with <code>id()</code>.</strong>
 The <code>id()</code> function returns a number that identifies the object. Two names with the same <code>id</code> are two names for one object.</p>
 <div class="highlight"><pre><span></span><code><span class="c1"># Step 1 - the original list.</span>
@@ -9969,6 +9971,7 @@ If the object cannot be changed, two names for it do no harm. Nobody can change 
     C --&gt; D["Step 4 - printing list1 reads that same object"]
     D --&gt; E["Step 5 - the output shows 1, 2 and 3"]
 </code></pre></div>
+<p><img alt="Q12. Aliasing and the bugs it causes" src="../resources/ch18-qa-fig-03.png" /></p>
 <p><strong>Step 5. See the version of this bug that bites in real programs.</strong>
 The example above is easy to spot because the two lines sit next to each other. In real code the alias is usually created by passing a list to a function.</p>
 <div class="highlight"><pre><span></span><code><span class="c1"># Step 1 - a function that looks harmless.</span>
@@ -10113,15 +10116,17 @@ Both are shallow. They copy the outer list only. If the list holds other lists, 
 <code>my_matrix[0]</code>, <code>my_matrix[1]</code>, <code>my_matrix[2]</code> and <code>my_matrix[3]</code> are four names for one row. Change a value through any of them and the change appears in all four.</p>
 <p><strong>Step 4. Picture it.</strong></p>
 <div class="highlight"><pre><span></span><code>flowchart TD
-    A["Step 1 - the inner part builds one row object of three zeros"] --&gt; B["Step 2 - the outer multiply by 4 stores that same row four times"]
+    S{"How is the matrix built"} -- "with the multiply" --&gt; A["Step 1 - the inner part builds one row object of three zeros"]
+    A --&gt; B["Step 2 - the outer multiply by 4 stores that same row four times"]
     B --&gt; C["Step 3 - all four rows of the matrix point to one object"]
     C --&gt; D["Step 4 - setting the first cell to 9 changes that one row"]
     D --&gt; E["Step 5 - printing the matrix shows the 9 in every row"]
-    B --&gt; F["Step 6 - the fix uses a list comprehension"]
+    S -- "with a comprehension" --&gt; F["Step 6 - the fix uses a list comprehension"]
     F --&gt; G["Step 7 - the comprehension builds a row of three zeros four separate times"]
     G --&gt; H["Step 8 - four different row objects are built"]
     H --&gt; I["Step 9 - setting the first cell to 9 changes only the first row"]
 </code></pre></div>
+<p><img alt="Q14. Why a repeated row is not four rows" src="../resources/ch18-qa-fig-04.png" /></p>
 <p><strong>Step 5. Prove the problem.</strong></p>
 <div class="highlight"><pre><span></span><code><span class="c1"># Step 1 - build the matrix the wrong way.</span>
 <span class="n">matrix</span> <span class="o">=</span> <span class="p">[[</span><span class="mi">0</span><span class="p">]</span> <span class="o">*</span> <span class="mi">3</span><span class="p">]</span> <span class="o">*</span> <span class="mi">4</span>
@@ -10888,6 +10893,7 @@ Defaults after f(2)   : ([1, 2],)
     G --&gt; H["Step 8 - the value is appended to the caller's list"]
     H --&gt; I["Step 9 - the stored default is untouched"]
 </code></pre></div>
+<p><img alt="Q21. The mutable default argument" src="../resources/ch18-qa-fig-05.png" /></p>
 <p><strong>Step 6. Write the corrected function.</strong>
 The cure is to use <code>None</code> as the default. <code>None</code> is immutable, so it cannot grow. Inside the function, check for it and build a fresh list.</p>
 <div class="highlight"><pre><span></span><code><span class="c1"># Step 1 - the safe pattern. None is the default.</span>
@@ -11320,6 +11326,7 @@ Use a set for the record, not a list. Checking <code>x in some_set</code> is fas
     F --&gt;|"Yes"| B
     F --&gt;|"No"| G["Step 7 - return the result list"]
 </code></pre></div>
+<p><img alt="Q29. Remove duplicates and keep the order" src="../resources/ch18-qa-fig-06.png" /></p>
 <p><strong>Step 5. Write the function.</strong></p>
 <div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">remove_dupes</span><span class="p">(</span><span class="n">lst</span><span class="p">):</span>
     <span class="c1"># Step 1 - seen remembers what has turned up, result keeps the order.</span>
@@ -11609,7 +11616,9 @@ After middle     : [1, 2, 3, 4, 5]  &lt;- the caller's list is unchanged
 </table>
 <p><strong>Step 6. Think about short lists.</strong>
 What should happen to a list with fewer than two items? As written, <code>chop([])</code> raises an <code>IndexError</code>, while <code>middle([])</code> quietly returns <code>[]</code>, because slices are forgiving. It is worth deciding which behaviour you want and guarding for it.</p>
-<div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">chop_safely</span><span class="p">(</span><span class="n">lst</span><span class="p">):</span>
+<div class="highlight"><pre><span></span><code><span class="c1"># Run the script just above this one first: it defines chop().</span>
+
+<span class="k">def</span><span class="w"> </span><span class="nf">chop_safely</span><span class="p">(</span><span class="n">lst</span><span class="p">):</span>
     <span class="c1"># Step 1 - do nothing unless there are at least two items to remove.</span>
     <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">lst</span><span class="p">)</span> <span class="o">&gt;=</span> <span class="mi">2</span><span class="p">:</span>
         <span class="k">del</span> <span class="n">lst</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
@@ -11709,12 +11718,14 @@ The two branches at the comparison are numbered 4a and 4b, because they do the s
     B --&gt;|"Yes"| C{"Step 3 - is the item at i smaller than the item at j"}
     C --&gt;|"Yes"| D["Step 4a - move the item at i into res and push i forward"]
     C --&gt;|"No"| E["Step 4b - move the item at j into res and push j forward"]
-    D --&gt; B
-    E --&gt; B
+    D --&gt; M["Both paths go back to Step 2"]
+    E --&gt; M
+    M --&gt; B
     B --&gt;|"No"| F["Step 5 - one list is finished. Add all that is left of list1"]
     F --&gt; G["Step 6 - add all that is left of list2"]
     G --&gt; H["Step 7 - return res"]
 </code></pre></div>
+<p><img alt="Q34. Merging two sorted lists" src="../resources/ch18-qa-fig-07.png" /></p>
 <p><strong>Step 5. Trace it once by hand.</strong>
 Merging <code>[1, 4, 9]</code> with <code>[2, 3, 10, 12]</code>:</p>
 <table>
@@ -12328,7 +12339,9 @@ is_unique(['a'])        : True
 </tr>
 </tbody>
 </table>
-<div class="highlight"><pre><span></span><code><span class="c1"># Step 1 - a version that stops at the first repeat.</span>
+<div class="highlight"><pre><span></span><code><span class="c1"># Run the script just above this one first: it defines is_unique().</span>
+
+<span class="c1"># Step 1 - a version that stops at the first repeat.</span>
 <span class="k">def</span><span class="w"> </span><span class="nf">is_unique_early</span><span class="p">(</span><span class="n">lst</span><span class="p">):</span>
     <span class="n">seen</span> <span class="o">=</span> <span class="nb">set</span><span class="p">()</span>
     <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">lst</span><span class="p">:</span>
@@ -12861,6 +12874,7 @@ The new matrix has one row for every column of the old one. To build new row <co
     J --&gt; D
     I --&gt;|"No"| K["Step 11 - the transposed matrix is complete"]
 </code></pre></div>
+<p><img alt="Q47 and Q48. Transposing a matrix" src="../resources/ch18-qa-fig-08.png" /></p>
 <p><strong>Step 4. Q47, the list comprehension version.</strong></p>
 <div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">matrix_transpose</span><span class="p">(</span><span class="n">matrix</span><span class="p">):</span>
     <span class="c1"># Step 1 - the outer comprehension runs once for each column of the old matrix.</span>
@@ -12900,7 +12914,9 @@ Transposed twice is the original : True
 </code></pre></div>
 <p><strong>Step 5. Q48, the nested loop version.</strong>
 This does exactly the same work, written out in full. Compare it line by line with the comprehension above and you will see that the comprehension is the same code folded into one line, with the outer loop written first.</p>
-<div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">matrix_transpose_loops</span><span class="p">(</span><span class="n">matrix</span><span class="p">):</span>
+<div class="highlight"><pre><span></span><code><span class="c1"># Run the script just above this one first: it defines matrix_transpose().</span>
+
+<span class="k">def</span><span class="w"> </span><span class="nf">matrix_transpose_loops</span><span class="p">(</span><span class="n">matrix</span><span class="p">):</span>
     <span class="c1"># Step 1 - the answer starts empty.</span>
     <span class="n">transpose</span> <span class="o">=</span> <span class="p">[]</span>
 
