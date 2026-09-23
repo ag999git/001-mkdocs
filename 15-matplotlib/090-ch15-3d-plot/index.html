@@ -9107,14 +9107,7 @@
 <li><strong>Plots that work in both 2D and 3D</strong></li>
 <li><strong>Plots specifically designed for 3D visualization</strong></li>
 </ol>
-<div class="highlight"><pre><span></span><code>flowchart TD
-    A[1 - Matplotlib plotting methods] --&gt; B[2 - Primarily 2D only]
-    A --&gt; C[3 - Work in both 2D and 3D]
-    A --&gt; D[4 - Designed for 3D]
-    B --&gt; B1[2a - pie, boxplot, violinplot, imshow, hist]
-    C --&gt; C1[3a - plot, scatter, bar, stem, contour, text]
-    D --&gt; D1[4a - plot_surface, plot_wireframe, plot_trisurf, voxels]
-</code></pre></div>
+<p><img alt="Which Matplotlib methods work in two dimensions, in both, or only in three" src="../../resources/ch-15-fig-32-which-methods-work-in-3d.png" /></p>
 <p>The following sections discuss these three categories.</p>
 <p><a href="#table-of-contents">Back to the Table of Contents</a></p>
 <h2 id="1-plots-primarily-used-only-in-2d">1. Plots Primarily Used Only in 2D<a class="headerlink" href="#1-plots-primarily-used-only-in-2d" title="Permanent link">&para;</a></h2>
@@ -9527,15 +9520,7 @@ voxels array shape: (6, 6, 6) - filled cells: 81
 <p>This is explained fully in the section <a href="#understanding-npmeshgrid">Understanding np.meshgrid()</a>.</p>
 <p><a href="#table-of-contents">Back to the Table of Contents</a></p>
 <h3 id="surface-plot-workflow">Surface Plot Workflow<a class="headerlink" href="#surface-plot-workflow" title="Permanent link">&para;</a></h3>
-<div class="highlight"><pre><span></span><code>flowchart TD
-    A[Step 1 - Make 1D x values] --&gt; C[Step 3 - Pass x and y to meshgrid]
-    B[Step 2 - Make 1D y values] --&gt; C
-    C --&gt; D[Step 4 - Receive the X grid]
-    C --&gt; E[Step 5 - Receive the Y grid]
-    D --&gt; F[Step 6 - Calculate Z from X and Y]
-    E --&gt; F
-    F --&gt; G[Step 7 - Draw with plot_surface]
-</code></pre></div>
+<p><img alt="Two one-dimensional lists become two grids, and those grids give Z" src="../../resources/ch-15-fig-33-how-meshgrid-works.png" /></p>
 <p><a href="#table-of-contents">Back to the Table of Contents</a></p>
 <h3 id="surface-plot-vs-wireframe-plot">Surface Plot vs Wireframe Plot<a class="headerlink" href="#surface-plot-vs-wireframe-plot" title="Permanent link">&para;</a></h3>
 <table>
@@ -9883,15 +9868,7 @@ X[0, 1] and Y[0, 1]                (2, 10)
 <p>The row number comes first in matrix indexing, but the x-value comes first in a coordinate. Therefore, when interpreting the output of <code>meshgrid()</code>, think in terms of <strong>Cartesian coordinates (x, y)</strong> rather than <strong>matrix positions (row, column)</strong>. See <a href="https://en.wikipedia.org/wiki/Cartesian_coordinate_system">Cartesian coordinate system (Wikipedia)</a>.</p>
 <p><a href="#table-of-contents">Back to the Table of Contents</a></p>
 <h3 id="how-surface-plots-use-meshgrid">How Surface Plots Use meshgrid()<a class="headerlink" href="#how-surface-plots-use-meshgrid" title="Permanent link">&para;</a></h3>
-<div class="highlight"><pre><span></span><code>flowchart LR
-    A[Step 1 - x values] --&gt; C[Step 3 - meshgrid]
-    B[Step 2 - y values] --&gt; C
-    C --&gt; D[Step 4 - X grid]
-    C --&gt; E[Step 5 - Y grid]
-    D --&gt; F[Step 6 - Calculate Z]
-    E --&gt; F
-    F --&gt; G[Step 7 - plot_surface]
-</code></pre></div>
+<p>The steps are the same ones shown in the figure under <a href="#surface-plot-workflow">Surface Plot Workflow</a> above: the two 1D lists go into <code>meshgrid()</code>, the two grids that come back are used to calculate <code>Z</code>, and <code>Z</code> is what <code>plot_surface()</code> draws.</p>
 <p><a href="#table-of-contents">Back to the Table of Contents</a></p>
 <h3 id="typical-workflow">Typical Workflow<a class="headerlink" href="#typical-workflow" title="Permanent link">&para;</a></h3>
 <div class="highlight"><pre><span></span><code><span class="n">x</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="o">-</span><span class="mi">3</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">50</span><span class="p">)</span>
@@ -10152,14 +10129,7 @@ Wireframe ⟶ Shows structure
 <h3 id="introductory-note-to-script-1">Introductory Note to Script 1<a class="headerlink" href="#introductory-note-to-script-1" title="Permanent link">&para;</a></h3>
 <p>A <strong>helix</strong> may be thought of as a circle that gradually rises in height, like a spring or a spiral staircase. As a point moves around the circumference of the circle, its z-coordinate continuously increases. This example demonstrates the use of the 3D version of <code>plot()</code>, which requires x, y and z coordinates. See <a href="https://en.wikipedia.org/wiki/Helix">Helix (Wikipedia)</a>.</p>
 <p>The circle is made with the functions cosine and sine. For an angle <code>t</code>, the point <code>(r × cos(t), r × sin(t))</code> lies on a circle of radius <code>r</code>. As <code>t</code> grows, the point travels around the circle. See <a href="https://en.wikipedia.org/wiki/Unit_circle">Unit circle (Wikipedia)</a>.</p>
-<div class="highlight"><pre><span></span><code>flowchart TD
-    A[Step 1 - Create 3D axes] --&gt; B[Step 2 - Make 1000 angle values t from 0 to 20 pi]
-    B --&gt; C[Step 3 - x = r cos t and y = r sin t give a circle]
-    C --&gt; D[Step 4 - z rises evenly from 0 to 10]
-    D --&gt; E[Step 5 - Print shapes and statistics]
-    E --&gt; F[Step 6 - ax.plot x, y, z draws the helix]
-    F --&gt; G[Step 7 - Add labels and show]
-</code></pre></div>
+<p><img alt="The seven steps of the 3D helix script" src="../../resources/ch-15-fig-34-helix-script-steps.png" /></p>
 <p><a href="#table-of-contents">Back to the Table of Contents</a></p>
 <h3 id="script-1-3d-helix-using-plotx-y-z">Script 1: 3D Helix Using plot(x, y, z)<a class="headerlink" href="#script-1-3d-helix-using-plotx-y-z" title="Permanent link">&para;</a></h3>
 <div class="highlight"><pre><span></span><code><span class="c1"># Step 1 - Import required modules</span>
@@ -10539,17 +10509,7 @@ Lowest z = 0.007, highest z = 18.0
 </table>
 <p><a href="#table-of-contents">Back to the Table of Contents</a></p>
 <h3 id="workflow-of-script-3">Workflow of Script 3<a class="headerlink" href="#workflow-of-script-3" title="Permanent link">&para;</a></h3>
-<div class="highlight"><pre><span></span><code>flowchart TD
-    A[Step 1 - X values] --&gt; C[Step 3 - meshgrid]
-    B[Step 2 - Y values] --&gt; C
-    C --&gt; D[Step 4 - X grid]
-    C --&gt; E[Step 5 - Y grid]
-    D --&gt; F[Step 6 - Calculate Z]
-    E --&gt; F
-    F --&gt; G[Step 7 - plot_surface]
-    G --&gt; H[Step 8 - Apply colormap]
-    H --&gt; I[Step 9 - Display color bar]
-</code></pre></div>
+<p><img alt="The nine steps that draw a coloured surface with its colour bar" src="../../resources/ch-15-fig-35-surface-with-a-colormap.png" /></p>
 <p><a href="#table-of-contents">Back to the Table of Contents</a></p>
 <h3 id="follow-up-question-on-script-3">Follow-up Question on Script 3<a class="headerlink" href="#follow-up-question-on-script-3" title="Permanent link">&para;</a></h3>
 <p>What shape would you get with <code>Z = X**2 - Y**2</code>?</p>
