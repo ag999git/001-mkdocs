@@ -81,6 +81,11 @@
     <label class="md-overlay" for="__drawer"></label>
     <div data-md-component="skip">
       
+        
+        <a href="#chapter-19-tuples-dictionaries-and-sets" class="md-skip">
+          Skip to content
+        </a>
+      
     </div>
     <div data-md-component="announce">
       
@@ -8014,9 +8019,95 @@
   
 
 
-  <h1>Overview</h1>
-
-
+<h1 id="chapter-19-tuples-dictionaries-and-sets">Chapter 19: Tuples, Dictionaries and Sets<a class="headerlink" href="#chapter-19-tuples-dictionaries-and-sets" title="Permanent link">&para;</a></h1>
+<p>The online companion to Chapter 19 of the book. The printed chapter introduces Python's other three built-in collections. These pages carry the full answers to all one hundred and twenty questions at the end of the chapter, twenty conceptual and twenty scripting for each of the three types.</p>
+<p>By the end of these pages you should know when a tuple is the right choice and when a list is, what makes an object usable as a dictionary key, how a dictionary finds a value without searching, and why a set answers "have I seen this before?" thousands of times faster than a list.</p>
+<p>You need Chapter 18 (Lists) first. Nothing else is assumed.</p>
+<h2 id="the-pages">The Pages<a class="headerlink" href="#the-pages" title="Permanent link">&para;</a></h2>
+<table>
+<thead>
+<tr>
+<th>Page</th>
+<th>What it covers</th>
+<th>Best for</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><a href="50-ch19-tuples-conceptual-qa/">Tuples: Conceptual Questions and Answers</a></td>
+<td>Twenty questions in eight parts, from the trailing comma to nested tuples</td>
+<td>Start here</td>
+</tr>
+<tr>
+<td><a href="70-ch19-tuples-scripting-qa/">Tuples: Scripting Questions and Answers</a></td>
+<td>Twenty worked programs on the same ground</td>
+<td>After the conceptual page</td>
+</tr>
+<tr>
+<td><a href="80-ch19-dictionary-conceptual-qa/">Dictionaries: Conceptual Questions and Answers</a></td>
+<td>Twenty questions in six parts, including how hashing actually works</td>
+<td>The heart of the chapter</td>
+</tr>
+<tr>
+<td><a href="90-ch19-dictionary-scripting-qa/">Dictionaries: Scripting Questions and Answers</a></td>
+<td>Twenty worked programs: counting, grouping, merging, copying</td>
+<td>Practice</td>
+</tr>
+<tr>
+<td><a href="95-ch19-sets-conceptual-qa/">Sets: Conceptual Questions and Answers</a></td>
+<td>Twenty questions in six parts, from uniqueness to <code>frozenset</code></td>
+<td>After dictionaries</td>
+</tr>
+<tr>
+<td><a href="98-ch19-sets-scripting-qa/">Sets: Scripting Questions and Answers</a></td>
+<td>Twenty worked programs on duplicates, membership and set operations</td>
+<td>Practice</td>
+</tr>
+</tbody>
+</table>
+<h2 id="how-the-pages-are-organised">How the Pages Are Organised<a class="headerlink" href="#how-the-pages-are-organised" title="Permanent link">&para;</a></h2>
+<p>Each of the three types has the same pair of pages: a conceptual one that explains why Python behaves as it does, and a scripting one with twenty complete programs. Every page opens with a table of key terms and closes with a quick revision summary.</p>
+<table>
+<thead>
+<tr>
+<th>Type</th>
+<th>Conceptual parts</th>
+<th>Scripting parts</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Tuples</td>
+<td>Creating and writing; immutability and slicing; performance against lists; packing and unpacking; converting and sorting; tuples as dictionary keys; everyday uses; nested tuples</td>
+<td>Creating; reading and joining; slicing; unpacking; testing; swapping and keys; sorting and nesting; functions, loops and <code>match-case</code></td>
+</tr>
+<tr>
+<td>Dictionaries</td>
+<td>What a dictionary is; keys and hashing; creating; traversing; view objects; operators and methods</td>
+<td>Creating and reading; looping; comprehensions and valid keys; checking, merging, removing, grouping; copies and views; counting, pairing, comparing</td>
+</tr>
+<tr>
+<td>Sets</td>
+<td>What a set is; creating and inspecting; hashability; compared with lists and dictionaries; speed and set operations; the unchangeable set</td>
+<td>Creating and removing duplicates; what a set can hold; adding and removing; speed and safe changes; set operations; choosing the right structure</td>
+</tr>
+</tbody>
+</table>
+<h2 id="suggested-reading-order">Suggested Reading Order<a class="headerlink" href="#suggested-reading-order" title="Permanent link">&para;</a></h2>
+<ol>
+<li><strong>Tuples, conceptual then scripting.</strong> Tuples are the simplest of the three, and the immutability rule explains nearly all of their behaviour.</li>
+<li><strong>Dictionaries, conceptual first.</strong> Part 2, on keys and hashing, is the most valuable section in the chapter. It explains why keys must be immutable, why lookup is fast whatever the size, and what a "collision" is.</li>
+<li><strong>Dictionaries, scripting.</strong> These are the patterns you will reuse most: counting with <code>get()</code>, grouping with <code>setdefault()</code>, merging with <code>update()</code>.</li>
+<li><strong>Sets last.</strong> Once hashing makes sense, sets are easy: a set is a dictionary with the values thrown away.</li>
+</ol>
+<h2 id="four-points-worth-extra-care">Four Points Worth Extra Care<a class="headerlink" href="#four-points-worth-extra-care" title="Permanent link">&para;</a></h2>
+<p><strong>A single value in brackets is not a tuple.</strong> <code>x = (5)</code> gives an integer. It is the comma that makes a tuple, not the brackets: <code>x = (5,)</code>.</p>
+<p><strong>A key must be hashable, and a tuple is hashable only if everything inside it is.</strong> <code>(1, 2)</code> works as a key. <code>(1, [2, 3])</code> does not, because of the list inside.</p>
+<p><strong>Never change a dictionary or a set while looping over it.</strong> Python raises <code>RuntimeError: dictionary changed size during iteration</code>. Loop over a snapshot instead, such as <code>list(my_dict)</code>.</p>
+<p><strong><code>d[key]</code> and <code>d.get(key)</code> behave differently when the key is missing.</strong> The first raises <code>KeyError</code> and stops the program; the second returns <code>None</code>, or whatever default you give it.</p>
+<h2 id="using-the-code">Using the Code<a class="headerlink" href="#using-the-code" title="Permanent link">&para;</a></h2>
+<p>Every script is complete and ready to run. Copy it into a <code>.py</code> file or a notebook cell. Every output shown was produced by running the script above it.</p>
+<p>Three kinds of output will differ on your machine, and that is expected. Any script that prints <code>id()</code> or <code>hash()</code> shows numbers your computer chooses. Any script that times two approaches shows speeds that depend on your hardware; only the size of the difference is meant to match. And because a set has no order, the items may print in a different order from the page.</p>
 
 
 

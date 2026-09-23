@@ -8567,12 +8567,13 @@
 <li><strong>Hashable only:</strong> the table can place an object only if the object gives a hash value that never changes. So mutable, unhashable objects (lists, dictionaries, other sets) are rejected outright.</li>
 </ol>
 <p>Understanding this one fact, <strong>"a set is a hash table of keys with no values"</strong>, explains almost every rule covered in the rest of this page.</p>
-<div class="highlight"><pre><span></span><code>flowchart TD
+<div class="highlight"><pre><span></span><code>flowchart LR
     A["Step 1: A set is stored as a hash table"] --&gt; B["Step 2: Items are placed by their hash value"]
     B --&gt; C["Step 3: An equal item lands in the same place, so it is not stored twice: UNIQUE"]
     B --&gt; D["Step 4: Placement does not depend on arrival order, so there are no positions: UNORDERED"]
     B --&gt; E["Step 5: The hash value must never change, or the item could not be found again: HASHABLE ONLY"]
 </code></pre></div>
+<p><img alt="Q1. A Python set — unordered? unique? hashable-only? Why each?" src="../../resources/ch19-sets-conceptual-qa-fig-01.png" /></p>
 <p><strong>Script: the three properties in action</strong></p>
 <div class="highlight"><pre><span></span><code><span class="c1"># Step 1 - Unique: duplicates are dropped automatically</span>
 <span class="n">s</span> <span class="o">=</span> <span class="p">{</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">3</span><span class="p">}</span>
@@ -8704,13 +8705,14 @@ Common (list way): ['Charlie']
 <li>If it sees nothing at all, <code>{}</code>, it builds an empty <strong>dictionary</strong>.</li>
 </ol>
 <p>This is one of the very few places in Python where an empty literal and a non-empty literal of the "same" syntax build different types. So it is worth memorising as a rule rather than working it out each time: <strong>"<code>{}</code> is always a dict; <code>set()</code> is always a set."</strong></p>
-<div class="highlight"><pre><span></span><code>flowchart TD
+<div class="highlight"><pre><span></span><code>flowchart LR
     A["Step 1: Python reads a pair of curly braces"] --&gt; B{"Step 2: Is there anything inside?"}
     B -- No --&gt; C["Step 3: Empty dict"]
     B -- Yes --&gt; D{"Step 4: Are the items written as key: value?"}
     D -- Yes --&gt; E["Step 5: dict"]
     D -- No --&gt; F["Step 6: set"]
 </code></pre></div>
+<p><img alt="Q3. The classic {} trap — (a) what does {} actually create (b) how do you correctly make an empty set (c) what changes once the set is non-empty?" src="../../resources/ch19-sets-conceptual-qa-fig-02.png" /></p>
 <p><strong>Script: which type do the braces give?</strong></p>
 <div class="highlight"><pre><span></span><code><span class="c1"># Step 1 - Empty braces give a dictionary</span>
 <span class="n">empty_literal</span> <span class="o">=</span> <span class="p">{}</span>
@@ -9033,6 +9035,7 @@ len of a list: 3 | len of a string: 5
     E --&gt; F["Step 6: Add value to the set. A duplicate is ignored"]
     F --&gt; D
 </code></pre></div>
+<p><img alt="Q7. Set comprehension — (a) syntax vs list comprehension (b) what &quot;nested set comprehension&quot; means and (c) how do you read the for clauses in one?" src="../../resources/ch19-sets-conceptual-qa-fig-03.png" /></p>
 <p><strong>Script: set comprehensions</strong></p>
 <div class="highlight"><pre><span></span><code><span class="n">numbers</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">6</span><span class="p">,</span> <span class="mi">4</span><span class="p">]</span>
 
@@ -9187,7 +9190,7 @@ False first: {False} | 0 first: {0}
 </ol>
 <p>Because step 3 touches only a tiny, near-constant number of slots, however large the set is, membership testing has <strong>average-case O(1)</strong> (constant) time. Looking something up in a set of 10 elements takes about the same time as in a set of 10 million elements. This is the biggest performance reason to prefer sets over lists in code that checks membership a lot.</p>
 <p>The word "average" matters. Two different items can sometimes get the same slot (a <strong>collision</strong>). Python then checks a few more slots. With well-spread hash values, this happens rarely enough that lookups stay fast.</p>
-<div class="highlight"><pre><span></span><code>flowchart TD
+<div class="highlight"><pre><span></span><code>flowchart LR
     A["Step 1: Python is asked: is x in my_set?"] --&gt; B["Step 2: Work out hash(x)"]
     B --&gt; C["Step 3: Use the hash to find x's slot in the table"]
     C --&gt; D{"Step 4: Is the slot empty?"}
@@ -9197,6 +9200,7 @@ False first: {False} | 0 first: {0}
     F -- No --&gt; H["Step 8: A collision. Move to the next candidate slot"]
     H --&gt; D
 </code></pre></div>
+<p><img alt="Q9. Hashability — (a) what makes an object hashable (b) which built-in types qualify/disqualify and why (c) how does this give O(1) average-case membership testing internally?" src="../../resources/ch19-sets-conceptual-qa-fig-04.png" /></p>
 <p><strong>Script: testing hashability</strong></p>
 <div class="highlight"><pre><span></span><code><span class="c1"># Step 1 - Hashable objects give a whole number</span>
 <span class="k">for</span> <span class="n">obj</span> <span class="ow">in</span> <span class="p">[</span><span class="mi">42</span><span class="p">,</span> <span class="mf">3.5</span><span class="p">,</span> <span class="s2">"Python"</span><span class="p">,</span> <span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">),</span> <span class="nb">frozenset</span><span class="p">({</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">}),</span> <span class="kc">None</span><span class="p">]:</span>
@@ -9478,13 +9482,14 @@ Is {Asha, Ravi} a team? True
 <li>Use a <strong>set</strong> when all that matters is <strong>which distinct items exist</strong>, or when you need fast membership tests or Venn-style comparisons between groups.</li>
 </ul>
 <p>A useful warning sign: if you find yourself writing <code>if item not in my_list:</code> before every <code>append()</code>, inside a loop that runs many times, the list should probably have been a set.</p>
-<div class="highlight"><pre><span></span><code>flowchart TD
+<div class="highlight"><pre><span></span><code>flowchart LR
     A["Step 1: What does the data need?"] --&gt; B{"Step 2: Do you look values up by a label?"}
     B -- Yes --&gt; C["Step 3: Use a dict"]
     B -- No --&gt; D{"Step 4: Do order or repeated items matter?"}
     D -- Yes --&gt; E["Step 5: Use a list"]
     D -- No --&gt; F["Step 6: Use a set, for unique items and fast in checks"]
 </code></pre></div>
+<p><img alt="Q12. Structural comparison — list vs dict vs set: (a) ordering (b) duplicates (c) access method (d) mutability (e) empty-literal syntax for each?" src="../../resources/ch19-sets-conceptual-qa-fig-05.png" /></p>
 <p><strong>Script: the same data in all three</strong></p>
 <div class="highlight"><pre><span></span><code><span class="n">data</span> <span class="o">=</span> <span class="p">[</span><span class="mi">3</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">]</span>
 
@@ -9675,7 +9680,7 @@ add(['kiwi']) -&gt; TypeError: unhashable type: 'list'
 <span class="n">students</span><span class="o">.</span><span class="n">clear</span><span class="p">()</span>                    <span class="c1"># -&gt; set()</span>
 </code></pre></div>
 <p><strong>A simple way to choose</strong></p>
-<div class="highlight"><pre><span></span><code>flowchart TD
+<div class="highlight"><pre><span></span><code>flowchart LR
     A["Step 1: What do you want to remove?"] --&gt; B{"Step 2: One particular element x?"}
     B -- Yes --&gt; C{"Step 3: Must x be there? Is a missing x a bug?"}
     C -- Yes --&gt; D["Step 4: Use remove(x). It raises KeyError if x is missing"]
@@ -9684,6 +9689,7 @@ add(['kiwi']) -&gt; TypeError: unhashable type: 'list'
     F -- Yes --&gt; G["Step 7: Use pop(). It returns the removed element"]
     F -- No --&gt; H["Step 8: Everything: use clear()"]
 </code></pre></div>
+<p><img alt="Q14. Four removal-family methods — .remove(), .discard(), .pop(), .clear(): (a) behaviour when element is missing/set is empty (b) return value (c) which to choose when" src="../../resources/ch19-sets-conceptual-qa-fig-06.png" /></p>
 <p><strong>How each one relates to what you already know</strong></p>
 <ul>
 <li><code>.remove()</code> is the <strong>strict</strong> one. It is like <code>dict[key]</code>, which raises <code>KeyError</code> for a missing key.</li>
@@ -9778,6 +9784,7 @@ After clear(): set() | the other name sees: set()
     B -- "numbers.copy()" --&gt; E["Step 5: remove() changes only the original"]
     E --&gt; F["Step 6: The loop finishes safely"]
 </code></pre></div>
+<p><img alt="Q15. Modifying a set while iterating over it — (a) what happens and why (b) the correct fix" src="../../resources/ch19-sets-conceptual-qa-fig-07.png" /></p>
 <p><strong>Script: the error, the fixes, and the list surprise</strong></p>
 <div class="highlight"><pre><span></span><code><span class="c1"># Step 1 - Changing the set being looped over raises RuntimeError</span>
 <span class="n">numbers</span> <span class="o">=</span> <span class="p">{</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">}</span>
@@ -10207,6 +10214,7 @@ P - D == D - P: False
     E -- Yes --&gt; F["Step 6: A is also a proper subset, so A &lt; B"]
     E -- No --&gt; G["Step 7: A equals B. A &lt;= B is True but A &lt; B is False"]
 </code></pre></div>
+<p><img alt="Q19. Subset, proper subset, superset, and disjoint — (a) define each (b) exact distinction between subset and proper subset?" src="../../resources/ch19-sets-conceptual-qa-fig-08.png" /></p>
 <p><strong>Script: subset, superset and disjoint</strong></p>
 <div class="highlight"><pre><span></span><code><span class="n">project_team</span> <span class="o">=</span> <span class="p">{</span><span class="s2">"Charlie"</span><span class="p">,</span> <span class="s2">"David"</span><span class="p">}</span>
 <span class="n">python_students</span> <span class="o">=</span> <span class="p">{</span><span class="s2">"Alice"</span><span class="p">,</span> <span class="s2">"Bob"</span><span class="p">,</span> <span class="s2">"Charlie"</span><span class="p">,</span> <span class="s2">"David"</span><span class="p">}</span>
