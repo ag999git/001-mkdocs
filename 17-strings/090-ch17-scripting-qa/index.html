@@ -8419,7 +8419,7 @@
 <p>Read the question, then write the program yourself before looking at the answer. Type the code rather than copying it, run it, and compare your output with the output shown. Where a program asks for input from the keyboard, the output block shows what was typed after the prompt, so your own run will show your own words.</p>
 <p>Every program on this page was run on Python 3.11, and every output block is the actual result. Two things vary from one computer to another, and both are marked where they appear: anything you type yourself, and the two escape sequences <code>\r</code> and <code>\b</code>, whose effect on the screen depends on the terminal you use.</p>
 <p><strong>The tools used on this page</strong></p>
-<div class="highlight"><pre><span></span><code>flowchart TD
+<div class="highlight"><pre><span></span><code>flowchart LR
     A["1. Make a string: quotes, triple quotes, str()"] --&gt; B["2. Measure and test it: len(), in, not in"]
     B --&gt; C["3. Reach into it: index, slice, for, while"]
     C --&gt; D["4. Clean it: strip(), lower(), replace()"]
@@ -8427,6 +8427,7 @@
     E --&gt; F["6. Break it up or put it together: split(), join(), +, *"]
     F --&gt; G["7. Show the result: print(), f-strings"]
 </code></pre></div>
+<p><img alt="Strings: Scripting Questions and Answers" src="../../resources/ch17-scripting-qa-fig-01.png" /></p>
 <h2 id="table-of-contents">Table of Contents<a class="headerlink" href="#table-of-contents" title="Permanent link">&para;</a></h2>
 <ul>
 <li><a href="#part-1-creating-and-inspecting-strings">Part 1: Creating and Inspecting Strings</a></li>
@@ -8596,6 +8597,7 @@ The original is untouched: Data
     D --&gt; E["5. The old empty string is left behind and cleared away"]
     A --&gt; F["6. Nothing was changed inside the old string"]
 </code></pre></div>
+<p><img alt="Question 2. An Empty String, Concatenation and the Immutability Rule" src="../../resources/ch17-scripting-qa-fig-02.png" /></p>
 <p><strong>Design Pattern Explanation</strong></p>
 <ul>
 <li><strong>Constructor Initialization Pattern:</strong> Calling <code>str()</code> with no arguments gives an empty string. It makes the purpose of the variable clear to anyone reading the code. Writing <code>base_container = ""</code> does exactly the same thing and is shorter, so both forms are common.</li>
@@ -8930,6 +8932,7 @@ Characters in '12345\rAB': 8
     D --&gt; G["7. The finished string is ready"]
     F --&gt; G
 </code></pre></div>
+<p><img alt="Question 4. Escape Sequences and the Raw String Prefix" src="../../resources/ch17-scripting-qa-fig-03.png" /></p>
 <p><strong>Design Pattern Explanation</strong></p>
 <ul>
 <li><strong>Escape Character Processing Pattern:</strong> In an ordinary string the backslash is a signal, not a character. Python turns <code>\n</code> into a newline, <code>\t</code> into a tab, <code>\r</code> into a carriage return that moves the writing position to the start of the line, and <code>\b</code> into a backspace that moves it one column to the left. Each pair becomes one character in the stored string.</li>
@@ -9070,7 +9073,7 @@ The counter stopped at: -1
 </tbody>
 </table>
 <p><strong>The two loops side by side</strong></p>
-<div class="highlight"><pre><span></span><code>flowchart TD
+<div class="highlight"><pre><span></span><code>flowchart LR
     A["1. Start with the word"] --&gt; B{"2. Which direction?"}
     B --&gt;|"Forward"| C["3. for character in word"]
     C --&gt; D["4. Python hands over the next character"]
@@ -9086,6 +9089,7 @@ The counter stopped at: -1
     H --&gt;|"No"| K["11. The counter has passed the first character"]
     K --&gt; M
 </code></pre></div>
+<p><img alt="Question 5. Forward Traversal and Backward Traversal" src="../../resources/ch17-scripting-qa-fig-04.png" /></p>
 <p><strong>Design Pattern Explanation</strong></p>
 <ul>
 <li><strong>Sequence Iterator Pattern, <code>for</code>:</strong> The form <code>for character in sequence</code> treats the string as a stream of characters. Python fetches them one at a time from left to right. There is no counter to set up, no condition to get wrong and no chance of an endless loop.</li>
@@ -9594,6 +9598,7 @@ chr(ord('A')) gives: A
     A["1. A character, 'A'"] --&gt;|"2. ord() reads its number"| B["3. Its code point, 65"]
     B --&gt;|"4. chr() reads the number back"| C["5. The character again, 'A'"]
 </code></pre></div>
+<p><img alt="Question 9. From Character to Number and Back" src="../../resources/ch17-scripting-qa-fig-05.png" /></p>
 <p><strong>Design Pattern Explanation</strong></p>
 <ul>
 <li><strong>Character-to-Integer Translation Pattern, <code>ord()</code>:</strong> <code>ord()</code> takes a string of exactly one character and returns its Unicode number. Two characters, or a number, will raise a <code>TypeError</code>.</li>
@@ -9720,7 +9725,7 @@ Is 'apple' less than 'Banana'?: False
 </tbody>
 </table>
 <p><strong>Flowchart</strong></p>
-<div class="highlight"><pre><span></span><code>flowchart TD
+<div class="highlight"><pre><span></span><code>flowchart LR
     A["1. Compare two strings"] --&gt; B["2. Look at the characters in the same position"]
     B --&gt; C{"3. Are they the same?"}
     C --&gt;|"No"| D["4. The smaller code point wins, and the comparison ends"]
@@ -9730,6 +9735,7 @@ Is 'apple' less than 'Banana'?: False
     F --&gt;|"Both at once"| G["7. The strings are equal"]
     F --&gt;|"One of them"| H["8. The shorter string is the smaller one"]
 </code></pre></div>
+<p><img alt="Question 10. Comparing Two Strings, and the Tie-Breaker" src="../../resources/ch17-scripting-qa-fig-06.png" /></p>
 <p><strong>Design Pattern Explanation</strong></p>
 <ul>
 <li><strong>Lexicographical Alignment Comparison Pattern:</strong> Python lines the two strings up and compares them position by position, from left to right. The first position where they differ decides the answer, and nothing after it is even looked at.</li>
@@ -9972,6 +9978,7 @@ Slicing from the untested result: '.'
     F --&gt; G["7. Wrap it in try and except ValueError"]
     G --&gt; H["8. Report the fault if it is raised"]
 </code></pre></div>
+<p><img alt="Question 12. find() and index(), and What Each Does on Failure" src="../../resources/ch17-scripting-qa-fig-07.png" /></p>
 <p><strong>Design Pattern Explanation</strong></p>
 <ul>
 <li><strong>Safe Sentinel Return Pattern, <code>find()</code>:</strong> <code>find()</code> returns the position of the first match, or <code>-1</code> when there is no match. A value like that <code>-1</code>, returned to stand for "nothing found", is called a sentinel. The program does not stop, so the caller must check the value before using it.</li>
@@ -10183,6 +10190,7 @@ Second item: banana
     A["1. One string: apple,banana,orange,grape"] --&gt;|"2. split(',')"| B["3. A list of four strings"]
     B --&gt;|"4. '-'.join(list)"| C["5. One string again: apple-banana-orange-grape"]
 </code></pre></div>
+<p><img alt="Question 14. Splitting a Line and Joining It Back" src="../../resources/ch17-scripting-qa-fig-08.png" /></p>
 <p>Note which object each method belongs to. <code>split()</code> is called on the string that is being cut up. <code>join()</code> is called on the separator, and the list is passed to it. Beginners often write <code>parsed_list.join("-")</code>, which does not work, because a list has no <code>join()</code> method.</p>
 <div class="highlight"><pre><span></span><code><span class="c1"># Step 1: The list to be joined</span>
 <span class="n">parsed_list</span> <span class="o">=</span> <span class="p">[</span><span class="s2">"apple"</span><span class="p">,</span> <span class="s2">"banana"</span><span class="p">,</span> <span class="s2">"orange"</span><span class="p">,</span> <span class="s2">"grape"</span><span class="p">]</span>
@@ -10852,6 +10860,7 @@ Final Processed Output: INTERACTIVE SCRIPT EXECUTION
     F --&gt; G["7. Print the result"]
     E --&gt; G
 </code></pre></div>
+<p><img alt="Question 19. A Decision Taken on the First Character" src="../../resources/ch17-scripting-qa-fig-09.png" /></p>
 <p><strong>Design Pattern Explanation</strong></p>
 <ul>
 <li><strong>State-Driven Conditional Transformation Pattern:</strong> The program first asks a question about the data, then decides what to do with it. Here the question is asked by <code>islower()</code> on a single character, <code>sample_text[0]</code>, and the answer decides whether the whole string is transformed. Keeping the two parts separate, first the test and then the action, is what makes such code easy to read and easy to change.</li>
@@ -11037,6 +11046,7 @@ In one line:         Year 2026 Is True
     E --&gt;|"No"| F["6. strip() removes the space at the end"]
     F --&gt; G["7. Print the finished sentence"]
 </code></pre></div>
+<p><img alt="Question 20. Building One Sentence From a List of Mixed Values" src="../../resources/ch17-scripting-qa-fig-10.png" /></p>
 <p><strong>Design Pattern Explanation</strong></p>
 <ul>
 <li><strong>Polymorphic Type Normalization Pattern, <code>str()</code>:</strong> The <code>+</code> operator joins a string only to another string. Passing every item through <code>str()</code> first turns numbers, <code>True</code> and <code>False</code>, and even lists, into their text form, so that they can all be joined safely. This is why the conversion is done inside the loop, before the addition.</li>

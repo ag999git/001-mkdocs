@@ -81,6 +81,11 @@
     <label class="md-overlay" for="__drawer"></label>
     <div data-md-component="skip">
       
+        
+        <a href="#chapter-17-strings" class="md-skip">
+          Skip to content
+        </a>
+      
     </div>
     <div data-md-component="announce">
       
@@ -8014,9 +8019,92 @@
   
 
 
-  <h1>Overview</h1>
-
-
+<h1 id="chapter-17-strings">Chapter 17: Strings<a class="headerlink" href="#chapter-17-strings" title="Permanent link">&para;</a></h1>
+<p>The online companion to Chapter 17 of the book. The printed chapter introduces the string: how to build one, index it, slice it and clean it. These pages carry the full answers to all forty questions at the end of the chapter, and add a page on dates and times, which are the most common kind of text a real program has to produce and read.</p>
+<p>By the end of these pages you should be able to say what happens in memory when you "change" a string, slice any part of one without counting on your fingers, choose the right method for a job from the forty or so a string offers, write an f-string with formatting, and handle a timestamp without silently losing hours.</p>
+<p>You need Chapters 1 to 6 first. Nothing else is assumed.</p>
+<h2 id="the-pages">The Pages<a class="headerlink" href="#the-pages" title="Permanent link">&para;</a></h2>
+<table>
+<thead>
+<tr>
+<th>Page</th>
+<th>What it covers</th>
+<th>Best for</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><a href="080-ch17-conceptual-qa/">Conceptual Questions and Answers</a></td>
+<td>The twenty conceptual questions, in five parts, from what a string is through to palindromes</td>
+<td>Start here</td>
+</tr>
+<tr>
+<td><a href="090-ch17-scripting-qa/">Scripting Questions and Answers</a></td>
+<td>Twenty small programs, each with its steps, its real output, and the pattern it shows</td>
+<td>After the conceptual page</td>
+</tr>
+<tr>
+<td><a href="050-ch17-assignment-timezone/">Beyond the Basics: Timezones, Calendars and Datetimes</a></td>
+<td>Naive and aware datetimes, the IANA zone database, <code>strftime()</code> and <code>strptime()</code>, and three lab assignments</td>
+<td>Before you write anything that records a time</td>
+</tr>
+</tbody>
+</table>
+<h2 id="what-is-on-the-conceptual-page">What Is on the Conceptual Page<a class="headerlink" href="#what-is-on-the-conceptual-page" title="Permanent link">&para;</a></h2>
+<table>
+<thead>
+<tr>
+<th>Part</th>
+<th>Questions</th>
+<th>Topics</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1. What a String Is</td>
+<td>Q1 to Q5</td>
+<td>An ordered sequence; the three kinds of quotes; <code>str()</code>; positive and negative indexing; immutability</td>
+</tr>
+<tr>
+<td>2. Writing Characters That Are Hard to Type</td>
+<td>Q6, Q7</td>
+<td>Escape sequences, and the raw-string prefix</td>
+</tr>
+<tr>
+<td>3. Working Through a String</td>
+<td>Q8 to Q10</td>
+<td>Traversal with <code>for</code> and with <code>while</code>; <code>+</code>, <code>*</code>, <code>in</code>; slicing</td>
+</tr>
+<tr>
+<td>4. Characters, Comparison, Methods and Formatting</td>
+<td>Q11 to Q16</td>
+<td>Unicode, <code>ord()</code> and <code>chr()</code>; how strings compare; methods as object methods; the common methods; the <code>is</code> family; f-strings</td>
+</tr>
+<tr>
+<td>5. Palindromes and a Full Review</td>
+<td>Q17 to Q20</td>
+<td>Two ways to test a palindrome, when to use each, and a review of the whole chapter</td>
+</tr>
+</tbody>
+</table>
+<h2 id="what-is-on-the-scripting-page">What Is on the Scripting Page<a class="headerlink" href="#what-is-on-the-scripting-page" title="Permanent link">&para;</a></h2>
+<p>The twenty programs are grouped the same way: creating and inspecting a string (Q1 to Q4), traversal, repetition and slicing (Q5 to Q8), characters and comparison (Q9, Q10), the string methods (Q11 to Q17), and negative slicing, conditions and type conversion (Q18 to Q20). The page ends with a one-line summary of all twenty.</p>
+<h2 id="suggested-reading-order">Suggested Reading Order<a class="headerlink" href="#suggested-reading-order" title="Permanent link">&para;</a></h2>
+<ol>
+<li><strong>Conceptual Part 1.</strong> Question 5, on immutability, is the one to get right. Everything else about strings follows from it.</li>
+<li><strong>Conceptual Parts 2 and 3</strong>, then the matching scripting questions. Read a conceptual answer, then write the program that uses it.</li>
+<li><strong>Conceptual Part 4.</strong> This is the longest part and the one you will come back to. Question 14 is a reference list of the common methods.</li>
+<li><strong>The scripting page in full</strong>, as practice. Write your own answer first, run it, then compare.</li>
+<li><strong>Conceptual Part 5</strong> for the palindrome problem, which brings indexing, slicing and comparison together.</li>
+<li><strong>Timezones and datetimes</strong> last, or whenever you first need to store a time.</li>
+</ol>
+<h2 id="three-points-worth-extra-care">Three Points Worth Extra Care<a class="headerlink" href="#three-points-worth-extra-care" title="Permanent link">&para;</a></h2>
+<p><strong>A string cannot be changed.</strong> <code>s.upper()</code> does not change <code>s</code>. It builds a new string and hands it back. If you do not keep the result in a variable, it is lost. Question 5 shows this with <code>id()</code>, and Question 13 shows why it catches people out.</p>
+<p><strong>Slicing never raises an error for being out of range.</strong> <code>"Python"[2:99]</code> gives <code>"thon"</code>, not an error, while <code>"Python"[99]</code> does raise one. Question 10 explains the rule.</p>
+<p><strong>A timestamp without a zone is only a clock reading.</strong> Subtracting two naive datetimes taken in different places gives a wrong answer and no error at all. The timezone page works through a case where the result is out by three and a half hours.</p>
+<h2 id="using-the-code">Using the Code<a class="headerlink" href="#using-the-code" title="Permanent link">&para;</a></h2>
+<p>Every script is complete and ready to run. Copy it into a <code>.py</code> file or a notebook cell. Every output shown was produced by running the script above it.</p>
+<p>Two cautions. Scripts that use <code>input()</code> wait for you to type, so run those in a terminal. On the timezone page, any script that reads the clock will print your date and time, not the one on the page; the shape of the output is what should match. The number of zones in the IANA database also depends on the version installed on your machine.</p>
 
 
 

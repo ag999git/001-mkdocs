@@ -8773,6 +8773,7 @@
     G --&gt; H["8. Convert to UTC with astimezone for storage and maths"]
     H --&gt; I["9. Convert to a local zone only for display"]
 </code></pre></div>
+<p><img alt="C. Naive vs. Aware at a Glance" src="../../resources/ch17-assignment-timezone-fig-01.png" /></p>
 <p><a href="#table-of-contents">Back to the Table of Contents</a></p>
 <h3 id="d-key-terms-used-on-this-page">D. Key Terms Used on This Page<a class="headerlink" href="#d-key-terms-used-on-this-page" title="Permanent link">&para;</a></h3>
 <table>
@@ -9195,7 +9196,7 @@ Step 5 -&gt; Is 2028 a leap year? True
 <li>Print the new object and its <code>tzinfo</code> to prove that it is now aware.</li>
 <li>Print the original object again to show that it was not changed.</li>
 </ol>
-<div class="highlight"><pre><span></span><code>flowchart TD
+<div class="highlight"><pre><span></span><code>flowchart LR
     A["Step 1: Import datetime and ZoneInfo"] --&gt; B["Step 2: naive_dt = datetime.now"]
     B --&gt; C["Step 3: Print naive_dt and its tzinfo, which is None"]
     C --&gt; D["Step 4: kolkata_tz = ZoneInfo Asia/Kolkata"]
@@ -9203,6 +9204,7 @@ Step 5 -&gt; Is 2028 a leap year? True
     E --&gt; F["Step 6: Print aware_dt, its tzinfo and offset +05:30"]
     F --&gt; G["Step 7: Print naive_dt again: still naive"]
 </code></pre></div>
+<p><img alt="Solution Approach for Question 1" src="../../resources/ch17-assignment-timezone-fig-02.png" /></p>
 <p><a href="#table-of-contents">Back to the Table of Contents</a></p>
 <h4 id="step-by-step-solution-script-for-question-1">Step-by-Step Solution Script for Question 1<a class="headerlink" href="#step-by-step-solution-script-for-question-1" title="Permanent link">&para;</a></h4>
 <div class="highlight"><pre><span></span><code><span class="sd">"""</span>
@@ -9371,6 +9373,7 @@ Step 5 -&gt; Error caused by replace():         5:30:00
     E --&gt; F["6. Then use astimezone Asia/Kolkata"]
     F --&gt; G["7. Result: correct aware Kolkata time"]
 </code></pre></div>
+<p><img alt="An Important Warning: replace() Labels, It Does Not Convert" src="../../resources/ch17-assignment-timezone-fig-03.png" /></p>
 <p><a href="#table-of-contents">Back to the Table of Contents</a></p>
 <h4 id="follow-up-questions-for-question-1">Follow-Up Questions for Question 1<a class="headerlink" href="#follow-up-questions-for-question-1" title="Permanent link">&para;</a></h4>
 <p><strong>Follow-up 1.1: What does <code>naive_dt.utcoffset()</code> return, and why?</strong></p>
@@ -9416,13 +9419,14 @@ Step 4 -&gt; Gap between A and B:          0:00:00.000038
 <li>Outside the function, call it and store the result in a variable.</li>
 <li>Print the value, its <code>tzinfo</code> and its offset to confirm that it is aware and set to UTC.</li>
 </ol>
-<div class="highlight"><pre><span></span><code>flowchart TD
+<div class="highlight"><pre><span></span><code>flowchart LR
     A["Step 1: Import datetime and ZoneInfo"] --&gt; B["Step 2: def get_current_utc with no parameters"]
     B --&gt; C["Step 3: utc_timestamp = datetime.now with ZoneInfo UTC"]
     C --&gt; D["Step 4: return utc_timestamp"]
     D --&gt; E["Step 5: current_utc_time = get_current_utc"]
     E --&gt; F["Step 6: Print value, tzinfo UTC and offset 0:00:00"]
 </code></pre></div>
+<p><img alt="Solution Approach for Question 2" src="../../resources/ch17-assignment-timezone-fig-04.png" /></p>
 <p><a href="#table-of-contents">Back to the Table of Contents</a></p>
 <h4 id="step-by-step-solution-script-for-question-2">Step-by-Step Solution Script for Question 2<a class="headerlink" href="#step-by-step-solution-script-for-question-2" title="Permanent link">&para;</a></h4>
 <div class="highlight"><pre><span></span><code><span class="sd">"""</span>
@@ -9694,6 +9698,7 @@ Naive answer minus true answer: 3:30:00
     G --&gt; H["8. Python subtracts 02:30 minus 02:00"]
     H --&gt; I["9. Result: 30 minutes, which is correct"]
 </code></pre></div>
+<p><img alt="Timeline Table for the Simulation" src="../../resources/ch17-assignment-timezone-fig-05.png" /></p>
 <p><a href="#table-of-contents">Back to the Table of Contents</a></p>
 <h4 id="the-three-system-failure-risks-explained">The Three System-Failure Risks Explained<a class="headerlink" href="#the-three-system-failure-risks-explained" title="Permanent link">&para;</a></h4>
 <p>In a large <strong>distributed application</strong>, such as one hosted on cloud platforms like AWS, Google Cloud or Microsoft Azure, the work is shared among hundreds of independent servers (called <strong>nodes</strong>) spread across the world. If an engineering team allows these nodes to store or calculate with <strong>naive</strong> datetimes, the system is exposed to three serious kinds of failure.</p>
