@@ -273,7 +273,7 @@ ZeroDivisionError: division by zero
 
 ### The same flow, as a flowchart 
 
-![Flowchart](/001-mkdocs/resources/ch-9-exceptions-august-2026-digging-into-exceptions-sys-traceback.png)
+![Flowchart](../resources/ch-9-exceptions-august-2026-digging-into-exceptions-sys-traceback.png)
 
 
 ### Key Concepts Explained

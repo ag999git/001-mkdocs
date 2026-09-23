@@ -275,7 +275,7 @@ Exception
 
 ### The same relationship, drawn as a flowchart 
 
-![Flowchart](/001-mkdocs/resources/ch-9-exceptions-august-2026-urlib-project.png)
+![Flowchart](../resources/ch-9-exceptions-august-2026-urlib-project.png)
 
 
 
