@@ -81,6 +81,11 @@
     <label class="md-overlay" for="__drawer"></label>
     <div data-md-component="skip">
       
+        
+        <a href="#chapter-20-pytest-unit-testing" class="md-skip">
+          Skip to content
+        </a>
+      
     </div>
     <div data-md-component="announce">
       
@@ -8014,9 +8019,138 @@
   
 
 
-  <h1>Overview</h1>
-
-
+<h1 id="chapter-20-pytest-unit-testing">Chapter 20: Pytest (Unit Testing)<a class="headerlink" href="#chapter-20-pytest-unit-testing" title="Permanent link">&para;</a></h1>
+<p>The online companion to Chapter 20 of the book. The printed chapter takes you from your first <code>assert</code> to fixtures, mocking and parameterized tests. These pages carry the longer explanations, the complete worked projects, and full answers to every question at the end of the chapter.</p>
+<p>By the end of these pages you should be able to write tests that are independent of one another, prepare and clean up test data with fixtures, replace slow or external things with mocks, check that your code refuses bad input, and run one test against many inputs without repeating yourself.</p>
+<p>You need to be comfortable with functions, classes and exceptions before starting.</p>
+<h2 id="the-pages">The Pages<a class="headerlink" href="#the-pages" title="Permanent link">&para;</a></h2>
+<table>
+<thead>
+<tr>
+<th>Page</th>
+<th>What it covers</th>
+<th>Best for</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><a href="010-ch20-pytest-flags/">Common Pytest Command-Line Flags</a></td>
+<td><code>-v</code>, <code>-s</code> and <code>-k</code>: what each shows you, why pytest hides <code>print()</code> output by default, and how to combine them</td>
+<td>Start here</td>
+</tr>
+<tr>
+<td><a href="020-ch20-unittest-disadvantage-rigid-oop-style/">Breaking Free from Rigid Test Classes</a></td>
+<td>Why the old <code>setup_method</code> and <code>teardown_method</code> style constrains you, and how fixtures remove the constraint</td>
+<td>The idea behind fixtures</td>
+</tr>
+<tr>
+<td><a href="040-ch20-dependency-injection/">Dependency Injection in Pytest Fixtures</a></td>
+<td>How a test simply names what it needs and pytest supplies it, compared with building the object by hand</td>
+<td>Read with the page above</td>
+</tr>
+<tr>
+<td><a href="030-ch20-payment-gateway/">Advanced Fixture Lifecycles: Session Scope</a></td>
+<td>When creating a fixture once per test is too slow, what the four scopes mean, and the contamination risk that comes with sharing</td>
+<td>After fixtures make sense</td>
+</tr>
+<tr>
+<td><a href="065-ch20-conftest-py/">Sharing Fixtures with conftest.py</a></td>
+<td>Putting a fixture in one place so every test file can use it, without importing anything</td>
+<td>When your suite outgrows one file</td>
+</tr>
+<tr>
+<td><a href="060-ch20-user-registration/">Testing User Validation with pytest.raises()</a></td>
+<td>A registration function that rejects bad input, and the tests that prove it does</td>
+<td>Testing for failure</td>
+</tr>
+<tr>
+<td><a href="070-ch20-pytest-raises-vs-try-except/">Why pytest.raises Is Better Than try/except</a></td>
+<td>Three ways to test an exception, side by side, and why the first two quietly pass when they should fail</td>
+<td>Read with the page above</td>
+</tr>
+<tr>
+<td><a href="067-ch20-magicmock/">MagicMock: An Introduction</a></td>
+<td>Faking objects that support <code>len()</code>, iteration, <code>in</code> and <code>with</code>, which plain <code>Mock</code> cannot do</td>
+<td>After the book's section on Mock</td>
+</tr>
+<tr>
+<td><a href="080-ch20-tax-collector-project/">The "Micro-Precision" Tax Calculator</a></td>
+<td>A project in three rounds: repetitive tests, then parameterized tests, then the floating-point trap and <code>pytest.approx()</code></td>
+<td>A complete worked project</td>
+</tr>
+<tr>
+<td><a href="090-ch20-config-files/">A Beginner's Guide to pytest.ini and pyproject.toml</a></td>
+<td>Where pytest keeps its settings, how to register your own markers, and how to stop typing the same flags every time</td>
+<td>Tidying up a real project</td>
+</tr>
+<tr>
+<td><a href="095-ch20-conceptual-qa/">Conceptual Questions and Answers</a></td>
+<td>Twenty questions with full answers, grouped by topic from testing basics through to organising a suite</td>
+<td>Revision</td>
+</tr>
+<tr>
+<td><a href="097-ch20-scripting-qa/">Scripting Questions and Answers</a></td>
+<td>Twenty questions that ask you to write the code, with complete working answers</td>
+<td>Practice</td>
+</tr>
+</tbody>
+</table>
+<h2 id="suggested-reading-order">Suggested Reading Order<a class="headerlink" href="#suggested-reading-order" title="Permanent link">&para;</a></h2>
+<ol>
+<li><strong>Command-Line Flags</strong>, so you can see what your tests are doing.</li>
+<li><strong>Rigid Test Classes</strong>, then <strong>Dependency Injection</strong>. These two explain why fixtures exist; read them together.</li>
+<li><strong>Session Scope</strong> and <strong>conftest.py</strong> once fixtures feel natural.</li>
+<li><strong>User Validation</strong> and <strong>pytest.raises vs try/except</strong> together, in that order.</li>
+<li><strong>MagicMock</strong> after the printed chapter's section on <code>Mock</code>.</li>
+<li><strong>The Tax Calculator project</strong> as a single sitting. It ties parameterized testing to a real bug.</li>
+<li><strong>Configuration files</strong> when you start a project of your own.</li>
+<li><strong>Conceptual</strong> and <strong>Scripting Questions</strong> for revision and practice.</li>
+</ol>
+<h2 id="running-the-scripts">Running the Scripts<a class="headerlink" href="#running-the-scripts" title="Permanent link">&para;</a></h2>
+<p>The scripts on these pages are not loose files. Each one belongs to a small project folder in this directory, because pytest needs a folder structure to discover tests in:</p>
+<table>
+<thead>
+<tr>
+<th>Folder</th>
+<th>Used by</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>pytest-demo/</code></td>
+<td>Rigid test classes, fixtures</td>
+</tr>
+<tr>
+<td><code>di-demo/</code></td>
+<td>Dependency injection</td>
+</tr>
+<tr>
+<td><code>payment-demo/</code></td>
+<td>Session scope</td>
+</tr>
+<tr>
+<td><code>config-demo/</code>, <code>banking_project/</code>, <code>warning-demo/</code></td>
+<td>Configuration files</td>
+</tr>
+<tr>
+<td><code>registration-demo/</code>, <code>raises-demo/</code></td>
+<td>User validation and exception testing</td>
+</tr>
+<tr>
+<td><code>magicmock-demo/</code></td>
+<td>MagicMock</td>
+</tr>
+<tr>
+<td><code>tax-demo/</code></td>
+<td>The tax calculator project</td>
+</tr>
+<tr>
+<td><code>qa-demo/</code></td>
+<td>The question pages</td>
+</tr>
+</tbody>
+</table>
+<p>To run any of them, open a terminal in that folder and type <code>pytest</code>, adding <code>-v</code> to see each test by name or <code>-s</code> to see <code>print()</code> output. Each page says which folder its scripts belong to and which command to use.</p>
 
 
 
