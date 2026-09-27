@@ -9311,15 +9311,6 @@ columnspan=3, sticky='ew' -&gt; 360 pixels wide
 </code></pre></div>
 <p>Why this matters so much in a GUI is that the default behaviour for a callback error is close to the worst possible one for a user. The program does not crash — Tkinter prints a traceback to the console and carries on — so the user clicks a button, absolutely nothing happens, no message appears, and the only explanation is in a terminal they are probably not looking at. A global handler converts that silence into a clear message.</p>
 <p><img alt="Flowchart" src="../../resources/ch14-tkinter-September-2026-conceptual-QA-006.png" /></p>
-<div class="highlight"><pre><span></span><code>flowchart TD
-    A["An exception is raised somewhere in your program"] --&gt; B{"Was it raised inside a Tkinter callback?"}
-    B --&gt;|"Yes: a button click, after job, bind or trace"| C["Tkinter catches it first"]
-    C --&gt; D["root.report_callback_exception is called"]
-    B --&gt;|"No: ordinary top level code"| E["It travels up the call chain"]
-    E --&gt; F["sys.excepthook is called"]
-    D --&gt; G["Point both names at one handler to cover every case"]
-    F --&gt; G
-</code></pre></div>
 <p><a href="#table-of-contents">Back to Table of Contents</a></p>
 <h3 id="20-explain-the-unlock-edit-lock-pattern-used-with-read-only-widgets-like-spinbox-and-combobox-why-is-it-necessary">20. Explain the "Unlock-Edit-Lock" pattern used with read-only widgets like Spinbox and Combobox. Why is it necessary?<a class="headerlink" href="#20-explain-the-unlock-edit-lock-pattern-used-with-read-only-widgets-like-spinbox-and-combobox-why-is-it-necessary" title="Permanent link">&para;</a></h3>
 <p>The pattern itself is:</p>
