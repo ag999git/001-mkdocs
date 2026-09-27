@@ -8371,13 +8371,7 @@
 <li><strong>speed</strong> - no time is spent making a new object, and comparing two identical objects is quick,</li>
 <li><strong>memory use</strong> - one object is shared instead of many copies.</li>
 </ol>
-<div class="highlight"><pre><span></span><code>flowchart LR
-    A["1. a = 256"] --&gt; OBJ["3. One shared object: 256"]
-    B["2. b = 256"] --&gt; OBJ
-    C["4. c = 257, built at run time"] --&gt; O1["6. Object: 257"]
-    D["5. d = 257, built at run time"] --&gt; O2["7. Another object: 257"]
-</code></pre></div>
-<p><img alt="What Is Interning" src="../../resources/ch01-2-interning-fig-01.png" /></p>
+<p><img alt="What Is Interning" src="../../resources/0000-12-ch1-interning-what-is.png" /></p>
 <p>In the picture, <code>a</code> and <code>b</code> point to <strong>one</strong> object, so <code>a is b</code> is <code>True</code>. But <code>c</code> and <code>d</code> point to <strong>two different</strong> objects that happen to hold the same value, so <code>c == d</code> is <code>True</code> while <code>c is d</code> is <code>False</code>. (Section 6 shows this with real code.)</p>
 <p>A word of caution: interning is an <strong>implementation detail</strong> of CPython - the standard version of Python that you download from python.org. It is not part of the Python language rules, so the exact details can differ between Python versions, and between CPython and other versions of Python such as PyPy.</p>
 <p><a href="#table-of-contents">Back to the Table of Contents</a></p>
@@ -8436,15 +8430,6 @@
 </tbody>
 </table>
 <p>The flowchart below shows, in simplified form, how CPython decides whether to reuse an object.</p>
-<div class="highlight"><pre><span></span><code>flowchart TD
-    A["1. Python needs a value"] --&gt; B{"2. Is it a small integer from -5 to 256?"}
-    B --&gt;|Yes| R["5. Reuse the stored object"]
-    B --&gt;|No| C{"3. Is it a string written in the code that looks like a name?"}
-    C --&gt;|Yes| R
-    C --&gt;|No| D{"4. Is it an empty string or an empty tuple?"}
-    D --&gt;|Yes| R
-    D --&gt;|No| N["6. Create a new object"]
-</code></pre></div>
 <p><img alt="Where Does Interning Happen" src="../../resources/ch01-2-interning-fig-02.png" /></p>
 <p><a href="#table-of-contents">Back to the Table of Contents</a></p>
 <h2 id="4-why-does-python-do-this">4. Why Does Python Do This<a class="headerlink" href="#4-why-does-python-do-this" title="Permanent link">&para;</a></h2>
@@ -8718,13 +8703,6 @@ True
 <p>(The start of the first line shows the folder of your file and the line number, here line 2.)</p>
 <p>(Python 3.8 to 3.11 show a similar message: <code>SyntaxWarning: "is" with a literal. Did you mean "=="?</code>.) Python warns you even though the answer happens to be <code>True</code> here, because it could just as well be <code>False</code> in another situation.</p>
 <p>The flowchart below sums up the rule.</p>
-<div class="highlight"><pre><span></span><code>flowchart TD
-    A["1. I want to compare two things"] --&gt; B{"2. Am I checking for None, True or False?"}
-    B --&gt;|Yes| C["3. Use is - for example: if x is None"]
-    B --&gt;|No| D{"4. Do I really need to know if they are the very same object?"}
-    D --&gt;|Yes| E["5. Use is - rare in everyday code"]
-    D --&gt;|No| F["6. Use == - the right choice almost every time"]
-</code></pre></div>
 <p><img alt="The Golden Rule for Comparing Values" src="../../resources/ch01-2-interning-fig-03.png" /></p>
 <p><a href="#table-of-contents">Back to the Table of Contents</a></p>
 <h2 id="9-practice-questions-with-answers">9. Practice Questions with Answers<a class="headerlink" href="#9-practice-questions-with-answers" title="Permanent link">&para;</a></h2>
