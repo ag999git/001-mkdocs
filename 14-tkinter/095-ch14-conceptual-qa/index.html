@@ -8933,13 +8933,6 @@ TclError: cannot use geometry manager grid inside .!frame which already has slav
 <p><code>pack()</code> stacks children in blocks, top to bottom or side to side. <code>grid()</code> places them in a table of rows and columns. The two use completely different bookkeeping for the same container, which is why Tk refuses to combine them rather than trying.</p>
 <p>What you <strong>can</strong> do — and should — is use different managers in <em>different</em> containers:</p>
 <p><img alt="Flowchart" src="../../resources/ch14-tkinter-September-2026-conceptual-QA-004.png" /></p>
-<div class="highlight"><pre><span></span><code>flowchart TD
-    A["GOOD: the root window"] --&gt; B["frame_one placed with pack"]
-    A --&gt; C["frame_two placed with pack"]
-    B --&gt; D["its children all use grid - allowed"]
-    C --&gt; E["its children all use pack - allowed"]
-    F["BAD: one container mixing pack and grid"] --&gt; G["TclError raised at once"]
-</code></pre></div>
 <p>Each container is judged on its own, so a frame can be packed into the root while everything inside that frame uses grid. The rule only forbids two managers competing for the same parent.</p>
 <p><a href="#table-of-contents">Back to Table of Contents</a></p>
 <h3 id="7-what-is-the-golden-rule-for-radiobutton-variables-and-what-happens-if-each-radiobutton-gets-its-own-variable-instead-of-sharing-one">7. What is the "Golden Rule" for Radiobutton variables, and what happens if each Radiobutton gets its own variable instead of sharing one?<a class="headerlink" href="#7-what-is-the-golden-rule-for-radiobutton-variables-and-what-happens-if-each-radiobutton-gets-its-own-variable-instead-of-sharing-one" title="Permanent link">&para;</a></h3>
