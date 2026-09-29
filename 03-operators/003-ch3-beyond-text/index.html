@@ -8472,18 +8472,19 @@
 <li>For <strong>matrix @ vector</strong>, the number of <strong>columns in the matrix</strong> must equal the number of <strong>elements in the vector</strong>.</li>
 <li>The answer has the rows of the first matrix and the columns of the second. A (2, 3) matrix <code>@</code> a (3, 2) matrix gives a (2, 2) matrix.</li>
 </ul>
-<div class="highlight"><pre><span></span><code>flowchart TD
-    A["1. Start: A @ B"] --&gt; B{"2. Columns of A equal rows of B?"}
-    B -- No --&gt; C["3. Python raises a ValueError. Stop."]
-    B -- Yes --&gt; D["4. Pick row i of A and column j of B"]
-    D --&gt; E["5. Multiply matching pairs"]
-    E --&gt; F["6. Add the products"]
-    F --&gt; G["7. Write the total in cell i, j of the answer"]
-    G --&gt; H{"8. Any cells left?"}
-    H -- Yes --&gt; D
-    H -- No --&gt; I["9. Answer is ready"]
-</code></pre></div>
-<p><img alt="How Matrix Multiplication Works" src="../../resources/ch3-beyond-text-fig-01.png" /></p>
+<p><img alt="How Matrix Multiplication Works" src="../../resources/LR-ch3-beyond-text-fig-01.png" /></p>
+<p><strong>Reading the figure</strong></p>
+<ul>
+<li><strong>Step 1:</strong> Start with the matrix product <code>A @ B</code>.</li>
+<li><strong>Step 2:</strong> Check the shapes: is the number of columns in A equal to the number of rows in B?</li>
+<li><strong>Step 3:</strong> No: the shapes do not fit, so NumPy raises a <code>ValueError</code> and stops.</li>
+<li><strong>Step 4:</strong> Yes: pick row <code>i</code> of A and column <code>j</code> of B.</li>
+<li><strong>Step 5:</strong> Multiply the matching pairs: the first item of the row with the first item of the column, the second with the second, and so on.</li>
+<li><strong>Step 6:</strong> Add all those products together.</li>
+<li><strong>Step 7:</strong> Write the total in cell <code>(i, j)</code> of the answer.</li>
+<li><strong>Step 8:</strong> If any cells of the answer are still empty, go back to Step 4 for the next row and column.</li>
+<li><strong>Step 9:</strong> No cells are left, so the answer is ready. A (2, 3) matrix <code>@</code> a (3, 2) matrix gives a (2, 2) answer.</li>
+</ul>
 <p><a href="#table-of-contents">Back to the Table of Contents</a></p>
 <hr />
 <h3 id="the-script-step-by-step">The Script, Step by Step<a class="headerlink" href="#the-script-step-by-step" title="Permanent link">&para;</a></h3>

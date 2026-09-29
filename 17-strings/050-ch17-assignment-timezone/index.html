@@ -8762,18 +8762,19 @@
 </table>
 <p>One more rule is worth remembering. Python <strong>will not let you subtract or compare</strong> a naive object with an aware one using <code>&lt;</code> or <code>&gt;</code>. It raises a <code>TypeError</code>. This is Python's way of stopping you from mixing a labelled time with an unlabelled one.</p>
 <p>The flowchart below shows how to decide what to do with a datetime object you have been given.</p>
-<div class="highlight"><pre><span></span><code>flowchart TD
-    A["1. Start with a datetime object"] --&gt; B{"2. Is tzinfo None?"}
-    B --&gt;|"Yes"| C["3. It is NAIVE: only a clock reading"]
-    C --&gt; D{"4. Do you know which zone the reading came from?"}
-    D --&gt;|"Yes"| E["5. Attach that zone with replace tzinfo"]
-    D --&gt;|"No"| F["6. Stop: find out the source zone first"]
-    B --&gt;|"No"| G["7. It is AWARE: the exact moment is known"]
-    E --&gt; G
-    G --&gt; H["8. Convert to UTC with astimezone for storage and maths"]
-    H --&gt; I["9. Convert to a local zone only for display"]
-</code></pre></div>
-<p><img alt="C. Naive vs. Aware at a Glance" src="../../resources/ch17-assignment-timezone-fig-01.png" /></p>
+<p><img alt="C. Naive vs. Aware at a Glance" src="../../resources/LR-ch17-assignment-timezone-fig-01.png" /></p>
+<p><strong>Reading the figure</strong></p>
+<ul>
+<li><strong>Step 1:</strong> Start with a <code>datetime</code> object you have been given.</li>
+<li><strong>Step 2:</strong> Look at its <code>tzinfo</code> attribute. Is it <code>None</code>?</li>
+<li><strong>Step 3:</strong> Yes: the object is naive. It is only a clock reading, with no zone attached.</li>
+<li><strong>Step 4:</strong> Do you know which zone the reading was taken in?</li>
+<li><strong>Step 5:</strong> No: stop. A naive time cannot be fixed by guessing, so find out the source zone first.</li>
+<li><strong>Step 6:</strong> Yes: attach that zone with <code>.replace(tzinfo=zone)</code>. This labels the reading; it does not change the clock time.</li>
+<li><strong>Step 7:</strong> The object is now aware: the exact moment in time is known. (No from Step 2 comes straight here.)</li>
+<li><strong>Step 8:</strong> Convert it to UTC with <code>.astimezone(ZoneInfo("UTC"))</code> for storing and for any arithmetic.</li>
+<li><strong>Step 9:</strong> Convert to a local zone, such as Asia/Kolkata, only when you need to display the time to a person.</li>
+</ul>
 <p><a href="#table-of-contents">Back to the Table of Contents</a></p>
 <h3 id="d-key-terms-used-on-this-page">D. Key Terms Used on This Page<a class="headerlink" href="#d-key-terms-used-on-this-page" title="Permanent link">&para;</a></h3>
 <table>
@@ -9365,15 +9366,17 @@ Step 5 -&gt; Error caused by replace():         5:30:00
 </tr>
 </tbody>
 </table>
-<div class="highlight"><pre><span></span><code>flowchart TD
-    A["1. You have a naive clock reading"] --&gt; B{"2. Was the reading taken in Asia/Kolkata?"}
-    B --&gt;|"Yes"| C["3. Use replace with tzinfo Asia/Kolkata"]
-    C --&gt; D["4. Result: correct aware Kolkata time"]
-    B --&gt;|"No, it was taken in another zone"| E["5. Use replace with tzinfo of the real source zone"]
-    E --&gt; F["6. Then use astimezone Asia/Kolkata"]
-    F --&gt; G["7. Result: correct aware Kolkata time"]
-</code></pre></div>
-<p><img alt="An Important Warning: replace() Labels, It Does Not Convert" src="../../resources/ch17-assignment-timezone-fig-03.png" /></p>
+<p><img alt="An Important Warning: replace() Labels, It Does Not Convert" src="../../resources/LR-ch17-assignment-timezone-fig-03.png" /></p>
+<p><strong>Reading the figure</strong></p>
+<ul>
+<li><strong>Step 1:</strong> You have a naive clock reading and want an aware Kolkata time.</li>
+<li><strong>Step 2:</strong> Was the reading actually taken in Asia/Kolkata?</li>
+<li><strong>Step 3:</strong> Yes: <code>.replace(tzinfo=ZoneInfo("Asia/Kolkata"))</code> attaches the label to the same clock reading.</li>
+<li><strong>Step 4:</strong> The result is the correct aware Kolkata time.</li>
+<li><strong>Step 5:</strong> No, it was taken in another zone: first use <code>.replace()</code> with the real source zone. Attaching Kolkata directly would give the wrong moment.</li>
+<li><strong>Step 6:</strong> Then use <code>.astimezone(ZoneInfo("Asia/Kolkata"))</code>, which converts the same moment to Kolkata's clock.</li>
+<li><strong>Step 7:</strong> The result is the correct aware Kolkata time. <code>replace()</code> labels; <code>astimezone()</code> converts.</li>
+</ul>
 <p><a href="#table-of-contents">Back to the Table of Contents</a></p>
 <h4 id="follow-up-questions-for-question-1">Follow-Up Questions for Question 1<a class="headerlink" href="#follow-up-questions-for-question-1" title="Permanent link">&para;</a></h4>
 <p><strong>Follow-up 1.1: What does <code>naive_dt.utcoffset()</code> return, and why?</strong></p>
@@ -9688,17 +9691,19 @@ Naive answer minus true answer: 3:30:00
 </tbody>
 </table>
 <p>The bold values are the ones each server actually wrote down. The naive calculation subtracts one bold value from the other (<code>08:00 - 04:00</code>), which mixes two different clocks and gives 4 hours. On any <strong>single</strong> clock the gap is 30 minutes. The naive answer is too large by 3 hours 30 minutes, which is exactly the difference between the two offsets (5:30 minus 2:00).</p>
-<div class="highlight"><pre><span></span><code>flowchart TD
-    A["1. Payment received in Frankfurt at 04:00 local time"] --&gt; B["2. Payment logged in Mumbai at 08:00 local time"]
-    B --&gt; C{"3. Are the stored timestamps aware?"}
-    C --&gt;|"No, naive"| D["4. Python subtracts 08:00 minus 04:00"]
-    D --&gt; E["5. Result: 4 hours"]
-    E --&gt; F["6. Wrong by 3 hours 30 minutes, and no error is shown"]
-    C --&gt;|"Yes, aware"| G["7. Python converts both to UTC: 02:00 and 02:30"]
-    G --&gt; H["8. Python subtracts 02:30 minus 02:00"]
-    H --&gt; I["9. Result: 30 minutes, which is correct"]
-</code></pre></div>
-<p><img alt="Timeline Table for the Simulation" src="../../resources/ch17-assignment-timezone-fig-05.png" /></p>
+<p><img alt="Timeline Table for the Simulation" src="../../resources/LR-ch17-assignment-timezone-fig-05.png" /></p>
+<p><strong>Reading the figure</strong></p>
+<ul>
+<li><strong>Step 1:</strong> A payment is received by the server in Frankfurt at 04:00 local time.</li>
+<li><strong>Step 2:</strong> The same payment is logged by the server in Mumbai at 08:00 local time.</li>
+<li><strong>Step 3:</strong> Are the stored timestamps aware, that is, do they carry their zones?</li>
+<li><strong>Step 4:</strong> No, they are naive: Python simply subtracts the two clock readings, 08:00 minus 04:00.</li>
+<li><strong>Step 5:</strong> The result is 4 hours.</li>
+<li><strong>Step 6:</strong> That is wrong by 3 hours 30 minutes, and Python shows no error, because it has no zones to check.</li>
+<li><strong>Step 7:</strong> Yes, they are aware: Python converts both to UTC first. Frankfurt 04:00 (UTC+2) is 02:00 UTC, and Mumbai 08:00 (UTC+5:30) is 02:30 UTC.</li>
+<li><strong>Step 8:</strong> Python subtracts 02:30 minus 02:00.</li>
+<li><strong>Step 9:</strong> The result is 30 minutes, which is correct.</li>
+</ul>
 <p><a href="#table-of-contents">Back to the Table of Contents</a></p>
 <h4 id="the-three-system-failure-risks-explained">The Three System-Failure Risks Explained<a class="headerlink" href="#the-three-system-failure-risks-explained" title="Permanent link">&para;</a></h4>
 <p>In a large <strong>distributed application</strong>, such as one hosted on cloud platforms like AWS, Google Cloud or Microsoft Azure, the work is shared among hundreds of independent servers (called <strong>nodes</strong>) spread across the world. If an engineering team allows these nodes to store or calculate with <strong>naive</strong> datetimes, the system is exposed to three serious kinds of failure.</p>

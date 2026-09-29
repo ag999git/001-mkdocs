@@ -8472,16 +8472,17 @@ Error caught: Insufficient funds
 <li><strong>Raise Test:</strong> "Sorry, not enough money." never appears. <code>raise</code> stopped the function, and the error was caught outside it, by the <code>try</code>/<code>except</code> in the main program.</li>
 </ul>
 <p>The flowchart below shows the path through <code>find_treasure()</code>. Notice that no arrow ever leads into box 6, the dead line.</p>
-<div class="highlight"><pre><span></span><code>flowchart TD
-    T1["1. Take the next item from the list"] --&gt; T2{"2. Is the item Gold?"}
-    T2 -- "No" --&gt; T3["3. Print Checking: item"]
-    T3 --&gt; T1
-    T2 -- "Yes" --&gt; T4["4. Print Found the Gold!"]
-    T4 --&gt; T5["5. break: leave the loop"]
-    T5 -. "never runs" .-&gt; T6["6. Dead line after break: never reached"]
-    T5 --&gt; T7["7. Function ends"]
-</code></pre></div>
-<p><img alt="Example Script: How Dead Code Creeps In" src="../../resources/ch4-flow-control-beyond-text-fig-01.png" /></p>
+<p><img alt="Example Script: How Dead Code Creeps In" src="../../resources/LR-ch4-flow-control-beyond-text-fig-01.png" /></p>
+<p><strong>Reading the figure</strong></p>
+<ul>
+<li><strong>Step 1:</strong> <code>find_treasure()</code> takes the next item from the list.</li>
+<li><strong>Step 2:</strong> Is the item "Gold"?</li>
+<li><strong>Step 3:</strong> No: print "Checking: item" and go back to Step 1.</li>
+<li><strong>Step 4:</strong> Yes: print "Found the Gold!".</li>
+<li><strong>Step 5:</strong> <code>break</code> leaves the loop at once.</li>
+<li><strong>Step 6:</strong> The line written after <code>break</code>, inside the loop, is dead code: no path ever leads to it, shown by the dashed arrow.</li>
+<li><strong>Step 7:</strong> The function ends. "Silver" is never checked, because the loop stopped at "Gold".</li>
+</ul>
 <p><a href="#table-of-contents">Back to the Table of Contents</a></p>
 <h3 id="tools-that-spot-dead-code">Tools That Spot Dead Code<a class="headerlink" href="#tools-that-spot-dead-code" title="Permanent link">&para;</a></h3>
 <p>You do not have to find dead code by eye alone.</p>
@@ -8650,18 +8651,19 @@ Result: dark
 <li><strong>Handle</strong> the boundary condition: <code>except StopIteration</code> catches the signal that the list has run out.</li>
 <li><strong>Terminate</strong> the process: print "Loop Finished" and <code>break</code> out of the <code>while True</code> loop.</li>
 </ol>
-<div class="highlight"><pre><span></span><code>flowchart TD
-    S1["1. Initialize: color_cursor = iter(colors)"] --&gt; S2["2. Start while True loop"]
-    S2 --&gt; S3["3. Attempt: try next(color_cursor)"]
-    S3 --&gt; S4{"4. Was an item returned?"}
-    S4 -- "Yes" --&gt; S5["5. Print Processing color"]
-    S5 --&gt; S3
-    S4 -- "No: StopIteration raised" --&gt; S6["6. Handle: except StopIteration"]
-    S6 --&gt; S7["7. Print Loop Finished"]
-    S7 --&gt; S8["8. Terminate: break"]
-    S8 --&gt; S9["9. Program continues normally"]
-</code></pre></div>
-<p><img alt="Solution Script" src="../../resources/ch4-flow-control-beyond-text-fig-02.png" /></p>
+<p><img alt="Solution Script" src="../../resources/LR-ch4-flow-control-beyond-text-fig-02.png" /></p>
+<p><strong>Reading the figure</strong></p>
+<ul>
+<li><strong>Step 1:</strong> Initialise: <code>color_cursor = iter(colors)</code> creates an iterator over the list of colours.</li>
+<li><strong>Step 2:</strong> Start an endless <code>while True</code> loop.</li>
+<li><strong>Step 3:</strong> Attempt: inside <code>try</code>, call <code>next(color_cursor)</code>.</li>
+<li><strong>Step 4:</strong> Was an item returned?</li>
+<li><strong>Step 5:</strong> Yes: print "Processing" with the colour, and go back to Step 3.</li>
+<li><strong>Step 6:</strong> No: <code>next()</code> raised <code>StopIteration</code>, the signal that the list has run out. <code>except StopIteration</code> catches it.</li>
+<li><strong>Step 7:</strong> Print "Loop Finished".</li>
+<li><strong>Step 8:</strong> Terminate: <code>break</code> leaves the <code>while True</code> loop.</li>
+<li><strong>Step 9:</strong> The program continues normally after the loop.</li>
+</ul>
 <div class="highlight"><pre><span></span><code><span class="c1"># --- BEYOND TEXT: MANUAL ITERATION ---</span>
 
 <span class="c1"># Step 1 - The iterable (the data)</span>
