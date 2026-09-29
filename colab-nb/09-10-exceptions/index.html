@@ -8817,7 +8817,7 @@
 <p>Run the cells from top to bottom.</p>
 <p><strong>Some cells end with a red error message on purpose.</strong> Examples 1 and 3 are meant to show what an unhandled exception looks like. The long red message is called a <strong>traceback</strong>. Read it from the bottom up: the last line names the exception and gives its message, and the lines above show where it happened.</p>
 <h3 id="how-to-read-the-flowcharts">How to read the flowcharts<a class="headerlink" href="#how-to-read-the-flowcharts" title="Permanent link">&para;</a></h3>
-<p>The steps are numbered 1, 2, 3 and so on. When the flow splits into two paths, one path uses the letter A (3A, 4A ...) and the other uses the letter B (3B, 4B ...). A long chain of steps is folded onto a second row: follow the arrow down and back to the left.</p>
+<p>Each flowchart reads from left to right. A long chain of steps continues on the next row: follow the arrow down and back to the left. The boxes are numbered 1, 2, 3 and so on. When the flow splits, the shorter branch is numbered first, and then the numbering carries on along the main branch. A diamond asks a question, and the grey tags on its arrows give the answers. An arrow labelled "Repeat" or "Next" goes back to an earlier step: this is how a loop is drawn. Under each flowchart, <strong>Reading the figure</strong> explains every step. A diagram that shows a structure, not a sequence of steps, has no numbers.</p>
 </div>
 </div>
 </div>
@@ -8969,7 +8969,17 @@
 </tr>
 </tbody>
 </table>
-<p><img alt="How a syntax error differs from an exception" src="https://raw.githubusercontent.com/ag999git/001-Python-book-2026/main/resources/ch-09-nb-01-syntax-vs-exception.png" /></p>
+<p><img alt="How a syntax error differs from an exception" src="https://raw.githubusercontent.com/ag999git/001-Python-book-2026/main/resources/S09-LR-ch-09-nb-01-syntax-vs-exception.png" /></p>
+<p><strong>Reading the figure</strong></p>
+<ul>
+<li><strong>Step 1:</strong> Before anything runs, Python reads the whole file.</li>
+<li><strong>Step 2:</strong> Does the code follow the rules of the language?</li>
+<li><strong>Step 3:</strong> No, for example a missing <code>:</code> after <code>if x &amp;gt; 3</code>: Python reports a <code>SyntaxError</code>, and the program does not start at all. It cannot be handled.</li>
+<li><strong>Step 4:</strong> Yes: the program starts to run.</li>
+<li><strong>Step 5:</strong> Does a statement fail while the program is running?</li>
+<li><strong>Step 6:</strong> Yes, for example <code>[1, 2][5]</code>: an exception such as <code>IndexError</code> is raised. The program stops, unless the exception is handled with <code>try-except</code>.</li>
+<li><strong>Step 7:</strong> No: the program finishes normally.</li>
+</ul>
 <p><a href="#toc">Back to the Table of Contents</a></p>
 <h2 id="92-the-raise-statement"><a name="9-2-the-raise-statement"></a>9.2 The raise statement<a class="headerlink" href="#92-the-raise-statement" title="Permanent link">&para;</a></h2>
 <p>So far, Python raised exceptions for us. With the <code>raise</code> statement <strong>you</strong> can raise an exception on purpose, when your own rule is broken. The syntax is:</p>
@@ -8987,7 +8997,15 @@
 <li><code>ValueError</code> is the right built-in exception when the type is correct (an integer) but the value is not acceptable.</li>
 <li>The red traceback below the cell is expected. Its last line reads <code>ValueError: Age cannot be negative</code>.</li>
 </ol>
-<p><img alt="What happens when Pet(&quot;Dog&quot;, -2) is created" src="https://raw.githubusercontent.com/ag999git/001-Python-book-2026/main/resources/ch-09-nb-02-raise-flow.png" /></p>
+<p><img alt="What happens when Pet(&quot;Dog&quot;, -2) is created" src="https://raw.githubusercontent.com/ag999git/001-Python-book-2026/main/resources/S09-LR-ch-09-nb-02-raise-flow.png" /></p>
+<p><strong>Reading the figure</strong></p>
+<ul>
+<li><strong>Step 1:</strong> <code>p1 = Pet("Dog", -2)</code> tries to create a pet with a negative age.</li>
+<li><strong>Step 2:</strong> <code>__init__()</code> starts.</li>
+<li><strong>Step 3:</strong> It checks the rule: is <code>age &amp;lt; 0</code>?</li>
+<li><strong>Step 4:</strong> Yes, as here: <code>raise ValueError("Age cannot be negative")</code>. The lines that set <code>self.name</code> and <code>self.age</code> never run, and no <code>Pet</code> object is made. With no <code>try-except</code>, Python prints a traceback.</li>
+<li><strong>Step 5:</strong> No: <code>self.name</code> and <code>self.age</code> are set, and the object is ready.</li>
+</ul>
 </div>
 </div>
 </div>
@@ -9071,7 +9089,17 @@
 </ol>
 <p><strong>The role of <code>else</code>:</strong> (1) it runs only if <strong>no</strong> exception occurred, and (2) it keeps the normal logic apart from the error-handling logic.</p>
 <p>If an exception occurs and <strong>no</strong> <code>except</code> block matches it, the exception is not handled. The same exception travels on to the code that called this code. If nothing handles it anywhere, Python prints a traceback and the program stops.</p>
-<p><img alt="Flow of a try-except-else statement" src="https://raw.githubusercontent.com/ag999git/001-Python-book-2026/main/resources/ch-09-nb-03-try-except-else.png" /></p>
+<p><img alt="Flow of a try-except-else statement" src="https://raw.githubusercontent.com/ag999git/001-Python-book-2026/main/resources/S09-LR-ch-09-nb-03-try-except-else.png" /></p>
+<p><strong>Reading the figure</strong></p>
+<ul>
+<li><strong>Step 1:</strong> Python runs the statements in the <code>try</code> block.</li>
+<li><strong>Step 2:</strong> Did an exception occur?</li>
+<li><strong>Step 3:</strong> No: the <code>else</code> block runs. It runs only if no exception occurred, and keeps the normal logic apart from the error handling.</li>
+<li><strong>Step 4:</strong> Yes: does an <code>except</code> block match the exception?</li>
+<li><strong>Step 5:</strong> No: the exception is not handled. It travels on to the calling code; if nothing handles it, Python prints a traceback and the program stops.</li>
+<li><strong>Step 6:</strong> Yes: the matching <code>except</code> block runs.</li>
+<li><strong>Step 7:</strong> The program carries on after the whole <code>try</code> statement.</li>
+</ul>
 <p><a href="#toc">Back to the Table of Contents</a></p>
 <h3 id="multiple-except-blocks"><a name="multiple-except-blocks"></a>Multiple except blocks<a class="headerlink" href="#multiple-except-blocks" title="Permanent link">&para;</a></h3>
 <p>One <code>try</code> block can have several <code>except</code> blocks, one for each kind of exception you want to treat differently.</p>
@@ -9211,7 +9239,18 @@
 <li>In case 3, "Finally block always executes" is printed <strong>before</strong> the traceback.</li>
 <li>The red <code>TypeError</code> traceback at the end is expected.</li>
 </ol>
-<p><img alt="try-except-else-finally without a generic except block" src="https://raw.githubusercontent.com/ag999git/001-Python-book-2026/main/resources/ch-09-nb-04-finally-no-generic.png" /></p>
+<p><img alt="try-except-else-finally without a generic except block" src="https://raw.githubusercontent.com/ag999git/001-Python-book-2026/main/resources/S09-LR-ch-09-nb-04-finally-no-generic.png" /></p>
+<p><strong>Reading the figure</strong></p>
+<ul>
+<li><strong>Step 1:</strong> <code>try:</code> prints <code>1. Performing division...</code> and works out <code>number / divisor</code>.</li>
+<li><strong>Step 2:</strong> Did an exception occur?</li>
+<li><strong>Step 3:</strong> No, as in case 1, <code>process_numbers(10, 2)</code>: the <code>else</code> block prints <code>No exception occurred</code> and the result.</li>
+<li><strong>Step 4:</strong> Yes: is it a <code>ZeroDivisionError</code>?</li>
+<li><strong>Step 5:</strong> No, as in case 3, where dividing a string raises <code>TypeError</code>: no <code>except</code> block matches. <code>finally</code> still prints <code>Finally block always executes</code>, and then the traceback stops the program.</li>
+<li><strong>Step 6:</strong> Yes, as in case 2: the <code>except ZeroDivisionError</code> block prints its message.</li>
+<li><strong>Step 7:</strong> The <code>finally</code> block always runs and prints <code>Finally block always executes</code>.</li>
+<li><strong>Step 8:</strong> The program carries on after the <code>try</code> statement.</li>
+</ul>
 </div>
 </div>
 </div>
@@ -9395,7 +9434,18 @@ Finally block always executes
 <li>The generic block comes <strong>after</strong> the specific one. If it came first, it would catch the <code>ZeroDivisionError</code> too, and the specific block would never run.</li>
 <li><code>finally</code> can use the function's parameters. Here it prints the divisor in every case.</li>
 </ol>
-<p><img alt="try-except-else-finally with a generic except block" src="https://raw.githubusercontent.com/ag999git/001-Python-book-2026/main/resources/ch-09-nb-05-finally-generic.png" /></p>
+<p><img alt="try-except-else-finally with a generic except block" src="https://raw.githubusercontent.com/ag999git/001-Python-book-2026/main/resources/S09-LR-ch-09-nb-05-finally-generic.png" /></p>
+<p><strong>Reading the figure</strong></p>
+<ul>
+<li><strong>Step 1:</strong> <code>try:</code> prints <code>1. Performing division...</code> and works out <code>number / divisor</code>.</li>
+<li><strong>Step 2:</strong> Did an exception occur?</li>
+<li><strong>Step 3:</strong> No, as in case 1: the <code>else</code> block prints <code>No exception occurred</code> and the result.</li>
+<li><strong>Step 4:</strong> Yes: is it a <code>ZeroDivisionError</code>?</li>
+<li><strong>Step 5:</strong> No, as in case 3 with <code>TypeError</code>: Python moves on to the generic <code>except Exception as e:</code>, which catches it because <code>TypeError</code> is derived from <code>Exception</code>, and prints <code>Generic Error:</code> and the message.</li>
+<li><strong>Step 6:</strong> Yes, as in case 2: the <code>except ZeroDivisionError</code> block prints its message. It comes before the generic block, otherwise it would never be reached.</li>
+<li><strong>Step 7:</strong> The <code>finally</code> block always runs and prints the divisor.</li>
+<li><strong>Step 8:</strong> The program carries on. There is no traceback now: every case is handled.</li>
+</ul>
 </div>
 </div>
 </div>
@@ -9503,7 +9553,15 @@ Finally block always executes. (divisor was a)
 </tr>
 </tbody>
 </table>
-<p><img alt="What the with statement does for you" src="https://raw.githubusercontent.com/ag999git/001-Python-book-2026/main/resources/ch-09-nb-06-with-statement.png" /></p>
+<p><img alt="What the with statement does for you" src="https://raw.githubusercontent.com/ag999git/001-Python-book-2026/main/resources/S09-LR-ch-09-nb-06-with-statement.png" /></p>
+<p><strong>Reading the figure</strong></p>
+<ul>
+<li><strong>Step 1:</strong> Python meets <code>with open("file.txt", "r") as f:</code>.</li>
+<li><strong>Step 2:</strong> <code>open()</code> returns a context manager. Its <code>__enter__()</code> method hands back the file object, which is given the name <code>f</code>.</li>
+<li><strong>Step 3:</strong> The indented block runs, for example <code>data = f.read()</code>.</li>
+<li><strong>Step 4:</strong> When the block ends, normally or because of an exception, Python calls <code>__exit__()</code>, which closes the file. Without <code>with</code>, an error before <code>f.close()</code> would leave the file open.</li>
+<li><strong>Step 5:</strong> If there was an error, it then carries on to the code outside the <code>with</code> statement.</li>
+</ul>
 <p><a href="#toc">Back to the Table of Contents</a></p>
 <h3 id="try-it-creating-two-small-files-for-the-examples"><a name="try-it-creating-two-small-files-for-the-examples"></a>Try it: creating two small files for the examples<a class="headerlink" href="#try-it-creating-two-small-files-for-the-examples" title="Permanent link">&para;</a></h3>
 <p>This cell is not in the book. Colab starts with an empty folder, so the examples that read <code>file.txt</code> and <code>existing_file.txt</code> would have nothing to read. The cell creates both files. You can see them in the Files panel on the left of the Colab window (the folder icon).</p>
@@ -10047,7 +10105,25 @@ Caught by ArithmeticError: ZeroDivisionError
 </tbody>
 </table>
 <p>This book deals only with category 1. The difference matters: application errors should be handled by the programmer, while system signals should normally be left alone so that the program can still be stopped.</p>
-<p><img alt="Part of the tree of built-in exceptions" src="https://raw.githubusercontent.com/ag999git/001-Python-book-2026/main/resources/ch-09-nb-08-exception-hierarchy.png" /></p>
+<p><img alt="Part of the tree of built-in exceptions" src="https://raw.githubusercontent.com/ag999git/001-Python-book-2026/main/resources/S09-LR-ch-09-nb-08-exception-hierarchy.png" /></p>
+<p><strong>Reading the figure</strong></p>
+<ul>
+<li><code>BaseException</code> is the root of every built-in exception.</li>
+<li><code>Exception</code> is the base class of all application-level errors: the ones you should handle. Derive your own exceptions from it.</li>
+<li><code>SystemExit</code> is raised by <code>exit()</code>: a signal to stop, not really an error.</li>
+<li><code>KeyboardInterrupt</code> is raised when the user presses Ctrl+C (in Colab, the Stop button).</li>
+<li><code>GeneratorExit</code> is raised when a generator is closed.</li>
+<li><code>ArithmeticError</code> covers errors in calculations.</li>
+<li><code>LookupError</code> covers a missing index or key.</li>
+<li><code>OSError</code> covers errors from the operating system, such as file problems.</li>
+<li><code>ValueError</code>: the type is right but the value is not acceptable.</li>
+<li><code>TypeError</code>: an operation is applied to the wrong type.</li>
+<li><code>ZeroDivisionError</code> is a kind of <code>ArithmeticError</code>.</li>
+<li><code>IndexError</code> is a kind of <code>LookupError</code>, for lists and other sequences.</li>
+<li><code>KeyError</code> is a kind of <code>LookupError</code>, for dictionaries.</li>
+<li><code>FileNotFoundError</code> is a kind of <code>OSError</code>.</li>
+<li><code>PermissionError</code> is a kind of <code>OSError</code>. Catching a parent class, such as <code>LookupError</code>, also catches all its children.</li>
+</ul>
 <p><a href="#toc">Back to the Table of Contents</a></p>
 <h3 id="some-common-built-in-exceptions"><a name="some-common-built-in-exceptions"></a>Some common built-in exceptions<a class="headerlink" href="#some-common-built-in-exceptions" title="Permanent link">&para;</a></h3>
 <table>
@@ -10228,7 +10304,16 @@ Caught by ArithmeticError: ZeroDivisionError
 <li><strong>Derive your own exceptions from <code>Exception</code>, not from <code>BaseException</code>.</strong> <code>BaseException</code> also covers the system signals. Code that catches it may (1) stop the user from ending the program, and (2) interfere with signals such as Ctrl+C.</li>
 <li><strong>Parent before child is a mistake.</strong> If an <code>except</code> for the parent comes first, it catches the child too, and the child's <code>except</code> block is never reached.</li>
 </ul>
-<p><img alt="How Python chooses an except clause" src="https://raw.githubusercontent.com/ag999git/001-Python-book-2026/main/resources/ch-09-nb-07-except-order.png" /></p>
+<p><img alt="How Python chooses an except clause" src="https://raw.githubusercontent.com/ag999git/001-Python-book-2026/main/resources/S09-LR-ch-09-nb-07-except-order.png" /></p>
+<p><strong>Reading the figure</strong></p>
+<ul>
+<li><strong>Step 1:</strong> An exception is raised inside the <code>try</code> block.</li>
+<li><strong>Step 2:</strong> Python checks the <code>except</code> clauses from top to bottom. Does the first one match? A clause matches its own class and every class derived from it.</li>
+<li><strong>Step 3:</strong> Yes: that block runs, and the other clauses are skipped.</li>
+<li><strong>Step 4:</strong> No: does the next <code>except</code> clause match?</li>
+<li><strong>Step 5:</strong> Yes: that block runs. So put a child class, such as <code>ChildError</code>, before its parent, <code>ParentError</code>: if the parent came first, it would catch the child too.</li>
+<li><strong>Step 6:</strong> No clause is left: the exception is not handled.</li>
+</ul>
 <p><a href="#toc">Back to the Table of Contents</a></p>
 <h3 id="example-8-the-order-of-except-blocks-for-a-parent-and-a-child-exception"><a name="example-8-the-order-of-except-blocks-for-a-parent-and-a-chil"></a>Example 8: The order of except blocks for a parent and a child exception<a class="headerlink" href="#example-8-the-order-of-except-blocks-for-a-parent-and-a-child-exception" title="Permanent link">&para;</a></h3>
 <p><strong>What the code does.</strong> It creates two exceptions of its own: <code>ParentError</code>, derived from <code>Exception</code>, and <code>ChildError</code>, derived from <code>ParentError</code>. Then it raises each of them in turn, twice:</p>
@@ -10448,7 +10533,15 @@ Caught ParentError
 </tr>
 </tbody>
 </table>
-<p><img alt="Flow of withdraw_money(1000, 1500) with a custom exception" src="https://raw.githubusercontent.com/ag999git/001-Python-book-2026/main/resources/ch-09-nb-09-custom-exception.png" /></p>
+<p><img alt="Flow of withdraw_money(1000, 1500) with a custom exception" src="https://raw.githubusercontent.com/ag999git/001-Python-book-2026/main/resources/S09-LR-ch-09-nb-09-custom-exception.png" /></p>
+<p><strong>Reading the figure</strong></p>
+<ul>
+<li><strong>Step 1:</strong> <code>withdraw_money(1000, 1500)</code> is called: the balance is 1000 and the amount is 1500.</li>
+<li><strong>Step 2:</strong> Inside the <code>try</code> block, <code>if amount &amp;gt; balance:</code> is <code>True</code>.</li>
+<li><strong>Step 3:</strong> <code>raise InsufficientBalanceError(balance, amount)</code> creates the exception object. Its <code>__init__()</code> stores both values on it.</li>
+<li><strong>Step 4:</strong> The rest of the <code>try</code> block is skipped, so <code>Withdrawal successful</code> is not printed. <code>except InsufficientBalanceError as e:</code> matches, and <code>e</code> is the exception object.</li>
+<li><strong>Step 5:</strong> <code>print("Error:", e)</code> calls the class's <code>__str__()</code> method and shows <code>Error: Balance 1000 is less than withdrawal 1500</code>.</li>
+</ul>
 </div>
 </div>
 </div>
@@ -10556,8 +10649,16 @@ Error: Balance 1000 is less than withdrawal 1500
 <li>It contains (1) the type, which says what kind of error, (2) the arguments (<code>args</code>), which are its internal data, and (3) its text form, a message for the user.</li>
 <li><strong>Lifetime:</strong> <code>e</code> exists only inside the <code>except</code> block. At the end of the block Python deletes the name <code>e</code>, so using it afterwards gives a <code>NameError</code>.</li>
 </ol>
-<p><img alt="The life of an exception object" src="https://raw.githubusercontent.com/ag999git/001-Python-book-2026/main/resources/ch-09-nb-10-exception-object.png" />
-</class></p>
+<p><img alt="The life of an exception object" src="https://raw.githubusercontent.com/ag999git/001-Python-book-2026/main/resources/S09-LR-ch-09-nb-10-exception-object.png" /></p>
+<p><strong>Reading the figure</strong></p>
+<ul>
+<li><strong>Step 1:</strong> After <code>1. Performing division</code> is printed, <code>x = 10 / 0</code> fails.</li>
+<li><strong>Step 2:</strong> Python creates an exception object of the class <code>ZeroDivisionError</code>.</li>
+<li><strong>Step 3:</strong> <code>except ZeroDivisionError as e:</code> catches it, and the name <code>e</code> refers to that object. <code>2. Exception caught</code> is printed.</li>
+<li><strong>Step 4:</strong> The object can be examined: <code>type(e)</code> is <code>&lt;class 'zerodivisionerror'=""&gt;</code>, <code>e.args</code> is <code>('division by zero',)</code>, and <code>str(e)</code> is <code>division by zero</code>.</li>
+<li><strong>Step 5:</strong> <code>finally</code> prints <code>3. Program continues</code>. <code>e</code> exists only inside the <code>except</code> block: afterwards Python deletes the name, so using it gives a <code>NameError</code>.</li>
+</ul>
+<p></class></class></p>
 </div>
 </div>
 </div>

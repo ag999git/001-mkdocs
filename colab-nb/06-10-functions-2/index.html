@@ -9134,7 +9134,7 @@
 <li>Examples 27 and 28 print folders on the computer that runs the notebook, so they have no saved output. Run them to see Colab's folders (not the folders of your own computer).</li>
 </ul>
 <h3 id="how-to-read-the-flowcharts">How to read the flowcharts<a class="headerlink" href="#how-to-read-the-flowcharts" title="Permanent link">&para;</a></h3>
-<p>The steps are numbered 1, 2, 3 and so on. When the flow splits into two paths, one path uses the letter A (3A, 4A ...) and the other uses the letter B (3B, 4B ...). A long chain of steps is folded onto a second row: follow the arrow down and back to the left.</p>
+<p>Each flowchart reads from left to right. A long chain of steps continues on the next row: follow the arrow down and back to the left. The boxes are numbered 1, 2, 3 and so on. When the flow splits, the shorter branch is numbered first, and then the numbering carries on along the main branch. A diamond asks a question, and the grey tags on its arrows give the answers. An arrow labelled "Repeat" or "Next" goes back to an earlier step: this is how a loop is drawn. Under each flowchart, <strong>Reading the figure</strong> explains every step. A diagram that shows a structure, not a sequence of steps, has no numbers.</p>
 </div>
 </div>
 </div>
@@ -9318,8 +9318,24 @@
 <li>Compare the ids in the output. In the integer case the id changes after <code>z = 4</code>. In the list case the id never changes.</li>
 <li>The ids in the saved output will not match yours. What matters is which ids are equal.</li>
 </ul>
-<p><img alt="What happens when an integer is passed to a function" src="https://raw.githubusercontent.com/ag999git/001-Python-book-2026/main/resources/ch-06-nb-01-pass-integer.png" /></p>
-<p><img alt="What happens when a list is passed to a function" src="https://raw.githubusercontent.com/ag999git/001-Python-book-2026/main/resources/ch-06-nb-02-pass-list.png" /></p>
+<p><img alt="What happens when an integer is passed to a function" src="https://raw.githubusercontent.com/ag999git/001-Python-book-2026/main/resources/S06-LR-ch-06-nb-01-pass-integer.png" /></p>
+<p><strong>Reading the figure</strong></p>
+<ul>
+<li><strong>Step 1:</strong> Before the call, <code>a = 5</code>: the name <code>a</code> points to the object <code>5</code>.</li>
+<li><strong>Step 2:</strong> <code>process_data(a)</code>: the parameter <code>z</code> is tied to the same object <code>5</code>. The ids of <code>a</code> and <code>z</code> are equal.</li>
+<li><strong>Step 3:</strong> <code>z = 4</code> cannot change the integer <code>5</code>, because integers are immutable. Python makes a new object <code>4</code> and moves <code>z</code> to it, so the id of <code>z</code> changes.</li>
+<li><strong>Step 4:</strong> The function ends, and <code>z</code> and its local namespace are gone.</li>
+<li><strong>Step 5:</strong> After the call, <code>a</code> still points to <code>5</code>. A function cannot change the caller's number.</li>
+</ul>
+<p><img alt="What happens when a list is passed to a function" src="https://raw.githubusercontent.com/ag999git/001-Python-book-2026/main/resources/S06-LR-ch-06-nb-02-pass-list.png" /></p>
+<p><strong>Reading the figure</strong></p>
+<ul>
+<li><strong>Step 1:</strong> Before the call, <code>c</code> points to the list <code>[5, 4, 3]</code>.</li>
+<li><strong>Step 2:</strong> <code>process_data(c)</code>: the parameter <code>z</code> is tied to the same list. The ids of <code>c</code> and <code>z</code> are equal.</li>
+<li><strong>Step 3:</strong> <code>z.append(1)</code> changes that one list in place. The id stays the same.</li>
+<li><strong>Step 4:</strong> The function ends, and the name <code>z</code> is gone. The list itself is not.</li>
+<li><strong>Step 5:</strong> After the call, <code>c</code> sees the new item: <code>[5, 4, 3, 1]</code>. A function can change the contents of the caller's list.</li>
+</ul>
 </div>
 </div>
 </div>
@@ -9457,7 +9473,15 @@ Original 'c' after call [5, 4, 3, 1] (Updated to include 1!)
 <li>The function ends and the new list is thrown away. <code>my_list</code> was never touched.</li>
 </ol>
 <p><strong>Learning point:</strong> to change the caller's list from inside a function, change its contents (for example <code>z[:] = [1, 2, 3]</code> replaces all the items in place), or <strong>return</strong> the new list and let the caller assign it.</p>
-<p><img alt="Why reassigning a list parameter does not change the original" src="https://raw.githubusercontent.com/ag999git/001-Python-book-2026/main/resources/ch-06-nb-03-reassignment-trap.png" /></p>
+<p><img alt="Why reassigning a list parameter does not change the original" src="https://raw.githubusercontent.com/ag999git/001-Python-book-2026/main/resources/S06-LR-ch-06-nb-03-reassignment-trap.png" /></p>
+<p><strong>Reading the figure</strong></p>
+<ul>
+<li><strong>Step 1:</strong> <code>my_list = [9, 9, 9]</code>.</li>
+<li><strong>Step 2:</strong> <code>reassign_list(my_list)</code>: at the start of the call, <code>z</code> and <code>my_list</code> point to the same list.</li>
+<li><strong>Step 3:</strong> <code>z = [1, 2, 3]</code> creates a new list and moves only <code>z</code> to it. The original list is not touched.</li>
+<li><strong>Step 4:</strong> The function ends, and the new list is thrown away.</li>
+<li><strong>Step 5:</strong> <code>print(my_list)</code> still shows <code>[9, 9, 9]</code>. To change the caller's list, change its contents, for example <code>z[:] = [1, 2, 3]</code>, or return the new list.</li>
+</ul>
 </div>
 </div>
 </div>
@@ -9820,7 +9844,15 @@ Hello Student
 <li>The second call does not get a fresh list. It gets <strong>the same one</strong>, which already holds 2. Appending 3 gives <code>[2, 3]</code>.</li>
 </ol>
 <p><strong>Learning point:</strong> the comment on the last line says "Should be 3". It means the result you would expect is <code>[3]</code>, a list holding only 3.</p>
-<p><img alt="Why a mutable default list keeps growing between calls" src="https://raw.githubusercontent.com/ag999git/001-Python-book-2026/main/resources/ch-06-nb-04-mutable-default.png" /></p>
+<p><img alt="Why a mutable default list keeps growing between calls" src="https://raw.githubusercontent.com/ag999git/001-Python-book-2026/main/resources/S06-LR-ch-06-nb-04-mutable-default.png" /></p>
+<p><strong>Reading the figure</strong></p>
+<ul>
+<li><strong>Step 1:</strong> When the <code>def</code> line runs, Python creates one empty list and stores it as the default for <code>number_list</code>.</li>
+<li><strong>Step 2:</strong> The first call, <code>add_number_to_list(2)</code>, appends <code>2</code> to that list.</li>
+<li><strong>Step 3:</strong> The result is <code>[2]</code>, as expected.</li>
+<li><strong>Step 4:</strong> The second call, <code>add_number_to_list(3)</code>, does not get a fresh list. It gets the same one, which already holds <code>2</code>.</li>
+<li><strong>Step 5:</strong> Appending <code>3</code> gives <code>[2, 3]</code>, not the expected <code>[3]</code>. Never use a mutable object as a default value.</li>
+</ul>
 </div>
 </div>
 </div>
@@ -9884,7 +9916,16 @@ After second call: [2, 3]
 <li>The number is appended and the list is returned.</li>
 </ol>
 <p><strong>Rule to remember:</strong> never use a mutable object as a default value. Use <code>None</code>, and create the object inside the function.</p>
-<p><img alt="How the None default gives each call its own new list" src="https://raw.githubusercontent.com/ag999git/001-Python-book-2026/main/resources/ch-06-nb-05-none-default.png" /></p>
+<p><img alt="How the None default gives each call its own new list" src="https://raw.githubusercontent.com/ag999git/001-Python-book-2026/main/resources/S06-LR-ch-06-nb-05-none-default.png" /></p>
+<p><strong>Reading the figure</strong></p>
+<ul>
+<li><strong>Step 1:</strong> <code>add_number_to_list(2)</code> is called without a list, so <code>number_list</code> takes its default, <code>None</code>.</li>
+<li><strong>Step 2:</strong> <code>if number_list is None:</code> checks whether the caller gave a list. <code>None</code> is immutable and safe as a default.</li>
+<li><strong>Step 3:</strong> Yes: a new empty list is made, for this call only.</li>
+<li><strong>Step 4:</strong> No: the list that the caller passed in is used.</li>
+<li><strong>Step 5:</strong> The number is appended.</li>
+<li><strong>Step 6:</strong> The list is returned. Now the two calls give <code>[2]</code> and <code>[3]</code>.</li>
+</ul>
 </div>
 </div>
 </div>
@@ -9939,7 +9980,16 @@ After second call: [2, 3]
 <li><strong>Keyword arguments</strong>: matched by name.</li>
 </ol>
 <p>The full order in which Python fills the parameters is:</p>
-<p><img alt="How Python matches the arguments of a call to the parameters" src="https://raw.githubusercontent.com/ag999git/001-Python-book-2026/main/resources/ch-06-nb-06-argument-matching.png" /></p>
+<p><img alt="How Python matches the arguments of a call to the parameters" src="https://raw.githubusercontent.com/ag999git/001-Python-book-2026/main/resources/S06-LR-ch-06-nb-06-argument-matching.png" /></p>
+<p><strong>Reading the figure</strong></p>
+<ul>
+<li><strong>Step 1:</strong> Positional arguments are matched first: the first argument goes to the first parameter, the second to the second, and so on.</li>
+<li><strong>Step 2:</strong> Keyword arguments are matched by name.</li>
+<li><strong>Step 3:</strong> Parameters that are still empty take their default values.</li>
+<li><strong>Step 4:</strong> Extra positional arguments are collected in <code>*args</code>, a tuple, if the function has it.</li>
+<li><strong>Step 5:</strong> Extra keyword arguments are collected in <code>**kwargs</code>, a dictionary, if the function has it.</li>
+<li><strong>Step 6:</strong> If a parameter is still missing, or an argument is left over, Python raises <code>TypeError</code>.</li>
+</ul>
 <p><a href="#toc">Back to the Table of Contents</a></p>
 <h2 id="69-passing-arguments-by-position-positional-arguments"><a name="6-9-passing-arguments-by-position-positional-arguments"></a>6.9 Passing arguments by position (positional arguments)<a class="headerlink" href="#69-passing-arguments-by-position-positional-arguments" title="Permanent link">&para;</a></h2>
 <p>With <strong>positional arguments</strong>, the first argument goes to the first parameter, the second to the second, and so on.</p>
@@ -10764,7 +10814,18 @@ Power = 3, Numbers = (2, 3), Expression → 2 ** 3 + 3 ** 3 = 35
 <li><strong><code>/</code> (slash):</strong> every parameter to its <strong>left</strong> is <strong>positional-only</strong>. It cannot be passed by name.</li>
 <li><strong><code>*</code> (star on its own):</strong> every parameter to its <strong>right</strong> is <strong>keyword-only</strong>. It must be passed by name.</li>
 </ol>
-<p><img alt="Where / and * put the dividing lines in a parameter list" src="https://raw.githubusercontent.com/ag999git/001-Python-book-2026/main/resources/ch-06-nb-07-slash-star.png" /></p>
+<p><img alt="Where / and * put the dividing lines in a parameter list" src="https://raw.githubusercontent.com/ag999git/001-Python-book-2026/main/resources/S06-LR-ch-06-nb-07-slash-star.png" /></p>
+<p><strong>Reading the figure</strong></p>
+<ul>
+<li>Parameters to the left of <code>/</code>, such as <code>length, width</code> in <code>calculate_area(length, width, /)</code>.</li>
+<li>The slash <code>/</code> marks the end of the positional-only parameters.</li>
+<li>Parameters between <code>/</code> and <code>*</code> can be passed either way.</li>
+<li>The star <code>*</code> on its own marks the start of the keyword-only parameters.</li>
+<li>Parameters to the right of <code>*</code>, such as <code>unit</code> in <code>print_result(*, unit, label="Area")</code>.</li>
+<li>Positional-only: pass the values in order, without names. <code>calculate_area(10, 5)</code> works; <code>calculate_area(length=10, width=5)</code> does not.</li>
+<li>Positional or keyword: either form is accepted.</li>
+<li>Keyword-only: the name is required, as in <code>print_result(unit="sq cm")</code>.</li>
+</ul>
 <table>
 <thead>
 <tr>
@@ -11033,7 +11094,19 @@ Shape (Red) -&gt; Area: 32 cm
 <li>Each waiting call is kept on the <strong>call stack</strong> with its own <code>n</code>. The calls unwind in the reverse order to the one in which they were made.</li>
 <li>There is no input check. A negative number would never reach the base case and would end in a <code>RecursionError</code>, so do not try one here.</li>
 </ul>
-<p><img alt="How factorial(5) calls itself and then returns the values back" src="https://raw.githubusercontent.com/ag999git/001-Python-book-2026/main/resources/ch-06-nb-08-factorial-recursion.png" /></p>
+<p><img alt="How factorial(5) calls itself and then returns the values back" src="https://raw.githubusercontent.com/ag999git/001-Python-book-2026/main/resources/S06-LR-ch-06-nb-08-factorial-recursion.png" /></p>
+<p><strong>Reading the figure</strong></p>
+<ul>
+<li><strong>Step 1:</strong> <code>factorial(5)</code> cannot answer yet, so it calls <code>factorial(4)</code> and waits on the call stack.</li>
+<li><strong>Step 2:</strong> <code>factorial(4)</code> calls <code>factorial(3)</code> and waits.</li>
+<li><strong>Step 3:</strong> <code>factorial(3)</code> calls <code>factorial(2)</code> and waits.</li>
+<li><strong>Step 4:</strong> <code>factorial(2)</code> calls <code>factorial(1)</code> and waits.</li>
+<li><strong>Step 5:</strong> Base case: <code>factorial(1)</code> returns <code>1</code> straight away, and the calls start to unwind.</li>
+<li><strong>Step 6:</strong> <code>factorial(2)</code> gets <code>1</code> and returns <code>2 x 1 = 2</code>.</li>
+<li><strong>Step 7:</strong> <code>factorial(3)</code> gets <code>2</code> and returns <code>3 x 2 = 6</code>.</li>
+<li><strong>Step 8:</strong> <code>factorial(4)</code> gets <code>6</code> and returns <code>4 x 6 = 24</code>.</li>
+<li><strong>Step 9:</strong> <code>factorial(5)</code> gets <code>24</code> and returns <code>5 x 24 = 120</code>. The calls unwind in the reverse order to the one in which they were made.</li>
+</ul>
 </div>
 </div>
 </div>
@@ -11144,7 +11217,25 @@ Final Result: 10! = 3628800
 <p><strong>How:</strong> the function has <strong>two</strong> base cases (0 and 1). Every other call makes <strong>two</strong> recursive calls and adds their results.</p>
 <p><strong>Why:</strong> it shows a recursion that branches. Each call can start two more, so the calls form a tree.</p>
 <p><strong>Learning point:</strong> this version is very slow for larger <code>n</code>, because it works out the same values again and again. In the tree below, <code>fib(3)</code> is worked out twice and <code>fib(2)</code> three times. Try <code>fibonacci_recursive(32)</code> in a new cell and notice the wait. Section 6.23 fixes this.</p>
-<p><img alt="The calls made by fibonacci_recursive(5); red boxes are repeated work" src="https://raw.githubusercontent.com/ag999git/001-Python-book-2026/main/resources/ch-06-nb-09-fibonacci-tree.png" /></p>
+<p><img alt="The calls made by fibonacci_recursive(5); red boxes are repeated work" src="https://raw.githubusercontent.com/ag999git/001-Python-book-2026/main/resources/S06-LR-ch-06-nb-09-fibonacci-tree.png" /></p>
+<p><strong>Reading the figure</strong></p>
+<ul>
+<li><code>fib(5)</code> is not a base case, so it makes two calls: <code>fib(4)</code> and <code>fib(3)</code>, and adds their results.</li>
+<li><code>fib(4)</code> calls <code>fib(3)</code> and <code>fib(2)</code>.</li>
+<li><code>fib(3)</code> is worked out a second time, from scratch.</li>
+<li><code>fib(3)</code> calls <code>fib(2)</code> and <code>fib(1)</code>.</li>
+<li><code>fib(2)</code> is worked out again.</li>
+<li><code>fib(2)</code> is worked out a third time.</li>
+<li><code>fib(1)</code> is a base case: it returns 1.</li>
+<li><code>fib(2)</code> calls <code>fib(1)</code> and <code>fib(0)</code>.</li>
+<li><code>fib(1)</code> is a base case: it returns 1.</li>
+<li><code>fib(1)</code> returns 1.</li>
+<li><code>fib(0)</code> is a base case: it returns 0.</li>
+<li><code>fib(1)</code> returns 1.</li>
+<li><code>fib(0)</code> returns 0.</li>
+<li><code>fib(1)</code> returns 1.</li>
+<li><code>fib(0)</code> returns 0. In all, <code>fib(3)</code> is worked out twice and <code>fib(2)</code> three times: that repeated work is why this version is slow, and why memoisation helps.</li>
+</ul>
 </div>
 </div>
 </div>
@@ -11255,7 +11346,16 @@ Fibonacci(10) → 55
 <li>Notice how the roles of the rods swap in the recursive calls: in step 1 the target and auxiliary are swapped; in step 3 the source and auxiliary are swapped.</li>
 <li>Change <code>num_disks</code> to 4 and check that it takes 2⁴ - 1 = 15 moves.</li>
 </ul>
-<p><img alt="How the recursive Tower of Hanoi solution splits the job" src="https://raw.githubusercontent.com/ag999git/001-Python-book-2026/main/resources/ch-06-nb-10-hanoi-recursion.png" /></p>
+<p><img alt="How the recursive Tower of Hanoi solution splits the job" src="https://raw.githubusercontent.com/ag999git/001-Python-book-2026/main/resources/S06-LR-ch-06-nb-10-hanoi-recursion.png" /></p>
+<p><strong>Reading the figure</strong></p>
+<ul>
+<li><strong>Step 1:</strong> <code>hanoi_recursive(n, source, target, auxiliary, ...)</code> is called to move <code>n</code> disks.</li>
+<li><strong>Step 2:</strong> Is <code>n == 1</code>? This is the base case.</li>
+<li><strong>Step 3:</strong> Yes: move the one disk straight from the source to the target, and return.</li>
+<li><strong>Step 4:</strong> No: first move the top <code>n-1</code> disks from the source to the auxiliary rod, with a recursive call. Here the target and auxiliary swap roles.</li>
+<li><strong>Step 5:</strong> Move the largest disk, disk <code>n</code>, from the source to the target.</li>
+<li><strong>Step 6:</strong> Move the <code>n-1</code> disks from the auxiliary rod onto the target, with another recursive call. Here the source and auxiliary swap roles.</li>
+</ul>
 </div>
 </div>
 </div>
@@ -11453,7 +11553,16 @@ Total moves required: 7
 <li>The printed cache shows every value that was stored, from 0 up to 20.</li>
 <li>Python can do this for you with the <code>functools.lru_cache</code> decorator. See "Beyond the Book", Extra 2.</li>
 </ul>
-<p><img alt="How fib_memo(n) uses its cache" src="https://raw.githubusercontent.com/ag999git/001-Python-book-2026/main/resources/ch-06-nb-11-memoisation.png" /></p>
+<p><img alt="How fib_memo(n) uses its cache" src="https://raw.githubusercontent.com/ag999git/001-Python-book-2026/main/resources/S06-LR-ch-06-nb-11-memoisation.png" /></p>
+<p><strong>Reading the figure</strong></p>
+<ul>
+<li><strong>Step 1:</strong> <code>fib_memo(n)</code> is called. The cache, <code>memo = {0: 0, 1: 1}</code>, lives outside the function.</li>
+<li><strong>Step 2:</strong> Is <code>n</code> already in <code>memo</code>?</li>
+<li><strong>Step 3:</strong> Yes: the stored value is returned at once, with no new calculation.</li>
+<li><strong>Step 4:</strong> No: work out <code>fib_memo(n - 1) + fib_memo(n - 2)</code>.</li>
+<li><strong>Step 5:</strong> Store the result in <code>memo[n]</code>, so it is never worked out again.</li>
+<li><strong>Step 6:</strong> Return the result. <code>fib_memo(20)</code> needs only about 20 new calculations.</li>
+</ul>
 </div>
 </div>
 </div>
@@ -11592,7 +11701,19 @@ Memoization Cache Contents: {0: 0, 1: 1, 2: 1, 3: 2, 4: 3, 5: 5, 6: 8, 7: 13, 8:
 <li>An iterator can be used <strong>only once</strong>. Run <code>print(list(cube_lambda))</code> a second time and you get <code>[]</code>.</li>
 <li>Assigning a lambda to a name, as in <code>square_lambda = lambda x: x * x</code>, works, but PEP 8 prefers a normal <code>def</code> in that case. Lambdas are best used directly inside a call, as with <code>map()</code> and <code>filter()</code> here.</li>
 </ul>
-<p><img alt="What zip(), map() and filter() do" src="https://raw.githubusercontent.com/ag999git/001-Python-book-2026/main/resources/ch-06-nb-12-zip-map-filter.png" /></p>
+<p><img alt="What zip(), map() and filter() do" src="https://raw.githubusercontent.com/ag999git/001-Python-book-2026/main/resources/S06-LR-ch-06-nb-12-zip-map-filter.png" /></p>
+<p><strong>Reading the figure</strong></p>
+<ul>
+<li>Two strings, <code>"abcd"</code> and <code>"1234"</code>.</li>
+<li><code>zip()</code> pairs the items by position.</li>
+<li><code>list(zip(str1, str2))</code> gives <code>[('a', '1'), ('b', '2'), ('c', '3'), ('d', '4')]</code>.</li>
+<li>A list of numbers, <code>[1, 2, 3, 4, 5]</code>.</li>
+<li><code>map()</code> applies the lambda, <code>x ** 3</code>, to every item.</li>
+<li><code>list(...)</code> shows the cubes: <code>[1, 8, 27, 64, 125]</code>.</li>
+<li>The numbers 0 to 9, <code>list(range(10))</code>.</li>
+<li><code>filter()</code> keeps only the items for which the lambda, <code>x % 2 == 0</code>, is <code>True</code>.</li>
+<li><code>list(...)</code> shows the even numbers: <code>[0, 2, 4, 6, 8]</code>. All three functions return lazy iterators, which can be used only once.</li>
+</ul>
 </div>
 </div>
 </div>
@@ -11695,7 +11816,15 @@ Even numbers using filter: [0, 2, 4, 6, 8]
 </tbody>
 </table>
 <p><strong>Generator rule:</strong> if a function contains <code>yield</code> anywhere, Python treats it as a generator function. Calling it does <strong>not</strong> run its body. It returns a <strong>generator object</strong>, and the body only runs when you ask for values.</p>
-<p><img alt="How a generator pauses at yield and resumes on next()" src="https://raw.githubusercontent.com/ag999git/001-Python-book-2026/main/resources/ch-06-nb-13-generator.png" /></p>
+<p><img alt="How a generator pauses at yield and resumes on next()" src="https://raw.githubusercontent.com/ag999git/001-Python-book-2026/main/resources/S06-LR-ch-06-nb-13-generator.png" /></p>
+<p><strong>Reading the figure</strong></p>
+<ul>
+<li><strong>Step 1:</strong> <code>gen = simple_generator()</code> creates a generator object. Because the function contains <code>yield</code>, calling it does not run its body.</li>
+<li><strong>Step 2:</strong> <code>next(gen)</code> runs the body from where it last paused (the first time, from the start).</li>
+<li><strong>Step 3:</strong> Does it reach a <code>yield</code>?</li>
+<li><strong>Step 4:</strong> No, the function reaches its end: it raises <code>StopIteration</code>, which tells the caller there are no more values.</li>
+<li><strong>Step 5:</strong> Yes: the value is handed back, <code>1</code>, then <code>2</code>, then <code>3</code>, and the function pauses with its local variables kept. The next <code>next(gen)</code> goes back to Step 2.</li>
+</ul>
 <p><a href="#toc">Back to the Table of Contents</a></p>
 <h4 id="example-20-a-simple-generator"><a name="example-20-a-simple-generator"></a>Example 20: A simple generator<a class="headerlink" href="#example-20-a-simple-generator" title="Permanent link">&para;</a></h4>
 <p><strong>What it does:</strong> creates a generator that yields 1, 2 and 3, and gets each value with <code>next()</code>.</p>
@@ -11874,8 +12003,17 @@ C
 <li><code>print(bark)</code> does not run anything. It prints a description of the function object, such as <code>&lt;function 0x7f...="" at="" bark=""&gt;</code>. The number is its memory address and will be different on your computer.</li>
 </ol>
 <p><strong>Learning point:</strong> this idea is what makes closures (Chapter 5) and decorators (next section) possible.</p>
-<p><img alt="bark() runs the function; bark is the function object itself" src="https://raw.githubusercontent.com/ag999git/001-Python-book-2026/main/resources/ch-06-nb-14-first-class.png" />
-</function></p>
+<p><img alt="bark() runs the function; bark is the function object itself" src="https://raw.githubusercontent.com/ag999git/001-Python-book-2026/main/resources/S06-LR-ch-06-nb-14-first-class.png" /></p>
+<p><strong>Reading the figure</strong></p>
+<ul>
+<li><strong>Step 1:</strong> <code>print(bark())</code>: the brackets call the function first.</li>
+<li><strong>Step 2:</strong> <code>bark()</code> runs and prints <code>Woof!</code>. It has no <code>return</code>, so it gives back <code>None</code>.</li>
+<li><strong>Step 3:</strong> <code>print()</code> shows that <code>None</code>.</li>
+<li><strong>Step 4:</strong> <code>print(bark)</code>: there are no brackets after <code>bark</code>.</li>
+<li><strong>Step 5:</strong> So nothing runs. <code>bark</code> is just the function object, like any other value.</li>
+<li><strong>Step 6:</strong> <code>print()</code> shows a description of the object, such as <code>&lt;function 0x7f...="" at="" bark=""&gt;</code>. The number is its memory address and will be different on your computer.</li>
+</ul>
+<p></function></function></p>
 </div>
 </div>
 </div>
@@ -12013,7 +12151,17 @@ None
 <li>After step 3, the name <code>bark</code> refers to the wrapper. The original function is still alive, stored inside the wrapper as <code>func</code>.</li>
 <li>The notebook also shows <code>'Barking Done'</code> under the printed lines. That is the value returned by the last line, <code>bark()</code>, which a notebook displays automatically. In a <code>.py</code> script it would not appear.</li>
 </ul>
-<p><img alt="What happens in the manual decorator script" src="https://raw.githubusercontent.com/ag999git/001-Python-book-2026/main/resources/ch-06-nb-15-manual-decorator.png" /></p>
+<p><img alt="What happens in the manual decorator script" src="https://raw.githubusercontent.com/ag999git/001-Python-book-2026/main/resources/S06-LR-ch-06-nb-15-manual-decorator.png" /></p>
+<p><strong>Reading the figure</strong></p>
+<ul>
+<li><strong>Step 1:</strong> The two <code>def</code> statements store <code>my_decorator</code> and <code>bark</code>. Nothing runs yet.</li>
+<li><strong>Step 2:</strong> <code>bark = my_decorator(bark)</code> passes the function to the factory, which returns <code>wrapper</code>. The name <code>bark</code> now points to <code>wrapper</code>; the original function is kept inside it as <code>func</code>.</li>
+<li><strong>Step 3:</strong> <code>bark()</code> is called, so <code>wrapper</code> runs.</li>
+<li><strong>Step 4:</strong> <code>wrapper</code> prints <code>--- [START] Logic added by Decorator ---</code>.</li>
+<li><strong>Step 5:</strong> <code>result = func()</code> calls the original <code>bark</code>, which prints <code>Woof!</code> and returns <code>'Barking Done'</code>.</li>
+<li><strong>Step 6:</strong> <code>wrapper</code> prints <code>--- [END] Logic added by Decorator ---</code>.</li>
+<li><strong>Step 7:</strong> <code>return result</code> hands back <code>'Barking Done'</code>, which the notebook shows under the printed lines.</li>
+</ul>
 </div>
 </div>
 </div>
@@ -12254,7 +12402,16 @@ Woof!
 <li>The wrapper only <strong>warns</strong>: <code>feed_pet()</code> still runs even for bad food. To stop it, the wrapper could <code>return</code> early without calling <code>func</code>.</li>
 <li>Try <code>feed_pet("Bruno")</code>. The food is not in <code>kwargs</code>, so the check says "Unknown food is safe", but <code>feed_pet()</code> itself uses its default and prints "Feeding Bruno some Bread." The wrapper cannot see the default of the original function. Try also <code>feed_pet("Bruno", "Cakes")</code>: passed by position, the food is missed by the check.</li>
 </ul>
-<p><img alt="How the food_checker wrapper checks and passes the arguments on" src="https://raw.githubusercontent.com/ag999git/001-Python-book-2026/main/resources/ch-06-nb-16-food-checker.png" /></p>
+<p><img alt="How the food_checker wrapper checks and passes the arguments on" src="https://raw.githubusercontent.com/ag999git/001-Python-book-2026/main/resources/S06-LR-ch-06-nb-16-food-checker.png" /></p>
+<p><strong>Reading the figure</strong></p>
+<ul>
+<li><strong>Step 1:</strong> <code>feed_pet("Kitty", food="Chocolate")</code> is called. Because of <code>@food_checker</code>, the name <code>feed_pet</code> points to <code>wrapper</code>.</li>
+<li><strong>Step 2:</strong> <code>wrapper(*args, **kwargs)</code> packs the arguments: <code>args = ('Kitty',)</code> and <code>kwargs = {'food': 'Chocolate'}</code>. <code>kwargs.get("food", "Unknown food")</code> finds the food.</li>
+<li><strong>Step 3:</strong> Is the food in <code>unhealthy_foods = ["Chocolate", "Cakes", "Onions"]</code>?</li>
+<li><strong>Step 4:</strong> Yes: <code>[WARNING] Chocolate is BAD for pets!</code> is printed.</li>
+<li><strong>Step 5:</strong> No: <code>[INFO] ... is safe. Proceeding...</code> is printed.</li>
+<li><strong>Step 6:</strong> Either way, <code>func(*args, **kwargs)</code> unpacks the arguments and runs the original <code>feed_pet</code>. The wrapper only warns; it does not stop the call.</li>
+</ul>
 </div>
 </div>
 </div>
@@ -12338,7 +12495,17 @@ Feeding Kitty some Chocolate.
 </li>
 <li><strong>Not found anywhere?</strong> Python raises <code>ModuleNotFoundError: No module named 'module_name'</code>.</li>
 </ol>
-<p><img alt="How Python finds a module when it meets import" src="https://raw.githubusercontent.com/ag999git/001-Python-book-2026/main/resources/ch-06-nb-17-module-search.png" /></p>
+<p><img alt="How Python finds a module when it meets import" src="https://raw.githubusercontent.com/ag999git/001-Python-book-2026/main/resources/S06-LR-ch-06-nb-17-module-search.png" /></p>
+<p><strong>Reading the figure</strong></p>
+<ul>
+<li><strong>Step 1:</strong> Python meets <code>import module_name</code>.</li>
+<li><strong>Step 2:</strong> Has this module already been loaded in this session?</li>
+<li><strong>Step 3:</strong> Yes: Python uses the module it already has. Its code is not run again.</li>
+<li><strong>Step 4:</strong> No: Python looks through the folders in <code>sys.path</code>, in order: the script's own folder, the PYTHONPATH folders, the standard library, and <code>site-packages</code>.</li>
+<li><strong>Step 5:</strong> Is the module found in any of them?</li>
+<li><strong>Step 6:</strong> No: Python raises <code>ModuleNotFoundError: No module named 'module_name'</code>.</li>
+<li><strong>Step 7:</strong> Yes: Python loads the first match and runs its code once.</li>
+</ul>
 <p>(Chapter 2 has a more detailed, 13-step version of this process.)</p>
 <p><a href="#toc">Back to the Table of Contents</a></p>
 <h4 id="example-27-the-current-working-directory"><a name="example-27-the-current-working-directory"></a>Example 27: The current working directory<a class="headerlink" href="#example-27-the-current-working-directory" title="Permanent link">&para;</a></h4>

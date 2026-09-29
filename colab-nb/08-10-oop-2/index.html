@@ -9078,7 +9078,7 @@
 <p>Run the cells from top to bottom. Many examples define classes called <code>Pet</code> and <code>Dog</code>. Each new definition replaces the one before it, so always run the cell you are studying before you change it.</p>
 <p>A few outputs show memory addresses such as <code>0x7f...</code>. Your numbers will be different. That is normal.</p>
 <h3 id="how-to-read-the-flowcharts">How to read the flowcharts<a class="headerlink" href="#how-to-read-the-flowcharts" title="Permanent link">&para;</a></h3>
-<p>The steps are numbered 1, 2, 3 and so on. When the flow splits into two paths, one path uses the letter A (3A, 4A ...) and the other uses the letter B (3B, 4B ...). A long chain of steps is folded onto a second row: follow the arrow down and back to the left.</p>
+<p>Each flowchart reads from left to right. A long chain of steps continues on the next row: follow the arrow down and back to the left. The boxes are numbered 1, 2, 3 and so on. When the flow splits, the shorter branch is numbered first, and then the numbering carries on along the main branch. A diamond asks a question, and the grey tags on its arrows give the answers. An arrow labelled "Repeat" or "Next" goes back to an earlier step: this is how a loop is drawn. Under each flowchart, <strong>Reading the figure</strong> explains every step. A diagram that shows a structure, not a sequence of steps, has no numbers.</p>
 </div>
 </div>
 </div>
@@ -9308,8 +9308,17 @@
 <li><code>type()</code> answers "exactly which class?". <code>isinstance()</code> answers "is it this kind of thing?".</li>
 </ol>
 <p>The flowchart shows how <code>isinstance()</code> reaches its answer.</p>
-<p><img alt="How isinstance(obj, SomeClass) decides between True and False" src="https://raw.githubusercontent.com/ag999git/001-Python-book-2026/main/resources/ch-08-nb-01-isinstance.png" />
-</class></p>
+<p><img alt="How isinstance(obj, SomeClass) decides between True and False" src="https://raw.githubusercontent.com/ag999git/001-Python-book-2026/main/resources/S08-LR-ch-08-nb-01-isinstance.png" /></p>
+<p><strong>Reading the figure</strong></p>
+<ul>
+<li><strong>Step 1:</strong> <code>isinstance(c1, Parent)</code> asks "is <code>c1</code> this kind of thing?".</li>
+<li><strong>Step 2:</strong> First check: is the class of <code>c1</code> exactly <code>Parent</code>?</li>
+<li><strong>Step 3:</strong> Yes: the answer is <code>True</code>.</li>
+<li><strong>Step 4:</strong> No: is <code>Parent</code> anywhere in the method resolution order (MRO) of <code>c1</code>'s class, that is, is it a parent or grandparent?</li>
+<li><strong>Step 5:</strong> Yes: the answer is <code>True</code>. <code>c1</code> is a <code>Child</code>, and because <code>Child</code> inherits from <code>Parent</code>, it is also a <code>Parent</code>.</li>
+<li><strong>Step 6:</strong> No: the answer is <code>False</code>. The link is one way only: <code>isinstance(p1, Child)</code> is <code>False</code>.</li>
+</ul>
+<p></class></p>
 </div>
 </div>
 </div>
@@ -9397,7 +9406,14 @@ Is p1 an instance of Child? False
 </ul>
 </li>
 </ol>
-<p><img alt="How Python searches the MRO of Dog for a method" src="https://raw.githubusercontent.com/ag999git/001-Python-book-2026/main/resources/ch-08-nb-02-mro-lookup.png" /></p>
+<p><img alt="How Python searches the MRO of Dog for a method" src="https://raw.githubusercontent.com/ag999git/001-Python-book-2026/main/resources/S08-LR-ch-08-nb-02-mro-lookup.png" /></p>
+<p><strong>Reading the figure</strong></p>
+<ul>
+<li><strong>Step 1:</strong> For <code>d.speak()</code>, Python first looks in the object's own class, <code>Dog</code>. The MRO of <code>Dog</code> is <code>Dog</code>, <code>Animal</code>, <code>object</code>.</li>
+<li><strong>Step 2:</strong> <code>Dog</code> has no <code>speak()</code>, so Python looks in <code>Animal</code>. It is found here, so <code>Animal.speak()</code> runs and the search stops.</li>
+<li><strong>Step 3:</strong> If it were still not found, Python would look in <code>object</code>, the last class in every MRO.</li>
+<li><strong>Step 4:</strong> Found nowhere: Python raises <code>AttributeError</code>.</li>
+</ul>
 </div>
 </div>
 </div>
@@ -9644,8 +9660,16 @@ Is p1 an instance of Child? False
 <li><code>self.name</code> is set only in <code>Pet</code>, yet <code>Dog.walk()</code> and <code>Puppy.walk()</code> can use it. It is stored on the same object.</li>
 <li>The MRO of <code>Puppy</code> is <code>Puppy</code>, <code>Dog</code>, <code>Pet</code>, <code>object</code>. <code>super()</code> follows this list.</li>
 </ol>
-<p><img alt="Constructor chaining with super() when Puppy(&quot;Tommy&quot;) is created" src="https://raw.githubusercontent.com/ag999git/001-Python-book-2026/main/resources/ch-08-nb-03-super-chain.png" />
-</classname></p>
+<p><img alt="Constructor chaining with super() when Puppy(&quot;Tommy&quot;) is created" src="https://raw.githubusercontent.com/ag999git/001-Python-book-2026/main/resources/S08-LR-ch-08-nb-03-super-chain.png" /></p>
+<p><strong>Reading the figure</strong></p>
+<ul>
+<li><strong>Step 1:</strong> <code>Puppy("Tommy")</code> is called. The MRO of <code>Puppy</code> is <code>Puppy</code>, <code>Dog</code>, <code>Pet</code>, <code>object</code>, and <code>super()</code> follows this list.</li>
+<li><strong>Step 2:</strong> <code>Puppy.__init__()</code> runs first and prints <code>Puppy constructor called</code>, because its <code>print()</code> comes before <code>super().__init__()</code>.</li>
+<li><strong>Step 3:</strong> <code>super().__init__(name)</code> runs <code>Dog.__init__()</code>, which prints <code>Dog constructor called</code>.</li>
+<li><strong>Step 4:</strong> <code>Dog</code>'s <code>super().__init__(name)</code> runs <code>Pet.__init__()</code>, which sets <code>self.name</code> and prints <code>Pet constructor called</code>. <code>Pet</code> is the only class that sets <code>name</code>.</li>
+<li><strong>Step 5:</strong> The finished object is named <code>p</code>. <code>self.name</code> is stored on it, so <code>Dog.walk()</code> and <code>Puppy.walk()</code> can use it.</li>
+</ul>
+<p></classname></p>
 </div>
 </div>
 </div>
@@ -9879,7 +9903,15 @@ MRO of Puppy:
 <li><code>Cat</code> never prints the generic sound. The parent method is hidden, not deleted: <code>Pet.speak(p3)</code> would still work.</li>
 <li><code>Dog</code> needs <code>super().__init__(name)</code>. Without it, <code>self.name</code> would not exist and <code>speak()</code> would fail.</li>
 </ol>
-<p><img alt="The four types of IS-A inheritance, all derived from Pet" src="https://raw.githubusercontent.com/ag999git/001-Python-book-2026/main/resources/ch-08-nb-04-four-isa-types.png" /></p>
+<p><img alt="The four types of IS-A inheritance, all derived from Pet" src="https://raw.githubusercontent.com/ag999git/001-Python-book-2026/main/resources/S08-LR-ch-08-nb-04-four-isa-types.png" /></p>
+<p><strong>Reading the figure</strong></p>
+<ul>
+<li>The base class <code>Pet</code> has <code>__init__()</code>, <code>speak()</code> and <code>eat()</code>.</li>
+<li>Pass-through: <code>BasicPet</code> adds nothing and changes nothing. <code>BasicPet("Rocky")</code> works because the <code>__init__()</code> in <code>Pet</code> is used.</li>
+<li>Additive: <code>Retriever</code> keeps <code>speak()</code> and <code>eat()</code> from <code>Pet</code> and adds a new method, <code>fetch()</code>.</li>
+<li>Replacement: <code>Cat</code> has its own <code>speak()</code>, which hides <code>Pet.speak()</code>. The parent method is hidden, not deleted: <code>Pet.speak(p3)</code> would still work.</li>
+<li>Cooperative: <code>Dog</code> has its own <code>__init__()</code> and <code>speak()</code>, and also calls the <code>Pet</code> versions with <code>super()</code>. Without <code>super().__init__(name)</code>, <code>self.name</code> would not exist.</li>
+</ul>
 </div>
 </div>
 </div>
@@ -9992,7 +10024,17 @@ Leo barks!
 <li><strong>The derived class has its own <code>__init__()</code> and it calls <code>super().__init__()</code>.</strong> The object is set up partly by the child's <code>__init__()</code> and partly by the parent's.</li>
 </ol>
 <p>In Example 4, <code>BasicPet</code>, <code>Retriever</code> and <code>Cat</code> are case 1, and <code>Dog</code> is case 3.</p>
-<p><img alt="Which __init__() runs when a derived object is created" src="https://raw.githubusercontent.com/ag999git/001-Python-book-2026/main/resources/ch-08-nb-05-derived-init.png" /></p>
+<p><img alt="Which __init__() runs when a derived object is created" src="https://raw.githubusercontent.com/ag999git/001-Python-book-2026/main/resources/S08-LR-ch-08-nb-05-derived-init.png" /></p>
+<p><strong>Reading the figure</strong></p>
+<ul>
+<li><strong>Step 1:</strong> An object of a derived class is created.</li>
+<li><strong>Step 2:</strong> Does the derived class have an <code>__init__()</code> of its own?</li>
+<li><strong>Step 3:</strong> No: the parent's <code>__init__()</code> is used automatically, as for <code>BasicPet</code>, <code>Retriever</code> and <code>Cat</code> in Example 4.</li>
+<li><strong>Step 4:</strong> Yes: does the derived <code>__init__()</code> call <code>super().__init__()</code>?</li>
+<li><strong>Step 5:</strong> No: only the child's <code>__init__()</code> runs. It completely replaces the parent's, so the attributes the parent would set are missing.</li>
+<li><strong>Step 6:</strong> Yes: the object is set up partly by the child's <code>__init__()</code> and partly by the parent's, as for <code>Dog</code> in Example 4.</li>
+<li><strong>Step 7:</strong> The object is ready.</li>
+</ul>
 <p>The online resource has a problem that brings together all the major properties of inheritance: IS-A, code reuse, MRO, overriding, polymorphism, <code>super()</code>, constructor behaviour, dynamic binding, encapsulation, extensibility and maintainability.</p>
 <p><a href="#toc">Back to the Table of Contents</a></p>
 <h2 id="89-multiple-inheritance"><a name="8-9-multiple-inheritance"></a>8.9 Multiple inheritance<a class="headerlink" href="#89-multiple-inheritance" title="Permanent link">&para;</a></h2>
@@ -10064,7 +10106,14 @@ wave from Base3
 <h3 id="the-problem-with-multiple-inheritance-and-the-c3-rule"><a name="the-problem-with-multiple-inheritance-and-the-c3-rule"></a>The problem with multiple inheritance, and the C3 rule<a class="headerlink" href="#the-problem-with-multiple-inheritance-and-the-c3-rule" title="Permanent link">&para;</a></h3>
 <p>What if the same method exists in more than one parent? Python must pick one. It uses the MRO to decide.</p>
 <p>Python 3 builds the MRO with an algorithm called <strong>C3 linearization</strong>. Old-style classes in Python 2 used a simple "depth-first, left-to-right" search. That simple search goes wrong for the <strong>diamond problem</strong>, where two parents share the same grandparent:</p>
-<p><img alt="The diamond shape: two parents that share one grandparent" src="https://raw.githubusercontent.com/ag999git/001-Python-book-2026/main/resources/ch-08-nb-07-diamond.png" /></p>
+<p><img alt="The diamond shape: two parents that share one grandparent" src="https://raw.githubusercontent.com/ag999git/001-Python-book-2026/main/resources/S08-LR-ch-08-nb-07-diamond.png" /></p>
+<p><strong>Reading the figure</strong></p>
+<ul>
+<li><code>Dog1</code> has two parents, <code>Walker</code> and <code>Swimmer</code>.</li>
+<li><code>Walker</code> inherits from <code>Pet</code>.</li>
+<li><code>Swimmer</code> also inherits from <code>Pet</code>.</li>
+<li><code>Pet</code> is the grandparent reached along both paths, which gives the diamond shape. Python's C3 rule puts <code>Pet</code> in the MRO only once, after both parents: <code>Dog1</code>, <code>Walker</code>, <code>Swimmer</code>, <code>Pet</code>, <code>object</code>.</li>
+</ul>
 <p>A pure depth-first search from <code>Dog1</code> would visit <code>Walker</code>, then <code>Pet</code> (the grandparent), and only then <code>Swimmer</code>. That is not sensible, because <code>Swimmer</code> is closer to <code>Dog1</code> than <code>Pet</code> is. C3 follows two rules:</p>
 <ol>
 <li>A child is always checked <strong>before</strong> its parents.</li>
@@ -10092,7 +10141,20 @@ wave from Base3
 <li>The first match in the MRO is the one that runs. The search then stops.</li>
 <li>Methods of the base class (<code>info()</code>) are inherited by all.</li>
 </ol>
-<p><img alt="The MRO of Dog1 and Dog2 depends on the order of the parent classes" src="https://raw.githubusercontent.com/ag999git/001-Python-book-2026/main/resources/ch-08-nb-06-multiple-mro.png" /></p>
+<p><img alt="The MRO of Dog1 and Dog2 depends on the order of the parent classes" src="https://raw.githubusercontent.com/ag999git/001-Python-book-2026/main/resources/S08-LR-ch-08-nb-06-multiple-mro.png" /></p>
+<p><strong>Reading the figure</strong></p>
+<ul>
+<li><strong>Step 1:</strong> <code>class Dog1(Walker, Swimmer)</code>: its MRO starts with <code>Dog1</code> itself.</li>
+<li><strong>Step 2:</strong> Next comes <code>Walker</code>, the first parent named. <code>action()</code> is found here, so <code>Walker</code>'s version runs and the search stops.</li>
+<li><strong>Step 3:</strong> <code>Swimmer</code> comes next in the MRO, but it is never reached for <code>action()</code>.</li>
+<li><strong>Step 4:</strong> Then <code>Pet</code>, the shared grandparent. <code>info()</code> is found here for both dogs.</li>
+<li><strong>Step 5:</strong> The MRO always ends with <code>object</code>.</li>
+<li><strong>Step 6:</strong> <code>class Dog2(Swimmer, Walker)</code>: the same parents in the opposite order.</li>
+<li><strong>Step 7:</strong> Now <code>Swimmer</code> comes first, so its <code>action()</code> runs.</li>
+<li><strong>Step 8:</strong> <code>Walker</code> comes next and is not reached.</li>
+<li><strong>Step 9:</strong> Then <code>Pet</code>.</li>
+<li><strong>Step 10:</strong> Then <code>object</code>. Swapping the order of the parent classes changes which method runs.</li>
+</ul>
 </div>
 </div>
 </div>
@@ -10198,7 +10260,15 @@ MRO of Dog2: (&lt;class '__main__.Dog2'&gt;, &lt;class '__main__.Swimmer'&gt;, &
 <li><code>Dog</code> does not get the methods of <code>Collar</code>. You reach them through the attribute: <code>d.collar.something()</code>.</li>
 <li>Every <code>Dog</code> gets its own new <code>Collar</code> object.</li>
 </ol>
-<p><img alt="What happens when d = Dog(&quot;Tommy&quot;) builds a Collar inside the Dog" src="https://raw.githubusercontent.com/ag999git/001-Python-book-2026/main/resources/ch-08-nb-08-composition.png" /></p>
+<p><img alt="What happens when d = Dog(&quot;Tommy&quot;) builds a Collar inside the Dog" src="https://raw.githubusercontent.com/ag999git/001-Python-book-2026/main/resources/S08-LR-ch-08-nb-08-composition.png" /></p>
+<p><strong>Reading the figure</strong></p>
+<ul>
+<li><strong>Step 1:</strong> <code>d = Dog("Tommy")</code> creates a <code>Dog</code> object.</li>
+<li><strong>Step 2:</strong> <code>Dog.__init__()</code> stores <code>self.name = "Tommy"</code>.</li>
+<li><strong>Step 3:</strong> It also creates a <code>Collar("Red")</code> object and stores it in <code>self.collar</code>. This ordinary assignment is composition: a <code>Dog</code> has a <code>Collar</code>.</li>
+<li><strong>Step 4:</strong> <code>d.collar</code> is a <code>Collar</code> object. <code>Dog</code> does not get the methods of <code>Collar</code>; you reach them through the attribute.</li>
+<li><strong>Step 5:</strong> <code>d.collar.color</code> takes the dog's collar, then that collar's colour, and gives <code>"Red"</code>. So <code>print(d.name, d.collar.color)</code> shows <code>Tommy Red</code>.</li>
+</ul>
 </div>
 </div>
 </div>
@@ -10442,7 +10512,15 @@ MRO of Dog2: (&lt;class '__main__.Dog2'&gt;, &lt;class '__main__.Swimmer'&gt;, &
 <li>You cannot create an object from <code>Pet</code> itself either. <code>Pet()</code> also raises <code>TypeError</code>.</li>
 <li>The error now comes <strong>early</strong>, when the object is created, not later when a method is called.</li>
 </ol>
-<p><img alt="When the error appears: NotImplementedError compared with the abc module" src="https://raw.githubusercontent.com/ag999git/001-Python-book-2026/main/resources/ch-08-nb-09-abstract-timing.png" /></p>
+<p><img alt="When the error appears: NotImplementedError compared with the abc module" src="https://raw.githubusercontent.com/ag999git/001-Python-book-2026/main/resources/S08-LR-ch-08-nb-09-abstract-timing.png" /></p>
+<p><strong>Reading the figure</strong></p>
+<ul>
+<li><strong>Step 1:</strong> <code>Cat</code> inherits from <code>Pet</code> but does not write its own <code>speak()</code>.</li>
+<li><strong>Step 2:</strong> How does <code>Pet</code> insist that every child writes <code>speak()</code>?</li>
+<li><strong>Step 3:</strong> With the <code>abc</code> module, <code>Pet(ABC)</code> and <code>@abstractmethod</code>: the error comes early. <code>c = Cat()</code> fails at once with <code>TypeError</code>, because <code>Cat</code> still has an abstract method.</li>
+<li><strong>Step 4:</strong> With a plain method that does <code>raise NotImplementedError</code>: nothing is checked when the object is made, so <code>c = Cat()</code> works.</li>
+<li><strong>Step 5:</strong> The error comes only later, when <code>c.speak()</code> is called and raises <code>NotImplementedError</code>.</li>
+</ul>
 </div>
 </div>
 </div>
@@ -10652,7 +10730,16 @@ TypeError: Can't instantiate abstract class Pet without an implementation for ab
 <li><code>RobotDog</code> gets nothing from <code>Pet</code>. If <code>Pet</code> had a method, a <code>RobotDog</code> object could not use it.</li>
 <li><code>register()</code> does not check anything. Python trusts you that <code>RobotDog</code> really provides what <code>Pet</code> promises.</li>
 </ol>
-<p><img alt="A real subclass (Dog) and a virtual subclass (RobotDog) of Pet" src="https://raw.githubusercontent.com/ag999git/001-Python-book-2026/main/resources/ch-08-nb-10-virtual-subclass.png" /></p>
+<p><img alt="A real subclass (Dog) and a virtual subclass (RobotDog) of Pet" src="https://raw.githubusercontent.com/ag999git/001-Python-book-2026/main/resources/S08-LR-ch-08-nb-10-virtual-subclass.png" /></p>
+<p><strong>Reading the figure</strong></p>
+<ul>
+<li><strong>Step 1:</strong> <code>class Dog(Pet)</code> really inherits from the abstract base class <code>Pet</code>.</li>
+<li><strong>Step 2:</strong> <code>class RobotDog</code> has no parent class at all.</li>
+<li><strong>Step 3:</strong> <code>Pet.register(RobotDog)</code> makes <code>RobotDog</code> a virtual subclass of <code>Pet</code>. <code>register()</code> checks nothing; Python trusts you.</li>
+<li><strong>Step 4:</strong> <code>Pet(ABC)</code> is the base class for both.</li>
+<li><strong>Step 5:</strong> For type checks, Python now treats both as kinds of <code>Pet</code>: <code>issubclass()</code> and <code>isinstance()</code> return <code>True</code> for <code>Dog</code> and for <code>RobotDog</code>.</li>
+<li><strong>Step 6:</strong> But only <code>Dog</code> really inherits: <code>Pet</code> is in <code>Dog.__mro__</code> and not in <code>RobotDog.__mro__</code>, and <code>RobotDog</code> gets nothing from <code>Pet</code>.</li>
+</ul>
 </div>
 </div>
 </div>
@@ -10947,7 +11034,14 @@ Dog barks
 <li>In the last three lines, "Getting pet at index ..." is printed <strong>before</strong> "Pet at ...". Python must work out <code>store[0]</code> (which prints its message) before <code>print()</code> can show the result.</li>
 <li><code>store[2]</code> was never set, so it is still <code>None</code>.</li>
 </ol>
-<p><img alt="How square brackets on a PetStore object call __setitem__ or __getitem__" src="https://raw.githubusercontent.com/ag999git/001-Python-book-2026/main/resources/ch-08-nb-11-getitem-setitem.png" /></p>
+<p><img alt="How square brackets on a PetStore object call __setitem__ or __getitem__" src="https://raw.githubusercontent.com/ag999git/001-Python-book-2026/main/resources/S08-LR-ch-08-nb-11-getitem-setitem.png" /></p>
+<p><strong>Reading the figure</strong></p>
+<ul>
+<li><strong>Step 1:</strong> Python meets square brackets on a <code>PetStore</code> object, <code>store[index]</code>.</li>
+<li><strong>Step 2:</strong> Is a value being assigned to it, as in <code>store[0] = "Dog"</code>?</li>
+<li><strong>Step 3:</strong> Yes: Python calls <code>store.__setitem__(0, "Dog")</code>, which prints its message and stores the value.</li>
+<li><strong>Step 4:</strong> No, the value is being read, as in <code>print(store[0])</code>: Python calls <code>store.__getitem__(0)</code> and uses the value it returns. You never call these methods yourself.</li>
+</ul>
 </div>
 </div>
 </div>
@@ -11056,7 +11150,15 @@ Pet at 2: None
 </table>
 <p>The order is: (1) you call <code>ClassName()</code>, (2) Python calls <code>__new__(cls)</code>, (3) <code>__new__</code> returns the new object, (4) Python calls <code>__init__(self)</code> on it.</p>
 <p>Note the first parameter. <code>__new__</code> receives the <strong>class</strong> (<code>cls</code>), because the object does not exist yet. <code>__init__</code> receives the <strong>object</strong> (<code>self</code>).</p>
-<p><img alt="The two steps of object creation: __new__() then __init__()" src="https://raw.githubusercontent.com/ag999git/001-Python-book-2026/main/resources/ch-08-nb-12-new-init.png" /></p>
+<p><img alt="The two steps of object creation: __new__() then __init__()" src="https://raw.githubusercontent.com/ag999git/001-Python-book-2026/main/resources/S08-LR-ch-08-nb-12-new-init.png" /></p>
+<p><strong>Reading the figure</strong></p>
+<ul>
+<li><strong>Step 1:</strong> <code>p = Pet("Tommy")</code> is called.</li>
+<li><strong>Step 2:</strong> Python calls <code>__new__(cls)</code> first. It receives the class, because the object does not exist yet, and prints <code>1. __new__ is called: creating the object</code>.</li>
+<li><strong>Step 3:</strong> <code>__new__</code> returns the new object.</li>
+<li><strong>Step 4:</strong> Python calls <code>__init__(self, "Tommy")</code> on it, which prints <code>2. __init__ is called...</code> and sets <code>self.name</code>.</li>
+<li><strong>Step 5:</strong> The finished object is returned and named <code>p</code>, and <code>3. Ready: Tommy</code> is printed.</li>
+</ul>
 <p><a href="#toc">Back to the Table of Contents</a></p>
 <h3 id="try-it-watching-the-two-steps"><a name="try-it-watching-the-two-steps"></a>Try it: watching the two steps<a class="headerlink" href="#try-it-watching-the-two-steps" title="Permanent link">&para;</a></h3>
 <p>This cell is not in the book. Both methods print a message so you can see the order. <code>__new__</code> passes the real work to <code>object.__new__</code> with <code>super()</code>.</p>
@@ -11140,11 +11242,17 @@ Pet at 2: None
 <li>to register classes automatically, and</li>
 <li>to add methods or attributes to classes automatically.</li>
 </ol>
-<p><img alt="A metaclass creates classes, and a class creates objects" src="https://raw.githubusercontent.com/ag999git/001-Python-book-2026/main/resources/ch-08-nb-13-metaclass.png" /></p>
+<p><img alt="A metaclass creates classes, and a class creates objects" src="https://raw.githubusercontent.com/ag999git/001-Python-book-2026/main/resources/S08-LR-ch-08-nb-13-metaclass.png" /></p>
+<p><strong>Reading the figure</strong></p>
+<ul>
+<li><code>type</code> is the default metaclass: the "class factory" that creates classes.</li>
+<li>A class such as <code>Pet</code> is itself an object made by <code>type</code>. <code>type(Cat)</code> shows <code>&lt;class 'type'=""&gt;</code>.</li>
+<li>The class, in turn, creates objects: <code>p = Pet()</code>.</li>
+</ul>
 <p><a href="#toc">Back to the Table of Contents</a></p>
 <h3 id="try-it-making-a-class-with-type"><a name="try-it-making-a-class-with-type"></a>Try it: making a class with type()<a class="headerlink" href="#try-it-making-a-class-with-type" title="Permanent link">&para;</a></h3>
 <p>This cell is not in the book. The two definitions below build the same kind of class. The second one calls <code>type</code> directly, which is what Python does for you behind the <code>class</code> statement.
-</class></p>
+</class></class></p>
 </div>
 </div>
 </div>
@@ -11234,7 +11342,15 @@ Pet at 2: None
 </tbody>
 </table>
 <p><strong>Visibility rules:</strong> (1) an inner scope can <strong>see</strong> the names of the outer scopes; (2) an outer scope <strong>cannot see</strong> the names of an inner scope.</p>
-<p><img alt="The LEGB order Python uses to find a name" src="https://raw.githubusercontent.com/ag999git/001-Python-book-2026/main/resources/ch-08-nb-14-legb.png" /></p>
+<p><img alt="The LEGB order Python uses to find a name" src="https://raw.githubusercontent.com/ag999git/001-Python-book-2026/main/resources/S08-LR-ch-08-nb-14-legb.png" /></p>
+<p><strong>Reading the figure</strong></p>
+<ul>
+<li><strong>Step 1:</strong> Python looks for a name first in the local namespace, inside the current function.</li>
+<li><strong>Step 2:</strong> Not found: it looks in the enclosing namespace, inside an outer function.</li>
+<li><strong>Step 3:</strong> Not found: it looks in the global namespace, the top level of the file.</li>
+<li><strong>Step 4:</strong> Not found: it looks among the built-in names, such as <code>print</code> and <code>len</code>.</li>
+<li><strong>Step 5:</strong> Found nowhere: <code>NameError</code>. An inner scope can see the names of the outer scopes, but not the other way round.</li>
+</ul>
 <p><a href="#toc">Back to the Table of Contents</a></p>
 <h3 id="a-summary-of-the-four-namespaces"><a name="a-summary-of-the-four-namespaces"></a>A summary of the four namespaces<a class="headerlink" href="#a-summary-of-the-four-namespaces" title="Permanent link">&para;</a></h3>
 <table>
@@ -11420,7 +11536,16 @@ Is 'mood' in globals()?   False
 </table>
 <p><code>nonlocal</code> works only inside nested functions.</p>
 <p>Note that these keywords are needed only for <strong>assignment</strong>. Just <strong>reading</strong> an outer variable works without them, thanks to LEGB.</p>
-<p><img alt="What an assignment inside a function changes" src="https://raw.githubusercontent.com/ag999git/001-Python-book-2026/main/resources/ch-08-nb-15-global-nonlocal.png" /></p>
+<p><img alt="What an assignment inside a function changes" src="https://raw.githubusercontent.com/ag999git/001-Python-book-2026/main/resources/S08-LR-ch-08-nb-15-global-nonlocal.png" /></p>
+<p><strong>Reading the figure</strong></p>
+<ul>
+<li><strong>Step 1:</strong> Inside a function, an assignment <code>x = new value</code> runs.</li>
+<li><strong>Step 2:</strong> Has <code>x</code> been declared <code>global</code> in this function?</li>
+<li><strong>Step 3:</strong> Yes: the global variable is changed, as with <code>pet_global_correct</code>.</li>
+<li><strong>Step 4:</strong> No: has <code>x</code> been declared <code>nonlocal</code>? This works only inside a nested function.</li>
+<li><strong>Step 5:</strong> Yes: the variable of the enclosing (outer) function is changed.</li>
+<li><strong>Step 6:</strong> No: the assignment creates a new local variable, and the outer one is not touched, as with <code>pet_global_wrong</code>. Just reading an outer variable needs neither keyword.</li>
+</ul>
 <p><a href="#toc">Back to the Table of Contents</a></p>
 <h3 id="example-14-the-effect-of-using-and-not-using-global-and-nonlocal"><a name="example-14-the-effect-of-using-and-not-using-global-and-nonl"></a>Example 14: The effect of using and not using global and nonlocal<a class="headerlink" href="#example-14-the-effect-of-using-and-not-using-global-and-nonlocal" title="Permanent link">&para;</a></h3>
 <p><strong>What the code does.</strong> It has two parts, and each part changes two variables: one <strong>with</strong> the keyword ("correct") and one <strong>without</strong> it ("wrong").</p>

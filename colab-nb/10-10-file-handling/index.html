@@ -8955,7 +8955,7 @@
 <h3 id="where-do-the-files-go">Where do the files go?<a class="headerlink" href="#where-do-the-files-go" title="Permanent link">&para;</a></h3>
 <p>The examples create small files such as <code>demo.txt</code> and <code>data.pkl</code>. In Colab they are saved in the folder <code>/content</code>. To see them, click the <strong>folder icon</strong> (Files) in the left sidebar. You can double-click a text file there to open it. These files are deleted when the Colab session ends.</p>
 <h3 id="how-to-read-the-flowcharts">How to read the flowcharts<a class="headerlink" href="#how-to-read-the-flowcharts" title="Permanent link">&para;</a></h3>
-<p>The steps are numbered 1, 2, 3 and so on. When the flow splits into two paths, one path uses the letter A (3A, 4A ...) and the other uses the letter B (3B, 4B ...). A long chain of steps is folded onto a second row: follow the arrow down and back to the left.</p>
+<p>Each flowchart reads from left to right. A long chain of steps continues on the next row: follow the arrow down and back to the left. The boxes are numbered 1, 2, 3 and so on. When the flow splits, the shorter branch is numbered first, and then the numbering carries on along the main branch. A diamond asks a question, and the grey tags on its arrows give the answers. An arrow labelled "Repeat" or "Next" goes back to an earlier step: this is how a loop is drawn. Under each flowchart, <strong>Reading the figure</strong> explains every step. A diagram that shows a structure, not a sequence of steps, has no numbers.</p>
 </div>
 </div>
 </div>
@@ -9428,7 +9428,18 @@ TypeError: round() missing required argument 'number' (pos 1)
 </tbody>
 </table>
 <p>An easy way to remember them: the letter says <strong>what</strong> (<code>r</code> read, <code>w</code> write, <code>a</code> append, <code>x</code> exclusive create), <code>+</code> adds the other direction, and <code>b</code> means binary.</p>
-<p><img alt="How to choose the mode for open()" src="https://raw.githubusercontent.com/ag999git/001-Python-book-2026/main/resources/ch-10-nb-01-choose-mode.png" /></p>
+<p><img alt="How to choose the mode for open()" src="https://raw.githubusercontent.com/ag999git/001-Python-book-2026/main/resources/S10-LR-ch-10-nb-01-choose-mode.png" /></p>
+<p><strong>Reading the figure</strong></p>
+<ul>
+<li><strong>Step 1:</strong> You want to open a file with <code>open()</code>, and must choose a mode.</li>
+<li><strong>Step 2:</strong> Do you only want to read it?</li>
+<li><strong>Step 3:</strong> Yes: use <code>'r'</code>, read. The file must already exist.</li>
+<li><strong>Step 4:</strong> No, you want to write: must the data already in the file be kept?</li>
+<li><strong>Step 5:</strong> Yes: use <code>'a'</code>, append. New data goes at the end; the file is created if it does not exist.</li>
+<li><strong>Step 6:</strong> No: must the file be a new one?</li>
+<li><strong>Step 7:</strong> Yes: use <code>'x'</code>, exclusive create. It raises an error if the file already exists.</li>
+<li><strong>Step 8:</strong> No: use <code>'w'</code>, write. The file is created, or its old content is wiped out. Add <code>+</code> for the other direction, and <code>b</code> for binary.</li>
+</ul>
 <p>The online resource has a full study of <code>open()</code>: its parameters (<code>file</code>, <code>mode</code>, <code>encoding</code>, <code>errors</code>, <code>buffering</code>), the methods and attributes of the file object, and errors such as <code>FileNotFoundError</code>, <code>PermissionError</code>, <code>UnicodeDecodeError</code>, and writing a string in binary mode.</p>
 <p><a href="#toc">Back to the Table of Contents</a></p>
 <h3 id="1062-close"><a name="10-6-2-close"></a>10.6.2 close()<a class="headerlink" href="#1062-close" title="Permanent link">&para;</a></h3>
@@ -9514,7 +9525,16 @@ TypeError: round() missing required argument 'number' (pos 1)
 <li><code>readlines()</code> returned only lines 2 and 3, because line 1 had already been read.</li>
 <li><code>f.closed</code> tells you whether a file object is closed.</li>
 </ol>
-<p><img alt="How the file pointer moves in Example 1" src="https://raw.githubusercontent.com/ag999git/001-Python-book-2026/main/resources/ch-10-nb-02-file-pointer.png" /></p>
+<p><img alt="How the file pointer moves in Example 1" src="https://raw.githubusercontent.com/ag999git/001-Python-book-2026/main/resources/S10-LR-ch-10-nb-02-file-pointer.png" /></p>
+<p><strong>Reading the figure</strong></p>
+<ul>
+<li><strong>Step 1:</strong> <code>open("demo.txt", "r")</code> opens the file. A new file object starts at position 0: <code>f.tell()</code> gives <code>0</code>.</li>
+<li><strong>Step 2:</strong> <code>f.read(6)</code> reads six characters, <code>'Line 1'</code>, and moves the pointer: <code>f.tell()</code> gives <code>6</code>.</li>
+<li><strong>Step 3:</strong> <code>f.seek(0)</code> moves the pointer back to the beginning.</li>
+<li><strong>Step 4:</strong> <code>f.readline()</code> reads one line and keeps its <code>\n</code>: <code>'Line 1\n'</code>.</li>
+<li><strong>Step 5:</strong> <code>f.readlines()</code> takes everything that is left, as a list: <code>['Line 2\n', 'Line 3\n']</code>. Line 1 had already been read.</li>
+<li><strong>Step 6:</strong> The <code>with</code> block ends and the file is closed: <code>f.closed</code> is <code>True</code>.</li>
+</ul>
 </div>
 </div>
 </div>
@@ -9637,7 +9657,15 @@ After close(), Closed? True
 <li>The cell prints nothing. Writing to a file does not show anything on the screen. The "Try it" cell below reads the file back so that you can see the result.</li>
 <li><code>'w'</code> replaces the whole file every time you run the cell. You will never see the lines twice.</li>
 </ol>
-<p><img alt="What Example 2 writes into write_demo.txt" src="https://raw.githubusercontent.com/ag999git/001-Python-book-2026/main/resources/ch-10-nb-03-write-steps.png" /></p>
+<p><img alt="What Example 2 writes into write_demo.txt" src="https://raw.githubusercontent.com/ag999git/001-Python-book-2026/main/resources/S10-LR-ch-10-nb-03-write-steps.png" /></p>
+<p><strong>Reading the figure</strong></p>
+<ul>
+<li><strong>Step 1:</strong> <code>open("write_demo.txt", "w")</code> creates the file if it does not exist, or empties it if it does.</li>
+<li><strong>Step 2:</strong> <code>f.write("Line 1\n")</code> writes one string. The newline must be added by hand.</li>
+<li><strong>Step 3:</strong> <code>f.write("Line 2\n")</code> writes the second line.</li>
+<li><strong>Step 4:</strong> <code>f.writelines(lines)</code> writes every string in the list <code>["Line 3\n", "Line 4\n"]</code>. It does not add newlines itself.</li>
+<li><strong>Step 5:</strong> The <code>with</code> block ends: the data is saved and the file is closed. The cell prints nothing; the file now has four lines.</li>
+</ul>
 </div>
 </div>
 </div>
@@ -9983,7 +10011,15 @@ After closing, is closed?: True
 <li>text: <code>"r"</code>, <code>"w"</code>, <code>"a"</code></li>
 <li>binary: <code>"rb"</code>, <code>"wb"</code>, <code>"ab"</code></li>
 </ul>
-<p><img alt="What you get from a file in text mode and in binary mode" src="https://raw.githubusercontent.com/ag999git/001-Python-book-2026/main/resources/ch-10-nb-04-text-vs-binary.png" /></p>
+<p><img alt="What you get from a file in text mode and in binary mode" src="https://raw.githubusercontent.com/ag999git/001-Python-book-2026/main/resources/S10-LR-ch-10-nb-04-text-vs-binary.png" /></p>
+<p><strong>Reading the figure</strong></p>
+<ul>
+<li><strong>Step 1:</strong> Every file is stored on the disk as bytes.</li>
+<li><strong>Step 2:</strong> In text mode, <code>'r'</code>, Python decodes the bytes into characters, using an encoding such as <code>utf-8</code>.</li>
+<li><strong>Step 3:</strong> Your program gets a string, <code>str</code>, such as <code>'Hello'</code>.</li>
+<li><strong>Step 4:</strong> In binary mode, <code>'rb'</code>, the bytes are handed over with no decoding at all.</li>
+<li><strong>Step 5:</strong> Your program gets a <code>bytes</code> object, such as <code>b'Hello'</code>. You write bytes back with <code>b"..."</code> literals, as in <code>f.write(b"Hello, binary world")</code>.</li>
+</ul>
 <p><a href="#toc">Back to the Table of Contents</a></p>
 <h3 id="10122-tell-and-seek"><a name="10-12-2-tell-and-seek"></a>10.12.2 tell() and seek()<a class="headerlink" href="#10122-tell-and-seek" title="Permanent link">&para;</a></h3>
 <table>
@@ -10419,7 +10455,18 @@ errors   : not available (AttributeError)
 <li><code>os.rmdir()</code> only removes an <strong>empty</strong> folder. That is why the file is deleted first.</li>
 <li>Checking with <code>os.path.exists()</code> or <code>os.path.isfile()</code> before acting avoids errors.</li>
 </ol>
-<p><img alt="The eight steps of the os module example" src="https://raw.githubusercontent.com/ag999git/001-Python-book-2026/main/resources/ch-10-nb-05-os-steps.png" /></p>
+<p><img alt="The eight steps of the os module example" src="https://raw.githubusercontent.com/ag999git/001-Python-book-2026/main/resources/S10-LR-ch-10-nb-05-os-steps.png" /></p>
+<p><strong>Reading the figure</strong></p>
+<ul>
+<li><strong>Step 1:</strong> <code>os.getcwd()</code> shows the current working directory.</li>
+<li><strong>Step 2:</strong> <code>os.makedirs("test_dir", exist_ok=True)</code> creates a folder, or leaves it if it exists.</li>
+<li><strong>Step 3:</strong> <code>open(os.path.join("test_dir", "sample.txt"), "w")</code> creates a file inside it. <code>os.path.join()</code> builds the path correctly on any operating system.</li>
+<li><strong>Step 4:</strong> <code>os.path.exists(file_path)</code> checks that the file is there.</li>
+<li><strong>Step 5:</strong> <code>os.rename()</code> renames it to <code>renamed.txt</code>.</li>
+<li><strong>Step 6:</strong> <code>os.listdir("test_dir")</code> lists the contents of the folder.</li>
+<li><strong>Step 7:</strong> <code>os.remove()</code> deletes the file.</li>
+<li><strong>Step 8:</strong> <code>os.rmdir()</code> removes the now empty folder.</li>
+</ul>
 </div>
 </div>
 </div>
@@ -10543,7 +10590,15 @@ Directory 'test_dir' deleted.
 </tr>
 </tbody>
 </table>
-<p><img alt="The three standard streams" src="https://raw.githubusercontent.com/ag999git/001-Python-book-2026/main/resources/ch-10-nb-06-standard-streams.png" /></p>
+<p><img alt="The three standard streams" src="https://raw.githubusercontent.com/ag999git/001-Python-book-2026/main/resources/S10-LR-ch-10-nb-06-standard-streams.png" /></p>
+<p><strong>Reading the figure</strong></p>
+<ul>
+<li><strong>Step 1:</strong> The user types at the keyboard.</li>
+<li><strong>Step 2:</strong> What is typed arrives through the standard input stream, <code>sys.stdin</code>. <code>sys.stdin.readline()</code> reads one line.</li>
+<li><strong>Step 3:</strong> Your program works with it.</li>
+<li><strong>Step 4:</strong> Normal output goes to the standard output stream, <code>sys.stdout</code>. <code>print()</code> writes here, and so does <code>sys.stdout.write()</code>.</li>
+<li><strong>Step 5:</strong> Error messages go to a separate stream, <code>sys.stderr</code>, which can be redirected on its own.</li>
+</ul>
 <p><a href="#toc">Back to the Table of Contents</a></p>
 <h2 id="1019-dos-and-donts"><a name="10-19-do-s-and-don-ts"></a>10.19 Do's and don'ts<a class="headerlink" href="#1019-dos-and-donts" title="Permanent link">&para;</a></h2>
 <p><strong>Do:</strong> (1) use <code>print()</code> in normal programs; (2) use <code>sys.stdout</code> when you need finer control; (3) use <code>sys.stderr</code> for errors.</p>
@@ -10685,7 +10740,16 @@ Hello
 <li>The raw bytes are not meant to be read by people. Only <code>pickle</code> understands them.</li>
 <li>Your raw bytes may differ slightly from the sample in the comment; they depend on the pickle protocol version.</li>
 </ol>
-<p><img alt="Pickling a dictionary to a file and unpickling it again" src="https://raw.githubusercontent.com/ag999git/001-Python-book-2026/main/resources/ch-10-nb-07-pickle.png" /></p>
+<p><img alt="Pickling a dictionary to a file and unpickling it again" src="https://raw.githubusercontent.com/ag999git/001-Python-book-2026/main/resources/S10-LR-ch-10-nb-07-pickle.png" /></p>
+<p><strong>Reading the figure</strong></p>
+<ul>
+<li><strong>Step 1:</strong> Create the object to be saved: <code>data = {'a': 1, 'b': 2}</code>.</li>
+<li><strong>Step 2:</strong> Open <code>data.pkl</code> in binary write mode, <code>'wb'</code>: pickle produces bytes, not text.</li>
+<li><strong>Step 3:</strong> <code>pickle.dump(data, f)</code> converts the object into a byte stream and stores it in the file.</li>
+<li><strong>Step 4:</strong> Open the file again in binary read mode, <code>'rb'</code>.</li>
+<li><strong>Step 5:</strong> <code>pickle.load(f)</code> converts the byte stream back into a Python object.</li>
+<li><strong>Step 6:</strong> <code>new_data</code> is <code>{'a': 1, 'b': 2}</code>, equal to the original. The raw file content is not readable text.</li>
+</ul>
 </div>
 </div>
 </div>
@@ -10800,7 +10864,14 @@ Raw bytes: b'\x80\x04\x95\x11\x00\x00\x00\x00\x00\x00\x00}\x94(\x8c\x01a\x94K\x0
 </tbody>
 </table>
 <p>A way to remember: the functions ending in <strong>s</strong> work with <strong>s</strong>trings.</p>
-<p><img alt="The four json functions: to and from a string, to and from a file" src="https://raw.githubusercontent.com/ag999git/001-Python-book-2026/main/resources/ch-10-nb-08-json-functions.png" /></p>
+<p><img alt="The four json functions: to and from a string, to and from a file" src="https://raw.githubusercontent.com/ag999git/001-Python-book-2026/main/resources/S10-LR-ch-10-nb-08-json-functions.png" /></p>
+<p><strong>Reading the figure</strong></p>
+<ul>
+<li><strong>Step 1:</strong> Start with a Python object, such as the dictionary <code>pet</code>.</li>
+<li><strong>Step 2:</strong> <code>json.dumps(pet)</code> turns it into a JSON string, <code>str</code>. The "s" stands for string.</li>
+<li><strong>Step 3:</strong> <code>json.dump(pet, f)</code> writes it into an open file, here <code>pet.json</code>; <code>indent=2</code> makes the file easy to read.</li>
+<li><strong>Step 4:</strong> <code>json.loads(text)</code> turns a JSON string back into a Python object, and <code>json.load(f)</code> does the same from a file. The loaded object equals the original.</li>
+</ul>
 <p><a href="#toc">Back to the Table of Contents</a></p>
 <h3 id="try-it-the-four-json-functions"><a name="try-it-the-four-json-functions"></a>Try it: the four json functions<a class="headerlink" href="#try-it-the-four-json-functions" title="Permanent link">&para;</a></h3>
 <p>This cell is not in the book. It converts a dictionary to a JSON string and back, and then to a <code>.json</code> file and back. Notice how Python's <code>True</code> becomes JSON's <code>true</code>, and that the file is plain text you can open in the Files panel.</p>
