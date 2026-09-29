@@ -9873,6 +9873,33 @@ A Python variable does not hold an object. It holds a reference, which is the ad
     G --&gt; H["Step 8 - a change made through b is not seen through a"]
 </code></pre></div>
 <p><img alt="Q11. Assigning a list versus copying a list" src="../../resources/ch18-qa-fig-02.png" /></p>
+<p><strong>Revised diagram (left to right)</strong></p>
+<div class="highlight"><pre><span></span><code>flowchart LR
+    classDef box fill:#e6e6e6,stroke:#000,stroke-width:3px,color:#222,font-weight:bold
+    classDef dia fill:#d4d4d4,stroke:#000,stroke-width:3px,color:#222,font-weight:bold
+    S1["1. a = #91;1, 2, 3#93; builds one list object"] --&gt; S2{"2. How is b made from a?"}
+    S2 --&gt;|"b = a"| S3["3. b is tied to the same list object"]
+    S3 --&gt; S4["4. One list, two names: a and b"]
+    S4 --&gt; S5["5. A change made through b shows up in a"]
+    S2 --&gt;|"b = a.copy()"| S6["6. A second, separate list object is built"]
+    S6 --&gt; S7["7. Two lists, one name each"]
+    S7 --&gt; S8["8. A change made through b does not show up in a"]
+    class S1,S3,S4,S5,S6,S7,S8 box
+    class S2 dia
+    linkStyle default stroke:#000,stroke-width:3px
+</code></pre></div>
+<p><img alt="Q11. Assigning a list versus copying a list (left to right)" src="../../resources/LR-ch18-qa-fig-02.png" /></p>
+<p><strong>Reading the figure</strong></p>
+<ul>
+<li><strong>Step 1:</strong> The line <code>a = [1, 2, 3]</code> creates one list object and ties the name <code>a</code> to it.</li>
+<li><strong>Step 2:</strong> The next line decides what <code>b</code> will be: a second name for the same list, or a new copy of it.</li>
+<li><strong>Step 3:</strong> <code>b = a</code> builds nothing new. It ties the name <code>b</code> to the list that <code>a</code> already names.</li>
+<li><strong>Step 4:</strong> There is still only one list. <code>a</code> and <code>b</code> are two names for it, so <code>a is b</code> is <code>True</code>.</li>
+<li><strong>Step 5:</strong> A change made through <code>b</code>, such as <code>b.append(4)</code>, is seen when you print <code>a</code>.</li>
+<li><strong>Step 6:</strong> <code>b = a.copy()</code> (or <code>b = a[:]</code>) builds a second list object holding the same items.</li>
+<li><strong>Step 7:</strong> Now there are two lists, one for each name. <code>a == b</code> is <code>True</code>, but <code>a is b</code> is <code>False</code>.</li>
+<li><strong>Step 8:</strong> A change made through <code>b</code> alters only the copy, so <code>a</code> is still <code>[1, 2, 3]</code>. (The copy is shallow: if the list holds other lists, those inner lists are still shared. See Question 15.)</li>
+</ul>
 <p><strong>Step 5. Prove it with <code>id()</code>.</strong>
 The <code>id()</code> function returns a number that identifies the object. Two names with the same <code>id</code> are two names for one object.</p>
 <div class="highlight"><pre><span></span><code><span class="c1"># Step 1 - the original list.</span>
@@ -9972,6 +9999,26 @@ If the object cannot be changed, two names for it do no harm. Nobody can change 
     D --&gt; E["Step 5 - the output shows 1, 2 and 3"]
 </code></pre></div>
 <p><img alt="Q12. Aliasing and the bugs it causes" src="../../resources/ch18-qa-fig-03.png" /></p>
+<p><strong>Revised diagram (left to right)</strong></p>
+<div class="highlight"><pre><span></span><code>flowchart LR
+    classDef box fill:#e6e6e6,stroke:#000,stroke-width:3px,color:#222,font-weight:bold
+    classDef dia fill:#d4d4d4,stroke:#000,stroke-width:3px,color:#222,font-weight:bold
+    S1["1. list1 = #91;1, 2#93; builds one list object"] --&gt; S2["2. list2 = list1 adds a second name to the same object"]
+    S2 --&gt; S3["3. list2.append(3) changes that one object"]
+    S3 --&gt; S4["4. print(list1) reads the same object"]
+    S4 --&gt; S5["5. Output is #91;1, 2, 3#93;: list1 has #quot;changed#quot; too"]
+    class S1,S2,S3,S4,S5 box
+    linkStyle default stroke:#000,stroke-width:3px
+</code></pre></div>
+<p><img alt="Q12. Aliasing and the bugs it causes (left to right)" src="../../resources/LR-ch18-qa-fig-03.png" /></p>
+<p><strong>Reading the figure</strong></p>
+<ul>
+<li><strong>Step 1:</strong> <code>list1 = [1, 2]</code> builds one list object and ties the name <code>list1</code> to it.</li>
+<li><strong>Step 2:</strong> <code>list2 = list1</code> builds nothing new. It ties a second name, <code>list2</code>, to the same object. This is aliasing.</li>
+<li><strong>Step 3:</strong> <code>list2.append(3)</code> changes that one object in place.</li>
+<li><strong>Step 4:</strong> <code>print(list1)</code> looks up the object that <code>list1</code> names, which is the same object.</li>
+<li><strong>Step 5:</strong> The output is <code>[1, 2, 3]</code>. Nothing was done to <code>list1</code> directly, yet it seems to have changed, because there was only ever one list.</li>
+</ul>
 <p><strong>Step 5. See the version of this bug that bites in real programs.</strong>
 The example above is easy to spot because the two lines sit next to each other. In real code the alias is usually created by passing a list to a function.</p>
 <div class="highlight"><pre><span></span><code><span class="c1"># Step 1 - a function that looks harmless.</span>
@@ -10127,6 +10174,37 @@ Both are shallow. They copy the outer list only. If the list holds other lists, 
     H --&gt; I["Step 9 - setting the first cell to 9 changes only the first row"]
 </code></pre></div>
 <p><img alt="Q14. Why a repeated row is not four rows" src="../../resources/ch18-qa-fig-04.png" /></p>
+<p><strong>Revised diagram (left to right)</strong></p>
+<div class="highlight"><pre><span></span><code>flowchart LR
+    classDef box fill:#e6e6e6,stroke:#000,stroke-width:3px,color:#222,font-weight:bold
+    classDef dia fill:#d4d4d4,stroke:#000,stroke-width:3px,color:#222,font-weight:bold
+    S1{"1. How is the matrix built?"} --&gt;|"#91;#91;0#93; * 3#93; * 4"| S2["2. #91;0#93; * 3 builds one row object #91;0, 0, 0#93;"]
+    S2 --&gt; S3["3. * 4 stores that same row four times"]
+    S3 --&gt; S4["4. All four rows point to one object"]
+    S4 --&gt; S5["5. matrix#91;0#93;#91;0#93; = 9 changes that one row"]
+    S5 --&gt; S6["6. The 9 shows up in every row"]
+    S1 --&gt;|"comprehension"| S7["7. #91;0#93; * 3 runs four separate times"]
+    S7 --&gt; S8["8. Four different row objects are built"]
+    S8 --&gt; S9["9. matrix#91;0#93;#91;0#93; = 9 changes only the first row"]
+    S9 --&gt; S10["10. The 9 shows up in the first row only"]
+    class S2,S3,S4,S5,S6,S7,S8,S9,S10 box
+    class S1 dia
+    linkStyle default stroke:#000,stroke-width:3px
+</code></pre></div>
+<p><img alt="Q14. Why a repeated row is not four rows (left to right)" src="../../resources/LR-ch18-qa-fig-04.png" /></p>
+<p><strong>Reading the figure</strong></p>
+<ul>
+<li><strong>Step 1:</strong> The result depends on how the matrix is built: with the outer multiply, or with a list comprehension.</li>
+<li><strong>Step 2:</strong> In <code>[[0] * 3] * 4</code>, the inner part <code>[0] * 3</code> runs once and builds one row object, <code>[0, 0, 0]</code>.</li>
+<li><strong>Step 3:</strong> The outer <code>* 4</code> does not copy that row. It stores a reference to the same row four times.</li>
+<li><strong>Step 4:</strong> So all four rows of the matrix are one object. <code>matrix[0] is matrix[3]</code> is <code>True</code>.</li>
+<li><strong>Step 5:</strong> <code>matrix[0][0] = 9</code> changes the first cell of that one shared row.</li>
+<li><strong>Step 6:</strong> Printing the matrix shows the 9 in every row: <code>[[9, 0, 0], [9, 0, 0], [9, 0, 0], [9, 0, 0]]</code>.</li>
+<li><strong>Step 7:</strong> In <code>[[0] * 3 for _ in range(4)]</code>, the expression <code>[0] * 3</code> runs once for every turn of the loop, four times in all.</li>
+<li><strong>Step 8:</strong> Each run builds a new row, so the matrix holds four different row objects.</li>
+<li><strong>Step 9:</strong> <code>matrix[0][0] = 9</code> changes only the first row.</li>
+<li><strong>Step 10:</strong> Printing the matrix gives <code>[[9, 0, 0], [0, 0, 0], [0, 0, 0], [0, 0, 0]]</code>.</li>
+</ul>
 <p><strong>Step 5. Prove the problem.</strong></p>
 <div class="highlight"><pre><span></span><code><span class="c1"># Step 1 - build the matrix the wrong way.</span>
 <span class="n">matrix</span> <span class="o">=</span> <span class="p">[[</span><span class="mi">0</span><span class="p">]</span> <span class="o">*</span> <span class="mi">3</span><span class="p">]</span> <span class="o">*</span> <span class="mi">4</span>
@@ -10894,6 +10972,38 @@ Defaults after f(2)   : ([1, 2],)
     H --&gt; I["Step 9 - the stored default is untouched"]
 </code></pre></div>
 <p><img alt="Q21. The mutable default argument" src="../../resources/ch18-qa-fig-05.png" /></p>
+<p><strong>Revised diagram (left to right)</strong></p>
+<div class="highlight"><pre><span></span><code>flowchart LR
+    classDef box fill:#e6e6e6,stroke:#000,stroke-width:3px,color:#222,font-weight:bold
+    classDef dia fill:#d4d4d4,stroke:#000,stroke-width:3px,color:#222,font-weight:bold
+    S1["1. def f(x, lst=#91;#93;) runs once and builds one empty list"] --&gt; S2["2. That list is stored as the default in f.__defaults__"]
+    S2 --&gt; S3["3. A call such as f(1) is made"]
+    S3 --&gt; S4{"4. Did the caller pass a list?"}
+    S4 --&gt;|"Yes"| S5["5. The caller's own list is used"]
+    S5 --&gt; S6["6. x is appended to the caller's list"]
+    S6 --&gt; S7["7. The stored default is untouched"]
+    S4 --&gt;|"No"| S8["8. The stored default list is used"]
+    S8 --&gt; S9["9. x is appended to the stored list"]
+    S9 --&gt; S10["10. The stored list is longer for the next call"]
+    S10 --&gt;|"next call"| S3
+    class S1,S2,S3,S5,S6,S7,S8,S9,S10 box
+    class S4 dia
+    linkStyle default stroke:#000,stroke-width:3px
+</code></pre></div>
+<p><img alt="Q21. The mutable default argument (left to right)" src="../../resources/LR-ch18-qa-fig-05.png" /></p>
+<p><strong>Reading the figure</strong></p>
+<ul>
+<li><strong>Step 1:</strong> Python runs the <code>def</code> line only once, when the function is defined, and builds one empty list for <code>lst</code> at that moment.</li>
+<li><strong>Step 2:</strong> That list is stored on the function object as the default value. You can see it in <code>f.__defaults__</code>.</li>
+<li><strong>Step 3:</strong> The function is called, for example <code>f(1)</code>.</li>
+<li><strong>Step 4:</strong> Python checks whether the caller passed a list for <code>lst</code>.</li>
+<li><strong>Step 5:</strong> Yes: the caller's own list is used as <code>lst</code>.</li>
+<li><strong>Step 6:</strong> <code>x</code> is appended to the caller's list.</li>
+<li><strong>Step 7:</strong> The stored default list is not touched by this call. This branch ends here.</li>
+<li><strong>Step 8:</strong> No: <code>lst</code> refers to the one stored default list.</li>
+<li><strong>Step 9:</strong> <code>x</code> is appended to that stored list.</li>
+<li><strong>Step 10:</strong> The stored list is now one item longer, and the next call without a list starts from it (back to Step 3). That is why <code>f(1)</code>, <code>f(2)</code> and <code>f(3)</code> return <code>[1]</code>, <code>[1, 2]</code> and <code>[1, 2, 3]</code>.</li>
+</ul>
 <p><strong>Step 6. Write the corrected function.</strong>
 The cure is to use <code>None</code> as the default. <code>None</code> is immutable, so it cannot grow. Inside the function, check for it and build a fresh list.</p>
 <div class="highlight"><pre><span></span><code><span class="c1"># Step 1 - the safe pattern. None is the default.</span>
@@ -11327,6 +11437,35 @@ Use a set for the record, not a list. Checking <code>x in some_set</code> is fas
     F --&gt;|"No"| G["Step 7 - return the result list"]
 </code></pre></div>
 <p><img alt="Q29. Remove duplicates and keep the order" src="../../resources/ch18-qa-fig-06.png" /></p>
+<p><strong>Revised diagram (left to right)</strong></p>
+<div class="highlight"><pre><span></span><code>flowchart LR
+    classDef box fill:#e6e6e6,stroke:#000,stroke-width:3px,color:#222,font-weight:bold
+    classDef dia fill:#d4d4d4,stroke:#000,stroke-width:3px,color:#222,font-weight:bold
+    S1["1. Start with result = #91;#93; and seen = set()"] --&gt; S2["2. Take the next item x from the input list"]
+    S2 --&gt; S3{"3. Is x already in seen?"}
+    S3 --&gt;|"Yes"| S4["4. Skip x: it is a repeat"]
+    S4 --&gt; S7
+    S3 --&gt;|"No"| S5["5. Append x to result"]
+    S5 --&gt; S6["6. Add x to seen"]
+    S6 --&gt; S7{"7. Any items left?"}
+    S7 --&gt;|"Yes"| S2
+    S7 --&gt;|"No"| S8["8. Return result"]
+    class S1,S2,S4,S5,S6,S8 box
+    class S3,S7 dia
+    linkStyle default stroke:#000,stroke-width:3px
+</code></pre></div>
+<p><img alt="Q29. Remove duplicates and keep the order (left to right)" src="../../resources/LR-ch18-qa-fig-06.png" /></p>
+<p><strong>Reading the figure</strong></p>
+<ul>
+<li><strong>Step 1:</strong> Start with an empty list <code>result</code>, which keeps the order, and an empty set <code>seen</code>, which remembers what has turned up.</li>
+<li><strong>Step 2:</strong> Take the next item <code>x</code> from the input list, working from left to right.</li>
+<li><strong>Step 3:</strong> Check whether <code>x</code> is already in <code>seen</code>. A set answers this quickly, whatever its size.</li>
+<li><strong>Step 4:</strong> Yes: <code>x</code> has appeared before, so skip it and go on to Step 7.</li>
+<li><strong>Step 5:</strong> No: this is the first time <code>x</code> has appeared, so append it to <code>result</code>.</li>
+<li><strong>Step 6:</strong> Add <code>x</code> to <code>seen</code>, so that any later copy of it will be skipped.</li>
+<li><strong>Step 7:</strong> If there are more items in the input list, go back to Step 2.</li>
+<li><strong>Step 8:</strong> When no items are left, return <code>result</code>. It holds each item once, in the order of its first appearance.</li>
+</ul>
 <p><strong>Step 5. Write the function.</strong></p>
 <div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">remove_dupes</span><span class="p">(</span><span class="n">lst</span><span class="p">):</span>
     <span class="c1"># Step 1 - seen remembers what has turned up, result keeps the order.</span>
@@ -11726,6 +11865,35 @@ The two branches at the comparison are numbered 4a and 4b, because they do the s
     G --&gt; H["Step 7 - return res"]
 </code></pre></div>
 <p><img alt="Q34. Merging two sorted lists" src="../../resources/ch18-qa-fig-07.png" /></p>
+<p><strong>Revised diagram (left to right)</strong></p>
+<div class="highlight"><pre><span></span><code>flowchart LR
+    classDef box fill:#e6e6e6,stroke:#000,stroke-width:3px,color:#222,font-weight:bold
+    classDef dia fill:#d4d4d4,stroke:#000,stroke-width:3px,color:#222,font-weight:bold
+    S1["1. res = #91;#93;, i = 0, j = 0"] --&gt; S2{"2. Do both lists still have items?"}
+    S2 --&gt;|"Yes"| S3{"3. Is l1#91;i#93; #lt; l2#91;j#93;?"}
+    S3 --&gt;|"Yes"| S4["4. Append l1#91;i#93; to res, then i += 1"]
+    S3 --&gt;|"No"| S5["5. Append l2#91;j#93; to res, then j += 1"]
+    S4 --&gt;|"back to step 2"| S2
+    S5 --&gt;|"back to step 2"| S2
+    S2 --&gt;|"No"| S6["6. Add what is left of l1: l1#91;i:#93;"]
+    S6 --&gt; S7["7. Add what is left of l2: l2#91;j:#93;"]
+    S7 --&gt; S8["8. Return res"]
+    class S1,S4,S5,S6,S7,S8 box
+    class S2,S3 dia
+    linkStyle default stroke:#000,stroke-width:3px
+</code></pre></div>
+<p><img alt="Q34. Merging two sorted lists (left to right)" src="../../resources/LR-ch18-qa-fig-07.png" /></p>
+<p><strong>Reading the figure</strong></p>
+<ul>
+<li><strong>Step 1:</strong> Start with an empty result list <code>res</code> and two markers, <code>i</code> on <code>l1</code> and <code>j</code> on <code>l2</code>, both at 0.</li>
+<li><strong>Step 2:</strong> Check whether both lists still have unused items: <code>i &lt; len(l1) and j &lt; len(l2)</code>.</li>
+<li><strong>Step 3:</strong> Yes: compare the two front items, <code>l1[i]</code> and <code>l2[j]</code>.</li>
+<li><strong>Step 4:</strong> If <code>l1[i]</code> is smaller, append it to <code>res</code> and move <code>i</code> forward by one. Then go back to Step 2.</li>
+<li><strong>Step 5:</strong> Otherwise (<code>l2[j]</code> is smaller, or the two are equal), append <code>l2[j]</code> to <code>res</code> and move <code>j</code> forward by one. Then go back to Step 2.</li>
+<li><strong>Step 6:</strong> No: at least one list is finished. Add whatever is left of <code>l1</code> with <code>res.extend(l1[i:])</code>. If <code>l1</code> is finished, this adds nothing.</li>
+<li><strong>Step 7:</strong> Add whatever is left of <code>l2</code> with <code>res.extend(l2[j:])</code>. The leftovers are already sorted and no smaller than anything in <code>res</code>, so no more comparisons are needed.</li>
+<li><strong>Step 8:</strong> Return <code>res</code>. It now holds every item of both lists, in sorted order.</li>
+</ul>
 <p><strong>Step 5. Trace it once by hand.</strong>
 Merging <code>[1, 4, 9]</code> with <code>[2, 3, 10, 12]</code>:</p>
 <table>
@@ -12875,6 +13043,49 @@ The new matrix has one row for every column of the old one. To build new row <co
     I --&gt;|"No"| K["Step 11 - the transposed matrix is complete"]
 </code></pre></div>
 <p><img alt="Q47 and Q48. Transposing a matrix" src="../../resources/ch18-qa-fig-08.png" /></p>
+<p><strong>Revised diagram (left to right)</strong></p>
+<div class="highlight"><pre><span></span><code>flowchart TB
+    classDef box fill:#e6e6e6,stroke:#000,stroke-width:3px,color:#222,font-weight:bold
+    classDef dia fill:#d4d4d4,stroke:#000,stroke-width:3px,color:#222,font-weight:bold
+    subgraph R1[" "]
+        direction LR
+        S1["1. The old matrix has R rows and C columns"] --&gt; S2["2. The new matrix will have C rows and R columns"]
+        S2 --&gt; S3["3. Set i = 0: the old column to work on"]
+    end
+    subgraph R2[" "]
+        direction LR
+        S4["4. Start an empty new_row"] --&gt; S5["5. Take the next old row"]
+        S5 --&gt; S6["6. Append row#91;i#93; to new_row"]
+        S6 --&gt; S7{"7. Any old rows left?"}
+        S7 --&gt;|"Yes"| S5
+        S7 --&gt;|"No"| S8["8. Append new_row to the new matrix"]
+        S8 --&gt; S9{"9. Is i #lt; C - 1?"}
+        S9 --&gt;|"Yes"| S10["10. Add 1 to i: move to the next column"]
+        S10 --&gt;|"build the next new row"| S4
+        S9 --&gt;|"No"| S11["11. The transposed matrix is complete"]
+    end
+    R1 --&gt; R2
+    class S1,S2,S3,S4,S5,S6,S8,S10,S11 box
+    class S7,S9 dia
+    style R1 fill:none,stroke:none
+    style R2 fill:none,stroke:none
+    linkStyle default stroke:#000,stroke-width:3px
+</code></pre></div>
+<p><img alt="Q47 and Q48. Transposing a matrix (left to right)" src="../../resources/LR-ch18-qa-fig-08.png" /></p>
+<p><strong>Reading the figure</strong></p>
+<ul>
+<li><strong>Step 1:</strong> Note the shape of the old matrix: R rows and C columns. C is <code>len(matrix[0])</code>.</li>
+<li><strong>Step 2:</strong> The transposed matrix will have C rows and R columns. It starts as an empty list.</li>
+<li><strong>Step 3:</strong> Set <code>i = 0</code>. <code>i</code> is the column of the old matrix that is being turned into a new row.</li>
+<li><strong>Step 4:</strong> Start an empty list, <code>new_row</code>.</li>
+<li><strong>Step 5:</strong> Take the next row of the old matrix.</li>
+<li><strong>Step 6:</strong> Append <code>row[i]</code>, the item in column <code>i</code> of that row, to <code>new_row</code>.</li>
+<li><strong>Step 7:</strong> If old rows are left, go back to Step 5.</li>
+<li><strong>Step 8:</strong> No old rows are left, so <code>new_row</code> is complete. Append it to the new matrix.</li>
+<li><strong>Step 9:</strong> Check whether <code>i &lt; C - 1</code>, that is, whether any column of the old matrix is still waiting to become a row.</li>
+<li><strong>Step 10:</strong> Yes: add 1 to <code>i</code> and go back to Step 4 to build the next new row.</li>
+<li><strong>Step 11:</strong> No: every column has become a row, and the transposed matrix is complete.</li>
+</ul>
 <p><strong>Step 4. Q47, the list comprehension version.</strong></p>
 <div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">matrix_transpose</span><span class="p">(</span><span class="n">matrix</span><span class="p">):</span>
     <span class="c1"># Step 1 - the outer comprehension runs once for each column of the old matrix.</span>
