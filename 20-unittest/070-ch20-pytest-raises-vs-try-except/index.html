@@ -8561,16 +8561,16 @@
 <p>A test that passes in both cases cannot tell a working function from a broken one. It checks nothing.</p>
 <p><a href="./#table-of-contents">Back to the Table of Contents</a></p>
 <h4 id="flow-chart-using-only-tryexcept-without-else">Flow chart (Using only try/except without else)<a class="headerlink" href="#flow-chart-using-only-tryexcept-without-else" title="Permanent link">&para;</a></h4>
-<p><img alt="try/except without else" src="../../resources/ch16-pytest-010-only-try-except-no-else.png" /></p>
-<p>The same flow, step by step:</p>
-<div class="highlight"><pre><span></span><code>flowchart TD
-    A["1. Call create_user(10)"] --&gt; B{"2. Was ValueError raised?"}
-    B -- Yes --&gt; C["3. except ValueError: pass"]
-    C --&gt; D["4. Test PASSES"]
-    B -- No --&gt; E["5. except block is skipped"]
-    E --&gt; F["6. Test still PASSES: the bug is missed"]
-</code></pre></div>
-<p><img alt="Flow chart (Using only try/except without else)" src="../../resources/ch20-pytest-raises-vs-try-except-fig-01.png" /></p>
+<p><img alt="Flow chart (Using only try/except without else)" src="../../resources/LR-ch20-pytest-raises-vs-try-except-fig-01.png" /></p>
+<p><strong>Reading the figure</strong></p>
+<ul>
+<li><strong>Step 1:</strong> The test calls <code>create_user(10)</code> inside a <code>try</code> block. An age of 10 should raise <code>ValueError</code>.</li>
+<li><strong>Step 2:</strong> Was a <code>ValueError</code> raised?</li>
+<li><strong>Step 3:</strong> Yes: <code>except ValueError: pass</code> catches it.</li>
+<li><strong>Step 4:</strong> The test passes, which is correct.</li>
+<li><strong>Step 5:</strong> No: nothing is raised, so the <code>except</code> block is skipped.</li>
+<li><strong>Step 6:</strong> The test still passes, because nothing in it can fail. The bug is missed.</li>
+</ul>
 <p><a href="./#table-of-contents">Back to the Table of Contents</a></p>
 <h2 id="4-improved-manual-approach-tryexceptelse">4. Improved Manual Approach (try/except/else)<a class="headerlink" href="#4-improved-manual-approach-tryexceptelse" title="Permanent link">&para;</a></h2>
 <div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">test_create_user</span><span class="p">():</span>
@@ -8596,16 +8596,16 @@
 <p>A small improvement: instead of <code>assert False, "..."</code>, pytest provides <code>pytest.fail("...")</code>, which says more clearly that the test should fail at this point.</p>
 <p><a href="./#table-of-contents">Back to the Table of Contents</a></p>
 <h4 id="flow-chart-for-tryexcept-with-else">Flow chart for try/except with else<a class="headerlink" href="#flow-chart-for-tryexcept-with-else" title="Permanent link">&para;</a></h4>
-<p><img alt="Flow chart for try/except with else" src="../../resources/ch16-pytest-020-try-except-with-else.png" /></p>
-<p>The same flow, step by step:</p>
-<div class="highlight"><pre><span></span><code>flowchart TD
-    A["1. Call create_user(10)"] --&gt; B{"2. Was ValueError raised?"}
-    B -- Yes --&gt; C["3. except ValueError: pass"]
-    C --&gt; D["4. else is skipped: test PASSES"]
-    B -- No --&gt; E["5. except is skipped, else runs"]
-    E --&gt; F["6. assert False: test FAILS with a message"]
-</code></pre></div>
-<p><img alt="Flow chart for try/except with else" src="../../resources/ch20-pytest-raises-vs-try-except-fig-02.png" /></p>
+<p><img alt="Flow chart for try/except with else" src="../../resources/LR-ch20-pytest-raises-vs-try-except-fig-02.png" /></p>
+<p><strong>Reading the figure</strong></p>
+<ul>
+<li><strong>Step 1:</strong> The test calls <code>create_user(10)</code> inside a <code>try</code> block.</li>
+<li><strong>Step 2:</strong> Was a <code>ValueError</code> raised?</li>
+<li><strong>Step 3:</strong> Yes: <code>except ValueError: pass</code> catches it.</li>
+<li><strong>Step 4:</strong> The <code>else</code> block runs only when no exception was raised, so it is skipped. The test passes.</li>
+<li><strong>Step 5:</strong> No: the <code>except</code> block is skipped and the <code>else</code> block runs.</li>
+<li><strong>Step 6:</strong> <code>else</code> contains <code>assert False, "..."</code>, so the test fails with a clear message. The bug is caught.</li>
+</ul>
 <p><a href="./#table-of-contents">Back to the Table of Contents</a></p>
 <h2 id="5-recommended-approach-pytestraises">5. Recommended Approach (pytest.raises)<a class="headerlink" href="#5-recommended-approach-pytestraises" title="Permanent link">&para;</a></h2>
 <div class="highlight"><pre><span></span><code><span class="kn">import</span><span class="w"> </span><span class="nn">pytest</span>
@@ -8617,17 +8617,17 @@
 </code></pre></div>
 <p><a href="./#table-of-contents">Back to the Table of Contents</a></p>
 <h3 id="flow-chart-of-pytest-raises">Flow chart of pytest raises<a class="headerlink" href="#flow-chart-of-pytest-raises" title="Permanent link">&para;</a></h3>
-<p><img alt="Flow chart of pytest raises" src="../../resources/ch16-pytest-030-pytest-raises.png" /></p>
-<p>The same flow, step by step:</p>
-<div class="highlight"><pre><span></span><code>flowchart TD
-    A["1. Enter: with pytest.raises(ValueError)"] --&gt; B["2. Call create_user(10)"]
-    B --&gt; C{"3. Was an exception raised?"}
-    C -- No --&gt; D["4. Test FAILS: DID NOT RAISE ValueError"]
-    C -- Yes --&gt; E{"5. Is it a ValueError?"}
-    E -- Yes --&gt; F["6. pytest.raises catches it: test PASSES"]
-    E -- No --&gt; G["7. The other exception is not caught: test FAILS"]
-</code></pre></div>
-<p><img alt="Flow chart of pytest raises" src="../../resources/ch20-pytest-raises-vs-try-except-fig-03.png" /></p>
+<p><img alt="Flow chart of pytest raises" src="../../resources/LR-ch20-pytest-raises-vs-try-except-fig-03.png" /></p>
+<p><strong>Reading the figure</strong></p>
+<ul>
+<li><strong>Step 1:</strong> The test enters the block <code>with pytest.raises(ValueError):</code>.</li>
+<li><strong>Step 2:</strong> Inside the block it calls <code>create_user(10)</code>.</li>
+<li><strong>Step 3:</strong> Was an exception raised?</li>
+<li><strong>Step 4:</strong> No: the test fails with <code>DID NOT RAISE &lt;class 'ValueError'&gt;</code>.</li>
+<li><strong>Step 5:</strong> Yes: is it a <code>ValueError</code>?</li>
+<li><strong>Step 6:</strong> Yes: <code>pytest.raises</code> catches it, and the test passes.</li>
+<li><strong>Step 7:</strong> No: a different exception is not caught, so it passes through and the test fails.</li>
+</ul>
 <p><a href="./#table-of-contents">Back to the Table of Contents</a></p>
 <h3 id="why-this-is-better">Why this is better<a class="headerlink" href="#why-this-is-better" title="Permanent link">&para;</a></h3>
 <ul>

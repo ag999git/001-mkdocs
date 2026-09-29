@@ -8698,13 +8698,15 @@ PASSED
 ============================== 3 passed in 0.00s ===============================
 </code></pre></div>
 <p>Expected execution order:</p>
-<div class="highlight"><pre><span></span><code>flowchart TD
-    A["1. Fixture setup: create Database and connect (once)"] --&gt; B["2. test_one"]
-    B --&gt; C["3. test_two (same object)"]
-    C --&gt; D["4. test_three (same object)"]
-    D --&gt; E["5. Fixture teardown (once)"]
-</code></pre></div>
-<p><img alt="Modify the fixture example to use session scope so that the object is created only once for all tests." src="../../resources/ch20-scripting-qa-fig-01.png" /></p>
+<p><img alt="Modify the fixture example to use session scope so that the object is created only once for all tests." src="../../resources/LR-ch20-scripting-qa-fig-01.png" /></p>
+<p><strong>Reading the figure</strong></p>
+<ul>
+<li><strong>Step 1:</strong> The session-scoped fixture runs its setup once: it creates the <code>Database</code> object and connects it.</li>
+<li><strong>Step 2:</strong> <code>test_one</code> runs with that object.</li>
+<li><strong>Step 3:</strong> <code>test_two</code> runs with the same object. It is not created again.</li>
+<li><strong>Step 4:</strong> <code>test_three</code> runs with the same object.</li>
+<li><strong>Step 5:</strong> After the last test, the fixture's teardown runs once.</li>
+</ul>
 <p>The setup and teardown happen only once. In the output, <code>[FIXTURE] session setup</code> and <code>[FIXTURE] session teardown</code> each appear a single time, even though there are three tests.</p>
 <p>The second <code>[DB] connecting</code> line comes from <code>test_three</code> itself, which calls <code>db.connect()</code> in its <code>assert</code>. It is not a second setup.</p>
 <p><a href="./#table-of-contents">Back to the Table of Contents</a></p>
@@ -8758,14 +8760,16 @@ PASSED
 </code></pre></div>
 <p>The line <code>&lt;class 'test_injection.User'&gt;</code> proves that the parameter <code>user</code> holds a real <code>User</code> object, created by the fixture. The class name includes <code>test_injection</code>, because the class is defined in the file <code>test_injection.py</code>.</p>
 <p>Flow:</p>
-<div class="highlight"><pre><span></span><code>flowchart TD
-    A["1. pytest collects test_user_injection(user)"] --&gt; B["2. Search for a fixture named user"]
-    B --&gt; C["3. Call user()"]
-    C --&gt; D["4. A User object is returned"]
-    D --&gt; E["5. The object is placed into the test parameter user"]
-    E --&gt; F["6. The test body runs"]
-</code></pre></div>
-<p><img alt="Write a pytest script demonstrating dependency injection. Show how pytest injects a fixture object into a test function parameter." src="../../resources/ch20-scripting-qa-fig-02.png" /></p>
+<p><img alt="Write a pytest script demonstrating dependency injection. Show how pytest injects a fixture object into a test function parameter." src="../../resources/LR-ch20-scripting-qa-fig-02.png" /></p>
+<p><strong>Reading the figure</strong></p>
+<ul>
+<li><strong>Step 1:</strong> pytest collects the test function <code>test_user_injection(user)</code>, which has one parameter, <code>user</code>.</li>
+<li><strong>Step 2:</strong> It searches for a fixture named <code>user</code>, the same name as the parameter.</li>
+<li><strong>Step 3:</strong> It calls the fixture function <code>user()</code>.</li>
+<li><strong>Step 4:</strong> The fixture returns a <code>User</code> object.</li>
+<li><strong>Step 5:</strong> pytest places that object into the test's parameter <code>user</code>. The test never creates it itself.</li>
+<li><strong>Step 6:</strong> The test body runs and can use <code>user</code> straight away.</li>
+</ul>
 <p>Note that steps 2 to 5 all happen <strong>before</strong> the first line of the test runs. That is why <code>[FIXTURE] creating User object</code> is printed before <code>[TEST] received object</code>.</p>
 <p><a href="./#table-of-contents">Back to the Table of Contents</a></p>
 <h3 id="5-write-a-pytest-test-using-pytestraises-to-verify-that-a-function-correctly-raises-an-exception">5. Write a pytest test using pytest.raises() to verify that a function correctly raises an exception.<a class="headerlink" href="#5-write-a-pytest-test-using-pytestraises-to-verify-that-a-function-correctly-raises-an-exception" title="Permanent link">&para;</a></h3>
@@ -9163,13 +9167,15 @@ PASSED
 ============================== 1 passed in 0.00s ===============================
 </code></pre></div>
 <p>Execution flow:</p>
-<div class="highlight"><pre><span></span><code>flowchart TD
-    A["1. Fixture setup: create and start the Resource"] --&gt; B["2. yield sends the object to the test"]
-    B --&gt; C["3. The test runs"]
-    C --&gt; D["4. The fixture continues after yield"]
-    D --&gt; E["5. Teardown: stop the Resource"]
-</code></pre></div>
-<p><img alt="Write a pytest fixture using yield to perform setup and teardown operations." src="../../resources/ch20-scripting-qa-fig-03.png" /></p>
+<p><img alt="Write a pytest fixture using yield to perform setup and teardown operations." src="../../resources/LR-ch20-scripting-qa-fig-03.png" /></p>
+<p><strong>Reading the figure</strong></p>
+<ul>
+<li><strong>Step 1:</strong> The fixture's setup runs: it creates the <code>Resource</code> and starts it.</li>
+<li><strong>Step 2:</strong> <code>yield</code> sends the object to the test, and the fixture pauses.</li>
+<li><strong>Step 3:</strong> The test runs using the resource.</li>
+<li><strong>Step 4:</strong> When the test has finished, the fixture continues from the line after <code>yield</code>.</li>
+<li><strong>Step 5:</strong> The teardown stops the <code>Resource</code>. This part runs even if the test failed.</li>
+</ul>
 <p><strong>Important:</strong></p>
 <ul>
 <li>The code before <code>yield</code> is the setup.</li>
@@ -9353,12 +9359,16 @@ PASSED
 <div class="highlight"><pre><span></span><code><span class="kn">from</span><span class="w"> </span><span class="nn">conftest</span><span class="w"> </span><span class="kn">import</span> <span class="n">calculator</span>
 </code></pre></div>
 <p>Pytest looks for the fixture itself:</p>
-<div class="highlight"><pre><span></span><code>flowchart TD
-    A["1. test_add asks for calculator"] --&gt; B{"2. Is it defined in test_calculator.py?"}
-    B -- No --&gt; C{"3. Is it defined in conftest.py in this folder?"}
-    C -- Yes --&gt; D["4. Run the fixture and inject the object"]
-</code></pre></div>
-<p><img alt="Create a conftest.py file containing a fixture and use it in a test file without importing it." src="../../resources/ch20-scripting-qa-fig-05.png" /></p>
+<p><img alt="Create a conftest.py file containing a fixture and use it in a test file without importing it." src="../../resources/LR-ch20-scripting-qa-fig-05.png" /></p>
+<p><strong>Reading the figure</strong></p>
+<ul>
+<li><strong>Step 1:</strong> The test <code>test_add</code> has a parameter named <code>calculator</code>, so it asks for that fixture.</li>
+<li><strong>Step 2:</strong> Is the fixture defined in the test file itself, <code>test_calculator.py</code>?</li>
+<li><strong>Step 3:</strong> No: is it defined in a <code>conftest.py</code> in the same folder?</li>
+<li><strong>Step 4:</strong> Yes: pytest runs the fixture from <code>conftest.py</code> and injects the object into the test. No <code>from conftest import calculator</code> is needed.</li>
+<li><strong>Step 5:</strong> Yes at Step 2: pytest would use the fixture from the test file instead. (In this example the answer is No.)</li>
+<li><strong>Step 6:</strong> No at Step 3: pytest keeps searching <code>conftest.py</code> files in parent folders, then pytest's own and plugin fixtures.</li>
+</ul>
 <p>Any other test file in this folder, or in a folder inside it, could use the <code>calculator</code> fixture in the same way.</p>
 <p><a href="./#table-of-contents">Back to the Table of Contents</a></p>
 <h3 id="12-demonstrate-the-difference-between-function-scope-and-module-scope-fixtures">12. Demonstrate the difference between function scope and module scope fixtures.<a class="headerlink" href="#12-demonstrate-the-difference-between-function-scope-and-module-scope-fixtures" title="Permanent link">&para;</a></h3>
@@ -9597,12 +9607,14 @@ PASSED
 ============================== 2 passed in 0.00s ===============================
 </code></pre></div>
 <p>Both tests pass. But look at why <code>test_status</code> passes: it receives the <strong>same</strong> <code>User</code> object that <code>test_login</code> changed.</p>
-<div class="highlight"><pre><span></span><code>flowchart TD
-    A["1. test_login sets logged_in = True"] --&gt; B["2. The same object goes to test_status"]
-    B --&gt; C["3. The changed value is still there"]
-    C --&gt; D["4. test_status passes, but only because test_login ran first"]
-</code></pre></div>
-<p><img alt="Demonstrate the shared state problem with a session-scoped fixture." src="../../resources/ch20-scripting-qa-fig-06.png" /></p>
+<p><img alt="Demonstrate the shared state problem with a session-scoped fixture." src="../../resources/LR-ch20-scripting-qa-fig-06.png" /></p>
+<p><strong>Reading the figure</strong></p>
+<ul>
+<li><strong>Step 1:</strong> <code>test_login</code> changes the shared <code>User</code> object: <code>logged_in = True</code>.</li>
+<li><strong>Step 2:</strong> The fixture has session scope, so <code>test_status</code> receives the same object, not a new one.</li>
+<li><strong>Step 3:</strong> The change made by <code>test_login</code> is still there.</li>
+<li><strong>Step 4:</strong> <code>test_status</code> passes, but only because <code>test_login</code> ran first. Run it alone and it would fail. This hidden dependency is the shared state problem.</li>
+</ul>
 <p>Now run <code>test_status</code> <strong>on its own</strong>:</p>
 <div class="highlight"><pre><span></span><code>pytest<span class="w"> </span>-v<span class="w"> </span>-s<span class="w"> </span>test_shared_state.py::test_status
 </code></pre></div>
@@ -9710,16 +9722,18 @@ PASSED
 </code></pre></div>
 <p><strong>Part A: Testing exceptions</strong></p>
 <p>Flow:</p>
-<div class="highlight"><pre><span></span><code>flowchart TD
-    A["1. Run the test"] --&gt; B["2. Run the code inside the with block"]
-    B --&gt; C{"3. Was a ValueError raised?"}
-    C -- Yes --&gt; D{"4. Does the message contain 'cannot divide'?"}
-    D -- Yes --&gt; E["5. PASS"]
-    D -- No --&gt; F["6. FAIL: message does not match"]
-    C -- No exception --&gt; G["7. FAIL: DID NOT RAISE"]
-    C -- A different exception --&gt; H["8. FAIL: that exception is reported"]
-</code></pre></div>
-<p><img alt="Test exceptions and floating point values using pytest tools." src="../../resources/ch20-scripting-qa-fig-07.png" /></p>
+<p><img alt="Test exceptions and floating point values using pytest tools." src="../../resources/LR-ch20-scripting-qa-fig-07.png" /></p>
+<p><strong>Reading the figure</strong></p>
+<ul>
+<li><strong>Step 1:</strong> Run the test.</li>
+<li><strong>Step 2:</strong> Run the code inside the block <code>with pytest.raises(ValueError, match="cannot divide"):</code>.</li>
+<li><strong>Step 3:</strong> What was raised inside the block?</li>
+<li><strong>Step 4:</strong> A <code>ValueError</code>: does its message contain "cannot divide"?</li>
+<li><strong>Step 5:</strong> Yes: the test passes.</li>
+<li><strong>Step 6:</strong> No: the test fails, because the message does not match.</li>
+<li><strong>Step 7:</strong> Nothing was raised: the test fails with <code>DID NOT RAISE</code>.</li>
+<li><strong>Step 8:</strong> A different exception was raised: it is not caught, so the test fails and that exception is reported.</li>
+</ul>
 <p><strong>Part B: Testing floating-point values</strong></p>
 <p>The output shows that <code>calculate_tax(1.10)</code> returns <code>0.11000000000000001</code>, not <code>0.11</code>.</p>
 <p>Why? Computers store most decimal numbers approximately, in binary. For example:</p>
@@ -9971,17 +9985,19 @@ PASSED
 ============================== 3 passed in 0.01s ===============================
 </code></pre></div>
 <p>Execution:</p>
-<div class="highlight"><pre><span></span><code>flowchart TD
-    A["1. Parameter set 1: admin, True"] --&gt; B["2. Fixture creates a new LoginSystem"]
-    B --&gt; C["3. Test runs with admin"]
-    C --&gt; D["4. Parameter set 2: guest, False"]
-    D --&gt; E["5. Fixture creates another new LoginSystem"]
-    E --&gt; F["6. Test runs with guest"]
-    F --&gt; G["7. Parameter set 3: abc, False"]
-    G --&gt; H["8. Fixture creates another new LoginSystem"]
-    H --&gt; I["9. Test runs with abc"]
-</code></pre></div>
-<p><img alt="Combine parameterized testing and fixtures to test multiple cases." src="../../resources/ch20-scripting-qa-fig-08.png" /></p>
+<p><img alt="Combine parameterized testing and fixtures to test multiple cases." src="../../resources/LR-ch20-scripting-qa-fig-08.png" /></p>
+<p><strong>Reading the figure</strong></p>
+<ul>
+<li><strong>Step 1:</strong> pytest takes the first parameter set: username <code>admin</code>, expected result <code>True</code>.</li>
+<li><strong>Step 2:</strong> The function-scoped fixture creates a new <code>LoginSystem</code> for this test.</li>
+<li><strong>Step 3:</strong> The test runs with <code>admin</code>.</li>
+<li><strong>Step 4:</strong> pytest takes the second parameter set: <code>guest</code>, <code>False</code>.</li>
+<li><strong>Step 5:</strong> The fixture creates another new <code>LoginSystem</code>. Each parameter set is a separate test, so it gets a fresh object.</li>
+<li><strong>Step 6:</strong> The test runs with <code>guest</code>.</li>
+<li><strong>Step 7:</strong> pytest takes the third parameter set: <code>abc</code>, <code>False</code>.</li>
+<li><strong>Step 8:</strong> The fixture creates another new <code>LoginSystem</code>.</li>
+<li><strong>Step 9:</strong> The test runs with <code>abc</code>. The fixture has run three times in all.</li>
+</ul>
 <p>Note that the fixture runs <strong>three times</strong>, once for each parameter set, as the output shows. Each parameter set is a separate test, and a function-scoped fixture is created fresh for every test. If you wanted one shared <code>LoginSystem</code>, you would give the fixture a wider scope, such as <code>scope="module"</code>.</p>
 <p>Advantages:</p>
 <ul>

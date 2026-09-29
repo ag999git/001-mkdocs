@@ -8834,19 +8834,18 @@
 <p>If you have ever used <code>pip install -r requirements.txt</code>, you have already used a file of this kind. The <code>requirements.txt</code> file is simply a list (package names and versions) that tells pip what to install. There is no magic: you write a list in a file, and a tool reads it. Configuration files work on the same principle.</p>
 <p><a href="./#table-of-contents">Back to the Table of Contents</a></p>
 <h4 id="flowchart-explaining-how-a-configuration-file-is-used">Flowchart Explaining How a Configuration File Is Used<a class="headerlink" href="#flowchart-explaining-how-a-configuration-file-is-used" title="Permanent link">&para;</a></h4>
-<p><img alt="Flowchart explaining how configuration file works" src="../../resources/ch16-pytest-060-config1.png" /></p>
-<p>The same idea, step by step:</p>
-<div class="highlight"><pre><span></span><code>flowchart TD
-    A["1. You type: pytest"] --&gt; B["2. pytest looks for a configuration file"]
-    B --&gt; C{"3. Configuration file found?"}
-    C -- Yes --&gt; D["4. Read the settings: markers, addopts, testpaths"]
-    C -- No --&gt; E["5. Use pytest's built-in defaults"]
-    D --&gt; F["6. Combine the settings with any flags you typed"]
-    E --&gt; F
-    F --&gt; G["7. Find and run the tests"]
-    G --&gt; H["8. Show the results"]
-</code></pre></div>
-<p><img alt="Configuration Files in the Python World" src="../../resources/ch20-config-files-fig-01.png" /></p>
+<p><img alt="Configuration Files in the Python World" src="../../resources/LR-ch20-config-files-fig-01.png" /></p>
+<p><strong>Reading the figure</strong></p>
+<ul>
+<li><strong>Step 1:</strong> You type <code>pytest</code> in the terminal.</li>
+<li><strong>Step 2:</strong> pytest looks for a configuration file such as <code>pytest.ini</code>.</li>
+<li><strong>Step 3:</strong> Was a configuration file found?</li>
+<li><strong>Step 4:</strong> Yes: read its settings, such as <code>markers</code>, <code>addopts</code> and <code>testpaths</code>.</li>
+<li><strong>Step 5:</strong> No: use pytest's built-in defaults.</li>
+<li><strong>Step 6:</strong> Combine those settings with any flags you typed on the command line.</li>
+<li><strong>Step 7:</strong> Find the tests and run them.</li>
+<li><strong>Step 8:</strong> Show the results.</li>
+</ul>
 <p><a href="./#table-of-contents">Back to the Table of Contents</a></p>
 <h2 id="2-why-does-pytest-need-one">2. Why Does Pytest Need One?<a class="headerlink" href="#2-why-does-pytest-need-one" title="Permanent link">&para;</a></h2>
 <p>The most common reason beginners create a configuration file is to fix a specific warning.</p>
@@ -9021,17 +9020,16 @@ ERROR test_backup.py - Failed: 'slow' not found in `markers` configuration op...
 <p>This is why you can run <code>pytest</code> from inside the <code>tests</code> folder and still get your settings: pytest walks up and finds <code>pytest.ini</code> in the folder above.</p>
 <p><a href="./#table-of-contents">Back to the Table of Contents</a></p>
 <h3 id="flowchart-showing-how-pytest-finds-the-configuration-file">Flowchart Showing How Pytest Finds the Configuration File<a class="headerlink" href="#flowchart-showing-how-pytest-finds-the-configuration-file" title="Permanent link">&para;</a></h3>
-<p><img alt="Flowchart showing how Pytest finds the configuration file" src="../../resources/ch16-pytest-065-config2.png" /></p>
-<p>The same search, step by step:</p>
-<div class="highlight"><pre><span></span><code>flowchart TD
-    A["1. Start in the current folder"] --&gt; B{"2. Is there a config file with pytest settings here?"}
-    B -- Yes --&gt; C["3. Use it. This folder becomes the rootdir"]
-    B -- No --&gt; D{"4. Is there a parent folder?"}
-    D -- Yes --&gt; E["5. Move up to the parent folder"]
-    E --&gt; B
-    D -- No --&gt; F["6. No config file: use pytest's built-in defaults"]
-</code></pre></div>
-<p><img alt="Where Does the File Live?" src="../../resources/ch20-config-files-fig-02.png" /></p>
+<p><img alt="Where Does the File Live?" src="../../resources/LR-ch20-config-files-fig-02.png" /></p>
+<p><strong>Reading the figure</strong></p>
+<ul>
+<li><strong>Step 1:</strong> pytest starts looking in the current folder.</li>
+<li><strong>Step 2:</strong> Is there a configuration file here that contains pytest settings?</li>
+<li><strong>Step 3:</strong> Yes: use it. This folder becomes the <code>rootdir</code>, the root of the project.</li>
+<li><strong>Step 4:</strong> No: is there a parent folder above this one?</li>
+<li><strong>Step 5:</strong> Yes: move up to the parent folder and go back to Step 2.</li>
+<li><strong>Step 6:</strong> No: the top of the file system was reached with no config file found, so pytest uses its built-in defaults.</li>
+</ul>
 <p><a href="./#table-of-contents">Back to the Table of Contents</a></p>
 <h2 id="5-how-to-fix-the-warning-step-by-step">5. How to Fix the Warning (Step-by-Step)<a class="headerlink" href="#5-how-to-fix-the-warning-step-by-step" title="Permanent link">&para;</a></h2>
 <p>Let us create a <code>pytest.ini</code> file to register the <code>slow</code> and <code>fast</code> markers (and a third one, <code>db</code>) for the <code>test_backup.py</code> example.</p>
@@ -9130,19 +9128,19 @@ test_backup.py .                                                         [100%]
 <p>More settings, and the rules for where pytest looks for them, are described in the pytest guide on <a href="https://docs.pytest.org/en/stable/reference/customize.html">configuration</a>.</p>
 <p><a href="./#table-of-contents">Back to the Table of Contents</a></p>
 <h2 id="7-visualizing-the-lifecycle-flowchart">7. Visualizing the Lifecycle (Flowchart)<a class="headerlink" href="#7-visualizing-the-lifecycle-flowchart" title="Permanent link">&para;</a></h2>
-<p><img alt="Flowchart" src="../../resources/ch16-pytest-070-config3.png" /></p>
-<p>The whole lifecycle of a test run with a configuration file, step by step:</p>
-<div class="highlight"><pre><span></span><code>flowchart TD
-    A["1. You type: pytest -m fast"] --&gt; B["2. pytest finds pytest.ini in the project root"]
-    B --&gt; C["3. Read addopts: add -v to the command"]
-    C --&gt; D["4. Read markers: register fast and slow"]
-    D --&gt; E["5. Read testpaths: search only the tests folder"]
-    E --&gt; F["6. Collect all the tests"]
-    F --&gt; G["7. Keep only the tests marked fast; deselect the rest"]
-    G --&gt; H["8. Run the selected tests"]
-    H --&gt; I["9. Show a detailed report because of -v"]
-</code></pre></div>
-<p><img alt="Visualizing the Lifecycle (Flowchart)" src="../../resources/ch20-config-files-fig-03.png" /></p>
+<p><img alt="Visualizing the Lifecycle (Flowchart)" src="../../resources/LR-ch20-config-files-fig-03.png" /></p>
+<p><strong>Reading the figure</strong></p>
+<ul>
+<li><strong>Step 1:</strong> You type <code>pytest -m fast</code>.</li>
+<li><strong>Step 2:</strong> pytest finds <code>pytest.ini</code> in the project root.</li>
+<li><strong>Step 3:</strong> It reads <code>addopts</code>, which adds <code>-v</code> to the command as if you had typed it.</li>
+<li><strong>Step 4:</strong> It reads <code>markers</code>, which registers the markers <code>fast</code> and <code>slow</code>.</li>
+<li><strong>Step 5:</strong> It reads <code>testpaths</code>, so it searches only the <code>tests</code> folder.</li>
+<li><strong>Step 6:</strong> It collects all the tests in that folder.</li>
+<li><strong>Step 7:</strong> <code>-m fast</code> keeps only the tests marked <code>fast</code>. The rest are deselected.</li>
+<li><strong>Step 8:</strong> The selected tests run.</li>
+<li><strong>Step 9:</strong> pytest shows a detailed report, because <code>-v</code> was added by <code>addopts</code>.</li>
+</ul>
 <p><a href="./#table-of-contents">Back to the Table of Contents</a></p>
 <h2 id="8-a-complete-worked-example">8. A Complete Worked Example<a class="headerlink" href="#8-a-complete-worked-example" title="Permanent link">&para;</a></h2>
 <p>Here is a full example using the <code>BankAccount</code> class. The folder looks like this:</p>
