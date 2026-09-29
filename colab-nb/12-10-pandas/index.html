@@ -9005,7 +9005,7 @@
 <p><strong>Some cells need the internet.</strong> They read files from public web addresses, or load a Seaborn dataset. Colab has an internet connection, so they work there. If a cell fails with a connection error, the website may be busy or the file may have moved. Run the cell again later, or use another of the examples.</p>
 <p><strong>Warnings in pink boxes.</strong> A few cells print a <code>FutureWarning</code>. That is Pandas telling you that a way of writing something will change in a later version. The code still runs correctly. The notes explain each one.</p>
 <h3 id="how-to-read-the-flowcharts">How to read the flowcharts<a class="headerlink" href="#how-to-read-the-flowcharts" title="Permanent link">&para;</a></h3>
-<p>The steps are numbered 1, 2, 3 and so on. When the flow splits into two paths, one path uses the letter A (2A, 3A ...) and the other uses the letter B (2B, 3B ...). A long chain of steps is folded onto a second row: follow the arrow down and back to the left.</p>
+<p>Each flowchart reads from left to right. A long chain of steps continues on the next row: follow the arrow down and back to the left. The boxes are numbered 1, 2, 3 and so on. When the flow splits, the shorter branch is numbered first, and then the numbering carries on along the main branch. A diamond asks a question, and the grey tags on its arrows give the answers. An arrow labelled "Repeat" or "Next" goes back to an earlier step: this is how a loop is drawn. Under each flowchart, <strong>Reading the figure</strong> explains every step. A diagram that shows a structure, not a sequence of steps, has no numbers.</p>
 </div>
 </div>
 </div>
@@ -9675,7 +9675,20 @@ dtype: float64
 </tr>
 </tbody>
 </table>
-<p><img alt="The two groups of ways to create a Pandas Series" src="https://raw.githubusercontent.com/ag999git/001-Python-book-2026/main/resources/ch-12-nb-01-series-creation.png" /></p>
+<p><img alt="The two groups of ways to create a Pandas Series" src="https://raw.githubusercontent.com/ag999git/001-Python-book-2026/main/resources/S12-LR-ch-12-nb-01-series-creation.png" /></p>
+<p><strong>Reading the figure</strong></p>
+<ul>
+<li>A Series can be created in two broad ways.</li>
+<li>Group A, default index: you give only the values, and Pandas numbers them 0, 1, 2 ... (a <code>RangeIndex</code>). The data is reached by position.</li>
+<li>Group B, custom index: you give meaningful labels, and the data is reached by name.</li>
+<li>From a plain list: <code>pd.Series([10, 20, 30, 40])</code>.</li>
+<li>From one column of a DataFrame: <code>df['A']</code>.</li>
+<li>From a list comprehension, for example the squares of 0 to 4.</li>
+<li>From a list, with the labels given in <code>index=['a', 'b', 'c']</code>.</li>
+<li>From a dictionary: its keys become the labels.</li>
+<li>From a NumPy array, with an index supplied.</li>
+<li>From a single value plus an index: the value is repeated for every label.</li>
+</ul>
 <p><a href="#toc">Back to the Table of Contents</a></p>
 <h3 id="example-5-seven-ways-to-create-a-series"><a name="example-5-seven-ways-to-create-a-series"></a>Example 5: Seven ways to create a Series<a class="headerlink" href="#example-5-seven-ways-to-create-a-series" title="Permanent link">&para;</a></h3>
 <p><strong>What the code does.</strong> It creates seven Series, three with a default index and four with a custom index:</p>
@@ -9862,7 +9875,17 @@ dtype: int64
 <p><a href="#toc">Back to the Table of Contents</a></p>
 <h3 id="1261-how-dataframes-are-created"><a name="12-6-1-how-dataframes-are-created"></a>12.6.1 How DataFrames are created<a class="headerlink" href="#1261-how-dataframes-are-created" title="Permanent link">&para;</a></h3>
 <p>There are three broad ways: (1) manually, from ordinary Python structures, (2) from external files, and (3) by converting existing objects.</p>
-<p><img alt="Three categories of ways to create a DataFrame" src="https://raw.githubusercontent.com/ag999git/001-Python-book-2026/main/resources/ch-12-nb-02-dataframe-creation.png" /></p>
+<p><img alt="Three categories of ways to create a DataFrame" src="https://raw.githubusercontent.com/ag999git/001-Python-book-2026/main/resources/S12-LR-ch-12-nb-02-dataframe-creation.png" /></p>
+<p><strong>Reading the figure</strong></p>
+<ul>
+<li>There are three broad ways to create a DataFrame.</li>
+<li>Manually, from ordinary Python structures.</li>
+<li>By reading an external file.</li>
+<li>By converting existing Pandas or NumPy objects.</li>
+<li>From a dictionary of lists (the most common), a list of dictionaries (record style), or a list of lists with <code>columns</code> labels.</li>
+<li>With the readers <code>pd.read_csv()</code>, <code>pd.read_excel()</code> and <code>pd.read_json()</code>.</li>
+<li>From a dictionary of Series, from a NumPy array, or as an empty DataFrame to fill later.</li>
+</ul>
 <p><strong>1. Manual creation (dictionaries and lists).</strong> Good for small tables and for testing. The most common form is a <strong>dictionary of lists</strong>, where the keys become the column names. A <strong>list of lists</strong> needs the <code>columns</code> parameter as well; without it, Pandas numbers the columns 0, 1, 2.</p>
 <p><a href="#toc">Back to the Table of Contents</a></p>
 <h3 id="example-6-three-manual-ways-to-build-a-dataframe"><a name="example-6-three-manual-ways-to-build-a-dataframe"></a>Example 6: Three manual ways to build a DataFrame<a class="headerlink" href="#example-6-three-manual-ways-to-build-a-dataframe" title="Permanent link">&para;</a></h3>
@@ -10096,7 +10119,14 @@ B. From Pandas Series:
 </tr>
 </tbody>
 </table>
-<p><img alt="Moving a column into the index with set_index()" src="https://raw.githubusercontent.com/ag999git/001-Python-book-2026/main/resources/ch-12-nb-03-default-custom-index.png" /></p>
+<p><img alt="Moving a column into the index with set_index()" src="https://raw.githubusercontent.com/ag999git/001-Python-book-2026/main/resources/S12-LR-ch-12-nb-03-default-custom-index.png" /></p>
+<p><strong>Reading the figure</strong></p>
+<ul>
+<li><strong>Step 1:</strong> <code>sns.load_dataset('penguins')</code> loads the data.</li>
+<li><strong>Step 2:</strong> By default Pandas numbers the rows 0, 1, 2 ... with a <code>RangeIndex</code>, and <code>species</code> stays an ordinary column.</li>
+<li><strong>Step 3:</strong> <code>df.set_index('species')</code> promotes the column to the index.</li>
+<li><strong>Step 4:</strong> <code>species</code> moves out of the data area and becomes the row label. The same label, such as <code>Adelie</code>, appears on many rows: the index does not have to be unique.</li>
+</ul>
 <p><a href="#toc">Back to the Table of Contents</a></p>
 <h3 id="example-9-default-index-and-set_index"><a name="example-9-default-index-and-set-index"></a>Example 9: Default index and set_index()<a class="headerlink" href="#example-9-default-index-and-set_index" title="Permanent link">&para;</a></h3>
 <p><strong>What the code does.</strong> It loads the penguins dataset, prints the first three rows with the automatic index, then moves the <code>species</code> column into the index with <code>set_index()</code> and prints the first three rows again.</p>
@@ -10443,7 +10473,14 @@ dtype: object
 <div class="text_cell_render border-box-sizing rendered_html">
 <h2 id="129-dataframe-operations-the-four-pillars"><a name="12-9-dataframe-operations-the-four-pillars"></a>12.9 DataFrame operations: the four pillars<a class="headerlink" href="#129-dataframe-operations-the-four-pillars" title="Permanent link">&para;</a></h2>
 <p>A DataFrame has hundreds of methods, but you do not have to memorise them. Look at how data analysis is actually done and every method falls into one of four groups. We call them the <strong>four pillars</strong>, and you will nearly always use them in this order: (1) look at the data, (2) understand it, (3) clean it, and (4) reach for special tools for text or dates.</p>
-<p><img alt="The four pillars of DataFrame methods" src="https://raw.githubusercontent.com/ag999git/001-Python-book-2026/main/resources/ch-12-nb-04-four-pillars.png" /></p>
+<p><img alt="The four pillars of DataFrame methods" src="https://raw.githubusercontent.com/ag999git/001-Python-book-2026/main/resources/S12-LR-ch-12-nb-04-four-pillars.png" /></p>
+<p><strong>Reading the figure</strong></p>
+<ul>
+<li>Pillar 1, inspection and retrieval: look at the data and pick parts of it, for example <code>tips.shape</code> and <code>tips.head(3)</code>.</li>
+<li>Pillar 2, analysis and summary: work out statistics, for example the average tip by day with <code>groupby()</code>.</li>
+<li>Pillar 3, cleaning and manipulation: fix, add and reshape data, for example a new <code>tip_pct</code> column with <code>assign()</code>.</li>
+<li>Pillar 4, type-specific tools: methods for one kind of column, through <code>.str</code> for text and <code>.dt</code> for dates.</li>
+</ul>
 <p><strong>Pillar 1: inspection and retrieval.</strong> Before you can analyse or fix anything, you must see what you have. These are your eyes and hands.</p>
 <table>
 <thead>
@@ -10863,7 +10900,15 @@ Day names in capitals: ['SUN' 'SAT' 'THUR' 'FRI']
 </tr>
 </tbody>
 </table>
-<p><img alt="Long to wide with pivot_table, and back again with stack and unstack" src="https://raw.githubusercontent.com/ag999git/001-Python-book-2026/main/resources/ch-12-nb-05-pivot-stack-unstack.png" /></p>
+<p><img alt="Long to wide with pivot_table, and back again with stack and unstack" src="https://raw.githubusercontent.com/ag999git/001-Python-book-2026/main/resources/S12-LR-ch-12-nb-05-pivot-stack-unstack.png" /></p>
+<p><strong>Reading the figure</strong></p>
+<ul>
+<li><strong>Step 1:</strong> The raw data is in long format: one row per sale, with the columns Shop, Item and sale.</li>
+<li><strong>Step 2:</strong> <code>pivot_table()</code> takes the Shop values as row labels, the Item values as column headers, and adds up the sales in each cell.</li>
+<li><strong>Step 3:</strong> The result is in wide format: one row per shop and one column per item.</li>
+<li><strong>Step 4:</strong> <code>stack()</code> moves the column labels into the index. The result is a Series with a two-level MultiIndex (Shop, Item).</li>
+<li><strong>Step 5:</strong> <code>unstack()</code> moves that inner level back to the columns, and the wide table returns.</li>
+</ul>
 <p><a href="#toc">Back to the Table of Contents</a></p>
 <h3 id="example-11-pivot_table-stack-and-unstack"><a name="example-11-pivot-table-stack-and-unstack"></a>Example 11: pivot_table(), stack() and unstack()<a class="headerlink" href="#example-11-pivot_table-stack-and-unstack" title="Permanent link">&para;</a></h3>
 <p><strong>What the code does.</strong> It (1) builds the sales DataFrame from a list of dictionaries, (2) makes the pivot table with <code>fill_value=0</code>, (3) uses <code>stack()</code> to turn it back into long format, (4) uses <code>unstack()</code> to return to wide format, and (5) unstacks the other level so that the table is flipped.</p>
@@ -11195,7 +11240,17 @@ Back to a flat table:
 <div class="text_cell_render border-box-sizing rendered_html">
 <h2 id="1212-using-pandas-with-files-csv-html-json"><a name="12-12-using-pandas-with-files-csv-html-json"></a>12.12 Using Pandas with files (CSV, HTML, JSON)<a class="headerlink" href="#1212-using-pandas-with-files-csv-html-json" title="Permanent link">&para;</a></h2>
 <p>Pandas reads and writes many formats: (1) CSV (comma-separated values), (2) HTML (tables on web pages), and (3) JSON (JavaScript Object Notation), among others. This is what makes it the centre of most data pipelines: read the raw file, clean it, analyse it, export the result.</p>
-<p><img alt="From a raw file to a DataFrame, whatever the format" src="https://raw.githubusercontent.com/ag999git/001-Python-book-2026/main/resources/ch-12-nb-06-file-to-dataframe.png" /></p>
+<p><img alt="From a raw file to a DataFrame, whatever the format" src="https://raw.githubusercontent.com/ag999git/001-Python-book-2026/main/resources/S12-LR-ch-12-nb-06-file-to-dataframe.png" /></p>
+<p><strong>Reading the figure</strong></p>
+<ul>
+<li><strong>Step 1:</strong> The data starts as a raw file or a web page.</li>
+<li><strong>Step 2:</strong> What format is it in?</li>
+<li><strong>Step 3:</strong> CSV, or any text with a separator: <code>pd.read_csv()</code>, with <code>sep=</code> for semicolons, tabs, colons and so on.</li>
+<li><strong>Step 4:</strong> Tables on a web page: <code>pd.read_html()</code>, which returns a list of DataFrames.</li>
+<li><strong>Step 5:</strong> JSON: <code>pd.read_json()</code>.</li>
+<li><strong>Step 6:</strong> Whatever the format, the result is a DataFrame.</li>
+<li><strong>Step 7:</strong> From there the work is the same: clean, transform, analyse and export it.</li>
+</ul>
 <p><a href="#toc">Back to the Table of Contents</a></p>
 <h2 id="1213-reading-csv-files-with-pdread_csv"><a name="12-13-reading-csv-files-with-pd-read-csv"></a>12.13 Reading CSV files with pd.read_csv()<a class="headerlink" href="#1213-reading-csv-files-with-pdread_csv" title="Permanent link">&para;</a></h2>
 <p><strong>Purpose:</strong> to load tabular data into a DataFrame.</p>
@@ -11944,8 +11999,19 @@ Read back: (244, 7) rows x columns
 <li>The cell prints a <code>FutureWarning</code>: passing raw HTML text to <code>read_html()</code> is on its way out. The fix is one line: <code>tables = pd.read_html(io.StringIO(html_text))</code>, after <code>import io</code>.</li>
 <li>The second table has repeated column names such as "Dataset I" and "Dataset I.1" for the x and y pairs. This is typical of web tables; they usually need tidying.</li>
 </ol>
-<p><img alt="The steps of reading tables from a web page" src="https://raw.githubusercontent.com/ag999git/001-Python-book-2026/main/resources/ch-12-nb-07-read-html-steps.png" />
-</table></p>
+<p><img alt="The steps of reading tables from a web page" src="https://raw.githubusercontent.com/ag999git/001-Python-book-2026/main/resources/S12-LR-ch-12-nb-07-read-html-steps.png" /></p>
+<p><strong>Reading the figure</strong></p>
+<ul>
+<li><strong>Step 1:</strong> Give the URL of the page, here the Wikipedia article on Anscombe's quartet.</li>
+<li><strong>Step 2:</strong> <code>requests.get(url, headers=headers)</code> fetches the page. The <code>User-Agent</code> header makes the request look like a browser; without it the site may answer with error 403.</li>
+<li><strong>Step 3:</strong> <code>response.text</code> holds the page's HTML as a string.</li>
+<li><strong>Step 4:</strong> <code>pd.read_html()</code> parses the HTML, with a parser such as <code>lxml</code>.</li>
+<li><strong>Step 5:</strong> It finds every table element on the page.</li>
+<li><strong>Step 6:</strong> Each table is turned into a DataFrame.</li>
+<li><strong>Step 7:</strong> The result is always a list of DataFrames, even for one table. Here <code>len(tables)</code> is 2.</li>
+<li><strong>Step 8:</strong> Pick the table you want by its position: the useful one here is <code>tables[1]</code>.</li>
+</ul>
+</table>
 </div>
 </div>
 </div>
@@ -12134,7 +12200,15 @@ STEP 11: Selected table preview:
 <p><strong>Panel</strong> was the old 3D structure of Pandas, with three axes: items (DataFrames), major axis (rows) and minor axis (columns). It has been removed.</p>
 <p>Modern Pandas handles the same data with a <strong>MultiIndex</strong> DataFrame, which is more efficient. A MultiIndex lets one 2D DataFrame hold higher-dimensional data, rather like an Excel sheet with several labels down the side of each row.</p>
 <p><strong>How <code>groupby()</code> creates a MultiIndex.</strong> When you group by more than one column, Pandas needs a way to name each combination of values. It does that by building a hierarchical index: each group is identified by a tuple of labels.</p>
-<p><img alt="How grouping by two columns builds a MultiIndex" src="https://raw.githubusercontent.com/ag999git/001-Python-book-2026/main/resources/ch-12-nb-08-groupby-multiindex.png" /></p>
+<p><img alt="How grouping by two columns builds a MultiIndex" src="https://raw.githubusercontent.com/ag999git/001-Python-book-2026/main/resources/S12-LR-ch-12-nb-08-groupby-multiindex.png" /></p>
+<p><strong>Reading the figure</strong></p>
+<ul>
+<li><strong>Step 1:</strong> <code>sns.load_dataset('penguins')</code> loads the data.</li>
+<li><strong>Step 2:</strong> <code>unique()</code> shows 3 islands (Torgersen, Biscoe, Dream) and the values of <code>sex</code>, which include missing ones.</li>
+<li><strong>Step 3:</strong> <code>dropna(subset=['sex'])</code> removes the rows with no sex recorded.</li>
+<li><strong>Step 4:</strong> Grouping by two columns, <code>groupby(['island', 'sex']).size()</code>, gives 3 x 2 = 6 groups. Each group is named by a pair of values, which becomes a two-level MultiIndex.</li>
+<li><strong>Step 5:</strong> <code>grouped.loc[('Biscoe', 'Male')]</code> reads one group by its pair of labels.</li>
+</ul>
 <p><a href="#toc">Back to the Table of Contents</a></p>
 <h3 id="example-16-building-a-multiindex-from-the-penguins-dataset"><a name="example-16-building-a-multiindex-from-the-penguins-dataset"></a>Example 16: Building a MultiIndex from the penguins dataset<a class="headerlink" href="#example-16-building-a-multiindex-from-the-penguins-dataset" title="Permanent link">&para;</a></h3>
 <p><strong>What the code does.</strong> In six numbered steps it (1) loads the penguins dataset, (2) prints the unique islands and sexes, (3) drops the rows where <code>sex</code> is missing, (4) groups by island and sex and counts each group with <code>size()</code>, (5) prints how many groups there are, and (6) reads one group out of the result.</p>

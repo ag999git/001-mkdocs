@@ -8379,7 +8379,7 @@
 </ol>
 <p>Answers that use random numbers give different values every time. If you want the same values as this notebook, add <code>np.random.seed(0)</code> before the random call.</p>
 <h3 id="how-to-read-the-flowcharts">How to read the flowcharts<a class="headerlink" href="#how-to-read-the-flowcharts" title="Permanent link">&para;</a></h3>
-<p>The steps are numbered 1, 2, 3 and so on. When the flow splits into two paths, one path uses the letter A (2A, 3A ...) and the other uses the letter B (2B, 3B ...). A long chain of steps is folded onto a second row: follow the arrow down and back to the left.</p>
+<p>Each flowchart reads from left to right. A long chain of steps continues on the next row: follow the arrow down and back to the left. The boxes are numbered 1, 2, 3 and so on. When the flow splits, the shorter branch is numbered first, and then the numbering carries on along the main branch. A diamond asks a question, and the grey tags on its arrows give the answers. An arrow labelled "Repeat" or "Next" goes back to an earlier step: this is how a loop is drawn. Under each flowchart, <strong>Reading the figure</strong> explains every step. A diagram that shows a structure, not a sequence of steps, has no numbers.</p>
 </div>
 </div>
 </div>
@@ -8467,7 +8467,15 @@
 <li><code>arr[::-1]</code> is a <strong>view</strong>, not a copy. It shares memory with <code>arr</code>.</li>
 <li><strong>Try it:</strong> <code>arr[::-2]</code> gives every second number, backwards.</li>
 </ol>
-<p><img alt="How arr[::-1] reads an array backwards" src="https://raw.githubusercontent.com/ag999git/001-Python-book-2026/main/resources/ch-11-qa-01-reverse-slice.png" /></p>
+<p><img alt="How arr[::-1] reads an array backwards" src="https://raw.githubusercontent.com/ag999git/001-Python-book-2026/main/resources/S11-LR-ch-11-qa-01-reverse-slice.png" /></p>
+<p><strong>Reading the figure</strong></p>
+<ul>
+<li><strong>Step 1:</strong> <code>np.arange(10, 50)</code> builds the 40 numbers from 10 to 49. The stop value, 50, is not included.</li>
+<li><strong>Step 2:</strong> The full slice syntax is <code>[start : stop : step]</code>.</li>
+<li><strong>Step 3:</strong> With start and stop left out, the slice covers the whole array.</li>
+<li><strong>Step 4:</strong> A step of -1 moves one place at a time, from right to left.</li>
+<li><strong>Step 5:</strong> So <code>arr[::-1]</code> gives the array backwards, <code>[49 48 ... 10]</code>. It is a view: it shares memory with <code>arr</code>.</li>
+</ul>
 </div>
 </div>
 </div>
@@ -8836,7 +8844,14 @@ Row and column of the min: (np.int64(0), np.int64(0))
 <li><code>dtype=int</code> keeps the output as 0 and 1 rather than 0. and 1.</li>
 <li><strong>Try it:</strong> swap the two assignments around, so that the top-left square becomes 1.</li>
 </ol>
-<p><img alt="Building a checkerboard with two slice assignments" src="https://raw.githubusercontent.com/ag999git/001-Python-book-2026/main/resources/ch-11-qa-02-checkerboard.png" /></p>
+<p><img alt="Building a checkerboard with two slice assignments" src="https://raw.githubusercontent.com/ag999git/001-Python-book-2026/main/resources/S11-LR-ch-11-qa-02-checkerboard.png" /></p>
+<p><strong>Reading the figure</strong></p>
+<ul>
+<li><strong>Step 1:</strong> <code>np.zeros((8, 8), dtype=int)</code> makes an 8 x 8 array of zeros. <code>dtype=int</code> makes them whole numbers, shown as 0 rather than 0.0.</li>
+<li><strong>Step 2:</strong> <code>check[1::2, ::2] = 1</code> writes 1 into rows 1, 3, 5, 7 and columns 0, 2, 4, 6.</li>
+<li><strong>Step 3:</strong> <code>check[::2, 1::2] = 1</code> writes 1 into rows 0, 2, 4, 6 and columns 1, 3, 5, 7.</li>
+<li><strong>Step 4:</strong> Together the two slice assignments make the checkerboard pattern of 0s and 1s.</li>
+</ul>
 </div>
 </div>
 </div>
@@ -8947,7 +8962,15 @@ Row and column of the min: (np.int64(0), np.int64(0))
 <li>After <code>safe_copy[1] = 88</code>, the original still shows 2 at that position.</li>
 <li>Rule of thumb: slicing gives a view; fancy indexing (a list of positions) and boolean masking give a copy.</li>
 </ol>
-<p><img alt="Slicing gives a view; integer indexing and masking give a copy" src="https://raw.githubusercontent.com/ag999git/001-Python-book-2026/main/resources/ch-11-nb-01-view-vs-copy.png" /></p>
+<p><img alt="Slicing gives a view; integer indexing and masking give a copy" src="https://raw.githubusercontent.com/ag999git/001-Python-book-2026/main/resources/S11-LR-ch-11-nb-01-view-vs-copy.png" /></p>
+<p><strong>Reading the figure</strong></p>
+<ul>
+<li><strong>Step 1:</strong> <code>np.arange(12).reshape(4, 3)</code> makes the numbers 0 to 11 in 4 rows of 3.</li>
+<li><strong>Step 2:</strong> A slice, such as <code>sub = arr[0:2, :]</code>, picks the first two rows.</li>
+<li><strong>Step 3:</strong> A slice is a view: it shares its data with <code>arr</code>. After <code>sub[0, 0] = 999</code>, the original <code>arr</code> also shows 999.</li>
+<li><strong>Step 4:</strong> Integer (fancy) indexing, such as <code>arr[[0, 3]]</code>, and boolean masking, such as <code>arr[arr &amp;gt; 5]</code>, pick elements in a different way.</li>
+<li><strong>Step 5:</strong> They return a copy. Changing it leaves <code>arr</code> alone. For an independent copy of a slice, write <code>arr[0:2, :].copy()</code>.</li>
+</ul>
 </div>
 </div>
 </div>
@@ -9272,7 +9295,15 @@ Inner Sub-matrix:
 <li>The shape shrinks from (5, 5) to (5,).</li>
 <li><code>matrix.sum()</code> with no axis adds every element: 300.</li>
 </ol>
-<p><img alt="What sum() does along axis 0 and along axis 1" src="https://raw.githubusercontent.com/ag999git/001-Python-book-2026/main/resources/ch-11-nb-02-axis-collapse.png" /></p>
+<p><img alt="What sum() does along axis 0 and along axis 1" src="https://raw.githubusercontent.com/ag999git/001-Python-book-2026/main/resources/S11-LR-ch-11-nb-02-axis-collapse.png" /></p>
+<p><strong>Reading the figure</strong></p>
+<ul>
+<li><strong>Step 1:</strong> <code>arr</code> has 2 rows and 3 columns: shape <code>(2, 3)</code>.</li>
+<li><strong>Step 2:</strong> <code>axis=0</code> collapses the rows: NumPy goes down each column and adds the values it meets.</li>
+<li><strong>Step 3:</strong> The result has one value per column, <code>[5 7 9]</code> (1+4, 2+5, 3+6), and shape <code>(3,)</code>: the row axis has gone.</li>
+<li><strong>Step 4:</strong> <code>axis=1</code> collapses the columns: NumPy goes across each row.</li>
+<li><strong>Step 5:</strong> The result has one value per row, <code>[6 15]</code> (1+2+3, 4+5+6), and shape <code>(2,)</code>.</li>
+</ul>
 </div>
 </div>
 </div>
@@ -9329,7 +9360,16 @@ Sums of columns: [50 55 60 65 70]
 <li><code>arr[mask] = 0</code> changes the array <strong>in place</strong>. There is no copy.</li>
 <li>The same result with <code>np.where</code> would be <code>arr = np.where(arr &amp;gt; 50, 0, arr)</code>, which builds a new array instead.</li>
 </ol>
-<p><img alt="Boolean masking filters; np.where keeps the shape and changes values" src="https://raw.githubusercontent.com/ag999git/001-Python-book-2026/main/resources/ch-11-nb-05-mask-where.png" /></p>
+<p><img alt="Boolean masking filters; np.where keeps the shape and changes values" src="https://raw.githubusercontent.com/ag999git/001-Python-book-2026/main/resources/S11-LR-ch-11-nb-05-mask-where.png" /></p>
+<p><strong>Reading the figure</strong></p>
+<ul>
+<li><strong>Step 1:</strong> <code>marks</code> holds the marks of six students.</li>
+<li><strong>Step 2:</strong> <code>marks &amp;gt;= 75</code> compares every element with 75.</li>
+<li><strong>Step 3:</strong> The result is a boolean array, the mask: <code>[ True False  True  True False False]</code>.</li>
+<li><strong>Step 4:</strong> Using the mask inside <code>[]</code> keeps only the <code>True</code> positions: <code>marks[mask]</code> gives <code>[85 78 92]</code>, fewer elements. The same mask can filter <code>names</code>.</li>
+<li><strong>Step 5:</strong> <code>np.where(marks &amp;lt; 40, 40, marks)</code> chooses, position by position, 40 where the condition is <code>True</code> and the original mark elsewhere.</li>
+<li><strong>Step 6:</strong> The result, <code>[85 40 78 92 40 60]</code>, has the same shape as <code>marks</code>: only the low values were changed.</li>
+</ul>
 </div>
 </div>
 </div>

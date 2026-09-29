@@ -9902,7 +9902,14 @@
 <li><strong>The operating system — the builder.</strong> Tk does not own the screen. It asks the operating system to draw, through the system's own drawing APIs.</li>
 </ol>
 <p>That fourth layer explains something students often ask about: why the same script looks different on different machines. A button on a Mac is drawn by macOS, and a button on Windows is drawn by Windows. Your code is identical; the painter is not.</p>
-<p><img alt="The layers that turn a line of Python into pixels on the screen" src="https://raw.githubusercontent.com/ag999git/001-Python-book-2026/main/resources/ch-14-nb-01-layers.png" /></p>
+<p><img alt="The layers that turn a line of Python into pixels on the screen" src="https://raw.githubusercontent.com/ag999git/001-Python-book-2026/main/resources/S14-LR-ch-14-nb-01-layers.png" /></p>
+<p><strong>Reading the figure</strong></p>
+<ul>
+<li><strong>Step 1:</strong> Your script calls Python, for example <code>tk.Label(root, text="Hi")</code>.</li>
+<li><strong>Step 2:</strong> Tkinter, the "Tk interface", translates that call into strings of Tcl commands.</li>
+<li><strong>Step 3:</strong> The Tcl/Tk engine, embedded in every Tkinter program, keeps the blueprint and state of every widget.</li>
+<li><strong>Step 4:</strong> Tk does not own the screen: it asks the operating system to draw, through the system's own drawing APIs. That is why the same script looks slightly different on Windows, macOS and Linux.</li>
+</ul>
 <h3 id="summary-of-the-layers"><a name="summary-of-the-layers"></a>Summary of the Layers<a class="headerlink" href="#summary-of-the-layers" title="Permanent link">&para;</a></h3>
 <table>
 <thead>
@@ -9951,7 +9958,19 @@
 <div class="text_cell_render border-box-sizing rendered_html">
 <h2 id="143-breakdown-of-the-tkinter-module"><a name="14-3-breakdown-of-the-tkinter-module"></a>14.3 Breakdown of the Tkinter Module<a class="headerlink" href="#143-breakdown-of-the-tkinter-module" title="Permanent link">&para;</a></h2>
 <p>The <code>tkinter</code> module is large, but it divides neatly into eight parts. Learning which part a name belongs to is most of the battle.</p>
-<p><img alt="The eight parts of the tkinter module" src="https://raw.githubusercontent.com/ag999git/001-Python-book-2026/main/resources/ch-14-nb-02-module-structure.png" /></p>
+<p><img alt="The eight parts of the tkinter module" src="https://raw.githubusercontent.com/ag999git/001-Python-book-2026/main/resources/S14-LR-ch-14-nb-02-module-structure.png" /></p>
+<p><strong>Reading the figure</strong></p>
+<ul>
+<li>The <code>tkinter</code> module is large, but it divides into eight parts.</li>
+<li>Core widgets, from <code>tk</code>: Label, Button, Entry, Text, Checkbutton, Radiobutton, Scale.</li>
+<li>Themed widgets, from <code>ttk</code>: Combobox, Treeview, Notebook, Progressbar, Separator.</li>
+<li>Windows and dialogs: the main window <code>Tk</code>, extra windows <code>Toplevel</code>, and <code>messagebox</code>, <code>filedialog</code> and <code>colorchooser</code>.</li>
+<li>Geometry managers, which place widgets: <code>pack()</code>, <code>grid()</code> and <code>place()</code>.</li>
+<li>Variable classes, which keep data and widgets in step: <code>StringVar</code>, <code>IntVar</code>, <code>DoubleVar</code>, <code>BooleanVar</code>.</li>
+<li>Event handling: <code>bind()</code>, event objects, and window protocols such as <code>WM_DELETE_WINDOW</code>.</li>
+<li>Canvas and graphics: <code>create_line()</code>, <code>create_oval()</code>, <code>create_rectangle()</code>, <code>create_text()</code>.</li>
+<li>Images and styles: <code>PhotoImage</code>, <code>widget.config()</code> and <code>ttk.Style</code>.</li>
+</ul>
 <h3 id="what-each-part-contains"><a name="what-each-part-contains"></a>What Each Part Contains<a class="headerlink" href="#what-each-part-contains" title="Permanent link">&para;</a></h3>
 <ol>
 <li><strong>Core widgets (<code>tk</code>)</strong>: the original building blocks. <code>Label</code>, <code>Button</code>, <code>Entry</code>, <code>Text</code>, <code>Checkbutton</code>, <code>Radiobutton</code>, <code>Scale</code>.</li>
@@ -10065,7 +10084,15 @@
 </ul>
 <h3 id="static-binding-versus-reactive-binding"><a name="static-binding-versus-reactive-binding"></a>Static Binding versus Reactive Binding<a class="headerlink" href="#static-binding-versus-reactive-binding" title="Permanent link">&para;</a></h3>
 <p>This is the single most useful idea in the section, so it deserves a picture.</p>
-<p><img alt="text= copies a value once, textvariable= keeps a live link" src="https://raw.githubusercontent.com/ag999git/001-Python-book-2026/main/resources/ch-14-nb-05-text-vs-textvariable.png" /></p>
+<p><img alt="text= copies a value once, textvariable= keeps a live link" src="https://raw.githubusercontent.com/ag999git/001-Python-book-2026/main/resources/S14-LR-ch-14-nb-05-text-vs-textvariable.png" /></p>
+<p><strong>Reading the figure</strong></p>
+<ul>
+<li><strong>Step 1:</strong> A control variable, such as <code>tk.StringVar()</code>, holds a value that widgets can share.</li>
+<li><strong>Step 2:</strong> Static binding, <code>text=var</code>: Tkinter reads the value once, when the widget is created.</li>
+<li><strong>Step 3:</strong> Worse, it reads the variable's internal Tcl name, so the label shows something like <code>PY_VAR0</code>, and it never changes again.</li>
+<li><strong>Step 4:</strong> Reactive binding, <code>textvariable=var</code>: a permanent link is built between the variable and the widget.</li>
+<li><strong>Step 5:</strong> Every <code>.set()</code> on the variable repaints the label at once. Use <code>textvariable=</code> for text and <code>variable=</code> for state, as in a Checkbutton.</li>
+</ul>
 <p><code>text=self.text_val</code> reads the variable <strong>once</strong> and copies the result. Worse, the result is not the string you expect: a <code>StringVar</code> converted to text gives its internal Tcl name, something like <code>PY_VAR0</code>. So the label shows a piece of Tkinter's own bookkeeping and then never changes.</p>
 <p><code>textvariable=self.text_val</code> stores a <strong>reference</strong>. Every time the variable changes, Tcl pushes the new value into the widget and the widget repaints itself.</p>
 <h3 id="why-widgets-never-get-confused"><a name="why-widgets-never-get-confused"></a>Why Widgets Never Get Confused<a class="headerlink" href="#why-widgets-never-get-confused" title="Permanent link">&para;</a></h3>
@@ -10186,7 +10213,15 @@
 </tbody>
 </table>
 <p>In practice <code>"write"</code> is the one you will use. The other two exist mainly for debugging.</p>
-<p><img alt="What happens on every keystroke when a variable is traced" src="https://raw.githubusercontent.com/ag999git/001-Python-book-2026/main/resources/ch-14-nb-06-variable-tracing.png" /></p>
+<p><img alt="What happens on every keystroke when a variable is traced" src="https://raw.githubusercontent.com/ag999git/001-Python-book-2026/main/resources/S14-LR-ch-14-nb-06-variable-tracing.png" /></p>
+<p><strong>Reading the figure</strong></p>
+<ul>
+<li><strong>Step 1:</strong> The user types a character into the Entry.</li>
+<li><strong>Step 2:</strong> Because of <code>textvariable=</code>, the Entry writes the new text into the <code>StringVar</code>.</li>
+<li><strong>Step 3:</strong> <code>variable.trace_add("write", callback)</code> watches the variable, so the change is noticed at once.</li>
+<li><strong>Step 4:</strong> Your callback runs. Tkinter passes it three extra arguments, which <code>*args</code> absorbs.</li>
+<li><strong>Step 5:</strong> The callback reads the value with <code>.get()</code> and updates the GUI, for example a live character count.</li>
+</ul>
 <h3 id="why-the-callback-needs-args"><a name="why-the-callback-needs-args"></a>Why the Callback Needs *args<a class="headerlink" href="#why-the-callback-needs-args" title="Permanent link">&para;</a></h3>
 <p>When Tcl calls your tracing callback, it passes three extra arguments: the internal variable name, an index (used only for Tcl arrays), and a one-letter code for the operation — <code>"w"</code>, <code>"r"</code> or <code>"u"</code>.</p>
 <p>Your function was probably written to take no arguments at all, so it would fail with a <code>TypeError</code>. The fix is to absorb them:</p>
@@ -10345,7 +10380,18 @@
 </code></pre></div>
 <p><code>tk.Tk()</code> does three things at once: it starts the Tcl interpreter, it initialises the Tk toolkit, and it creates the main window. This is why a program should normally create exactly one <code>Tk()</code> object.</p>
 <p>The geometry string <code>"400x300+100+100"</code> means: 400 pixels wide, 300 tall, placed 100 pixels from the left edge of the screen and 100 from the top. The position part is optional; <code>"400x300"</code> alone is common.</p>
-<p><img alt="The eight steps of a typical Tkinter script" src="https://raw.githubusercontent.com/ag999git/001-Python-book-2026/main/resources/ch-14-nb-03-script-steps.png" /></p>
+<p><img alt="The eight steps of a typical Tkinter script" src="https://raw.githubusercontent.com/ag999git/001-Python-book-2026/main/resources/S14-LR-ch-14-nb-03-script-steps.png" /></p>
+<p><strong>Reading the figure</strong></p>
+<ul>
+<li><strong>Step 1:</strong> <code>import tkinter as tk</code>.</li>
+<li><strong>Step 2:</strong> <code>root = tk.Tk()</code> starts the Tcl interpreter, initialises the Tk toolkit and creates the main window.</li>
+<li><strong>Step 3:</strong> Configure the window, for example <code>root.title("My Tkinter Application")</code> and <code>root.geometry("400x300+100+100")</code>: 400 wide, 300 tall, 100 pixels from the left and top.</li>
+<li><strong>Step 4:</strong> Create the widgets, such as labels, buttons and entry boxes.</li>
+<li><strong>Step 5:</strong> Apply a geometry manager to each widget. Until then it exists in memory but is invisible.</li>
+<li><strong>Step 6:</strong> <code>root.mainloop()</code> starts the event loop. Without it the window flashes on screen and vanishes.</li>
+<li><strong>Step 7:</strong> Tkinter now waits for the user to do something.</li>
+<li><strong>Step 8:</strong> When an event happens, Tkinter runs the callback function you connected to it, and goes back to waiting.</li>
+</ul>
 <h3 id="the-steps-in-order"><a name="the-steps-in-order"></a>The Steps in Order<a class="headerlink" href="#the-steps-in-order" title="Permanent link">&para;</a></h3>
 <ol>
 <li><strong>Import</strong> the library.</li>
@@ -10411,7 +10457,14 @@
 <h2 id="148-the-event-loop-mainloop"><a name="14-8-the-event-loop-mainloop"></a>14.8 The Event Loop (mainloop())<a class="headerlink" href="#148-the-event-loop-mainloop" title="Permanent link">&para;</a></h2>
 <p><code>mainloop()</code> is the heartbeat of a Tkinter program. It is an infinite loop that does four things over and over: waits for events, detects user interaction, dispatches each event to the right widget, and executes the matching callback.</p>
 <p>Without it, the window is created and the program immediately ends, so the window flashes on screen and vanishes.</p>
-<p><img alt="How one mouse click travels through the event loop" src="https://raw.githubusercontent.com/ag999git/001-Python-book-2026/main/resources/ch-14-nb-04-event-loop.png" /></p>
+<p><img alt="How one mouse click travels through the event loop" src="https://raw.githubusercontent.com/ag999git/001-Python-book-2026/main/resources/S14-LR-ch-14-nb-04-event-loop.png" /></p>
+<p><strong>Reading the figure</strong></p>
+<ul>
+<li><strong>Step 1:</strong> The user does something: a mouse click or a key press.</li>
+<li><strong>Step 2:</strong> The operating system records it and puts it in the event queue.</li>
+<li><strong>Step 3:</strong> <code>mainloop()</code>, the heartbeat of the program, picks the event up and works out which widget it belongs to.</li>
+<li><strong>Step 4:</strong> Tkinter runs the callback connected to that widget, redraws what changed, and the loop goes back to waiting for the next event.</li>
+</ul>
 <h3 id="characteristics-of-mainloop"><a name="characteristics-of-mainloop"></a>Characteristics of mainloop()<a class="headerlink" href="#characteristics-of-mainloop" title="Permanent link">&para;</a></h3>
 <table>
 <thead>
@@ -10496,7 +10549,17 @@
 </tbody>
 </table>
 <p>Tkinter offers three ways to wire an event to a function. They are not alternatives to choose between at random; each one fits a different job.</p>
-<p><img alt="The three ways to handle events in Tkinter" src="https://raw.githubusercontent.com/ag999git/001-Python-book-2026/main/resources/ch-14-nb-07-three-event-systems.png" /></p>
+<p><img alt="The three ways to handle events in Tkinter" src="https://raw.githubusercontent.com/ag999git/001-Python-book-2026/main/resources/S14-LR-ch-14-nb-07-three-event-systems.png" /></p>
+<p><strong>Reading the figure</strong></p>
+<ul>
+<li>A user action can reach your code in three ways, each fitting a different job.</li>
+<li><code>command=</code> is a shortcut available only on widgets such as Button and Menu.</li>
+<li><code>bind("&lt;event&gt;")</code>, with single angle brackets, catches hardware events such as <code>&lt;button-1&gt;</code>, <code>&lt;motion&gt;</code> or <code>&lt;keypress&gt;</code>.</li>
+<li><code>bind("&amp;lt;&lt;virtualevent&gt;&amp;gt;")</code>, with double angle brackets, catches logical events such as <code>&amp;lt;&lt;listboxselect&gt;&amp;gt;</code>.</li>
+<li>With <code>command=</code>, your function is called with no event object.</li>
+<li>With <code>bind()</code>, your function receives an event object carrying details such as <code>event.x</code>, <code>event.y</code>, <code>event.char</code> and <code>event.keysym</code>.</li>
+<li>A virtual event fires only when the widget's state really changes, for example when a new item in a list is selected.</li>
+</ul>
 <h3 id="1-command-the-shortcut"><a name="1-command-the-shortcut"></a>1. command= — The Shortcut<a class="headerlink" href="#1-command-the-shortcut" title="Permanent link">&para;</a></h3>
 <div class="highlight"><pre><span></span><code><span class="n">command</span><span class="o">=</span><span class="n">function_name</span> <span class="c1"># No parentheses, no brackets</span>
 <span class="c1"># Example:</span>
@@ -10627,7 +10690,7 @@
 </table>
 <p><code>event.char</code> is empty for keys that produce no character, such as Shift or the arrow keys. <code>event.keysym</code> always has a name, which is why it is the safer of the two.</p>
 <p><a href="#toc">Back to the Table of Contents</a>
-</virtualevent></event></apply></listboxselect></listboxselect></eventname></keypress></button-1></eventname></p>
+</virtualevent></event></apply></listboxselect></listboxselect></eventname></keypress></button-1></eventname></listboxselect></virtualevent></keypress></motion></button-1></event></p>
 </div>
 </div>
 </div>
@@ -10774,7 +10837,17 @@ Example: ttk.Button(root, text="Click", cursor="hand2").pack()
 <li>A frame can itself contain another frame.</li>
 </ul>
 <p>So a Tkinter application forms a tree.</p>
-<p><img alt="The six families of Tkinter widgets" src="https://raw.githubusercontent.com/ag999git/001-Python-book-2026/main/resources/ch-14-nb-08-widget-families.png" /></p>
+<p><img alt="The six families of Tkinter widgets" src="https://raw.githubusercontent.com/ag999git/001-Python-book-2026/main/resources/S14-LR-ch-14-nb-08-widget-families.png" /></p>
+<p><strong>Reading the figure</strong></p>
+<ul>
+<li>Tkinter widgets fall into six families.</li>
+<li>Input widgets collect what the user types: Entry, Text, Spinbox, Combobox.</li>
+<li>Selection widgets let the user choose: Checkbutton, Radiobutton, Listbox, OptionMenu.</li>
+<li>Display widgets show information: Label, Message, Canvas.</li>
+<li>Control widgets trigger actions or set values: Button, Menu, Scale, Scrollbar.</li>
+<li>Container widgets hold other widgets: Frame, LabelFrame, Notebook, PanedWindow, Toplevel.</li>
+<li>Advanced widgets, from <code>ttk</code>: Treeview and Progressbar.</li>
+</ul>
 <h3 id="the-six-families"><a name="the-six-families"></a>The Six Families<a class="headerlink" href="#the-six-families" title="Permanent link">&para;</a></h3>
 <table>
 <thead>
@@ -10880,7 +10953,13 @@ Example: ttk.Button(root, text="Click", cursor="hand2").pack()
 <span class="n">username_lbl</span> <span class="o">=</span> <span class="n">ttk</span><span class="o">.</span><span class="n">Label</span><span class="p">(</span><span class="n">form_frame</span><span class="p">,</span> <span class="n">text</span><span class="o">=</span><span class="s2">"Username:"</span><span class="p">)</span>
 <span class="n">username_lbl</span><span class="o">.</span><span class="n">pack</span><span class="p">()</span>
 </code></pre></div>
-<p><img alt="The three steps that place a widget inside a container" src="https://raw.githubusercontent.com/ag999git/001-Python-book-2026/main/resources/ch-14-nb-09-container-flow.png" /></p>
+<p><img alt="The three steps that place a widget inside a container" src="https://raw.githubusercontent.com/ag999git/001-Python-book-2026/main/resources/S14-LR-ch-14-nb-09-container-flow.png" /></p>
+<p><strong>Reading the figure</strong></p>
+<ul>
+<li><strong>Step 1:</strong> Create the host container first: <code>form_frame = ttk.Frame(root)</code>.</li>
+<li><strong>Step 2:</strong> Position the container straight away: <code>form_frame.pack(padx=10, pady=10)</code>.</li>
+<li><strong>Step 3:</strong> Create each child with the container as its parent, <code>ttk.Label(form_frame, text="Username:")</code>, and place it with its own geometry manager.</li>
+</ul>
 <h3 id="layout-rules-dos-and-donts"><a name="layout-rules-dos-and-don-ts"></a>Layout Rules: Dos and Don'ts<a class="headerlink" href="#layout-rules-dos-and-donts" title="Permanent link">&para;</a></h3>
 <ul>
 <li><strong>Do</strong> partition your layout into clean, named frames: <code>top_bar</code>, <code>form_body</code>, <code>status_footer</code>.</li>
@@ -11016,7 +11095,15 @@ Example: ttk.Button(root, text="Click", cursor="hand2").pack()
 <li><strong><code>.grid()</code></strong>: organises widgets into a table of rows and columns.</li>
 <li><strong><code>.place()</code></strong>: positions widgets at exact pixel coordinates.</li>
 </ul>
-<p><img alt="The three geometry managers and the rule against mixing them" src="https://raw.githubusercontent.com/ag999git/001-Python-book-2026/main/resources/ch-14-nb-10-geometry-managers.png" /></p>
+<p><img alt="The three geometry managers and the rule against mixing them" src="https://raw.githubusercontent.com/ag999git/001-Python-book-2026/main/resources/S14-LR-ch-14-nb-10-geometry-managers.png" /></p>
+<p><strong>Reading the figure</strong></p>
+<ul>
+<li>A widget stays invisible until a geometry manager places it. Every widget needs exactly one.</li>
+<li><code>.pack()</code> arranges widgets in flowing blocks, top to bottom or side to side.</li>
+<li><code>.grid()</code> organises widgets into a table of rows and columns.</li>
+<li><code>.place()</code> positions widgets at exact pixel coordinates.</li>
+<li>The rule: use one manager per parent container. Mixing <code>pack()</code> and <code>grid()</code> in the same parent raises <code>TclError</code>.</li>
+</ul>
 <h3 id="the-golden-rule-of-layouts"><a name="the-golden-rule-of-layouts"></a>The Golden Rule of Layouts<a class="headerlink" href="#the-golden-rule-of-layouts" title="Permanent link">&para;</a></h3>
 <p>A geometry manager positions a widget relative to <strong>its parent container</strong>, not to the whole screen. If a Label is inside a Frame and you call <code>label.grid()</code>, the label is being placed inside the frame's grid, not the window's.</p>
 <h3 id="the-mixing-prohibition"><a name="the-mixing-prohibition"></a>The Mixing Prohibition<a class="headerlink" href="#the-mixing-prohibition" title="Permanent link">&para;</a></h3>
@@ -11121,9 +11208,25 @@ has slaves managed by pack
 <li><strong>Pixel coordinates versus text layout.</strong> <code>Label</code> uses text-flow mechanics. <code>Canvas</code> works on an absolute 2D coordinate system in pixels, which is what allows precise vector drawing. <code>Treeview</code> uses a structured row-and-column layout.</li>
 </ul>
 <p>The clearest way to see the difference is to compare the flow of data.</p>
-<p><img alt="A passive widget: data flows one way, out to the user" src="https://raw.githubusercontent.com/ag999git/001-Python-book-2026/main/resources/ch-14-nb-11-passive-widget.png" /></p>
+<p><img alt="A passive widget: data flows one way, out to the user" src="https://raw.githubusercontent.com/ag999git/001-Python-book-2026/main/resources/S14-LR-ch-14-nb-11-passive-widget.png" /></p>
+<p><strong>Reading the figure</strong></p>
+<ul>
+<li><strong>Step 1:</strong> The data starts somewhere: a variable, a file or a calculation.</li>
+<li><strong>Step 2:</strong> Your Python code prepares it.</li>
+<li><strong>Step 3:</strong> A passive widget, such as a Label, Message or Canvas, displays it.</li>
+<li><strong>Step 4:</strong> The user reads it. Nothing comes back: a passive widget is the end of the line.</li>
+</ul>
 <p>A passive widget is a terminus. Data goes in and the user reads it; nothing comes back.</p>
-<p><img alt="An interactive widget: the data flows in a loop" src="https://raw.githubusercontent.com/ag999git/001-Python-book-2026/main/resources/ch-14-nb-12-interactive-widget.png" /></p>
+<p><img alt="An interactive widget: the data flows in a loop" src="https://raw.githubusercontent.com/ag999git/001-Python-book-2026/main/resources/S14-LR-ch-14-nb-12-interactive-widget.png" /></p>
+<p><strong>Reading the figure</strong></p>
+<ul>
+<li><strong>Step 1:</strong> The user clicks or types.</li>
+<li><strong>Step 2:</strong> An interactive widget, such as a Listbox, Text or Button, receives the action.</li>
+<li><strong>Step 3:</strong> The widget fires an event.</li>
+<li><strong>Step 4:</strong> Your event handler runs.</li>
+<li><strong>Step 5:</strong> Python updates the program's state or a control variable.</li>
+<li><strong>Step 6:</strong> <code>config()</code> repaints the widget with the new data, and the loop can start again. The data flows in a circle.</li>
+</ul>
 <p>An interactive widget closes the loop. The user acts, an event fires, your handler runs, the program state changes, and <code>config()</code> pushes the change back onto the screen.</p>
 <h3 id="parameters-common-to-all-display-and-interaction-widgets"><a name="parameters-common-to-all-display-and-interaction-widgets"></a>Parameters Common to All Display and Interaction Widgets<a class="headerlink" href="#parameters-common-to-all-display-and-interaction-widgets" title="Permanent link">&para;</a></h3>
 <table>
@@ -11690,7 +11793,14 @@ has slaves managed by pack
 <h3 id="the-unlock-edit-lock-pattern"><a name="the-unlock-edit-lock-pattern"></a>The Unlock-Edit-Lock Pattern<a class="headerlink" href="#the-unlock-edit-lock-pattern" title="Permanent link">&para;</a></h3>
 <p>A <code>Spinbox</code> or <code>Combobox</code> set to <code>state="readonly"</code> is locked for the user — and also for your own code. If you try to <code>delete()</code> or <code>insert()</code> while it is readonly, nothing happens.</p>
 <p>The solution is a three-step dance that appears in the next script:</p>
-<p><img alt="The unlock-edit-lock pattern for a read-only widget" src="https://raw.githubusercontent.com/ag999git/001-Python-book-2026/main/resources/ch-14-nb-13-unlock-edit-lock.png" /></p>
+<p><img alt="The unlock-edit-lock pattern for a read-only widget" src="https://raw.githubusercontent.com/ag999git/001-Python-book-2026/main/resources/S14-LR-ch-14-nb-13-unlock-edit-lock.png" /></p>
+<p><strong>Reading the figure</strong></p>
+<ul>
+<li><strong>Step 1:</strong> A Spinbox or Combobox with <code>state="readonly"</code> is locked for the user, and also for your own code: <code>delete()</code> and <code>insert()</code> are silently ignored.</li>
+<li><strong>Step 2:</strong> Unlock it: <code>config(state="normal")</code>.</li>
+<li><strong>Step 3:</strong> Edit it: <code>delete()</code> the old text and <code>insert()</code> the new value.</li>
+<li><strong>Step 4:</strong> Lock it again: <code>config(state="readonly")</code>.</li>
+</ul>
 <p>This is a general design pattern in GUI programming: to update a protected field, unlock it, change it, and restore the protection immediately.</p>
 <p><a href="#toc">Back to the Table of Contents</a></p>
 </div>
@@ -12763,7 +12873,14 @@ ask_exit answer: True
 <p><strong>The solution: the <code>.destroy()</code> method.</strong> Every Tkinter window, including <code>Toplevel</code>, has a built-in <code>.destroy()</code> method. This does not just hide the window; it completely removes the window and all widgets inside it from memory.</p>
 <p><strong>How to see the lifecycle.</strong> To verify that memory is being freed, we use Python's <code>__del__</code> destructor method. Python calls this special method automatically at the exact moment an object is removed from memory by the garbage collector. By adding a <code>print</code> statement inside <code>__del__</code>, we get a real-time "memory alert" the moment our window is destroyed.</p>
 <p><strong>How to implement it.</strong> You can assign the <code>.destroy()</code> method directly to a button's <code>command</code> parameter. This effectively turns the button into a "Close" button for that specific window.</p>
-<p><img alt="The life of a Toplevel window, from creation to garbage collection" src="https://raw.githubusercontent.com/ag999git/001-Python-book-2026/main/resources/ch-14-nb-16-window-lifecycle.png" /></p>
+<p><img alt="The life of a Toplevel window, from creation to garbage collection" src="https://raw.githubusercontent.com/ag999git/001-Python-book-2026/main/resources/S14-LR-ch-14-nb-16-window-lifecycle.png" /></p>
+<p><strong>Reading the figure</strong></p>
+<ul>
+<li><strong>Step 1:</strong> Birth: <code>ChildWindow(master)</code>, a subclass of <code>tk.Toplevel</code>, creates a new window.</li>
+<li><strong>Step 2:</strong> Life: the window stays on screen and holds memory for itself and its widgets.</li>
+<li><strong>Step 3:</strong> Death: <code>destroy()</code>, for example as the <code>command</code> of a Close button, removes the window and every widget inside it.</li>
+<li><strong>Step 4:</strong> Cleanup: when nothing refers to the object any more, the garbage collector frees it. The <code>__del__</code> method defined in <code>ChildWindow</code> runs, so you can see the message in the terminal.</li>
+</ul>
 <p><a href="#toc">Back to the Table of Contents</a></p>
 </div>
 </div>
@@ -12887,7 +13004,15 @@ ask_exit answer: True
 <li><strong>The loop continues.</strong> The <code>mainloop()</code> keeps running, keeping the window open and the application responsive.</li>
 </ol>
 <p>The result is a <strong>silent crash</strong>. The button you clicked simply stops working, or the GUI becomes unresponsive, but the rest of the app is still alive and the window does not close.</p>
-<p><img alt="Why an unhandled error in a callback produces a silent crash" src="https://raw.githubusercontent.com/ag999git/001-Python-book-2026/main/resources/ch-14-nb-15-silent-crash.png" /></p>
+<p><img alt="Why an unhandled error in a callback produces a silent crash" src="https://raw.githubusercontent.com/ag999git/001-Python-book-2026/main/resources/S14-LR-ch-14-nb-15-silent-crash.png" /></p>
+<p><strong>Reading the figure</strong></p>
+<ul>
+<li><strong>Step 1:</strong> The user clicks a button, and its callback starts.</li>
+<li><strong>Step 2:</strong> An error occurs inside the callback, and it is not handled.</li>
+<li><strong>Step 3:</strong> Only that function dies. The traceback is printed to the console, which the user usually cannot see.</li>
+<li><strong>Step 4:</strong> <code>mainloop()</code> keeps running, so the window stays open and looks normal.</li>
+<li><strong>Step 5:</strong> The result is a silent crash: the button simply stops working. That is why callbacks should catch and report their own errors.</li>
+</ul>
 <p>This is why proactive error handling is not optional in GUI programming. Without it, you are left with a "zombie" application that looks fine but refuses to do anything.</p>
 <h3 id="common-errors"><a name="common-errors"></a>Common Errors<a class="headerlink" href="#common-errors" title="Permanent link">&para;</a></h3>
 <table>
@@ -12930,9 +13055,19 @@ ask_exit answer: True
 </table>
 <h3 id="two-sides-of-error-handling-validation-versus-exceptions"><a name="two-sides-of-error-handling-validation-versus-exceptions"></a>Two Sides of Error Handling: Validation versus Exceptions<a class="headerlink" href="#two-sides-of-error-handling-validation-versus-exceptions" title="Permanent link">&para;</a></h3>
 <p>When building robust applications, not all errors are created equal. It helps to categorise them so you know how to respond.</p>
-<p><img alt="Validation errors and system exceptions need different treatment" src="https://raw.githubusercontent.com/ag999git/001-Python-book-2026/main/resources/ch-14-nb-14-two-kinds-of-error.png" /></p>
+<p><img alt="Validation errors and system exceptions need different treatment" src="https://raw.githubusercontent.com/ag999git/001-Python-book-2026/main/resources/S14-LR-ch-14-nb-14-two-kinds-of-error.png" /></p>
+<p><strong>Reading the figure</strong></p>
 <ul>
-<li><strong>User validation — expected errors.</strong> These occur when a user provides "bad" data: typing "ABC" into an age field, or leaving a required field empty. These are not bugs; they are expected behaviours in any interactive program.</li>
+<li>Errors in a GUI fall into two kinds, and each needs a different response.</li>
+<li>Validation errors are expected: the user types something wrong, such as letters in an age field.</li>
+<li>System exceptions are unexpected: a bug, or something outside your control, such as a missing file.</li>
+<li>For validation errors, check the input first and show a polite warning with <code>messagebox</code>.</li>
+<li>
+<p>For system exceptions, catch them with <code>try-except</code>, write the details to <code>app.log</code> with <code>logging.error()</code>, and show the user a calm message.</p>
+</li>
+<li>
+<p><strong>User validation — expected errors.</strong> These occur when a user provides "bad" data: typing "ABC" into an age field, or leaving a required field empty. These are not bugs; they are expected behaviours in any interactive program.</p>
+</li>
 <li><strong>The remedy: prevent and inform.</strong> Use if-else logic or input masks to check data before processing, and use a messagebox to show a friendly, polite warning.</li>
 <li><strong>System exceptions — unexpected bugs.</strong> These occur when the program hits a situation it was not prepared for: a missing configuration file, a network failure, a corrupted image file.</li>
 <li><strong>The remedy: catch and log.</strong> Use try-except to catch these "sneaky" errors. Always log them to a file so you can investigate them later, and provide a generic, calm error message to the user to keep the GUI from "dying".</li>

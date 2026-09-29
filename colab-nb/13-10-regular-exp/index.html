@@ -9409,7 +9409,7 @@
 <p>Run the cells from top to bottom. The <code>re</code> module is part of the Python standard library, so there is nothing to install. Just write <code>import re</code>.</p>
 <p><strong>Always write your patterns as raw strings</strong>, that is with an <code>r</code> in front: <code>r"\d+"</code>. Without the <code>r</code>, Python treats the backslash as an escape character and your pattern may break.</p>
 <h3 id="how-to-read-the-flowcharts">How to read the flowcharts<a class="headerlink" href="#how-to-read-the-flowcharts" title="Permanent link">&para;</a></h3>
-<p>The steps are numbered 1, 2, 3 and so on. When the flow splits into two paths, one path uses the letter A (2A, 3A ...) and the other uses the letter B (2B, 3B ...). A long chain of steps is folded onto a second row: follow the arrow down and back to the left.</p>
+<p>Each flowchart reads from left to right. A long chain of steps continues on the next row: follow the arrow down and back to the left. The boxes are numbered 1, 2, 3 and so on. When the flow splits, the shorter branch is numbered first, and then the numbering carries on along the main branch. A diamond asks a question, and the grey tags on its arrows give the answers. An arrow labelled "Repeat" or "Next" goes back to an earlier step: this is how a loop is drawn. Under each flowchart, <strong>Reading the figure</strong> explains every step. A diagram that shows a structure, not a sequence of steps, has no numbers.</p>
 </div>
 </div>
 </div>
@@ -9655,7 +9655,16 @@
 </tr>
 </tbody>
 </table>
-<p><img alt="The five questions every regex pattern answers" src="https://raw.githubusercontent.com/ag999git/001-Python-book-2026/main/resources/ch-13-nb-01-five-questions.png" /></p>
+<p><img alt="The five questions every regex pattern answers" src="https://raw.githubusercontent.com/ag999git/001-Python-book-2026/main/resources/S13-LR-ch-13-nb-01-five-questions.png" /></p>
+<p><strong>Reading the figure</strong></p>
+<ul>
+<li>Every regular expression answers five basic questions.</li>
+<li>What individual character should be matched? Character specifiers such as <code>a</code>, <code>\d</code> (a digit) and <code>.</code> (any character).</li>
+<li>Which single character from a set? Character classes such as <code>[a-z]</code> and <code>[^0-9]</code> (anything but a digit).</li>
+<li>Where should it appear? Anchors such as <code>^</code> (start), <code>$</code> (end) and <code>\b</code> (word boundary).</li>
+<li>How many times should it repeat? Quantifiers such as <code>*</code>, <code>+</code>, <code>?</code> and <code>{m,n}</code>.</li>
+<li>How are the parts grouped, combined or interpreted? Grouping <code>( )</code>, alternation <code>|</code> and escaping <code>\</code>.</li>
+</ul>
 <p><a href="#toc">Back to the Table of Contents</a></p>
 <h2 id="134-character-specifiers-what-to-match"><a name="13-4-character-specifiers-what-to-match"></a>13.4 Character specifiers: what to match<a class="headerlink" href="#134-character-specifiers-what-to-match" title="Permanent link">&para;</a></h2>
 <p>Character specifiers answer the question "which characters do I want to match?". They come in two kinds:</p>
@@ -10219,7 +10228,15 @@
 </tbody>
 </table>
 <p>These three are closely related but different: some elements match <strong>and</strong> consume; some match without consuming (anchors); some matches are also captured; and a pattern may consume only part of a string and leave the rest alone.</p>
-<p><img alt="Matching, consuming and capturing are three different things" src="https://raw.githubusercontent.com/ag999git/001-Python-book-2026/main/resources/ch-13-nb-02-match-consume-capture.png" /></p>
+<p><img alt="Matching, consuming and capturing are three different things" src="https://raw.githubusercontent.com/ag999git/001-Python-book-2026/main/resources/S13-LR-ch-13-nb-02-match-consume-capture.png" /></p>
+<p><strong>Reading the figure</strong></p>
+<ul>
+<li>As the engine works through the pattern, three different things can happen.</li>
+<li>Matching: the rule is satisfied. "Does the text in front of me fit the rule?"</li>
+<li>Consuming: the cursor moves forward past the matched characters, so the next part of the pattern cannot match them again. Anchors match without consuming.</li>
+<li>Capturing: matched text inside <code>( )</code> is stored in a numbered group for later use.</li>
+<li>The outcome is a Match object, or <code>None</code> if the pattern did not match.</li>
+</ul>
 <p><a href="#toc">Back to the Table of Contents</a></p>
 <h3 id="1392-the-cursor-and-consumption"><a name="13-9-2-the-cursor-and-consumption"></a>13.9.2 The cursor and consumption<a class="headerlink" href="#1392-the-cursor-and-consumption" title="Permanent link">&para;</a></h3>
 <p>Think of the cursor as the actor and consumption as the action.</p>
@@ -10381,7 +10398,15 @@
 <li><code>m = re.search(r"\d+", "abc 123")</code> returns a <strong>Match</strong> object.</li>
 </ul>
 <p>A Pattern object stores <strong>the rules</strong> of matching. A Match object stores <strong>the result</strong> of applying those rules to one string.</p>
-<p><img alt="A Pattern object applied to a string gives a Match object" src="https://raw.githubusercontent.com/ag999git/001-Python-book-2026/main/resources/ch-13-nb-03-pattern-match.png" /></p>
+<p><img alt="A Pattern object applied to a string gives a Match object" src="https://raw.githubusercontent.com/ag999git/001-Python-book-2026/main/resources/S13-LR-ch-13-nb-03-pattern-match.png" /></p>
+<p><strong>Reading the figure</strong></p>
+<ul>
+<li><strong>Step 1:</strong> Start with the pattern as text, <code>r"\d+"</code>: one or more digits.</li>
+<li><strong>Step 2:</strong> <code>pat = re.compile(r"\d+")</code> returns a Pattern object. It stores the rules of matching, and can be used again and again.</li>
+<li><strong>Step 3:</strong> Apply the Pattern to a string, for example <code>p.search("abc 123")</code>.</li>
+<li><strong>Step 4:</strong> If it matches, you get a Match object: the result of applying the rules to that one string, here the text <code>123</code> and its span.</li>
+<li><strong>Step 5:</strong> If nothing matched, you get <code>None</code>: a Match object does not exist when the match fails.</li>
+</ul>
 <p><a href="#toc">Back to the Table of Contents</a></p>
 <h3 id="13111-what-a-pattern-object-is"><a name="13-11-1-what-a-pattern-object-is"></a>13.11.1 What a Pattern object is<a class="headerlink" href="#13111-what-a-pattern-object-is" title="Permanent link">&para;</a></h3>
 <p>A Pattern object is a <strong>compiled</strong> regular expression: an object that knows how to match. It is a reusable matching engine. It holds logic and rules, not text.</p>
@@ -10514,7 +10539,16 @@ This works: &lt;class 're.Pattern'&gt;
 <p>The <code>re</code> module uses five kinds of functions and methods, and they differ in what they create and what they return. Some internally create a Pattern object and use it at once; others work on a Pattern object you have already made; and others return a Match object. Knowing which is which is the key to reading <code>re</code> code.</p>
 <p><a href="#toc">Back to the Table of Contents</a></p>
 <h2 id="1312-the-functions-of-the-re-module"><a name="13-12-the-functions-of-the-re-module"></a>13.12 The functions of the re module<a class="headerlink" href="#1312-the-functions-of-the-re-module" title="Permanent link">&para;</a></h2>
-<p><img alt="The five kinds of functions and methods in the re module" src="https://raw.githubusercontent.com/ag999git/001-Python-book-2026/main/resources/ch-13-nb-04-five-categories.png" /></p>
+<p><img alt="The five kinds of functions and methods in the re module" src="https://raw.githubusercontent.com/ag999git/001-Python-book-2026/main/resources/S13-LR-ch-13-nb-04-five-categories.png" /></p>
+<p><strong>Reading the figure</strong></p>
+<ul>
+<li>The functions and methods of the <code>re</code> module fall into five kinds, which differ in what they create and what they return.</li>
+<li>Factory: <code>re.compile()</code> creates and returns a Pattern object.</li>
+<li>Convenience functions, such as <code>re.match()</code>, <code>re.search()</code>, <code>re.findall()</code> and <code>re.sub()</code>, do a quick, one-off job.</li>
+<li>Utility functions, such as <code>re.escape()</code> and <code>re.purge()</code>, do helper tasks and do no matching.</li>
+<li>Wrapper: seen from inside, <code>re.match()</code> is a wrapper. It creates a Pattern object and calls its method for you, hiding the extra steps.</li>
+<li>Instance methods, such as <code>p.match()</code>, <code>p.search()</code> and <code>p.findall()</code>, are called on a Pattern you compiled yourself.</li>
+</ul>
 <p><a href="#toc">Back to the Table of Contents</a></p>
 <h3 id="13121-factory-function-recompile"><a name="13-12-1-factory-function-re-compile"></a>13.12.1 Factory function: re.compile()<a class="headerlink" href="#13121-factory-function-recompile" title="Permanent link">&para;</a></h3>
 <p>A <strong>factory function</strong> creates and returns an object. In the <code>re</code> module the factory function is <code>compile()</code>, which returns a Pattern object:</p>
@@ -10655,7 +10689,15 @@ This works: &lt;class 're.Pattern'&gt;
 <li>It is reusable, which is good in loops and repeated checks.</li>
 <li>It takes one more line of code, and gives you more control.</li>
 </ol>
-<p><img alt="Two ways to run the same regex operation, with the same result" src="https://raw.githubusercontent.com/ag999git/001-Python-book-2026/main/resources/ch-13-nb-05-two-ways.png" /></p>
+<p><img alt="Two ways to run the same regex operation, with the same result" src="https://raw.githubusercontent.com/ag999git/001-Python-book-2026/main/resources/S13-LR-ch-13-nb-05-two-ways.png" /></p>
+<p><strong>Reading the figure</strong></p>
+<ul>
+<li><strong>Step 1:</strong> You need to run a regex operation, for example matching <code>r"\d+"</code> against <code>"123 def 456"</code>.</li>
+<li><strong>Step 2:</strong> Way 1, a convenience function such as <code>re.match(r'\d+', text)</code>: Python compiles the pattern, uses it and throws it away.</li>
+<li><strong>Step 3:</strong> Way 2, a Pattern object: <code>pattern_digits = re.compile(r"\d+")</code>, then <code>pattern_digits.match(text)</code>. The pattern is compiled once and can be reused, which is good in loops.</li>
+<li><strong>Step 4:</strong> Both give the same result: a Match object, here <code>&lt;re.match 3),="" match="123" object;="" span="(0,"&gt;</code>, or <code>None</code> if nothing matched.</li>
+</ul>
+<p></re.match></p>
 </div>
 </div>
 </div>
@@ -10755,7 +10797,15 @@ This works: &lt;class 're.Pattern'&gt;
     <span class="k">return</span> <span class="n">re</span><span class="o">.</span><span class="n">compile</span><span class="p">(</span><span class="n">pattern</span><span class="p">)</span><span class="o">.</span><span class="n">match</span><span class="p">(</span><span class="n">string</span><span class="p">)</span>
 </code></pre></div>
 <p>So (1) the pattern is compiled, (2) a temporary Pattern object is created, and (3) the <code>match()</code> method of that object is called. You never see those steps.</p>
-<p><img alt="What re.match() does behind the scenes" src="https://raw.githubusercontent.com/ag999git/001-Python-book-2026/main/resources/ch-13-nb-06-wrapper.png" /></p>
+<p><img alt="What re.match() does behind the scenes" src="https://raw.githubusercontent.com/ag999git/001-Python-book-2026/main/resources/S13-LR-ch-13-nb-06-wrapper.png" /></p>
+<p><strong>Reading the figure</strong></p>
+<ul>
+<li><strong>Step 1:</strong> You write <code>re.match(r"\d+", text)</code>.</li>
+<li><strong>Step 2:</strong> Inside, <code>re.match()</code> calls <code>re.compile(r"\d+")</code> for you.</li>
+<li><strong>Step 3:</strong> A temporary Pattern object is created. You never see it.</li>
+<li><strong>Step 4:</strong> Its <code>match(text)</code> method is called: <code>re.compile(pattern).match(string)</code>.</li>
+<li><strong>Step 5:</strong> The result, a Match object or <code>None</code>, is returned to you.</li>
+</ul>
 <p><a href="#toc">Back to the Table of Contents</a></p>
 <h3 id="example-6-the-two-ways-of-writing-the-same-thing"><a name="example-6-the-two-ways-of-writing-the-same-thing"></a>Example 6: The two ways of writing the same thing<a class="headerlink" href="#example-6-the-two-ways-of-writing-the-same-thing" title="Permanent link">&para;</a></h3>
 <p><strong>What the code does.</strong> It shows the long way (compile, then call the method) and the short way (one call to <code>re.match()</code>), with the same result. The cell prints nothing; it only defines <code>pattern</code> and <code>result</code>.</p>
@@ -12204,7 +12254,19 @@ abc
 <li>A <strong>non-greedy</strong> (or lazy) quantifier tries to match as few as possible. You make a quantifier lazy by adding <code>?</code> after it: <code>*?</code>, <code>+?</code>, <code>??</code>, <code>{m,n}?</code>.</li>
 </ul>
 <p>So the question mark has two jobs. On its own it means "zero or one". After another quantifier it changes greedy behaviour into lazy behaviour.</p>
-<p><img alt="Greedy and lazy quantifiers on the same HTML string" src="https://raw.githubusercontent.com/ag999git/001-Python-book-2026/main/resources/ch-13-nb-07-greedy-lazy.png" /></p>
+<p><img alt="Greedy and lazy quantifiers on the same HTML string" src="https://raw.githubusercontent.com/ag999git/001-Python-book-2026/main/resources/S13-LR-ch-13-nb-07-greedy-lazy.png" /></p>
+<p><strong>Reading the figure</strong></p>
+<ul>
+<li><strong>Step 1:</strong> `str_html = '&lt;!DOCTYPE html&gt;
+ </li>
+</ul>
+<html> <head> </head> </html>
+<p>'<code>has 45 characters and several</code>&gt;<code>characters.
+- **Step 2:** The greedy pattern</code>&lt;.<em>&gt;<code>lets</code>.</em><code>take as much as possible, and gives characters back only when the final</code>&gt;<code>forces it to.
+- **Step 3:** So it stops at the last</code>&gt;<code>, at ``:</code>span()<code>is</code>(0, 45)<code>, the whole string.
+- **Step 4:** The lazy pattern</code>&lt;.<em>?&gt;<code>adds</code>?<code>after</code></em><code>, so</code>.*?<code>takes as little as possible and adds characters only when it must.
+- **Step 5:** So it stops at the first</code>&gt;<code>:</code>span()<code>is</code>(0, 15)<code>, just</code>&lt;!DOCTYPE html&gt;
+`.</p>
 <p><a href="#toc">Back to the Table of Contents</a></p>
 <h3 id="example-15-greedy-and-lazy-on-two-examples"><a name="example-15-greedy-and-lazy-on-two-examples"></a>Example 15: Greedy and lazy, on two examples<a class="headerlink" href="#example-15-greedy-and-lazy-on-two-examples" title="Permanent link">&para;</a></h3>
 <p><strong>What the code does.</strong> The first part matches <code>.*\d+</code> and <code>.*?\d+</code> against <code>"abc123xyz456"</code>. The second part matches <code>&amp;lt;.*&amp;gt;</code> and <code>&amp;lt;.*?&amp;gt;</code> against a short piece of HTML.</p>
@@ -12914,7 +12976,17 @@ world hello rocks python
 </tr>
 </tbody>
 </table>
-<p><img alt="The four lookarounds: two lookaheads and two lookbehinds" src="https://raw.githubusercontent.com/ag999git/001-Python-book-2026/main/resources/ch-13-nb-08-lookaround.png" /></p>
+<p><img alt="The four lookarounds: two lookaheads and two lookbehinds" src="https://raw.githubusercontent.com/ag999git/001-Python-book-2026/main/resources/S13-LR-ch-13-nb-08-lookaround.png" /></p>
+<p><strong>Reading the figure</strong></p>
+<ul>
+<li>A lookaround is a zero-width check: it tests the text around the current position without consuming it, so the cursor does not move.</li>
+<li>A lookahead looks forward, at the text after the position.</li>
+<li>A lookbehind looks backward, at the text before the position.</li>
+<li>Positive lookahead, <code>(?=pattern)</code>: "Is this followed by ...?" The password example uses <code>(?=.*[A-Z])</code> to require an uppercase letter somewhere.</li>
+<li>Negative lookahead, <code>(?!pattern)</code>: "Is this not followed by ...?"</li>
+<li>Positive lookbehind, <code>(?&lt;=pattern)</code>: "Is this preceded by ...?"</li>
+<li>Negative lookbehind, <code>(?&lt;!pattern)</code>: "Is this not preceded by ...?"</li>
+</ul>
 <p><strong>When are lookarounds essential?</strong> Ordinary regex works well when order matters and you want to consume the characters as you match. Lookarounds are needed when:</p>
 <ul>
 <li>the order does not matter, but several conditions must all hold (password rules);</li>
@@ -13121,7 +13193,14 @@ GoodPass1 -&gt; VALID
 </ol>
 <p><code>re.findall(r"ana", "banana")</code> finds only the first: it consumes the middle <code>a</code>, so the second one cannot start.</p>
 <p><strong>The solution</strong> is a positive lookahead with a capturing group inside it: <code>r"(?=(ana))"</code>. The lookahead checks the condition without moving the cursor, and the brackets take a snapshot of what it saw.</p>
-<p><img alt="Finding the overlapping &quot;ana&quot; inside &quot;banana&quot; with a lookahead" src="https://raw.githubusercontent.com/ag999git/001-Python-book-2026/main/resources/ch-13-nb-09-banana.png" /></p>
+<p><img alt="Finding the overlapping &quot;ana&quot; inside &quot;banana&quot; with a lookahead" src="https://raw.githubusercontent.com/ag999git/001-Python-book-2026/main/resources/S13-LR-ch-13-nb-09-banana.png" /></p>
+<p><strong>Reading the figure</strong></p>
+<ul>
+<li><strong>Step 1:</strong> <code>"banana"</code> contains <code>ana</code> twice, starting at index 1 and at index 3. But <code>re.findall(r"ana", "banana")</code> finds only the first.</li>
+<li><strong>Step 2:</strong> An ordinary match consumes its characters. The first <code>ana</code> uses up the middle <code>a</code>, and the search carries on only after it, so the second <code>ana</code> cannot start.</li>
+<li><strong>Step 3:</strong> The positive lookahead <code>r"(?=(ana))"</code> checks the condition without moving the cursor, and the group inside it captures the text.</li>
+<li><strong>Step 4:</strong> <code>re.finditer()</code> finds two zero-width matches, at positions 1 and 3. <code>m.group(0)</code> is empty, and <code>m.group(1)</code> holds <code>ana</code> each time.</li>
+</ul>
 <p><a href="#toc">Back to the Table of Contents</a></p>
 <h3 id="example-21-finding-overlapping-matches"><a name="example-21-finding-overlapping-matches"></a>Example 21: Finding overlapping matches<a class="headerlink" href="#example-21-finding-overlapping-matches" title="Permanent link">&para;</a></h3>
 <p><strong>What the code does.</strong> It uses <code>re.finditer(r"(?=(ana))", "banana")</code> and, for every match, prints the Match object, its span, the text captured in group 1, and its starting index.</p>
