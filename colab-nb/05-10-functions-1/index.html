@@ -8888,7 +8888,7 @@
 <li>Examples 4 and 5 use random numbers, so your output will be different each time you run them.</li>
 </ul>
 <h3 id="how-to-read-the-flowcharts">How to read the flowcharts<a class="headerlink" href="#how-to-read-the-flowcharts" title="Permanent link">&para;</a></h3>
-<p>The steps are numbered 1, 2, 3 and so on. When the flow splits into two paths, one path uses the letter A (3A, 4A ...) and the other uses the letter B (3B, 4B ...). A long chain of steps is folded onto a second row: follow the arrow down and back to the left.</p>
+<p>Each flowchart reads from left to right. A long chain of steps continues on the next row: follow the arrow down and back to the left. The boxes are numbered 1, 2, 3 and so on. When the flow splits, the shorter branch is numbered first, and then the numbering carries on along the main branch. A diamond asks a question, and the grey tags on its arrows give the answers. An arrow labelled "Repeat" or "Next" goes back to an earlier step: this is how a loop is drawn. Under each flowchart, <strong>Reading the figure</strong> explains every step. A diagram that shows a structure, not a sequence of steps, has no numbers.</p>
 </div>
 </div>
 </div>
@@ -9012,7 +9012,17 @@
 <p><a href="#toc">Back to the Table of Contents</a></p>
 <h2 id="53-basics-of-functions"><a name="5-3-basics-of-functions"></a>5.3 Basics of functions<a class="headerlink" href="#53-basics-of-functions" title="Permanent link">&para;</a></h2>
 <p>Python has three broad kinds of functions:</p>
-<p><img alt="The three broad kinds of functions in Python" src="https://raw.githubusercontent.com/ag999git/001-Python-book-2026/main/resources/ch-05-nb-01-types-of-functions.png" /></p>
+<p><img alt="The three broad kinds of functions in Python" src="https://raw.githubusercontent.com/ag999git/001-Python-book-2026/main/resources/S05-LR-ch-05-nb-01-types-of-functions.png" /></p>
+<p><strong>Reading the figure</strong></p>
+<ul>
+<li>Python has three broad kinds of functions.</li>
+<li>Built-in functions are part of Python itself and always available.</li>
+<li>Module functions are stored in separate <code>.py</code> files called modules.</li>
+<li>User-defined functions are written by you.</li>
+<li>Built-in functions need no <code>import</code>. Examples: <code>print()</code>, <code>len()</code>, <code>type()</code>.</li>
+<li>Module functions need an <code>import</code> first. Examples: <code>math.sqrt()</code>, <code>random.randint()</code>.</li>
+<li>User-defined functions are written with the <code>def</code> keyword. No <code>import</code> is needed if they are in the same file.</li>
+</ul>
 <table>
 <thead>
 <tr>
@@ -10156,7 +10166,15 @@ East
 </tr>
 </tbody>
 </table>
-<p><img alt="What a function gives back in each of the three cases" src="https://raw.githubusercontent.com/ag999git/001-Python-book-2026/main/resources/ch-05-nb-02-return-cases.png" /></p>
+<p><img alt="What a function gives back in each of the three cases" src="https://raw.githubusercontent.com/ag999git/001-Python-book-2026/main/resources/S05-LR-ch-05-nb-02-return-cases.png" /></p>
+<p><strong>Reading the figure</strong></p>
+<ul>
+<li><strong>Step 1:</strong> The function is called, and its body runs.</li>
+<li><strong>Step 2:</strong> How does the function end? <code>return</code> sends a value back and ends the function at once.</li>
+<li><strong>Step 3:</strong> With <code>return value</code>, as in <code>add_numbers(5, 3)</code>: the caller gets that value, here <code>8</code>.</li>
+<li><strong>Step 4:</strong> With a bare <code>return</code>, as in <code>print_message()</code>: the caller gets <code>None</code>.</li>
+<li><strong>Step 5:</strong> With no <code>return</code> at all, as in <code>greet("Alice")</code>: the body runs to its end, and the caller also gets <code>None</code>. A Python function always returns something.</li>
+</ul>
 <p><a href="#toc">Back to the Table of Contents</a></p>
 <h4 id="example-8-the-three-cases-of-return"><a name="example-8-the-three-cases-of-return"></a>Example 8: The three cases of return<a class="headerlink" href="#example-8-the-three-cases-of-return" title="Permanent link">&para;</a></h4>
 <p><strong>What it does:</strong> defines three functions, one for each case, and prints what each one returns.</p>
@@ -10410,7 +10428,16 @@ Result of greet: None
 </table>
 <p><strong>Why are lines 1 and 2 not run first?</strong> They are a <strong>definition</strong>, like reading a recipe without cooking it. Python learns <strong>how</strong> to greet, but only does it when line 4 calls the function.</p>
 <p><strong>Learning point:</strong> this <code>greet()</code> takes no parameters, and replaces the earlier <code>greet(name)</code>.</p>
-<p><img alt="The detour Python takes when it calls greet()" src="https://raw.githubusercontent.com/ag999git/001-Python-book-2026/main/resources/ch-05-nb-03-function-detour.png" /></p>
+<p><img alt="The detour Python takes when it calls greet()" src="https://raw.githubusercontent.com/ag999git/001-Python-book-2026/main/resources/S05-LR-ch-05-nb-03-function-detour.png" /></p>
+<p><strong>Reading the figure</strong></p>
+<ul>
+<li><strong>Step 1:</strong> Lines 1 and 2 are a definition: Python reads and stores them but runs nothing. The main flow starts at line 3, which prints <code>Before calling greet()</code>.</li>
+<li><strong>Step 2:</strong> Line 4 calls <code>greet()</code>. Python takes a detour.</li>
+<li><strong>Step 3:</strong> Python jumps to the definition of <code>greet</code> on line 1.</li>
+<li><strong>Step 4:</strong> The body, line 2, runs and prints <code>Inside greet()</code>.</li>
+<li><strong>Step 5:</strong> The function ends, and Python returns to line 4, where the call was made.</li>
+<li><strong>Step 6:</strong> The main flow carries on with line 5, which prints <code>After calling greet()</code>.</li>
+</ul>
 </div>
 </div>
 </div>
@@ -10630,7 +10657,15 @@ Hello
 <li><strong>A lifetime problem:</strong> the variable's function has already finished, so the variable is gone.</li>
 </ol>
 <p>When Python meets a name, it looks for it in this order, and stops at the first place it finds it:</p>
-<p><img alt="Where Python looks for a name, in order" src="https://raw.githubusercontent.com/ag999git/001-Python-book-2026/main/resources/ch-05-nb-06-name-lookup.png" /></p>
+<p><img alt="Where Python looks for a name, in order" src="https://raw.githubusercontent.com/ag999git/001-Python-book-2026/main/resources/S05-LR-ch-05-nb-06-name-lookup.png" /></p>
+<p><strong>Reading the figure</strong></p>
+<ul>
+<li><strong>Step 1:</strong> Python looks first in the local scope: the function that is running now. It stops at the first place it finds the name.</li>
+<li><strong>Step 2:</strong> Not found: it looks in the enclosing scopes, any outer functions.</li>
+<li><strong>Step 3:</strong> Not found: it looks in the global scope, the top level of the script.</li>
+<li><strong>Step 4:</strong> Not found: it looks among the built-in names, such as <code>print</code> and <code>len</code>.</li>
+<li><strong>Step 5:</strong> Found nowhere: Python stops with a <code>NameError</code>. The order is remembered as LEGB: Local, Enclosing, Global, Built-in.</li>
+</ul>
 <p>(These four places are often remembered as <strong>LEGB</strong>: Local, Enclosing, Global, Built-in.)</p>
 <p><strong>Note:</strong></p>
 <ul>
@@ -10717,7 +10752,13 @@ Global scope (Main) -&gt; cat
 <li>The last line prints the global <code>x</code>, which was never touched: <code>cat</code>.</li>
 </ol>
 <p><strong>Why:</strong> think of the global scope as a big box, and each local scope as a smaller box inside it. Inside a small box, you see the local <code>x</code>. Outside the small boxes, you see the global <code>x</code>.</p>
-<p><img alt="One global scope holding two separate local scopes" src="https://raw.githubusercontent.com/ag999git/001-Python-book-2026/main/resources/ch-05-nb-04-two-local-scopes.png" /></p>
+<p><img alt="One global scope holding two separate local scopes" src="https://raw.githubusercontent.com/ag999git/001-Python-book-2026/main/resources/S05-LR-ch-05-nb-04-two-local-scopes.png" /></p>
+<p><strong>Reading the figure</strong></p>
+<ul>
+<li>The global scope holds <code>x = 'cat'</code>. Think of it as a big box.</li>
+<li><code>f1()</code> has its own small box, a local scope, with its own <code>x = 'dog'</code>. It exists only while <code>f1()</code> runs.</li>
+<li><code>f2()</code> has a separate local scope with <code>x = 'rat'</code>. It has no connection to <code>f1()</code>'s <code>x</code>. The last line prints the global <code>x</code>, which was never touched: <code>cat</code>.</li>
+</ul>
 </div>
 </div>
 </div>
@@ -10820,7 +10861,13 @@ Global scope -&gt; cat
 <li><code>f2</code> exists only inside <code>f1</code>. Try calling <code>f2()</code> at the top level: you get a <code>NameError</code>.</li>
 <li>Nested functions are useful, especially to build <strong>closures</strong> (Section 5.14), which is how tools such as decorators work. But keep them simple: deep nesting is hard to read.</li>
 </ul>
-<p><img alt="Scopes created by a nested function: f2 sits inside f1, which sits inside the global scope" src="https://raw.githubusercontent.com/ag999git/001-Python-book-2026/main/resources/ch-05-nb-05-nested-scopes.png" /></p>
+<p><img alt="Scopes created by a nested function: f2 sits inside f1, which sits inside the global scope" src="https://raw.githubusercontent.com/ag999git/001-Python-book-2026/main/resources/S05-LR-ch-05-nb-05-nested-scopes.png" /></p>
+<p><strong>Reading the figure</strong></p>
+<ul>
+<li>The global scope holds <code>x = 'cat in global scope'</code>. It is printed by the last line.</li>
+<li>The scope of <code>f1()</code> sits inside the global scope. Its own <code>x = 'dog in f1()'</code> shadows the global <code>x</code>. For <code>f2()</code>, this is the enclosing scope.</li>
+<li>The scope of <code>f2()</code> sits inside <code>f1()</code>. Its <code>x = 'rat in f2()'</code> shadows <code>f1()</code>'s <code>x</code>. <code>f2</code> exists only inside <code>f1</code>: calling <code>f2()</code> at the top level gives a <code>NameError</code>.</li>
+</ul>
 </div>
 </div>
 </div>
@@ -10896,8 +10943,16 @@ x in global scope -&gt; cat in global scope
 </ol>
 <p><strong>Why:</strong> in Python, functions are objects, just like numbers and strings. They can be stored in variables, passed around, and returned from other functions.</p>
 <p><strong>Learning point:</strong> the text in triple quotes just below each <code>def</code> line is a <strong>docstring</strong>. It describes the function. Try <code>help(f1)</code> in a new cell.</p>
-<p><img alt="Returning a nested function so it can be called from outside" src="https://raw.githubusercontent.com/ag999git/001-Python-book-2026/main/resources/ch-05-nb-07-return-nested.png" />
-</class></p>
+<p><img alt="Returning a nested function so it can be called from outside" src="https://raw.githubusercontent.com/ag999git/001-Python-book-2026/main/resources/S05-LR-ch-05-nb-07-return-nested.png" /></p>
+<p><strong>Reading the figure</strong></p>
+<ul>
+<li><strong>Step 1:</strong> <code>nested = f1()</code> calls <code>f1()</code>.</li>
+<li><strong>Step 2:</strong> Inside <code>f1()</code>, <code>f2</code> is defined but not called.</li>
+<li><strong>Step 3:</strong> <code>return f2</code> hands back the function itself. There are no brackets: <code>return f2()</code> would call <code>f2</code> and return its result, <code>None</code>.</li>
+<li><strong>Step 4:</strong> <code>f1()</code> is now finished, but <code>nested</code> refers to the function <code>f2</code>. <code>type(nested)</code> shows <code>&lt;class 'function'=""&gt;</code>.</li>
+<li><strong>Step 5:</strong> <code>nested()</code> calls it, and <code>Hello from f2!</code> is printed.</li>
+</ul>
+<p></class></class></p>
 </div>
 </div>
 </div>
@@ -11162,7 +11217,16 @@ Hello, Bob!
 <li><strong>When <code>nonlocal</code> is not needed:</strong> (1) if you only <strong>read</strong> the variable without changing it, as in Example 15; or (2) if the variable holds a mutable object, such as a list, and you change the object's <strong>contents</strong> rather than re-assigning the name. "Beyond the Book", Extra 3 shows case (2). Even then, many programmers prefer <code>nonlocal</code>, because it makes the intention clear.</li>
 <li><code>__closure__</code> is a special attribute that every function has. You rarely need it; here it simply proves that the count really is stored inside the function.</li>
 </ul>
-<p><img alt="How the closure counter remembers its count between calls" src="https://raw.githubusercontent.com/ag999git/001-Python-book-2026/main/resources/ch-05-nb-08-closure-counter.png" /></p>
+<p><img alt="How the closure counter remembers its count between calls" src="https://raw.githubusercontent.com/ag999git/001-Python-book-2026/main/resources/S05-LR-ch-05-nb-08-closure-counter.png" /></p>
+<p><strong>Reading the figure</strong></p>
+<ul>
+<li><strong>Step 1:</strong> <code>counter_a = make_counter()</code> calls the outer function.</li>
+<li><strong>Step 2:</strong> <code>make_counter</code> sets <code>count = 0</code> in its own scope, defines <code>counter</code>, and returns the function <code>counter</code>.</li>
+<li><strong>Step 3:</strong> <code>counter</code> carries <code>count</code> with it, even after <code>make_counter</code> has finished. This is its closure, its private memory.</li>
+<li><strong>Step 4:</strong> <code>counter_a()</code> runs the inner function. <code>nonlocal count</code> lets it change <code>count</code>, and <code>count += 1</code> makes it 1. Without <code>nonlocal</code>, Python would stop with an <code>UnboundLocalError</code>.</li>
+<li><strong>Step 5:</strong> The new count is kept in the closure.</li>
+<li><strong>Step 6:</strong> The next call to <code>counter_a()</code> starts from the kept value and returns 2. <code>counter_b = make_counter()</code> gets a separate count of its own.</li>
+</ul>
 </div>
 </div>
 </div>
@@ -11298,7 +11362,16 @@ Counter A: 3
 </tbody>
 </table>
 <p><strong>Learning point:</strong> the order of composition matters, just as in maths.</p>
-<p><img alt="Working out f(g(5)) and g(f(5))" src="https://raw.githubusercontent.com/ag999git/001-Python-book-2026/main/resources/ch-05-nb-09-composition.png" /></p>
+<p><img alt="Working out f(g(5)) and g(f(5))" src="https://raw.githubusercontent.com/ag999git/001-Python-book-2026/main/resources/S05-LR-ch-05-nb-09-composition.png" /></p>
+<p><strong>Reading the figure</strong></p>
+<ul>
+<li><strong>Step 1:</strong> <code>f(g(5))</code>: the inner call runs first. <code>g(5)</code> multiplies by 2: <code>5 * 2 = 10</code>.</li>
+<li><strong>Step 2:</strong> Then <code>f(10)</code> adds 10: <code>10 + 10 = 20</code>.</li>
+<li><strong>Step 3:</strong> So <code>f(g(5))</code> is <code>20</code>.</li>
+<li><strong>Step 4:</strong> <code>g(f(5))</code>: now <code>f(5)</code> runs first and adds 10: <code>5 + 10 = 15</code>.</li>
+<li><strong>Step 5:</strong> Then <code>g(15)</code> multiplies by 2: <code>15 * 2 = 30</code>.</li>
+<li><strong>Step 6:</strong> So <code>g(f(5))</code> is <code>30</code>. The order of composition matters, just as in maths.</li>
+</ul>
 </div>
 </div>
 </div>

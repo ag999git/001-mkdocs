@@ -8722,7 +8722,7 @@
 </ol>
 <p>Run the cells from top to bottom. No cell in this notebook stops with an error or asks you to type anything.</p>
 <h3 id="how-to-read-the-flowcharts">How to read the flowcharts<a class="headerlink" href="#how-to-read-the-flowcharts" title="Permanent link">&para;</a></h3>
-<p>The steps in each flowchart are numbered: they go 1, 2, 3 and so on. When the flow splits into two paths, one path uses the letter A (4A, 5A ...) and the other uses the letter B (4B, 5B ...). If the two paths join again, the numbering goes back to plain numbers. A long chain of steps is folded onto a second row: follow the arrow down and back to the left.</p>
+<p>Each flowchart reads from left to right. A long chain of steps continues on the next row: follow the arrow down and back to the left. The boxes are numbered 1, 2, 3 and so on. When the flow splits, the shorter branch is numbered first, and then the numbering carries on along the main branch. A diamond asks a question, and the grey tags on its arrows give the answers. An arrow labelled "Repeat" or "Next" goes back to an earlier step: this is how a loop is drawn. Under each flowchart, <strong>Reading the figure</strong> explains every step. A diagram that shows a structure, not a sequence of steps, has no numbers.</p>
 </div>
 </div>
 </div>
@@ -8854,7 +8854,15 @@
 <li>It ties the name on the left to the result.</li>
 </ol>
 <p>Because the right-hand side is worked out first, <code>a</code> must already have a value. If <code>a</code> has never been given a value, <code>a = a + 5</code> stops with a <code>NameError</code>.</p>
-<p><img alt="How a = a + 5 is carried out" src="https://raw.githubusercontent.com/ag999git/001-Python-book-2026/main/resources/ch-03-nb-01-reassignment-steps.png" /></p>
+<p><img alt="How a = a + 5 is carried out" src="https://raw.githubusercontent.com/ag999git/001-Python-book-2026/main/resources/S03-LR-ch-03-nb-01-reassignment-steps.png" /></p>
+<p><strong>Reading the figure</strong></p>
+<ul>
+<li><strong>Step 1:</strong> At the start, the name <code>a</code> points to the object <code>5</code>.</li>
+<li><strong>Step 2:</strong> For <code>a = a + 5</code>, Python works out the right-hand side first: it reads the current value of <code>a</code> and gets <code>5</code>.</li>
+<li><strong>Step 3:</strong> It adds <code>5 + 5</code>, which gives a new object, <code>10</code>.</li>
+<li><strong>Step 4:</strong> Then it ties the name on the left, <code>a</code>, to the new object <code>10</code>.</li>
+<li><strong>Step 5:</strong> Now <code>a</code> is <code>10</code>. The object <code>5</code> is no longer used by <code>a</code>. If <code>a</code> had never been given a value, Step 2 would stop with a <code>NameError</code>.</li>
+</ul>
 <p><strong>The rules of assignment in Python:</strong></p>
 <table>
 <thead>
@@ -9154,7 +9162,15 @@
 <li><code>(a // b) * b + (a % b)</code> always gives back <code>a</code>. This is true for every pair of numbers (as long as <code>b</code> is not zero). Check it for each line of the table.</li>
 <li>This rule is handy. For example, <code>n % 7</code> is always between 0 and 6 for any whole number <code>n</code>, even a negative one, which makes it easy to work out days of the week.</li>
 </ul>
-<p><img alt="Working out -7 % 3 step by step" src="https://raw.githubusercontent.com/ag999git/001-Python-book-2026/main/resources/ch-03-nb-02-remainder-sign.png" /></p>
+<p><img alt="Working out -7 % 3 step by step" src="https://raw.githubusercontent.com/ag999git/001-Python-book-2026/main/resources/S03-LR-ch-03-nb-02-remainder-sign.png" /></p>
+<p><strong>Reading the figure</strong></p>
+<ul>
+<li><strong>Step 1:</strong> Divide: <code>-7 / 3</code> is about <code>-2.33</code>.</li>
+<li><strong>Step 2:</strong> Floor: <code>//</code> always rounds down, towards minus infinity, so <code>-2.33</code> becomes <code>-3</code>. This is <code>-7 // 3</code>.</li>
+<li><strong>Step 3:</strong> Multiply back: <code>3 * -3</code> is <code>-9</code>.</li>
+<li><strong>Step 4:</strong> The remainder is what is left: <code>-7 - (-9)</code>, which is <code>2</code>. So <code>-7 % 3</code> is <code>2</code>.</li>
+<li><strong>Step 5:</strong> The remainder <code>2</code> has the same sign as the divisor <code>3</code>. In Python, <code>a % b</code> always has the sign of <code>b</code>, or is zero.</li>
+</ul>
 </div>
 </div>
 </div>
@@ -9212,7 +9228,23 @@
 <li><strong>There is one exception: the power operator <code>**</code> is worked out from right to left.</strong> So <code>2 ** 3 ** 2</code> means <code>2 ** (3 ** 2)</code>, which is <code>2 ** 9</code> = <code>512</code>, not <code>(2 ** 3) ** 2</code> = <code>64</code>.</li>
 </ul>
 <p>The full order, from highest (done first) to lowest (done last):</p>
-<p><img alt="Order of precedence of Python operators, highest first" src="https://raw.githubusercontent.com/ag999git/001-Python-book-2026/main/resources/ch-03-nb-03-precedence-ladder.png" /></p>
+<p><img alt="Order of precedence of Python operators, highest first" src="https://raw.githubusercontent.com/ag999git/001-Python-book-2026/main/resources/S03-LR-ch-03-nb-03-precedence-ladder.png" /></p>
+<p><strong>Reading the figure</strong></p>
+<ul>
+<li><strong>Step 1:</strong> Parentheses <code>( )</code> come first. Anything inside them is worked out before the rest.</li>
+<li><strong>Step 2:</strong> Power <code>**</code>. It is the one operator worked out from right to left: <code>2 ** 3 ** 2</code> is <code>2 ** 9</code>.</li>
+<li><strong>Step 3:</strong> Unary plus, unary minus and bit-wise NOT: <code>+x</code>, <code>-x</code>, <code>~x</code>.</li>
+<li><strong>Step 4:</strong> Multiplication, division, floor division, remainder and matrix multiplication: <code>*</code>, <code>/</code>, <code>//</code>, <code>%</code>, <code>@</code>.</li>
+<li><strong>Step 5:</strong> Addition and subtraction: <code>+</code>, <code>-</code>.</li>
+<li><strong>Step 6:</strong> Bit shifts: <code>&amp;lt;&amp;lt;</code>, <code>&amp;gt;&amp;gt;</code>.</li>
+<li><strong>Step 7:</strong> Bit-wise AND: <code>&amp;amp;</code>.</li>
+<li><strong>Step 8:</strong> Bit-wise XOR: <code>^</code>.</li>
+<li><strong>Step 9:</strong> Bit-wise OR: <code>|</code>.</li>
+<li><strong>Step 10:</strong> Comparisons, identity and membership: <code>==</code>, <code>!=</code>, <code>&amp;lt;</code>, <code>&amp;lt;=</code>, <code>&amp;gt;</code>, <code>&amp;gt;=</code>, <code>is</code>, <code>is not</code>, <code>in</code>, <code>not in</code>.</li>
+<li><strong>Step 11:</strong> Logical NOT: <code>not</code>.</li>
+<li><strong>Step 12:</strong> Logical AND: <code>and</code>.</li>
+<li><strong>Step 13:</strong> Logical OR: <code>or</code>, the lowest, done last. Operators on the same level are worked out from left to right.</li>
+</ul>
 <table>
 <thead>
 <tr>
@@ -9676,7 +9708,19 @@ True
 <li>use <code>==</code> to check <strong>equality</strong>, and</li>
 <li>use <code>is</code> to check <strong>identity</strong>.</li>
 </ul>
-<p><img alt="Identity (is) compared with equality (==)" src="https://raw.githubusercontent.com/ag999git/001-Python-book-2026/main/resources/ch-03-nb-04-identity-vs-equality.png" /></p>
+<p><img alt="Identity (is) compared with equality (==)" src="https://raw.githubusercontent.com/ag999git/001-Python-book-2026/main/resources/S03-LR-ch-03-nb-04-identity-vs-equality.png" /></p>
+<p><strong>Reading the figure</strong></p>
+<ul>
+<li><code>x</code> is a name tied to a list object.</li>
+<li><code>y</code> is a second name tied to the same list object.</li>
+<li>There is only one object, Object A, holding <code>[1, 2]</code>.</li>
+<li>Identity: <code>x is y</code> is <code>True</code>, because both names are tied to the same object. And <code>x == y</code> is also <code>True</code>, because an object always has the same value as itself.</li>
+<li><code>a</code> is a name tied to one list.</li>
+<li><code>b</code> is a name tied to another list.</li>
+<li>Object A holds <code>[1, 2]</code>.</li>
+<li>Object B also holds <code>[1, 2]</code>, but it is a different object.</li>
+<li>Equality: <code>a == b</code> is <code>True</code>, because the values are equal. But <code>a is b</code> is <code>False</code>, because they are two different objects. Use <code>==</code> to check equality and <code>is</code> to check identity.</li>
+</ul>
 <p>Small integers and short strings can look "identical" because Python reuses (<strong>interns</strong>) some objects to save memory. So <code>a is b</code> may happen to be <code>True</code> when you did not expect it. Never rely on that. Example 4 explores this.</p>
 <p><a href="#toc">Back to the Table of Contents</a></p>
 <h4 id="example-4-interning-and-why-is-can-surprise-you"><a name="example-4-interning-and-why-is-can-surprise-you"></a>Example 4: Interning, and why <code>is</code> can surprise you<a class="headerlink" href="#example-4-interning-and-why-is-can-surprise-you" title="Permanent link">&para;</a></h4>
@@ -10098,7 +10142,14 @@ True
 </tr>
 </tbody>
 </table>
-<p><img alt="Steps in a bit-wise operation on decimal numbers" src="https://raw.githubusercontent.com/ag999git/001-Python-book-2026/main/resources/ch-03-nb-05-bitwise-steps.png" /></p>
+<p><img alt="Steps in a bit-wise operation on decimal numbers" src="https://raw.githubusercontent.com/ag999git/001-Python-book-2026/main/resources/S03-LR-ch-03-nb-05-bitwise-steps.png" /></p>
+<p><strong>Reading the figure</strong></p>
+<ul>
+<li><strong>Step 1:</strong> Start with ordinary decimal numbers, for example <code>6</code> and <code>5</code>.</li>
+<li><strong>Step 2:</strong> Write them in binary: <code>6</code> is <code>00000110</code> and <code>5</code> is <code>00000101</code>.</li>
+<li><strong>Step 3:</strong> Apply the operator to each pair of bits: <code>&amp;amp;</code>, <code>|</code>, <code>^</code>, <code>~</code>, <code>&amp;lt;&amp;lt;</code> or <code>&amp;gt;&amp;gt;</code>. For example, <code>6 &amp;amp; 5</code> gives <code>00000100</code>.</li>
+<li><strong>Step 4:</strong> Convert the binary result back to decimal: <code>00000100</code> is <code>4</code>. Python does all of this for you and shows the decimal result.</li>
+</ul>
 <p><a href="#toc">Back to the Table of Contents</a></p>
 <h4 id="example-5-the-six-bit-wise-operators"><a name="example-5-the-six-bit-wise-operators"></a>Example 5: The six bit-wise operators<a class="headerlink" href="#example-5-the-six-bit-wise-operators" title="Permanent link">&para;</a></h4>
 <p><strong>What it does:</strong> applies each bit-wise operator to the numbers 6 and 5 (or to 6 alone) and prints the result.</p>
@@ -10432,7 +10483,15 @@ False
 <li><code>=</code> is a statement; it cannot be used inside an expression. <code>:=</code> is an operator; it can.</li>
 <li>Keep walrus expressions short and simple. If they make the line hard to read, use two lines instead.</li>
 </ul>
-<p><img alt="How the walrus operator works inside an if statement" src="https://raw.githubusercontent.com/ag999git/001-Python-book-2026/main/resources/ch-03-nb-06-walrus.png" /></p>
+<p><img alt="How the walrus operator works inside an if statement" src="https://raw.githubusercontent.com/ag999git/001-Python-book-2026/main/resources/S03-LR-ch-03-nb-06-walrus.png" /></p>
+<p><strong>Reading the figure</strong></p>
+<ul>
+<li><strong>Step 1:</strong> Python works out <code>len("hello")</code> and gets <code>5</code>.</li>
+<li><strong>Step 2:</strong> <code>n := ...</code> stores <code>5</code> in <code>n</code> and, at the same time, hands <code>5</code> on to the rest of the expression. The brackets around <code>(n := len("hello"))</code> are needed.</li>
+<li><strong>Step 3:</strong> The comparison <code>5 &amp;gt; 3</code> is checked.</li>
+<li><strong>Step 4:</strong> No: the <code>if</code> block would be skipped.</li>
+<li><strong>Step 5:</strong> Yes, as here: the <code>if</code> block runs, and <code>print(n)</code> shows <code>5</code>.</li>
+</ul>
 </div>
 </div>
 </div>
@@ -10490,7 +10549,15 @@ False
 <li>In a chain, the middle value is worked out only once.</li>
 <li>If the first comparison is <code>False</code>, Python does not check the rest. The whole chain is already <code>False</code>.</li>
 </ul>
-<p><img alt="How 1 &lt; x &lt; 10 is checked" src="https://raw.githubusercontent.com/ag999git/001-Python-book-2026/main/resources/ch-03-nb-07-chained-comparison.png" /></p>
+<p><img alt="How 1 &lt; x &lt; 10 is checked" src="https://raw.githubusercontent.com/ag999git/001-Python-book-2026/main/resources/S03-LR-ch-03-nb-07-chained-comparison.png" /></p>
+<p><strong>Reading the figure</strong></p>
+<ul>
+<li><strong>Step 1:</strong> <code>x = 5</code>.</li>
+<li><strong>Step 2:</strong> <code>1 &amp;lt; x &amp;lt; 10</code> is worked out as <code>(1 &amp;lt; x) and (x &amp;lt; 10)</code>. First: is <code>1 &amp;lt; x</code>?</li>
+<li><strong>Step 3:</strong> No, at Step 2 or at Step 4: the whole chain is <code>False</code> and the <code>if</code> block is skipped. If the first part is <code>False</code>, Python does not check the rest.</li>
+<li><strong>Step 4:</strong> Yes: is <code>x &amp;lt; 10</code>?</li>
+<li><strong>Step 5:</strong> Yes: both parts are <code>True</code>, so the whole test is <code>True</code> and <code>5 is between 1 and 10</code> is printed.</li>
+</ul>
 </div>
 </div>
 </div>
@@ -10559,7 +10626,16 @@ False
     <span class="n">status</span> <span class="o">=</span> <span class="s2">"Minor"</span>
 </code></pre></div>
 <p><strong>Learning point:</strong> use the ternary operator only for simple choices. For anything longer, a full <code>if</code> statement is easier to read.</p>
-<p><img alt="How the ternary conditional operator picks a value" src="https://raw.githubusercontent.com/ag999git/001-Python-book-2026/main/resources/ch-03-nb-08-ternary.png" /></p>
+<p><img alt="How the ternary conditional operator picks a value" src="https://raw.githubusercontent.com/ag999git/001-Python-book-2026/main/resources/S03-LR-ch-03-nb-08-ternary.png" /></p>
+<p><strong>Reading the figure</strong></p>
+<ul>
+<li><strong>Step 1:</strong> <code>age = 20</code>.</li>
+<li><strong>Step 2:</strong> In <code>status = "Adult" if age &amp;gt;= 18 else "Minor"</code>, the condition <code>age &amp;gt;= 18</code> is checked first.</li>
+<li><strong>Step 3:</strong> Yes: the value before <code>if</code>, <code>"Adult"</code>, is picked.</li>
+<li><strong>Step 4:</strong> No: the value after <code>else</code>, <code>"Minor"</code>, would be picked.</li>
+<li><strong>Step 5:</strong> The picked value is stored in <code>status</code>.</li>
+<li><strong>Step 6:</strong> <code>print(status)</code> shows <code>Adult</code>.</li>
+</ul>
 </div>
 </div>
 </div>
@@ -10604,7 +10680,15 @@ False
 <h3 id="the-matrix-multiplication-operator"><a name="the-matrix-multiplication-operator"></a>The matrix multiplication operator <code>@</code><a class="headerlink" href="#the-matrix-multiplication-operator" title="Permanent link">&para;</a></h3>
 <p>The <code>@</code> operator was added in Python 3.5. It multiplies matrices and vectors. It is mostly used with the NumPy library, which is already installed in Colab.</p>
 <p>To multiply matrix <code>A</code> by matrix <code>B</code>, the number of <strong>columns</strong> of <code>A</code> must equal the number of <strong>rows</strong> of <code>B</code>. Each entry of the result is made by taking a row of <code>A</code> and a column of <code>B</code>, multiplying the matching numbers, and adding them up:</p>
-<p><img alt="How one entry of A @ B is worked out" src="https://raw.githubusercontent.com/ag999git/001-Python-book-2026/main/resources/ch-03-nb-09-matrix-multiplication.png" /></p>
+<p><img alt="How one entry of A @ B is worked out" src="https://raw.githubusercontent.com/ag999git/001-Python-book-2026/main/resources/S03-LR-ch-03-nb-09-matrix-multiplication.png" /></p>
+<p><strong>Reading the figure</strong></p>
+<ul>
+<li><strong>Step 1:</strong> Take row 1 of <code>A = [[1, 2], [3, 4]]</code>: <code>[1, 2]</code>.</li>
+<li><strong>Step 2:</strong> Take column 1 of <code>B = [[5, 6], [7, 8]]</code>: <code>[5, 7]</code>.</li>
+<li><strong>Step 3:</strong> Multiply the matching pairs: <code>1*5</code> is <code>5</code> and <code>2*7</code> is <code>14</code>.</li>
+<li><strong>Step 4:</strong> Add the products: <code>5 + 14</code> is <code>19</code>.</li>
+<li><strong>Step 5:</strong> <code>19</code> goes in row 1, column 1 of <code>A @ B</code>. Every other position is worked out the same way, with its own row of <code>A</code> and column of <code>B</code>.</li>
+</ul>
 <p>For <code>A = [[1, 2], [3, 4]]</code> and <code>B = [[5, 6], [7, 8]]</code>:</p>
 <table>
 <thead>
