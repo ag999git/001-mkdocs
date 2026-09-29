@@ -8583,20 +8583,22 @@
 <li>Pytest runs tests one after another, not at the same time (unless you use a plugin for parallel runs, discussed later). So "shared" means the same object is handed to one test after another.</li>
 </ol>
 <p>The flowchart below shows the order of events when a run has one session-scoped fixture, and two test files that each have a module-scoped fixture.</p>
-<div class="highlight"><pre><span></span><code>flowchart TD
-    A["1. Start the pytest run"] --&gt; B["2. Session fixture: setup (once)"]
-    B --&gt; C["3. File 1: module fixture setup"]
-    C --&gt; D["4. Run test_1_a"]
-    D --&gt; E["5. Run test_1_b"]
-    E --&gt; F["6. File 1: module fixture teardown"]
-    F --&gt; G["7. File 2: module fixture setup"]
-    G --&gt; H["8. Run test_2_a"]
-    H --&gt; I["9. Run test_2_b"]
-    I --&gt; J["10. File 2: module fixture teardown"]
-    J --&gt; K["11. Session fixture: teardown (once)"]
-    K --&gt; L["12. End of the pytest run"]
-</code></pre></div>
-<p><img alt="The Fixture Lifecycle Hierarchy" src="../../resources/ch20-payment-gateway-fig-01.png" /></p>
+<p><img alt="The Fixture Lifecycle Hierarchy" src="../../resources/LR-ch20-payment-gateway-fig-01.png" /></p>
+<p><strong>Reading the figure</strong></p>
+<ul>
+<li><strong>Step 1:</strong> The pytest run starts.</li>
+<li><strong>Step 2:</strong> The session-scoped fixture is set up, once for the whole run, when the first test asks for it.</li>
+<li><strong>Step 3:</strong> The module fixture of file 1 is set up.</li>
+<li><strong>Step 4:</strong> <code>test_1_a</code> runs.</li>
+<li><strong>Step 5:</strong> <code>test_1_b</code> runs, sharing the same module and session objects.</li>
+<li><strong>Step 6:</strong> File 1 is finished, so its module fixture is torn down.</li>
+<li><strong>Step 7:</strong> The module fixture of file 2 is set up.</li>
+<li><strong>Step 8:</strong> <code>test_2_a</code> runs.</li>
+<li><strong>Step 9:</strong> <code>test_2_b</code> runs.</li>
+<li><strong>Step 10:</strong> File 2 is finished, so its module fixture is torn down.</li>
+<li><strong>Step 11:</strong> The last test of the run has finished, so the session fixture is torn down, once.</li>
+<li><strong>Step 12:</strong> The pytest run ends.</li>
+</ul>
 <p>Notice that the session fixture wraps around everything. It is set up at step 2 and not torn down until step 11, after both files have finished. The module fixtures are set up and torn down once for each file.</p>
 <p><a href="./#table-of-contents">Back to the Table of Contents</a></p>
 <h2 id="application-simulation-architectural-design">Application Simulation Architectural Design<a class="headerlink" href="#application-simulation-architectural-design" title="Permanent link">&para;</a></h2>
@@ -8889,16 +8891,18 @@ PASSED
 <li>The fixture then pauses while the tests run. How long it pauses depends on its scope: for a function-scoped fixture, until that one test ends; for a session-scoped fixture, until the last test of the whole run ends.</li>
 <li>Everything <strong>after</strong> <code>yield</code> is the <strong>teardown phase</strong>, where resources are released (here, the gateway is closed). This part runs even if a test fails.</li>
 </ol>
-<div class="highlight"><pre><span></span><code>flowchart TD
-    A["1. First test asks for gateway_session"] --&gt; B["2. Fixture runs up to yield: create and connect the gateway"]
-    B --&gt; C["3. yield hands the gateway to the test and the fixture pauses"]
-    C --&gt; D["4. Test 1 runs"]
-    D --&gt; E["5. Test 2 runs with the same gateway"]
-    E --&gt; F["6. Test 3 runs with the same gateway"]
-    F --&gt; G["7. Last test of the session has finished"]
-    G --&gt; H["8. Fixture continues after yield: close the gateway"]
-</code></pre></div>
-<p><img alt="The Mechanics of yield Statements" src="../../resources/ch20-payment-gateway-fig-02.png" /></p>
+<p><img alt="The Mechanics of yield Statements" src="../../resources/LR-ch20-payment-gateway-fig-02.png" /></p>
+<p><strong>Reading the figure</strong></p>
+<ul>
+<li><strong>Step 1:</strong> The first test that needs the session-scoped fixture <code>gateway_session</code> asks for it.</li>
+<li><strong>Step 2:</strong> The fixture runs up to <code>yield</code>: it creates the gateway and connects it. This is the setup phase.</li>
+<li><strong>Step 3:</strong> <code>yield</code> hands the gateway to the test, and the fixture pauses.</li>
+<li><strong>Step 4:</strong> Test 1 runs.</li>
+<li><strong>Step 5:</strong> Test 2 runs with the same gateway, because the fixture's scope is the whole session.</li>
+<li><strong>Step 6:</strong> Test 3 runs with the same gateway.</li>
+<li><strong>Step 7:</strong> The last test of the session has finished.</li>
+<li><strong>Step 8:</strong> The fixture continues after <code>yield</code> and closes the gateway. This teardown runs even if a test failed.</li>
+</ul>
 <p><a href="./#table-of-contents">Back to the Table of Contents</a></p>
 <h4 id="3-output-of-the-pytest-with-flag-s-shows-that-resources-are-optimized">3. Output of the pytest (with flag -s) shows that resources are optimized<a class="headerlink" href="#3-output-of-the-pytest-with-flag-s-shows-that-resources-are-optimized" title="Permanent link">&para;</a></h4>
 <p>When this test file is run with the <code>-s</code> flag, output capturing is turned off. The <code>print()</code> messages then appear on the screen, and they show the fixture's lifecycle clearly. We also add <code>-v</code> to see the name of each test.</p>
@@ -9344,15 +9348,17 @@ PASSED
 </tr>
 </tbody>
 </table>
-<div class="highlight"><pre><span></span><code>flowchart TD
-    A["1. Is the setup slow?"] -- No --&gt; B["2. Use function scope"]
-    A -- Yes --&gt; C{"3. Do the tests change the object?"}
-    C -- Yes --&gt; D["4. Use function scope, or reset the object after each test"]
-    C -- No --&gt; E{"5. Is it needed in many files?"}
-    E -- No --&gt; F["6. Use module or class scope"]
-    E -- Yes --&gt; G["7. Use session scope and put the fixture in conftest.py"]
-</code></pre></div>
-<p><img alt="Choosing the Right Scope" src="../../resources/ch20-payment-gateway-fig-03.png" /></p>
+<p><img alt="Choosing the Right Scope" src="../../resources/LR-ch20-payment-gateway-fig-03.png" /></p>
+<p><strong>Reading the figure</strong></p>
+<ul>
+<li><strong>Step 1:</strong> Is the fixture's setup slow?</li>
+<li><strong>Step 2:</strong> No: use the default function scope. Every test gets a fresh object, and the cost is small.</li>
+<li><strong>Step 3:</strong> Yes: do the tests change the object?</li>
+<li><strong>Step 4:</strong> Yes: sharing a changed object would make tests depend on each other, so use function scope, or reset the object after each test.</li>
+<li><strong>Step 5:</strong> No: is the object needed in many files?</li>
+<li><strong>Step 6:</strong> No: use module scope for one file, or class scope for one class.</li>
+<li><strong>Step 7:</strong> Yes: use session scope and put the fixture in <code>conftest.py</code>, so every file can use it and the setup is paid for only once.</li>
+</ul>
 <p><a href="./#table-of-contents">Back to the Table of Contents</a></p>
 <h2 id="follow-up-questions">Follow-Up Questions<a class="headerlink" href="#follow-up-questions" title="Permanent link">&para;</a></h2>
 <h3 id="question-1-counting-setups">Question 1: Counting Setups<a class="headerlink" href="#question-1-counting-setups" title="Permanent link">&para;</a></h3>

@@ -9674,17 +9674,18 @@
 <li>Work out the speedup: linear time divided by binary time.</li>
 <li>Print one row of the table.</li>
 </ol>
-<div class="highlight"><pre><span></span><code>flowchart TD
-    A["1. Take the next list size n"] --&gt; B["2. Build random data and a sorted copy"]
-    B --&gt; C["3. Time linear search on data, 5 runs, keep fastest"]
-    C --&gt; D["4. Time binary search on sorted copy, 5 runs, keep fastest"]
-    D --&gt; E["5. speedup = linear time / binary time"]
-    E --&gt; F["6. Print n, both times and speedup"]
-    F --&gt; G{"7. More sizes?"}
-    G -- "Yes" --&gt; A
-    G -- "No" --&gt; H["8. Print Big-O summary"]
-</code></pre></div>
-<p><img alt="Q1. Linear Search vs Binary Search Timing" src="../../resources/ch16-scripting-qa-hard-fig-01.png" /></p>
+<p><img alt="Q1. Linear Search vs Binary Search Timing" src="../../resources/LR-ch16-scripting-qa-hard-fig-01.png" /></p>
+<p><strong>Reading the figure</strong></p>
+<ul>
+<li><strong>Step 1:</strong> Take the next list size <code>n</code>.</li>
+<li><strong>Step 2:</strong> Build a list of <code>n</code> random numbers, and a sorted copy of it for binary search, which only works on sorted data.</li>
+<li><strong>Step 3:</strong> Time linear search on the data 5 times and keep the fastest time, the one least disturbed by other activity on the computer.</li>
+<li><strong>Step 4:</strong> Time binary search on the sorted copy in the same way.</li>
+<li><strong>Step 5:</strong> Work out how many times faster binary search is: <code>speedup = linear time / binary time</code>.</li>
+<li><strong>Step 6:</strong> Print one row of the table: <code>n</code>, both times and the speedup.</li>
+<li><strong>Step 7:</strong> If more sizes are left, go back to Step 1.</li>
+<li><strong>Step 8:</strong> No: print the Big-O summary. Linear search grows like O(n), binary search like O(log n), so the speedup grows as <code>n</code> grows.</li>
+</ul>
 <p><a href="#table-of-contents">Back to the Table of Contents</a></p>
 <h3 id="12-answer-script">1.2 Answer Script<a class="headerlink" href="#12-answer-script" title="Permanent link">&para;</a></h3>
 <div class="highlight"><pre><span></span><code><span class="sd">"""</span>
@@ -9807,22 +9808,21 @@ Big-O reminder:
 <li>At the end of the pass, if <code>already_sorted</code> is still <code>True</code>, no item was out of order, so stop.</li>
 </ol>
 <p><strong>Counting comparisons.</strong> Without an early exit, the passes make <code>(n - 1) + (n - 2) + ... + 1</code> comparisons, which adds up to <code>n(n - 1)/2</code>. The largest part of this is <code>n²/2</code>, so the count grows like <code>n²</code>. A simple test: when <code>n</code> doubles, the count should become about <strong>four times</strong> larger.</p>
-<div class="highlight"><pre><span></span><code>flowchart TD
-    A["1. pass_no = 0"] --&gt; B["2. already_sorted = True"]
-    B --&gt; C["3. Compare each neighbouring pair in the unsorted part. comparisons + 1"]
-    C --&gt; D{"4. Left item bigger than right item?"}
-    D -- "Yes" --&gt; E["5. Swap and set already_sorted = False"]
-    D -- "No" --&gt; F{"6. More pairs in this pass?"}
-    E --&gt; F
-    F -- "Yes" --&gt; C
-    F -- "No" --&gt; G{"7. Is already_sorted still True?"}
-    G -- "Yes" --&gt; H["8. Stop early: list is sorted"]
-    G -- "No" --&gt; I{"9. More passes left?"}
-    I -- "Yes" --&gt; J["10. pass_no = pass_no + 1"]
-    J --&gt; B
-    I -- "No" --&gt; K["11. Done"]
-</code></pre></div>
-<p><img alt="Q2. Bubble Sort with Early Exit" src="../../resources/ch16-scripting-qa-hard-fig-02.png" /></p>
+<p><img alt="Q2. Bubble Sort with Early Exit" src="../../resources/LR-ch16-scripting-qa-hard-fig-02.png" /></p>
+<p><strong>Reading the figure</strong></p>
+<ul>
+<li><strong>Step 1:</strong> Start with the first pass, <code>pass_no = 0</code>.</li>
+<li><strong>Step 2:</strong> At the start of each pass, assume the list is sorted: <code>already_sorted = True</code>.</li>
+<li><strong>Step 3:</strong> Compare the next neighbouring pair in the unsorted part, and count one comparison.</li>
+<li><strong>Step 4:</strong> Is the left item bigger than the right item?</li>
+<li><strong>Step 5:</strong> Yes: swap them and set <code>already_sorted = False</code>, because an item was out of order.</li>
+<li><strong>Step 6:</strong> If more pairs are left in this pass, go back to Step 3. (No from Step 4 comes straight here.)</li>
+<li><strong>Step 7:</strong> The pass is over. Is <code>already_sorted</code> still <code>True</code>?</li>
+<li><strong>Step 8:</strong> Yes: no swap happened in the whole pass, so the list is sorted. Stop early.</li>
+<li><strong>Step 9:</strong> No: are there more passes left?</li>
+<li><strong>Step 10:</strong> Yes: <code>pass_no = pass_no + 1</code>, and go back to Step 2.</li>
+<li><strong>Step 11:</strong> No: all passes are done. Without the early exit the count is <code>n(n - 1)/2</code> comparisons, which grows like <code>n²</code>.</li>
+</ul>
 <p><a href="#table-of-contents">Back to the Table of Contents</a></p>
 <h3 id="22-answer-script">2.2 Answer Script<a class="headerlink" href="#22-answer-script" title="Permanent link">&para;</a></h3>
 <div class="highlight"><pre><span></span><code><span class="sd">"""</span>
@@ -9970,19 +9970,19 @@ Best case (already sorted):
 </tbody>
 </table>
 <p>(If a swap is done by hand with a temporary variable, it takes 3 assignments, which makes the difference even larger.)</p>
-<div class="highlight"><pre><span></span><code>flowchart TD
-    A["1. i = 1"] --&gt; B["2. key = numbers at i. j = i - 1"]
-    B --&gt; C{"3. j at least 0 AND numbers at j bigger than key?"}
-    C -- "Yes" --&gt; D["4. Shift: numbers at j + 1 = numbers at j. shifts + 1"]
-    D --&gt; E["5. j = j - 1"]
-    E --&gt; C
-    C -- "No" --&gt; F["6. Place: numbers at j + 1 = key"]
-    F --&gt; G{"7. More items?"}
-    G -- "Yes" --&gt; H["8. i = i + 1"]
-    H --&gt; B
-    G -- "No" --&gt; I["9. Sorted"]
-</code></pre></div>
-<p><img alt="Q3. Insertion Sort: Shifts vs Swaps" src="../../resources/ch16-scripting-qa-hard-fig-03.png" /></p>
+<p><img alt="Q3. Insertion Sort: Shifts vs Swaps" src="../../resources/LR-ch16-scripting-qa-hard-fig-03.png" /></p>
+<p><strong>Reading the figure</strong></p>
+<ul>
+<li><strong>Step 1:</strong> Start with the second item, <code>i = 1</code>.</li>
+<li><strong>Step 2:</strong> Pick up the item as <code>key</code>, and start comparing with the item before it: <code>j = i - 1</code>.</li>
+<li><strong>Step 3:</strong> Is <code>j</code> still inside the list (<code>j &gt;= 0</code>), and is the item at <code>j</code> bigger than <code>key</code>?</li>
+<li><strong>Step 4:</strong> Yes: shift that item one place right, <code>numbers[j + 1] = numbers[j]</code>, and count one shift. A shift writes only one position.</li>
+<li><strong>Step 5:</strong> Move one step left, <code>j = j - 1</code>, and go back to Step 3.</li>
+<li><strong>Step 6:</strong> No: place <code>key</code> into the gap, <code>numbers[j + 1] = key</code>.</li>
+<li><strong>Step 7:</strong> Are there more items to place?</li>
+<li><strong>Step 8:</strong> Yes: <code>i = i + 1</code>, and go back to Step 2.</li>
+<li><strong>Step 9:</strong> No: the list is sorted.</li>
+</ul>
 <p><a href="#table-of-contents">Back to the Table of Contents</a></p>
 <h3 id="32-answer-script">3.2 Answer Script<a class="headerlink" href="#32-answer-script" title="Permanent link">&para;</a></h3>
 <div class="highlight"><pre><span></span><code><span class="sd">"""</span>
@@ -10274,19 +10274,19 @@ Removing 100,000 items from the front:
 <li>The main program waits for both threads to finish with <code>join()</code>.</li>
 </ol>
 <p>Because two threads print at the same time, their lines could get mixed together. The script uses a <strong>lock</strong> so that only one thread prints at a time.</p>
-<div class="highlight"><pre><span></span><code>flowchart TD
-    A["1. Start producer and consumer threads"] --&gt; B["2. Producer puts job-A, job-B, job-C with short pauses"]
-    B --&gt; C["3. Producer puts None as the sentinel"]
-    A --&gt; D["4. Consumer calls get and waits for an item"]
-    D --&gt; E{"5. Is the item None?"}
-    E -- "No" --&gt; F["6. Process the job and call task_done"]
-    F --&gt; D
-    E -- "Yes" --&gt; G["7. Call task_done and leave the loop"]
-    C --&gt; H["8. Main program joins both threads"]
-    G --&gt; H
-    H --&gt; I["9. Program ends"]
-</code></pre></div>
-<p><img alt="Q5. FIFO Queue and Producer-Consumer Threads" src="../../resources/ch16-scripting-qa-hard-fig-04.png" /></p>
+<p><img alt="Q5. FIFO Queue and Producer-Consumer Threads" src="../../resources/LR-ch16-scripting-qa-hard-fig-04.png" /></p>
+<p><strong>Reading the figure</strong></p>
+<ul>
+<li><strong>Step 1:</strong> The main program starts two threads, the producer and the consumer. They run at the same time.</li>
+<li><strong>Step 2:</strong> The producer puts job-A, job-B and job-C into the queue, pausing briefly between them.</li>
+<li><strong>Step 3:</strong> When it has no more jobs, the producer puts <code>None</code> into the queue as the sentinel, the stop signal.</li>
+<li><strong>Step 4:</strong> Meanwhile the consumer calls <code>get()</code>, which waits until an item is in the queue and then takes it.</li>
+<li><strong>Step 5:</strong> The consumer checks whether the item is <code>None</code>.</li>
+<li><strong>Step 6:</strong> No: it is a real job. Process it, call <code>task_done()</code>, and go back to Step 4.</li>
+<li><strong>Step 7:</strong> Yes: it is the sentinel. Call <code>task_done()</code> for it and leave the loop.</li>
+<li><strong>Step 8:</strong> The main program calls <code>join()</code> on both threads and waits until both have finished.</li>
+<li><strong>Step 9:</strong> The program ends.</li>
+</ul>
 <p><a href="#table-of-contents">Back to the Table of Contents</a></p>
 <h3 id="52-answer-script">5.2 Answer Script<a class="headerlink" href="#52-answer-script" title="Permanent link">&para;</a></h3>
 <div class="highlight"><pre><span></span><code><span class="sd">"""</span>
@@ -10662,14 +10662,16 @@ user_prefs unchanged:   {'theme': 'dark', 'font': 'Consolas'}
 </tbody>
 </table>
 <p>After <code>heapify</code>, the marks list <code>[41, 55, 60, 92, 88, 73]</code> forms this tree:</p>
-<div class="highlight"><pre><span></span><code>flowchart TD
-    A["index 0: 41"] --&gt; B["index 1: 55"]
-    A --&gt; C["index 2: 60"]
-    B --&gt; D["index 3: 92"]
-    B --&gt; E["index 4: 88"]
-    C --&gt; F["index 5: 73"]
-</code></pre></div>
-<p><img alt="Q7. heapq: Min-Heap, Max-Heap and Priority Queue" src="../../resources/ch16-scripting-qa-hard-fig-05.png" /></p>
+<p><img alt="Q7. heapq: Min-Heap, Max-Heap and Priority Queue" src="../../resources/LR-ch16-scripting-qa-hard-fig-05.png" /></p>
+<p><strong>Reading the figure</strong></p>
+<ul>
+<li>Index 0 holds 41, the root and the smallest mark. It is always at <code>heap[0]</code>.</li>
+<li>Index 1 holds 55, the left child of index 0 (<code>2 * 0 + 1</code>).</li>
+<li>Index 2 holds 60, the right child of index 0 (<code>2 * 0 + 2</code>).</li>
+<li>Index 3 holds 92, the left child of index 1 (<code>2 * 1 + 1</code>).</li>
+<li>Index 4 holds 88, the right child of index 1 (<code>2 * 1 + 2</code>).</li>
+<li>Index 5 holds 73, the left child of index 2 (<code>2 * 2 + 1</code>). Every parent is smaller than or equal to its children, so this is a valid min-heap.</li>
+</ul>
 <p>Check the rule: 41 is smaller than 55 and 60; 55 is smaller than 92 and 88; 60 is smaller than 73.</p>
 <p><a href="#table-of-contents">Back to the Table of Contents</a></p>
 <h3 id="72-answer-script">7.2 Answer Script<a class="headerlink" href="#72-answer-script" title="Permanent link">&para;</a></h3>
@@ -10854,15 +10856,16 @@ Processing tasks by priority:
 </tbody>
 </table>
 <p>There must always be one more grade than there are breakpoints.</p>
-<div class="highlight"><pre><span></span><code>flowchart TD
-    A["1. Take a score"] --&gt; B["2. index = bisect of breakpoints and score"]
-    B --&gt; C["3. grade = grades at index"]
-    C --&gt; D["4. Print score and grade"]
-    D --&gt; E{"5. More scores?"}
-    E -- "Yes" --&gt; A
-    E -- "No" --&gt; F["6. Done"]
-</code></pre></div>
-<p><img alt="Q8. bisect: Duplicates, Leaderboard and Grade Lookup" src="../../resources/ch16-scripting-qa-hard-fig-06.png" /></p>
+<p><img alt="Q8. bisect: Duplicates, Leaderboard and Grade Lookup" src="../../resources/LR-ch16-scripting-qa-hard-fig-06.png" /></p>
+<p><strong>Reading the figure</strong></p>
+<ul>
+<li><strong>Step 1:</strong> Take the next score.</li>
+<li><strong>Step 2:</strong> <code>bisect(breakpoints, score)</code> counts how many breakpoints are less than or equal to the score. That count is the index.</li>
+<li><strong>Step 3:</strong> Use the index to pick the grade, <code>grade = grades[index]</code>. There is always one more grade than there are breakpoints.</li>
+<li><strong>Step 4:</strong> Print the score with its grade.</li>
+<li><strong>Step 5:</strong> If more scores are left, go back to Step 1.</li>
+<li><strong>Step 6:</strong> No: done.</li>
+</ul>
 <p><a href="#table-of-contents">Back to the Table of Contents</a></p>
 <h3 id="82-answer-script">8.2 Answer Script<a class="headerlink" href="#82-answer-script" title="Permanent link">&para;</a></h3>
 <div class="highlight"><pre><span></span><code><span class="sd">"""</span>
@@ -10992,18 +10995,18 @@ Grade lookup using bisect:
 <li>When an item is read or updated, <code>move_to_end(key)</code> marks it as most recently used.</li>
 <li>When the cache is too full, <code>popitem(last=False)</code> removes the item at the front, which is the least recently used.</li>
 </ul>
-<div class="highlight"><pre><span></span><code>flowchart TD
-    A["1. put key and value"] --&gt; B{"2. Is key already in the cache?"}
-    B -- "Yes" --&gt; C["3. move_to_end key"]
-    B -- "No" --&gt; D["4. Nothing to move"]
-    C --&gt; E["5. Store the value at key"]
-    D --&gt; E
-    E --&gt; F{"6. Is size now bigger than capacity?"}
-    F -- "Yes" --&gt; G["7. popitem last=False: evict the least recently used"]
-    F -- "No" --&gt; H["8. Done"]
-    G --&gt; H
-</code></pre></div>
-<p><img alt="Q9. OrderedDict and an LRU Cache" src="../../resources/ch16-scripting-qa-hard-fig-07.png" /></p>
+<p><img alt="Q9. OrderedDict and an LRU Cache" src="../../resources/LR-ch16-scripting-qa-hard-fig-07.png" /></p>
+<p><strong>Reading the figure</strong></p>
+<ul>
+<li><strong>Step 1:</strong> Call <code>put(key, value)</code> on the LRU cache.</li>
+<li><strong>Step 2:</strong> Is <code>key</code> already in the cache?</li>
+<li><strong>Step 3:</strong> Yes: <code>move_to_end(key)</code> moves it to the end, marking it as the most recently used.</li>
+<li><strong>Step 4:</strong> No: there is nothing to move.</li>
+<li><strong>Step 5:</strong> Store the value at <code>key</code>. A new key is added at the end, as the most recently used.</li>
+<li><strong>Step 6:</strong> Is the cache now holding more items than its capacity?</li>
+<li><strong>Step 7:</strong> Yes: <code>popitem(last=False)</code> removes the item at the front, which is the least recently used.</li>
+<li><strong>Step 8:</strong> Done.</li>
+</ul>
 <p><a href="#table-of-contents">Back to the Table of Contents</a></p>
 <h3 id="92-answer-script">9.2 Answer Script<a class="headerlink" href="#92-answer-script" title="Permanent link">&para;</a></h3>
 <div class="highlight"><pre><span></span><code><span class="sd">"""</span>
@@ -11663,18 +11666,19 @@ Is 404 NOT_FOUND? True
 </ul>
 <p><strong>The Fibonacci example.</strong> In the <a href="https://en.wikipedia.org/wiki/Fibonacci_sequence">Fibonacci sequence</a> each number is the sum of the two before it: 0, 1, 1, 2, 3, 5, 8, ... The plain recursive <code>fib(n)</code> calls <code>fib(n-1)</code> and <code>fib(n-2)</code>, and each of those calls two more, so the same values are worked out again and again. The number of calls grows exponentially. <code>O(2ⁿ)</code> is the usual simple upper bound; <code>fib(35)</code> actually makes about 30 million calls.</p>
 <p>With the cache, each <code>n</code> from 0 to 35 is worked out only <strong>once</strong>, so the work drops to <code>O(n)</code>.</p>
-<div class="highlight"><pre><span></span><code>flowchart TD
-    A["1. fib_cached n is called"] --&gt; B{"2. Is n already in the cache?"}
-    B -- "Yes: hit" --&gt; C["3. Return saved value. hits + 1"]
-    B -- "No: miss" --&gt; D["4. misses + 1"]
-    D --&gt; E{"5. Is n less than 2?"}
-    E -- "Yes" --&gt; F["6. Result is n"]
-    E -- "No" --&gt; G["7. Result = fib_cached n-1 plus fib_cached n-2"]
-    F --&gt; H["8. Save result in cache. currsize + 1"]
-    G --&gt; H
-    H --&gt; I["9. Return result"]
-</code></pre></div>
-<p><img alt="Q13. lrucache and Fibonacci" src="../../resources/ch16-scripting-qa-hard-fig-08.png" /></p>
+<p><img alt="Q13. lrucache and Fibonacci" src="../../resources/LR-ch16-scripting-qa-hard-fig-08.png" /></p>
+<p><strong>Reading the figure</strong></p>
+<ul>
+<li><strong>Step 1:</strong> <code>fib_cached(n)</code> is called. It is decorated with <code>@lru_cache</code>.</li>
+<li><strong>Step 2:</strong> Is the result for this <code>n</code> already in the cache?</li>
+<li><strong>Step 3:</strong> Yes, a hit: return the saved value at once, and <code>hits</code> goes up by 1.</li>
+<li><strong>Step 4:</strong> No, a miss: <code>misses</code> goes up by 1 and the function body runs.</li>
+<li><strong>Step 5:</strong> Is <code>n &lt; 2</code>?</li>
+<li><strong>Step 6:</strong> Yes: this is a base case, so the result is <code>n</code> itself (<code>fib(0) = 0</code>, <code>fib(1) = 1</code>).</li>
+<li><strong>Step 7:</strong> No: the result is <code>fib_cached(n-1) + fib_cached(n-2)</code>. These two calls go through the cache too, so each value is worked out only once.</li>
+<li><strong>Step 8:</strong> Save the result in the cache, so <code>currsize</code> goes up by 1.</li>
+<li><strong>Step 9:</strong> Return the result. With the cache, the work drops from exponential to O(n).</li>
+</ul>
 <p><a href="#table-of-contents">Back to the Table of Contents</a></p>
 <h3 id="132-answer-script">13.2 Answer Script<a class="headerlink" href="#132-answer-script" title="Permanent link">&para;</a></h3>
 <div class="highlight"><pre><span></span><code><span class="sd">"""</span>
@@ -11845,14 +11849,15 @@ Cache info now: CacheInfo(hits=34, misses=36, maxsize=None, currsize=36)
 </tr>
 </tbody>
 </table>
-<div class="highlight"><pre><span></span><code>flowchart TD
-    A["1. result = first item, 2"] --&gt; B["2. Take the next item"]
-    B --&gt; C["3. result = multiply result and item. Print it"]
-    C --&gt; D{"4. Items left?"}
-    D -- "Yes" --&gt; B
-    D -- "No" --&gt; E["5. Return result, 120"]
-</code></pre></div>
-<p><img alt="Q14. partial() and reduce()" src="../../resources/ch16-scripting-qa-hard-fig-09.png" /></p>
+<p><img alt="Q14. partial() and reduce()" src="../../resources/LR-ch16-scripting-qa-hard-fig-09.png" /></p>
+<p><strong>Reading the figure</strong></p>
+<ul>
+<li><strong>Step 1:</strong> No starting value is given, so <code>reduce</code> starts with the first item: <code>result = 2</code>.</li>
+<li><strong>Step 2:</strong> Take the next item: 3, then 4, then 5.</li>
+<li><strong>Step 3:</strong> Call the function on the running result and the item, <code>multiply(result, item)</code>, and print the new result: 6, 24, 120.</li>
+<li><strong>Step 4:</strong> If items are left, go back to Step 2.</li>
+<li><strong>Step 5:</strong> No: return the final result, 120.</li>
+</ul>
 <p>GST (Goods and Services Tax) is the tax added to most sales in India. <code>₹</code> is the symbol for the Indian rupee.</p>
 <p><a href="#table-of-contents">Back to the Table of Contents</a></p>
 <h3 id="142-answer-script">14.2 Answer Script<a class="headerlink" href="#142-answer-script" title="Permanent link">&para;</a></h3>
@@ -12020,17 +12025,17 @@ math.prod(data) = 120
 </table>
 <p>A <strong>generator</strong> is a function that uses <code>yield</code> instead of <code>return</code>. Each time it is asked for a value, it runs until the next <code>yield</code>, hands that value out, and pauses. A generator with <code>while True:</code> never ends, so it is <strong>infinite</strong>. You can never turn it into a list, but <code>islice()</code> can safely take the first few items. See <a href="https://docs.python.org/3/glossary.html#term-generator">generators</a>.</p>
 <p><strong>Why sort before <code>groupby()</code>?</strong> <code>groupby()</code> starts a new group every time the key changes. If "Engineering" appears, then "HR", then "Engineering" again, you get two separate Engineering groups. Sorting by department first puts all the same departments next to each other.</p>
-<div class="highlight"><pre><span></span><code>flowchart TD
-    A["1. Sort employees by dept"] --&gt; B["2. groupby reads the next employee"]
-    B --&gt; C{"3. Is dept the same as the current group?"}
-    C -- "Yes" --&gt; D["4. Add employee to the current group"]
-    C -- "No" --&gt; E["5. Start a new group for this dept"]
-    D --&gt; F{"6. More employees?"}
-    E --&gt; F
-    F -- "Yes" --&gt; B
-    F -- "No" --&gt; G["7. All groups produced"]
-</code></pre></div>
-<p><img alt="Q15. chain, islice and groupby" src="../../resources/ch16-scripting-qa-hard-fig-10.png" /></p>
+<p><img alt="Q15. chain, islice and groupby" src="../../resources/LR-ch16-scripting-qa-hard-fig-10.png" /></p>
+<p><strong>Reading the figure</strong></p>
+<ul>
+<li><strong>Step 1:</strong> Sort the employees by department first, so that everyone in the same department sits next to each other.</li>
+<li><strong>Step 2:</strong> <code>groupby</code> reads the next employee.</li>
+<li><strong>Step 3:</strong> Is this employee's department the same as the department of the current group?</li>
+<li><strong>Step 4:</strong> Yes: the employee joins the current group.</li>
+<li><strong>Step 5:</strong> No: the key has changed, so <code>groupby</code> starts a new group for this department. Without Step 1, one department could be split into several groups.</li>
+<li><strong>Step 6:</strong> If more employees are left, go back to Step 2.</li>
+<li><strong>Step 7:</strong> No: all the groups have been produced.</li>
+</ul>
 <p><a href="#table-of-contents">Back to the Table of Contents</a></p>
 <h3 id="152-answer-script">15.2 Answer Script<a class="headerlink" href="#152-answer-script" title="Permanent link">&para;</a></h3>
 <div class="highlight"><pre><span></span><code><span class="sd">"""</span>
@@ -12341,25 +12346,23 @@ Totals:
 </tbody>
 </table>
 <p>Selection sort is therefore a good choice when writing data is expensive, for example on flash memory, which wears out a little with every write.</p>
-<div class="highlight"><pre><span></span><code>flowchart TD
-    A["1. i = 0"] --&gt; B["2. min_idx = i"]
-    B --&gt; C["3. Scan j from i + 1 to the end"]
-    C --&gt; D{"4. Is data at j smaller than data at min_idx?"}
-    D -- "Yes" --&gt; E["5. min_idx = j"]
-    D -- "No" --&gt; F{"6. More j?"}
-    E --&gt; F
-    F -- "Yes" --&gt; C
-    F -- "No" --&gt; G{"7. Is min_idx different from i?"}
-    G -- "Yes" --&gt; H["8. Swap data at i and data at min_idx. swaps + 1"]
-    G -- "No" --&gt; I["9. No swap needed"]
-    H --&gt; J["10. Print trace for this pass"]
-    I --&gt; J
-    J --&gt; K{"11. i less than n - 2?"}
-    K -- "Yes" --&gt; L["12. i = i + 1"]
-    L --&gt; B
-    K -- "No" --&gt; M["13. Sorted"]
-</code></pre></div>
-<p><img alt="Q17. Selection Sort with Trace" src="../../resources/ch16-scripting-qa-hard-fig-11.png" /></p>
+<p><img alt="Q17. Selection Sort with Trace" src="../../resources/LR-ch16-scripting-qa-hard-fig-11.png" /></p>
+<p><strong>Reading the figure</strong></p>
+<ul>
+<li><strong>Step 1:</strong> Start with the first position, <code>i = 0</code>.</li>
+<li><strong>Step 2:</strong> Assume the smallest item in the unsorted part is at <code>i</code>: <code>min_idx = i</code>.</li>
+<li><strong>Step 3:</strong> Take the next index <code>j</code>, from <code>i + 1</code> to the end of the list.</li>
+<li><strong>Step 4:</strong> Is <code>data[j]</code> smaller than the smallest found so far, <code>data[min_idx]</code>?</li>
+<li><strong>Step 5:</strong> Yes: remember it, <code>min_idx = j</code>.</li>
+<li><strong>Step 6:</strong> If more <code>j</code> values are left, go back to Step 3.</li>
+<li><strong>Step 7:</strong> The scan is over. Is <code>min_idx</code> different from <code>i</code>?</li>
+<li><strong>Step 8:</strong> Yes: swap <code>data[i]</code> with <code>data[min_idx]</code> and count one swap.</li>
+<li><strong>Step 9:</strong> No: the smallest item is already in place, so no swap is needed.</li>
+<li><strong>Step 10:</strong> Print the trace for this pass, showing the list and the swap count.</li>
+<li><strong>Step 11:</strong> Is <code>i &lt; n - 2</code>? That is, is there more than one item left in the unsorted part after this pass?</li>
+<li><strong>Step 12:</strong> Yes: <code>i = i + 1</code>, and go back to Step 2.</li>
+<li><strong>Step 13:</strong> No: the list is sorted. Selection sort makes at most <code>n - 1</code> swaps, which is O(n).</li>
+</ul>
 <p><a href="#table-of-contents">Back to the Table of Contents</a></p>
 <h3 id="172-answer-script">17.2 Answer Script<a class="headerlink" href="#172-answer-script" title="Permanent link">&para;</a></h3>
 <div class="highlight"><pre><span></span><code><span class="sd">"""</span>
@@ -12904,23 +12907,23 @@ Same final order? True
 <li>Runs that whole measurement 5 times and keeps the fastest, which is the one least disturbed by background activity.</li>
 </ol>
 <p><strong>Measurement methodology</strong></p>
-<div class="highlight"><pre><span></span><code>flowchart TD
-    A["1. Choose the input sizes"] --&gt; B["2. Take the next size n"]
-    B --&gt; C["3. Build random data of size n and a sorted copy"]
-    C --&gt; D["4. Choose a target that is not in the data: worst case"]
-    D --&gt; E["5. Read perf_counter as start"]
-    E --&gt; F["6. Run the algorithm, repeated several times"]
-    F --&gt; G["7. Read perf_counter as end"]
-    G --&gt; H["8. Time per run = end - start, divided by repeats"]
-    H --&gt; I{"9. Done 5 rounds?"}
-    I -- "No" --&gt; E
-    I -- "Yes" --&gt; J["10. Keep the fastest round"]
-    J --&gt; K{"11. More sizes?"}
-    K -- "Yes" --&gt; B
-    K -- "No" --&gt; L["12. Print table and growth ratios"]
-    L --&gt; M["13. Draw and save the graph"]
-</code></pre></div>
-<p><img alt="Q20. Big-O Timing Comparison" src="../../resources/ch16-scripting-qa-hard-fig-12.png" /></p>
+<p><img alt="Q20. Big-O Timing Comparison" src="../../resources/LR-ch16-scripting-qa-hard-fig-12.png" /></p>
+<p><strong>Reading the figure</strong></p>
+<ul>
+<li><strong>Step 1:</strong> Choose the list sizes to test.</li>
+<li><strong>Step 2:</strong> Take the next size <code>n</code>.</li>
+<li><strong>Step 3:</strong> Build a list of <code>n</code> random numbers, and a sorted copy for binary search.</li>
+<li><strong>Step 4:</strong> Choose a target that is not in the data, so every search does the most work it can: the worst case.</li>
+<li><strong>Step 5:</strong> Read <code>time.perf_counter()</code> as the start time.</li>
+<li><strong>Step 6:</strong> Run the search many times in a row, because one search is too fast to time accurately.</li>
+<li><strong>Step 7:</strong> Read <code>time.perf_counter()</code> as the end time.</li>
+<li><strong>Step 8:</strong> Work out the time for one run: <code>(end - start) / repeats</code>.</li>
+<li><strong>Step 9:</strong> Have 5 rounds been done? If not, go back to Step 5.</li>
+<li><strong>Step 10:</strong> Yes: keep the fastest of the 5 rounds, the one least disturbed by background activity.</li>
+<li><strong>Step 11:</strong> If more sizes are left, go back to Step 2.</li>
+<li><strong>Step 12:</strong> No: print the table of times and how much each time grew from one size to the next.</li>
+<li><strong>Step 13:</strong> Draw the graph of time against <code>n</code> and save it.</li>
+</ul>
 <p><a href="#table-of-contents">Back to the Table of Contents</a></p>
 <h3 id="202-answer-script">20.2 Answer Script<a class="headerlink" href="#202-answer-script" title="Permanent link">&para;</a></h3>
 <p>The graph at the end of the script needs the third-party <a href="https://matplotlib.org/">matplotlib</a> library (<code>pip install matplotlib</code>). If you do not have it, delete Step 7 and the tables will still print.</p>

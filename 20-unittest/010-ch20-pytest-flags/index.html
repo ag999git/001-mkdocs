@@ -9305,20 +9305,19 @@ test_bank.py::test_deposit PASSED                                        [100%]
 ======================= 1 passed, 2 deselected in 0.02s ========================
 </code></pre></div>
 <p>The following flowchart shows how pytest decides for each test in this example.</p>
-<div class="highlight"><pre><span></span><code>flowchart TD
-    A["1. Collect 3 tests from test_bank.py"] --&gt; B["2. Take the next test"]
-    B --&gt; C{"3. Does the name contain 'deposit'?"}
-    C -- No --&gt; D["4. Deselect the test"]
-    C -- Yes --&gt; E{"5. Does the name contain 'large'?"}
-    E -- Yes --&gt; F["6. Deselect the test because of 'not large'"]
-    E -- No --&gt; G["7. Select and run the test"]
-    D --&gt; H{"8. Any tests left?"}
-    F --&gt; H
-    G --&gt; H
-    H -- Yes --&gt; B
-    H -- No --&gt; I["9. Show summary: 1 passed, 2 deselected"]
-</code></pre></div>
-<p><img alt="Using and, or and not with -k" src="../../resources/ch20-pytest-flags-fig-01.png" /></p>
+<p><img alt="Using and, or and not with -k" src="../../resources/LR-ch20-pytest-flags-fig-01.png" /></p>
+<p><strong>Reading the figure</strong></p>
+<ul>
+<li><strong>Step 1:</strong> The command is <code>pytest test_bank.py -k "deposit and not large"</code>. pytest first collects the 3 tests in <code>test_bank.py</code>.</li>
+<li><strong>Step 2:</strong> Take the next test and check its name against the <code>-k</code> expression.</li>
+<li><strong>Step 3:</strong> <code>and</code> needs both parts to be true. First part: does the name contain <code>deposit</code>?</li>
+<li><strong>Step 4:</strong> No: the first part is false, so the whole expression is false. Deselect the test. (<code>test_withdraw</code> goes this way.)</li>
+<li><strong>Step 5:</strong> Yes: now the second part, <code>not large</code>. Does the name contain <code>large</code>?</li>
+<li><strong>Step 6:</strong> Yes: <code>not large</code> is false, so deselect the test. (<code>test_deposit_large_amount</code> goes this way.)</li>
+<li><strong>Step 7:</strong> No: both parts are true, so select the test and run it. (<code>test_deposit</code> goes this way.)</li>
+<li><strong>Step 8:</strong> If any tests are left, go back to Step 2.</li>
+<li><strong>Step 9:</strong> No: show the summary, <code>1 passed, 2 deselected</code>.</li>
+</ul>
 <p><a href="./#table-of-contents">Back to the Table of Contents</a></p>
 <h3 id="things-to-watch-out-for-with-k">Things to Watch Out For with -k<a class="headerlink" href="#things-to-watch-out-for-with-k" title="Permanent link">&para;</a></h3>
 <ol>
@@ -9534,19 +9533,20 @@ test_bank.py::test_deposit PASSED                                        [100%]
 9. Run the full test suite again with pytest
 </code></pre></div>
 <p>The same workflow as a flowchart:</p>
-<div class="highlight"><pre><span></span><code>flowchart TD
-    A["1. Write a test"] --&gt; B["2. Run pytest"]
-    B --&gt; C{"3. Did all tests pass?"}
-    C -- Yes --&gt; J["10. Done"]
-    C -- No --&gt; D["4. Add print statements"]
-    D --&gt; E["5. Run pytest -s"]
-    E --&gt; F["6. Run pytest -v"]
-    F --&gt; G["7. Run pytest -v -s -k test_name"]
-    G --&gt; H["8. Fix the bug"]
-    H --&gt; I["9. Run the full test suite"]
-    I --&gt; C
-</code></pre></div>
-<p><img alt="Typical Pytest Workflow" src="../../resources/ch20-pytest-flags-fig-02.png" /></p>
+<p><img alt="Typical Pytest Workflow" src="../../resources/LR-ch20-pytest-flags-fig-02.png" /></p>
+<p><strong>Reading the figure</strong></p>
+<ul>
+<li><strong>Step 1:</strong> Write a test for the code.</li>
+<li><strong>Step 2:</strong> Run <code>pytest</code>.</li>
+<li><strong>Step 3:</strong> Did all the tests pass?</li>
+<li><strong>Step 4:</strong> Yes: you are done.</li>
+<li><strong>Step 5:</strong> No: add <code>print()</code> statements where you want to see values.</li>
+<li><strong>Step 6:</strong> Run <code>pytest -s</code>. The <code>-s</code> flag stops pytest from capturing output, so your <code>print()</code> lines appear.</li>
+<li><strong>Step 7:</strong> Run <code>pytest -v</code> to see the name and result of every test.</li>
+<li><strong>Step 8:</strong> Run <code>pytest -v -s -k test_name</code> to run just the failing test, verbosely and with its prints.</li>
+<li><strong>Step 9:</strong> Fix the bug.</li>
+<li><strong>Step 10:</strong> Run the full test suite again, to be sure the fix broke nothing else, and go back to Step 3.</li>
+</ul>
 <p>Once all tests pass, remember to remove any <code>print()</code> statements you added only for debugging.</p>
 <p><a href="./#table-of-contents">Back to the Table of Contents</a></p>
 <h2 id="practice-questions">Practice Questions<a class="headerlink" href="#practice-questions" title="Permanent link">&para;</a></h2>

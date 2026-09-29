@@ -8955,16 +8955,18 @@ PASSED
 </ol>
 <p>If any of these requirements is not met, the function immediately raises a <code>ValueError</code>. Only valid data is allowed through.</p>
 <p>The flowchart shows the order of the checks.</p>
-<div class="highlight"><pre><span></span><code>flowchart TD
-    A["1. Call create_user(username, age, email)"] --&gt; B{"2. Is the username empty?"}
-    B -- Yes --&gt; C["3. Raise ValueError: Username cannot be empty"]
-    B -- No --&gt; D{"4. Is the age less than 13?"}
-    D -- Yes --&gt; E["5. Raise ValueError: User must be at least 13 years old"]
-    D -- No --&gt; F{"6. Does the email match the pattern?"}
-    F -- No --&gt; G["7. Raise ValueError: Invalid email address"]
-    F -- Yes --&gt; H["8. Return the user dictionary"]
-</code></pre></div>
-<p><img alt="What the Script Does" src="../../resources/ch20-user-registration-fig-01.png" /></p>
+<p><img alt="What the Script Does" src="../../resources/LR-ch20-user-registration-fig-01.png" /></p>
+<p><strong>Reading the figure</strong></p>
+<ul>
+<li><strong>Step 1:</strong> Call <code>create_user(username, age, email)</code>.</li>
+<li><strong>Step 2:</strong> First check: is the username empty?</li>
+<li><strong>Step 3:</strong> Yes: raise <code>ValueError("Username cannot be empty")</code>. The function stops here.</li>
+<li><strong>Step 4:</strong> No: second check. Is the age less than 13?</li>
+<li><strong>Step 5:</strong> Yes: raise <code>ValueError("User must be at least 13 years old")</code>.</li>
+<li><strong>Step 6:</strong> No: third check. Does the email match the email pattern?</li>
+<li><strong>Step 7:</strong> No: raise <code>ValueError("Invalid email address")</code>.</li>
+<li><strong>Step 8:</strong> Yes: all three checks passed, so return the user dictionary. Only valid data gets this far.</li>
+</ul>
 <p><a href="./#table-of-contents">Back to the Table of Contents</a></p>
 <h3 id="need-for-validation-in-the-script">Need for Validation in the Script<a class="headerlink" href="#need-for-validation-in-the-script" title="Permanent link">&para;</a></h3>
 <p>Real-world applications constantly receive input from users and from other systems. Examples include:</p>
@@ -9200,19 +9202,20 @@ PASSED
 </ul>
 <p>This allows us to show several pytest features, one in each test. It also lets us write a "happy path" test (<code>test_valid_user</code>) that checks the function works when nothing is wrong. A good test suite always tests both kinds of path.</p>
 <p>The flowchart below shows how <code>pytest.raises()</code> decides whether a test passes.</p>
-<div class="highlight"><pre><span></span><code>flowchart TD
-    A["1. Enter the with pytest.raises(ValueError) block"] --&gt; B["2. Run the code inside the block"]
-    B --&gt; C{"3. Was an exception raised?"}
-    C -- No --&gt; D["4. Test FAILS: DID NOT RAISE"]
-    C -- Yes --&gt; E{"5. Is it a ValueError?"}
-    E -- No --&gt; F["6. The other exception passes through: test FAILS"]
-    E -- Yes --&gt; G{"7. Was match= given?"}
-    G -- Yes --&gt; H{"8. Does the message match?"}
-    H -- No --&gt; I["9. Test FAILS: Regex pattern did not match"]
-    H -- Yes --&gt; J["10. Exception is caught: the test carries on after the with block"]
-    G -- No --&gt; J
-</code></pre></div>
-<p><img alt="Why This Example Is Good for pytest.raises()" src="../../resources/ch20-user-registration-fig-02.png" /></p>
+<p><img alt="Why This Example Is Good for pytest.raises()" src="../../resources/LR-ch20-user-registration-fig-02.png" /></p>
+<p><strong>Reading the figure</strong></p>
+<ul>
+<li><strong>Step 1:</strong> The test enters the block <code>with pytest.raises(ValueError):</code>.</li>
+<li><strong>Step 2:</strong> The code inside the block runs, for example <code>create_user("", 20, "a@b.com")</code>.</li>
+<li><strong>Step 3:</strong> Was an exception raised?</li>
+<li><strong>Step 4:</strong> No: the test fails with the message <code>DID NOT RAISE</code>, because an exception was expected.</li>
+<li><strong>Step 5:</strong> Yes: is it a <code>ValueError</code> (or a subclass of it)?</li>
+<li><strong>Step 6:</strong> No: <code>pytest.raises</code> does not catch it. The other exception passes through and the test fails.</li>
+<li><strong>Step 7:</strong> Yes: was a <code>match=</code> pattern given?</li>
+<li><strong>Step 8:</strong> Yes: does the exception's message match the pattern? <code>match=</code> uses <code>re.search()</code>.</li>
+<li><strong>Step 9:</strong> No: the test fails with <code>Regex pattern did not match</code>.</li>
+<li><strong>Step 10:</strong> The exception is caught, and the test carries on after the <code>with</code> block. (No from Step 7 comes straight here.)</li>
+</ul>
 <p><a href="./#table-of-contents">Back to the Table of Contents</a></p>
 <h3 id="testing-exception-occurrence">Testing Exception Occurrence<a class="headerlink" href="#testing-exception-occurrence" title="Permanent link">&para;</a></h3>
 <div class="highlight"><pre><span></span><code><span class="k">with</span> <span class="n">pytest</span><span class="o">.</span><span class="n">raises</span><span class="p">(</span><span class="ne">ValueError</span><span class="p">):</span>

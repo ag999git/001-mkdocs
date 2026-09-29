@@ -8830,20 +8830,17 @@ E   ModuleNotFoundError: No module named 'bank_account'
 <h3 id="7-how-pytest-resolves-distributed-fixtures">7. How Pytest Resolves Distributed Fixtures<a class="headerlink" href="#7-how-pytest-resolves-distributed-fixtures" title="Permanent link">&para;</a></h3>
 <p>When a test asks for a fixture, pytest searches for it in a fixed order, starting close to the test and moving outwards. The first match it finds is used.</p>
 <h4 id="flowchart">Flowchart<a class="headerlink" href="#flowchart" title="Permanent link">&para;</a></h4>
-<p><img alt="Flow chart" src="../../resources/ch16-pytest-010-conftest-py.png" /></p>
-<p>The same lookup, step by step:</p>
-<div class="highlight"><pre><span></span><code>flowchart TD
-    A["1. A test asks for fresh_account"] --&gt; B{"2. Defined in the test's own file?"}
-    B -- Yes --&gt; Z["7. Use that fixture: run it and inject the result"]
-    B -- No --&gt; C{"3. Defined in conftest.py in the same folder?"}
-    C -- Yes --&gt; Z
-    C -- No --&gt; D{"4. Defined in conftest.py in a parent folder?"}
-    D -- Yes --&gt; Z
-    D -- No --&gt; E{"5. Provided by pytest or an installed plugin?"}
-    E -- Yes --&gt; Z
-    E -- No --&gt; F["6. Stop: report ERROR fixture 'fresh_account' not found"]
-</code></pre></div>
-<p><img alt="How Pytest Resolves Distributed Fixtures" src="../../resources/ch20-conftest-py-fig-01.png" /></p>
+<p><img alt="How Pytest Resolves Distributed Fixtures" src="../../resources/LR-ch20-conftest-py-fig-01.png" /></p>
+<p><strong>Reading the figure</strong></p>
+<ul>
+<li><strong>Step 1:</strong> A test function has a parameter named <code>fresh_account</code>, so it asks for that fixture.</li>
+<li><strong>Step 2:</strong> pytest looks first in the test's own file. Is the fixture defined there?</li>
+<li><strong>Step 3:</strong> No: is it defined in a <code>conftest.py</code> in the same folder?</li>
+<li><strong>Step 4:</strong> No: is it defined in a <code>conftest.py</code> in a parent folder, working upwards?</li>
+<li><strong>Step 5:</strong> No: is it a fixture provided by pytest itself or by an installed plugin?</li>
+<li><strong>Step 6:</strong> No: pytest stops and reports <code>fixture 'fresh_account' not found</code>.</li>
+<li><strong>Step 7:</strong> Yes at any of Steps 2 to 5: pytest uses the first fixture it found, runs it and injects the result into the test. No import is needed.</li>
+</ul>
 <table>
 <thead>
 <tr>

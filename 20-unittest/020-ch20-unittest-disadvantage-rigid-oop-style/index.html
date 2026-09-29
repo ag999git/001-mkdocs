@@ -8901,20 +8901,21 @@
 <p>Reading the scripts is useful, but you will learn much more by running them yourself and watching the output appear. This section explains, step by step, how to download the six scripts, install pytest and run the scripts in <strong>Visual Studio Code (VS Code)</strong>, a free code editor that many Python programmers use.</p>
 <p>The steps are written for Windows. Where macOS or Linux is different, this is noted.</p>
 <p>The whole process looks like this:</p>
-<div class="highlight"><pre><span></span><code>flowchart TD
-    A["1. Check that Python is installed"] --&gt; B["2. Install VS Code and its Python extension"]
-    B --&gt; C["3. Create a folder for the scripts"]
-    C --&gt; D["4. Download the six files into the folder"]
-    D --&gt; E["5. Open the folder in VS Code"]
-    E --&gt; F["6. Open the terminal in VS Code"]
-    F --&gt; G{"7. Is pytest installed?"}
-    G -- No --&gt; H["8. Install pytest"]
-    G -- Yes --&gt; I["9. Run the scripts with pytest"]
-    H --&gt; I
-    I --&gt; J["10. Compare the output with this page"]
-    J --&gt; K["11. Change a value and run again"]
-</code></pre></div>
-<p><img alt="Running the Scripts on Your Computer" src="../../resources/ch20-unittest-disadvantage-rigid-oop-style-fig-01.png" /></p>
+<p><img alt="Running the Scripts on Your Computer" src="../../resources/LR-ch20-unittest-disadvantage-rigid-oop-style-fig-01.png" /></p>
+<p><strong>Reading the figure</strong></p>
+<ul>
+<li><strong>Step 1:</strong> Check that Python is installed, for example with <code>python --version</code> in a terminal.</li>
+<li><strong>Step 2:</strong> Install VS Code and its Python extension.</li>
+<li><strong>Step 3:</strong> Create a folder to hold the scripts.</li>
+<li><strong>Step 4:</strong> Download the six script files into that folder.</li>
+<li><strong>Step 5:</strong> Open the folder in VS Code.</li>
+<li><strong>Step 6:</strong> Open the terminal inside VS Code.</li>
+<li><strong>Step 7:</strong> Is pytest installed? <code>pytest --version</code> will tell you.</li>
+<li><strong>Step 8:</strong> No: install it with <code>python -m pip install pytest</code>.</li>
+<li><strong>Step 9:</strong> Run the scripts with pytest.</li>
+<li><strong>Step 10:</strong> Compare the output with the output shown on this page.</li>
+<li><strong>Step 11:</strong> Change a value in a script and run it again, to see how the result changes.</li>
+</ul>
 <p><a href="./#table-of-contents">Back to the Table of Contents</a></p>
 <h3 id="step-1-check-that-python-is-installed">Step 1: Check That Python Is Installed<a class="headerlink" href="#step-1-check-that-python-is-installed" title="Permanent link">&para;</a></h3>
 <p>Open <strong>Command Prompt</strong> (press the Windows key, type <code>cmd</code> and press Enter) and type:</p>
@@ -9263,17 +9264,18 @@ PASSED
 <p><a href="./#table-of-contents">Back to the Table of Contents</a></p>
 <h3 id="how-the-xunit-setup-runs">How the xUnit Setup Runs<a class="headerlink" href="#how-the-xunit-setup-runs" title="Permanent link">&para;</a></h3>
 <p>The flowchart shows the order in which pytest handles a test class that has a <code>setup_method</code>.</p>
-<div class="highlight"><pre><span></span><code>flowchart TD
-    A["1. Find the class TestBankAccount"] --&gt; B["2. Take the next test method"]
-    B --&gt; C["3. Create a new instance of the class"]
-    C --&gt; D["4. Run setup_method: create self.account"]
-    D --&gt; E["5. Run the test method"]
-    E --&gt; F["6. Run teardown_method"]
-    F --&gt; G{"7. More test methods?"}
-    G -- Yes --&gt; B
-    G -- No --&gt; H["8. Report the results"]
-</code></pre></div>
-<p><img alt="How the xUnit Setup Runs" src="../../resources/ch20-unittest-disadvantage-rigid-oop-style-fig-02.png" /></p>
+<p><img alt="How the xUnit Setup Runs" src="../../resources/LR-ch20-unittest-disadvantage-rigid-oop-style-fig-02.png" /></p>
+<p><strong>Reading the figure</strong></p>
+<ul>
+<li><strong>Step 1:</strong> pytest finds the test class <code>TestBankAccount</code>.</li>
+<li><strong>Step 2:</strong> Take the next test method in the class.</li>
+<li><strong>Step 3:</strong> Create a brand-new instance of the class for this one method, so no state leaks between tests.</li>
+<li><strong>Step 4:</strong> Run <code>setup_method</code>, which creates a fresh <code>self.account</code>.</li>
+<li><strong>Step 5:</strong> Run the test method itself.</li>
+<li><strong>Step 6:</strong> Run <code>teardown_method</code> to clean up.</li>
+<li><strong>Step 7:</strong> If more test methods are left, go back to Step 2.</li>
+<li><strong>Step 8:</strong> No: report the results.</li>
+</ul>
 <p>Notice that step 4 has no choice in it. There is no question like "does this test need an account?". The setup runs for every test method, every time.</p>
 <p><a href="./#table-of-contents">Back to the Table of Contents</a></p>
 <h3 id="1-the-all-or-nothing-scope-problem">1. The "All-or-Nothing" Scope Problem<a class="headerlink" href="#1-the-all-or-nothing-scope-problem" title="Permanent link">&para;</a></h3>
@@ -9472,20 +9474,20 @@ PASSED
 </ul>
 <p><a href="./#table-of-contents">Back to the Table of Contents</a></p>
 <h3 id="how-pytest-supplies-a-fixture">How Pytest Supplies a Fixture<a class="headerlink" href="#how-pytest-supplies-a-fixture" title="Permanent link">&para;</a></h3>
-<div class="highlight"><pre><span></span><code>flowchart TD
-    A["1. Find the next test function"] --&gt; B["2. Read its parameter names"]
-    B --&gt; C{"3. Does it name a fixture?"}
-    C -- No --&gt; D["4. Run the test with no setup"]
-    C -- Yes --&gt; E["5. Run the fixture code up to yield"]
-    E --&gt; F["6. Pass the yielded object to the test"]
-    F --&gt; G["7. Run the test"]
-    G --&gt; H["8. Run the fixture code after yield"]
-    D --&gt; I{"9. More tests?"}
-    H --&gt; I
-    I -- Yes --&gt; A
-    I -- No --&gt; J["10. Report the results"]
-</code></pre></div>
-<p><img alt="How Pytest Supplies a Fixture" src="../../resources/ch20-unittest-disadvantage-rigid-oop-style-fig-03.png" /></p>
+<p><img alt="How Pytest Supplies a Fixture" src="../../resources/LR-ch20-unittest-disadvantage-rigid-oop-style-fig-03.png" /></p>
+<p><strong>Reading the figure</strong></p>
+<ul>
+<li><strong>Step 1:</strong> pytest finds the next test function.</li>
+<li><strong>Step 2:</strong> It reads the names of the test's parameters.</li>
+<li><strong>Step 3:</strong> Does a parameter name match a fixture?</li>
+<li><strong>Step 4:</strong> No: run the test with no setup.</li>
+<li><strong>Step 5:</strong> Yes: run the fixture's code up to <code>yield</code>. This is the setup.</li>
+<li><strong>Step 6:</strong> Pass the object after <code>yield</code> into the test as the argument.</li>
+<li><strong>Step 7:</strong> Run the test.</li>
+<li><strong>Step 8:</strong> Run the rest of the fixture, the code after <code>yield</code>. This is the teardown, and it runs even if the test failed.</li>
+<li><strong>Step 9:</strong> If more tests are left, go back to Step 1.</li>
+<li><strong>Step 10:</strong> No: report the results.</li>
+</ul>
 <p>Compare this with the xUnit flowchart earlier. There, the setup ran for every test with no choice. Here, step 3 makes a decision for each test, based only on the parameters the test asks for.</p>
 <p><a href="./#table-of-contents">Back to the Table of Contents</a></p>
 <h3 id="the-refactored-script">The Refactored Script<a class="headerlink" href="#the-refactored-script" title="Permanent link">&para;</a></h3>

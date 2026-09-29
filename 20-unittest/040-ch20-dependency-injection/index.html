@@ -9014,19 +9014,21 @@ PASSED
 <p><a href="./#table-of-contents">Back to the Table of Contents</a></p>
 <h3 id="flow-for-each-test-test_injection-test_connect-test_state">Flow for EACH test (test_injection / test_connect / test_state)<a class="headerlink" href="#flow-for-each-test-test_injection-test_connect-test_state" title="Permanent link">&para;</a></h3>
 <p>The flowchart below shows what happens for <code>test_injection</code>. The order of events is the same for every test in the file.</p>
-<div class="highlight"><pre><span></span><code>flowchart TD
-    A["1. pytest collects test_injection"] --&gt; B["2. pytest reads its parameter name: db"]
-    B --&gt; C["3. pytest searches for a fixture named db"]
-    C --&gt; D{"4. Fixture found?"}
-    D -- No --&gt; E["5. Report ERROR: fixture 'db' not found"]
-    D -- Yes --&gt; F["6. pytest calls the db() fixture function"]
-    F --&gt; G["7. Inside the fixture: Database() object is created"]
-    G --&gt; H["8. Fixture returns the Database object"]
-    H --&gt; I["9. pytest calls test_injection and passes the object in as db"]
-    I --&gt; J["10. Test code runs: type(db) and the isinstance check"]
-    J --&gt; K["11. Test completes: PASSED or FAILED"]
-</code></pre></div>
-<p><img alt="Flow for EACH test (testinjection / testconnect / teststate)" src="../../resources/ch20-dependency-injection-fig-01.png" /></p>
+<p><img alt="Flow for EACH test (testinjection / testconnect / teststate)" src="../../resources/LR-ch20-dependency-injection-fig-01.png" /></p>
+<p><strong>Reading the figure</strong></p>
+<ul>
+<li><strong>Step 1:</strong> pytest collects the test function <code>test_injection</code>.</li>
+<li><strong>Step 2:</strong> It reads the test's parameter name, <code>db</code>.</li>
+<li><strong>Step 3:</strong> It searches for a fixture with that exact name.</li>
+<li><strong>Step 4:</strong> Was a fixture named <code>db</code> found?</li>
+<li><strong>Step 5:</strong> No: pytest reports an error, <code>fixture 'db' not found</code>, and the test does not run.</li>
+<li><strong>Step 6:</strong> Yes: pytest calls the fixture function <code>db()</code>.</li>
+<li><strong>Step 7:</strong> Inside the fixture, a <code>Database()</code> object is created.</li>
+<li><strong>Step 8:</strong> The fixture returns the <code>Database</code> object.</li>
+<li><strong>Step 9:</strong> pytest calls <code>test_injection</code> and passes that object in as the argument <code>db</code>. This is dependency injection.</li>
+<li><strong>Step 10:</strong> The test body runs: it checks <code>type(db)</code> and <code>isinstance(db, Database)</code>.</li>
+<li><strong>Step 11:</strong> The test completes, as PASSED or FAILED.</li>
+</ul>
 <p>In words:</p>
 <ol>
 <li>Pytest collects the test function <code>test_injection(db)</code>.</li>
@@ -9109,28 +9111,32 @@ PASSED
 <p>The key row is step 4. Because the fixture has the default <strong>function scope</strong>, it runs once for <strong>each</strong> test, and each test gets its own new object. The fourth test in the file, <code>test_fresh_object</code>, proves this: the <code>new_flag</code> added in <code>test_state</code> is not present in the object that <code>test_fresh_object</code> receives.</p>
 <p><a href="./#table-of-contents">Back to the Table of Contents</a></p>
 <h3 id="for-test_connectdb">For test_connect(db)<a class="headerlink" href="#for-test_connectdb" title="Permanent link">&para;</a></h3>
-<div class="highlight"><pre><span></span><code>flowchart TD
-    A["1. pytest sees the db parameter"] --&gt; B["2. Find the db fixture"]
-    B --&gt; C["3. Call db()"]
-    C --&gt; D["4. Create a new Database object"]
-    D --&gt; E["5. Return the Database object"]
-    E --&gt; F["6. Inject it into test_connect(db)"]
-    F --&gt; G["7. Run db.connect()"]
-    G --&gt; H["8. Check: assert result == 'connected'"]
-</code></pre></div>
-<p><img alt="For testconnect(db)" src="../../resources/ch20-dependency-injection-fig-02.png" /></p>
+<p><img alt="For testconnect(db)" src="../../resources/LR-ch20-dependency-injection-fig-02.png" /></p>
+<p><strong>Reading the figure</strong></p>
+<ul>
+<li><strong>Step 1:</strong> pytest sees that <code>test_connect</code> has a parameter called <code>db</code>.</li>
+<li><strong>Step 2:</strong> It finds the fixture named <code>db</code>.</li>
+<li><strong>Step 3:</strong> It calls <code>db()</code>.</li>
+<li><strong>Step 4:</strong> The fixture creates a new <code>Database</code> object. With the default function scope, this happens once for each test.</li>
+<li><strong>Step 5:</strong> The fixture returns the object.</li>
+<li><strong>Step 6:</strong> pytest injects it into <code>test_connect(db)</code>.</li>
+<li><strong>Step 7:</strong> The test runs <code>db.connect()</code>.</li>
+<li><strong>Step 8:</strong> The test checks <code>assert result == 'connected'</code>.</li>
+</ul>
 <p><a href="./#table-of-contents">Back to the Table of Contents</a></p>
 <h3 id="for-test_statedb">For test_state(db)<a class="headerlink" href="#for-test_statedb" title="Permanent link">&para;</a></h3>
-<div class="highlight"><pre><span></span><code>flowchart TD
-    A["1. pytest sees the db parameter"] --&gt; B["2. Find the db fixture"]
-    B --&gt; C["3. Call db()"]
-    C --&gt; D["4. Create a new Database object"]
-    D --&gt; E["5. Return the Database object"]
-    E --&gt; F["6. Inject it into test_state(db)"]
-    F --&gt; G["7. Run db.new_flag = 'set in test_state'"]
-    G --&gt; H["8. Check: assert db.new_flag == 'set in test_state'"]
-</code></pre></div>
-<p><img alt="For teststate(db)" src="../../resources/ch20-dependency-injection-fig-03.png" /></p>
+<p><img alt="For teststate(db)" src="../../resources/LR-ch20-dependency-injection-fig-03.png" /></p>
+<p><strong>Reading the figure</strong></p>
+<ul>
+<li><strong>Step 1:</strong> pytest sees that <code>test_state</code> has a parameter called <code>db</code>.</li>
+<li><strong>Step 2:</strong> It finds the fixture named <code>db</code>.</li>
+<li><strong>Step 3:</strong> It calls <code>db()</code>.</li>
+<li><strong>Step 4:</strong> The fixture creates another new <code>Database</code> object, not the one <code>test_connect</code> used.</li>
+<li><strong>Step 5:</strong> The fixture returns the object.</li>
+<li><strong>Step 6:</strong> pytest injects it into <code>test_state(db)</code>.</li>
+<li><strong>Step 7:</strong> The test adds an attribute: <code>db.new_flag = 'set in test_state'</code>.</li>
+<li><strong>Step 8:</strong> The test checks <code>assert db.new_flag == 'set in test_state'</code>. Because the object is new, this flag will not be present in the next test.</li>
+</ul>
 <p><a href="./#table-of-contents">Back to the Table of Contents</a></p>
 <h2 id="scripts-for-this-page-and-how-to-run-them">Scripts for This Page and How to Run Them<a class="headerlink" href="#scripts-for-this-page-and-how-to-run-them" title="Permanent link">&para;</a></h2>
 <p>All the scripts on this page are available in the <a href="https://github.com/ag999git/001-Python-book-2026/tree/main/20-unittest/di-demo">di-demo folder</a>.</p>

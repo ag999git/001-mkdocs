@@ -9683,22 +9683,21 @@
 <li>Compare the times to see how they grow with <code>n</code>.</li>
 </ol>
 <p>We use <a href="https://docs.python.org/3/library/time.html#time.perf_counter">time.perf_counter()</a> because it is a precise clock made for measuring short periods. <a href="https://docs.python.org/3/library/random.html#random.randint">random.randint(a, b)</a> gives a random whole number between <code>a</code> and <code>b</code>, including both.</p>
-<div class="highlight"><pre><span></span><code>flowchart TD
-    A["1. Take the next list size n"] --&gt; B["2. Build a list of n random numbers"]
-    B --&gt; C["3. Start the timer"]
-    C --&gt; D["4. Check each item against the target"]
-    D --&gt; E{"5. Item equals target?"}
-    E -- "Yes" --&gt; F["6. Return True"]
-    E -- "No" --&gt; G{"7. More items left?"}
-    G -- "Yes" --&gt; D
-    G -- "No" --&gt; H["8. Return False"]
-    F --&gt; I["9. Stop the timer and record the time"]
-    H --&gt; I
-    I --&gt; J{"10. More sizes left?"}
-    J -- "Yes" --&gt; A
-    J -- "No" --&gt; K["11. Print how time grew with n"]
-</code></pre></div>
-<p><img alt="Linear Search Timing" src="../../resources/ch16-scripting-qa-easy-fig-01.png" /></p>
+<p><img alt="Linear Search Timing" src="../../resources/LR-ch16-scripting-qa-easy-fig-01.png" /></p>
+<p><strong>Reading the figure</strong></p>
+<ul>
+<li><strong>Step 1:</strong> Take the next list size <code>n</code> from <code>sizes = [1000, 10000, 100000, 500000]</code>.</li>
+<li><strong>Step 2:</strong> Build a list of <code>n</code> random numbers with <code>random.randint(1, 100000)</code>.</li>
+<li><strong>Step 3:</strong> Start the timer with <code>time.perf_counter()</code> and call <code>linear_search()</code>.</li>
+<li><strong>Step 4:</strong> Linear search takes the next item from the list.</li>
+<li><strong>Step 5:</strong> Does the item equal the target?</li>
+<li><strong>Step 6:</strong> Yes: return <code>True</code>. (In this script the target is <code>-1</code>, which is never in the list, so this branch is never taken.)</li>
+<li><strong>Step 7:</strong> No: if more items are left, go back to Step 4.</li>
+<li><strong>Step 8:</strong> No items are left: return <code>False</code>. Every item has been checked, which is the worst case.</li>
+<li><strong>Step 9:</strong> Stop the timer and record the time taken for this size.</li>
+<li><strong>Step 10:</strong> If more sizes are left, go back to Step 1.</li>
+<li><strong>Step 11:</strong> Print each size with its time. The time grows roughly in step with <code>n</code>, which is O(n).</li>
+</ul>
 <p><a href="#table-of-contents">Back to the Table of Contents</a></p>
 <h3 id="12-answer-script">1.2 Answer Script<a class="headerlink" href="#12-answer-script" title="Permanent link">&para;</a></h3>
 <div class="highlight"><pre><span></span><code><span class="kn">import</span><span class="w"> </span><span class="nn">random</span>
@@ -9853,19 +9852,19 @@ Graph saved as 065-ch16-linear-search-timing.png
 <li>Otherwise, search the left half: <code>right = middle - 1</code>.</li>
 <li>If <code>left</code> passes <code>right</code>, the target is not in the list. Return <code>-1</code>.</li>
 </ol>
-<div class="highlight"><pre><span></span><code>flowchart TD
-    A["1. left = 0, right = last index, comparisons = 0"] --&gt; B{"2. Is left less than or equal to right?"}
-    B -- "No" --&gt; C["3. Not found. Return -1 and comparisons"]
-    B -- "Yes" --&gt; D["4. middle = left + right, then // 2. comparisons + 1"]
-    D --&gt; E{"5. Is middle item equal to target?"}
-    E -- "Yes" --&gt; F["6. Return middle and comparisons"]
-    E -- "No" --&gt; G{"7. Is target bigger than middle item?"}
-    G -- "Yes" --&gt; H["8. left = middle + 1"]
-    G -- "No" --&gt; I["9. right = middle - 1"]
-    H --&gt; B
-    I --&gt; B
-</code></pre></div>
-<p><img alt="Binary Search" src="../../resources/ch16-scripting-qa-easy-fig-02.png" /></p>
+<p><img alt="Binary Search" src="../../resources/LR-ch16-scripting-qa-easy-fig-02.png" /></p>
+<p><strong>Reading the figure</strong></p>
+<ul>
+<li><strong>Step 1:</strong> Start with the whole list: <code>left = 0</code>, <code>right = len(numbers) - 1</code>, and <code>comparisons = 0</code>.</li>
+<li><strong>Step 2:</strong> Is <code>left &lt;= right</code>? While it is, part of the list is still left to search.</li>
+<li><strong>Step 3:</strong> No: the target is not in the list. Return -1 and the number of comparisons.</li>
+<li><strong>Step 4:</strong> Yes: find the middle, <code>middle = (left + right) // 2</code>, and count one comparison.</li>
+<li><strong>Step 5:</strong> Is the item at <code>middle</code> equal to the target?</li>
+<li><strong>Step 6:</strong> Yes: return <code>middle</code> and the number of comparisons.</li>
+<li><strong>Step 7:</strong> No: is the target bigger than the middle item?</li>
+<li><strong>Step 8:</strong> Yes: the target can only be in the right half, so <code>left = middle + 1</code>. Go back to Step 2.</li>
+<li><strong>Step 9:</strong> No: the target can only be in the left half, so <code>right = middle - 1</code>. Go back to Step 2.</li>
+</ul>
 <p>Here is the search for 70 in <code>[10, 20, 30, 40, 50, 60, 70]</code>:</p>
 <table>
 <thead>
@@ -9990,22 +9989,21 @@ Target 35: index -1, comparisons 3
 <li>Each pass can stop one position earlier than the last, because the end of the list is already sorted.</li>
 <li>Print the list after each pass.</li>
 </ol>
-<div class="highlight"><pre><span></span><code>flowchart TD
-    A["1. pass_no = 0"] --&gt; B["2. i = 0"]
-    B --&gt; C{"3. Is numbers at i bigger than numbers at i + 1?"}
-    C -- "Yes" --&gt; D["4. Swap the two items"]
-    C -- "No" --&gt; E["5. Leave them"]
-    D --&gt; F{"6. More pairs in this pass?"}
-    E --&gt; F
-    F -- "Yes" --&gt; G["7. i = i + 1"]
-    G --&gt; C
-    F -- "No" --&gt; H["8. Print the list after this pass"]
-    H --&gt; I{"9. More passes left?"}
-    I -- "Yes" --&gt; J["10. pass_no = pass_no + 1"]
-    J --&gt; B
-    I -- "No" --&gt; K["11. List is sorted"]
-</code></pre></div>
-<p><img alt="Bubble Sort Implementation" src="../../resources/ch16-scripting-qa-easy-fig-03.png" /></p>
+<p><img alt="Bubble Sort Implementation" src="../../resources/LR-ch16-scripting-qa-easy-fig-03.png" /></p>
+<p><strong>Reading the figure</strong></p>
+<ul>
+<li><strong>Step 1:</strong> Start with the first pass, <code>pass_no = 0</code>.</li>
+<li><strong>Step 2:</strong> Start each pass at the first pair, <code>i = 0</code>.</li>
+<li><strong>Step 3:</strong> Is <code>numbers[i]</code> bigger than the item after it, <code>numbers[i + 1]</code>?</li>
+<li><strong>Step 4:</strong> Yes: swap the two items, so the bigger one moves right.</li>
+<li><strong>Step 5:</strong> No: leave the pair as it is.</li>
+<li><strong>Step 6:</strong> Are there more pairs in this pass? Each pass stops one position earlier than the last, because the end of the list is already sorted.</li>
+<li><strong>Step 7:</strong> Yes: move to the next pair, <code>i = i + 1</code>, and go back to Step 3.</li>
+<li><strong>Step 8:</strong> No: the pass is over. Print the list, so you can watch the biggest remaining item settle at the end.</li>
+<li><strong>Step 9:</strong> Are there more passes left?</li>
+<li><strong>Step 10:</strong> Yes: <code>pass_no = pass_no + 1</code>, and go back to Step 2.</li>
+<li><strong>Step 11:</strong> No: the list is sorted.</li>
+</ul>
 <p>The line <code>numbers[i], numbers[i+1] = (numbers[i+1], numbers[i])</code> swaps two items in one step. Python first builds the pair on the right, then assigns it to the two positions on the left. This is called <a href="https://docs.python.org/3/tutorial/datastructures.html#tuples-and-sequences">tuple unpacking</a>.</p>
 <p><a href="#table-of-contents">Back to the Table of Contents</a></p>
 <h3 id="32-answer-script">3.2 Answer Script<a class="headerlink" href="#32-answer-script" title="Permanent link">&para;</a></h3>
@@ -10134,19 +10132,19 @@ Sorted: [1, 2, 3, 4, 5, 6]
 <li>Put the key into the gap.</li>
 <li>Repeat until every item has been placed.</li>
 </ol>
-<div class="highlight"><pre><span></span><code>flowchart TD
-    A["1. key_index = 1"] --&gt; B["2. key = numbers at key_index. position = key_index - 1"]
-    B --&gt; C{"3. position at least 0 AND numbers at position bigger than key?"}
-    C -- "Yes" --&gt; D["4. Shift: numbers at position + 1 = numbers at position"]
-    D --&gt; E["5. position = position - 1"]
-    E --&gt; C
-    C -- "No" --&gt; F["6. Insert: numbers at position + 1 = key"]
-    F --&gt; G{"7. More items?"}
-    G -- "Yes" --&gt; H["8. key_index = key_index + 1"]
-    H --&gt; B
-    G -- "No" --&gt; I["9. List is sorted"]
-</code></pre></div>
-<p><img alt="Insertion Sort" src="../../resources/ch16-scripting-qa-easy-fig-04.png" /></p>
+<p><img alt="Insertion Sort" src="../../resources/LR-ch16-scripting-qa-easy-fig-04.png" /></p>
+<p><strong>Reading the figure</strong></p>
+<ul>
+<li><strong>Step 1:</strong> Start with the second item, <code>key_index = 1</code>. A single item on its own is already sorted.</li>
+<li><strong>Step 2:</strong> Pick up the item as <code>key</code>, and start comparing with the item just before it: <code>position = key_index - 1</code>.</li>
+<li><strong>Step 3:</strong> Is <code>position</code> still inside the list (<code>position &gt;= 0</code>), and is the item there bigger than <code>key</code>? Both must be true.</li>
+<li><strong>Step 4:</strong> Yes: shift that item one place to the right, <code>numbers[position + 1] = numbers[position]</code>.</li>
+<li><strong>Step 5:</strong> Move one step further left, <code>position = position - 1</code>, and go back to Step 3.</li>
+<li><strong>Step 6:</strong> No: the gap is at <code>position + 1</code>, so put <code>key</code> there.</li>
+<li><strong>Step 7:</strong> Are there more items to place?</li>
+<li><strong>Step 8:</strong> Yes: <code>key_index = key_index + 1</code>, and go back to Step 2.</li>
+<li><strong>Step 9:</strong> No: every item has been placed, so the list is sorted.</li>
+</ul>
 <p><a href="#table-of-contents">Back to the Table of Contents</a></p>
 <h3 id="42-answer-script">4.2 Answer Script<a class="headerlink" href="#42-answer-script" title="Permanent link">&para;</a></h3>
 <div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">insertion_sort</span><span class="p">(</span><span class="n">numbers</span><span class="p">):</span>
@@ -10241,24 +10239,22 @@ Sorted: [2, 3, 4, 5]
 <li>If the smallest item is not already at this position, swap them.</li>
 <li>When every position has been filled, the list is sorted.</li>
 </ol>
-<div class="highlight"><pre><span></span><code>flowchart TD
-    A["1. position = 0"] --&gt; B["2. min_index = position"]
-    B --&gt; C["3. Scan items after position"]
-    C --&gt; D{"4. Found a smaller item?"}
-    D -- "Yes" --&gt; E["5. min_index = index of that item"]
-    D -- "No" --&gt; F{"6. More items to scan?"}
-    E --&gt; F
-    F -- "Yes" --&gt; C
-    F -- "No" --&gt; G{"7. Is min_index different from position?"}
-    G -- "Yes" --&gt; H["8. Swap the two items"]
-    G -- "No" --&gt; I["9. No swap needed"]
-    H --&gt; J{"10. More positions?"}
-    I --&gt; J
-    J -- "Yes" --&gt; K["11. position = position + 1"]
-    K --&gt; B
-    J -- "No" --&gt; L["12. List is sorted"]
-</code></pre></div>
-<p><img alt="Selection Sort" src="../../resources/ch16-scripting-qa-easy-fig-05.png" /></p>
+<p><img alt="Selection Sort" src="../../resources/LR-ch16-scripting-qa-easy-fig-05.png" /></p>
+<p><strong>Reading the figure</strong></p>
+<ul>
+<li><strong>Step 1:</strong> Start with the first position, <code>position = 0</code>.</li>
+<li><strong>Step 2:</strong> Assume for now that the smallest item is the one at <code>position</code>: <code>min_index = position</code>.</li>
+<li><strong>Step 3:</strong> Take the next item after <code>position</code>.</li>
+<li><strong>Step 4:</strong> Is it smaller than the smallest item found so far, the one at <code>min_index</code>?</li>
+<li><strong>Step 5:</strong> Yes: remember its index, <code>min_index</code> = index of that item.</li>
+<li><strong>Step 6:</strong> If more items are left to scan, go back to Step 3.</li>
+<li><strong>Step 7:</strong> The scan is over. Is <code>min_index</code> different from <code>position</code>?</li>
+<li><strong>Step 8:</strong> Yes: swap the item at <code>position</code> with the smallest item.</li>
+<li><strong>Step 9:</strong> No: the smallest item is already in place, so no swap is needed.</li>
+<li><strong>Step 10:</strong> Are there more positions to fill?</li>
+<li><strong>Step 11:</strong> Yes: <code>position = position + 1</code>, and go back to Step 2.</li>
+<li><strong>Step 12:</strong> No: every position has been filled, so the list is sorted.</li>
+</ul>
 <p><a href="#table-of-contents">Back to the Table of Contents</a></p>
 <h3 id="52-answer-script">5.2 Answer Script<a class="headerlink" href="#52-answer-script" title="Permanent link">&para;</a></h3>
 <div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">selection_sort</span><span class="p">(</span><span class="n">numbers</span><span class="p">):</span>
@@ -10467,15 +10463,16 @@ IndexError: pop from empty list
 <li>Add tasks at the right end with <code>append()</code>.</li>
 <li>While the deque is not empty, remove the task at the left end with <code>popleft()</code> and process it.</li>
 </ol>
-<div class="highlight"><pre><span></span><code>flowchart TD
-    A["1. Create an empty deque"] --&gt; B["2. append Task 1, Task 2, Task 3 at the right end"]
-    B --&gt; C{"3. Is the queue empty?"}
-    C -- "No" --&gt; D["4. popleft removes the oldest task from the left end"]
-    D --&gt; E["5. Process and print the task"]
-    E --&gt; C
-    C -- "Yes" --&gt; F["6. All tasks done"]
-</code></pre></div>
-<p><img alt="Queue using deque" src="../../resources/ch16-scripting-qa-easy-fig-06.png" /></p>
+<p><img alt="Queue using deque" src="../../resources/LR-ch16-scripting-qa-easy-fig-06.png" /></p>
+<p><strong>Reading the figure</strong></p>
+<ul>
+<li><strong>Step 1:</strong> Create an empty <code>deque</code>.</li>
+<li><strong>Step 2:</strong> Add Task 1, Task 2 and Task 3 at the right end with <code>append()</code>.</li>
+<li><strong>Step 3:</strong> Is the queue empty?</li>
+<li><strong>Step 4:</strong> No: <code>popleft()</code> removes the task at the left end, which is the oldest one. First in, first out.</li>
+<li><strong>Step 5:</strong> Process and print the task, then go back to Step 3.</li>
+<li><strong>Step 6:</strong> Yes: the queue is empty, so all tasks are done.</li>
+</ul>
 <p><a href="#table-of-contents">Back to the Table of Contents</a></p>
 <h3 id="72-answer-script">7.2 Answer Script<a class="headerlink" href="#72-answer-script" title="Permanent link">&para;</a></h3>
 <div class="highlight"><pre><span></span><code><span class="kn">from</span><span class="w"> </span><span class="nn">collections</span><span class="w"> </span><span class="kn">import</span> <span class="n">deque</span>
@@ -10635,17 +10632,17 @@ ruby appears 0 times
 <li>The first time a subject is used, an empty list is created for it automatically.</li>
 <li>Print the groups.</li>
 </ol>
-<div class="highlight"><pre><span></span><code>flowchart TD
-    A["1. students = defaultdict of list"] --&gt; B["2. students at subject . append name"]
-    B --&gt; C{"3. Does this subject key exist?"}
-    C -- "No" --&gt; D["4. Create the key with an empty list"]
-    D --&gt; E["5. Append the name to the list"]
-    C -- "Yes" --&gt; E
-    E --&gt; F{"6. More students?"}
-    F -- "Yes" --&gt; B
-    F -- "No" --&gt; G["7. Print the groups"]
-</code></pre></div>
-<p><img alt="defaultdict" src="../../resources/ch16-scripting-qa-easy-fig-07.png" /></p>
+<p><img alt="defaultdict" src="../../resources/LR-ch16-scripting-qa-easy-fig-07.png" /></p>
+<p><strong>Reading the figure</strong></p>
+<ul>
+<li><strong>Step 1:</strong> Create <code>students = defaultdict(list)</code>. A missing key will get an empty list.</li>
+<li><strong>Step 2:</strong> Take the next student's name and subject.</li>
+<li><strong>Step 3:</strong> The line <code>students[subject].append(name)</code> first looks up the subject. Does that key exist yet?</li>
+<li><strong>Step 4:</strong> No: <code>defaultdict</code> creates the key with an empty list, <code>[]</code>, instead of raising <code>KeyError</code>.</li>
+<li><strong>Step 5:</strong> The name is appended to the list for that subject. (Yes from Step 3 comes straight here.)</li>
+<li><strong>Step 6:</strong> If more students are left, go back to Step 2.</li>
+<li><strong>Step 7:</strong> No: print the groups, each subject with its list of names.</li>
+</ul>
 <p><a href="#table-of-contents">Back to the Table of Contents</a></p>
 <h3 id="92-answer-script">9.2 Answer Script<a class="headerlink" href="#92-answer-script" title="Permanent link">&para;</a></h3>
 <div class="highlight"><pre><span></span><code><span class="kn">from</span><span class="w"> </span><span class="nn">collections</span><span class="w"> </span><span class="kn">import</span> <span class="n">defaultdict</span>
@@ -10820,14 +10817,16 @@ Original: Student(name='Anita', age=20) | Updated copy: Student(name='Anita', ag
 <li>Combine them with <code>ChainMap(user_settings, default_settings)</code>. The order matters: the first dictionary is searched first.</li>
 <li>When you look up a key, ChainMap checks <code>user_settings</code> first. If the key is not there, it checks <code>default_settings</code>.</li>
 </ol>
-<div class="highlight"><pre><span></span><code>flowchart TD
-    A["1. Look up a setting in settings"] --&gt; B{"2. Is the key in user_settings?"}
-    B -- "Yes" --&gt; C["3. Use the user's value"]
-    B -- "No" --&gt; D{"4. Is the key in default_settings?"}
-    D -- "Yes" --&gt; E["5. Use the default value"]
-    D -- "No" --&gt; F["6. Raise KeyError"]
-</code></pre></div>
-<p><img alt="ChainMap: Combine User Settings with Default Settings" src="../../resources/ch16-scripting-qa-easy-fig-08.png" /></p>
+<p><img alt="ChainMap: Combine User Settings with Default Settings" src="../../resources/LR-ch16-scripting-qa-easy-fig-08.png" /></p>
+<p><strong>Reading the figure</strong></p>
+<ul>
+<li><strong>Step 1:</strong> Look up a key in <code>settings = ChainMap(user_settings, default_settings)</code>.</li>
+<li><strong>Step 2:</strong> <code>ChainMap</code> searches the first dictionary first. Is the key in <code>user_settings</code>?</li>
+<li><strong>Step 3:</strong> Yes: use the user's value. <code>default_settings</code> is not looked at.</li>
+<li><strong>Step 4:</strong> No: is the key in <code>default_settings</code>?</li>
+<li><strong>Step 5:</strong> Yes: use the default value.</li>
+<li><strong>Step 6:</strong> No: the key is in neither dictionary, so <code>KeyError</code> is raised.</li>
+</ul>
 <table>
 <thead>
 <tr>
@@ -10934,15 +10933,16 @@ Language after changing the defaults: Hindi
 <li>Tuples are compared by their first item, so the priority number decides the order. A smaller number means more important.</li>
 <li>Remove tasks one by one with <code>heapq.heappop()</code>. It always returns the tuple with the smallest priority number.</li>
 </ol>
-<div class="highlight"><pre><span></span><code>flowchart TD
-    A["1. tasks = empty list"] --&gt; B["2. heappush each task as priority and name"]
-    B --&gt; C{"3. Any tasks left?"}
-    C -- "Yes" --&gt; D["4. heappop removes the task with the smallest priority number"]
-    D --&gt; E["5. Print the priority and the task"]
-    E --&gt; C
-    C -- "No" --&gt; F["6. All tasks done"]
-</code></pre></div>
-<p><img alt="heapq: Process Tasks According to Priority" src="../../resources/ch16-scripting-qa-easy-fig-09.png" /></p>
+<p><img alt="heapq: Process Tasks According to Priority" src="../../resources/LR-ch16-scripting-qa-easy-fig-09.png" /></p>
+<p><strong>Reading the figure</strong></p>
+<ul>
+<li><strong>Step 1:</strong> Start with an empty list, <code>tasks = []</code>, which <code>heapq</code> will use as a heap.</li>
+<li><strong>Step 2:</strong> Add each task as a tuple <code>(priority, task_name)</code> with <code>heapq.heappush()</code>. Tuples compare by their first item, so the priority number decides the order.</li>
+<li><strong>Step 3:</strong> Are there any tasks left?</li>
+<li><strong>Step 4:</strong> Yes: <code>heapq.heappop()</code> removes and returns the tuple with the smallest priority number, the most important task.</li>
+<li><strong>Step 5:</strong> Print the priority and the task, then go back to Step 3.</li>
+<li><strong>Step 6:</strong> No: all tasks are done.</li>
+</ul>
 <p><a href="#table-of-contents">Back to the Table of Contents</a></p>
 <h3 id="122-answer-script">12.2 Answer Script<a class="headerlink" href="#122-answer-script" title="Permanent link">&para;</a></h3>
 <div class="highlight"><pre><span></span><code><span class="kn">import</span><span class="w"> </span><span class="nn">heapq</span>
@@ -11308,14 +11308,16 @@ Undo: Typed Hello
 <li>Write a function that checks which status it has received.</li>
 <li>Call the function with a readable name.</li>
 </ol>
-<div class="highlight"><pre><span></span><code>flowchart TD
-    A["1. show_status receives a status"] --&gt; B{"2. Is it Status.SUCCESS?"}
-    B -- "Yes" --&gt; C["3. Print Request successful"]
-    B -- "No" --&gt; D{"4. Is it Status.NOT_FOUND?"}
-    D -- "Yes" --&gt; E["5. Print Page missing"]
-    D -- "No" --&gt; F["6. Print Server error"]
-</code></pre></div>
-<p><img alt="Enum: Represent Fixed Choices" src="../../resources/ch16-scripting-qa-easy-fig-10.png" /></p>
+<p><img alt="Enum: Represent Fixed Choices" src="../../resources/LR-ch16-scripting-qa-easy-fig-10.png" /></p>
+<p><strong>Reading the figure</strong></p>
+<ul>
+<li><strong>Step 1:</strong> The function <code>show_status</code> is called with a member of the <code>Status</code> enum.</li>
+<li><strong>Step 2:</strong> Is it <code>Status.SUCCESS</code>?</li>
+<li><strong>Step 3:</strong> Yes: print "Request successful".</li>
+<li><strong>Step 4:</strong> No: is it <code>Status.NOT_FOUND</code>?</li>
+<li><strong>Step 5:</strong> Yes: print "Page missing".</li>
+<li><strong>Step 6:</strong> No: the <code>else</code> branch runs and prints "Server error".</li>
+</ul>
 <p><a href="#table-of-contents">Back to the Table of Contents</a></p>
 <h3 id="172-answer-script">17.2 Answer Script<a class="headerlink" href="#172-answer-script" title="Permanent link">&para;</a></h3>
 <div class="highlight"><pre><span></span><code><span class="kn">from</span><span class="w"> </span><span class="nn">enum</span><span class="w"> </span><span class="kn">import</span> <span class="n">Enum</span>
@@ -11503,14 +11505,16 @@ Student(name='Bob', marks=35, passed=False)
 <li>The first call with <code>10</code> runs the function body, which is slow, and saves the result.</li>
 <li>The second call with <code>10</code> finds the saved result and returns it immediately.</li>
 </ol>
-<div class="highlight"><pre><span></span><code>flowchart TD
-    A["1. calculate_square is called with a number"] --&gt; B{"2. Is the result for this number already cached?"}
-    B -- "No" --&gt; C["3. Run the body: print Calculating and wait 1 second"]
-    C --&gt; D["4. Save the result in the cache"]
-    D --&gt; E["5. Return the result"]
-    B -- "Yes" --&gt; F["6. Return the saved result immediately"]
-</code></pre></div>
-<p><img alt="lrucache: Avoid Repeated Calculations" src="../../resources/ch16-scripting-qa-easy-fig-11.png" /></p>
+<p><img alt="lrucache: Avoid Repeated Calculations" src="../../resources/LR-ch16-scripting-qa-easy-fig-11.png" /></p>
+<p><strong>Reading the figure</strong></p>
+<ul>
+<li><strong>Step 1:</strong> <code>calculate_square(10)</code> is called. The function has <code>@lru_cache(maxsize=None)</code> above it.</li>
+<li><strong>Step 2:</strong> <code>lru_cache</code> checks whether it already holds a result for this number.</li>
+<li><strong>Step 3:</strong> Yes: the saved result is returned immediately. The body does not run, so nothing is printed and there is no wait.</li>
+<li><strong>Step 4:</strong> No: the body runs. It prints "Calculating" and waits 1 second to simulate slow work.</li>
+<li><strong>Step 5:</strong> <code>lru_cache</code> saves the result against the number.</li>
+<li><strong>Step 6:</strong> The result is returned. The next call with <code>10</code> will take the Yes path.</li>
+</ul>
 <p><a href="#table-of-contents">Back to the Table of Contents</a></p>
 <h3 id="192-answer-script">19.2 Answer Script<a class="headerlink" href="#192-answer-script" title="Permanent link">&para;</a></h3>
 <div class="highlight"><pre><span></span><code><span class="kn">from</span><span class="w"> </span><span class="nn">functools</span><span class="w"> </span><span class="kn">import</span> <span class="n">lru_cache</span>

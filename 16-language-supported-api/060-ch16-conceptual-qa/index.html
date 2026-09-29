@@ -9477,19 +9477,19 @@
 </tbody>
 </table>
 <p>The flowchart shows the logic of binary search.</p>
-<div class="highlight"><pre><span></span><code>flowchart TD
-    A["1. Set low = 0 and high = last index"] --&gt; B{"2. Is low less than or equal to high?"}
-    B -- "No" --&gt; C["3. Target is not in the list. Stop"]
-    B -- "Yes" --&gt; D["4. middle = low + high, divided by 2"]
-    D --&gt; E{"5. Is item at middle equal to target?"}
-    E -- "Yes" --&gt; F["6. Found. Return middle"]
-    E -- "No" --&gt; G{"7. Is item at middle less than target?"}
-    G -- "Yes" --&gt; H["8. Discard left half: low = middle + 1"]
-    G -- "No" --&gt; I["9. Discard right half: high = middle - 1"]
-    H --&gt; B
-    I --&gt; B
-</code></pre></div>
-<p><img alt="Answer to Q1 (b): Why binary search is O(log n)" src="../../resources/ch16-conceptual-qa-fig-01.png" /></p>
+<p><img alt="Answer to Q1 (b): Why binary search is O(log n)" src="../../resources/LR-ch16-conceptual-qa-fig-01.png" /></p>
+<p><strong>Reading the figure</strong></p>
+<ul>
+<li><strong>Step 1:</strong> Start with the whole list: <code>low = 0</code> and <code>high</code> is the last index, <code>len(items) - 1</code>.</li>
+<li><strong>Step 2:</strong> Is <code>low &lt;= high</code>? While it is, part of the list is still left to search.</li>
+<li><strong>Step 3:</strong> No: nothing is left to search, so the target is not in the list. Stop.</li>
+<li><strong>Step 4:</strong> Yes: find the middle of the part still being searched, <code>middle = (low + high) // 2</code>.</li>
+<li><strong>Step 5:</strong> Is the item at <code>middle</code> the target?</li>
+<li><strong>Step 6:</strong> Yes: the target is found. Return <code>middle</code>.</li>
+<li><strong>Step 7:</strong> No: is the item at <code>middle</code> smaller than the target?</li>
+<li><strong>Step 8:</strong> Yes: the target can only be to the right, so discard the left half with <code>low = middle + 1</code>. Go back to Step 2.</li>
+<li><strong>Step 9:</strong> No: the target can only be to the left, so discard the right half with <code>high = middle - 1</code>. Go back to Step 2. Each pass halves what is left, which is why binary search is O(log n).</li>
+</ul>
 <p>The script below counts the comparisons made by both methods, so you can see the difference for yourself.</p>
 <div class="highlight"><pre><span></span><code><span class="sd">"""</span>
 <span class="sd">Count how many comparisons linear search and binary search need.</span>
@@ -9653,23 +9653,22 @@ List of 1,000,000 items:
 <p><a href="#table-of-contents">Back to the Table of Contents</a></p>
 <h4 id="when-on-is-achievable">When O(n) is achievable<a class="headerlink" href="#when-on-is-achievable" title="Permanent link">&para;</a></h4>
 <p>Only with the <strong>optimised</strong> version that includes an <code>is_swapped</code> flag. If a complete pass produces zero swaps, the list is already sorted and the outer loop exits immediately. For an already-sorted list this needs only one pass of <code>n - 1</code> comparisons, which is <code>O(n)</code>. The basic version without the flag always does all <code>n(n - 1)/2</code> comparisons, so it is always <code>O(n²)</code> regardless of input order.</p>
-<div class="highlight"><pre><span></span><code>flowchart TD
-    A["1. pass_no = 0"] --&gt; B["2. is_swapped = False"]
-    B --&gt; C["3. Compare each neighbouring pair in the unsorted part"]
-    C --&gt; D{"4. Is left item bigger than right item?"}
-    D -- "Yes" --&gt; E["5. Swap them and set is_swapped = True"]
-    D -- "No" --&gt; F["6. Leave them as they are"]
-    E --&gt; G{"7. Pairs left in this pass?"}
-    F --&gt; G
-    G -- "Yes" --&gt; C
-    G -- "No" --&gt; H{"8. Was anything swapped in this pass?"}
-    H -- "No" --&gt; I["9. List is sorted. Stop early"]
-    H -- "Yes" --&gt; J["10. pass_no = pass_no + 1"]
-    J --&gt; K{"11. Passes left?"}
-    K -- "Yes" --&gt; B
-    K -- "No" --&gt; I
-</code></pre></div>
-<p><img alt="When O(n) is achievable" src="../../resources/ch16-conceptual-qa-fig-02.png" /></p>
+<p><img alt="When O(n) is achievable" src="../../resources/LR-ch16-conceptual-qa-fig-02.png" /></p>
+<p><strong>Reading the figure</strong></p>
+<ul>
+<li><strong>Step 1:</strong> Start with the first pass, <code>pass_no = 0</code>. The outer loop is <code>for pass_no in range(n - 1)</code>.</li>
+<li><strong>Step 2:</strong> At the start of every pass, set <code>is_swapped = False</code>.</li>
+<li><strong>Step 3:</strong> The inner loop, <code>for i in range(n - pass_no - 1)</code>, compares the next neighbouring pair in the part that is not yet sorted.</li>
+<li><strong>Step 4:</strong> Is the left item bigger than the right item?</li>
+<li><strong>Step 5:</strong> Yes: swap the two items and set <code>is_swapped = True</code>.</li>
+<li><strong>Step 6:</strong> No: leave the pair as it is.</li>
+<li><strong>Step 7:</strong> If pairs are left in this pass, go back to Step 3.</li>
+<li><strong>Step 8:</strong> The pass is over. Was anything swapped during it?</li>
+<li><strong>Step 9:</strong> No: a whole pass with no swaps means the list is already sorted, so stop early. For a list that is sorted to begin with, this happens after one pass, which is O(n).</li>
+<li><strong>Step 10:</strong> Yes: move on to the next pass, <code>pass_no = pass_no + 1</code>. The largest unsorted item has now bubbled to its final place.</li>
+<li><strong>Step 11:</strong> If passes are left, go back to Step 2.</li>
+<li><strong>Step 12:</strong> No passes are left, so the list is sorted.</li>
+</ul>
 <p>The script below counts comparisons for the basic and optimised versions on a sorted list and on a reversed list.</p>
 <div class="highlight"><pre><span></span><code><span class="c1"># Step 1 - Basic bubble sort (no early exit)</span>
 <span class="k">def</span><span class="w"> </span><span class="nf">bubble_sort_basic</span><span class="p">(</span><span class="n">numbers</span><span class="p">):</span>
@@ -9746,19 +9745,19 @@ Reversed:
 <li>When you reach an item that is not bigger (or the start of the list), drop the key into the gap.</li>
 <li>Repeat from Step 2 until every item has been placed.</li>
 </ol>
-<div class="highlight"><pre><span></span><code>flowchart TD
-    A["1. Start with index 1"] --&gt; B["2. key = item at index. position = index"]
-    B --&gt; C{"3. position greater than 0 AND item on the left bigger than key?"}
-    C -- "Yes" --&gt; D["4. Shift the left item one place right"]
-    D --&gt; E["5. position = position - 1"]
-    E --&gt; C
-    C -- "No" --&gt; F["6. Place key at position"]
-    F --&gt; G{"7. More items to place?"}
-    G -- "Yes" --&gt; H["8. index = index + 1"]
-    H --&gt; B
-    G -- "No" --&gt; I["9. List is sorted"]
-</code></pre></div>
-<p><img alt="Answer to Q3: The card analogy" src="../../resources/ch16-conceptual-qa-fig-03.png" /></p>
+<p><img alt="Answer to Q3: The card analogy" src="../../resources/LR-ch16-conceptual-qa-fig-03.png" /></p>
+<p><strong>Reading the figure</strong></p>
+<ul>
+<li><strong>Step 1:</strong> Start with the item at <code>index = 1</code>. The single item at index 0 counts as a sorted hand of one card.</li>
+<li><strong>Step 2:</strong> Pick up that item as the <code>key</code> and remember its place: <code>position = index</code>.</li>
+<li><strong>Step 3:</strong> Is there an item to the left (<code>position &gt; 0</code>), and is that item bigger than <code>key</code>? Both must be true.</li>
+<li><strong>Step 4:</strong> Yes: shift the bigger item one place to the right, opening a gap.</li>
+<li><strong>Step 5:</strong> Move one place left, <code>position = position - 1</code>, and go back to Step 3.</li>
+<li><strong>Step 6:</strong> No: the gap is in the right place, so drop <code>key</code> into it at <code>position</code>.</li>
+<li><strong>Step 7:</strong> Are there more items still to place?</li>
+<li><strong>Step 8:</strong> Yes: move on to the next item, <code>index = index + 1</code>, and go back to Step 2.</li>
+<li><strong>Step 9:</strong> No: every item has been placed, so the list is sorted.</li>
+</ul>
 <p><a href="#table-of-contents">Back to the Table of Contents</a></p>
 <h4 id="shift-vs-swap-the-key-performance-difference">Shift vs swap: the key performance difference<a class="headerlink" href="#shift-vs-swap-the-key-performance-difference" title="Permanent link">&para;</a></h4>
 <p>Bubble sort and selection sort use <strong>swaps</strong>. Done by hand, a swap needs 3 assignments: a temporary variable stores one value, then the two values are exchanged. (Python's <code>a, b = b, a</code> hides the temporary variable, but it still writes both positions.)</p>
@@ -10325,14 +10324,16 @@ ValueError: mutable default &lt;class 'list'&gt; for field subjects is not allow
 </table>
 <p>This makes the tree structure implicit: no node objects, no pointers, just a list whose order follows the heap rule.</p>
 <p>For example, the heap list <code>[1, 3, 2, 7, 4, 5]</code> represents this tree:</p>
-<div class="highlight"><pre><span></span><code>flowchart TD
-    A["index 0: value 1"] --&gt; B["index 1: value 3"]
-    A --&gt; C["index 2: value 2"]
-    B --&gt; D["index 3: value 7"]
-    B --&gt; E["index 4: value 4"]
-    C --&gt; F["index 5: value 5"]
-</code></pre></div>
-<p><img alt="How Python stores a heap" src="../../resources/ch16-conceptual-qa-fig-04.png" /></p>
+<p><img alt="How Python stores a heap" src="../../resources/LR-ch16-conceptual-qa-fig-04.png" /></p>
+<p><strong>Reading the figure</strong></p>
+<ul>
+<li>Index 0 holds 1, the root. In a min-heap the root is always the smallest value.</li>
+<li>Index 1 holds 3, the left child of index 0, because <code>2 * 0 + 1 = 1</code>.</li>
+<li>Index 2 holds 2, the right child of index 0, because <code>2 * 0 + 2 = 2</code>.</li>
+<li>Index 3 holds 7, the left child of index 1 (<code>2 * 1 + 1 = 3</code>).</li>
+<li>Index 4 holds 4, the right child of index 1 (<code>2 * 1 + 2 = 4</code>).</li>
+<li>Index 5 holds 5, the left child of index 2 (<code>2 * 2 + 1 = 5</code>). Every parent is smaller than or equal to its children, which is the heap rule.</li>
+</ul>
 <p>Check the rule: 1 is smaller than 3 and 2. 3 is smaller than 7 and 4. 2 is smaller than 5. Every parent is smaller than its children, so this is a valid min-heap.</p>
 <p><a href="#table-of-contents">Back to the Table of Contents</a></p>
 <h4 id="simulating-a-max-heap-with-the-negation-trick">Simulating a max-heap with the negation trick<a class="headerlink" href="#simulating-a-max-heap-with-the-negation-trick" title="Permanent link">&para;</a></h4>
@@ -10601,17 +10602,19 @@ Mark 95 -&gt; Grade A
 </code></pre></div>
 <p>This approach needs no extra shared variables or flags, works reliably, and is easy to understand.</p>
 <p>About <code>task_done()</code> and <code>join()</code>: every call to <code>get()</code> adds to the queue's count of unfinished tasks, and every call to <code>task_done()</code> reduces it. <code>queue.join()</code> waits until that count reaches zero. So <code>task_done()</code> must be called for <strong>every</strong> item taken from the queue, including the <code>None</code> sentinels if <code>join()</code> is called after they are added. A simple way to stay safe is the order used in the script below: first <code>join()</code> the queue to wait for the real work, then send the sentinels, then wait for the threads to finish.</p>
-<div class="highlight"><pre><span></span><code>flowchart TD
-    A["1. Main thread starts worker threads"] --&gt; B["2. Main thread puts tasks in the queue"]
-    B --&gt; C["3. Worker calls get and waits for an item"]
-    C --&gt; D{"4. Is the item None?"}
-    D -- "No" --&gt; E["5. Process the task"]
-    E --&gt; F["6. Call task_done"]
-    F --&gt; C
-    D -- "Yes" --&gt; G["7. Call task_done and leave the loop"]
-    G --&gt; H["8. Worker thread ends"]
-</code></pre></div>
-<p><img alt="The None sentinel pattern" src="../../resources/ch16-conceptual-qa-fig-05.png" /></p>
+<p><img alt="The None sentinel pattern" src="../../resources/LR-ch16-conceptual-qa-fig-05.png" /></p>
+<p><strong>Reading the figure</strong></p>
+<ul>
+<li><strong>Step 1:</strong> The main thread creates and starts the worker threads.</li>
+<li><strong>Step 2:</strong> The main thread puts the real tasks into the queue.</li>
+<li><strong>Step 3:</strong> After the tasks, it puts one <code>None</code> into the queue for each worker. <code>None</code> is the stop signal, the sentinel.</li>
+<li><strong>Step 4:</strong> Each worker calls <code>get()</code>, which waits until an item is available and then takes it.</li>
+<li><strong>Step 5:</strong> The worker checks whether the item is <code>None</code>.</li>
+<li><strong>Step 6:</strong> No: it is a real task, so the worker processes it.</li>
+<li><strong>Step 7:</strong> The worker calls <code>task_done()</code> for that item and goes back to Step 4 for the next one.</li>
+<li><strong>Step 8:</strong> Yes: it is the stop signal. The worker still calls <code>task_done()</code> for it, so that <code>queue.join()</code> can finish, and then leaves its loop.</li>
+<li><strong>Step 9:</strong> The worker thread ends.</li>
+</ul>
 <div class="highlight"><pre><span></span><code><span class="c1"># Step 1 - Imports</span>
 <span class="kn">import</span><span class="w"> </span><span class="nn">queue</span>
 <span class="kn">import</span><span class="w"> </span><span class="nn">threading</span>
@@ -10684,14 +10687,16 @@ All workers stopped: True
 <li>A <strong>cache hit</strong> happens when the result is already in the cache and is returned immediately.</li>
 <li>A <strong>cache miss</strong> happens when the result is not in the cache, so the function body runs and the new result is saved.</li>
 </ul>
-<div class="highlight"><pre><span></span><code>flowchart TD
-    A["1. Function called with some arguments"] --&gt; B{"2. Are these arguments in the cache?"}
-    B -- "Yes: cache hit" --&gt; C["3. Return the saved result. hits + 1"]
-    B -- "No: cache miss" --&gt; D["4. Run the function body. misses + 1"]
-    D --&gt; E["5. Save the result in the cache"]
-    E --&gt; F["6. Return the result"]
-</code></pre></div>
-<p><img alt="Answer to Q10: What memoisation is" src="../../resources/ch16-conceptual-qa-fig-06.png" /></p>
+<p><img alt="Answer to Q10: What memoisation is" src="../../resources/LR-ch16-conceptual-qa-fig-06.png" /></p>
+<p><strong>Reading the figure</strong></p>
+<ul>
+<li><strong>Step 1:</strong> The memoised function is called with some arguments.</li>
+<li><strong>Step 2:</strong> Look up these arguments in the cache.</li>
+<li><strong>Step 3:</strong> Yes, a cache hit: return the saved result at once and add 1 to the hit count. The function body does not run.</li>
+<li><strong>Step 4:</strong> No, a cache miss: run the function body to work out the result, and add 1 to the miss count.</li>
+<li><strong>Step 5:</strong> Save the new result in the cache, stored against these arguments.</li>
+<li><strong>Step 6:</strong> Return the result. The next call with the same arguments will be a hit.</li>
+</ul>
 <p><a href="#table-of-contents">Back to the Table of Contents</a></p>
 <h4 id="why-fibonacci-is-the-classic-example">Why Fibonacci is the classic example<a class="headerlink" href="#why-fibonacci-is-the-classic-example" title="Permanent link">&para;</a></h4>
 <p>In the <a href="https://en.wikipedia.org/wiki/Fibonacci_sequence">Fibonacci sequence</a>, each number is the sum of the two before it: 0, 1, 1, 2, 3, 5, 8, 13, and so on. The naive recursive <code>fib(n)</code> calls itself twice per call: <code>fib(n - 1) + fib(n - 2)</code>.</p>
@@ -11327,14 +11332,15 @@ auto values: [('LOW', 1), ('MEDIUM', 2), ('HIGH', 3)]
 </tr>
 </tbody>
 </table>
-<div class="highlight"><pre><span></span><code>flowchart TD
-    A["1. result = first item, 2"] --&gt; B["2. Take the next item"]
-    B --&gt; C["3. result = function of result and item"]
-    C --&gt; D{"4. Items left?"}
-    D -- "Yes" --&gt; B
-    D -- "No" --&gt; E["5. Return result, 120"]
-</code></pre></div>
-<p><img alt="Step-by-step trace for reduce(multiply, [2, 3, 4, 5])" src="../../resources/ch16-conceptual-qa-fig-07.png" /></p>
+<p><img alt="Step-by-step trace for reduce(multiply, [2, 3, 4, 5])" src="../../resources/LR-ch16-conceptual-qa-fig-07.png" /></p>
+<p><strong>Reading the figure</strong></p>
+<ul>
+<li><strong>Step 1:</strong> No starting value is given, so <code>reduce</code> uses the first item, 2, as the starting <code>result</code>.</li>
+<li><strong>Step 2:</strong> Take the next item from the list: 3, then 4, then 5.</li>
+<li><strong>Step 3:</strong> Call the function on the running result and the item: <code>multiply(2, 3)</code> gives 6, then 24, then 120.</li>
+<li><strong>Step 4:</strong> If items are left, go back to Step 2.</li>
+<li><strong>Step 5:</strong> No items are left, so <code>reduce</code> returns the final result, 120.</li>
+</ul>
 <p><a href="#table-of-contents">Back to the Table of Contents</a></p>
 <h4 id="why-guido-van-rossum-moved-it-to-functools">Why Guido van Rossum moved it to functools<a class="headerlink" href="#why-guido-van-rossum-moved-it-to-functools" title="Permanent link">&para;</a></h4>
 <p>In Python 2, <code>reduce()</code> was a built-in function, available without any import. Python's creator, Guido van Rossum, wrote publicly (in his 2005 article "The fate of reduce() in Python 3000") that he found <code>reduce()</code> hard to read in most real uses. For anything beyond simple adding or multiplying, a reader has to work through the step-by-step build-up in their head to understand what the code does.</p>
@@ -11463,16 +11469,17 @@ TypeError: reduce() of empty iterable with no initial value
 <li>You need to save a Python-specific object that json cannot represent, such as a custom class instance, a set, or a NumPy array.</li>
 <li>The saved file will be read back only by your own code on a trusted system.</li>
 </ol>
-<div class="highlight"><pre><span></span><code>flowchart TD
-    A["1. Need to save data"] --&gt; B{"2. Will another language or system read it?"}
-    B -- "Yes" --&gt; C["3. Use json"]
-    B -- "No" --&gt; D{"4. Can json represent the data?"}
-    D -- "Yes" --&gt; C
-    D -- "No" --&gt; E{"5. Is the file only for your own trusted code?"}
-    E -- "Yes" --&gt; F["6. Use pickle"]
-    E -- "No" --&gt; G["7. Convert the data to json-friendly types first, then use json"]
-</code></pre></div>
-<p><img alt="Practical rule" src="../../resources/ch16-conceptual-qa-fig-08.png" /></p>
+<p><img alt="Practical rule" src="../../resources/LR-ch16-conceptual-qa-fig-08.png" /></p>
+<p><strong>Reading the figure</strong></p>
+<ul>
+<li><strong>Step 1:</strong> You need to save some data to a file.</li>
+<li><strong>Step 2:</strong> Will a program in another language, or another system, read the file?</li>
+<li><strong>Step 3:</strong> Use <code>json</code>. It is safe, readable, and accepted almost everywhere. (Yes from Step 2 and Yes from Step 4 both end here.)</li>
+<li><strong>Step 4:</strong> No: can <code>json</code> represent the data? It cannot store sets, custom class instances or NumPy arrays directly.</li>
+<li><strong>Step 5:</strong> No: will the file be read only by your own code on a trusted system?</li>
+<li><strong>Step 6:</strong> Yes: <code>pickle</code> is acceptable. Never unpickle a file from an untrusted source, because loading it can run code.</li>
+<li><strong>Step 7:</strong> No: convert the data to json-friendly types first, for example a set to a list, and then use <code>json</code>.</li>
+</ul>
 <div class="highlight"><pre><span></span><code><span class="c1"># Step 1 - Imports</span>
 <span class="kn">import</span><span class="w"> </span><span class="nn">json</span>
 <span class="kn">import</span><span class="w"> </span><span class="nn">pickle</span>
@@ -11562,18 +11569,18 @@ pickle loaded subjects is a set: True
 </tr>
 </tbody>
 </table>
-<div class="highlight"><pre><span></span><code>flowchart TD
-    A["1. boundary = 0"] --&gt; B["2. Scan from boundary to the end and find the smallest item"]
-    B --&gt; C{"3. Is the smallest item already at the boundary?"}
-    C -- "No" --&gt; D["4. Swap it into the boundary position"]
-    C -- "Yes" --&gt; E["5. No swap needed"]
-    D --&gt; F["6. boundary = boundary + 1"]
-    E --&gt; F
-    F --&gt; G{"7. Is boundary less than n - 1?"}
-    G -- "Yes" --&gt; B
-    G -- "No" --&gt; H["8. List is sorted"]
-</code></pre></div>
-<p><img alt="Answer to Q17: The sorted and unsorted parts" src="../../resources/ch16-conceptual-qa-fig-09.png" /></p>
+<p><img alt="Answer to Q17: The sorted and unsorted parts" src="../../resources/LR-ch16-conceptual-qa-fig-09.png" /></p>
+<p><strong>Reading the figure</strong></p>
+<ul>
+<li><strong>Step 1:</strong> Start with <code>boundary = 0</code>. Everything left of the boundary is sorted, so at first the sorted part is empty.</li>
+<li><strong>Step 2:</strong> Scan the unsorted part, from <code>boundary</code> to the end, and find the smallest item.</li>
+<li><strong>Step 3:</strong> Is that smallest item already at the <code>boundary</code> position?</li>
+<li><strong>Step 4:</strong> No: swap it into the <code>boundary</code> position.</li>
+<li><strong>Step 5:</strong> Yes: it is already in place, so no swap is needed.</li>
+<li><strong>Step 6:</strong> The sorted part has grown by one: <code>boundary = boundary + 1</code>.</li>
+<li><strong>Step 7:</strong> If <code>boundary &lt; n - 1</code>, go back to Step 2.</li>
+<li><strong>Step 8:</strong> No: only one item is left in the unsorted part, and it must be the largest, so the list is sorted.</li>
+</ul>
 <p><a href="#table-of-contents">Back to the Table of Contents</a></p>
 <h4 id="why-swaps-are-on-not-on2">Why swaps are O(n), not O(n²)<a class="headerlink" href="#why-swaps-are-on-not-on2" title="Permanent link">&para;</a></h4>
 <p>In each of the <code>n - 1</code> passes, at most one swap happens: the smallest item is swapped into its final position. So even in the worst case, the total number of swaps is at most <code>n - 1</code>, which is <code>O(n)</code>.</p>
@@ -11976,16 +11983,17 @@ PicklingError: Can't pickle &lt;class '__main__.Student'&gt;: it's not the same 
 <li>It stores the loaded module in <code>sys.modules</code>, so any later import is instant.</li>
 <li>It creates a name in your program that refers to the module (or to the specific names you asked for).</li>
 </ol>
-<div class="highlight"><pre><span></span><code>flowchart TD
-    A["1. Python reads: import collections"] --&gt; B{"2. Is collections already in sys.modules?"}
-    B -- "Yes" --&gt; F["5. Bind the name collections in your program"]
-    B -- "No" --&gt; C["3. Search the folders in sys.path"]
-    C --&gt; D{"4. Found?"}
-    D -- "No" --&gt; G["6. Raise ModuleNotFoundError"]
-    D -- "Yes" --&gt; E["7. Run the module code once and store it in sys.modules"]
-    E --&gt; F
-</code></pre></div>
-<p><img alt="How importing works" src="../../resources/ch16-conceptual-qa-fig-10.png" /></p>
+<p><img alt="How importing works" src="../../resources/LR-ch16-conceptual-qa-fig-10.png" /></p>
+<p><strong>Reading the figure</strong></p>
+<ul>
+<li><strong>Step 1:</strong> Python meets the line <code>import collections</code>.</li>
+<li><strong>Step 2:</strong> It first checks <code>sys.modules</code>, the store of modules already loaded. Is <code>collections</code> there?</li>
+<li><strong>Step 3:</strong> No: search the folders listed in <code>sys.path</code>, in order.</li>
+<li><strong>Step 4:</strong> Was the module found?</li>
+<li><strong>Step 5:</strong> No: raise <code>ModuleNotFoundError</code>.</li>
+<li><strong>Step 6:</strong> Yes: run the module's code once, from top to bottom, and store the loaded module in <code>sys.modules</code>.</li>
+<li><strong>Step 7:</strong> Bind the name <code>collections</code> in your program so that it refers to the module. (Yes from Step 2 comes straight here, which is why a second import is instant.)</li>
+</ul>
 <p>See <a href="https://docs.python.org/3/reference/import.html">the import system</a> for full details.</p>
 <p>There are three main forms of import:</p>
 <table>
