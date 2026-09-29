@@ -8852,16 +8852,18 @@ HTMLReportApp created HTMLReport
     Report generated in HTML format
 </code></pre></div>
 <p>Both forms share the same core idea: client code does not create the concrete object itself. Read more at <a href="https://refactoring.guru/design-patterns/factory-method">Refactoring Guru: Factory Method</a>.</p>
-<p><strong>Mermaid flowchart of the simple factory script</strong></p>
-<div class="highlight"><pre><span></span><code>flowchart TD
-    A["1. Client asks factory for a report type"] --&gt; B["2. Factory looks up the type in its dictionary"]
-    B --&gt; C{"3. Is the type known?"}
-    C -- Yes --&gt; D["4. Factory creates the matching object"]
-    D --&gt; E["5. Object is returned to the client"]
-    E --&gt; F["6. Client calls generate on the object"]
-    C -- No --&gt; G["7. Factory raises ValueError"]
-</code></pre></div>
-<p><img alt="Q3. Explain the Factory Method Pattern. What problem does it solve? How does it improve software compared to directly creating objects?" src="../../resources/ch21-conceptualqa-fig-01.png" /></p>
+<p><strong>Flowchart of the simple factory script</strong></p>
+<p><img alt="Q3. Explain the Factory Method Pattern. What problem does it solve? How does it improve software compared to directly creating objects?" src="../../resources/LR-ch21-conceptualqa-fig-01.png" /></p>
+<p><strong>Reading the figure</strong></p>
+<ul>
+<li><strong>Step 1:</strong> The client asks the factory for a report of a given type, for example <code>"pdf"</code>. It never names the concrete class itself.</li>
+<li><strong>Step 2:</strong> The factory looks up that type in its dictionary of known report classes.</li>
+<li><strong>Step 3:</strong> Is the type known?</li>
+<li><strong>Step 4:</strong> No: the factory raises <code>ValueError</code>, so a mistake in the type name is reported at once.</li>
+<li><strong>Step 5:</strong> Yes: the factory creates an object of the matching class.</li>
+<li><strong>Step 6:</strong> The object is returned to the client.</li>
+<li><strong>Step 7:</strong> The client calls <code>generate()</code> on it, without knowing or caring which concrete class it got.</li>
+</ul>
 <p><strong>Advantages</strong></p>
 <ul>
 <li>brings object creation to one place;</li>
@@ -10081,16 +10083,17 @@ Guest tries to view an image:
 <li>The first <code>show()</code> loads the image. The second <code>show()</code> reuses it, so "Loading" appears only once.</li>
 <li>The guest is stopped by the proxy, so <code>secret.png</code> is never loaded at all.</li>
 </ul>
-<p><strong>Mermaid flowchart of the script</strong></p>
-<div class="highlight"><pre><span></span><code>flowchart TD
-    A["1. Client calls show on the proxy"] --&gt; B{"2. Is the user a member?"}
-    B -- No --&gt; C["3. Print Access denied and stop"]
-    B -- Yes --&gt; D{"4. Is the real image already loaded?"}
-    D -- No --&gt; E["5. Create RealImage and load it from disk"]
-    E --&gt; F["6. Call show on the real image"]
-    D -- Yes --&gt; F
-</code></pre></div>
-<p><img alt="Q12. Explain the Proxy Pattern. Why is it used? Compare it with directly accessing an object." src="../../resources/ch21-conceptualqa-fig-02.png" /></p>
+<p><strong>Flowchart of the script</strong></p>
+<p><img alt="Q12. Explain the Proxy Pattern. Why is it used? Compare it with directly accessing an object." src="../../resources/LR-ch21-conceptualqa-fig-02.png" /></p>
+<p><strong>Reading the figure</strong></p>
+<ul>
+<li><strong>Step 1:</strong> The client calls <code>show()</code> on the proxy, exactly as it would on a real image.</li>
+<li><strong>Step 2:</strong> Protection: the proxy first checks whether the user is a member.</li>
+<li><strong>Step 3:</strong> No: print "Access denied" and stop. The real image is never loaded.</li>
+<li><strong>Step 4:</strong> Yes: lazy loading. Has the real image already been loaded?</li>
+<li><strong>Step 5:</strong> No: create the <code>RealImage</code> object now, which loads the file from disk. This happens only once.</li>
+<li><strong>Step 6:</strong> Call <code>show()</code> on the real image. (Yes from Step 4 comes straight here, so the second <code>show()</code> reuses the image and "Loading" appears only once.)</li>
+</ul>
 <p>Read more at <a href="https://refactoring.guru/design-patterns/proxy">Refactoring Guru: Proxy</a>.</p>
 <p><strong>Comparison table</strong></p>
 <table>
@@ -10515,19 +10518,20 @@ After running the queue: 'Hello!!'
 <li>Undo works in <strong>reverse order</strong>, because <code>history.pop()</code> removes the most recent command first. A list used this way is called a <strong>stack</strong> (<a href="https://en.wikipedia.org/wiki/Stack_(abstract_data_type)">stack</a>).</li>
 <li>In Step 6 the two commands are created first and run later. This is the idea behind task queues.</li>
 </ul>
-<p><strong>Mermaid flowchart of the undo process</strong></p>
-<div class="highlight"><pre><span></span><code>flowchart TD
-    A["1. User performs an action"] --&gt; B["2. A command object is created"]
-    B --&gt; C["3. Invoker calls execute on the command"]
-    C --&gt; D["4. Command is pushed onto the history list"]
-    D --&gt; E{"5. Does the user press Undo?"}
-    E -- No --&gt; A
-    E -- Yes --&gt; F{"6. Is the history empty?"}
-    F -- Yes --&gt; G["7. Nothing to undo"]
-    F -- No --&gt; H["8. Pop the last command"]
-    H --&gt; I["9. Call undo on that command"]
-</code></pre></div>
-<p><img alt="Q15. Explain the Command Pattern. How does it help in implementing undo operations, menus and task queues?" src="../../resources/ch21-conceptualqa-fig-04.png" /></p>
+<p><strong>Flowchart of the undo process</strong></p>
+<p><img alt="Q15. Explain the Command Pattern. How does it help in implementing undo operations, menus and task queues?" src="../../resources/LR-ch21-conceptualqa-fig-04.png" /></p>
+<p><strong>Reading the figure</strong></p>
+<ul>
+<li><strong>Step 1:</strong> The user performs an action.</li>
+<li><strong>Step 2:</strong> The action is wrapped in a command object, which knows how to do it and how to undo it.</li>
+<li><strong>Step 3:</strong> The invoker calls <code>execute()</code> on the command.</li>
+<li><strong>Step 4:</strong> The invoker pushes the command onto its history list.</li>
+<li><strong>Step 5:</strong> Does the user press Undo? If not, go back to Step 1 for the next action.</li>
+<li><strong>Step 6:</strong> Yes: is the history list empty?</li>
+<li><strong>Step 7:</strong> Yes: there is nothing to undo.</li>
+<li><strong>Step 8:</strong> No: <code>history.pop()</code> removes the most recent command. The list is used as a stack, so undo works in reverse order.</li>
+<li><strong>Step 9:</strong> Call <code>undo()</code> on that command, which reverses its effect.</li>
+</ul>
 <p>Read more at <a href="https://refactoring.guru/design-patterns/command">Refactoring Guru: Command</a>.</p>
 <p><strong>Comparison table</strong></p>
 <table>

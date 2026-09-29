@@ -8590,14 +8590,16 @@ The original is untouched: Data
 </code></pre></div>
 <p><code>repr()</code> is used in step 1 so that the empty string is visible as a pair of quotes. A plain <code>print()</code> would show an empty line and leave you guessing.</p>
 <p><strong>What the <code>+=</code> really does</strong></p>
-<div class="highlight"><pre><span></span><code>flowchart TD
-    A["1. base_container points to an empty string"] --&gt; B["2. The line base_container += 'Data' runs"]
-    B --&gt; C["3. Python builds a NEW string, 'Data'"]
-    C --&gt; D["4. The name base_container is pointed at the new string"]
-    D --&gt; E["5. The old empty string is left behind and cleared away"]
-    A --&gt; F["6. Nothing was changed inside the old string"]
-</code></pre></div>
-<p><img alt="Question 2. An Empty String, Concatenation and the Immutability Rule" src="../../resources/ch17-scripting-qa-fig-02.png" /></p>
+<p><img alt="Question 2. An Empty String, Concatenation and the Immutability Rule" src="../../resources/LR-ch17-scripting-qa-fig-02.png" /></p>
+<p><strong>Reading the figure</strong></p>
+<ul>
+<li><strong>Step 1:</strong> The name <code>base_container</code> points to an empty string, <code>''</code>.</li>
+<li><strong>Step 2:</strong> The line <code>base_container += 'Data'</code> runs.</li>
+<li><strong>Step 3:</strong> Strings are immutable, so Python builds a brand-new string, <code>'Data'</code>.</li>
+<li><strong>Step 4:</strong> The name <code>base_container</code> is pointed at the new string.</li>
+<li><strong>Step 5:</strong> The old empty string is left behind, and Python clears it away when nothing uses it.</li>
+<li><strong>Step 6:</strong> Nothing was changed inside the old string at any point. <code>+=</code> on a string always makes a new object.</li>
+</ul>
 <p><strong>Design Pattern Explanation</strong></p>
 <ul>
 <li><strong>Constructor Initialization Pattern:</strong> Calling <code>str()</code> with no arguments gives an empty string. It makes the purpose of the variable clear to anyone reading the code. Writing <code>base_container = ""</code> does exactly the same thing and is shorter, so both forms are common.</li>
@@ -8923,16 +8925,17 @@ Characters in '12345\rAB': 8
 </tbody>
 </table>
 <p><strong>How Python reads a backslash</strong></p>
-<div class="highlight"><pre><span></span><code>flowchart TD
-    A["1. Python reads the characters of the literal"] --&gt; B{"2. Is there an r before the opening quote?"}
-    B --&gt;|"No"| C["3. A backslash joins the next character"]
-    C --&gt; D["4. The pair is stored as one special character"]
-    B --&gt;|"Yes"| E["5. The backslash is stored as an ordinary character"]
-    E --&gt; F["6. The next character is stored as itself"]
-    D --&gt; G["7. The finished string is ready"]
-    F --&gt; G
-</code></pre></div>
-<p><img alt="Question 4. Escape Sequences and the Raw String Prefix" src="../../resources/ch17-scripting-qa-fig-03.png" /></p>
+<p><img alt="Question 4. Escape Sequences and the Raw String Prefix" src="../../resources/LR-ch17-scripting-qa-fig-03.png" /></p>
+<p><strong>Reading the figure</strong></p>
+<ul>
+<li><strong>Step 1:</strong> Python reads the characters of the string literal.</li>
+<li><strong>Step 2:</strong> Is there an <code>r</code> before the opening quote?</li>
+<li><strong>Step 3:</strong> No: a backslash joins the character after it.</li>
+<li><strong>Step 4:</strong> The pair is stored as one special character. <code>"\t"</code> holds 1 character, a tab.</li>
+<li><strong>Step 5:</strong> Yes: it is a raw string, so the backslash is stored as an ordinary character.</li>
+<li><strong>Step 6:</strong> The next character is stored as itself. <code>r"\t"</code> holds 2 characters, a backslash and a <code>t</code>.</li>
+<li><strong>Step 7:</strong> The finished string is ready.</li>
+</ul>
 <p><strong>Design Pattern Explanation</strong></p>
 <ul>
 <li><strong>Escape Character Processing Pattern:</strong> In an ordinary string the backslash is a signal, not a character. Python turns <code>\n</code> into a newline, <code>\t</code> into a tab, <code>\r</code> into a carriage return that moves the writing position to the start of the line, and <code>\b</code> into a backspace that moves it one column to the left. Each pair becomes one character in the stored string.</li>
@@ -9969,16 +9972,18 @@ Slicing from the untested result: '.'
 </code></pre></div>
 <p>The last line shows the danger. The slice quietly returned the full stop at the end of the sentence, because <code>-1</code> means the last character. Nothing went wrong on the screen, and the program carried on with the wrong value.</p>
 <p><strong>Choosing between the two methods</strong></p>
-<div class="highlight"><pre><span></span><code>flowchart TD
-    A["1. A position in the text is needed"] --&gt; B{"2. Might the text be missing?"}
-    B --&gt;|"Yes, that is normal"| C["3. Use find()"]
-    C --&gt; D["4. Test the result against -1"]
-    D --&gt; E["5. Take the other path if it is -1"]
-    B --&gt;|"No, it must be present"| F["6. Use index()"]
-    F --&gt; G["7. Wrap it in try and except ValueError"]
-    G --&gt; H["8. Report the fault if it is raised"]
-</code></pre></div>
-<p><img alt="Question 12. find() and index(), and What Each Does on Failure" src="../../resources/ch17-scripting-qa-fig-07.png" /></p>
+<p><img alt="Question 12. find() and index(), and What Each Does on Failure" src="../../resources/LR-ch17-scripting-qa-fig-07.png" /></p>
+<p><strong>Reading the figure</strong></p>
+<ul>
+<li><strong>Step 1:</strong> Your program needs the position of some text inside a string.</li>
+<li><strong>Step 2:</strong> Might the text be missing, as a normal part of the job?</li>
+<li><strong>Step 3:</strong> Yes, that is normal: use <code>find()</code>, which returns -1 when the text is not found.</li>
+<li><strong>Step 4:</strong> Always test the result against -1 before using it. <code>-1</code> used as a position quietly means the last character.</li>
+<li><strong>Step 5:</strong> If it is -1, take the other path in your program.</li>
+<li><strong>Step 6:</strong> No, it must be present: use <code>index()</code>, which raises <code>ValueError</code> when the text is not found.</li>
+<li><strong>Step 7:</strong> Wrap the call in <code>try</code> and <code>except ValueError</code>.</li>
+<li><strong>Step 8:</strong> If the error is raised, report the fault, because something that should be there is missing.</li>
+</ul>
 <p><strong>Design Pattern Explanation</strong></p>
 <ul>
 <li><strong>Safe Sentinel Return Pattern, <code>find()</code>:</strong> <code>find()</code> returns the position of the first match, or <code>-1</code> when there is no match. A value like that <code>-1</code>, returned to stand for "nothing found", is called a sentinel. The program does not stop, so the caller must check the value before using it.</li>
@@ -10851,16 +10856,17 @@ Final Processed Output: INTERACTIVE SCRIPT EXECUTION
 </code></pre></div>
 <p>The third and fourth lines are worth a thought. A digit is not a small letter, and neither is a space, so <code>islower()</code> says <code>False</code> for both and the text is left alone. That is the behaviour the question asks for, but in a real program a leading space is usually an accident, so the text would be stripped first.</p>
 <p><strong>The decision in a diagram</strong></p>
-<div class="highlight"><pre><span></span><code>flowchart TD
-    A["1. Take the string"] --&gt; B["2. Read the character at index 0"]
-    B --&gt; C{"3. Is it a small letter?"}
-    C --&gt;|"Yes"| D["4. Build an upper-case copy of the whole string"]
-    D --&gt; E["5. Keep it as the result"]
-    C --&gt;|"No"| F["6. Keep the text as it is"]
-    F --&gt; G["7. Print the result"]
-    E --&gt; G
-</code></pre></div>
-<p><img alt="Question 19. A Decision Taken on the First Character" src="../../resources/ch17-scripting-qa-fig-09.png" /></p>
+<p><img alt="Question 19. A Decision Taken on the First Character" src="../../resources/LR-ch17-scripting-qa-fig-09.png" /></p>
+<p><strong>Reading the figure</strong></p>
+<ul>
+<li><strong>Step 1:</strong> Take the string.</li>
+<li><strong>Step 2:</strong> Read its first character, <code>text[0]</code>.</li>
+<li><strong>Step 3:</strong> Is it a small letter? <code>text[0].islower()</code> checks this.</li>
+<li><strong>Step 4:</strong> No: a capital, a digit or a space is not a small letter, so keep the text as it is.</li>
+<li><strong>Step 5:</strong> Yes: build an upper-case copy of the whole string with <code>text.upper()</code>.</li>
+<li><strong>Step 6:</strong> Keep that copy as the result.</li>
+<li><strong>Step 7:</strong> Print the result.</li>
+</ul>
 <p><strong>Design Pattern Explanation</strong></p>
 <ul>
 <li><strong>State-Driven Conditional Transformation Pattern:</strong> The program first asks a question about the data, then decides what to do with it. Here the question is asked by <code>islower()</code> on a single character, <code>sample_text[0]</code>, and the answer decides whether the whole string is transformed. Keeping the two parts separate, first the test and then the action, is what makes such code easy to read and easy to change.</li>
@@ -11037,16 +11043,17 @@ In one line:         Year 2026 Is True
 </tr>
 </tbody>
 </table>
-<div class="highlight"><pre><span></span><code>flowchart TD
-    A["1. Start with an empty string"] --&gt; B["2. Take the next item from the list"]
-    B --&gt; C["3. Convert it with str()"]
-    C --&gt; D["4. Add it, and a space, to the collected string"]
-    D --&gt; E{"5. Any items left?"}
-    E --&gt;|"Yes"| B
-    E --&gt;|"No"| F["6. strip() removes the space at the end"]
-    F --&gt; G["7. Print the finished sentence"]
-</code></pre></div>
-<p><img alt="Question 20. Building One Sentence From a List of Mixed Values" src="../../resources/ch17-scripting-qa-fig-10.png" /></p>
+<p><img alt="Question 20. Building One Sentence From a List of Mixed Values" src="../../resources/LR-ch17-scripting-qa-fig-10.png" /></p>
+<p><strong>Reading the figure</strong></p>
+<ul>
+<li><strong>Step 1:</strong> Start with an empty string.</li>
+<li><strong>Step 2:</strong> Take the next item from the list, which mixes strings, numbers and Booleans.</li>
+<li><strong>Step 3:</strong> Convert it to text with <code>str()</code>, because <code>+</code> cannot join a string to a number.</li>
+<li><strong>Step 4:</strong> Add it, followed by a space, to the collected string.</li>
+<li><strong>Step 5:</strong> If items are left, go back to Step 2.</li>
+<li><strong>Step 6:</strong> No: <code>strip()</code> removes the extra space at the end.</li>
+<li><strong>Step 7:</strong> Print the finished sentence: <code>'Year 2026 Is True'</code>.</li>
+</ul>
 <p><strong>Design Pattern Explanation</strong></p>
 <ul>
 <li><strong>Polymorphic Type Normalization Pattern, <code>str()</code>:</strong> The <code>+</code> operator joins a string only to another string. Passing every item through <code>str()</code> first turns numbers, <code>True</code> and <code>False</code>, and even lists, into their text form, so that they can all be joined safely. This is why the conversion is done inside the loop, before the addition.</li>

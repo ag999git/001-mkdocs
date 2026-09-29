@@ -8760,14 +8760,16 @@ Tuple after:  (10, 20, 30)
 <li>Behind the scenes, a list has a special method (named <code>__setitem__</code>) that lets Python replace an item. A tuple simply does not have this method, so Python has no way to carry out the change.</li>
 <li><strong>About <code>try</code> and <code>except</code>:</strong> Without them, the error would stop the program at once. The <code>try</code> block runs the risky line. If a <code>TypeError</code> happens, Python jumps to the <code>except</code> block, stores the error in the variable <code>error</code>, and carries on. This lets us print the message and then prove, in Step 4, that the tuple is unchanged.</li>
 </ul>
-<div class="highlight"><pre><span></span><code>flowchart TD
-    A["Step 1: Create numbers = (10, 20, 30)"] --&gt; B["Step 2: Try numbers[0] = 99"]
-    B --&gt; C{"Step 3: Can a tuple item be replaced?"}
-    C -- No --&gt; D["Step 4: Python raises TypeError"]
-    D --&gt; E["Step 5: except block catches it and prints the message"]
-    E --&gt; F["Step 6: The tuple is still (10, 20, 30)"]
-</code></pre></div>
-<p><img alt="Q3. Write a script that shows you cannot change a tuple element. Try to change the first item of a tuple and print the error message." src="../../resources/ch19-tuples-scripting-qa-fig-02.png" /></p>
+<p><img alt="Q3. Write a script that shows you cannot change a tuple element. Try to change the first item of a tuple and print the error message." src="../../resources/LR-ch19-tuples-scripting-qa-fig-02.png" /></p>
+<p><strong>Reading the figure</strong></p>
+<ul>
+<li><strong>Step 1:</strong> Create the tuple <code>numbers = (10, 20, 30)</code>.</li>
+<li><strong>Step 2:</strong> Inside a <code>try</code> block, try to replace the first item: <code>numbers[0] = 99</code>.</li>
+<li><strong>Step 3:</strong> A list has a special method, <code>__setitem__</code>, that lets Python replace an item. A tuple has no such method, so the change cannot be made.</li>
+<li><strong>Step 4:</strong> Python raises <code>TypeError: 'tuple' object does not support item assignment</code>.</li>
+<li><strong>Step 5:</strong> The <code>except TypeError as error:</code> block catches it and prints the message, so the program carries on.</li>
+<li><strong>Step 6:</strong> Printing <code>numbers</code> shows it is still <code>(10, 20, 30)</code>.</li>
+</ul>
 <p><strong>Try this next</strong></p>
 <p>Try the same with a list, and try deleting an item from the tuple.</p>
 <div class="highlight"><pre><span></span><code><span class="c1"># Step 1 - A list CAN be changed</span>
@@ -9558,15 +9560,16 @@ Orange is not available
 <li>The opposite test is <code>not in</code>, used in Step 4.</li>
 <li>The comparison is exact. Upper and lower case matter, so <code>"apple" in fruits</code> is <code>False</code>.</li>
 </ul>
-<div class="highlight"><pre><span></span><code>flowchart TD
-    A["Step 1: Look for Orange in the tuple"] --&gt; B["Step 2: Take the next item"]
-    B --&gt; C{"Step 3: Is it equal to Orange?"}
-    C -- Yes --&gt; D["Step 4: Stop and return True"]
-    C -- No --&gt; E{"Step 5: Are there more items?"}
-    E -- Yes --&gt; B
-    E -- No --&gt; F["Step 6: Return False"]
-</code></pre></div>
-<p><img alt="Q13. Write a script that uses the in operator to check if the item &quot;Apple&quot; exists inside the tuple (&quot;Apple&quot;, &quot;Banana&quot;, &quot;Cherry&quot;). Then check for &quot;Orange&quot;." src="../../resources/ch19-tuples-scripting-qa-fig-06.png" /></p>
+<p><img alt="Q13. Write a script that uses the in operator to check if the item &quot;Apple&quot; exists inside the tuple (&quot;Apple&quot;, &quot;Banana&quot;, &quot;Cherry&quot;). Then check for &quot;Orange&quot;." src="../../resources/LR-ch19-tuples-scripting-qa-fig-06.png" /></p>
+<p><strong>Reading the figure</strong></p>
+<ul>
+<li><strong>Step 1:</strong> Evaluate <code>"Orange" in fruits</code>, where <code>fruits = ("Apple", "Banana", "Cherry")</code>.</li>
+<li><strong>Step 2:</strong> Python takes the next item of the tuple, from left to right.</li>
+<li><strong>Step 3:</strong> Is it equal to "Orange"? The comparison is exact, so upper and lower case matter.</li>
+<li><strong>Step 4:</strong> Yes: stop at once and return <code>True</code>. (For "Apple" this happens on the first item.)</li>
+<li><strong>Step 5:</strong> No: are there more items? If so, go back to Step 2.</li>
+<li><strong>Step 6:</strong> No items are left, so return <code>False</code>. For "Orange" every item is checked and the answer is <code>False</code>.</li>
+</ul>
 <p><strong>Try this next</strong></p>
 <p>Check a value with different capital letters, and try a case-insensitive search.</p>
 <div class="highlight"><pre><span></span><code><span class="n">fruits</span> <span class="o">=</span> <span class="p">(</span><span class="s2">"Apple"</span><span class="p">,</span> <span class="s2">"Banana"</span><span class="p">,</span> <span class="s2">"Cherry"</span><span class="p">)</span>

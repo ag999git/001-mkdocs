@@ -9417,15 +9417,16 @@ He said "Hello"
 Are both the same string? True
 </code></pre></div>
 <p><strong>Flowchart</strong></p>
-<div class="highlight"><pre><span></span><code>flowchart TD
-    A["1. Python reads the string character by character"] --&gt; B{"2. Is the character a backslash?"}
-    B --&gt;|"No"| C["3. Store the character as it is"]
-    B --&gt;|"Yes"| D["4. Read the next character too"]
-    D --&gt; E["5. Store the single special character they stand for"]
-    C --&gt; F["6. Move to the next character"]
-    E --&gt; F
-</code></pre></div>
-<p><img alt="Question 6. Escape Sequences" src="../../resources/ch17-conceptual-qa-fig-04.png" /></p>
+<p><img alt="Question 6. Escape Sequences" src="../../resources/LR-ch17-conceptual-qa-fig-04.png" /></p>
+<p><strong>Reading the figure</strong></p>
+<ul>
+<li><strong>Step 1:</strong> Python reads the string literal one character at a time.</li>
+<li><strong>Step 2:</strong> Is the character a backslash, <code>\</code>?</li>
+<li><strong>Step 3:</strong> No: store the character as it is.</li>
+<li><strong>Step 4:</strong> Yes: read the next character as well.</li>
+<li><strong>Step 5:</strong> Store the single special character the pair stands for. <code>\n</code> becomes one newline character, and <code>\t</code> one tab.</li>
+<li><strong>Step 6:</strong> Move on to the next character.</li>
+</ul>
 <p><strong>Common beginner mistakes</strong></p>
 <table>
 <thead>
@@ -9584,14 +9585,15 @@ Stored form: 'a\\tb'
 </ul>
 <p>Regular expressions are the most common use of all. There the backslash has its own meaning, for example <code>\d</code> for "any digit", and that meaning must survive untouched into the pattern. You will meet them in the chapter on regular expressions, and the <a href="https://docs.python.org/3/library/re.html">Python documentation on the <code>re</code> module</a> recommends raw strings for exactly this reason.</p>
 <p><strong>Diagram</strong></p>
-<div class="highlight"><pre><span></span><code>flowchart TD
-    A["1. Python meets a backslash inside a string"] --&gt; B{"2. Does the literal have an r prefix?"}
-    B --&gt;|"Yes"| C["3. Keep the backslash as an ordinary character"]
-    B --&gt;|"No"| D["4. Read the next character and form an escape sequence"]
-    C --&gt; E["5. Continue with the rest of the string"]
-    D --&gt; E
-</code></pre></div>
-<p><img alt="Question 7. Raw Strings" src="../../resources/ch17-conceptual-qa-fig-05.png" /></p>
+<p><img alt="Question 7. Raw Strings" src="../../resources/LR-ch17-conceptual-qa-fig-05.png" /></p>
+<p><strong>Reading the figure</strong></p>
+<ul>
+<li><strong>Step 1:</strong> Python meets a backslash inside a string literal.</li>
+<li><strong>Step 2:</strong> Does the literal have an <code>r</code> prefix, as in <code>r"C:\new"</code>?</li>
+<li><strong>Step 3:</strong> Yes: it is a raw string, so the backslash is kept as an ordinary character.</li>
+<li><strong>Step 4:</strong> No: Python reads the next character and forms an escape sequence, so <code>\n</code> becomes a newline.</li>
+<li><strong>Step 5:</strong> Python continues with the rest of the string.</li>
+</ul>
 <p><strong>One limitation worth knowing</strong></p>
 <p>A raw string cannot end with a single backslash. Python still uses the backslash to find the closing quote, so <code>r"C:\"</code> is an error.</p>
 <div class="highlight"><pre><span></span><code><span class="c1"># Step 1: A raw string that ends with one backslash is not allowed</span>
@@ -9825,23 +9827,22 @@ Number of vowels: 3
 </code></pre></div>
 <p>Both loops give 3. The <code>for</code> loop is shorter, so it is the better choice here.</p>
 <p><strong>Flowchart</strong></p>
-<div class="highlight"><pre><span></span><code>flowchart TD
-    A["1. Start"] --&gt; B["2. Get the string"]
-    B --&gt; C{"3. Which traversal method?"}
-    C --&gt;|"for"| D["4. The loop hands over the next character"]
-    D --&gt; E["5. Process the character"]
-    E --&gt; F{"6. Any characters left?"}
-    F --&gt;|"Yes"| D
-    F --&gt;|"No"| L["12. End"]
-    C --&gt;|"while"| G["7. Set the index to 0"]
-    G --&gt; H["8. Read the character at the index"]
-    H --&gt; I["9. Process the character"]
-    I --&gt; J["10. Add 1 to the index"]
-    J --&gt; K{"11. Index still less than the length?"}
-    K --&gt;|"Yes"| H
-    K --&gt;|"No"| L
-</code></pre></div>
-<p><img alt="Question 8. Traversing a String With for and while" src="../../resources/ch17-conceptual-qa-fig-06.png" /></p>
+<p><img alt="Question 8. Traversing a String With for and while" src="../../resources/LR-ch17-conceptual-qa-fig-06.png" /></p>
+<p><strong>Reading the figure</strong></p>
+<ul>
+<li><strong>Step 1:</strong> Start.</li>
+<li><strong>Step 2:</strong> Get the string to traverse.</li>
+<li><strong>Step 3:</strong> Which traversal method is used?</li>
+<li><strong>Step 4:</strong> <code>for</code>: the loop itself hands over the next character. No index is needed.</li>
+<li><strong>Step 5:</strong> Process the character, for example count it.</li>
+<li><strong>Step 6:</strong> If characters are left, go back to Step 4. If not, go to Step 12.</li>
+<li><strong>Step 7:</strong> <code>while</code>: set the index to 0 yourself.</li>
+<li><strong>Step 8:</strong> Read the character at the index, <code>text[i]</code>.</li>
+<li><strong>Step 9:</strong> Process the character.</li>
+<li><strong>Step 10:</strong> Add 1 to the index. Forgetting this line makes the loop run for ever.</li>
+<li><strong>Step 11:</strong> Is the index still less than <code>len(text)</code>? If so, go back to Step 8. If not, go to Step 12.</li>
+<li><strong>Step 12:</strong> End. Both loops give the same result, and the <code>for</code> loop is shorter.</li>
+</ul>
 <p><strong>Common beginner mistakes</strong></p>
 <table>
 <thead>
@@ -10302,14 +10303,15 @@ Pormig
 <li>Repeats until the stop index is reached or passed.</li>
 </ol>
 <p><strong>Flowchart</strong></p>
-<div class="highlight"><pre><span></span><code>flowchart TD
-    A["1. Go to the start index"] --&gt; B["2. Copy the character"]
-    B --&gt; C["3. Move forward by the step"]
-    C --&gt; D{"4. Has the stop index been reached?"}
-    D --&gt;|"No"| B
-    D --&gt;|"Yes"| E["5. Return the new string"]
-</code></pre></div>
-<p><img alt="Question 10. String Slicing" src="../../resources/ch17-conceptual-qa-fig-08.png" /></p>
+<p><img alt="Question 10. String Slicing" src="../../resources/LR-ch17-conceptual-qa-fig-08.png" /></p>
+<p><strong>Reading the figure</strong></p>
+<ul>
+<li><strong>Step 1:</strong> Go to the start index of the slice.</li>
+<li><strong>Step 2:</strong> Copy the character at that position into the new string.</li>
+<li><strong>Step 3:</strong> Move forward by the step, for example two positions for <code>[::2]</code>.</li>
+<li><strong>Step 4:</strong> Has the stop index been reached or passed? If not, go back to Step 2. The character at the stop index itself is never copied.</li>
+<li><strong>Step 5:</strong> Yes: return the new string. The original string is not changed.</li>
+</ul>
 <p><strong>Examples</strong></p>
 <div class="highlight"><pre><span></span><code><span class="c1"># Step 1: A string whose characters are easy to follow</span>
 <span class="n">text</span> <span class="o">=</span> <span class="s2">"ABCDEFGHIJ"</span>
@@ -11758,13 +11760,15 @@ Invalid input. Please type digits only.
 </code></pre></div>
 <p>Validation therefore improves program reliability. Note the order of the steps: test first, convert second. Reversing them defeats the purpose.</p>
 <p><strong>Flowchart</strong></p>
-<div class="highlight"><pre><span></span><code>flowchart TD
-    A["1. Read the input as text"] --&gt; B["2. Apply the matching is method"]
-    B --&gt; C{"3. Did it return True?"}
-    C --&gt;|"Yes"| D["4. Convert and process the value"]
-    C --&gt;|"No"| E["5. Show an error message and ask again"]
-</code></pre></div>
-<p><img alt="Question 15. The is Family of Methods" src="../../resources/ch17-conceptual-qa-fig-13.png" /></p>
+<p><img alt="Question 15. The is Family of Methods" src="../../resources/LR-ch17-conceptual-qa-fig-13.png" /></p>
+<p><strong>Reading the figure</strong></p>
+<ul>
+<li><strong>Step 1:</strong> Read the input as text. <code>input()</code> always returns a string.</li>
+<li><strong>Step 2:</strong> Apply the matching <code>is</code> method, for example <code>text.isdigit()</code> for a whole number.</li>
+<li><strong>Step 3:</strong> Did it return <code>True</code>?</li>
+<li><strong>Step 4:</strong> Yes: the text is valid, so it is now safe to convert it, for example with <code>int()</code>, and process it.</li>
+<li><strong>Step 5:</strong> No: show an error message and ask again, going back to Step 1. Test first, convert second.</li>
+</ul>
 <p><strong>Comparison table</strong></p>
 <table>
 <thead>
@@ -12324,17 +12328,18 @@ Result: Palindrome
 <p>Every comparison checks two characters at once. For a string of length <code>n</code>, only <code>n // 2</code> comparisons are needed. Comparing the whole string would simply repeat every test in the opposite order.</p>
 <p>For a word of 5 letters that means 2 comparisons instead of 5. For a sentence of 1000 characters it means 500 instead of 1000.</p>
 <p><strong>Flowchart</strong></p>
-<div class="highlight"><pre><span></span><code>flowchart TD
-    A["1. Start with the string"] --&gt; B["2. Set i to 0 and assume palindrome"]
-    B --&gt; C["3. Compare the character at i with the one at the matching place from the end"]
-    C --&gt; D{"4. Are they equal?"}
-    D --&gt;|"No"| E["5. Not a palindrome, stop"]
-    D --&gt;|"Yes"| F["6. Add 1 to i"]
-    F --&gt; G{"7. Has i reached half the length?"}
-    G --&gt;|"No"| C
-    G --&gt;|"Yes"| H["8. Palindrome"]
-</code></pre></div>
-<p><img alt="Question 17. Palindrome Using Indexing" src="../../resources/ch17-conceptual-qa-fig-15.png" /></p>
+<p><img alt="Question 17. Palindrome Using Indexing" src="../../resources/LR-ch17-conceptual-qa-fig-15.png" /></p>
+<p><strong>Reading the figure</strong></p>
+<ul>
+<li><strong>Step 1:</strong> Start with the string to test.</li>
+<li><strong>Step 2:</strong> Set <code>i</code> to 0 and assume, for now, that the string is a palindrome.</li>
+<li><strong>Step 3:</strong> Compare the character at <code>i</code> with the one at the matching place from the end, <code>text[-(i + 1)]</code>.</li>
+<li><strong>Step 4:</strong> Are they equal?</li>
+<li><strong>Step 5:</strong> No: one mismatch is enough. It is not a palindrome, so stop.</li>
+<li><strong>Step 6:</strong> Yes: add 1 to <code>i</code>.</li>
+<li><strong>Step 7:</strong> Has <code>i</code> reached half the length, <code>len(text) // 2</code>? If not, go back to Step 3.</li>
+<li><strong>Step 8:</strong> Yes: every pair matched, so it is a palindrome. Only <code>n // 2</code> comparisons were needed.</li>
+</ul>
 <p><strong>Advantages</strong></p>
 <ul>
 <li>Efficient, because it stops at the first mismatch.</li>
@@ -12463,15 +12468,16 @@ Reversed: ognam
 Are they equal? False
 </code></pre></div>
 <p><strong>Diagram</strong></p>
-<div class="highlight"><pre><span></span><code>flowchart TD
-    A["1. Original string"] --&gt; B["2. Build the reverse with a slice, step -1"]
-    B --&gt; C["3. Reversed string"]
-    A --&gt; D{"4. Is the original equal to the reverse?"}
-    C --&gt; D
-    D --&gt;|"Yes"| E["5. Palindrome"]
-    D --&gt;|"No"| F["6. Not a palindrome"]
-</code></pre></div>
-<p><img alt="Question 18. Palindrome Using Slicing" src="../../resources/ch17-conceptual-qa-fig-16.png" /></p>
+<p><img alt="Question 18. Palindrome Using Slicing" src="../../resources/LR-ch17-conceptual-qa-fig-16.png" /></p>
+<p><strong>Reading the figure</strong></p>
+<ul>
+<li><strong>Step 1:</strong> Start with the original string.</li>
+<li><strong>Step 2:</strong> Build its reverse with the slice <code>text[::-1]</code>, which uses a step of -1.</li>
+<li><strong>Step 3:</strong> This gives the reversed string, a new string object.</li>
+<li><strong>Step 4:</strong> Compare the two: <code>text == text[::-1]</code>.</li>
+<li><strong>Step 5:</strong> Yes: they are equal, so it is a palindrome.</li>
+<li><strong>Step 6:</strong> No: it is not a palindrome.</li>
+</ul>
 <p><strong>Advantages</strong></p>
 <ul>
 <li>Extremely concise.</li>
@@ -12643,16 +12649,18 @@ ab       indexing: False, slicing: False, agree: True
 <p>For educational purposes, beginners should first learn the <strong>indexing approach</strong>, because it develops logical reasoning and reinforces concepts such as indexing, loops and conditional statements. It is also the version you would have to write in a language that has no slicing.</p>
 <p>After mastering the algorithm, they should learn the slicing approach to appreciate Python's expressive features. In real programs, and in examinations that ask only for a correct answer, the slicing version is the one to write.</p>
 <p><strong>Diagram</strong></p>
-<div class="highlight"><pre><span></span><code>flowchart TD
-    A["1. A palindrome check is needed"] --&gt; B{"2. What is the purpose?"}
-    B --&gt;|"Learning the algorithm"| C["3. Use the indexing method"]
-    C --&gt; D["4. Work through the comparisons by hand"]
-    D --&gt; E["5. Understand loops and indexes"]
-    B --&gt;|"Writing working code"| F["6. Use the slicing method"]
-    F --&gt; G["7. One line, easy to read"]
-    G --&gt; H["8. Add a cleaning step if needed"]
-</code></pre></div>
-<p><img alt="Question 19. Comparing the Two Palindrome Methods" src="../../resources/ch17-conceptual-qa-fig-17.png" /></p>
+<p><img alt="Question 19. Comparing the Two Palindrome Methods" src="../../resources/LR-ch17-conceptual-qa-fig-17.png" /></p>
+<p><strong>Reading the figure</strong></p>
+<ul>
+<li><strong>Step 1:</strong> A palindrome check is needed.</li>
+<li><strong>Step 2:</strong> What is the purpose?</li>
+<li><strong>Step 3:</strong> Learning the algorithm: use the indexing method.</li>
+<li><strong>Step 4:</strong> Work through the comparisons by hand, one pair at a time.</li>
+<li><strong>Step 5:</strong> This builds understanding of loops, indexes and conditions, and works in any language.</li>
+<li><strong>Step 6:</strong> Writing working code: use the slicing method.</li>
+<li><strong>Step 7:</strong> It is one line, <code>text == text[::-1]</code>, and easy to read.</li>
+<li><strong>Step 8:</strong> Add a cleaning step if needed, for example lower-casing and removing spaces, before comparing.</li>
+</ul>
 <p><strong>Key points</strong></p>
 <ul>
 <li>Both algorithms are correct.</li>

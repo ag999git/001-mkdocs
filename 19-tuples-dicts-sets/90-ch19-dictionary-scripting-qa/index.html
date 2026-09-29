@@ -9566,18 +9566,18 @@ Final: {'Fruit': ['Apple', 'Mango'], 'Veg': ['Carrot', 'Peas']}
 <li><code>setdefault(category, [])</code> does both jobs in one call. It <strong>inserts</strong> the key with an empty list if the key is absent, and then <strong>returns</strong> the list stored for that key. The returned list is then immediately used by <code>.append(item)</code>.</li>
 <li>The key point is that <code>setdefault()</code> returns the <strong>actual list stored in the dictionary</strong>, not a copy. So appending to what it returns changes the dictionary.</li>
 </ul>
-<div class="highlight"><pre><span></span><code>flowchart TD
-    A["Step 1: Take the next (category, item) pair"] --&gt; B{"Step 2: Is category already a key?"}
-    B -- No --&gt; C["Step 3: setdefault stores category with a new empty list"]
-    B -- Yes --&gt; D["Step 4: setdefault leaves the dictionary as it is"]
-    C --&gt; E["Step 5: setdefault returns the list stored for category"]
-    D --&gt; E
-    E --&gt; F["Step 6: append(item) adds the item to that list"]
-    F --&gt; G{"Step 7: More pairs?"}
-    G -- Yes --&gt; A
-    G -- No --&gt; H["Step 8: Print grouped"]
-</code></pre></div>
-<p><img alt="Q13. Empty dict category→list. Given list of (category, item) tuples, group items under categories using setdefault() — no manual if key in dict check." src="../../resources/ch19-dictionary-scripting-qa-fig-06.png" /></p>
+<p><img alt="Q13. Empty dict category→list. Given list of (category, item) tuples, group items under categories using setdefault() — no manual if key in dict check." src="../../resources/LR-ch19-dictionary-scripting-qa-fig-06.png" /></p>
+<p><strong>Reading the figure</strong></p>
+<ul>
+<li><strong>Step 1:</strong> Take the next <code>(category, item)</code> pair from the list.</li>
+<li><strong>Step 2:</strong> <code>grouped.setdefault(category, [])</code> first checks: is <code>category</code> already a key?</li>
+<li><strong>Step 3:</strong> No: it stores <code>category</code> with a new empty list.</li>
+<li><strong>Step 4:</strong> Yes: it leaves the dictionary as it is.</li>
+<li><strong>Step 5:</strong> Either way, it returns the actual list stored for <code>category</code>, not a copy.</li>
+<li><strong>Step 6:</strong> <code>.append(item)</code> adds the item to that list, so the dictionary itself changes.</li>
+<li><strong>Step 7:</strong> If more pairs are left, go back to Step 1.</li>
+<li><strong>Step 8:</strong> No: print <code>grouped</code>, with each category and its list of items.</li>
+</ul>
 <p><strong>Try this next</strong></p>
 <p>Use the grouped dictionary: print each category with a count of its items.</p>
 <div class="highlight"><pre><span></span><code><span class="n">grouped</span> <span class="o">=</span> <span class="p">{</span><span class="s1">'Fruit'</span><span class="p">:</span> <span class="p">[</span><span class="s1">'Apple'</span><span class="p">,</span> <span class="s1">'Mango'</span><span class="p">],</span> <span class="s1">'Veg'</span><span class="p">:</span> <span class="p">[</span><span class="s1">'Carrot'</span><span class="p">,</span> <span class="s1">'Peas'</span><span class="p">]}</span>
@@ -9868,15 +9868,16 @@ TypeError: 'dict_keys' object is not subscriptable
 </tbody>
 </table>
 <p>The same pattern continues for <code>s</code>, <code>i</code>, <code>p</code>, <code>p</code> and <code>i</code>, giving the final result.</p>
-<div class="highlight"><pre><span></span><code>flowchart TD
-    A["Step 1: Start with an empty dictionary freq"] --&gt; B["Step 2: Take the next character ch"]
-    B --&gt; C["Step 3: current = freq.get(ch, 0)"]
-    C --&gt; D["Step 4: freq[ch] = current + 1"]
-    D --&gt; E{"Step 5: More characters?"}
-    E -- Yes --&gt; B
-    E -- No --&gt; F["Step 6: Print freq"]
-</code></pre></div>
-<p><img alt="Q16. Count frequency of each character in &quot;mississippi&quot; using a dictionary, no library. Use get() with default 0." src="../../resources/ch19-dictionary-scripting-qa-fig-08.png" /></p>
+<p><img alt="Q16. Count frequency of each character in &quot;mississippi&quot; using a dictionary, no library. Use get() with default 0." src="../../resources/LR-ch19-dictionary-scripting-qa-fig-08.png" /></p>
+<p><strong>Reading the figure</strong></p>
+<ul>
+<li><strong>Step 1:</strong> Start with an empty dictionary, <code>freq = {}</code>.</li>
+<li><strong>Step 2:</strong> Take the next character <code>ch</code> from "mississippi".</li>
+<li><strong>Step 3:</strong> <code>freq.get(ch, 0)</code> returns the count so far, or 0 if this character has not been seen yet. No <code>if</code> is needed.</li>
+<li><strong>Step 4:</strong> Store the new count: <code>freq[ch] = current + 1</code>.</li>
+<li><strong>Step 5:</strong> If more characters are left, go back to Step 2.</li>
+<li><strong>Step 6:</strong> No: print <code>freq</code>, which is <code>{'m': 1, 'i': 4, 's': 4, 'p': 2}</code>.</li>
+</ul>
 <p><strong>Try this next</strong></p>
 <p>Print the characters from most to least frequent. For the curious, compare with <code>Counter</code> from the standard <code>collections</code> module, which does the same counting for you.</p>
 <div class="highlight"><pre><span></span><code><span class="n">text</span> <span class="o">=</span> <span class="s2">"mississippi"</span>

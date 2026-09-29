@@ -9008,15 +9008,17 @@ AttributeError: 'tuple' object has no attribute 'append'
 </ol>
 <p>So the <em>variable</em> <code>t1</code> now refers to something different, but no tuple has been changed.</p>
 <p>You can see this with the built-in function <code>id()</code>. It returns a number that identifies an object while that object exists. If the number changes, you are looking at a different object.</p>
-<div class="highlight"><pre><span></span><code>flowchart TD
-    A["Step 1: t1 points to tuple (1, 2, 3)"] --&gt; B["Step 2: Python evaluates t1 + (4, 5)"]
-    B --&gt; C["Step 3: A new tuple (1, 2, 3, 4, 5) is built in a new place in memory"]
-    C --&gt; D["Step 4: The name t1 is moved to point to the new tuple"]
-    D --&gt; E{"Step 5: Does any other name still point to (1, 2, 3)?"}
-    E -- Yes --&gt; F["Step 6: The old tuple stays in memory, unchanged"]
-    E -- No --&gt; G["Step 7: Python frees the memory of the old tuple"]
-</code></pre></div>
-<p><img alt="Q5. Explain how t1 = t1 + (4, 5) modifies a variable. Trace memory via id()." src="../../resources/ch19-tuples-conceptual-qa-fig-02.png" /></p>
+<p><img alt="Q5. Explain how t1 = t1 + (4, 5) modifies a variable. Trace memory via id()." src="../../resources/LR-ch19-tuples-conceptual-qa-fig-02.png" /></p>
+<p><strong>Reading the figure</strong></p>
+<ul>
+<li><strong>Step 1:</strong> The name <code>t1</code> points to the tuple <code>(1, 2, 3)</code>. <code>id(t1)</code> gives that object's identity.</li>
+<li><strong>Step 2:</strong> Python evaluates the right-hand side first: <code>t1 + (4, 5)</code>.</li>
+<li><strong>Step 3:</strong> Tuples cannot be changed, so <code>+</code> builds a brand-new tuple, <code>(1, 2, 3, 4, 5)</code>, in a new place in memory.</li>
+<li><strong>Step 4:</strong> The assignment moves the name <code>t1</code> to the new tuple. <code>id(t1)</code> now gives a different number.</li>
+<li><strong>Step 5:</strong> Does any other name still point to the old tuple <code>(1, 2, 3)</code>?</li>
+<li><strong>Step 6:</strong> Yes: the old tuple stays in memory, completely unchanged.</li>
+<li><strong>Step 7:</strong> No: nothing uses the old tuple any more, so Python frees its memory. No tuple was ever modified.</li>
+</ul>
 <p><strong>Script: tracing memory with <code>id()</code></strong></p>
 <div class="highlight"><pre><span></span><code><span class="c1"># Step 1 - Create a tuple and note its id</span>
 <span class="n">t1</span> <span class="o">=</span> <span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span>

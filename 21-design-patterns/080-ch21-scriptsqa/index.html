@@ -8640,16 +8640,17 @@ Step 4: Theme read through config2: dark
 <li>The settings dictionary is created inside the <code>if</code> block, so it is set up only on the first call. If it were placed in an <code>__init__</code> method instead, <code>__init__</code> would run on <strong>every</strong> call to <code>AppConfig()</code> and would reset the settings each time. This is a common beginner mistake with Singletons.</li>
 <li><code>config1 is config2</code> is <code>True</code>, and both names have the same <code>id()</code>. They are two labels on one object.</li>
 </ul>
-<p><strong>Mermaid flowchart</strong></p>
-<div class="highlight"><pre><span></span><code>flowchart TD
-    A["1. Client calls AppConfig"] --&gt; B["2. Python calls __new__"]
-    B --&gt; C{"3. Is _instance None?"}
-    C -- Yes --&gt; D["4. Create one real object and store it in _instance"]
-    D --&gt; E["5. Return _instance"]
-    C -- No --&gt; E
-    E --&gt; F["6. Every caller receives the same object"]
-</code></pre></div>
-<p><img alt="Q1. Write a script implementing a basic Singleton pattern to maintain a single configuration reference. Verify if two instances point to the exact same memory object." src="../../resources/ch21-scriptsqa-fig-01.png" /></p>
+<p><strong>Flowchart</strong></p>
+<p><img alt="Q1. Write a script implementing a basic Singleton pattern to maintain a single configuration reference. Verify if two instances point to the exact same memory object." src="../../resources/LR-ch21-scriptsqa-fig-01.png" /></p>
+<p><strong>Reading the figure</strong></p>
+<ul>
+<li><strong>Step 1:</strong> The client calls <code>AppConfig()</code>.</li>
+<li><strong>Step 2:</strong> Python calls the class's <code>__new__</code> method, which decides what object to hand back.</li>
+<li><strong>Step 3:</strong> Is the class attribute <code>_instance</code> still <code>None</code>?</li>
+<li><strong>Step 4:</strong> Yes: this is the first call. Create the one real object, set up its settings, and store it in <code>_instance</code>.</li>
+<li><strong>Step 5:</strong> Return <code>_instance</code>. (No from Step 3 comes straight here: the object already exists.)</li>
+<li><strong>Step 6:</strong> Every caller receives the same object, so <code>config1 is config2</code> is <code>True</code>.</li>
+</ul>
 <p><strong>Pattern Explanation:</strong></p>
 <ul>
 <li><strong>Design Pattern Used:</strong> Singleton Pattern (Creational family).</li>
@@ -9500,16 +9501,17 @@ Second display():
 <li>On the first <code>display()</code>, the proxy creates <code>_RealImage</code>, which prints the "LOADING" message. On the second call, the stored object is reused and no loading happens.</li>
 <li>The leading underscore in <code>_RealImage</code> is a Python convention meaning "internal, do not use directly". Client code is expected to use <code>ImageProxy</code> instead (<a href="https://peps.python.org/pep-0008/#descriptive-naming-styles">PEP 8: naming conventions</a>).</li>
 </ul>
-<p><strong>Mermaid flowchart</strong></p>
-<div class="highlight"><pre><span></span><code>flowchart TD
-    A["1. Client creates ImageProxy"] --&gt; B["2. Proxy stores only the file name"]
-    B --&gt; C["3. Client calls display"]
-    C --&gt; D{"4. Is the real image loaded?"}
-    D -- No --&gt; E["5. Create _RealImage and load it"]
-    E --&gt; F["6. Call display on the real image"]
-    D -- Yes --&gt; F
-</code></pre></div>
-<p><img alt="Q11. Implement a lazy-loading proxy pattern class (ImageProxy) that defers actual instantiation of an expensive internal RealImage object until .display() is invoked." src="../../resources/ch21-scriptsqa-fig-03.png" /></p>
+<p><strong>Flowchart</strong></p>
+<p><img alt="Q11. Implement a lazy-loading proxy pattern class (ImageProxy) that defers actual instantiation of an expensive internal RealImage object until .display() is invoked." src="../../resources/LR-ch21-scriptsqa-fig-03.png" /></p>
+<p><strong>Reading the figure</strong></p>
+<ul>
+<li><strong>Step 1:</strong> The client creates an <code>ImageProxy</code> for a file.</li>
+<li><strong>Step 2:</strong> The proxy stores only the file name. Nothing is loaded yet.</li>
+<li><strong>Step 3:</strong> The client calls <code>display()</code>.</li>
+<li><strong>Step 4:</strong> Has the real image been loaded yet?</li>
+<li><strong>Step 5:</strong> No: create <code>_RealImage</code> now, which prints the "LOADING" message. This happens only on the first call.</li>
+<li><strong>Step 6:</strong> Call <code>display()</code> on the real image. (Yes from Step 4 comes straight here, so the second call reuses the stored object.)</li>
+</ul>
 <p><strong>Pattern Explanation:</strong></p>
 <ul>
 <li><strong>Design Pattern Used:</strong> Proxy Pattern (Structural family). This kind is called a <strong>virtual proxy</strong>, because it delays creating an expensive object.</li>
@@ -9855,19 +9857,20 @@ Step 5: After second undo: OFF
 </tr>
 </tbody>
 </table>
-<p><strong>Mermaid flowchart</strong></p>
-<div class="highlight"><pre><span></span><code>flowchart TD
-    A["1. Client creates a command for the light"] --&gt; B["2. Remote runs execute on the command"]
-    B --&gt; C["3. Command tells the light what to do"]
-    C --&gt; D["4. Remote pushes the command onto history"]
-    D --&gt; E{"5. Undo pressed?"}
-    E -- No --&gt; A
-    E -- Yes --&gt; F{"6. Is history empty?"}
-    F -- Yes --&gt; G["7. Print Nothing to undo"]
-    F -- No --&gt; H["8. Pop the last command"]
-    H --&gt; I["9. Call undo on it"]
-</code></pre></div>
-<p><img alt="Q14. Implement an undoable transaction command routing pipeline using the descriptive Command Pattern framework mapping action targets against a Light resource receptor." src="../../resources/ch21-scriptsqa-fig-05.png" /></p>
+<p><strong>Flowchart</strong></p>
+<p><img alt="Q14. Implement an undoable transaction command routing pipeline using the descriptive Command Pattern framework mapping action targets against a Light resource receptor." src="../../resources/LR-ch21-scriptsqa-fig-05.png" /></p>
+<p><strong>Reading the figure</strong></p>
+<ul>
+<li><strong>Step 1:</strong> The client creates a command object for the light, for example "turn on".</li>
+<li><strong>Step 2:</strong> The remote control, the invoker, runs <code>execute()</code> on the command.</li>
+<li><strong>Step 3:</strong> The command tells the light, the receiver, what to do.</li>
+<li><strong>Step 4:</strong> The remote pushes the command onto its <code>history</code> list.</li>
+<li><strong>Step 5:</strong> Is Undo pressed? If not, go back to Step 1 for the next command.</li>
+<li><strong>Step 6:</strong> Yes: is <code>history</code> empty?</li>
+<li><strong>Step 7:</strong> Yes: print "Nothing to undo".</li>
+<li><strong>Step 8:</strong> No: pop the last command off <code>history</code>, the most recent one.</li>
+<li><strong>Step 9:</strong> Call <code>undo()</code> on it, which reverses what it did.</li>
+</ul>
 <p><strong>Pattern Explanation:</strong></p>
 <ul>
 <li><strong>Design Pattern Used:</strong> Command Pattern (Behavioral family).</li>
@@ -9961,17 +9964,18 @@ Step 6: 'B' in collection -&gt; True
 <li>Python's rules say an iterator should have <strong>both</strong> <code>__next__()</code> and <code>__iter__()</code> (returning itself). With <code>__iter__()</code> added, a <code>CustomIterator</code> can also be used directly in a <code>for</code> loop (<a href="https://docs.python.org/3/library/stdtypes.html#iterator-types">iterator types</a>).</li>
 <li>Once the collection follows these rules, other tools work with it for free: <code>list()</code>, the <code>in</code> operator, <code>sum()</code>, <code>sorted()</code> and many more.</li>
 </ul>
-<p><strong>Mermaid flowchart</strong></p>
-<div class="highlight"><pre><span></span><code>flowchart TD
-    A["1. for loop calls iter on the collection"] --&gt; B["2. Collection returns a new CustomIterator"]
-    B --&gt; C["3. Loop calls next on the iterator"]
-    C --&gt; D{"4. Is _index past the last item?"}
-    D -- No --&gt; E["5. Return the item and add 1 to _index"]
-    E --&gt; F["6. Loop body runs with the item"]
-    F --&gt; C
-    D -- Yes --&gt; G["7. Raise StopIteration and the loop ends"]
-</code></pre></div>
-<p><img alt="Q15. Write a custom sequence traversal loop pattern using the traditional Iterator architecture by defining sequential steps inside CustomIterator and CustomCollection." src="../../resources/ch21-scriptsqa-fig-06.png" /></p>
+<p><strong>Flowchart</strong></p>
+<p><img alt="Q15. Write a custom sequence traversal loop pattern using the traditional Iterator architecture by defining sequential steps inside CustomIterator and CustomCollection." src="../../resources/LR-ch21-scriptsqa-fig-06.png" /></p>
+<p><strong>Reading the figure</strong></p>
+<ul>
+<li><strong>Step 1:</strong> The <code>for</code> loop calls <code>iter()</code> on the collection.</li>
+<li><strong>Step 2:</strong> The collection's <code>__iter__()</code> returns a new <code>CustomIterator</code>, starting at <code>_index = 0</code>.</li>
+<li><strong>Step 3:</strong> The loop calls <code>next()</code> on the iterator, which runs its <code>__next__()</code> method.</li>
+<li><strong>Step 4:</strong> Is <code>_index</code> past the last item?</li>
+<li><strong>Step 5:</strong> No: return the item at <code>_index</code>, and add 1 to <code>_index</code>.</li>
+<li><strong>Step 6:</strong> The loop body runs with that item, then goes back to Step 3.</li>
+<li><strong>Step 7:</strong> Yes: <code>__next__()</code> raises <code>StopIteration</code>, and the <code>for</code> loop ends quietly.</li>
+</ul>
 <p><strong>Pattern Explanation:</strong></p>
 <ul>
 <li><strong>Design Pattern Used:</strong> Iterator Pattern (Behavioral family).</li>
@@ -10161,16 +10165,18 @@ Step 3: Block with an error
     <span class="n">session</span><span class="o">.</span><span class="fm">__exit__</span><span class="p">(</span><span class="kc">None</span><span class="p">,</span> <span class="kc">None</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
 </code></pre></div>
 <p>The <code>with</code> statement writes all of this for you, and you cannot forget the cleanup step.</p>
-<p><strong>Mermaid flowchart</strong></p>
-<div class="highlight"><pre><span></span><code>flowchart TD
-    A["1. with statement starts"] --&gt; B["2. Python calls __enter__ and the connection opens"]
-    B --&gt; C["3. Code inside the with block runs"]
-    C --&gt; D{"4. Did an error occur?"}
-    D -- No --&gt; E["5. __exit__ runs and closes the connection normally"]
-    D -- Yes --&gt; F["6. __exit__ runs and closes the connection"]
-    F --&gt; G["7. __exit__ returns False, so the error reaches the caller"]
-</code></pre></div>
-<p><img alt="Q17. Develop an elegant Pythonic native alternative to resource management workflows by configuring a class utilizing Context Manager protocols." src="../../resources/ch21-scriptsqa-fig-07.png" /></p>
+<p><strong>Flowchart</strong></p>
+<p><img alt="Q17. Develop an elegant Pythonic native alternative to resource management workflows by configuring a class utilizing Context Manager protocols." src="../../resources/LR-ch21-scriptsqa-fig-07.png" /></p>
+<p><strong>Reading the figure</strong></p>
+<ul>
+<li><strong>Step 1:</strong> The <code>with</code> statement starts.</li>
+<li><strong>Step 2:</strong> Python calls <code>__enter__</code>, which opens the connection.</li>
+<li><strong>Step 3:</strong> The code inside the <code>with</code> block runs.</li>
+<li><strong>Step 4:</strong> Did an error occur inside the block?</li>
+<li><strong>Step 5:</strong> No: <code>__exit__</code> runs and closes the connection normally.</li>
+<li><strong>Step 6:</strong> Yes: <code>__exit__</code> still runs and closes the connection. You cannot forget the cleanup.</li>
+<li><strong>Step 7:</strong> <code>__exit__</code> returns <code>False</code>, which means "do not hide the error", so the exception carries on to the caller.</li>
+</ul>
 <p><strong>Pattern Explanation:</strong></p>
 <ul>
 <li><strong>Design Pattern Used:</strong> Pythonic Context Manager idiom, used for resource management. It does not belong to one of the three GoF families. It plays the same role as a <code>try</code> / <code>finally</code> block in other languages, and as the idea called <a href="https://en.wikipedia.org/wiki/Resource_acquisition_is_initialization">RAII</a> in C++.</li>
