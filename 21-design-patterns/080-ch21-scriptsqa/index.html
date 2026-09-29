@@ -8469,7 +8469,7 @@
 <li><strong>Pattern Explanation</strong>: which pattern is used and how it works.</li>
 <li><strong>Follow-up questions</strong>: small extra questions, with answers, to test your understanding.</li>
 </ol>
-<p>Some answers also include a flowchart drawn with <a href="https://mermaid.js.org/">Mermaid</a>, which GitHub displays as a diagram.</p>
+<p>Some answers also include a flowchart.</p>
 <p><strong>Tip:</strong> Type each script yourself rather than copying it. Then change one thing (add a class, change a value, remove a line) and predict the new output before you run it.</p>
 <p><a href="#table-of-contents">Back to the Table of Contents</a></p>
 <h2 id="key-terms-used-on-this-page">Key Terms Used on This Page<a class="headerlink" href="#key-terms-used-on-this-page" title="Permanent link">&para;</a></h2>
@@ -9251,15 +9251,17 @@ Step 3: Client using the adapter:
 <li>The line "Adapter received XML" appears twice because <code>get_json()</code> is called twice: once directly in Step 3, and once inside <code>show_report()</code>.</li>
 <li>The marks come out as the text <code>"91"</code>, because everything read from XML is text. The client could convert it with <code>int()</code> if it needed a number.</li>
 </ul>
-<p><strong>Mermaid flowchart</strong></p>
-<div class="highlight"><pre><span></span><code>flowchart LR
-    A["1. Client calls get_json on the adapter"] --&gt; B["2. Adapter calls request_xml on the legacy object"]
-    B --&gt; C["3. Legacy object returns XML text"]
-    C --&gt; D["4. Adapter reads the XML into a dictionary"]
-    D --&gt; E["5. Adapter converts the dictionary to JSON"]
-    E --&gt; F["6. Client receives JSON and uses it"]
-</code></pre></div>
-<p><img alt="Q8. Write an Adapter pattern script that converts a legacy incompatible .requestxml() output method style into a client-expected .getjson() format." src="../../resources/ch21-scriptsqa-fig-02.png" /></p>
+<p><strong>Flowchart</strong></p>
+<p><img alt="Q8. Write an Adapter pattern script that converts a legacy incompatible .requestxml() output method style into a client-expected .getjson() format." src="../../resources/S21-LR-ch21-scriptsqa-fig-02.png" /></p>
+<p><strong>Reading the figure</strong></p>
+<ul>
+<li><strong>Step 1:</strong> The client calls <code>get_json()</code> on the adapter. It only knows about JSON.</li>
+<li><strong>Step 2:</strong> The adapter calls <code>request_xml()</code> on the old, legacy object.</li>
+<li><strong>Step 3:</strong> The legacy object returns its data as XML text.</li>
+<li><strong>Step 4:</strong> The adapter reads the XML into a Python dictionary.</li>
+<li><strong>Step 5:</strong> The adapter converts the dictionary to JSON text.</li>
+<li><strong>Step 6:</strong> The client receives JSON and turns it back into a dictionary with <code>json.loads()</code>. It never learns that XML was involved.</li>
+</ul>
 <p><strong>Pattern Explanation:</strong></p>
 <ul>
 <li><strong>Design Pattern Used:</strong> Adapter Pattern (Structural family).</li>
@@ -9598,16 +9600,18 @@ Station: new temperature 28°C
 <li>After <code>detach(wall)</code>, only the phone receives the 28°C update.</li>
 <li><code>_notify_all()</code> starts with an underscore to show that it is meant for use inside the class only. Client code changes the data through <code>set_temperature()</code>, and notification happens automatically.</li>
 </ul>
-<p><strong>Mermaid flowchart</strong></p>
-<div class="highlight"><pre><span></span><code>flowchart LR
-    A["1. Observers call attach on the station"] --&gt; B["2. Station adds them to its observer list"]
-    B --&gt; C["3. Client calls set_temperature"]
-    C --&gt; D["4. Station stores the new value"]
-    D --&gt; E["5. Station calls _notify_all"]
-    E --&gt; F["6. update is called on every observer in the list"]
-    F --&gt; G["7. Each display prints the new temperature"]
-</code></pre></div>
-<p><img alt="Q12. Build an architectural event listener tracking routine matching an Observer workflow by linking a WeatherStation subject update with registered display units." src="../../resources/ch21-scriptsqa-fig-04.png" /></p>
+<p><strong>Flowchart</strong></p>
+<p><img alt="Q12. Build an architectural event listener tracking routine matching an Observer workflow by linking a WeatherStation subject update with registered display units." src="../../resources/S21-LR-ch21-scriptsqa-fig-04.png" /></p>
+<p><strong>Reading the figure</strong></p>
+<ul>
+<li><strong>Step 1:</strong> Each display calls <code>attach()</code> on the weather station to register itself.</li>
+<li><strong>Step 2:</strong> The station adds each one to its list of observers.</li>
+<li><strong>Step 3:</strong> The client changes the data by calling <code>set_temperature()</code>.</li>
+<li><strong>Step 4:</strong> The station stores the new value.</li>
+<li><strong>Step 5:</strong> The station calls <code>_notify_all()</code> automatically. The underscore shows it is meant for use inside the class only.</li>
+<li><strong>Step 6:</strong> <code>_notify_all()</code> calls <code>update()</code> on every observer in the list.</li>
+<li><strong>Step 7:</strong> Each display prints the new temperature. After <code>detach(wall)</code>, only the phone would receive the next update.</li>
+</ul>
 <p><strong>Pattern Explanation:</strong></p>
 <ul>
 <li><strong>Design Pattern Used:</strong> Observer Pattern (Behavioral family).</li>

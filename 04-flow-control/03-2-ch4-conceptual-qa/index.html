@@ -9419,19 +9419,18 @@ Trap 2 fixed with 'is None': score is present and equals 0
 <li>If none was <code>True</code>, run the <code>else</code> block (if there is one).</li>
 <li>Continue with the first line after the whole chain.</li>
 </ol>
-<div class="highlight"><pre><span></span><code>flowchart LR
-    D1{"1. if n greater than 0?"} -- "True" --&gt; D2["2. Run Branch 1"]
-    D1 -- "False" --&gt; D3{"3. elif n greater than -5?"}
-    D3 -- "True" --&gt; D4["4. Run Branch 2"]
-    D3 -- "False" --&gt; D5{"5. elif n is even?"}
-    D5 -- "True" --&gt; D6["6. Run Branch 3"]
-    D5 -- "False" --&gt; D7["7. else: Run Branch 4"]
-    D2 --&gt; D8["8. Continue after the chain"]
-    D4 --&gt; D8
-    D6 --&gt; D8
-    D7 --&gt; D8
-</code></pre></div>
-<p><img alt="Q1. The Rule of One in if-elif-else" src="../../resources/ch4-conceptual-qa-fig-04.png" /></p>
+<p><img alt="Q1. The Rule of One in if-elif-else" src="../../resources/S04-LR-ch4-conceptual-qa-fig-04.png" /></p>
+<p><strong>Reading the figure</strong></p>
+<ul>
+<li><strong>Step 1:</strong> Test the <code>if</code> condition first: is <code>n &gt; 0</code>?</li>
+<li><strong>Step 2:</strong> True: run Branch 1, then jump straight to Step 8. No other condition is tested.</li>
+<li><strong>Step 3:</strong> False: test the first <code>elif</code>: is <code>n &gt; -5</code>?</li>
+<li><strong>Step 4:</strong> True: run Branch 2, then jump to Step 8.</li>
+<li><strong>Step 5:</strong> False: test the next <code>elif</code>: is <code>n</code> even?</li>
+<li><strong>Step 6:</strong> True: run Branch 3, then jump to Step 8.</li>
+<li><strong>Step 7:</strong> None of the conditions was <code>True</code>, so run the <code>else</code> block, Branch 4.</li>
+<li><strong>Step 8:</strong> Continue with the first line after the whole chain. Whatever happens, exactly one branch runs: the Rule of One.</li>
+</ul>
 <p><strong>Script</strong></p>
 <div class="highlight"><pre><span></span><code><span class="c1"># Rule of One: only the first True branch runs</span>
 

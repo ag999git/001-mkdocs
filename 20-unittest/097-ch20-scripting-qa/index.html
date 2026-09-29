@@ -9268,12 +9268,14 @@ PASSED
 <p>Why use <code>patch()</code> instead of simply writing <code>requests.get = Mock(...)</code>? A direct assignment replaces <code>requests.get</code> for the <strong>rest of the test run</strong>. Every later test that uses <code>requests</code> would get the fake, which can cause confusing failures far away from this test. <code>patch()</code> limits the change to one block. (Pytest's built-in <code>monkeypatch</code> fixture does the same job.) You can read more in the Python documentation on <a href="https://docs.python.org/3/library/unittest.mock.html#unittest.mock.patch">patch</a>.</p>
 <p><strong>Concept:</strong></p>
 <p>The test does not contact the internet:</p>
-<div class="highlight"><pre><span></span><code>flowchart LR
-    A["1. Test calls get_price"] --&gt; B["2. get_price calls requests.get"]
-    B --&gt; C["3. The Mock answers, not the internet"]
-    C --&gt; D["4. The test checks the result"]
-</code></pre></div>
-<p><img alt="Write a pytest example that uses a mock object instead of calling a real external service." src="../../resources/ch20-scripting-qa-fig-04.png" /></p>
+<p><img alt="Write a pytest example that uses a mock object instead of calling a real external service." src="../../resources/S20-LR-ch20-scripting-qa-fig-04.png" /></p>
+<p><strong>Reading the figure</strong></p>
+<ul>
+<li><strong>Step 1:</strong> The test calls <code>get_price()</code> inside a <code>with patch("payment.requests.get", ...)</code> block.</li>
+<li><strong>Step 2:</strong> <code>get_price()</code> calls <code>requests.get()</code> as usual, without knowing that anything has changed.</li>
+<li><strong>Step 3:</strong> <code>patch()</code> has replaced <code>requests.get</code> with a <code>Mock</code>, so the <code>Mock</code> answers with the fake response set up in the test. The internet is never contacted.</li>
+<li><strong>Step 4:</strong> The test checks the result. When the <code>with</code> block ends, <code>patch()</code> puts the real <code>requests.get</code> back.</li>
+</ul>
 <p>Mocking helps create:</p>
 <ul>
 <li>fast tests</li>

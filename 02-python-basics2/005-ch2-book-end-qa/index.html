@@ -9153,16 +9153,18 @@ Wide: 5.0
 Big int:      12345678901234567890
 As a float:   12345678901234567168
 </code></pre></div>
-<div class="highlight"><pre><span></span><code>flowchart LR
-    A["1. A value must change type"] --&gt; B{"2. Who asks for the change?"}
-    B --&gt;|Python, in mixed arithmetic| C["3. Implicit casting"]
-    C --&gt; D["4. Always narrow to wide, for example int to float: no data lost"]
-    B --&gt;|The programmer| E["5. Explicit casting with int(), float() or str()"]
-    E --&gt; F{"6. Is the new type wider or narrower?"}
-    F --&gt;|Wider| G["7. Wide casting, for example float(5): no data lost"]
-    F --&gt;|Narrower| H["8. Narrow casting, for example int(9.78): data may be lost"]
-</code></pre></div>
-<p><img alt="e.6 All the Examples in One Script" src="../../resources/ch02-book-end-qa-fig-01.png" /></p>
+<p><img alt="e.6 All the Examples in One Script" src="../../resources/S02-LR-ch02-book-end-qa-fig-01.png" /></p>
+<p><strong>Reading the figure</strong></p>
+<ul>
+<li><strong>Step 1:</strong> A value must change from one type to another.</li>
+<li><strong>Step 2:</strong> Who asks for the change?</li>
+<li><strong>Step 3:</strong> Python itself, in mixed arithmetic such as <code>3 + 1.5</code>: this is implicit casting.</li>
+<li><strong>Step 4:</strong> Implicit casting always goes from narrow to wide, for example <code>int</code> to <code>float</code>, so no data is lost.</li>
+<li><strong>Step 5:</strong> The programmer, on purpose: this is explicit casting, with <code>int()</code>, <code>float()</code> or <code>str()</code>.</li>
+<li><strong>Step 6:</strong> Is the new type wider or narrower than the old one?</li>
+<li><strong>Step 7:</strong> Wider: for example <code>float(5)</code> gives <code>5.0</code>, and no data is lost.</li>
+<li><strong>Step 8:</strong> Narrower: for example <code>int(9.78)</code> gives <code>9</code>, and the fraction is lost. A very large <code>int</code> turned into a <code>float</code> can lose digits too.</li>
+</ul>
 <p><a href="#table-of-contents">Back to the Table of Contents</a></p>
 <h2 id="f-what-is-the-type-of-data-when-you-divide-an-integer-by-another-integer">f. What is the type of data when you divide an integer by another integer?<a class="headerlink" href="#f-what-is-the-type-of-data-when-you-divide-an-integer-by-another-integer" title="Permanent link">&para;</a></h2>
 <p><strong>Always float</strong>, when you use the <code>/</code> operator.</p>
@@ -9496,17 +9498,19 @@ True
 KeyError: 0
 TypeError: 'set' object is not subscriptable
 </code></pre></div>
-<div class="highlight"><pre><span></span><code>flowchart LR
-    A["Python containers"] --&gt; B["Sequenced: ordered, access by position"]
-    A --&gt; C["Non-sequenced: no access by position"]
-    B --&gt; B1["list: mutable"]
-    B --&gt; B2["tuple: immutable"]
-    B --&gt; B3["str: immutable, characters only"]
-    B --&gt; B4["range: immutable, numbers only"]
-    C --&gt; C1["dict: access by key, remembers insertion order"]
-    C --&gt; C2["set: no order, unique items"]
-</code></pre></div>
-<p><img alt="j.2 Non-sequenced Containers" src="../../resources/ch02-book-end-qa-fig-03.png" /></p>
+<p><img alt="j.2 Non-sequenced Containers" src="../../resources/S02-LR-ch02-book-end-qa-fig-03.png" /></p>
+<p><strong>Reading the figure</strong></p>
+<ul>
+<li>Python's built-in containers fall into two groups.</li>
+<li>Sequenced containers keep their items in order, and you reach an item by its position, <code>x[0]</code>.</li>
+<li>Non-sequenced containers do not allow access by position.</li>
+<li><code>list</code>: a sequence you can change.</li>
+<li><code>tuple</code>: a sequence you cannot change.</li>
+<li><code>str</code>: a sequence you cannot change, holding characters only.</li>
+<li><code>range</code>: a sequence you cannot change, holding numbers only.</li>
+<li><code>dict</code>: items are reached by key, and it remembers the order in which keys were added, but <code>d[0]</code> looks for the key <code>0</code>, not the first item.</li>
+<li><code>set</code>: no order and no duplicates, so <code>s[0]</code> raises <code>TypeError</code>.</li>
+</ul>
 <p><a href="#table-of-contents">Back to the Table of Contents</a></p>
 <h2 id="k-why-can-we-think-of-a-tuple-as-a-read-only-list">k. Why can we think of a tuple as a “read-only list”?<a class="headerlink" href="#k-why-can-we-think-of-a-tuple-as-a-read-only-list" title="Permanent link">&para;</a></h2>
 <p>Because:</p>

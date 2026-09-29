@@ -8862,17 +8862,17 @@ Total scores: 9 | unique scores: 6
 <li>Because <code>85</code>, <code>90</code> and <code>78</code> each appear twice across the three rows, both ways end with the same <strong>6</strong> unique scores out of 9.</li>
 <li><strong>Step 4</strong>'s equality check confirms that the comprehension is not just shorter to type; it behaves exactly the same as the explicit loop.</li>
 </ul>
-<div class="highlight"><pre><span></span><code>flowchart LR
-    A["Step 1: Start with an empty set"] --&gt; B{"Step 2: Outer loop - another row?"}
-    B -- No --&gt; G["Step 7: Done. 6 unique scores"]
-    B -- Yes --&gt; C["Step 3: Take the next row, e.g. [78, 85, 90]"]
-    C --&gt; D{"Step 4: Inner loop - another score in this row?"}
-    D -- No --&gt; B
-    D -- Yes --&gt; E["Step 5: Take the next score"]
-    E --&gt; F["Step 6: Add it to the set. A repeat is ignored"]
-    F --&gt; D
-</code></pre></div>
-<p><img alt="Q4. examscores = [[78,85,90],[85,92,78],[60,90,100]]. Script: (a) nested set comprehension to get unique scores. (b) same result using explicit nested for loop. (c) confirm both are equal." src="../../resources/ch19-sets-scripting-qa-fig-02.png" /></p>
+<p><img alt="Q4. examscores = [[78,85,90],[85,92,78],[60,90,100]]. Script: (a) nested set comprehension to get unique scores. (b) same result using explicit nested for loop. (c) confirm both are equal." src="../../resources/S19-LR-ch19-sets-scripting-qa-fig-02.png" /></p>
+<p><strong>Reading the figure</strong></p>
+<ul>
+<li><strong>Step 1:</strong> Start with an empty set.</li>
+<li><strong>Step 2:</strong> Outer loop, <code>for row in examscores</code>: is there another row?</li>
+<li><strong>Step 3:</strong> Yes: take the next row, for example <code>[78, 85, 90]</code>.</li>
+<li><strong>Step 4:</strong> Inner loop, <code>for score in row</code>: is there another score in this row? If not, go back to Step 2.</li>
+<li><strong>Step 5:</strong> Yes: take the next score.</li>
+<li><strong>Step 6:</strong> Add it to the set. A score that is already there is ignored. Then go back to Step 4.</li>
+<li><strong>Step 7:</strong> No rows are left: the set holds 6 unique scores out of 9. The comprehension and the explicit loops give exactly the same set.</li>
+</ul>
 <p><strong>Try this next</strong></p>
 <p>Find the scores that appear in <strong>every</strong> student's list, using set intersection.</p>
 <div class="highlight"><pre><span></span><code><span class="n">exam_scores</span> <span class="o">=</span> <span class="p">[[</span><span class="mi">78</span><span class="p">,</span> <span class="mi">85</span><span class="p">,</span> <span class="mi">90</span><span class="p">],</span> <span class="p">[</span><span class="mi">85</span><span class="p">,</span> <span class="mi">92</span><span class="p">,</span> <span class="mi">78</span><span class="p">],</span> <span class="p">[</span><span class="mi">60</span><span class="p">,</span> <span class="mi">90</span><span class="p">,</span> <span class="mi">100</span><span class="p">]]</span>
@@ -9035,14 +9035,15 @@ Is (1, 2) in the set? True
 <li><strong>Step 3</strong> supplies the fix. <code>tuple([1, 2])</code> converts the mutable list into an immutable tuple with the same values. A tuple of hashable elements is itself hashable, so <code>.add()</code> now succeeds.</li>
 <li><strong>General tip:</strong> whenever you get "unhashable type: 'list'", converting the list to a tuple is almost always the right first thing to try, <strong>provided</strong> the list's own contents are all hashable too (see <a href="#q7">Q7</a>).</li>
 </ul>
-<div class="highlight"><pre><span></span><code>flowchart LR
-    A["Step 1: my_set.add(something)"] --&gt; B{"Step 2: Is it hashable?"}
-    B -- "No, e.g. a list" --&gt; C["Step 3: TypeError. The set is unchanged"]
-    C --&gt; D["Step 4: Convert: tuple([1, 2])"]
-    D --&gt; A
-    B -- "Yes, e.g. a tuple" --&gt; E["Step 5: Added to the set"]
-</code></pre></div>
-<p><img alt="Q6. Script: (a) try adding a list [1,2] as a set element, catch the error. (b) fix it by converting to tuple, add successfully. Print set after each step." src="../../resources/ch19-sets-scripting-qa-fig-03.png" /></p>
+<p><img alt="Q6. Script: (a) try adding a list [1,2] as a set element, catch the error. (b) fix it by converting to tuple, add successfully. Print set after each step." src="../../resources/S19-LR-ch19-sets-scripting-qa-fig-03.png" /></p>
+<p><strong>Reading the figure</strong></p>
+<ul>
+<li><strong>Step 1:</strong> Call <code>my_set.add(something)</code>.</li>
+<li><strong>Step 2:</strong> Is the value hashable?</li>
+<li><strong>Step 3:</strong> No, for example a list <code>[1, 2]</code>: Python raises <code>TypeError: unhashable type: 'list'</code>, and the set is unchanged.</li>
+<li><strong>Step 4:</strong> Fix it by converting the list to a tuple, <code>tuple([1, 2])</code>, then call <code>add()</code> again.</li>
+<li><strong>Step 5:</strong> Yes, for example the tuple <code>(1, 2)</code>: it is added to the set.</li>
+</ul>
 <p><strong>Try this next</strong></p>
 <p>What happens if you add the same tuple a second time, or add the list's items separately instead?</p>
 <div class="highlight"><pre><span></span><code><span class="n">my_set</span> <span class="o">=</span> <span class="p">{</span><span class="mi">10</span><span class="p">,</span> <span class="mi">20</span><span class="p">,</span> <span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">)}</span>
@@ -9470,13 +9471,14 @@ After clear() again: set()
 <li><code>.pop()</code> is for removing items one at a time when you do not care which one, but it must be protected against an empty set.</li>
 <li><code>.clear()</code> is for wiping everything at once, and never needs protecting.</li>
 </ul>
-<div class="highlight"><pre><span></span><code>flowchart LR
-    A["Step 1: Call nums.pop()"] --&gt; B{"Step 2: Is the set empty?"}
-    B -- No --&gt; C["Step 3: Remove some element and return it"]
-    C --&gt; A
-    B -- Yes --&gt; D["Step 4: Raise KeyError: pop from an empty set"]
-</code></pre></div>
-<p><img alt="Q11. nums = {1,2,3}. Script: (a) .pop() twice, print each removed item. (b) .pop() on the now-single-item set, then again on the resulting empty set — catch the error. (c) .clear() and print final set." src="../../resources/ch19-sets-scripting-qa-fig-05.png" /></p>
+<p><img alt="Q11. nums = {1,2,3}. Script: (a) .pop() twice, print each removed item. (b) .pop() on the now-single-item set, then again on the resulting empty set — catch the error. (c) .clear() and print final set." src="../../resources/S19-LR-ch19-sets-scripting-qa-fig-05.png" /></p>
+<p><strong>Reading the figure</strong></p>
+<ul>
+<li><strong>Step 1:</strong> Call <code>nums.pop()</code>.</li>
+<li><strong>Step 2:</strong> Is the set empty?</li>
+<li><strong>Step 3:</strong> No: remove some element, you cannot choose which, and return it. Calling <code>pop()</code> again repeats from Step 1.</li>
+<li><strong>Step 4:</strong> Yes: raise <code>KeyError: 'pop from an empty set'</code>. Protect <code>pop()</code> with <code>if nums:</code>. <code>clear()</code>, by contrast, is always safe.</li>
+</ul>
 <p><strong>Try this next</strong></p>
 <p>Protect <code>.pop()</code> with a check, so that the loop stops cleanly when the set is empty.</p>
 <div class="highlight"><pre><span></span><code><span class="n">tasks</span> <span class="o">=</span> <span class="p">{</span><span class="s2">"email"</span><span class="p">,</span> <span class="s2">"report"</span><span class="p">,</span> <span class="s2">"call"</span><span class="p">}</span>
@@ -10145,15 +10147,17 @@ As dict: {'Amit': 1, 'Sneha': 1, 'Ravi': 1} | length: 3
 </tr>
 </tbody>
 </table>
-<div class="highlight"><pre><span></span><code>flowchart LR
-    A["Step 1: data = Amit, Amit, Sneha, Ravi"] --&gt; B["Step 2: list(data)"]
-    A --&gt; C["Step 3: set(data)"]
-    A --&gt; D["Step 4: name: 1 for each name"]
-    B --&gt; E["Step 5: 4 items, repeat kept, order kept"]
-    C --&gt; F["Step 6: 3 items, repeat dropped, no order"]
-    D --&gt; G["Step 7: 3 keys, repeat dropped, order kept, each with a value"]
-</code></pre></div>
-<p><img alt="Q18. Same data [&quot;Amit&quot;,&quot;Amit&quot;,&quot;Sneha&quot;,&quot;Ravi&quot;]. Script: store it as (a) a list, (b) a set, (c) a dict (using names as keys, value=1). Print all three and comment on what changed in each." src="../../resources/ch19-sets-scripting-qa-fig-07.png" /></p>
+<p><img alt="Q18. Same data [&quot;Amit&quot;,&quot;Amit&quot;,&quot;Sneha&quot;,&quot;Ravi&quot;]. Script: store it as (a) a list, (b) a set, (c) a dict (using names as keys, value=1). Print all three and comment on what changed in each." src="../../resources/S19-LR-ch19-sets-scripting-qa-fig-07.png" /></p>
+<p><strong>Reading the figure</strong></p>
+<ul>
+<li><strong>Step 1:</strong> Start with the same data: <code>["Amit", "Amit", "Sneha", "Ravi"]</code>.</li>
+<li><strong>Step 2:</strong> Store it as a list, <code>list(data)</code>.</li>
+<li><strong>Step 3:</strong> Store it as a set, <code>set(data)</code>.</li>
+<li><strong>Step 4:</strong> Store it as a dictionary, using each name as a key with the value 1.</li>
+<li><strong>Step 5:</strong> The list has 4 items: the repeated "Amit" is kept, and the order is kept.</li>
+<li><strong>Step 6:</strong> The set has 3 items: the repeat is dropped, and there is no order.</li>
+<li><strong>Step 7:</strong> The dictionary has 3 keys: the repeat is dropped, the insertion order is kept, and each name carries a value.</li>
+</ul>
 <p><strong>Try this next</strong></p>
 <p>Make the dictionary's values useful: count how many times each name appears, instead of storing <code>1</code>.</p>
 <div class="highlight"><pre><span></span><code><span class="n">data</span> <span class="o">=</span> <span class="p">[</span><span class="s2">"Amit"</span><span class="p">,</span> <span class="s2">"Amit"</span><span class="p">,</span> <span class="s2">"Sneha"</span><span class="p">,</span> <span class="s2">"Ravi"</span><span class="p">]</span>

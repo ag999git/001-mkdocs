@@ -8919,14 +8919,16 @@ AttributeError: attribute 'real' of 'int' objects is not writable
 hello! | same object: False
 TypeError: 'tuple' object does not support item assignment
 </code></pre></div>
-<div class="highlight"><pre><span></span><code>flowchart LR
-    A["1. You change a value, for example add an item"] --&gt; B{"2. Is the object mutable?"}
-    B --&gt;|Yes| C["3. Python changes the same object in place"]
-    C --&gt; D["4. id() stays the same, and every name pointing to it sees the change"]
-    B --&gt;|No| E["5. Python creates a new object with the new value"]
-    E --&gt; F["6. The name now points to the new object, and id() changes"]
-</code></pre></div>
-<p><img alt="What is the difference between mutable and immutable objects in Python?" src="../../resources/ch02-2-ch2-more-conceptual-qa-fig-01.png" /></p>
+<p><img alt="What is the difference between mutable and immutable objects in Python?" src="../../resources/S02-LR-ch02-2-ch2-more-conceptual-qa-fig-01.png" /></p>
+<p><strong>Reading the figure</strong></p>
+<ul>
+<li><strong>Step 1:</strong> You change a value, for example append an item to a list or add <code>"!"</code> to a string.</li>
+<li><strong>Step 2:</strong> Is the object mutable, meaning it can be changed after it is created?</li>
+<li><strong>Step 3:</strong> Yes, as with a list: Python changes the same object in place.</li>
+<li><strong>Step 4:</strong> <code>id()</code> stays the same, and every name that points to the object sees the change.</li>
+<li><strong>Step 5:</strong> No, as with a string or a number: Python creates a new object holding the new value.</li>
+<li><strong>Step 6:</strong> The name is moved to the new object, so <code>id()</code> changes. A tuple cannot be changed at all: trying raises <code>TypeError</code>.</li>
+</ul>
 <p><a href="#table-of-contents">Back to the Table of Contents</a></p>
 <h3 id="3-why-does-the-expression-5-2-return-a-float-in-python">3. Why does the expression 5 / 2 return a float in Python?<a class="headerlink" href="#3-why-does-the-expression-5-2-return-a-float-in-python" title="Permanent link">&para;</a></h3>
 <p>In Python 3, the division operator <code>/</code> always performs floating-point division. Even when both operands are integers, the result is a floating-point number. Therefore, <code>5 / 2</code> returns <code>2.5</code> instead of <code>2</code>. This avoids accidentally losing the fractional part and gives the mathematically correct answer. If you want a whole-number answer, use floor division <code>//</code> instead.</p>
@@ -9636,14 +9638,16 @@ set() -&gt; False
 None -&gt; False
 </code></pre></div>
 <p>Notice that <code>[0]</code> and <code>"0"</code> are <strong>true</strong>. They are not empty: one holds a zero and the other holds the character "0".</p>
-<div class="highlight"><pre><span></span><code>flowchart LR
-    A["1. Python needs to know if x is true or false"] --&gt; B{"2. Does x define its own truth rule, __bool__?"}
-    B --&gt;|Yes| C["3. Use that rule, for example 0 is False"]
-    B --&gt;|No| D{"4. Does x have a length, __len__?"}
-    D --&gt;|Yes| E["5. Length 0 means False, otherwise True"]
-    D --&gt;|No| F["6. True"]
-</code></pre></div>
-<p><img alt="Why are empty containers considered False in Boolean contexts?" src="../../resources/ch02-2-ch2-more-conceptual-qa-fig-04.png" /></p>
+<p><img alt="Why are empty containers considered False in Boolean contexts?" src="../../resources/S02-LR-ch02-2-ch2-more-conceptual-qa-fig-04.png" /></p>
+<p><strong>Reading the figure</strong></p>
+<ul>
+<li><strong>Step 1:</strong> Python needs to know whether <code>x</code> counts as true or false, for example in <code>if x:</code>.</li>
+<li><strong>Step 2:</strong> Does <code>x</code> define its own truth rule, a <code>__bool__</code> method?</li>
+<li><strong>Step 3:</strong> Yes: use that rule. Numbers use it: <code>0</code> and <code>0.0</code> are <code>False</code>, any other number is <code>True</code>. <code>None</code> is always <code>False</code>.</li>
+<li><strong>Step 4:</strong> No: does <code>x</code> have a length, a <code>__len__</code> method?</li>
+<li><strong>Step 5:</strong> Yes: a length of 0 means <code>False</code>, anything else means <code>True</code>. So <code>[]</code> and <code>""</code> are false, but <code>[0]</code> and <code>"0"</code> are true.</li>
+<li><strong>Step 6:</strong> No: an object with neither rule counts as <code>True</code>.</li>
+</ul>
 <p><a href="#table-of-contents">Back to the Table of Contents</a></p>
 <h3 id="28-why-is-if-my_list-considered-better-than-if-lenmy_list-0">28. Why is <code>if my_list:</code> considered better than <code>if len(my_list) &gt; 0:</code>?<a class="headerlink" href="#28-why-is-if-my_list-considered-better-than-if-lenmy_list-0" title="Permanent link">&para;</a></h3>
 <p>The shorter form is more readable and follows the Pythonic style. Python already knows how to treat a container as true or false, so checking the length yourself is unnecessary in most cases. Using the truth value directly also reduces clutter and makes the code clearer. PEP 8 recommends this style.</p>

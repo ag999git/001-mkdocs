@@ -8433,7 +8433,7 @@
 <li>a <strong>step-by-step explanation</strong> that you can follow in order;</li>
 <li>a <strong>Python script</strong> with <code># Step 1</code>, <code># Step 2</code> comments, followed by its <strong>output</strong>;</li>
 <li>a <strong>comparison table</strong>;</li>
-<li>a <strong>flowchart</strong> (as an image, and sometimes also as a Mermaid diagram);</li>
+<li>a <strong>flowchart</strong> (as an image);</li>
 <li>a few <strong>follow-up questions</strong> with short answers, to test your understanding.</li>
 </ul>
 <p><a href="#table-of-contents">Back to the Table of Contents</a></p>
@@ -10222,16 +10222,18 @@ Station: temperature changed to 30 C
 <li>A new kind of observer, such as an <code>SMSService</code>, can be added without changing the <code>WeatherStation</code> class at all.</li>
 <li>After <code>detach(phone)</code>, only the alert system reacts to the last change.</li>
 </ul>
-<p><strong>Mermaid flowchart of the script</strong></p>
-<div class="highlight"><pre><span></span><code>flowchart LR
-    A["1. Create the WeatherStation subject"] --&gt; B["2. Attach PhoneDisplay and AlertSystem"]
-    B --&gt; C["3. Temperature changes"]
-    C --&gt; D["4. Subject calls notify"]
-    D --&gt; E["5. Subject calls update on every observer in its list"]
-    E --&gt; F["6. Each observer reacts in its own way"]
-    F --&gt; G["7. An observer may detach and receive no more updates"]
-</code></pre></div>
-<p><img alt="Q13. Explain the Observer Pattern. How does it support communication between objects? Give suitable applications." src="../../resources/ch21-conceptualqa-fig-03.png" /></p>
+<p><strong>Flowchart of the script</strong></p>
+<p><img alt="Q13. Explain the Observer Pattern. How does it support communication between objects? Give suitable applications." src="../../resources/S21-LR-ch21-conceptualqa-fig-03.png" /></p>
+<p><strong>Reading the figure</strong></p>
+<ul>
+<li><strong>Step 1:</strong> Create the <code>WeatherStation</code>, the subject that others want to watch.</li>
+<li><strong>Step 2:</strong> Attach two observers, a <code>PhoneDisplay</code> and an <code>AlertSystem</code>. The station keeps them in a list.</li>
+<li><strong>Step 3:</strong> The temperature changes.</li>
+<li><strong>Step 4:</strong> The subject calls its <code>notify()</code> method.</li>
+<li><strong>Step 5:</strong> <code>notify()</code> calls <code>update()</code> on every observer in the list. The station does not need to know what kind of object each one is.</li>
+<li><strong>Step 6:</strong> Each observer reacts in its own way: the display shows the value, and the alert system checks it.</li>
+<li><strong>Step 7:</strong> An observer can call <code>detach()</code> at any time. After <code>detach(phone)</code>, only the alert system reacts to later changes.</li>
+</ul>
 <p>Read more at <a href="https://refactoring.guru/design-patterns/observer">Refactoring Guru: Observer</a>.</p>
 <p><strong>Comparison table</strong></p>
 <table>
@@ -11051,17 +11053,19 @@ Running AttendanceReport:
 </tr>
 </tbody>
 </table>
-<p><strong>Mermaid flowchart: a quick decision path</strong></p>
-<div class="highlight"><pre><span></span><code>flowchart LR
-    A["1. Describe the problem in plain words"] --&gt; B{"2. Can a plain function or built-in feature solve it?"}
-    B -- Yes --&gt; C["3. Use the simple solution, no pattern needed"]
-    B -- No --&gt; D{"4. Is it about creating objects?"}
-    D -- Yes --&gt; E["5. Look at Singleton, Factory Method, Abstract Factory, Builder"]
-    D -- No --&gt; F{"6. Is it about organizing or connecting objects?"}
-    F -- Yes --&gt; G["7. Look at Decorator, Adapter, Facade, Composite, Proxy"]
-    F -- No --&gt; H["8. Look at Observer, Strategy, Command, Iterator, Template Method"]
-</code></pre></div>
-<p><img alt="Q18. How should a programmer choose the appropriate design pattern? What factors should be considered before applying one?" src="../../resources/ch21-conceptualqa-fig-05.png" /></p>
+<p><strong>Flowchart: a quick decision path</strong></p>
+<p><img alt="Q18. How should a programmer choose the appropriate design pattern? What factors should be considered before applying one?" src="../../resources/S21-LR-ch21-conceptualqa-fig-05.png" /></p>
+<p><strong>Reading the figure</strong></p>
+<ul>
+<li><strong>Step 1:</strong> Describe the problem in plain words before thinking about any pattern.</li>
+<li><strong>Step 2:</strong> Can a plain function or a built-in Python feature solve it?</li>
+<li><strong>Step 3:</strong> Yes: use the simple solution. No pattern is needed, and adding one would only make the code harder to read.</li>
+<li><strong>Step 4:</strong> No: is the problem about creating objects?</li>
+<li><strong>Step 5:</strong> Yes: look at the creational patterns: Singleton, Factory Method, Abstract Factory and Builder.</li>
+<li><strong>Step 6:</strong> No: is it about organising or connecting objects?</li>
+<li><strong>Step 7:</strong> Yes: look at the structural patterns: Decorator, Adapter, Facade, Composite and Proxy.</li>
+<li><strong>Step 8:</strong> No: it is about how objects behave and communicate, so look at the behavioural patterns: Observer, Strategy, Command, Iterator and Template Method.</li>
+</ul>
 <p><strong>Flowchart</strong></p>
 <p><img alt="Flowchart: choosing a design pattern" src="../../resources/ch16-21-august-2026-qa-question-18.png" /></p>
 <p><strong>Follow-up questions</strong></p>

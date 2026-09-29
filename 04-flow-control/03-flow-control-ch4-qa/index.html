@@ -9410,14 +9410,15 @@ found: 90
 <li>Make the new <code>a</code> equal to the old <code>b</code>, and the new <code>b</code> equal to the remainder.</li>
 <li>Go back to Step 2.</li>
 </ol>
-<div class="highlight"><pre><span></span><code>flowchart LR
-    E1["1. Read a and b"] --&gt; E2{"2. Is b equal to 0?"}
-    E2 -- "No" --&gt; E3["3. Work out remainder r = a % b"]
-    E3 --&gt; E4["4. Set a = b and b = r"]
-    E4 --&gt; E2
-    E2 -- "Yes" --&gt; E5["5. The GCD is a"]
-</code></pre></div>
-<p><img alt="e. GCD using Euclidean Algorithm." src="../../resources/ch4-flow-control-qa-fig-02.png" /></p>
+<p><img alt="e. GCD using Euclidean Algorithm." src="../../resources/S04-LR-ch4-flow-control-qa-fig-02.png" /></p>
+<p><strong>Reading the figure</strong></p>
+<ul>
+<li><strong>Step 1:</strong> Read the two numbers, <code>a</code> and <code>b</code>.</li>
+<li><strong>Step 2:</strong> Is <code>b</code> equal to 0?</li>
+<li><strong>Step 3:</strong> No: work out the remainder, <code>r = a % b</code>.</li>
+<li><strong>Step 4:</strong> Move along: the new <code>a</code> is the old <code>b</code>, and the new <code>b</code> is the remainder. Go back to Step 2.</li>
+<li><strong>Step 5:</strong> Yes: stop. The answer, the greatest common divisor, is <code>a</code>.</li>
+</ul>
 <p>The line <code>a, b = b, a % b</code> does Step 4 in one go. Python works out both values on the right side first, and only then stores them in <code>a</code> and <code>b</code>. This is called <strong>tuple unpacking</strong> or simultaneous assignment. If you wrote <code>a = b</code> and then <code>b = a % b</code> on separate lines, the second line would use the <em>new</em> <code>a</code>, and the answer would be wrong.</p>
 <p><strong>Script</strong></p>
 <div class="highlight"><pre><span></span><code><span class="c1"># Greatest Common Divisor (GCD) by Euclid's method</span>
@@ -9762,18 +9763,18 @@ Hailstone list for 53 is-&gt; [160, 80, 40, 20, 10, 5, 16, 8, 4, 2, 1]
 <li>If any division leaves no remainder, a divisor has been found: the number is not prime. Stop looking (<code>break</code>).</li>
 <li>If no divisor is found, the number is prime.</li>
 </ol>
-<div class="highlight"><pre><span></span><code>flowchart LR
-    H1["1. Read num"] --&gt; H2{"2. Is num less than 2?"}
-    H2 -- "Yes" --&gt; H7["7. Not Prime"]
-    H2 -- "No" --&gt; H3["3. Set i = 2"]
-    H3 --&gt; H4{"4. Is i less than num?"}
-    H4 -- "No" --&gt; H8["8. Prime"]
-    H4 -- "Yes" --&gt; H5{"5. Does num % i equal 0?"}
-    H5 -- "Yes" --&gt; H7
-    H5 -- "No" --&gt; H6["6. i = i + 1"]
-    H6 --&gt; H4
-</code></pre></div>
-<p><img alt="h. Check for Prime" src="../../resources/ch4-flow-control-qa-fig-04.png" /></p>
+<p><img alt="h. Check for Prime" src="../../resources/S04-LR-ch4-flow-control-qa-fig-04.png" /></p>
+<p><strong>Reading the figure</strong></p>
+<ul>
+<li><strong>Step 1:</strong> Read the number, <code>num</code>.</li>
+<li><strong>Step 2:</strong> Is <code>num</code> less than 2?</li>
+<li><strong>Step 3:</strong> Yes: 0, 1 and negative numbers are not prime. (Yes at Step 6 also ends here.)</li>
+<li><strong>Step 4:</strong> No: start trying divisors at <code>i = 2</code>.</li>
+<li><strong>Step 5:</strong> Is <code>i</code> still less than <code>num</code>?</li>
+<li><strong>Step 6:</strong> Yes: does <code>num % i</code> equal 0, meaning <code>i</code> divides <code>num</code> exactly? If so, a divisor has been found, so the number is not prime: <code>break</code> and go to Step 3.</li>
+<li><strong>Step 7:</strong> No: try the next divisor, <code>i = i + 1</code>, and go back to Step 5.</li>
+<li><strong>Step 8:</strong> No divisor was found below <code>num</code>, so the number is prime.</li>
+</ul>
 <p><strong>Script 1: the basic method</strong></p>
 <p>The variable <code>is_prime</code> is a <strong>flag</strong>: a <code>True</code>/<code>False</code> variable that remembers what the loop found. It starts as <code>True</code> ("prime until proved otherwise") and is set to <code>False</code> as soon as a divisor turns up.</p>
 <div class="highlight"><pre><span></span><code><span class="c1"># Is the number prime? (the original method)</span>

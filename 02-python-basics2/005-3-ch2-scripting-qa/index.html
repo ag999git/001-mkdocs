@@ -9500,14 +9500,16 @@ Updated dictionary:
 </tr>
 </tbody>
 </table>
-<div class="highlight"><pre><span></span><code>flowchart LR
-    A["1. You want the value for a key"] --&gt; B{"2. Could the key be missing?"}
-    B --&gt;|No| C["3. Use d[key]"]
-    B --&gt;|Yes| D["4. Use d.get(key, default)"]
-    D --&gt; E["5. Get the value, or the default if the key is missing"]
-    C --&gt; F["6. Get the value, or KeyError if you were wrong"]
-</code></pre></div>
-<p><img alt="Write a Python script to create a dictionary of student details and perform adding, updating, deleting, and safe retrieval operations." src="../../resources/ch02-3-ch2-scripting-qa-fig-02.png" /></p>
+<p><img alt="Write a Python script to create a dictionary of student details and perform adding, updating, deleting, and safe retrieval operations." src="../../resources/S02-LR-ch02-3-ch2-scripting-qa-fig-02.png" /></p>
+<p><strong>Reading the figure</strong></p>
+<ul>
+<li><strong>Step 1:</strong> You want the value stored for a key in a dictionary.</li>
+<li><strong>Step 2:</strong> Could the key be missing?</li>
+<li><strong>Step 3:</strong> No, it must be there: use <code>d[key]</code>.</li>
+<li><strong>Step 4:</strong> You get the value. If you were wrong and the key is missing, Python raises <code>KeyError</code>, which points you straight at the problem.</li>
+<li><strong>Step 5:</strong> Yes, it may be missing: use <code>d.get(key, default)</code>.</li>
+<li><strong>Step 6:</strong> You get the value, or the default if the key is missing. Without a default, <code>get()</code> returns <code>None</code>.</li>
+</ul>
 <p><a href="#table-of-contents">Back to the Table of Contents</a></p>
 <h3 id="13-write-a-python-script-that-demonstrates-dictionary-methods-such-as-keys-values-and-items">13. Write a Python script that demonstrates dictionary methods such as keys(), values(), and items().<a class="headerlink" href="#13-write-a-python-script-that-demonstrates-dictionary-methods-such-as-keys-values-and-items" title="Permanent link">&para;</a></h3>
 <p><strong>Plan:</strong> create a dictionary, print the result of each method, then use <code>items()</code> in a loop.</p>
@@ -10706,13 +10708,15 @@ TypeError: 'tuple' object does not support item assignment
 TypeError: unhashable type: 'list'
 </code></pre></div>
 <p>The tuple does not store the list itself. It stores a <strong>reference</strong> (a pointer) to it. The tuple's references can never change, but the list they point to can:</p>
-<div class="highlight"><pre><span></span><code>flowchart LR
-    T["my_tuple"] --&gt; A["slot 0: 1"]
-    T --&gt; B["slot 1: 2"]
-    T --&gt; C["slot 2: reference"]
-    C --&gt; L["list object: 3, 4, 5 (can change)"]
-</code></pre></div>
-<p><img alt="Write a Python script to demonstrate that tuples can contain mutable objects like lists. Modify the internal list and observe the result." src="../../resources/ch02-3-ch2-scripting-qa-fig-04.png" /></p>
+<p><img alt="Write a Python script to demonstrate that tuples can contain mutable objects like lists. Modify the internal list and observe the result." src="../../resources/S02-LR-ch02-3-ch2-scripting-qa-fig-04.png" /></p>
+<p><strong>Reading the figure</strong></p>
+<ul>
+<li><code>my_tuple</code> holds three slots. The tuple itself can never change.</li>
+<li>Slot 0 holds the number <code>1</code>.</li>
+<li>Slot 1 holds the number <code>2</code>.</li>
+<li>Slot 2 does not hold the list itself. It holds a reference, a pointer, to it, and that reference can never change either.</li>
+<li>The list it points to, <code>[3, 4]</code>, is mutable, so <code>my_tuple[2].append(5)</code> works and the list becomes <code>[3, 4, 5]</code>. The tuple still points to the same list; only the list changed.</li>
+</ul>
 <p><a href="#table-of-contents">Back to the Table of Contents</a></p>
 <h2 id="part-9-built-in-modules-sets-and-naming">Part 9: Built-in Modules, Sets and Naming<a class="headerlink" href="#part-9-built-in-modules-sets-and-naming" title="Permanent link">&para;</a></h2>
 <p><a href="#table-of-contents">Back to the Table of Contents</a></p>

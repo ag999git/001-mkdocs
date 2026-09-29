@@ -8611,14 +8611,16 @@
 <li>If there is a comma, Python creates a tuple.</li>
 <li>If there is no comma, the brackets only group the value. The value keeps its own type, such as <code>int</code> or <code>str</code>.</li>
 </ol>
-<div class="highlight"><pre><span></span><code>flowchart LR
-    A["Step 1: Python reads the value on the right of ="] --&gt; B{"Step 2: Is it an empty pair of brackets ( ) ?"}
-    B -- Yes --&gt; C["Step 3: An empty tuple is created"]
-    B -- No --&gt; D{"Step 4: Is there at least one comma?"}
-    D -- Yes --&gt; E["Step 5: A tuple is created"]
-    D -- No --&gt; F["Step 6: The brackets only group the value. It keeps its own type, for example int"]
-</code></pre></div>
-<p><img alt="Q1. Define syntactic criteria for tuples. Why does x = (5) fail to produce a tuple?" src="../../resources/ch19-tuples-conceptual-qa-fig-01.png" /></p>
+<p><img alt="Q1. Define syntactic criteria for tuples. Why does x = (5) fail to produce a tuple?" src="../../resources/S19-LR-ch19-tuples-conceptual-qa-fig-01.png" /></p>
+<p><strong>Reading the figure</strong></p>
+<ul>
+<li><strong>Step 1:</strong> Python reads the value on the right of <code>=</code>.</li>
+<li><strong>Step 2:</strong> Is it just an empty pair of brackets, <code>()</code>?</li>
+<li><strong>Step 3:</strong> Yes: an empty tuple is created.</li>
+<li><strong>Step 4:</strong> No: is there at least one comma at the top level? The comma, not the brackets, makes a tuple.</li>
+<li><strong>Step 5:</strong> Yes: a tuple is created, so <code>x = (5,)</code> and even <code>x = 5,</code> are tuples.</li>
+<li><strong>Step 6:</strong> No: the brackets only group the value, like brackets in arithmetic. So <code>x = (5)</code> is simply the <code>int</code> 5.</li>
+</ul>
 <p><strong>Script: the comma makes the tuple</strong></p>
 <div class="highlight"><pre><span></span><code><span class="c1"># Step 1 - Brackets around a single value only group it</span>
 <span class="n">x</span> <span class="o">=</span> <span class="p">(</span><span class="mi">5</span><span class="p">)</span>
@@ -9306,15 +9308,17 @@ Read lst[2] 1,000,000 times: 0.012 seconds
 </ul>
 <p>In Python 3.14 and later the first message also tells you how many items there were: <code>too many values to unpack (expected 2, got 3)</code>.</p>
 <p><strong>How unpacking works, step by step</strong></p>
-<div class="highlight"><pre><span></span><code>flowchart LR
-    A["Step 1: Python evaluates the right-hand side, for example (10, 20, 30)"] --&gt; B["Step 2: Count the items on the right"]
-    B --&gt; C["Step 3: Count the variables on the left"]
-    C --&gt; D{"Step 4: Are the two counts equal?"}
-    D -- Yes --&gt; E["Step 5: Assign items to variables in order: first to first, second to second"]
-    D -- "No, too many items" --&gt; F["Step 6: ValueError - too many values to unpack"]
-    D -- "No, too few items" --&gt; G["Step 7: ValueError - not enough values to unpack"]
-</code></pre></div>
-<p><img alt="Q8. Detail tuple packing vs. unpacking. What happens during structural mismatches?" src="../../resources/ch19-tuples-conceptual-qa-fig-03.png" /></p>
+<p><img alt="Q8. Detail tuple packing vs. unpacking. What happens during structural mismatches?" src="../../resources/S19-LR-ch19-tuples-conceptual-qa-fig-03.png" /></p>
+<p><strong>Reading the figure</strong></p>
+<ul>
+<li><strong>Step 1:</strong> Python evaluates the right-hand side first, for example <code>(10, 20, 30)</code>.</li>
+<li><strong>Step 2:</strong> It counts the items on the right.</li>
+<li><strong>Step 3:</strong> It counts the variables on the left.</li>
+<li><strong>Step 4:</strong> Are the two counts equal?</li>
+<li><strong>Step 5:</strong> Yes: the items are assigned in order, the first item to the first name, the second to the second, and so on.</li>
+<li><strong>Step 6:</strong> More items than names, as in <code>a, b = (10, 20, 30)</code>: <code>ValueError: too many values to unpack (expected 2)</code>.</li>
+<li><strong>Step 7:</strong> Fewer items than names, as in <code>a, b, c = (10, 20)</code>: <code>ValueError: not enough values to unpack (expected 3, got 2)</code>.</li>
+</ul>
 <p><strong>Summary table</strong></p>
 <table>
 <thead>
@@ -9784,17 +9788,19 @@ No results found.
 </code></pre></div>
 <p>Notice that the first line, <code>invalid_key = (1, [2, 3])</code>, works without any problem. You are allowed to create such a tuple. The error comes only on the second line, when Python tries to use the tuple as a key.</p>
 <p><strong>How Python checks a key, step by step</strong></p>
-<div class="highlight"><pre><span></span><code>flowchart LR
-    A["Step 1: Python is asked to use an object as a dictionary key"] --&gt; B{"Step 2: Is the object a tuple?"}
-    B -- No --&gt; C{"Step 3: Is the object itself hashable? For example int or str"}
-    C -- Yes --&gt; D["Step 4: The key is accepted"]
-    C -- No --&gt; E["Step 5: TypeError - unhashable type"]
-    B -- Yes --&gt; F["Step 6: Python checks each item inside the tuple, one by one"]
-    F --&gt; G{"Step 7: Is every item hashable?"}
-    G -- Yes --&gt; H["Step 8: The tuple is accepted as a key"]
-    G -- No --&gt; I["Step 9: TypeError - unhashable type: list"]
-</code></pre></div>
-<p><img alt="Q13. State requirements for dictionary keys. Can a tuple containing a list be a key?" src="../../resources/ch19-tuples-conceptual-qa-fig-04.png" /></p>
+<p><img alt="Q13. State requirements for dictionary keys. Can a tuple containing a list be a key?" src="../../resources/S19-LR-ch19-tuples-conceptual-qa-fig-04.png" /></p>
+<p><strong>Reading the figure</strong></p>
+<ul>
+<li><strong>Step 1:</strong> Python is asked to use an object as a dictionary key.</li>
+<li><strong>Step 2:</strong> Is the object a tuple?</li>
+<li><strong>Step 3:</strong> No: is the object itself hashable? Immutable types such as <code>int</code> and <code>str</code> are.</li>
+<li><strong>Step 4:</strong> Yes: the key is accepted.</li>
+<li><strong>Step 5:</strong> No: a mutable object such as a list raises <code>TypeError: unhashable type</code>.</li>
+<li><strong>Step 6:</strong> Yes, it is a tuple: Python checks each item inside it, one by one.</li>
+<li><strong>Step 7:</strong> Is every item hashable?</li>
+<li><strong>Step 8:</strong> Yes: the tuple is accepted as a key, for example <code>(1, 2)</code>.</li>
+<li><strong>Step 9:</strong> No: one item, such as the list in <code>(1, [2, 3])</code>, cannot be hashed, so <code>TypeError: unhashable type: 'list'</code> is raised. Creating that tuple was fine; only using it as a key fails.</li>
+</ul>
 <p>In this chart, the "not a tuple" branch uses steps 3 to 5, and the "tuple" branch uses steps 6 to 9. Note that the check in Step 6 goes all the way down. A tuple inside a tuple is checked item by item as well.</p>
 <p><strong>Which tuples can be keys?</strong></p>
 <table>
@@ -9966,14 +9972,16 @@ Lowest: 45 | Highest: 92
 <li>The swap is complete, and you did not have to create a temporary variable yourself.</li>
 </ol>
 <p>Step 1 is the key. Because both values are read <em>before</em> anything is assigned, neither value is lost.</p>
-<div class="highlight"><pre><span></span><code>flowchart LR
-    A["Step 1: Start with a = 5, b = 10"] --&gt; B["Step 2: Read the right side b, a to get 10 and 5"]
-    B --&gt; C["Step 3: Pack them into a hidden tuple (10, 5)"]
-    C --&gt; D["Step 4: Unpack: a gets 10"]
-    D --&gt; E["Step 5: Unpack: b gets 5"]
-    E --&gt; F["Step 6: Result: a = 10, b = 5"]
-</code></pre></div>
-<p><img alt="Q15. Explain Pythonic variable swapping via a, b = b, a without temporary storage." src="../../resources/ch19-tuples-conceptual-qa-fig-05.png" /></p>
+<p><img alt="Q15. Explain Pythonic variable swapping via a, b = b, a without temporary storage." src="../../resources/S19-LR-ch19-tuples-conceptual-qa-fig-05.png" /></p>
+<p><strong>Reading the figure</strong></p>
+<ul>
+<li><strong>Step 1:</strong> Start with <code>a = 5</code> and <code>b = 10</code>.</li>
+<li><strong>Step 2:</strong> For <code>a, b = b, a</code>, Python reads the right side first and gets the values 10 and 5. Nothing is assigned yet, so neither value can be lost.</li>
+<li><strong>Step 3:</strong> Packing: the two values are packed into a hidden, temporary tuple, <code>(10, 5)</code>.</li>
+<li><strong>Step 4:</strong> Unpacking: the first item, 10, goes to <code>a</code>.</li>
+<li><strong>Step 5:</strong> The second item, 5, goes to <code>b</code>.</li>
+<li><strong>Step 6:</strong> The swap is complete, <code>a = 10</code> and <code>b = 5</code>, without a temporary variable of your own.</li>
+</ul>
 <p>A technical note for the curious: for two or three names, CPython is clever enough to skip building a real tuple and swaps the values directly. The result is exactly the same, so it is still correct to think of it as packing and unpacking.</p>
 <p><strong>Script: swapping values</strong></p>
 <div class="highlight"><pre><span></span><code><span class="c1"># Step 1 - The traditional way, with a temporary variable</span>
@@ -10025,16 +10033,17 @@ List after swapping first and last: ['blue', 'green', 'red']
 <li>The loop goes back to Step 2 for the next pair.</li>
 <li>When no pairs are left, the loop ends.</li>
 </ol>
-<div class="highlight"><pre><span></span><code>flowchart LR
-    A["Step 1: d.items() provides the key-value pairs"] --&gt; B{"Step 2: Is there another pair?"}
-    B -- Yes --&gt; C["Step 3: Take the next pair, for example ('apple', 40)"]
-    C --&gt; D["Step 4: Unpack: key = 'apple'"]
-    D --&gt; E["Step 5: Unpack: value = 40"]
-    E --&gt; F["Step 6: Run the loop body using key and value"]
-    F --&gt; B
-    B -- No --&gt; G["Step 7: The loop ends"]
-</code></pre></div>
-<p><img alt="Q16. How does loop unpacking operate on dict.items() collections? Detail the steps." src="../../resources/ch19-tuples-conceptual-qa-fig-06.png" /></p>
+<p><img alt="Q16. How does loop unpacking operate on dict.items() collections? Detail the steps." src="../../resources/S19-LR-ch19-tuples-conceptual-qa-fig-06.png" /></p>
+<p><strong>Reading the figure</strong></p>
+<ul>
+<li><strong>Step 1:</strong> In <code>for key, value in d.items():</code>, <code>d.items()</code> provides the key-value pairs, each one a tuple.</li>
+<li><strong>Step 2:</strong> Is there another pair?</li>
+<li><strong>Step 3:</strong> Yes: take the next pair, for example <code>('apple', 40)</code>.</li>
+<li><strong>Step 4:</strong> Unpack it: the first item goes to <code>key</code>, so <code>key = 'apple'</code>.</li>
+<li><strong>Step 5:</strong> The second item goes to <code>value</code>, so <code>value = 40</code>.</li>
+<li><strong>Step 6:</strong> Run the loop body using <code>key</code> and <code>value</code>, then go back to Step 2.</li>
+<li><strong>Step 7:</strong> No pairs are left, so the loop ends.</li>
+</ul>
 <p>This built-in unpacking means you do not need to write <code>pair[0]</code> and <code>pair[1]</code> inside the loop. Your loops become shorter, cleaner and much easier to read.</p>
 <p><strong>Script: looping with and without unpacking</strong></p>
 <div class="highlight"><pre><span></span><code><span class="n">prices</span> <span class="o">=</span> <span class="p">{</span><span class="s2">"apple"</span><span class="p">:</span> <span class="mi">40</span><span class="p">,</span> <span class="s2">"banana"</span><span class="p">:</span> <span class="mi">10</span><span class="p">,</span> <span class="s2">"mango"</span><span class="p">:</span> <span class="mi">60</span><span class="p">}</span>
@@ -10098,17 +10107,17 @@ mango costs 60
 <li>If no case matches, nothing happens, unless there is a final <code>case _:</code>, which catches everything that is left.</li>
 </ol>
 <p>In the example, the first case fails at Step 3 (<code>404</code> is not <code>200</code>). The second case passes all the checks, so <code>msg</code> becomes <code>"Not Found"</code> and the program prints <code>Error Alert: Not Found</code>.</p>
-<div class="highlight"><pre><span></span><code>flowchart LR
-    A["Step 1: Take the next case pattern, from top to bottom"] --&gt; B{"Step 2: Is the value a sequence of the right length?"}
-    B -- No --&gt; F{"Step 6: Are there more case patterns?"}
-    B -- Yes --&gt; C{"Step 3: Do the fixed values match, for example 404?"}
-    C -- No --&gt; F
-    C -- Yes --&gt; D["Step 4: Store the other items in the capture names, for example msg"]
-    D --&gt; E["Step 5: Run this case's code and leave the match"]
-    F -- Yes --&gt; A
-    F -- No --&gt; G["Step 7: No match - nothing runs, unless case _ is present"]
-</code></pre></div>
-<p><img alt="Q17. Explain structural pattern matching (match-case) on tuples. Detail the flow." src="../../resources/ch19-tuples-conceptual-qa-fig-07.png" /></p>
+<p><img alt="Q17. Explain structural pattern matching (match-case) on tuples. Detail the flow." src="../../resources/S19-LR-ch19-tuples-conceptual-qa-fig-07.png" /></p>
+<p><strong>Reading the figure</strong></p>
+<ul>
+<li><strong>Step 1:</strong> Take the next <code>case</code> pattern, working from top to bottom.</li>
+<li><strong>Step 2:</strong> Is the value a sequence of the right length? <code>case (404, msg)</code> needs a sequence of exactly two items.</li>
+<li><strong>Step 3:</strong> Yes: do the fixed values match? In <code>case (404, msg)</code> the first item must be <code>404</code>.</li>
+<li><strong>Step 4:</strong> Yes: store the other items in the capture names. A plain name such as <code>msg</code> matches anything, so <code>msg</code> becomes <code>"Not Found"</code>.</li>
+<li><strong>Step 5:</strong> Run this case's code and leave the <code>match</code> statement. Later cases are not checked.</li>
+<li><strong>Step 6:</strong> A check failed: are there more <code>case</code> patterns? If so, go back to Step 1.</li>
+<li><strong>Step 7:</strong> No case matched, so nothing runs, unless there is a final <code>case _:</code>, which catches everything that is left.</li>
+</ul>
 <p><strong>Script: matching HTTP status tuples</strong></p>
 <p>An HTTP status code is the number a web server sends back to your browser. For example, <code>200</code> means "OK" and <code>404</code> means "page not found".</p>
 <div class="highlight"><pre><span></span><code><span class="c1"># Step 1 - A function that reacts to a (code, message) tuple</span>
@@ -10189,12 +10198,14 @@ Not a (code, message) pair
 </tr>
 </tbody>
 </table>
-<div class="highlight"><pre><span></span><code>flowchart LR
-    A["Step 1: Start with t = ((1, 2), (3, 4))"] --&gt; B["Step 2: t[1] picks the second inner tuple (3, 4)"]
-    B --&gt; C["Step 3: [0] picks its first item"]
-    C --&gt; D["Step 4: Result is 3"]
-</code></pre></div>
-<p><img alt="Q18. Explain nested tuple indexing. How do you extract 3 from ((1, 2), (3, 4))?" src="../../resources/ch19-tuples-conceptual-qa-fig-08.png" /></p>
+<p><img alt="Q18. Explain nested tuple indexing. How do you extract 3 from ((1, 2), (3, 4))?" src="../../resources/S19-LR-ch19-tuples-conceptual-qa-fig-08.png" /></p>
+<p><strong>Reading the figure</strong></p>
+<ul>
+<li><strong>Step 1:</strong> Start with the nested tuple <code>t = ((1, 2), (3, 4))</code>.</li>
+<li><strong>Step 2:</strong> The first index picks the inner tuple: <code>t[1]</code> is <code>(3, 4)</code>.</li>
+<li><strong>Step 3:</strong> The second index picks an item from that inner tuple: <code>[0]</code> is its first item.</li>
+<li><strong>Step 4:</strong> So <code>t[1][0]</code> is 3. Read the brackets from left to right: row first, then position.</li>
+</ul>
 <p><strong>Script: nested indexing</strong></p>
 <div class="highlight"><pre><span></span><code><span class="c1"># Step 1 - Create a nested tuple</span>
 <span class="n">t</span> <span class="o">=</span> <span class="p">((</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">),</span> <span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">))</span>
@@ -10348,15 +10359,16 @@ t3 is t1: True | t3 == t1: True
 <span class="n">new_t</span> <span class="o">=</span> <span class="n">t</span><span class="p">[:</span><span class="mi">2</span><span class="p">]</span> <span class="o">+</span> <span class="n">t</span><span class="p">[</span><span class="mi">3</span><span class="p">:]</span>
 <span class="nb">print</span><span class="p">(</span><span class="n">new_t</span><span class="p">)</span>  <span class="c1"># Output: ('a', 'b', 'd')</span>
 </code></pre></div>
-<div class="highlight"><pre><span></span><code>flowchart LR
-    A["Step 1: Start with t = ('a', 'b', 'c', 'd') and remove position 2"] --&gt; B["Step 2: Slice before it: t[:2] gives ('a', 'b')"]
-    A --&gt; C["Step 3: Slice after it: t[3:] gives ('d',)"]
-    B --&gt; D["Step 4: Join the two slices with +"]
-    C --&gt; D
-    D --&gt; E["Step 5: New tuple ('a', 'b', 'd')"]
-    A --&gt; F["Step 6: The original t is still ('a', 'b', 'c', 'd')"]
-</code></pre></div>
-<p><img alt="Q20. Detail how to simulate element removal from an immutable tuple using slicing." src="../../resources/ch19-tuples-conceptual-qa-fig-09.png" /></p>
+<p><img alt="Q20. Detail how to simulate element removal from an immutable tuple using slicing." src="../../resources/S19-LR-ch19-tuples-conceptual-qa-fig-09.png" /></p>
+<p><strong>Reading the figure</strong></p>
+<ul>
+<li><strong>Step 1:</strong> Start with <code>t = ('a', 'b', 'c', 'd')</code>. You want to "remove" the item at position 2, <code>'c'</code>, but a tuple cannot be changed.</li>
+<li><strong>Step 2:</strong> Slice the part before it: <code>t[:2]</code> is <code>('a', 'b')</code>.</li>
+<li><strong>Step 3:</strong> Slice the part after it: <code>t[3:]</code> is <code>('d',)</code>.</li>
+<li><strong>Step 4:</strong> Join the two slices with <code>+</code>: <code>new_t = t[:2] + t[3:]</code>.</li>
+<li><strong>Step 5:</strong> The result is a new tuple, <code>('a', 'b', 'd')</code>.</li>
+<li><strong>Step 6:</strong> The original <code>t</code> is still <code>('a', 'b', 'c', 'd')</code>.</li>
+</ul>
 <p>This approach keeps the original tuple <code>t</code> completely safe and unchanged in memory. Any other part of the program that uses <code>t</code> will not be affected.</p>
 <p><strong>Script: removing an item by building a new tuple</strong></p>
 <div class="highlight"><pre><span></span><code><span class="c1"># Step 1 - The original tuple</span>

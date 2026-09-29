@@ -8419,15 +8419,17 @@
 <p>Read the question, then write the program yourself before looking at the answer. Type the code rather than copying it, run it, and compare your output with the output shown. Where a program asks for input from the keyboard, the output block shows what was typed after the prompt, so your own run will show your own words.</p>
 <p>Every program on this page was run on Python 3.11, and every output block is the actual result. Two things vary from one computer to another, and both are marked where they appear: anything you type yourself, and the two escape sequences <code>\r</code> and <code>\b</code>, whose effect on the screen depends on the terminal you use.</p>
 <p><strong>The tools used on this page</strong></p>
-<div class="highlight"><pre><span></span><code>flowchart LR
-    A["1. Make a string: quotes, triple quotes, str()"] --&gt; B["2. Measure and test it: len(), in, not in"]
-    B --&gt; C["3. Reach into it: index, slice, for, while"]
-    C --&gt; D["4. Clean it: strip(), lower(), replace()"]
-    D --&gt; E["5. Check it: isalpha(), isdigit(), startswith(), endswith()"]
-    E --&gt; F["6. Break it up or put it together: split(), join(), +, *"]
-    F --&gt; G["7. Show the result: print(), f-strings"]
-</code></pre></div>
-<p><img alt="Strings: Scripting Questions and Answers" src="../../resources/ch17-scripting-qa-fig-01.png" /></p>
+<p><img alt="Strings: Scripting Questions and Answers" src="../../resources/S17-LR-ch17-scripting-qa-fig-01.png" /></p>
+<p><strong>Reading the figure</strong></p>
+<ul>
+<li><strong>Step 1:</strong> Make a string with quotes or triple quotes, or convert a value with <code>str()</code>.</li>
+<li><strong>Step 2:</strong> Measure and test it with <code>len()</code>, <code>in</code> and <code>not in</code>.</li>
+<li><strong>Step 3:</strong> Reach into it by index and slice, or visit each character with <code>for</code> or <code>while</code>.</li>
+<li><strong>Step 4:</strong> Clean it with <code>strip()</code>, <code>lower()</code> and <code>replace()</code>.</li>
+<li><strong>Step 5:</strong> Check it with <code>isalpha()</code>, <code>isdigit()</code>, <code>startswith()</code> and <code>endswith()</code>.</li>
+<li><strong>Step 6:</strong> Break it up with <code>split()</code>, or put pieces together with <code>join()</code>, <code>+</code> and <code>*</code>.</li>
+<li><strong>Step 7:</strong> Show the result with <code>print()</code> and f-strings.</li>
+</ul>
 <h2 id="table-of-contents">Table of Contents<a class="headerlink" href="#table-of-contents" title="Permanent link">&para;</a></h2>
 <ul>
 <li><a href="#part-1-creating-and-inspecting-strings">Part 1: Creating and Inspecting Strings</a></li>
@@ -9076,23 +9078,22 @@ The counter stopped at: -1
 </tbody>
 </table>
 <p><strong>The two loops side by side</strong></p>
-<div class="highlight"><pre><span></span><code>flowchart LR
-    A["1. Start with the word"] --&gt; B{"2. Which direction?"}
-    B --&gt;|"Forward"| C["3. for character in word"]
-    C --&gt; D["4. Python hands over the next character"]
-    D --&gt; E["5. Print it"]
-    E --&gt; F{"6. Any characters left?"}
-    F --&gt;|"Yes"| D
-    F --&gt;|"No"| M["12. Done"]
-    B --&gt;|"Backward"| G["7. Set the counter to len(word) - 1"]
-    G --&gt; H{"8. Is the counter still 0 or more?"}
-    H --&gt;|"Yes"| I["9. Print the character at the counter"]
-    I --&gt; J["10. Take 1 off the counter"]
-    J --&gt; H
-    H --&gt;|"No"| K["11. The counter has passed the first character"]
-    K --&gt; M
-</code></pre></div>
-<p><img alt="Question 5. Forward Traversal and Backward Traversal" src="../../resources/ch17-scripting-qa-fig-04.png" /></p>
+<p><img alt="Question 5. Forward Traversal and Backward Traversal" src="../../resources/S17-LR-ch17-scripting-qa-fig-04.png" /></p>
+<p><strong>Reading the figure</strong></p>
+<ul>
+<li><strong>Step 1:</strong> Start with a word, for example "Python".</li>
+<li><strong>Step 2:</strong> Which direction do you want to go?</li>
+<li><strong>Step 3:</strong> Forward: write <code>for character in word:</code>.</li>
+<li><strong>Step 4:</strong> Python hands over the next character each time round the loop. No counter is needed.</li>
+<li><strong>Step 5:</strong> Print the character.</li>
+<li><strong>Step 6:</strong> If characters are left, go back to Step 4. If not, go to Step 12.</li>
+<li><strong>Step 7:</strong> Backward: set a counter to the last index, <code>len(word) - 1</code>, which is 5 for "Python".</li>
+<li><strong>Step 8:</strong> Is the counter still 0 or more?</li>
+<li><strong>Step 9:</strong> Yes: print the character at that index, <code>word[counter]</code>.</li>
+<li><strong>Step 10:</strong> Take 1 off the counter and go back to Step 8.</li>
+<li><strong>Step 11:</strong> No: the counter is -1, so it has passed the first character and the loop stops.</li>
+<li><strong>Step 12:</strong> Done.</li>
+</ul>
 <p><strong>Design Pattern Explanation</strong></p>
 <ul>
 <li><strong>Sequence Iterator Pattern, <code>for</code>:</strong> The form <code>for character in sequence</code> treats the string as a stream of characters. Python fetches them one at a time from left to right. There is no counter to set up, no condition to get wrong and no chance of an endless loop.</li>
@@ -9597,11 +9598,15 @@ chr(ord('A')) gives: A
 </code></pre></div>
 <p><strong>A code point</strong> is simply the number that Unicode gives to a character. Unicode is the worldwide table of characters used by Python 3 for all its text, and it covers nearly every writing system, not just English. The first 128 entries of that table are the old ASCII codes, which is why <code>A</code> is still 65.</p>
 <p><strong>The circle of the two functions</strong></p>
-<div class="highlight"><pre><span></span><code>flowchart LR
-    A["1. A character, 'A'"] --&gt;|"2. ord() reads its number"| B["3. Its code point, 65"]
-    B --&gt;|"4. chr() reads the number back"| C["5. The character again, 'A'"]
-</code></pre></div>
-<p><img alt="Question 9. From Character to Number and Back" src="../../resources/ch17-scripting-qa-fig-05.png" /></p>
+<p><img alt="Question 9. From Character to Number and Back" src="../../resources/S17-LR-ch17-scripting-qa-fig-05.png" /></p>
+<p><strong>Reading the figure</strong></p>
+<ul>
+<li><strong>Step 1:</strong> Start with a character, <code>'A'</code>.</li>
+<li><strong>Step 2:</strong> <code>ord('A')</code> reads its number from the Unicode table.</li>
+<li><strong>Step 3:</strong> The number, its code point, is 65. The first 128 code points are the same as the old ASCII table.</li>
+<li><strong>Step 4:</strong> <code>chr(65)</code> turns the number back into a character.</li>
+<li><strong>Step 5:</strong> The result is <code>'A'</code> again: <code>chr(ord('A'))</code> gives <code>A</code>. The two functions undo each other.</li>
+</ul>
 <p><strong>Design Pattern Explanation</strong></p>
 <ul>
 <li><strong>Character-to-Integer Translation Pattern, <code>ord()</code>:</strong> <code>ord()</code> takes a string of exactly one character and returns its Unicode number. Two characters, or a number, will raise a <code>TypeError</code>.</li>
@@ -9728,17 +9733,18 @@ Is 'apple' less than 'Banana'?: False
 </tbody>
 </table>
 <p><strong>Flowchart</strong></p>
-<div class="highlight"><pre><span></span><code>flowchart LR
-    A["1. Compare two strings"] --&gt; B["2. Look at the characters in the same position"]
-    B --&gt; C{"3. Are they the same?"}
-    C --&gt;|"No"| D["4. The smaller code point wins, and the comparison ends"]
-    C --&gt;|"Yes"| E["5. Move to the next position"]
-    E --&gt; F{"6. Has either string run out?"}
-    F --&gt;|"No"| B
-    F --&gt;|"Both at once"| G["7. The strings are equal"]
-    F --&gt;|"One of them"| H["8. The shorter string is the smaller one"]
-</code></pre></div>
-<p><img alt="Question 10. Comparing Two Strings, and the Tie-Breaker" src="../../resources/ch17-scripting-qa-fig-06.png" /></p>
+<p><img alt="Question 10. Comparing Two Strings, and the Tie-Breaker" src="../../resources/S17-LR-ch17-scripting-qa-fig-06.png" /></p>
+<p><strong>Reading the figure</strong></p>
+<ul>
+<li><strong>Step 1:</strong> Compare two strings.</li>
+<li><strong>Step 2:</strong> Look at the characters in the same position in each string, starting with the first.</li>
+<li><strong>Step 3:</strong> Are they the same?</li>
+<li><strong>Step 4:</strong> No: the string whose character has the smaller code point is the smaller string, and the comparison ends.</li>
+<li><strong>Step 5:</strong> Yes: move to the next position.</li>
+<li><strong>Step 6:</strong> Has either string run out of characters? If not, go back to Step 2.</li>
+<li><strong>Step 7:</strong> Both ran out at once: the strings are equal.</li>
+<li><strong>Step 8:</strong> Only one ran out: the shorter string is the smaller one, so "Book" is less than "Bookcase".</li>
+</ul>
 <p><strong>Design Pattern Explanation</strong></p>
 <ul>
 <li><strong>Lexicographical Alignment Comparison Pattern:</strong> Python lines the two strings up and compares them position by position, from left to right. The first position where they differ decides the answer, and nothing after it is even looked at.</li>
@@ -10191,11 +10197,15 @@ Type returned by join(): &lt;class 'str'&gt;
 Second item: banana
 </code></pre></div>
 <p><strong>The two methods are mirror images</strong></p>
-<div class="highlight"><pre><span></span><code>flowchart LR
-    A["1. One string: apple,banana,orange,grape"] --&gt;|"2. split(',')"| B["3. A list of four strings"]
-    B --&gt;|"4. '-'.join(list)"| C["5. One string again: apple-banana-orange-grape"]
-</code></pre></div>
-<p><img alt="Question 14. Splitting a Line and Joining It Back" src="../../resources/ch17-scripting-qa-fig-08.png" /></p>
+<p><img alt="Question 14. Splitting a Line and Joining It Back" src="../../resources/S17-LR-ch17-scripting-qa-fig-08.png" /></p>
+<p><strong>Reading the figure</strong></p>
+<ul>
+<li><strong>Step 1:</strong> Start with one string: "apple,banana,orange,grape".</li>
+<li><strong>Step 2:</strong> <code>split(',')</code> cuts the string at every comma.</li>
+<li><strong>Step 3:</strong> The result is a list of four strings: <code>['apple', 'banana', 'orange', 'grape']</code>. You can now reach an item by position, such as <code>[1]</code> for "banana".</li>
+<li><strong>Step 4:</strong> <code>'-'.join(the_list)</code> goes the other way: it joins the list's items with <code>-</code> between them.</li>
+<li><strong>Step 5:</strong> The result is one string again: "apple-banana-orange-grape". <code>split()</code> and <code>join()</code> are mirror images.</li>
+</ul>
 <p>Note which object each method belongs to. <code>split()</code> is called on the string that is being cut up. <code>join()</code> is called on the separator, and the list is passed to it. Beginners often write <code>parsed_list.join("-")</code>, which does not work, because a list has no <code>join()</code> method.</p>
 <div class="highlight"><pre><span></span><code><span class="c1"># Step 1: The list to be joined</span>
 <span class="n">parsed_list</span> <span class="o">=</span> <span class="p">[</span><span class="s2">"apple"</span><span class="p">,</span> <span class="s2">"banana"</span><span class="p">,</span> <span class="s2">"orange"</span><span class="p">,</span> <span class="s2">"grape"</span><span class="p">]</span>

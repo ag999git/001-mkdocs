@@ -8567,13 +8567,15 @@
 <li><strong>Hashable only:</strong> the table can place an object only if the object gives a hash value that never changes. So mutable, unhashable objects (lists, dictionaries, other sets) are rejected outright.</li>
 </ol>
 <p>Understanding this one fact, <strong>"a set is a hash table of keys with no values"</strong>, explains almost every rule covered in the rest of this page.</p>
-<div class="highlight"><pre><span></span><code>flowchart LR
-    A["Step 1: A set is stored as a hash table"] --&gt; B["Step 2: Items are placed by their hash value"]
-    B --&gt; C["Step 3: An equal item lands in the same place, so it is not stored twice: UNIQUE"]
-    B --&gt; D["Step 4: Placement does not depend on arrival order, so there are no positions: UNORDERED"]
-    B --&gt; E["Step 5: The hash value must never change, or the item could not be found again: HASHABLE ONLY"]
-</code></pre></div>
-<p><img alt="Q1. A Python set — unordered? unique? hashable-only? Why each?" src="../../resources/ch19-sets-conceptual-qa-fig-01.png" /></p>
+<p><img alt="Q1. A Python set — unordered? unique? hashable-only? Why each?" src="../../resources/S19-LR-ch19-sets-conceptual-qa-fig-01.png" /></p>
+<p><strong>Reading the figure</strong></p>
+<ul>
+<li><strong>Step 1:</strong> A set is stored as a hash table: a table of keys with no values.</li>
+<li><strong>Step 2:</strong> Each item is placed according to its hash value.</li>
+<li><strong>Step 3:</strong> Unique: an equal item has the same hash and lands in the same place, so it is not stored twice.</li>
+<li><strong>Step 4:</strong> Unordered: placement depends on the hash, not on when the item arrived, so there are no positions and no indexing.</li>
+<li><strong>Step 5:</strong> Hashable only: the hash must never change, or the item could not be found again. So lists, dictionaries and other sets are rejected.</li>
+</ul>
 <p><strong>Script: the three properties in action</strong></p>
 <div class="highlight"><pre><span></span><code><span class="c1"># Step 1 - Unique: duplicates are dropped automatically</span>
 <span class="n">s</span> <span class="o">=</span> <span class="p">{</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">3</span><span class="p">}</span>
@@ -8705,14 +8707,16 @@ Common (list way): ['Charlie']
 <li>If it sees nothing at all, <code>{}</code>, it builds an empty <strong>dictionary</strong>.</li>
 </ol>
 <p>This is one of the very few places in Python where an empty literal and a non-empty literal of the "same" syntax build different types. So it is worth memorising as a rule rather than working it out each time: <strong>"<code>{}</code> is always a dict; <code>set()</code> is always a set."</strong></p>
-<div class="highlight"><pre><span></span><code>flowchart LR
-    A["Step 1: Python reads a pair of curly braces"] --&gt; B{"Step 2: Is there anything inside?"}
-    B -- No --&gt; C["Step 3: Empty dict"]
-    B -- Yes --&gt; D{"Step 4: Are the items written as key: value?"}
-    D -- Yes --&gt; E["Step 5: dict"]
-    D -- No --&gt; F["Step 6: set"]
-</code></pre></div>
-<p><img alt="Q3. The classic {} trap — (a) what does {} actually create (b) how do you correctly make an empty set (c) what changes once the set is non-empty?" src="../../resources/ch19-sets-conceptual-qa-fig-02.png" /></p>
+<p><img alt="Q3. The classic {} trap — (a) what does {} actually create (b) how do you correctly make an empty set (c) what changes once the set is non-empty?" src="../../resources/S19-LR-ch19-sets-conceptual-qa-fig-02.png" /></p>
+<p><strong>Reading the figure</strong></p>
+<ul>
+<li><strong>Step 1:</strong> Python reads a pair of curly braces, <code>{ }</code>.</li>
+<li><strong>Step 2:</strong> Is there anything inside?</li>
+<li><strong>Step 3:</strong> No: <code>{}</code> builds an empty dictionary, not an empty set.</li>
+<li><strong>Step 4:</strong> Yes: are the items written as <code>key: value</code> pairs?</li>
+<li><strong>Step 5:</strong> Yes: <code>{"name": "Anita"}</code> builds a dictionary.</li>
+<li><strong>Step 6:</strong> No: <code>{10, 20, 30}</code> builds a set. For an empty set always write <code>set()</code>.</li>
+</ul>
 <p><strong>Script: which type do the braces give?</strong></p>
 <div class="highlight"><pre><span></span><code><span class="c1"># Step 1 - Empty braces give a dictionary</span>
 <span class="n">empty_literal</span> <span class="o">=</span> <span class="p">{}</span>
@@ -9190,17 +9194,18 @@ False first: {False} | 0 first: {0}
 </ol>
 <p>Because step 3 touches only a tiny, near-constant number of slots, however large the set is, membership testing has <strong>average-case O(1)</strong> (constant) time. Looking something up in a set of 10 elements takes about the same time as in a set of 10 million elements. This is the biggest performance reason to prefer sets over lists in code that checks membership a lot.</p>
 <p>The word "average" matters. Two different items can sometimes get the same slot (a <strong>collision</strong>). Python then checks a few more slots. With well-spread hash values, this happens rarely enough that lookups stay fast.</p>
-<div class="highlight"><pre><span></span><code>flowchart LR
-    A["Step 1: Python is asked: is x in my_set?"] --&gt; B["Step 2: Work out hash(x)"]
-    B --&gt; C["Step 3: Use the hash to find x's slot in the table"]
-    C --&gt; D{"Step 4: Is the slot empty?"}
-    D -- Yes --&gt; E["Step 5: x is not in the set. Return False"]
-    D -- No --&gt; F{"Step 6: Is the item in the slot equal to x?"}
-    F -- Yes --&gt; G["Step 7: Found. Return True"]
-    F -- No --&gt; H["Step 8: A collision. Move to the next candidate slot"]
-    H --&gt; D
-</code></pre></div>
-<p><img alt="Q9. Hashability — (a) what makes an object hashable (b) which built-in types qualify/disqualify and why (c) how does this give O(1) average-case membership testing internally?" src="../../resources/ch19-sets-conceptual-qa-fig-04.png" /></p>
+<p><img alt="Q9. Hashability — (a) what makes an object hashable (b) which built-in types qualify/disqualify and why (c) how does this give O(1) average-case membership testing internally?" src="../../resources/S19-LR-ch19-sets-conceptual-qa-fig-04.png" /></p>
+<p><strong>Reading the figure</strong></p>
+<ul>
+<li><strong>Step 1:</strong> Python is asked whether <code>x</code> is in <code>my_set</code>.</li>
+<li><strong>Step 2:</strong> It works out <code>hash(x)</code>.</li>
+<li><strong>Step 3:</strong> It uses that number to find the one slot in the table where <code>x</code> belongs.</li>
+<li><strong>Step 4:</strong> Is that slot empty?</li>
+<li><strong>Step 5:</strong> Yes: <code>x</code> is not in the set, so return <code>False</code>.</li>
+<li><strong>Step 6:</strong> No: is the item in the slot equal to <code>x</code>?</li>
+<li><strong>Step 7:</strong> Yes: found, so return <code>True</code>.</li>
+<li><strong>Step 8:</strong> No: a different item shares the slot, a collision. Move to the next candidate slot and go back to Step 4. Only a few slots are ever checked, so the average time is O(1), whatever the size of the set.</li>
+</ul>
 <p><strong>Script: testing hashability</strong></p>
 <div class="highlight"><pre><span></span><code><span class="c1"># Step 1 - Hashable objects give a whole number</span>
 <span class="k">for</span> <span class="n">obj</span> <span class="ow">in</span> <span class="p">[</span><span class="mi">42</span><span class="p">,</span> <span class="mf">3.5</span><span class="p">,</span> <span class="s2">"Python"</span><span class="p">,</span> <span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">),</span> <span class="nb">frozenset</span><span class="p">({</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">}),</span> <span class="kc">None</span><span class="p">]:</span>
@@ -9482,14 +9487,16 @@ Is {Asha, Ravi} a team? True
 <li>Use a <strong>set</strong> when all that matters is <strong>which distinct items exist</strong>, or when you need fast membership tests or Venn-style comparisons between groups.</li>
 </ul>
 <p>A useful warning sign: if you find yourself writing <code>if item not in my_list:</code> before every <code>append()</code>, inside a loop that runs many times, the list should probably have been a set.</p>
-<div class="highlight"><pre><span></span><code>flowchart LR
-    A["Step 1: What does the data need?"] --&gt; B{"Step 2: Do you look values up by a label?"}
-    B -- Yes --&gt; C["Step 3: Use a dict"]
-    B -- No --&gt; D{"Step 4: Do order or repeated items matter?"}
-    D -- Yes --&gt; E["Step 5: Use a list"]
-    D -- No --&gt; F["Step 6: Use a set, for unique items and fast in checks"]
-</code></pre></div>
-<p><img alt="Q12. Structural comparison — list vs dict vs set: (a) ordering (b) duplicates (c) access method (d) mutability (e) empty-literal syntax for each?" src="../../resources/ch19-sets-conceptual-qa-fig-05.png" /></p>
+<p><img alt="Q12. Structural comparison — list vs dict vs set: (a) ordering (b) duplicates (c) access method (d) mutability (e) empty-literal syntax for each?" src="../../resources/S19-LR-ch19-sets-conceptual-qa-fig-05.png" /></p>
+<p><strong>Reading the figure</strong></p>
+<ul>
+<li><strong>Step 1:</strong> Ask what the data needs.</li>
+<li><strong>Step 2:</strong> Do you look values up by a meaningful label, such as a student ID?</li>
+<li><strong>Step 3:</strong> Yes: use a dictionary.</li>
+<li><strong>Step 4:</strong> No: do the order of the items, or repeated items, matter?</li>
+<li><strong>Step 5:</strong> Yes: use a list, as for a shopping cart or a queue of tasks.</li>
+<li><strong>Step 6:</strong> No: use a set, when all that matters is which distinct items exist, or you need fast <code>in</code> checks.</li>
+</ul>
 <p><strong>Script: the same data in all three</strong></p>
 <div class="highlight"><pre><span></span><code><span class="n">data</span> <span class="o">=</span> <span class="p">[</span><span class="mi">3</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">]</span>
 
@@ -9680,16 +9687,18 @@ add(['kiwi']) -&gt; TypeError: unhashable type: 'list'
 <span class="n">students</span><span class="o">.</span><span class="n">clear</span><span class="p">()</span>                    <span class="c1"># -&gt; set()</span>
 </code></pre></div>
 <p><strong>A simple way to choose</strong></p>
-<div class="highlight"><pre><span></span><code>flowchart LR
-    A["Step 1: What do you want to remove?"] --&gt; B{"Step 2: One particular element x?"}
-    B -- Yes --&gt; C{"Step 3: Must x be there? Is a missing x a bug?"}
-    C -- Yes --&gt; D["Step 4: Use remove(x). It raises KeyError if x is missing"]
-    C -- No --&gt; E["Step 5: Use discard(x). It does nothing if x is missing"]
-    B -- No --&gt; F{"Step 6: Any one element, whichever it is?"}
-    F -- Yes --&gt; G["Step 7: Use pop(). It returns the removed element"]
-    F -- No --&gt; H["Step 8: Everything: use clear()"]
-</code></pre></div>
-<p><img alt="Q14. Four removal-family methods — .remove(), .discard(), .pop(), .clear(): (a) behaviour when element is missing/set is empty (b) return value (c) which to choose when" src="../../resources/ch19-sets-conceptual-qa-fig-06.png" /></p>
+<p><img alt="Q14. Four removal-family methods — .remove(), .discard(), .pop(), .clear(): (a) behaviour when element is missing/set is empty (b) return value (c) which to choose when" src="../../resources/S19-LR-ch19-sets-conceptual-qa-fig-06.png" /></p>
+<p><strong>Reading the figure</strong></p>
+<ul>
+<li><strong>Step 1:</strong> Decide what you want to remove from the set.</li>
+<li><strong>Step 2:</strong> Is it one particular element, <code>x</code>?</li>
+<li><strong>Step 3:</strong> Yes: must <code>x</code> be there, so that a missing <code>x</code> would be a bug?</li>
+<li><strong>Step 4:</strong> Yes: use <code>remove(x)</code>. It raises <code>KeyError</code> if <code>x</code> is missing, which reveals the bug.</li>
+<li><strong>Step 5:</strong> No: use <code>discard(x)</code>. It quietly does nothing if <code>x</code> is missing.</li>
+<li><strong>Step 6:</strong> No particular element: will any one element do, whichever it is?</li>
+<li><strong>Step 7:</strong> Yes: use <code>pop()</code>. It removes some element and returns it, and raises <code>KeyError</code> on an empty set.</li>
+<li><strong>Step 8:</strong> No, everything must go: use <code>clear()</code>, which leaves an empty set, <code>set()</code>.</li>
+</ul>
 <p><strong>How each one relates to what you already know</strong></p>
 <ul>
 <li><code>.remove()</code> is the <strong>strict</strong> one. It is like <code>dict[key]</code>, which raises <code>KeyError</code> for a missing key.</li>

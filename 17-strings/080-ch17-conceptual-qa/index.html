@@ -8451,15 +8451,17 @@
 </ul>
 <h2 id="how-strings-fit-into-python">How Strings Fit Into Python<a class="headerlink" href="#how-strings-fit-into-python" title="Permanent link">&para;</a></h2>
 <p>Before the questions, here is a short map of the ideas that follow. Each box is explained by one or more questions on this page.</p>
-<div class="highlight"><pre><span></span><code>flowchart LR
-    A["1. A string is a built-in type: an ordered sequence of characters"] --&gt; B["2. Create it with single, double or triple quotes"]
-    B --&gt; C["3. Reach one character by index, many by slicing"]
-    C --&gt; D["4. Strings are immutable, so every operation returns a NEW string"]
-    D --&gt; E["5. Each character is stored as a Unicode number"]
-    E --&gt; F["6. Built-in methods do the common jobs: case, search, split, join"]
-    F --&gt; G["7. f-strings put values neatly into text for display"]
-</code></pre></div>
-<p><img alt="How Strings Fit Into Python" src="../../resources/ch17-conceptual-qa-fig-01.png" /></p>
+<p><img alt="How Strings Fit Into Python" src="../../resources/S17-LR-ch17-conceptual-qa-fig-01.png" /></p>
+<p><strong>Reading the figure</strong></p>
+<ul>
+<li><strong>Step 1:</strong> A string, <code>str</code>, is a built-in type: an ordered sequence of characters.</li>
+<li><strong>Step 2:</strong> Create one with single, double or triple quotes.</li>
+<li><strong>Step 3:</strong> Reach one character by its index, <code>s[0]</code>, or several at once by slicing, <code>s[1:4]</code>.</li>
+<li><strong>Step 4:</strong> Strings are immutable: no operation changes a string; each one returns a new string.</li>
+<li><strong>Step 5:</strong> Each character is stored as a number from the Unicode table, its code point.</li>
+<li><strong>Step 6:</strong> Built-in methods do the everyday jobs: changing case, searching, splitting and joining.</li>
+<li><strong>Step 7:</strong> f-strings place values neatly into text for display.</li>
+</ul>
 <p><a href="#table-of-contents">Back to the Table of Contents</a></p>
 <h2 id="part-1-what-a-string-is">Part 1: What a String Is<a class="headerlink" href="#part-1-what-a-string-is" title="Permanent link">&para;</a></h2>
 <p>The first five questions build the base. They explain the type itself, how to create one, how characters are numbered, and why a string cannot be changed after it is made.</p>
@@ -9029,14 +9031,16 @@ Error message: string index out of range
 </code></pre></div>
 <p>The last statement produces an <code>IndexError</code>, which is Python's way of saying that no such position exists. Note that the error is caught here with <code>try</code> only so that the script can continue. In an ordinary program it would stop the script.</p>
 <p><strong>Diagram</strong></p>
-<div class="highlight"><pre><span></span><code>flowchart LR
-    A["P (0, -6)"] --&gt; B["y (1, -5)"]
-    B --&gt; C["t (2, -4)"]
-    C --&gt; D["h (3, -3)"]
-    D --&gt; E["o (4, -2)"]
-    E --&gt; F["n (5, -1)"]
-</code></pre></div>
-<p><img alt="Question 4. Positive and Negative String Indexing" src="../../resources/ch17-conceptual-qa-fig-02.png" /></p>
+<p><img alt="Question 4. Positive and Negative String Indexing" src="../../resources/S17-LR-ch17-conceptual-qa-fig-02.png" /></p>
+<p><strong>Reading the figure</strong></p>
+<ul>
+<li><code>P</code> is at index 0 counting from the front, and -6 counting from the back.</li>
+<li><code>y</code> is at index 1, or -5.</li>
+<li><code>t</code> is at index 2, or -4.</li>
+<li><code>h</code> is at index 3, or -3.</li>
+<li><code>o</code> is at index 4, or -2.</li>
+<li><code>n</code> is at index 5, or -1. Any index outside 0 to 5, or -6 to -1, raises <code>IndexError</code>.</li>
+</ul>
 <p><strong>Follow-up questions</strong></p>
 <p><strong>4.1 What does a single character returned by indexing look like to Python?</strong></p>
 <p>It is itself a string, of length one. Python has no separate character type.</p>
@@ -9190,12 +9194,14 @@ Rebuilt from a list: Jython
 </code></pre></div>
 <p>The third method is worth remembering. When a program has to change many characters one by one, converting the string to a list, editing the list and joining it back is both clearer and faster than joining strings again and again.</p>
 <p><strong>Conceptual flow</strong></p>
-<div class="highlight"><pre><span></span><code>flowchart LR
-    A["1. Original string: Hello"] --&gt; B["2. Call upper()"]
-    B --&gt; C["3. New string created: HELLO"]
-    A --&gt; D["4. Original string still Hello"]
-</code></pre></div>
-<p><img alt="Question 5. String Immutability" src="../../resources/ch17-conceptual-qa-fig-03.png" /></p>
+<p><img alt="Question 5. String Immutability" src="../../resources/S17-LR-ch17-conceptual-qa-fig-03.png" /></p>
+<p><strong>Reading the figure</strong></p>
+<ul>
+<li><strong>Step 1:</strong> Start with the string <code>text = "Hello"</code>.</li>
+<li><strong>Step 2:</strong> Call <code>text.upper()</code>.</li>
+<li><strong>Step 3:</strong> <code>upper()</code> cannot change the string, so it creates and returns a new string, "HELLO".</li>
+<li><strong>Step 4:</strong> The original string is still "Hello". To keep the new value, assign it: <code>text = text.upper()</code>.</li>
+</ul>
 <p><strong>Follow-up questions</strong></p>
 <p><strong>5.1 How can I prove that a new object is created?</strong></p>
 <p>Every object has an identity number, which <code>id()</code> reports. If the number changes, the object is not the same one.</p>
@@ -10130,16 +10136,16 @@ marks.csv looks like a comma separated file
 Does the message contain a banned word? False
 </code></pre></div>
 <p><strong>Flowchart</strong></p>
-<div class="highlight"><pre><span></span><code>flowchart LR
-    A["1. Original string"] --&gt; B{"2. Which operator?"}
-    B --&gt;|"+"| C["3. New joined string"]
-    B --&gt;|"*"| D["4. New repeated string"]
-    B --&gt;|"in or not in"| E["5. True or False"]
-    C --&gt; F["6. The original string is unchanged"]
-    D --&gt; F
-    E --&gt; F
-</code></pre></div>
-<p><img alt="Question 9. Concatenation, Repetition and Membership" src="../../resources/ch17-conceptual-qa-fig-07.png" /></p>
+<p><img alt="Question 9. Concatenation, Repetition and Membership" src="../../resources/S17-LR-ch17-conceptual-qa-fig-07.png" /></p>
+<p><strong>Reading the figure</strong></p>
+<ul>
+<li><strong>Step 1:</strong> Start with a string.</li>
+<li><strong>Step 2:</strong> Which operator is used on it?</li>
+<li><strong>Step 3:</strong> <code>+</code> joins two strings and gives a new, longer string.</li>
+<li><strong>Step 4:</strong> <code>*</code> repeats a string a number of times and gives a new string.</li>
+<li><strong>Step 5:</strong> <code>in</code> (or <code>not in</code>) tests whether some text appears inside the string, and gives <code>True</code> or <code>False</code>.</li>
+<li><strong>Step 6:</strong> In every case the original string is unchanged.</li>
+</ul>
 <p><strong>Common beginner mistakes</strong></p>
 <table>
 <thead>
@@ -10677,11 +10683,15 @@ ord(chr(9731)) gives: 9731
 The character at 9731 is: ☃
 </code></pre></div>
 <p><strong>Flowchart</strong></p>
-<div class="highlight"><pre><span></span><code>flowchart LR
-    A["1. A character, for example A"] --&gt;|"2. ord()"| B["3. Its code point, 65"]
-    B --&gt;|"4. chr()"| C["5. The character again, A"]
-</code></pre></div>
-<p><img alt="Question 11. ASCII, Unicode, ord() and chr()" src="../../resources/ch17-conceptual-qa-fig-09.png" /></p>
+<p><img alt="Question 11. ASCII, Unicode, ord() and chr()" src="../../resources/S17-LR-ch17-conceptual-qa-fig-09.png" /></p>
+<p><strong>Reading the figure</strong></p>
+<ul>
+<li><strong>Step 1:</strong> Start with a character, for example "A".</li>
+<li><strong>Step 2:</strong> <code>ord("A")</code> looks up the character's number in the Unicode table.</li>
+<li><strong>Step 3:</strong> It returns the code point, 65.</li>
+<li><strong>Step 4:</strong> <code>chr(65)</code> goes the other way, from the number to the character.</li>
+<li><strong>Step 5:</strong> It returns the character again, "A". So <code>chr(ord(c))</code> always gives back <code>c</code>.</li>
+</ul>
 <p><strong>Practical applications</strong></p>
 <p><code>ord()</code> and <code>chr()</code> are useful in</p>
 <ul>
@@ -10966,17 +10976,18 @@ Case-free sort:   ['Apple', 'banana', 'cherry']
 </code></pre></div>
 <p>In this example both sorts happen to agree. Change <code>"Apple"</code> to <code>"apple"</code> and <code>"banana"</code> to <code>"Banana"</code>, and the two results will differ, because all capitals sort before all small letters.</p>
 <p><strong>Flowchart</strong></p>
-<div class="highlight"><pre><span></span><code>flowchart LR
-    A["1. Compare two strings"] --&gt; B["2. Look at the first pair of characters"]
-    B --&gt; C{"3. Are they equal?"}
-    C --&gt;|"No"| D["4. The one with the smaller code point is the smaller string"]
-    C --&gt;|"Yes"| E["5. Move to the next pair of characters"]
-    E --&gt; F{"6. Has either string ended?"}
-    F --&gt;|"No"| C
-    F --&gt;|"Yes, both together"| G["7. The strings are equal"]
-    F --&gt;|"Yes, one of them"| H["8. The shorter string is the smaller one"]
-</code></pre></div>
-<p><img alt="Question 12. Comparing Strings" src="../../resources/ch17-conceptual-qa-fig-10.png" /></p>
+<p><img alt="Question 12. Comparing Strings" src="../../resources/S17-LR-ch17-conceptual-qa-fig-10.png" /></p>
+<p><strong>Reading the figure</strong></p>
+<ul>
+<li><strong>Step 1:</strong> Compare two strings, for example with <code>&lt;</code>.</li>
+<li><strong>Step 2:</strong> Look at the first pair of characters, one from each string.</li>
+<li><strong>Step 3:</strong> Are they equal?</li>
+<li><strong>Step 4:</strong> No: the string whose character has the smaller code point is the smaller string. The comparison ends here. All capitals come before all small letters.</li>
+<li><strong>Step 5:</strong> Yes: move to the next pair of characters.</li>
+<li><strong>Step 6:</strong> Has either string run out of characters? If not, go back to Step 3.</li>
+<li><strong>Step 7:</strong> Both ended together: the strings are equal.</li>
+<li><strong>Step 8:</strong> Only one ended: the shorter string is the smaller one, so <code>"app" &lt; "apple"</code>.</li>
+</ul>
 <p><strong>Common beginner mistakes</strong></p>
 <table>
 <thead>
@@ -11147,13 +11158,15 @@ Step by step: 'PyThOn' 'python' 'java'
 </code></pre></div>
 <p>Python evaluates the chain from left to right, handing the result of one method to the next. The order matters. If <code>replace()</code> came before <code>lower()</code>, it would look for <code>python</code> in <code>PyThOn</code>, fail to find it, and return the text unchanged.</p>
 <p><strong>Diagram</strong></p>
-<div class="highlight"><pre><span></span><code>flowchart LR
-    A["1. String object with spaces and mixed case"] --&gt; B["2. strip() removes the spaces"]
-    B --&gt; C["3. lower() makes it all small letters"]
-    C --&gt; D["4. replace() swaps one word for another"]
-    D --&gt; E["5. Final string"]
-</code></pre></div>
-<p><img alt="Question 13. String Methods as Object Methods" src="../../resources/ch17-conceptual-qa-fig-11.png" /></p>
+<p><img alt="Question 13. String Methods as Object Methods" src="../../resources/S17-LR-ch17-conceptual-qa-fig-11.png" /></p>
+<p><strong>Reading the figure</strong></p>
+<ul>
+<li><strong>Step 1:</strong> Start with a string that has spaces around it and mixed case, such as <code>"  PyThOn  "</code>.</li>
+<li><strong>Step 2:</strong> <code>strip()</code> returns a new string without the spaces at the ends.</li>
+<li><strong>Step 3:</strong> <code>lower()</code> returns a new string in small letters.</li>
+<li><strong>Step 4:</strong> <code>replace("python", "java")</code> returns a new string with the word swapped.</li>
+<li><strong>Step 5:</strong> The result is the final string. Python runs the chain from left to right, so the order matters: <code>replace()</code> before <code>lower()</code> would not find "python".</li>
+</ul>
 <p><strong>Why are methods preferable to ordinary functions?</strong></p>
 <p>Methods improve</p>
 <ul>
@@ -11490,16 +11503,16 @@ After assigning the result back: PYTHON
 </code></pre></div>
 <p>Step 4 is one of the most frequent beginner errors. Nothing goes wrong, no error appears, and the string simply stays as it was.</p>
 <p><strong>Flowchart</strong></p>
-<div class="highlight"><pre><span></span><code>flowchart LR
-    A["1. Original string"] --&gt; B["2. lower() returns a new string"]
-    A --&gt; C["3. replace() returns a new string"]
-    A --&gt; D["4. split() returns a list"]
-    B --&gt; E["5. Keep the result in a variable, or it is lost"]
-    C --&gt; E
-    D --&gt; E
-    A --&gt; F["6. The original object is never changed"]
-</code></pre></div>
-<p><img alt="Question 14. The Common String Methods" src="../../resources/ch17-conceptual-qa-fig-12.png" /></p>
+<p><img alt="Question 14. The Common String Methods" src="../../resources/S17-LR-ch17-conceptual-qa-fig-12.png" /></p>
+<p><strong>Reading the figure</strong></p>
+<ul>
+<li><strong>Step 1:</strong> Start with a string.</li>
+<li><strong>Step 2:</strong> <code>lower()</code> returns a new string.</li>
+<li><strong>Step 3:</strong> <code>replace()</code> returns a new string.</li>
+<li><strong>Step 4:</strong> <code>split()</code> returns a list of strings.</li>
+<li><strong>Step 5:</strong> Whatever the method, keep its result in a variable. Calling <code>text.upper()</code> on a line by itself does nothing useful: the result is lost.</li>
+<li><strong>Step 6:</strong> The original string object is never changed.</li>
+</ul>
 <p><strong>Choosing the appropriate method</strong></p>
 <table>
 <thead>
@@ -12104,13 +12117,15 @@ Roll number = 007
 average=68.5
 </code></pre></div>
 <p><strong>Flowchart</strong></p>
-<div class="highlight"><pre><span></span><code>flowchart LR
-    A["1. Variables hold the values"] --&gt; B["2. The f prefix marks the string"]
-    B --&gt; C["3. Python evaluates each expression in braces"]
-    C --&gt; D["4. Any format code after the colon is applied"]
-    D --&gt; E["5. The finished string is produced"]
-</code></pre></div>
-<p><img alt="Question 16. f-Strings" src="../../resources/ch17-conceptual-qa-fig-14.png" /></p>
+<p><img alt="Question 16. f-Strings" src="../../resources/S17-LR-ch17-conceptual-qa-fig-14.png" /></p>
+<p><strong>Reading the figure</strong></p>
+<ul>
+<li><strong>Step 1:</strong> Variables such as <code>name</code> and <code>marks</code> hold the values.</li>
+<li><strong>Step 2:</strong> The <code>f</code> before the opening quote marks an f-string.</li>
+<li><strong>Step 3:</strong> Python evaluates each expression inside braces, such as <code>{name}</code>.</li>
+<li><strong>Step 4:</strong> Any format code after a colon is applied, for example <code>{price:.2f}</code> shows two decimal places.</li>
+<li><strong>Step 5:</strong> The finished string is produced, ready to print.</li>
+</ul>
 <p><strong>Common beginner mistakes</strong></p>
 <table>
 <thead>
@@ -12675,17 +12690,19 @@ ab       indexing: False, slicing: False, agree: True
 <p>A string is much more than a collection of characters. It is an immutable Unicode sequence object that supports indexing, slicing, iteration, comparison, formatting, and a large collection of built-in methods.</p>
 <p>Understanding strings requires connecting several independent concepts. Each of them was the subject of an earlier question on this page; the purpose here is to see them working together.</p>
 <p><strong>Concept map</strong></p>
-<div class="highlight"><pre><span></span><code>flowchart LR
-    A["String"] --&gt; B["Unicode, Question 11"]
-    A --&gt; C["Indexing, Question 4"]
-    A --&gt; D["Slicing, Question 10"]
-    A --&gt; E["Methods, Questions 13 and 14"]
-    A --&gt; F["Formatting, Question 16"]
-    A --&gt; G["Traversal, Question 8"]
-    A --&gt; H["Comparison, Question 12"]
-    A --&gt; I["Immutability, Question 5"]
-</code></pre></div>
-<p><img alt="Question 20. Strings, a Comprehensive Review" src="../../resources/ch17-conceptual-qa-fig-18.png" /></p>
+<p><img alt="Question 20. Strings, a Comprehensive Review" src="../../resources/S17-LR-ch17-conceptual-qa-fig-18.png" /></p>
+<p><strong>Reading the figure</strong></p>
+<ul>
+<li>A string brings together all of the ideas below.</li>
+<li>Unicode: every character is a code point (Question 11).</li>
+<li>Indexing: reach one character by position (Question 4).</li>
+<li>Slicing: take a piece of a string (Question 10).</li>
+<li>Methods: the built-in tools for common jobs (Questions 13 and 14).</li>
+<li>Formatting: put values into text with f-strings (Question 16).</li>
+<li>Traversal: visit the characters one by one with a loop (Question 8).</li>
+<li>Comparison: strings compare character by character, by code point (Question 12).</li>
+<li>Immutability: a string never changes; methods return new strings (Question 5).</li>
+</ul>
 <p><strong>How the concepts work together</strong></p>
 <p>Suppose a program accepts a user's name and prints a greeting. Look at how many ideas from this chapter appear in five short steps.</p>
 <p><strong>Step 1. Input.</strong> Read the text. <code>input()</code> always returns a string, whatever the user types.</p>

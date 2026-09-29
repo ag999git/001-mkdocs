@@ -9197,15 +9197,17 @@ Step 5 -&gt; Is 2028 a leap year? True
 <li>Print the new object and its <code>tzinfo</code> to prove that it is now aware.</li>
 <li>Print the original object again to show that it was not changed.</li>
 </ol>
-<div class="highlight"><pre><span></span><code>flowchart LR
-    A["Step 1: Import datetime and ZoneInfo"] --&gt; B["Step 2: naive_dt = datetime.now"]
-    B --&gt; C["Step 3: Print naive_dt and its tzinfo, which is None"]
-    C --&gt; D["Step 4: kolkata_tz = ZoneInfo Asia/Kolkata"]
-    D --&gt; E["Step 5: aware_dt = naive_dt.replace with tzinfo = kolkata_tz"]
-    E --&gt; F["Step 6: Print aware_dt, its tzinfo and offset +05:30"]
-    F --&gt; G["Step 7: Print naive_dt again: still naive"]
-</code></pre></div>
-<p><img alt="Solution Approach for Question 1" src="../../resources/ch17-assignment-timezone-fig-02.png" /></p>
+<p><img alt="Solution Approach for Question 1" src="../../resources/S17-LR-ch17-assignment-timezone-fig-02.png" /></p>
+<p><strong>Reading the figure</strong></p>
+<ul>
+<li><strong>Step 1:</strong> Import <code>datetime</code> from the <code>datetime</code> module and <code>ZoneInfo</code> from <code>zoneinfo</code>.</li>
+<li><strong>Step 2:</strong> <code>datetime.now()</code> with no argument gives a naive object: the current clock reading with no zone.</li>
+<li><strong>Step 3:</strong> Print it and its <code>tzinfo</code> to show that <code>tzinfo</code> is <code>None</code>.</li>
+<li><strong>Step 4:</strong> Create a zone object for India, <code>ZoneInfo("Asia/Kolkata")</code>.</li>
+<li><strong>Step 5:</strong> <code>.replace(tzinfo=kolkata_tz)</code> returns a new, aware object with the same clock reading and the Kolkata label.</li>
+<li><strong>Step 6:</strong> Print the aware object, its <code>tzinfo</code> and its offset, <code>+05:30</code>, to prove that it is now aware.</li>
+<li><strong>Step 7:</strong> Print the original <code>naive_dt</code> again: it is unchanged and still naive, because <code>replace()</code> made a new object.</li>
+</ul>
 <p><a href="#table-of-contents">Back to the Table of Contents</a></p>
 <h4 id="step-by-step-solution-script-for-question-1">Step-by-Step Solution Script for Question 1<a class="headerlink" href="#step-by-step-solution-script-for-question-1" title="Permanent link">&para;</a></h4>
 <div class="highlight"><pre><span></span><code><span class="sd">"""</span>
@@ -9422,14 +9424,16 @@ Step 4 -&gt; Gap between A and B:          0:00:00.000038
 <li>Outside the function, call it and store the result in a variable.</li>
 <li>Print the value, its <code>tzinfo</code> and its offset to confirm that it is aware and set to UTC.</li>
 </ol>
-<div class="highlight"><pre><span></span><code>flowchart LR
-    A["Step 1: Import datetime and ZoneInfo"] --&gt; B["Step 2: def get_current_utc with no parameters"]
-    B --&gt; C["Step 3: utc_timestamp = datetime.now with ZoneInfo UTC"]
-    C --&gt; D["Step 4: return utc_timestamp"]
-    D --&gt; E["Step 5: current_utc_time = get_current_utc"]
-    E --&gt; F["Step 6: Print value, tzinfo UTC and offset 0:00:00"]
-</code></pre></div>
-<p><img alt="Solution Approach for Question 2" src="../../resources/ch17-assignment-timezone-fig-04.png" /></p>
+<p><img alt="Solution Approach for Question 2" src="../../resources/S17-LR-ch17-assignment-timezone-fig-04.png" /></p>
+<p><strong>Reading the figure</strong></p>
+<ul>
+<li><strong>Step 1:</strong> Import <code>datetime</code> and <code>ZoneInfo</code>.</li>
+<li><strong>Step 2:</strong> Define the function <code>get_current_utc()</code>. It needs no parameters.</li>
+<li><strong>Step 3:</strong> Inside it, <code>datetime.now(ZoneInfo("UTC"))</code> gets the current time as an aware UTC object.</li>
+<li><strong>Step 4:</strong> Return that object to the caller.</li>
+<li><strong>Step 5:</strong> Outside the function, call it and store the result: <code>current_utc_time = get_current_utc()</code>.</li>
+<li><strong>Step 6:</strong> Print the value, its <code>tzinfo</code>, which is UTC, and its offset, <code>0:00:00</code>, to confirm that it is aware and set to UTC.</li>
+</ul>
 <p><a href="#table-of-contents">Back to the Table of Contents</a></p>
 <h4 id="step-by-step-solution-script-for-question-2">Step-by-Step Solution Script for Question 2<a class="headerlink" href="#step-by-step-solution-script-for-question-2" title="Permanent link">&para;</a></h4>
 <div class="highlight"><pre><span></span><code><span class="sd">"""</span>
