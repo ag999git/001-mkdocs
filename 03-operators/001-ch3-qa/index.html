@@ -8511,19 +8511,19 @@ True
 True
 </code></pre></div>
 <p><strong>How Python decides</strong></p>
-<div class="highlight"><pre><span></span><code>flowchart TD
-    A["1. Start: value in collection"] --&gt; B{"2. Is the collection a dictionary?"}
-    B -- Yes --&gt; C["3. Look only at the KEYS"]
-    B -- No --&gt; D{"4. Is the collection a string?"}
-    D -- Yes --&gt; E["5. Look for the text as a continuous piece"]
-    D -- No --&gt; F["6. Look at each item one by one"]
-    C --&gt; G{"7. Found?"}
-    E --&gt; G
-    F --&gt; G
-    G -- Yes --&gt; H["8. in gives True, not in gives False"]
-    G -- No --&gt; I["9. in gives False, not in gives True"]
-</code></pre></div>
-<p><img alt="c. Explain membership operators in and not in." src="../../resources/ch3-qa-fig-02.png" /></p>
+<p><img alt="c. Explain membership operators in and not in." src="../../resources/LR-ch3-qa-fig-02.png" /></p>
+<p><strong>Reading the figure</strong></p>
+<ul>
+<li><strong>Step 1:</strong> Python meets an expression such as <code>value in collection</code>.</li>
+<li><strong>Step 2:</strong> Is the collection a dictionary?</li>
+<li><strong>Step 3:</strong> Yes: <code>in</code> looks only at the keys, never at the values.</li>
+<li><strong>Step 4:</strong> No: is the collection a string?</li>
+<li><strong>Step 5:</strong> Yes: <code>in</code> looks for the text as one continuous piece, a substring. <code>'ell' in 'hello'</code> is <code>True</code>, but <code>'hlo' in 'hello'</code> is <code>False</code>.</li>
+<li><strong>Step 6:</strong> No: for a list, tuple or set, <code>in</code> looks at each item one by one.</li>
+<li><strong>Step 7:</strong> Was the value found?</li>
+<li><strong>Step 8:</strong> Yes: <code>in</code> gives <code>True</code> and <code>not in</code> gives <code>False</code>.</li>
+<li><strong>Step 9:</strong> No: <code>in</code> gives <code>False</code> and <code>not in</code> gives <code>True</code>.</li>
+</ul>
 <p><strong>Follow-up question:</strong> What does <code>'A' in 'cat'</code> give, and why?</p>
 <p>It gives <code>False</code>. Python treats upper-case and lower-case letters as different characters, so <code>'A'</code> is not the same as <code>'a'</code>.</p>
 <p><a href="#table-of-contents">Back to the Table of Contents</a></p>
@@ -8637,14 +8637,16 @@ SyntaxError: cannot assign to literal here. Maybe you meant '==' instead of '='?
 <li><code>7 / -2 = -3.5</code>. Moving left from -3.5, the nearest whole number is <strong>-4</strong>, not -3. This surprises many beginners.</li>
 </ul>
 <p><img alt="Floor division on a number line" src="../../resources/ch3-floor-division-number-line.png" /></p>
-<div class="highlight"><pre><span></span><code>flowchart TD
-    A["1. Start: a // b"] --&gt; B["2. Divide normally: a / b"]
-    B --&gt; C{"3. Is the answer a whole number?"}
-    C -- Yes --&gt; D["4. That whole number is the result"]
-    C -- No --&gt; E["5. Move LEFT on the number line"]
-    E --&gt; F["6. Nearest whole number on the left is the result"]
-</code></pre></div>
-<p><img alt="f. What is floor division? What is its operator?" src="../../resources/ch3-qa-fig-04.png" /></p>
+<p><img alt="f. What is floor division? What is its operator?" src="../../resources/LR-ch3-qa-fig-04.png" /></p>
+<p><strong>Reading the figure</strong></p>
+<ul>
+<li><strong>Step 1:</strong> Start with a floor division, <code>a // b</code>.</li>
+<li><strong>Step 2:</strong> First divide normally, <code>a / b</code>. For example, <code>7 / -2</code> gives <code>-3.5</code>.</li>
+<li><strong>Step 3:</strong> Is that answer already a whole number?</li>
+<li><strong>Step 4:</strong> Yes: that whole number is the result. <code>8 // 2</code> gives <code>4</code>.</li>
+<li><strong>Step 5:</strong> No: move LEFT on the number line, towards minus infinity. This is what "floor" means.</li>
+<li><strong>Step 6:</strong> The nearest whole number on the left is the result. <code>7 // 2</code> gives <code>3</code>, but <code>7 // -2</code> gives <code>-4</code>, not <code>-3</code>.</li>
+</ul>
 <p><strong>Script with output</strong></p>
 <div class="highlight"><pre><span></span><code><span class="c1"># Step 1: Ordinary division always gives a float (decimal number)</span>
 <span class="nb">print</span><span class="p">(</span><span class="mi">7</span> <span class="o">/</span> <span class="mi">2</span><span class="p">)</span>
@@ -8719,13 +8721,15 @@ SyntaxError: cannot assign to literal here. Maybe you meant '==' instead of '='?
 <li>Subtract from the dividend: <code>7 - 9 = -2</code></li>
 <li>So <code>7 % -3 = -2</code>. The remainder is negative, like the divisor.</li>
 </ol>
-<div class="highlight"><pre><span></span><code>flowchart TD
-    A["1. Divide: 7 / -3 = -2.33"] --&gt; B["2. Floor: 7 // -3 = -3"]
-    B --&gt; C["3. Multiply back: divisor -3 x quotient -3 = 9"]
-    C --&gt; D["4. Subtract: 7 - 9 = -2"]
-    D --&gt; E["5. Result: 7 modulo -3 = -2"]
-</code></pre></div>
-<p><img alt="g. If dividend is positive but divisor is negative, is remainder positive or negative?" src="../../resources/ch3-qa-fig-05.png" /></p>
+<p><img alt="g. If dividend is positive but divisor is negative, is remainder positive or negative?" src="../../resources/LR-ch3-qa-fig-05.png" /></p>
+<p><strong>Reading the figure</strong></p>
+<ul>
+<li><strong>Step 1:</strong> Divide normally: <code>7 / -3</code> is about <code>-2.33</code>.</li>
+<li><strong>Step 2:</strong> Floor division moves left on the number line, so <code>7 // -3</code> is <code>-3</code>, not <code>-2</code>.</li>
+<li><strong>Step 3:</strong> Multiply back: the divisor times the quotient, <code>-3 × -3</code>, is <code>9</code>.</li>
+<li><strong>Step 4:</strong> Subtract that from the dividend: <code>7 - 9 = -2</code>.</li>
+<li><strong>Step 5:</strong> So <code>7 % -3</code> is <code>-2</code>. The remainder takes the sign of the divisor, which is negative here.</li>
+</ul>
 <p><strong>Script with output</strong></p>
 <div class="highlight"><pre><span></span><code><span class="c1"># Step 1: Positive dividend, negative divisor</span>
 <span class="n">dividend</span> <span class="o">=</span> <span class="mi">7</span>
@@ -8935,14 +8939,16 @@ c: [1, 2, 3, 4]
 x: 5
 y: 6
 </code></pre></div>
-<div class="highlight"><pre><span></span><code>flowchart TD
-    A["1. a = [1, 2]"] --&gt; B["2. b = a (same list, two names)"]
-    B --&gt; C["3. b.append(3)"]
-    C --&gt; D["4. a and b both show 1, 2, 3"]
-    D --&gt; E["5. c = a.copy() (new separate list)"]
-    E --&gt; F["6. c.append(4) changes only c"]
-</code></pre></div>
-<p><img alt="j. Why is it important to understand object identity in Python?" src="../../resources/ch3-qa-fig-06.png" /></p>
+<p><img alt="j. Why is it important to understand object identity in Python?" src="../../resources/LR-ch3-qa-fig-06.png" /></p>
+<p><strong>Reading the figure</strong></p>
+<ul>
+<li><strong>Step 1:</strong> <code>a = [1, 2]</code> creates one list and ties the name <code>a</code> to it.</li>
+<li><strong>Step 2:</strong> <code>b = a</code> does not copy the list. It ties a second name, <code>b</code>, to the same object, so <code>a is b</code> is <code>True</code>.</li>
+<li><strong>Step 3:</strong> <code>b.append(3)</code> changes that one list.</li>
+<li><strong>Step 4:</strong> Printing <code>a</code> and <code>b</code> shows <code>[1, 2, 3]</code> for both, because they are the same object.</li>
+<li><strong>Step 5:</strong> <code>c = a.copy()</code> builds a new, separate list with the same items. <code>c == a</code> is <code>True</code>, but <code>c is a</code> is <code>False</code>.</li>
+<li><strong>Step 6:</strong> <code>c.append(4)</code> changes only <code>c</code>. <code>a</code> and <code>b</code> are still <code>[1, 2, 3]</code>.</li>
+</ul>
 <p><strong>Follow-up question:</strong> How can you check whether two names share one object?</p>
 <p>Use <code>a is b</code>, or compare <code>id(a)</code> with <code>id(b)</code>. If the result is <code>True</code>, a change through one name will be seen through the other.</p>
 <p><a href="#table-of-contents">Back to the Table of Contents</a></p>

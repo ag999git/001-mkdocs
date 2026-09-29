@@ -9265,15 +9265,17 @@ As a float:   12345678901234567168
 <div class="highlight"><pre><span></span><code>ImportError: cannot import name 'func_a' from partially initialized module 'a_mod' (most likely due to a circular import) (path/to/your/folder/a_mod.py)
 </code></pre></div>
 <p>What happens, step by step:</p>
-<div class="highlight"><pre><span></span><code>flowchart TD
-    A["1. main.py runs import a_mod"] --&gt; B["2. Python creates an empty a_mod and starts running a_mod.py"]
-    B --&gt; C["3. The first line of a_mod.py asks for func_b from b_mod"]
-    C --&gt; D["4. Python starts running b_mod.py"]
-    D --&gt; E["5. The first line of b_mod.py asks for func_a from a_mod"]
-    E --&gt; F["6. a_mod exists but is only half built: func_a is not defined yet"]
-    F --&gt; G["7. ImportError: cannot import name func_a"]
-</code></pre></div>
-<p><img alt="g.2 Circular Import Example" src="../../resources/ch02-book-end-qa-fig-02.png" /></p>
+<p><img alt="g.2 Circular Import Example" src="../../resources/LR-ch02-book-end-qa-fig-02.png" /></p>
+<p><strong>Reading the figure</strong></p>
+<ul>
+<li><strong>Step 1:</strong> <code>main.py</code> runs <code>import a_mod</code>.</li>
+<li><strong>Step 2:</strong> Python creates an empty module object for <code>a_mod</code>, stores it in <code>sys.modules</code>, and starts running <code>a_mod.py</code> from the top.</li>
+<li><strong>Step 3:</strong> The first line of <code>a_mod.py</code> is <code>from b_mod import func_b</code>.</li>
+<li><strong>Step 4:</strong> So Python pauses <code>a_mod.py</code> and starts running <code>b_mod.py</code>.</li>
+<li><strong>Step 5:</strong> The first line of <code>b_mod.py</code> is <code>from a_mod import func_a</code>.</li>
+<li><strong>Step 6:</strong> <code>a_mod</code> is already in <code>sys.modules</code>, but it is only half built: its code stopped at line 1, so <code>func_a</code> has not been defined yet.</li>
+<li><strong>Step 7:</strong> Python raises <code>ImportError: cannot import name 'func_a' from partially initialized module 'a_mod' (most likely due to a circular import)</code>.</li>
+</ul>
 <p><a href="#table-of-contents">Back to the Table of Contents</a></p>
 <h3 id="g3-how-to-avoid-circular-imports">g.3 How to Avoid Circular Imports<a class="headerlink" href="#g3-how-to-avoid-circular-imports" title="Permanent link">&para;</a></h3>
 <ul>
@@ -9719,14 +9721,16 @@ Hello, World!
 <p>Running <code>python test2.py</code> prints only:</p>
 <div class="highlight"><pre><span></span><code>Hello, Asha!
 </code></pre></div>
-<div class="highlight"><pre><span></span><code>flowchart TD
-    A["1. A file greet.py is used"] --&gt; B{"2. How is it used?"}
-    B --&gt;|Run directly: python greet.py| C["3. __name__ is set to __main__"]
-    C --&gt; D["4. The if __name__ == __main__ block runs"]
-    B --&gt;|Imported: import greet| E["5. __name__ is set to greet"]
-    E --&gt; F["6. The block is skipped; only the function definitions are loaded"]
-</code></pre></div>
-<p><img alt="p.3 Controlling Runnable Code with name" src="../../resources/ch02-book-end-qa-fig-04.png" /></p>
+<p><img alt="p.3 Controlling Runnable Code with name" src="../../resources/LR-ch02-book-end-qa-fig-04.png" /></p>
+<p><strong>Reading the figure</strong></p>
+<ul>
+<li><strong>Step 1:</strong> A file called <code>greet.py</code> is used, either as a program or as a module.</li>
+<li><strong>Step 2:</strong> How is it being used?</li>
+<li><strong>Step 3:</strong> Run directly, with <code>python greet.py</code>: Python sets <code>__name__</code> to <code>"__main__"</code>.</li>
+<li><strong>Step 4:</strong> So the test <code>if __name__ == "__main__":</code> is <code>True</code>, and the block under it runs.</li>
+<li><strong>Step 5:</strong> Imported, with <code>import greet</code>: Python sets <code>__name__</code> to the module's name, <code>"greet"</code>.</li>
+<li><strong>Step 6:</strong> The test is <code>False</code>, so the block is skipped. Only the function definitions are loaded, ready to be called.</li>
+</ul>
 <p><a href="#table-of-contents">Back to the Table of Contents</a></p>
 <h2 id="q-difference-between-attributesmethods-of-a-module-vs-normal-variablesfunctions">q. Difference between attributes/methods of a module vs normal variables/functions<a class="headerlink" href="#q-difference-between-attributesmethods-of-a-module-vs-normal-variablesfunctions" title="Permanent link">&para;</a></h2>
 <p><a href="#table-of-contents">Back to the Table of Contents</a></p>

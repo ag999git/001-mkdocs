@@ -9149,15 +9149,17 @@ r * cmath.exp(1j * phi) -&gt; (3.0000000000000004+3.9999999999999996j)
 cmath.isclose(z, 3 + 4j) -&gt; True
 </code></pre></div>
 <p>The rebuilt number is not exactly <code>3 + 4j</code>, because the angle and the cos and sin values are rounded floats. That is why Step 5 uses <code>cmath.isclose()</code>.</p>
-<div class="highlight"><pre><span></span><code>flowchart TD
-    A["1. Start with z = x + yj (rectangular form)"] --&gt; B["2. r = abs(z) = square root of x squared + y squared"]
-    B --&gt; C["3. phi = cmath.phase(z), the angle in radians"]
-    C --&gt; D["4. Polar form: (r, phi), from cmath.polar(z)"]
-    D --&gt; E["5. x = r cos phi and y = r sin phi"]
-    E --&gt; F["6. Back to rectangular form with cmath.rect(r, phi)"]
-    F --&gt; G["7. Compare with the original using cmath.isclose()"]
-</code></pre></div>
-<p><img alt="Polar Operations with cmath" src="../../resources/ch02-complex-numbers-advanced-fig-01.png" /></p>
+<p><img alt="Polar Operations with cmath" src="../../resources/LR-ch02-complex-numbers-advanced-fig-01.png" /></p>
+<p><strong>Reading the figure</strong></p>
+<ul>
+<li><strong>Step 1:</strong> Start with a complex number in rectangular form, <code>z = x + yj</code>, for example <code>3 + 4j</code>.</li>
+<li><strong>Step 2:</strong> Its length is <code>r = abs(z)</code>, the square root of <code>x² + y²</code>. For <code>3 + 4j</code> this is <code>5.0</code>.</li>
+<li><strong>Step 3:</strong> Its angle is <code>phi = cmath.phase(z)</code>, measured in radians from the positive real axis.</li>
+<li><strong>Step 4:</strong> Together, <code>(r, phi)</code> is the polar form. <code>cmath.polar(z)</code> returns both at once.</li>
+<li><strong>Step 5:</strong> To go back, use <code>x = r cos phi</code> and <code>y = r sin phi</code>.</li>
+<li><strong>Step 6:</strong> <code>cmath.rect(r, phi)</code> does that for you and returns the rectangular form.</li>
+<li><strong>Step 7:</strong> The rebuilt number is not exactly <code>3 + 4j</code>, because the values are rounded floats, so compare with <code>cmath.isclose()</code> instead of <code>==</code>.</li>
+</ul>
 <p><a href="#table-of-contents">Back to the Table of Contents</a></p>
 <h3 id="5-ieee-754-behavior-and-edge-cases">5. IEEE-754 Behavior and Edge Cases<a class="headerlink" href="#5-ieee-754-behavior-and-edge-cases" title="Permanent link">&para;</a></h3>
 <p>Because the two parts of a complex number are <strong>double-precision floats</strong>, complex numbers inherit all the special behaviour of floats:</p>

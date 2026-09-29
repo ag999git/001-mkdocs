@@ -10297,15 +10297,16 @@ round(2.675, 2)-&gt; 2.67
 </code></pre></div>
 <p><strong>How round() decides</strong></p>
 <p>Most people learn at school to round a half <strong>up</strong> (2.5 becomes 3). Python instead rounds a half to the nearest <strong>even</strong> digit (2.5 becomes 2, 3.5 becomes 4). This is called banker's rounding. When you round many numbers, rounding halves always up makes totals drift upwards. Rounding to even pushes half of them up and half down, so the errors cancel out.</p>
-<div class="highlight"><pre><span></span><code>flowchart TD
-    A["1. Call round(x) or round(x, n)"] --&gt; B["2. Look at the value Python has actually stored"]
-    B --&gt; C{"3. Is it exactly halfway between two choices?"}
-    C --&gt;|No| D["4. Pick the nearer choice"]
-    C --&gt;|Yes| E["5. Pick the choice whose last digit is even"]
-    D --&gt; F["6. Return the result"]
-    E --&gt; F
-</code></pre></div>
-<p><img alt="Block 4: isinteger() and round()" src="../../resources/ch02-float-data-fig-05.png" /></p>
+<p><img alt="Block 4: isinteger() and round()" src="../../resources/LR-ch02-float-data-fig-05.png" /></p>
+<p><strong>Reading the figure</strong></p>
+<ul>
+<li><strong>Step 1:</strong> Call <code>round(x)</code> to round to a whole number, or <code>round(x, n)</code> to keep <code>n</code> decimal places.</li>
+<li><strong>Step 2:</strong> Python looks at the value it has actually stored in binary, not the decimal you typed. <code>2.675</code> is stored as slightly less than 2.675.</li>
+<li><strong>Step 3:</strong> Is the stored value exactly halfway between the two possible answers?</li>
+<li><strong>Step 4:</strong> No: pick the nearer answer. This is why <code>round(2.675, 2)</code> gives <code>2.67</code>.</li>
+<li><strong>Step 5:</strong> Yes: pick the answer whose last digit is even. This is banker's rounding: <code>round(2.5)</code> gives <code>2</code> and <code>round(3.5)</code> gives <code>4</code>.</li>
+<li><strong>Step 6:</strong> Return the result.</li>
+</ul>
 <p>Step 2 is the key to the <code>round(2.675, 2)</code> surprise. The stored value is slightly less than 2.675, so at step 3 it is <strong>not</strong> exactly halfway, and step 4 picks the nearer choice, 2.67.</p>
 <p>Learn more: <a href="https://docs.python.org/3/library/functions.html#round">round() in the Python documentation</a>.</p>
 <p><a href="#table-of-contents">Back to the Table of Contents</a></p>

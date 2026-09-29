@@ -9302,14 +9302,16 @@ not known
 <h3 id="17-why-must-dictionary-keys-be-immutable">17. Why must dictionary keys be immutable?<a class="headerlink" href="#17-why-must-dictionary-keys-be-immutable" title="Permanent link">&para;</a></h3>
 <p>Dictionary keys are stored using hash values worked out from the key objects. If a key could change, its contents and its hash could change after it was stored, and the dictionary would look for it in the wrong place. Immutable objects such as strings, integers and tuples of immutable items have hash values that never change. Therefore, Python allows only <strong>hashable</strong> objects as dictionary keys. In practice these are mostly immutable objects.</p>
 <p>How a lookup such as <code>d["a"]</code> works:</p>
-<div class="highlight"><pre><span></span><code>flowchart TD
-    A["1. You ask for d[key]"] --&gt; B["2. Python works out hash(key)"]
-    B --&gt; C["3. The hash tells Python which slot of the table to look in"]
-    C --&gt; D{"4. Is a key equal to the one you asked for stored there?"}
-    D --&gt;|Yes| E["5. Return its value"]
-    D --&gt;|No| F["6. KeyError"]
-</code></pre></div>
-<p><img alt="Why must dictionary keys be immutable?" src="../../resources/ch02-2-ch2-more-conceptual-qa-fig-02.png" /></p>
+<p><img alt="Why must dictionary keys be immutable?" src="../../resources/LR-ch02-2-ch2-more-conceptual-qa-fig-02.png" /></p>
+<p><strong>Reading the figure</strong></p>
+<ul>
+<li><strong>Step 1:</strong> You ask for a value, for example <code>d["a"]</code>.</li>
+<li><strong>Step 2:</strong> Python works out <code>hash(key)</code>, a number calculated from the key's contents.</li>
+<li><strong>Step 3:</strong> The hash tells Python which slot of the dictionary's table to look in, so it does not have to search every item.</li>
+<li><strong>Step 4:</strong> Is a key equal to the one you asked for stored there? (If two keys share a slot, Python checks the next slots too.)</li>
+<li><strong>Step 5:</strong> Yes: return its value.</li>
+<li><strong>Step 6:</strong> No: raise <code>KeyError</code>. If a key could change after being stored, its hash would change too, and Python would look in the wrong slot. That is why keys must be immutable.</li>
+</ul>
 <p>If the key could change after being stored, its hash at step 2 would no longer point to the slot where it was stored, and the lookup would fail.</p>
 <div class="highlight"><pre><span></span><code><span class="c1"># Step 1: Strings, numbers and tuples work as keys</span>
 <span class="n">d</span> <span class="o">=</span> <span class="p">{</span><span class="s2">"a"</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">:</span> <span class="s2">"two"</span><span class="p">,</span> <span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">):</span> <span class="s2">"pair"</span><span class="p">}</span>
@@ -9549,15 +9551,17 @@ In five years you will be 30
 5.0
 99 marks
 </code></pre></div>
-<div class="highlight"><pre><span></span><code>flowchart TD
-    A["1. An operation uses two values of different types"] --&gt; B{"2. Are both values numbers?"}
-    B --&gt;|Yes| C["3. Implicit: Python converts the narrower type to the wider one"]
-    C --&gt; D["4. The operation runs, for example 3 + 1.5 gives 4.5"]
-    B --&gt;|No| E["5. Python raises TypeError"]
-    E --&gt; F["6. Explicit: the programmer converts, for example int() or str()"]
-    F --&gt; G["7. The operation runs with the converted value"]
-</code></pre></div>
-<p><img alt="What is the difference between implicit and explicit type conversion?" src="../../resources/ch02-2-ch2-more-conceptual-qa-fig-03.png" /></p>
+<p><img alt="What is the difference between implicit and explicit type conversion?" src="../../resources/LR-ch02-2-ch2-more-conceptual-qa-fig-03.png" /></p>
+<p><strong>Reading the figure</strong></p>
+<ul>
+<li><strong>Step 1:</strong> An operation such as <code>+</code> is given two values of different types.</li>
+<li><strong>Step 2:</strong> Are both values numbers, for example an <code>int</code> and a <code>float</code>?</li>
+<li><strong>Step 3:</strong> Yes: Python converts implicitly, turning the narrower type into the wider one, here <code>int</code> to <code>float</code>, so no information is lost.</li>
+<li><strong>Step 4:</strong> The operation runs: <code>3 + 1.5</code> gives <code>4.5</code>.</li>
+<li><strong>Step 5:</strong> No: for a mix such as <code>"5" + 3</code>, Python will not guess, so it raises <code>TypeError</code>.</li>
+<li><strong>Step 6:</strong> The programmer converts explicitly, on purpose, with a function such as <code>int()</code>, <code>float()</code> or <code>str()</code>.</li>
+<li><strong>Step 7:</strong> The operation now runs with the converted value, for example <code>int("5") + 3</code> gives <code>8</code>.</li>
+</ul>
 <p><a href="#table-of-contents">Back to the Table of Contents</a></p>
 <h3 id="26-why-is-converting-a-float-to-an-integer-called-narrowing-conversion">26. Why is converting a <code>float</code> to an integer called narrowing conversion?<a class="headerlink" href="#26-why-is-converting-a-float-to-an-integer-called-narrowing-conversion" title="Permanent link">&para;</a></h3>
 <p>Converting a float to an integer removes the fractional part of the number. An <code>int</code> cannot hold a fractional part, so the conversion goes from a "wider" type to a "narrower" one, and some information is lost. That is why it is called a narrowing conversion. For example, <code>int(7.9)</code> gives <code>7</code>. The decimal part is cut off (truncated), not rounded. For negative numbers, cutting off moves toward zero, so <code>int(-7.9)</code> gives <code>-7</code>.</p>
@@ -9786,20 +9790,20 @@ NameError: name 'sqrt' is not defined
 True
 True
 </code></pre></div>
-<div class="highlight"><pre><span></span><code>flowchart TD
-    A["1. Python runs import name"] --&gt; B{"2. Is name already in sys.modules?"}
-    B --&gt;|Yes| C["3. Reuse the cached module object"]
-    B --&gt;|No| D["4. Find the module file"]
-    D --&gt; E{"5. Is an up-to-date .pyc file in __pycache__?"}
-    E --&gt;|Yes| F["6. Load the bytecode from the .pyc file"]
-    E --&gt;|No| G["7. Compile the .py file to bytecode and save a new .pyc"]
-    F --&gt; H["8. Store the new module in sys.modules"]
-    G --&gt; H
-    H --&gt; I["9. Run the module's code once"]
-    C --&gt; J["10. Bind the name in your program"]
-    I --&gt; J
-</code></pre></div>
-<p><img alt="Why does Python cache imported modules in sys.modules?" src="../../resources/ch02-2-ch2-more-conceptual-qa-fig-05.png" /></p>
+<p><img alt="Why does Python cache imported modules in sys.modules?" src="../../resources/LR-ch02-2-ch2-more-conceptual-qa-fig-05.png" /></p>
+<p><strong>Reading the figure</strong></p>
+<ul>
+<li><strong>Step 1:</strong> Python runs the statement <code>import name</code>.</li>
+<li><strong>Step 2:</strong> It first checks <code>sys.modules</code>, the cache of modules already imported. Is <code>name</code> there?</li>
+<li><strong>Step 3:</strong> Yes: reuse the cached module object. Nothing is loaded or run again, so a second import is instant.</li>
+<li><strong>Step 4:</strong> No: find the module's file by searching the folders in <code>sys.path</code>.</li>
+<li><strong>Step 5:</strong> Is there an up-to-date <code>.pyc</code> file for it in the <code>__pycache__</code> folder?</li>
+<li><strong>Step 6:</strong> Yes: load the ready-made bytecode from the <code>.pyc</code> file.</li>
+<li><strong>Step 7:</strong> No: compile the <code>.py</code> file to bytecode and save a new <code>.pyc</code> for next time.</li>
+<li><strong>Step 8:</strong> Store the new module object in <code>sys.modules</code>. This happens before its code runs.</li>
+<li><strong>Step 9:</strong> Run the module's code once, from top to bottom, creating its functions and variables.</li>
+<li><strong>Step 10:</strong> Bind the name in your program so it refers to the module. (Yes from Step 2 comes straight here.)</li>
+</ul>
 <p>Python stores the module in <code>sys.modules</code> (step 8) just before running its code (step 9). So if two modules import each other, the second import finds the half-built module in the cache instead of starting an endless loop.</p>
 <p>If you edit a module while a program is running, a new <code>import</code> will not pick up the change, because of the cache. <code>importlib.reload()</code> forces a fresh load.</p>
 <p><a href="#table-of-contents">Back to the Table of Contents</a></p>
