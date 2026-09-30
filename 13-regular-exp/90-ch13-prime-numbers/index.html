@@ -8826,7 +8826,19 @@ is_prime_unary(9) -&gt; False
   n=11  expected=True   got=True   OK
 </code></pre></div>
 <h2 id="how-the-regex-decision-making-flows">How the regex decision-making flows<a class="headerlink" href="#how-the-regex-decision-making-flows" title="Permanent link">&para;</a></h2>
-<p><img alt="Flowchart" src="../../resources/ch-13-august-2026-exercise-prime-numbers-with-regex.png" /></p>
+<p><img alt="Flowchart" src="../../resources/S13-LR-ch-13-august-2026-exercise-prime-numbers-with-regex.png" /></p>
+<p><strong>Reading the figure</strong></p>
+<ul>
+<li><strong>Step 1:</strong> Start with a whole number <code>n</code>.</li>
+<li><strong>Step 2:</strong> Convert it to unary text, a string of <code>n</code> copies of the character <code>1</code>.</li>
+<li><strong>Step 3:</strong> Is the string empty, or exactly one character long (<code>^1?$</code>)?</li>
+<li><strong>Step 4:</strong> Yes: not prime; this covers <code>n = 0</code> and <code>n = 1</code>.</li>
+<li><strong>Step 5:</strong> Try the next block length, starting with the shortest allowed block of two characters (<code>(11+?)</code>).</li>
+<li><strong>Step 6:</strong> Does the whole string consist of that block repeated (<code>\1+</code>), with nothing left over?</li>
+<li><strong>Step 7:</strong> Yes: a repeating block was found, so <code>n</code> has a real factor and is not prime.</li>
+<li><strong>Step 8:</strong> No: is there a longer block length still to try? If so, go back to Step 5 with that length.</li>
+<li><strong>Step 9:</strong> No block length is left: no repeating block ever divided the string evenly, so <code>n</code> is prime.</li>
+</ul>
 <h2 id="why-primes-fail-to-match-in-one-table">Why primes fail to match, in one table<a class="headerlink" href="#why-primes-fail-to-match-in-one-table" title="Permanent link">&para;</a></h2>
 <table>
 <thead>
@@ -8872,11 +8884,11 @@ is_prime_unary(9) -&gt; False
 <td><code>11111111111</code></td>
 <td>2, 3, 4, 5</td>
 <td>No match</td>
-<td>None of the block sizes up to 5 (half of 11, rounded down) divide 11 evenly</td>
+<td>None of the block sizes 2 to 5 divides 11 evenly, and larger blocks cannot fit twice</td>
 </tr>
 </tbody>
 </table>
-<p>The pattern for every prime number in this table is the same: the engine dutifully tries every possible block length from 2 up to half the number, finds that none of them evenly divide the string, and only then reports "no match" — meaning <code>is_prime_unary</code> can finally, correctly, return <code>True</code>. This exhaustive process, of trying every possibility and finding nothing, is exactly why primes are the <em>slow</em> case for this algorithm, which the next section measures directly.</p>
+<p>The pattern for every prime number in this table is the same: the engine dutifully tries every possible block length from 2 upward (only lengths up to half the number could possibly succeed), finds that none of them evenly divide the string, and only then reports "no match" — meaning <code>is_prime_unary</code> can finally, correctly, return <code>True</code>. This exhaustive process, of trying every possibility and finding nothing, is exactly why primes are the <em>slow</em> case for this algorithm, which the next section measures directly.</p>
 <h2 id="just-how-inefficient-is-extremely-inefficient">Just how inefficient is "extremely inefficient"?<a class="headerlink" href="#just-how-inefficient-is-extremely-inefficient" title="Permanent link">&para;</a></h2>
 <p>The original docstring warns that this method "is extremely inefficient for large numbers," without saying exactly how inefficient. That claim was measured directly while preparing this page, by timing <code>is_prime_unary</code> on a series of larger and larger prime numbers.</p>
 <div class="highlight"><pre><span></span><code><span class="c1"># Step 1: Time is_prime_unary on primes of increasing size</span>
@@ -8944,7 +8956,7 @@ The prime took about 43 times as long as the composite
 <ul>
 <li><em>How the regex works:</em> it tries two alternatives, joined by <code>|</code>. The first, <code>^1?$</code>, matches only the empty string or a single <code>"1"</code> character, catching the special cases <code>n = 0</code> and <code>n = 1</code>. The second, <code>^(11+?)\1+$</code>, uses a non-greedy capturing group to find the shortest possible block of two or more <code>'1'</code>s, then uses a backreference (<code>\1+</code>) to check whether that exact block, repeated one or more further times, accounts for the rest of the string with nothing left over.</li>
 <li><em>Why it detects composite numbers:</em> a composite number, by definition, is a product of two smaller whole numbers greater than 1 — for example, <code>9 = 3 × 3</code>. In unary, this means the string of <code>'1'</code>s can always be split into that many equal-sized blocks. The regex's job is exactly to search for such a split, trying every possible block length from the smallest upward.</li>
-<li><em>Why primes fail to match:</em> a prime number, by definition, has no such factor pair. No matter which block length the regex tries, some <code>'1'</code>s are always left over, or the block does not divide the string evenly. Once every possible block length (from 2 up to half the number) has been tried and none of them work, the regex engine reports no match, which is exactly the signal <code>is_prime_unary</code> uses to return <code>True</code>.</li>
+<li><em>Why primes fail to match:</em> a prime number, by definition, has no such factor pair. No matter which block length the regex tries, some <code>'1'</code>s are always left over, or the block does not divide the string evenly. Once every possible block length (from 2 upward; only those up to half the number could possibly fit twice) has been tried and none of them work, the regex engine reports no match, which is exactly the signal <code>is_prime_unary</code> uses to return <code>True</code>.</li>
 </ul>
 
 

@@ -9033,7 +9033,7 @@ Span:                 (0, 7)
 <p><strong>Explanation:</strong></p>
 <ul>
 <li>The character class <code>[,;\s]</code> contains every kind of separator this text might use, all treated as equally valid split points.</li>
-<li>The <code>+</code> quantifier combines consecutive separators together, which matters here because "Banana Grape" is separated by a plain space while the other words use punctuation — <code>re.split()</code> handles all three separator styles uniformly in one call, which plain <a href="https://docs.python.org/3/library/stdtypes.html#str.split"><code>str.split()</code></a> could not do without several separate calls.</li>
+<li>The <code>+</code> quantifier combines consecutive separators together, (this text happens to use only single separators, but without <code>+</code> a comma followed by a space would leave an empty string in the result) — <code>re.split()</code> handles all three separator styles uniformly in one call, which plain <a href="https://docs.python.org/3/library/stdtypes.html#str.split"><code>str.split()</code></a> could not do without several separate calls.</li>
 </ul>
 <h4 id="q17-write-a-script-that-demonstrates-the-difference-between-greedy-and-non-greedy-matching"><strong>Q17. Write a script that demonstrates the difference between greedy and non-greedy matching.</strong><a class="headerlink" href="#q17-write-a-script-that-demonstrates-the-difference-between-greedy-and-non-greedy-matching" title="Permanent link">&para;</a></h4>
 <p><strong>Answer:</strong></p>
@@ -9264,7 +9264,7 @@ Named groups:  {'word': 1}
 <div class="highlight"><pre><span></span><code>['oooo', 'eeaau']
 </code></pre></div>
 <blockquote>
-<p><strong>Fix applied here:</strong> the original comment claimed this would print <code>['ooo', 'eeaa', 'uu']</code> — three separate matches. Counting the vowels carefully in <code>"cooool beeaautiful"</code> shows this is not correct: <code>"cooool"</code> contains <strong>four</strong> consecutive <code>o</code>s (<code>c-o-o-o-o-l</code>), not three, and in <code>"beeaautiful"</code> the run <code>e-e-a-a-u</code> is <strong>one single, unbroken</strong> run of five vowels (<code>"eeaau"</code>) — it is not split into a separate <code>"eeaa"</code> and <code>"uu"</code>, because there is no non-vowel character sitting between the <code>a</code> and the <code>u</code>. The corrected, verified output is <code>['oooo', 'eeaau']</code> — two matches, not three.</p>
+<p><strong>Note:</strong> it is easy to expect <code>['ooo', 'eeaa', 'uu']</code> — three separate matches. Counting the vowels carefully in <code>"cooool beeaautiful"</code> shows this is not correct: <code>"cooool"</code> contains <strong>four</strong> consecutive <code>o</code>s (<code>c-o-o-o-o-l</code>), not three, and in <code>"beeaautiful"</code> the run <code>e-e-a-a-u</code> is <strong>one single, unbroken</strong> run of five vowels (<code>"eeaau"</code>) — it is not split into a separate <code>"eeaa"</code> and <code>"uu"</code>, because there is no non-vowel character sitting between the <code>a</code> and the <code>u</code>. The actual output is <code>['oooo', 'eeaau']</code> — two matches, not three.</p>
 </blockquote>
 <p><strong>Explanation:</strong></p>
 <ul>
@@ -9461,7 +9461,7 @@ Position: 8 11
 <span class="c1"># Step 2: Set up sample text containing a 16-digit card number</span>
 <span class="n">text</span> <span class="o">=</span> <span class="s2">"My card number is 1234567812345678"</span>
 
-<span class="c1"># Step 3: \d(?=\d{4}) matches any SINGLE digit that has EXACTLY four</span>
+<span class="c1"># Step 3: \d(?=\d{4}) matches any SINGLE digit that has AT LEAST four</span>
 <span class="c1"># more digits somewhere immediately after it. (?=\d{4}) is a positive</span>
 <span class="c1"># lookahead: it CHECKS for four digits ahead without consuming them,</span>
 <span class="c1"># so those four digits remain available for the next \d(?=\d{4})</span>

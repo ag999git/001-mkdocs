@@ -8569,7 +8569,7 @@ Bad practice   group(4): dog
 Better practice groups(): ('dog',)
 Better practice group(1): dog
 </code></pre></div>
-<p><strong>What this shows:</strong> this script was newly added here (it did not appear in the original text, which only described the bad-vs-better idea in prose) to make the "bad vs. better practice" point concrete and verifiable, rather than something you have to take on faith. Both versions successfully find <code>"dog"</code> — but the better-practice version makes it <code>group(1)</code>, the simplest possible position to remember and to keep stable as the pattern evolves. This is (1) cleaner and (2) less error-prone, exactly as the original text summarised.</p>
+<p><strong>What this shows:</strong> this script makes the "bad vs. better practice" point concrete and verifiable, rather than something you have to take on faith. Both versions successfully find <code>"dog"</code> — but the better-practice version makes it <code>group(1)</code>, the simplest possible position to remember and to keep stable as the pattern evolves. This is (1) cleaner and (2) less error-prone.</p>
 <h2 id="worked-example-choosing-which-part-of-a-match-to-capture">Worked example: choosing which part of a match to capture<a class="headerlink" href="#worked-example-choosing-which-part-of-a-match-to-capture" title="Permanent link">&para;</a></h2>
 <p>The next script searches a sentence containing several filenames, and shows three slightly different patterns — each capturing a different piece of the match — to demonstrate how you choose exactly which part of a pattern to make capturing.</p>
 <div class="highlight"><pre><span></span><code><span class="c1"># Step 1: Import re</span>
@@ -8605,12 +8605,12 @@ m3.group(1): report
 m3.group(2): pdf
 </code></pre></div>
 <blockquote>
-<p><strong>Fix applied here:</strong> the original text claimed <code>m1.group(1)</code> would be <code>"docx"</code>, and that <code>m2.group(1)</code> / <code>m3.group(1)</code> would both be <code>"notes"</code>.
+<p><strong>Note:</strong> you might expect <code>m1.group(1)</code> to be <code>"docx"</code>, and <code>m2.group(1)</code> / <code>m3.group(1)</code> to be <code>"notes"</code>.
 Note: <code>re.search()</code> always returns the <strong>first</strong> (leftmost) match it finds while scanning the text from left to right, and in <code>"Here are some files: report.pdf, notes.docx, image.png, summary.txt."</code>, the filename <code>report.pdf</code> appears <strong>before</strong> <code>notes.docx</code>.
 Since <code>report.pdf</code> matches the pattern just as well as <code>notes.docx</code> would have, <code>re.search()</code> stops there and never even looks as far as <code>notes.docx</code>.
 This is exactly the same leftmost-match rule already verified elsewhere on this chapter's companion page — see Script 13 on <a href="../10-ch13-re/"><code>10-ch13-re.md</code></a>, which uses this very same sentence as its example text.</p>
 </blockquote>
-<p>Notice that <code>m2</code> and <code>m3</code> above use the <em>exact same pattern</em> — the script simply calls <code>.group(1)</code> and <code>.group(2)</code> on the same match twice, in two separate steps, to show that both pieces are available on the one <code>Match</code> object once you capture them both.</p>
+<p>Notice that <code>m2</code> and <code>m3</code> above use the <em>exact same pattern</em> — the script simply runs the same search twice (as <code>m2</code> and <code>m3</code>), to show that both pieces are available on the one <code>Match</code> object once you capture them both.</p>
 <h2 id="case-study-removing-duplicate-words-with-a-backreference">Case study: removing duplicate words with a backreference<a class="headerlink" href="#case-study-removing-duplicate-words-with-a-backreference" title="Permanent link">&para;</a></h2>
 <p>This case study puts capturing and non-capturing groups side by side in a single, realistic task: cleaning up a sentence where some words have accidentally been typed twice in a row (<code>"The The cat cat cat sat sat on on the the wall wall."</code>).</p>
 <h3 id="the-pattern-piece-by-piece">The pattern, piece by piece<a class="headerlink" href="#the-pattern-piece-by-piece" title="Permanent link">&para;</a></h3>
@@ -8762,7 +8762,15 @@ Duplicate word: wall
 </code></pre></div>
 <h2 id="decision-guide-capturing-or-non-capturing">Decision guide: capturing or non-capturing?<a class="headerlink" href="#decision-guide-capturing-or-non-capturing" title="Permanent link">&para;</a></h2>
 <p>The flowchart below summarises the decision in one place: for any pair of parentheses you are about to type into a pattern, ask yourself whether you will ever need that piece of text back again — either through <code>.group(n)</code> afterwards, or through a backreference such as <code>\1</code> later in the <em>same</em> pattern.</p>
-<p><img alt="Flowchart" src="../../resources/ch-13-august-2026-capturing-noncapturing-decision-01.png" /></p>
+<p><img alt="Flowchart" src="../../resources/S13-LR-ch-13-august-2026-capturing-noncapturing-decision-01.png" /></p>
+<p><strong>Reading the figure</strong></p>
+<ul>
+<li><strong>Step 1:</strong> You are about to write a pair of parentheses in a regular expression.</li>
+<li><strong>Step 2:</strong> Will you need this piece of text afterwards, through <code>.group(n)</code>?</li>
+<li><strong>Step 3:</strong> Yes: use a capturing group, <code>( … )</code>. The matched text is stored and gets a group number.</li>
+<li><strong>Step 4:</strong> No: will you refer back to it with a backreference such as <code>\1</code> later in the same pattern?</li>
+<li><strong>Step 5:</strong> No to both: use a non-capturing group, <code>(?: … )</code>. It only groups; nothing is stored and no group number is used.</li>
+</ul>
 <h3 id="summary-comparison-table">Summary comparison table<a class="headerlink" href="#summary-comparison-table" title="Permanent link">&para;</a></h3>
 <table>
 <thead>

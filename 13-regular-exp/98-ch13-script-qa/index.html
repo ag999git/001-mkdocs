@@ -8338,7 +8338,7 @@
 
 <h1 id="twenty-regular-expression-programs-a-practice-set-for-pythons-re-module">Twenty Regular Expression Programs: A Practice Set for Python's re Module<a class="headerlink" href="#twenty-regular-expression-programs-a-practice-set-for-pythons-re-module" title="Permanent link">&para;</a></h1>
 <h2 id="what-this-page-contains-and-why-it-matters">What this page contains, and why it matters<a class="headerlink" href="#what-this-page-contains-and-why-it-matters" title="Permanent link">&para;</a></h2>
-<p>Regular expressions are learned best by writing a lot of small, focused programs rather than by reading theory alone. This page is exactly that: twenty short, independent Python scripts, each one built around a single regex idea — checking a string's shape, pulling matching pieces out of a paragraph, splitting text apart, replacing pieces of it, and a few of the more advanced tricks such as backreferences and lookaheads. Taken together, they form a practice set that touches almost every regex tool this chapter has introduced: character classes, quantifiers, anchors, groups, backreferences, greedy and non-greedy matching, and four of the most useful functions in Python's <code>re</code> module — <code>re.fullmatch()</code>, <code>re.findall()</code>, <code>re.split()</code>, <code>re.sub()</code>, and <code>re.finditer()</code>.</p>
+<p>Regular expressions are learned best by writing a lot of small, focused programs rather than by reading theory alone. This page is exactly that: twenty short, independent Python scripts, each one built around a single regex idea — checking a string's shape, pulling matching pieces out of a paragraph, splitting text apart, replacing pieces of it, and a few of the more advanced tricks such as backreferences and lookaheads. Taken together, they form a practice set that touches almost every regex tool this chapter has introduced: character classes, quantifiers, anchors, groups, backreferences, greedy and non-greedy matching, and five of the most useful functions in Python's <code>re</code> module — <code>re.fullmatch()</code>, <code>re.findall()</code>, <code>re.split()</code>, <code>re.sub()</code>, and <code>re.finditer()</code>.</p>
 <p>Every script on this page was actually run while preparing it, and every line of printed output shown here is the real, checked output of that exact code — not a description of what the code is expected to do. Working through all twenty, in order, is a good way to test whether the earlier parts of this chapter have genuinely sunk in, since each question asks you to reach for a slightly different regex tool without telling you in advance which one.</p>
 <h3 id="glossary-of-terms">Glossary of terms<a class="headerlink" href="#glossary-of-terms" title="Permanent link">&para;</a></h3>
 <table>
@@ -8391,7 +8391,7 @@
 </tr>
 <tr>
 <td>Non-capturing group</td>
-<td>A group written <code>(?:...)</code>, used purely to apply a quantifier or an alternation (<code>|</code>) to several characters at once, without the overhead of remembering what it matched.</td>
+<td>A group written <code>(?:...)</code>, used purely to apply a quantifier or an alternation (<code>\|</code>) to several characters at once, without the overhead of remembering what it matched.</td>
 </tr>
 <tr>
 <td>Backreference</td>
@@ -8525,7 +8525,7 @@
 <td>14</td>
 <td>Match titles (Mr/Ms/Dr)</td>
 <td><code>re.findall()</code></td>
-<td>Non-capturing group <code>(?:...)</code>, alternation <code>|</code></td>
+<td>Non-capturing group <code>(?:...)</code>, alternation <code>\|</code></td>
 </tr>
 <tr>
 <td>15</td>
@@ -8853,8 +8853,16 @@ Invalid PIN
 Non-Greedy:
 &lt;h1&gt;
 </code></pre></div>
-<p>Both patterns start looking from the very first <code>&lt;</code> in the string, but they disagree completely about where to stop. The greedy version's <code>.*</code> reaches all the way to the very last <code>&gt;</code> in the entire string before the engine even starts checking whether the pattern is satisfied, because greedy quantifiers grab as much as they can up front, and only give characters back if forced to. Since the string does end in a <code>&gt;</code>, the greedy match never needs to give anything back, and the whole string becomes one giant match. The non-greedy version's <code>.*?</code> does the opposite: it grabs as few characters as it possibly can, checking after every single character whether a <code>&gt;</code> would let the pattern succeed right now — and the very first <code>&gt;</code>, closing the opening <code>&lt;h1&gt;</code> tag, is reached almost immediately, so the match stops there.</p>
-<p><img alt="Flowchart" src="../../resources/ch-13-august-2026-exercise-greedy-nongreedy.png" /></p>
+<p>Both patterns start looking from the very first <code>&lt;</code> in the string, but they disagree completely about where to stop. The greedy version's <code>.*</code> first runs all the way to the end of the string (swallowing the final <code>&gt;</code> too), because greedy quantifiers grab as much as they can up front, and only give characters back if forced to. The pattern's closing <code>&gt;</code> then has nothing left to match, so the engine backtracks exactly one character, hands the final <code>&gt;</code> back, and the whole string becomes one giant match. The non-greedy version's <code>.*?</code> does the opposite: it grabs as few characters as it possibly can, checking after every single character whether a <code>&gt;</code> would let the pattern succeed right now — and the very first <code>&gt;</code>, closing the opening <code>&lt;h1&gt;</code> tag, is reached almost immediately, so the match stops there.</p>
+<p><img alt="Flowchart" src="../../resources/S13-LR-ch-13-august-2026-exercise-greedy-nongreedy.png" /></p>
+<p><strong>Reading the figure</strong></p>
+<ul>
+<li>Both searches start at the first <code>&lt;</code> in <code>text = "&lt;h1&gt;Hello&lt;/h1&gt;&lt;p&gt;World&lt;/p&gt;"</code>.</li>
+<li>Greedy <code>&lt;.*&gt;</code>: <code>.*</code> first runs to the end of the string, swallowing the last <code>&gt;</code> too; the pattern's own <code>&gt;</code> then has nothing to match, so the engine backtracks one character.</li>
+<li>Non-greedy <code>&lt;.*?&gt;</code>: <code>.*?</code> takes one character at a time and checks after each whether the pattern's <code>&gt;</code> can match.</li>
+<li>The greedy match is the whole string, <code>&lt;h1&gt;Hello&lt;/h1&gt;&lt;p&gt;World&lt;/p&gt;</code>.</li>
+<li>The non-greedy match stops at the very first <code>&gt;</code>: <code>&lt;h1&gt;</code>.</li>
+</ul>
 <p>This distinction matters in practice far more often than it might first appear: a greedy <code>&lt;.*&gt;</code> used to pull individual HTML tags out of real HTML would, exactly as shown here, swallow everything from the first tag to the last one on the whole page, rather than matching one tag at a time. The non-greedy version is almost always the one you actually want when the goal is "match one small, specific piece," while greedy matching is more useful when the goal genuinely is "match as much as possible."</p>
 <p><a id="question-10"></a></p>
 <h2 id="question-10-write-a-script-to-validate-whether-a-password-contains-at-least-one-uppercase-letter-and-one-digit">Question 10: Write a script to validate whether a password contains at least one uppercase letter and one digit.<a class="headerlink" href="#question-10-write-a-script-to-validate-whether-a-password-contains-at-least-one-uppercase-letter-and-one-digit" title="Permanent link">&para;</a></h2>
@@ -8897,7 +8905,18 @@ Non-Greedy:
 Invalid Password
 </code></pre></div>
 <p><code>"GoodPass1"</code> is nine characters long, contains the uppercase letters <code>G</code> and <code>P</code>, and contains the digit <code>1</code>, so it satisfies all three conditions. <code>"badpass"</code> fails on every count at once: it is only seven characters long (short of the required eight), it has no uppercase letter, and it has no digit — any one of these three failures on its own would already be enough to make the whole pattern fail.</p>
-<p><img alt="Flowchart" src="../../resources/ch-13-august-2026-exercise-valid-invalid-password.png" /></p>
+<p><img alt="Flowchart" src="../../resources/S13-LR-ch-13-august-2026-exercise-valid-invalid-password.png" /></p>
+<p><strong>Reading the figure</strong></p>
+<ul>
+<li><strong>Step 1:</strong> Start with a candidate password, checked with <code>re.fullmatch(r"(?=.*[A-Z])(?=.*\d).{8,}", pw)</code>.</li>
+<li><strong>Step 2:</strong> Does it contain at least one uppercase letter, <code>(?=.*[A-Z])</code>?</li>
+<li><strong>Step 3:</strong> No: "Invalid Password".</li>
+<li><strong>Step 4:</strong> Does it contain at least one digit, <code>(?=.*\d)</code>?</li>
+<li><strong>Step 5:</strong> No: "Invalid Password".</li>
+<li><strong>Step 6:</strong> Is it at least eight characters long, <code>.{8,}</code>?</li>
+<li><strong>Step 7:</strong> No: "Invalid Password".</li>
+<li><strong>Step 8:</strong> Yes to all three: "Valid Password". (<code>"GoodPass1"</code> passes; <code>"badpass"</code> already fails the first check.)</li>
+</ul>
 <p><a id="question-11"></a></p>
 <h2 id="question-11-write-a-script-to-extract-hashtags-from-a-social-media-post">Question 11: Write a script to extract hashtags from a social media post.<a class="headerlink" href="#question-11-write-a-script-to-extract-hashtags-from-a-social-media-post" title="Permanent link">&para;</a></h2>
 <div class="highlight"><pre><span></span><code><span class="kn">import</span><span class="w"> </span><span class="nn">re</span>

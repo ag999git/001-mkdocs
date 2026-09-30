@@ -8415,7 +8415,7 @@
 <span class="nb">print</span><span class="p">(</span><span class="nb">type</span><span class="p">(</span><span class="n">match</span><span class="p">)</span> <span class="ow">is</span> <span class="n">re</span><span class="o">.</span><span class="n">Match</span><span class="p">)</span>
 </code></pre></div>
 <p>Verified output:</p>
-<div class="highlight"><pre><span></span><code>Pattern object: re.compile('\d+')
+<div class="highlight"><pre><span></span><code>Pattern object: re.compile('\\d+')
 Match object : &lt;re.Match object; span=(0, 3), match='123'&gt;
 &lt;class 're.Pattern'&gt;
 &lt;class 're.Match'&gt;
@@ -8464,7 +8464,7 @@ True
 <p><strong>Follow-up questions</strong>, added for students who want to push the investigation further (these are new; the four numbered questions above are the printed book's original research questions and are unchanged):</p>
 <ol>
 <li>The line <code>Pattern = type(_compiler.compile('', 0))</code> would still work correctly no matter what regular expression you compiled instead of <code>''</code> — try it yourself with <code>_compiler.compile(r'[a-z]+', 0)</code> and compare <code>type()</code> of the result against <code>re.Pattern</code>. If the choice of pattern does not matter, why do you think the developers specifically chose the <em>simplest possible</em> one?</li>
-<li><code>re.Pattern</code> and <code>re.Match</code> are assigned as ordinary module-level variables, exactly like <code>PatternError = error = _compiler.PatternError</code> a few lines above them in the same file. What does this tell you about the difference between how Python <em>defines</em> a class internally, versus how a class <em>appears</em> to code that imports and uses it?</li>
+<li><code>re.Pattern</code> and <code>re.Match</code> are assigned as ordinary module-level variables, exactly like <code>PatternError = error = _compiler.PatternError</code> earlier in the same file (on Python 3.12 that line reads <code>error = _compiler.error</code>). What does this tell you about the difference between how Python <em>defines</em> a class internally, versus how a class <em>appears</em> to code that imports and uses it?</li>
 </ol>
 </blockquote>
 <h2 id="the-cheat-sheet">The "Cheat Sheet"<a class="headerlink" href="#the-cheat-sheet" title="Permanent link">&para;</a></h2>
@@ -8516,7 +8516,16 @@ True
 <li>The classes for <strong>compiled regex objects</strong> and <strong>match objects</strong> are not ordinary Python classes with source code you can open and read — they are C structures exposed to Python.</li>
 </ul>
 <p>Now suppose, as the <code>re</code> module's own developers once did, that you want to let other people's code check whether some object is a Pattern — using the completely ordinary, idiomatic <code>isinstance(obj, re.Pattern)</code>. To make that possible, <code>re.Pattern</code> has to exist as a real, importable, checkable class name. The authors of the <code>re</code> module solved this with a small, well-known trick: they created two throwaway objects, and then deliberately named the <em>result of asking for those objects' types</em> <code>Pattern</code> and <code>Match</code>.</p>
-<p><img alt="Flowchart" src="../../resources/ch-13-august-2026-exercise-missing-classes.png" /></p>
+<p><img alt="Flowchart" src="../../resources/S13-LR-ch-13-august-2026-exercise-missing-classes.png" /></p>
+<p><strong>Reading the figure</strong></p>
+<ul>
+<li><strong>Step 1:</strong> The Pattern class is implemented in C and has no Python source, so it cannot be imported by name.</li>
+<li><strong>Step 2:</strong> Step 1: build an instance anyway, by calling the private C-backed function <code>_compiler.compile('', 0)</code> with an empty pattern and no flags.</li>
+<li><strong>Step 3:</strong> Step 2: ask Python what class that instance belongs to, with the built-in <code>type()</code> function (reflection).</li>
+<li><strong>Step 4:</strong> Step 3: store the answer under a public, class-like name: <code>Pattern = type(_compiler.compile('', 0))</code>. The same trick with <code>.match('')</code> gives <code>Match</code>.</li>
+<li><strong>Step 5:</strong> Step 4: list <code>Pattern</code> (and <code>Match</code>) in <code>__all__</code>, so code that imports <code>re</code> sees them as ordinary public names.</li>
+<li><strong>Step 6:</strong> Result: <code>re.Pattern</code> behaves like a normal importable class, for <code>isinstance()</code> checks and type hints.</li>
+</ul>
 <h4 id="the-key-idea-behind-the-hack">The key idea behind the hack<a class="headerlink" href="#the-key-idea-behind-the-hack" title="Permanent link">&para;</a></h4>
 <blockquote>
 <p><strong>If you can't import the class, create an instance and ask Python what its type is.</strong></p>
@@ -8529,7 +8538,7 @@ True
 <div class="highlight"><pre><span></span><code><span class="n">Pattern</span> <span class="o">=</span> <span class="nb">type</span><span class="p">(</span><span class="n">_compiler</span><span class="o">.</span><span class="n">compile</span><span class="p">(</span><span class="s1">''</span><span class="p">,</span> <span class="mi">0</span><span class="p">))</span>
 <span class="n">Match</span> <span class="o">=</span> <span class="nb">type</span><span class="p">(</span><span class="n">_compiler</span><span class="o">.</span><span class="n">compile</span><span class="p">(</span><span class="s1">''</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span><span class="o">.</span><span class="n">match</span><span class="p">(</span><span class="s1">''</span><span class="p">))</span>
 </code></pre></div>
-<p>The walkthrough below breaks this into four numbered steps and, unlike the original write-up, actually runs each step separately and shows you its real, verified output, so you can see the value building up piece by piece rather than only reading about it in the abstract.</p>
+<p>The walkthrough below breaks this into four numbered steps and actually runs each step separately and shows you its real, verified output, so you can see the value building up piece by piece rather than only reading about it in the abstract.</p>
 <div class="highlight"><pre><span></span><code><span class="c1"># Step 1: Call the private compiler function directly, exactly the way</span>
 <span class="c1">#          the real re module does internally, with an empty pattern</span>
 <span class="c1">#          and no flags (0 means "no special flags requested")</span>

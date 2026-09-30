@@ -8469,7 +8469,7 @@
 <li><a href="#combined-script-all-twelve-conversions-together">Combined script: all twelve conversions together</a></li>
 </ul>
 <h2 id="the-twelve-conversions-one-at-a-time">The twelve conversions, one at a time<a class="headerlink" href="#the-twelve-conversions-one-at-a-time" title="Permanent link">&para;</a></h2>
-<p>The original file presented all twelve functions as one long script. Here, each conversion gets its own explanation and its own small, runnable script, so you can study — and test — one conversion at a time before seeing them all combined at the end.</p>
+<p>Here, each conversion gets its own explanation and its own small, runnable script, so you can study — and test — one conversion at a time before seeing them all combined at the end.</p>
 <h3 id="1-snake_case-to-camelcase">1. <code>snake_case</code> to <code>camelCase</code><a class="headerlink" href="#1-snake_case-to-camelcase" title="Permanent link">&para;</a></h3>
 <p><strong>Answer:</strong></p>
 <div class="highlight"><pre><span></span><code><span class="c1"># Step 1: Import re (needed later on this page, even though this</span>
@@ -8528,10 +8528,11 @@
     <span class="c1"># Example: "abcXyz" -&gt; "abc_Xyz"</span>
     <span class="n">step1</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">sub</span><span class="p">(</span><span class="sa">r</span><span class="s1">'(.)([A-Z][a-z]+)'</span><span class="p">,</span> <span class="sa">r</span><span class="s1">'\1_\2'</span><span class="p">,</span> <span class="n">camel_name</span><span class="p">)</span>
 
-    <span class="c1"># Step 2b: Handle the one case Step 2a deliberately leaves alone</span>
-    <span class="c1"># -- a lowercase letter or digit immediately followed by an</span>
-    <span class="c1"># uppercase letter, which covers the boundary AFTER a run of</span>
-    <span class="c1"># capitals, such as "XML" followed by "File" in "XMLFile"</span>
+    <span class="c1"># Step 2b: Insert an underscore between a lowercase letter or digit</span>
+    <span class="c1"># and an uppercase letter that directly follows it. This catches the</span>
+    <span class="c1"># boundaries Step 2a misses because its matches cannot overlap</span>
+    <span class="c1"># ("camel_CaseExample" -&gt; "camel_Case_Example"), and names that end</span>
+    <span class="c1"># in capitals ("getHTTP" -&gt; "get_HTTP")</span>
     <span class="n">snake_name</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">sub</span><span class="p">(</span><span class="sa">r</span><span class="s1">'([a-z0-9])([A-Z])'</span><span class="p">,</span> <span class="sa">r</span><span class="s1">'\1_\2'</span><span class="p">,</span> <span class="n">step1</span><span class="p">)</span>
 
     <span class="c1"># Step 2c: Lowercase everything, since snake_case is always</span>
@@ -8549,7 +8550,7 @@
 <div class="highlight"><pre><span></span><code>camel to snake -&gt; camel_case_example
 XMLFile -&gt; xml_file
 </code></pre></div>
-<p><strong>Explanation:</strong> this is the most involved function on the page, and it needs <strong>two</strong> separate substitutions because a single simple rule ("insert <code>_</code> before every capital letter") would incorrectly split up acronyms — see the comparison with <code>pascal_to_snake</code> below for exactly what goes wrong if you try that shortcut. Step 2a's pattern, <code>(.)([A-Z][a-z]+)</code>, only inserts an underscore before a capital letter that starts an <em>ordinary</em> word (one capital followed by lowercase letters) — this correctly handles <code>"camelCase"</code> → <code>"camel_Case"</code>. Step 2b's pattern, <code>([a-z0-9])([A-Z])</code>, then catches the one situation Step 2a leaves alone: a lowercase letter or digit running directly into an uppercase letter, which is exactly the boundary <em>after</em> an acronym like <code>"XML"</code> butting up against <code>"File"</code>. Running both steps in sequence on <code>"XMLFile"</code> correctly produces <code>"xml_file"</code> — exactly as the function's own docstring promises — rather than fragmenting the acronym letter by letter.</p>
+<p><strong>Explanation:</strong> this is the most involved function on the page, and it needs <strong>two</strong> separate substitutions because a single simple rule ("insert <code>_</code> before every capital letter") would incorrectly split up acronyms — see the comparison with <code>pascal_to_snake</code> below for exactly what goes wrong if you try that shortcut. Step 2a's pattern, <code>(.)([A-Z][a-z]+)</code>, only inserts an underscore before a capital letter that starts an <em>ordinary</em> word (one capital followed by lowercase letters) — this correctly handles <code>"camelCase"</code> → <code>"camel_Case"</code>. Step 2b's pattern, <code>([a-z0-9])([A-Z])</code>, then catches what Step 2a misses: a lowercase letter or digit running directly into an uppercase letter. Because Step 2a's matches cannot overlap, it turns <code>"camelCaseExample"</code> into only <code>"camel_CaseExample"</code>, and Step 2b adds the missing underscore; it also splits names such as <code>"getHTTP"</code> into <code>"get_HTTP"</code>. Running both steps in sequence on <code>"XMLFile"</code> correctly produces <code>"xml_file"</code> — exactly as the function's own docstring promises — rather than fragmenting the acronym letter by letter.</p>
 <h3 id="3-pascalcase-to-snake_case">3. <code>PascalCase</code> to <code>snake_case</code><a class="headerlink" href="#3-pascalcase-to-snake_case" title="Permanent link">&para;</a></h3>
 <p><strong>Answer:</strong></p>
 <div class="highlight"><pre><span></span><code><span class="c1"># Step 1: Import re</span>
@@ -8581,7 +8582,7 @@ XMLFile -&gt; xml_file
 <div class="highlight"><pre><span></span><code>pascal to snake -&gt; pascal_case_example
 XMLFile -&gt; x_m_l_file
 </code></pre></div>
-<p><strong>Explanation:</strong> this function's pattern is deliberately simpler than <code>camel_to_snake</code>'s — it inserts an underscore before <em>every</em> capital letter except one right at the start, with no attempt to detect acronyms. That is enough for ordinary PascalCase names like <code>"PascalCaseExample"</code>, but notice what happens with <code>"XMLFile"</code>: since every one of <code>X</code>, <code>M</code>, <code>L</code>, and <code>F</code> is an uppercase letter not at the very start, an underscore goes in front of each one, producing <code>"x_m_l_file"</code> instead of the more readable <code>"xml_file"</code> that <code>camel_to_snake</code> manages for the same input. Neither the original text nor this page's rewrite claims <code>pascal_to_snake</code> handles acronyms — but seeing the two functions produce genuinely different results on the very same input is a useful, concrete illustration of why <code>camel_to_snake</code>'s extra step exists at all.</p>
+<p><strong>Explanation:</strong> this function's pattern is deliberately simpler than <code>camel_to_snake</code>'s — it inserts an underscore before <em>every</em> capital letter except one right at the start, with no attempt to detect acronyms. That is enough for ordinary PascalCase names like <code>"PascalCaseExample"</code>, but notice what happens with <code>"XMLFile"</code>: since every one of <code>X</code>, <code>M</code>, <code>L</code>, and <code>F</code> is an uppercase letter not at the very start, an underscore goes in front of each one, producing <code>"x_m_l_file"</code> instead of the more readable <code>"xml_file"</code> that <code>camel_to_snake</code> manages for the same input. This page does not claim that <code>pascal_to_snake</code> handles acronyms — but seeing the two functions produce genuinely different results on the very same input is a useful, concrete illustration of why <code>camel_to_snake</code>'s extra step exists at all.</p>
 <blockquote>
 <p><strong>Extra practice question (not in the printed book):</strong> could you rewrite <code>pascal_to_snake</code> to handle acronyms the same way <code>camel_to_snake</code> does? <em>(One approach: reuse <code>camel_to_snake</code>'s own two-step pattern, since a PascalCase string is really just a camelCase string whose very first letter also happens to be capitalized — try <code>camel_to_snake("XMLFile")</code> against <code>pascal_to_snake("XMLFile")</code> to confirm this for yourself.)</em></p>
 </blockquote>
@@ -8814,33 +8815,109 @@ XMLFile -&gt; x_m_l_file
 <p><strong>Explanation:</strong> the last of the four "routes through <code>snake_case</code>" conversions — <code>PascalCase</code> first normalizes down to <code>snake_case</code> (reusing conversion 3's lookahead-based logic), then up to <code>UPPER_CASE</code> (reusing conversion 8).</p>
 <h2 id="how-the-twelve-functions-fit-together">How the twelve functions fit together<a class="headerlink" href="#how-the-twelve-functions-fit-together" title="Permanent link">&para;</a></h2>
 <p>There are four naming styles on this page, and twelve functions — which is exactly the number of <em>ordered pairs</em> you can make from four styles (pick a "from" style and a different "to" style: 4 choices for "from", 3 remaining choices for "to", giving 4 × 3 = 12). Every possible direction of conversion between the four styles is covered, with none missing and none duplicated.</p>
-<p>Looking at how each function is actually implemented, a pattern emerges: <code>snake_case</code> acts as a kind of <strong>hub</strong>. Six of the twelve functions convert directly between two styles with their own dedicated logic (a regex substitution, a lookahead pattern, or a simple case change), while the four functions converting to or from <code>UPPER_CASE</code> and either <code>camelCase</code> or <code>PascalCase</code> are built by <strong>composing</strong> two of the direct functions together, routing <em>through</em> <code>snake_case</code> as a common intermediate form, rather than duplicating similar logic a second time.</p>
+<p>Looking at how each function is actually implemented, a pattern emerges: <code>snake_case</code> acts as a kind of <strong>hub</strong>. Eight of the twelve functions convert directly between two styles with their own dedicated logic (a regex substitution, a lookahead pattern, or a simple case change), while the four functions converting to or from <code>UPPER_CASE</code> and either <code>camelCase</code> or <code>PascalCase</code> are built by <strong>composing</strong> two of the direct functions together, routing <em>through</em> <code>snake_case</code> as a common intermediate form, rather than duplicating similar logic a second time.</p>
 <h3 id="snake-to-camel-case">Snake to Camel case<a class="headerlink" href="#snake-to-camel-case" title="Permanent link">&para;</a></h3>
-<p><img alt="Flowchart" src="../../resources/ch-13-august-2026-snake_to-camel.png" /></p>
+<p><img alt="Flowchart" src="../../resources/S13-LR-ch-13-august-2026-snake_to-camel.png" /></p>
+<p><strong>Reading the figure</strong></p>
+<ul>
+<li><strong>Step 1:</strong> Start with the <code>snake_case</code> name <code>"snake_case_example"</code>.</li>
+<li><strong>Step 2:</strong> <code>split('_')</code> breaks it into words: <code>['snake', 'case', 'example']</code>.</li>
+<li><strong>Step 3:</strong> The first word stays exactly as it is: <code>snake</code>.</li>
+<li><strong>Step 4:</strong> Every other word is capitalized: <code>Case</code>, <code>Example</code>.</li>
+<li><strong>Step 5:</strong> Join them with no separator: <code>"snakeCaseExample"</code>. No regex is needed.</li>
+</ul>
 <h3 id="camel-to-snake">Camel to Snake<a class="headerlink" href="#camel-to-snake" title="Permanent link">&para;</a></h3>
-<p><img alt="Flowchart" src="../../resources/ch-13-august-2026-camel-to-snake_02.png" /></p>
+<p><img alt="Flowchart" src="../../resources/S13-LR-ch-13-august-2026-camel-to-snake_02.png" /></p>
+<p><strong>Reading the figure</strong></p>
+<ul>
+<li><strong>Step 1:</strong> Start with the <code>camelCase</code> name <code>"camelCaseExample"</code>.</li>
+<li><strong>Step 2:</strong> Step 2a, <code>re.sub(r'(.)([A-Z][a-z]+)', r'\1_\2', …)</code>, puts <code>_</code> before a capital that starts an ordinary word. The matches cannot overlap: after <code>lCase</code> is used, no character is left in front of <code>Example</code>, so only one underscore goes in: <code>"camel_CaseExample"</code>.</li>
+<li><strong>Step 3:</strong> Step 2b, <code>re.sub(r'([a-z0-9])([A-Z])', r'\1_\2', …)</code>, puts <code>_</code> between a lowercase letter or digit and a capital. It adds the missing underscore: <code>"camel_Case_Example"</code> (it also splits names such as <code>"getHTTP"</code> into <code>"get_HTTP"</code>).</li>
+<li><strong>Step 4:</strong> Step 2c lowercases everything: <code>"camel_case_example"</code>.</li>
+</ul>
 <h3 id="pascal-case-to-snake-case">Pascal case to Snake case<a class="headerlink" href="#pascal-case-to-snake-case" title="Permanent link">&para;</a></h3>
-<p><img alt="Flowchart" src="../../resources/ch-13-august-2026-pascal-to-snake_03.png" /></p>
+<p><img alt="Flowchart" src="../../resources/S13-LR-ch-13-august-2026-pascal-to-snake_03.png" /></p>
+<p><strong>Reading the figure</strong></p>
+<ul>
+<li><strong>Step 1:</strong> Start with the <code>PascalCase</code> name <code>"PascalCaseExample"</code>.</li>
+<li><strong>Step 2:</strong> <code>re.sub(r'(?&lt;!^)(?=[A-Z])', '_', …)</code> inserts <code>_</code> at every position that is not the very start (<code>(?&lt;!^)</code>) and has a capital letter next (<code>(?=[A-Z])</code>): <code>"Pascal_Case_Example"</code>.</li>
+<li><strong>Step 3:</strong> <code>.lower()</code> gives <code>"pascal_case_example"</code>.</li>
+</ul>
 <h3 id="snake-to-pascal-case">Snake to Pascal case<a class="headerlink" href="#snake-to-pascal-case" title="Permanent link">&para;</a></h3>
-<p><img alt="Flowchart" src="../../resources/ch-13-august-2026-snake-to-pascal_04.png" /></p>
+<p><img alt="Flowchart" src="../../resources/S13-LR-ch-13-august-2026-snake-to-pascal_04.png" /></p>
+<p><strong>Reading the figure</strong></p>
+<ul>
+<li><strong>Step 1:</strong> Start with <code>"snake_case_example"</code>.</li>
+<li><strong>Step 2:</strong> <code>split('_')</code> breaks it into <code>['snake', 'case', 'example']</code>.</li>
+<li><strong>Step 3:</strong> Every word is capitalized, including the first: <code>Snake</code>, <code>Case</code>, <code>Example</code>.</li>
+<li><strong>Step 4:</strong> Join them with no separator: <code>"SnakeCaseExample"</code>.</li>
+</ul>
 <h3 id="camel-case-to-pascal-case">Camel case to Pascal case<a class="headerlink" href="#camel-case-to-pascal-case" title="Permanent link">&para;</a></h3>
-<p><img alt="Flowchart" src="../../resources/ch-13-august-2026-camel-to-pascal_05.png" /></p>
+<p><img alt="Flowchart" src="../../resources/S13-LR-ch-13-august-2026-camel-to-pascal_05.png" /></p>
+<p><strong>Reading the figure</strong></p>
+<ul>
+<li><strong>Step 1:</strong> Start with <code>"camelCaseExample"</code>.</li>
+<li><strong>Step 2:</strong> Uppercase only the first character and keep the rest exactly as it is. No regex is needed: the two styles have the same word boundaries.</li>
+<li><strong>Step 3:</strong> The result is <code>"CamelCaseExample"</code>.</li>
+</ul>
 <h3 id="pascal-to-camel-case">Pascal to Camel Case<a class="headerlink" href="#pascal-to-camel-case" title="Permanent link">&para;</a></h3>
-<p><img alt="Flowchart" src="../../resources/ch-13-august-2026-pascal-to-camel_06.png" /></p>
+<p><img alt="Flowchart" src="../../resources/S13-LR-ch-13-august-2026-pascal-to-camel_06.png" /></p>
+<p><strong>Reading the figure</strong></p>
+<ul>
+<li><strong>Step 1:</strong> Start with <code>"PascalCaseExample"</code>.</li>
+<li><strong>Step 2:</strong> Lowercase only the first character and keep the rest exactly as it is: the mirror image of <code>camel_to_pascal()</code>.</li>
+<li><strong>Step 3:</strong> The result is <code>"pascalCaseExample"</code>.</li>
+</ul>
 <h3 id="upper-case-to-snake-case">UPPER case to Snake case<a class="headerlink" href="#upper-case-to-snake-case" title="Permanent link">&para;</a></h3>
-<p><img alt="Flowchart" src="../../resources/ch-13-august-2026-UPPER-case-to-snake-case_07.png" /></p>
+<p><img alt="Flowchart" src="../../resources/S13-LR-ch-13-august-2026-UPPER-case-to-snake-case_07.png" /></p>
+<p><strong>Reading the figure</strong></p>
+<ul>
+<li><strong>Step 1:</strong> Start with <code>"UPPER_CASE_EXAMPLE"</code>.</li>
+<li><strong>Step 2:</strong> <code>.lower()</code> lowercases every letter. No regex is needed: both styles already have underscores in the same places.</li>
+<li><strong>Step 3:</strong> The result is <code>"upper_case_example"</code>.</li>
+</ul>
 <h3 id="snake-case-to-upper-case">Snake case to UPPER Case<a class="headerlink" href="#snake-case-to-upper-case" title="Permanent link">&para;</a></h3>
-<p><img alt="Flowchart" src="../../resources/ch-13-august-2026-snake-case-to-upper-case_08.png" /></p>
+<p><img alt="Flowchart" src="../../resources/S13-LR-ch-13-august-2026-snake-case-to-upper-case_08.png" /></p>
+<p><strong>Reading the figure</strong></p>
+<ul>
+<li><strong>Step 1:</strong> Start with <code>"snake_case_example"</code>.</li>
+<li><strong>Step 2:</strong> <code>.upper()</code> uppercases every letter: the mirror image of <code>upper_to_snake()</code>.</li>
+<li><strong>Step 3:</strong> The result is <code>"SNAKE_CASE_EXAMPLE"</code>.</li>
+</ul>
 <h3 id="upper-case-to-camel-case">UPPER case to Camel Case<a class="headerlink" href="#upper-case-to-camel-case" title="Permanent link">&para;</a></h3>
-<p><img alt="Flowchart" src="../../resources/ch-13-august-2026-upper-case-to-camel-case_09.png" /></p>
+<p><img alt="Flowchart" src="../../resources/S13-LR-ch-13-august-2026-upper-case-to-camel-case_09.png" /></p>
+<p><strong>Reading the figure</strong></p>
+<ul>
+<li><strong>Step 1:</strong> Start with <code>"UPPER_CASE_EXAMPLE"</code>.</li>
+<li><strong>Step 2:</strong> Reuse conversion 7, <code>upper_to_snake()</code>: <code>"upper_case_example"</code>.</li>
+<li><strong>Step 3:</strong> Reuse conversion 1, <code>snake_to_camel()</code>: <code>"upperCaseExample"</code>.</li>
+</ul>
 <h3 id="camel-case-to-upper-case">Camel case to UPPER Case<a class="headerlink" href="#camel-case-to-upper-case" title="Permanent link">&para;</a></h3>
-<p><img alt="Flowchart" src="../../resources/ch-13-august-2026-camel-case-to-UPPER-case_10.png" /></p>
+<p><img alt="Flowchart" src="../../resources/S13-LR-ch-13-august-2026-camel-case-to-UPPER-case_10.png" /></p>
+<p><strong>Reading the figure</strong></p>
+<ul>
+<li><strong>Step 1:</strong> Start with <code>"camelCaseExample"</code>.</li>
+<li><strong>Step 2:</strong> Reuse conversion 2, <code>camel_to_snake()</code> (two regex substitutions, then <code>.lower()</code>): <code>"camel_case_example"</code>.</li>
+<li><strong>Step 3:</strong> Reuse conversion 8, <code>snake_to_upper()</code>: <code>"CAMEL_CASE_EXAMPLE"</code>.</li>
+</ul>
 <h3 id="upper-case-to-pascal-case">UPPER Case to Pascal Case<a class="headerlink" href="#upper-case-to-pascal-case" title="Permanent link">&para;</a></h3>
-<p><img alt="Flowchart" src="../../resources/ch-13-august-2026-UPPER-case-to-Pascal-case_11.png" /></p>
+<p><img alt="Flowchart" src="../../resources/S13-LR-ch-13-august-2026-UPPER-case-to-Pascal-case_11.png" /></p>
+<p><strong>Reading the figure</strong></p>
+<ul>
+<li><strong>Step 1:</strong> Start with <code>"UPPER_CASE_EXAMPLE"</code>.</li>
+<li><strong>Step 2:</strong> Reuse conversion 7, <code>upper_to_snake()</code>: <code>"upper_case_example"</code>.</li>
+<li><strong>Step 3:</strong> Reuse conversion 4, <code>snake_to_pascal()</code>: <code>"UpperCaseExample"</code>.</li>
+</ul>
 <h3 id="pascal-case-to-upper-case">Pascal Case to UPPER Case<a class="headerlink" href="#pascal-case-to-upper-case" title="Permanent link">&para;</a></h3>
-<p><img alt="Flowchart" src="../../resources/ch-13-august-2026-Pascal-case-to-UPPER-case_12.png" /></p>
+<p><img alt="Flowchart" src="../../resources/S13-LR-ch-13-august-2026-Pascal-case-to-UPPER-case_12.png" /></p>
+<p><strong>Reading the figure</strong></p>
+<ul>
+<li><strong>Step 1:</strong> Start with <code>"PascalCaseExample"</code>.</li>
+<li><strong>Step 2:</strong> Reuse conversion 3, <code>pascal_to_snake()</code> (the lookbehind/lookahead substitution, then <code>.lower()</code>): <code>"pascal_case_example"</code>.</li>
+<li><strong>Step 3:</strong> Reuse conversion 8, <code>snake_to_upper()</code>: <code>"PASCAL_CASE_EXAMPLE"</code>.</li>
+</ul>
 <h2 id="combined-script-all-twelve-conversions-together">Combined script: all twelve conversions together<a class="headerlink" href="#combined-script-all-twelve-conversions-together" title="Permanent link">&para;</a></h2>
-<p>Since each conversion was introduced separately above, here is the complete script combining all twelve functions in one place — exactly matching how the original file presented them, and reproducing every one of its verified results in a single run.</p>
+<p>Since each conversion was introduced separately above, here is the complete script combining all twelve functions in one place — reproducing every one of the results shown above in a single run.</p>
 <div class="highlight"><pre><span></span><code><span class="c1"># Step 1: Import re, needed by camel_to_snake and pascal_to_snake</span>
 <span class="kn">import</span><span class="w"> </span><span class="nn">re</span>
 
