@@ -8302,8 +8302,8 @@ way.</strong> This is the mathematical foundation behind computer graphics,
 robotics, machine learning, and much of scientific computing — anywhere a
 program needs to rotate an image, resize a shape, or transform coordinates
 from one system into another.</p>
-<p>This resource disucsses in brief the mathematics behind vector-matrix multiplication. 
-I addition it also provides numPy scripts (with detailed explanations) to show how vectr-matrix multiplication is actually implemented in NumPy. Note that these aren't just abstract formulas: they
+<p>This resource discusses in brief the mathematics behind vector-matrix multiplication. 
+In addition, it provides NumPy scripts (with detailed explanations) to show how vector-matrix multiplication is actually implemented in NumPy. Note that these aren't just abstract formulas: they
 are exactly what <code>matrix @ vector</code> computes in a single line of Python.</p>
 <blockquote>
 <p><strong>Glossary of terms</strong>
@@ -8325,7 +8325,16 @@ are exactly what <code>matrix @ vector</code> computes in a single line of Pytho
   converting from degrees is a common early stumbling block. See
   <a href="https://numpy.org/doc/stable/reference/generated/numpy.radians.html">NumPy's <code>radians()</code> documentation</a>.</p>
 </blockquote>
-<p><img alt="Flowchart" src="../../resources/ch-11-numpy-august-2026-vector-matrices-01.png" /></p>
+<p><img alt="Flowchart" src="../../resources/S11-LR-ch-11-numpy-august-2026-vector-matrices-01.png" /></p>
+<p><strong>Reading the figure</strong></p>
+<ul>
+<li>Start with a vector <code>x</code>.</li>
+<li>Multiply it by a matrix <code>M</code> to get <code>y = M x</code>. What happens to <code>x</code> depends on <code>M</code>.</li>
+<li>Uniform scaling: every axis is stretched by the same factor.</li>
+<li>Non-uniform scaling: each axis is stretched by its own factor.</li>
+<li>Reflection: the vector is flipped across an axis or a line.</li>
+<li>Rotation: the vector is turned through an angle.</li>
+</ul>
 <hr />
 <h2 id="1-vectors-and-matrices">1. Vectors and Matrices<a class="headerlink" href="#1-vectors-and-matrices" title="Permanent link">&para;</a></h2>
 <p>In standard algebra, a vector is typically represented as a column matrix.
@@ -8347,7 +8356,16 @@ of a row vector. This saves vertical space on the page:</p>
 <p>Here, the superscript <code>T</code> denotes the <strong>transpose</strong>, effectively
 converting a row into a column.</p>
 <h3 id="the-following-flowchart-shows-the-various-common-transformations-a-matrix-can-apply-to-a-vector">The following flowchart shows the various common transformations a matrix can apply to a vector<a class="headerlink" href="#the-following-flowchart-shows-the-various-common-transformations-a-matrix-can-apply-to-a-vector" title="Permanent link">&para;</a></h3>
-<p><img alt="Flowchart" src="../../resources/ch11-matrix-vector-maths.png" /></p>
+<p><img alt="Flowchart" src="../../resources/S11-LR-ch11-matrix-vector-maths.png" /></p>
+<p><strong>Reading the figure</strong></p>
+<ul>
+<li>Start with the input vector <code>x</code>.</li>
+<li>Multiply it by the matrix <code>M</code>.</li>
+<li>The result is the transformed vector <code>y = M x</code>.</li>
+<li>A scaling matrix changes the vector's length.</li>
+<li>A rotation matrix changes its direction but keeps its length.</li>
+<li>A reflection matrix mirrors it across an axis, reversing its orientation.</li>
+</ul>
 <h3 id="turning-this-into-numpy-code">Turning this into NumPy code<a class="headerlink" href="#turning-this-into-numpy-code" title="Permanent link">&para;</a></h3>
 <div class="highlight"><pre><span></span><code><span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
 

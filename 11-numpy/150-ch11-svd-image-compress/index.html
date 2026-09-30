@@ -4439,6 +4439,23 @@
   
 </li>
         
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#key-concepts-students-must-understand" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Key concepts students must understand
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Key concepts students must understand">
+      <ul class="md-nav__list">
+        
           <li class="md-nav__item">
   <a href="#svd-image-compression-flow-chart" class="md-nav__link">
     <span class="md-ellipsis">
@@ -8469,19 +8486,12 @@ Final formula:
 </tr>
 </tbody>
 </table>
-<p>Key Concepts Students Must Understand
-1. Image = Matrix</p>
-<p>Each pixel is a number</p>
+<h3 id="key-concepts-students-must-understand">Key concepts students must understand<a class="headerlink" href="#key-concepts-students-must-understand" title="Permanent link">&para;</a></h3>
 <ol>
-<li>SVD = Decomposition</li>
-</ol>
-<p>Break matrix into meaningful parts</p>
-<ol>
-<li>Compression = Information Reduction</li>
-</ol>
-<p>Keep only important features</p>
-<ol>
-<li>Trade-off</li>
+<li><strong>Image = Matrix</strong> — each pixel is a number.</li>
+<li><strong>SVD = Decomposition</strong> — break the matrix into meaningful parts.</li>
+<li><strong>Compression = Information Reduction</strong> — keep only the important features.</li>
+<li><strong>Trade-off</strong> — the value of <code>k</code> decides the balance:</li>
 </ol>
 <table>
 <thead>
@@ -8502,7 +8512,17 @@ Final formula:
 </tbody>
 </table>
 <h4 id="svd-image-compression-flow-chart">SVD Image Compression Flow chart<a class="headerlink" href="#svd-image-compression-flow-chart" title="Permanent link">&para;</a></h4>
-<p><img alt="SVD Image Compression Flow Chart" src="../../resources/ch11-svd-image-compression-2.png" /></p>
+<p><img alt="SVD Image Compression Flow Chart" src="../../resources/S11-LR-ch11-svd-image-compression-2.png" /></p>
+<p><strong>Reading the figure</strong></p>
+<ul>
+<li><strong>Step 1:</strong> Download the image and open it with Pillow (<code>Image.open()</code>).</li>
+<li><strong>Step 2:</strong> Convert it to grayscale with <code>img.convert('L')</code>, so each pixel is one number.</li>
+<li><strong>Step 3:</strong> Turn it into a NumPy matrix.</li>
+<li><strong>Step 4:</strong> Decompose the matrix with <code>np.linalg.svd(img_mat, full_matrices=False)</code>, giving <code>U</code>, <code>S</code> and <code>Vt</code>.</li>
+<li><strong>Step 5:</strong> Keep only the top <code>k</code> singular values (here <code>k = int(len(S) / 20)</code>).</li>
+<li><strong>Step 6:</strong> Rebuild an approximate image from <code>U[:, :k]</code>, <code>np.diag(S[:k])</code> and <code>Vt[:k, :]</code>.</li>
+<li><strong>Step 7:</strong> Show the original, the grayscale version and the compressed version side by side.</li>
+</ul>
 
 
 

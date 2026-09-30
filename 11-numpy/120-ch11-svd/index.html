@@ -8295,7 +8295,16 @@ of three special matrices:</p>
 <li>The columns of <span class="arithmatex">\(U\)</span> are the <strong>left-singular vectors</strong> of <span class="arithmatex">\(A\)</span>.</li>
 <li>The columns of <span class="arithmatex">\(V\)</span> are the <strong>right-singular vectors</strong> of <span class="arithmatex">\(A\)</span>.</li>
 </ul>
-<p><img alt="Flowchart" src="../../resources/ch-11-numpy-august-2026-eigen-decomposition-02.png" /></p>
+<p><img alt="Flowchart" src="../../resources/S11-LR-ch-11-numpy-august-2026-SVD-01.png" /></p>
+<p><strong>Reading the figure</strong></p>
+<ul>
+<li><strong>Step 1:</strong> SVD works for any matrix <code>A</code> of shape <code>(m, n)</code>, square or not.</li>
+<li><strong>Step 2:</strong> <code>np.linalg.svd(A)</code> returns three pieces, <code>U</code>, <code>S</code> and <code>Vt</code>.</li>
+<li><strong>Step 3:</strong> <code>U</code> is an <code>(m, m)</code> matrix whose orthonormal columns are the left-singular vectors.</li>
+<li><strong>Step 4:</strong> <code>Σ</code> (Sigma) is an <code>(m, n)</code> matrix with the non-negative singular values on its diagonal; NumPy returns just those values, as <code>S</code>.</li>
+<li><strong>Step 5:</strong> <code>Vᵀ</code> is the transpose of an <code>(n, n)</code> matrix <code>V</code>, whose columns are the right-singular vectors.</li>
+<li><strong>Step 6:</strong> Multiplying the three back together, <code>A = U Σ Vᵀ</code>, rebuilds the original matrix.</li>
+</ul>
 <hr />
 <h2 id="2-svd-vs-eigendecomposition">2. SVD vs. Eigendecomposition<a class="headerlink" href="#2-svd-vs-eigendecomposition" title="Permanent link">&para;</a></h2>
 <p>SVD is very similar to eigen decomposition. The important differences are:</p>
@@ -8507,13 +8516,22 @@ dimensionality of data.</p>
 <li><strong><span class="arithmatex">\(U\)</span></strong> (readers → latent categories) tells us how strongly each reader
   aligns with each hidden category.</li>
 <li><strong><span class="arithmatex">\(\Sigma\)</span></strong> (strength of categories): the singular values might look
-  something like <code>[22.8, 17.2, 2.1, 0.9]</code>. Notice the sharp drop-off after
+  roughly <code>[22.8, 17.3, 2.1, 1.0]</code>. Notice the sharp drop-off after
   the first two values — this means the first two "latent categories"
   contain almost all the useful information, and the rest is mostly noise.</li>
 <li><strong><span class="arithmatex">\(V^{T}\)</span></strong> (latent categories → books) tells us how strongly each book
   belongs to each hidden category.</li>
 </ul>
-<p><img alt="Flowchart" src="../../resources/ch-11-numpy-august-2026-SVD-02.png" /></p>
+<p><img alt="Flowchart" src="../../resources/S11-LR-ch-11-numpy-august-2026-SVD-02.png" /></p>
+<p><strong>Reading the figure</strong></p>
+<ul>
+<li><strong>Step 1:</strong> Start with the ratings matrix: 4 readers × 6 books.</li>
+<li><strong>Step 2:</strong> Apply the full SVD, <code>A = U Σ Vᵀ</code>.</li>
+<li><strong>Step 3:</strong> The singular values come out at about <code>[22.8, 17.3, 2.1, 1.0]</code>.</li>
+<li><strong>Step 4:</strong> They drop sharply after the first two: those two "latent categories" (math and literature) carry almost all the information.</li>
+<li><strong>Step 5:</strong> Keep only the top 2: the first 2 columns of <code>U</code>, the top-left 2 × 2 block of <code>Σ</code> and the first 2 rows of <code>Vᵀ</code>.</li>
+<li><strong>Step 6:</strong> The six book dimensions are now compressed into two hidden topics, and <code>U_k Σ_k Vᵀ_k</code> gives an approximation of the original ratings.</li>
+</ul>
 <h3 id="truncated-svd">Truncated SVD<a class="headerlink" href="#truncated-svd" title="Permanent link">&para;</a></h3>
 <p>If we keep only the top 2 singular values, we effectively "truncate" the
 matrices:</p>

@@ -4264,10 +4264,10 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#7b-how-five-5d-tensors-become-one-6d-tensor" class="md-nav__link">
+  <a href="#7b-how-several-5d-tensors-here-three-become-one-6d-tensor" class="md-nav__link">
     <span class="md-ellipsis">
       
-        7(B) How five 5D tensors become one 6D tensor
+        7(B) How several 5D tensors (here, three) become one 6D tensor
       
     </span>
   </a>
@@ -8421,7 +8421,15 @@ possible.</p>
 </tr>
 </tbody>
 </table>
-<p><img alt="Flowchart" src="../../resources/ch-11-numpy-august-2026-organizing-photo-collection-1.png" /></p>
+<p><img alt="Flowchart" src="../../resources/S11-LR-ch-11-numpy-august-2026-organizing-photo-collection-1.png" /></p>
+<p><strong>Reading the figure</strong></p>
+<ul>
+<li><strong>Step 1:</strong> The whole dataset is a 6D tensor of shape <code>(C, K, N, H, W, 3)</code>.</li>
+<li><strong>Step 2:</strong> Taking one collection (fixing the first index) leaves <code>(K, N, H, W, 3)</code>.</li>
+<li><strong>Step 3:</strong> One category inside it is <code>(N, H, W, 3)</code>: N images.</li>
+<li><strong>Step 4:</strong> One image is <code>(H, W, 3)</code>: height × width pixels.</li>
+<li><strong>Step 5:</strong> One pixel is three numbers, <code>[R, G, B]</code>.</li>
+</ul>
 <hr />
 <h2 id="5-task">5. Task<a class="headerlink" href="#5-task" title="Permanent link">&para;</a></h2>
 <h3 id="objective">Objective<a class="headerlink" href="#objective" title="Permanent link">&para;</a></h3>
@@ -8499,7 +8507,20 @@ possible.</p>
     └── Street Life
 </code></pre></div>
 <p>Here's the same folder structure as flowchart:</p>
-<p><img alt="Flowchart" src="../../resources/ch-11-numpy-august-2026-organizing-photo-collection-2.png" /></p>
+<p><img alt="Flowchart" src="../../resources/S11-LR-ch-11-numpy-august-2026-organizing-photo-collection-2.png" /></p>
+<p><strong>Reading the figure</strong></p>
+<ul>
+<li>The dataset is the whole photo archive.</li>
+<li>Collection 1, Wildlife.</li>
+<li>Collection 2, Family.</li>
+<li>Collection 3, Urban. Three collections, so <code>C = 3</code>.</li>
+<li>Wildlife's first category, Safari, holds images such as <code>lion_01</code> and <code>elephant_02</code>.</li>
+<li>Wildlife's second category, Night Watch. Each collection has two categories, so <code>K = 2</code>.</li>
+<li>Family: Wedding.</li>
+<li>Family: Birthday.</li>
+<li>Urban: Architecture.</li>
+<li>Urban: Street Life.</li>
+</ul>
 <p><strong>Beginner tip:</strong> notice that Steps 1–5 above are simply the same tensor
 structure from Section 4, but built up <strong>one level at a time</strong>. This is a
 useful way to check your own understanding of any high-dimensional array:
@@ -8554,7 +8575,7 @@ of random numbers, and only afterward arranges them into whatever shape
 you asked for via <code>size=</code>. The shape doesn't change <em>how many</em> numbers get
 generated — only how they're organized once generated.</p>
 <hr />
-<h3 id="7b-how-five-5d-tensors-become-one-6d-tensor">7(B) How five 5D tensors become one 6D tensor<a class="headerlink" href="#7b-how-five-5d-tensors-become-one-6d-tensor" title="Permanent link">&para;</a></h3>
+<h3 id="7b-how-several-5d-tensors-here-three-become-one-6d-tensor">7(B) How several 5D tensors (here, three) become one 6D tensor<a class="headerlink" href="#7b-how-several-5d-tensors-here-three-become-one-6d-tensor" title="Permanent link">&para;</a></h3>
 <p>Real datasets are often built up step by step, rather than all at once.
 Here's exactly how that happens for this photo archive:</p>
 <p><strong>Step 1 — Create one 5D tensor (one collection)</strong></p>
@@ -8572,7 +8593,15 @@ tensor.</p>
 </code></pre></div>
 <p><code>np.stack()</code> takes each item in the list and gives it a position along a
 <strong>brand-new axis</strong>, then combines everything into one single array.</p>
-<p><img alt="Flowchart" src="../../resources/ch-11-numpy-august-2026-organizing-photo-collection-3.png" /></p>
+<p><img alt="Flowchart" src="../../resources/S11-LR-ch-11-numpy-august-2026-organizing-photo-collection-3.png" /></p>
+<p><strong>Reading the figure</strong></p>
+<ul>
+<li>The first collection is a 5D array of shape <code>(K, N, H, W, CH)</code>.</li>
+<li>The second collection has exactly the same shape.</li>
+<li>So does the third; together they sit in an ordinary Python list, <code>collection_list</code>.</li>
+<li><code>np.stack(collection_list, axis=0)</code> adds a new first axis, using each item's position in the list.</li>
+<li>The result, <code>dataset</code>, is one 6D array of shape <code>(C, K, N, H, W, CH)</code>, and <code>dataset[i]</code> gives back collection <code>i</code>.</li>
+</ul>
 <p><strong>Resulting shape:</strong> <code>(C, K, N, H, W, CH)</code>, where <code>C</code> is simply the number
 of collections in the original list.</p>
 <p><strong>Key insight:</strong> <code>np.stack()</code> uses each list item's <strong>position (index)</strong>

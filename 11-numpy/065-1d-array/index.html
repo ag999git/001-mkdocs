@@ -8266,7 +8266,7 @@ data has; the other doesn't.</p>
 <li><strong><code>np.concatenate()</code> is the foundation</strong> — you control the axis manually.</li>
 <li><strong><code>np.hstack()</code> and <code>np.vstack()</code> are shortcuts</strong> built on top of it.</li>
 <li><strong><code>hstack</code> = horizontal (joins along columns); <code>vstack</code> = vertical (joins along rows).</strong></li>
-<li><strong>For 1D arrays specifically, <code>vstack()</code> adds a new dimension, while <code>hstack()</code> does not.</strong> This last point is worthg noting .</li>
+<li><strong>For 1D arrays specifically, <code>vstack()</code> adds a new dimension, while <code>hstack()</code> does not.</strong> This last point is worth noting.</li>
 </ul>
 <hr />
 <h2 id="step-by-step-visualization">Step-by-Step Visualization<a class="headerlink" href="#step-by-step-visualization" title="Permanent link">&para;</a></h2>
@@ -8295,7 +8295,13 @@ row/column structure at all:</p>
   A 1D array has no <code>axis=1</code> to speak of — this single fact is the root
   cause of the different behaviour you're about to see.</li>
 </ul>
-<p><img alt="Flowchart" src="../../resources/ch-11-numpy-august-2026-hstack-vstack.png" /></p>
+<p><img alt="Flowchart" src="../../resources/S11-LR-ch-11-numpy-august-2026-hstack-vstack.png" /></p>
+<p><strong>Reading the figure</strong></p>
+<ul>
+<li><code>x = np.array([1, 2])</code> is a 1D array of shape <code>(2,)</code>.</li>
+<li><code>y = np.array([3, 4])</code> is also 1D, shape <code>(2,)</code>.</li>
+<li>A 1D array has only one axis, <code>axis=0</code>; there is no row or column yet.</li>
+</ul>
 <hr />
 <h3 id="step-2-nphstackx-y">Step 2: <code>np.hstack((x, y))</code><a class="headerlink" href="#step-2-nphstackx-y" title="Permanent link">&para;</a></h3>
 <p><strong>Operation:</strong> "join along the existing axis."</p>
@@ -8324,7 +8330,14 @@ axis = 0
 <blockquote>
 <p>For 1D arrays, <strong><code>hstack()</code> is identical to <code>concatenate(axis=0)</code>.</strong></p>
 </blockquote>
-<p><img alt="Flowchart" src="../../resources/ch-11-numpy-august-2026-hstack-vstack--2.png" /></p>
+<p><img alt="Flowchart" src="../../resources/S11-LR-ch-11-numpy-august-2026-hstack-vstack--2.png" /></p>
+<p><strong>Reading the figure</strong></p>
+<ul>
+<li><strong>Step 1:</strong> Start with <code>x = [1, 2]</code>.</li>
+<li><strong>Step 2:</strong> And <code>y = [3, 4]</code>.</li>
+<li><strong>Step 3:</strong> <code>np.hstack((x, y))</code>, like <code>np.concatenate((x, y), axis=0)</code>, joins the two arrays end to end along their only axis.</li>
+<li><strong>Step 4:</strong> The result is still flat: <code>[1, 2, 3, 4]</code>, shape <code>(4,)</code>.</li>
+</ul>
 <hr />
 <h3 id="step-4-npvstackx-y">Step 4: <code>np.vstack((x, y))</code><a class="headerlink" href="#step-4-npvstackx-y" title="Permanent link">&para;</a></h3>
 <p>Here's where things change.</p>
@@ -8346,7 +8359,16 @@ most important detail in this whole chapter, because it's exactly what
  [3   4]]
 </code></pre></div>
 <p><strong>Shape:</strong> <code>(2, 2)</code> — a genuine 2D matrix now, with 2 rows and 2 columns.</p>
-<p><img alt="Flowchart" src="../../resources/ch-11-numpy-august-2026-hstack-vstack--3.png" /></p>
+<p><img alt="Flowchart" src="../../resources/S11-LR-ch-11-numpy-august-2026-hstack-vstack--3.png" /></p>
+<p><strong>Reading the figure</strong></p>
+<ul>
+<li><strong>Step 1:</strong> <code>x</code> starts as a 1D array of shape <code>(2,)</code>.</li>
+<li><strong>Step 2:</strong> <code>vstack()</code> first silently turns it into a row vector <code>[[1, 2]]</code>, shape <code>(1, 2)</code>.</li>
+<li><strong>Step 3:</strong> <code>y</code> is also 1D, shape <code>(2,)</code>.</li>
+<li><strong>Step 4:</strong> It is turned into the row vector <code>[[3, 4]]</code>, shape <code>(1, 2)</code>.</li>
+<li><strong>Step 5:</strong> The two rows are stacked along <code>axis=0</code>, one below the other.</li>
+<li><strong>Step 6:</strong> The result is a 2D matrix <code>[[1, 2], [3, 4]]</code>, shape <code>(2, 2)</code>.</li>
+</ul>
 <hr />
 <h3 id="side-by-side-comparison">Side-by-Side Comparison<a class="headerlink" href="#side-by-side-comparison" title="Permanent link">&para;</a></h3>
 <table>

@@ -8165,7 +8165,15 @@ and that difference turns out to matter a great deal once you start doing
 matrix multiplication or geometric transformations — the same numbers,
 arranged the "wrong" way, can produce a completely different (or invalid)
 calculation.</p>
-<p><img alt="Flowchart" src="../../resources/ch-11-numpy-august-2026-row-vs-column-vector.png" /></p>
+<p><img alt="Flowchart" src="../../resources/S11-LR-ch-11-numpy-august-2026-row-vs-column-vector.png" /></p>
+<p><strong>Reading the figure</strong></p>
+<ul>
+<li>The same three values, <code>3</code>, <code>5</code> and <code>7</code>, can be arranged in two ways.</li>
+<li>As a row vector, shape <code>(1, 3)</code>: one row and three columns, <code>[[3, 5, 7]]</code>.</li>
+<li>As a column vector, shape <code>(3, 1)</code>: three rows and one column, <code>[[3], [5], [7]]</code>.</li>
+<li>Row vectors suit a single record, such as one row of a dataset.</li>
+<li>Column vectors suit points and vectors that go through matrix multiplication and transformations.</li>
+</ul>
 <hr />
 <h2 id="2-row-vector">2. Row Vector<a class="headerlink" href="#2-row-vector" title="Permanent link">&para;</a></h2>
 <p>A <strong>row vector</strong> arranges its values horizontally, in a single row.</p>
@@ -8311,7 +8319,7 @@ mathematics expects.</p>
 <li>rotation,</li>
 <li>scaling,</li>
 <li>projection, and</li>
-<li>translation</li>
+<li>translation (which needs one extra coordinate, called <em>homogeneous coordinates</em>, before it can be written as a matrix product)</li>
 </ul>
 <p>are conventionally written as:</p>
 <p><strong><code>Matrix × Column Vector</code></strong></p>
@@ -8323,7 +8331,13 @@ mathematics expects.</p>
 <li><code>x</code> is the <strong>column vector</strong> — it encodes the point (or points) being transformed, and</li>
 <li><code>y</code> is the resulting column vector, after the transformation has been applied.</li>
 </ul>
-<p><img alt="Flowchart" src="../../resources/ch-11-numpy-august-2026-row-vs-column-vector-2.png" /></p>
+<p><img alt="Flowchart" src="../../resources/S11-LR-ch-11-numpy-august-2026-row-vs-column-vector-2.png" /></p>
+<p><strong>Reading the figure</strong></p>
+<ul>
+<li><strong>Step 1:</strong> The point to be transformed is written as a column vector <code>x</code>, for example shape <code>(2, 1)</code>.</li>
+<li><strong>Step 2:</strong> The transformation matrix <code>M</code>, for example a 2 × 2 rotation or scaling matrix, is multiplied with it: <code>M @ x</code>.</li>
+<li><strong>Step 3:</strong> The result <code>y = M @ x</code> is again a column vector: the new, transformed point.</li>
+</ul>
 <p><strong>Why a column, specifically?</strong> The rule for matrix multiplication requires
 the number of <em>columns</em> in the first item to match the number of <em>rows</em> in
 the second. An <code>n × n</code> transformation matrix naturally lines up with an
@@ -8472,7 +8486,15 @@ vectors are the natural fit for "one mathematical object being
 transformed,"</strong> the way you'd think of a point moving through space. When
 in doubt, and especially when working with transformation matrices, the
 column vector is the safer, more conventional default.</p>
-<p><img alt="Flowchart" src="../../resources/ch-11-numpy-august-2026-row-vs-column-vector-3.png" /></p>
+<p><img alt="Flowchart" src="../../resources/S11-LR-ch-11-numpy-august-2026-row-vs-column-vector-3.png" /></p>
+<p><strong>Reading the figure</strong></p>
+<ul>
+<li><strong>Step 1:</strong> Do you need to multiply the vector by a transformation matrix, as in <code>y = M @ x</code>?</li>
+<li><strong>Step 2:</strong> Yes: use a column vector, following the standard linear-algebra convention.</li>
+<li><strong>Step 3:</strong> No: does the vector represent one record of a dataset, or one input example for a model?</li>
+<li><strong>Step 4:</strong> Yes: use a row vector, like one row of a spreadsheet.</li>
+<li><strong>Step 5:</strong> No: a column vector is usually the safer default.</li>
+</ul>
 <hr />
 <h2 id="follow-up-questions-for-practice">Follow-up questions for practice<a class="headerlink" href="#follow-up-questions-for-practice" title="Permanent link">&para;</a></h2>
 <p><em>(These are additional, optional questions for self-testing — they don't

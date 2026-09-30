@@ -8353,9 +8353,31 @@ in memory.</p>
 <p>Before diving into the detailed rules, look at this decision process. Every
 time you write <code>A + B</code> in NumPy, this is effectively the logic the engine
 runs through.</p>
-<p><img alt="Broadcasting Decision Tree" src="../../resources/ch11-broadcast-rule-flowchart.png" /></p>
+<p><img alt="Broadcasting Decision Tree" src="../../resources/S11-LR-ch11-broadcast-rule-flowchart.png" /></p>
+<p><strong>Reading the figure</strong></p>
+<ul>
+<li><strong>Step 1:</strong> Start with <code>A + B</code> and look at the two shapes, <code>A.shape</code> and <code>B.shape</code>.</li>
+<li><strong>Step 2:</strong> Do both shapes have the same number of dimensions?</li>
+<li><strong>Step 3:</strong> No: Rule 1, pad the shorter shape with 1s on the left until the lengths match.</li>
+<li><strong>Step 4:</strong> Line the two shapes up from the right-hand end.</li>
+<li><strong>Step 5:</strong> Take the next pair of dimensions, working from right to left: are they equal? If they are, simply move on to the next pair.</li>
+<li><strong>Step 6:</strong> Not equal: is one of the two dimensions exactly 1?</li>
+<li><strong>Step 7:</strong> No: Rule 3, the shapes are incompatible, and NumPy raises <code>ValueError: operands could not be broadcast together</code>.</li>
+<li><strong>Step 8:</strong> Yes: Rule 2, that dimension of size 1 will be stretched (virtually, without copying) to match the other; then check the next pair (back to Step 5).</li>
+<li><strong>Step 9:</strong> When every pair has passed the check: Rule 4, the operation is carried out using the virtually stretched shapes.</li>
+</ul>
 <p>Here's the same logic as a different flowchart:</p>
-<p><img alt="Flowchart" src="../../resources/ch-11-numpy-august-2026-broadcasting1.png" /></p>
+<p><img alt="Flowchart" src="../../resources/S11-LR-ch-11-numpy-august-2026-broadcasting1.png" /></p>
+<p><strong>Reading the figure</strong></p>
+<ul>
+<li><strong>Step 1:</strong> Compare the shapes of the two arrays, A and B.</li>
+<li><strong>Step 2:</strong> Do they have the same number of dimensions?</li>
+<li><strong>Step 3:</strong> No: pad the shorter shape with 1s on the left.</li>
+<li><strong>Step 4:</strong> Compare the two shapes dimension by dimension, starting from the right.</li>
+<li><strong>Step 5:</strong> Is every pair of dimensions either equal, or does one of the two equal 1?</li>
+<li><strong>Step 6:</strong> No, some pair mismatches: NumPy raises <code>ValueError</code>, the shapes cannot be broadcast.</li>
+<li><strong>Step 7:</strong> Yes: every dimension of size 1 is stretched to match the other, and the operation proceeds on the matched shape.</li>
+</ul>
 <hr />
 <h2 id="rule-1-right-alignment-and-left-padding-the-prepend-rule">Rule 1: Right-Alignment and Left-Padding (The Prepend Rule)<a class="headerlink" href="#rule-1-right-alignment-and-left-padding-the-prepend-rule" title="Permanent link">&para;</a></h2>
 <p><strong>The rule:</strong> When comparing two array shapes, NumPy lines them up starting
@@ -8383,7 +8405,15 @@ runs out of dimensions on B's side, so it pads B with a <code>1</code> at the fr
 <li>Effective shape B: <code>(8, 7, 6, 5)</code></li>
 </ul>
 <p>Both shapes now match exactly, so the arithmetic operation can proceed.</p>
-<p><img alt="Flowchart" src="../../resources/ch-11-numpy-august-2026-broadcasting2.png" /></p>
+<p><img alt="Flowchart" src="../../resources/S11-LR-ch-11-numpy-august-2026-broadcasting2.png" /></p>
+<p><strong>Reading the figure</strong></p>
+<ul>
+<li><strong>Step 1:</strong> Array A has shape <code>(8, 1, 6, 1)</code>: 4 dimensions.</li>
+<li><strong>Step 2:</strong> Array B has shape <code>(7, 1, 5)</code>: only 3 dimensions.</li>
+<li><strong>Step 3:</strong> Rule 1: B is padded with a 1 on the left, becoming <code>(1, 7, 1, 5)</code>.</li>
+<li><strong>Step 4:</strong> Rule 2: every dimension of size 1 is stretched to match the other array (<code>1</code> against <code>8</code>, <code>1</code> against <code>7</code>, <code>1</code> against <code>6</code>, <code>1</code> against <code>5</code>).</li>
+<li><strong>Step 5:</strong> Both shapes are now <code>(8, 7, 6, 5)</code>, so the operation can proceed.</li>
+</ul>
 <h3 id="the-following-figure-shows-the-steps-in-broadcasting-of-array-a-shape-8-1-6-1-and-array-b-shape-7-1-5">The following figure shows the steps in broadcasting of Array A shape <code>(8, 1, 6, 1)</code> and Array B shape <code>(7, 1, 5)</code><a class="headerlink" href="#the-following-figure-shows-the-steps-in-broadcasting-of-array-a-shape-8-1-6-1-and-array-b-shape-7-1-5" title="Permanent link">&para;</a></h3>
 <p><img alt="Flow chart showing broadcasting of A (8,1,6,1) and B (7,1,5)" src="../../resources/ch11-broadcast-2-matrices-different-dimensions.png" /></p>
 <p><strong>Do's and don'ts:</strong></p>

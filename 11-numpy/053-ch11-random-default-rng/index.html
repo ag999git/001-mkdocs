@@ -8432,11 +8432,20 @@
 
 <span class="nb">print</span><span class="p">(</span><span class="n">a</span><span class="p">)</span>
 <span class="nb">print</span><span class="p">(</span><span class="n">b</span><span class="p">)</span>
-<span class="c1"># The VALUES stored in 'a' and 'b' are now DIFFERENT from the previous</span>
-<span class="c1"># example -- even though the seed is identical, simply swapping which</span>
-<span class="c1"># line runs first changes which numbers end up in which variable.</span>
+<span class="c1"># The two sets of numbers have now SWAPPED places compared with the</span>
+<span class="c1"># previous example: 'b' now holds the first three numbers of the</span>
+<span class="c1"># sequence, and 'a' the next three -- even though the seed is identical,</span>
+<span class="c1"># simply swapping which line runs first changes which numbers end up in</span>
+<span class="c1"># which variable.</span>
 </code></pre></div>
-<p><img alt="Flowchart" src="../../resources/ch-11-numpy-august-2026-prng1.png" /></p>
+<p><img alt="Flowchart" src="../../resources/S11-LR-ch-11-numpy-august-2026-prng1.png" /></p>
+<p><strong>Reading the figure</strong></p>
+<ul>
+<li><strong>Step 1:</strong> <code>np.random.seed(0)</code> seeds the one hidden, global generator that every <code>np.random.*</code> function in the program shares.</li>
+<li><strong>Step 2:</strong> The first call takes the first three numbers of the sequence.</li>
+<li><strong>Step 3:</strong> The global generator does not reset; it carries on from where the first call stopped.</li>
+<li><strong>Step 4:</strong> The second call takes the next three numbers. So the values each variable gets depend on the order of the calls.</li>
+</ul>
 <p><strong>This is the core problem with the old API:</strong> a shared global sequence means the <em>order</em> in which different parts of your program happen to call random functions can change your results — a subtle, easy-to-introduce bug, especially in larger programs where you might not even realize two unrelated functions are both quietly drawing from the same global sequence.</p>
 <h4 id="new-api-independent-generators">New API → independent generators<a class="headerlink" href="#new-api-independent-generators" title="Permanent link">&para;</a></h4>
 <p>Each <code>rng</code> object created with <code>default_rng()</code> is its own, completely separate random-number machine.</p>
@@ -8461,7 +8470,16 @@
 <span class="c1"># sync, because each one only ever tracks its OWN separate progress,</span>
 <span class="c1"># completely unaffected by anything happening to the other generator.</span>
 </code></pre></div>
-<p><img alt="Flowchart" src="../../resources/ch-11-numpy-august-2026-prng2.png" /></p>
+<p><img alt="Flowchart" src="../../resources/S11-LR-ch-11-numpy-august-2026-prng2.png" /></p>
+<p><strong>Reading the figure</strong></p>
+<ul>
+<li><code>rng1</code> is an independent generator, created with seed 0.</li>
+<li>Its first call returns the first three numbers of its own sequence.</li>
+<li>Its second call continues its own sequence.</li>
+<li><code>rng2</code> is a separate generator, also created with seed 0.</li>
+<li>Its first call returns the same three numbers as <code>rng1</code>'s first call.</li>
+<li>Its second call matches <code>rng1</code>'s second call. Each generator keeps its own place, so nothing done with one can affect the other.</li>
+</ul>
 <p><strong>Key insight:</strong> each generator runs its own, completely independent sequence — nothing that happens to <code>rng2</code> can ever affect <code>rng1</code>, and vice versa, no matter what order you call them in, or how many other generators exist elsewhere in your program.</p>
 <hr />
 <h2 id="part-b-a-complete-practical-solution">Part B: A complete practical solution<a class="headerlink" href="#part-b-a-complete-practical-solution" title="Permanent link">&para;</a></h2>
