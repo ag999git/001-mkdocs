@@ -8187,7 +8187,7 @@
 <p>This page is a research/project assignment for Chapter 8 that steps a little outside pure inheritance and into a genuinely practical design pattern: the <strong>class registry</strong>. A registry is simply a place — usually a dictionary — that keeps track of which classes exist in a system, so that new objects can be created dynamically by <em>name</em>, rather than needing to be hardcoded with <code>if/elif</code> chains every time you add a new type. This page compares three different ways of building such a registry in Python, each trading off simplicity against automation.</p>
 <p>This is a genuinely useful, real-world pattern — it's how many frameworks and plugin systems let you "register" new components (new pet types here, but the same idea applies to new game characters, new payment methods, new file format handlers, and so on) without the core system needing to know about every specific type in advance.</p>
 <p><strong>A few terms used throughout, explained simply, with links for more detail:</strong>
-- <strong>Class registry pattern</strong> — a design pattern where classes are stored in a lookup structure (often a dictionary) so they can be found and used by name at runtime. (<a href="https://en.wikipedia.org/wiki/Service_locator_pattern">Wikipedia: Registry pattern</a>)
+- <strong>Class registry pattern</strong> — a design pattern where classes are stored in a lookup structure (often a dictionary) so they can be found and used by name at runtime. (A closely related pattern: <a href="https://en.wikipedia.org/wiki/Service_locator_pattern">Wikipedia: Service locator pattern</a>)
 - <strong><code>@classmethod</code></strong> — a method that receives the <em>class itself</em> (conventionally named <code>cls</code>) as its first argument, rather than a specific object (<code>self</code>). This is what lets <code>PetRegistryManual.register(...)</code> be called directly on the class, without ever creating a <code>PetRegistryManual</code> object. (<a href="https://docs.python.org/3/library/functions.html#classmethod">Python docs: <code>classmethod</code></a>)
 - <strong>Closure</strong> — a function defined inside another function, which "remembers" variables from the outer function even after the outer function has finished running. This is what makes the decorator-based approach below work (covered in more depth on the earlier chapter page, "Using <code>functools.wraps</code> in Decorators").
 - <strong><code>__init_subclass__</code></strong> — a special hook method that Python calls automatically every time a new subclass of a class is defined — not when an <em>object</em> is created, but the moment the <em>class itself</em> is defined. (<a href="https://docs.python.org/3/reference/datamodel.html#object.__init_subclass__">Python docs: <code>__init_subclass__</code></a>)</p>
@@ -8250,7 +8250,14 @@
 </tr>
 </tbody>
 </table>
-<p><img alt="Flowchart" src="../../resources/ch-8-august-2026-3-approaches-to-class-registration.png" /></p>
+<p><img alt="Flowchart" src="../../resources/S08-LR-ch-8-august-2026-3-approaches-to-class-registration.png" /></p>
+<p><strong>Reading the figure</strong></p>
+<ul>
+<li>The goal of all three approaches: store classes so they can be looked up and used by name while the program runs.</li>
+<li>Approach 1, manual registration: you call <code>register()</code> yourself for each class, which is easy to forget.</li>
+<li>Approach 2, decorator registration: <code>@PetRegistryDecorator.register("name")</code> registers the class the moment it is defined.</li>
+<li>Approach 3, automatic registration: the base class's <code>__init_subclass__()</code> registers every subclass, with no extra code on the subclass.</li>
+</ul>
 <h2 id="approach-1-manual-registration">Approach 1: Manual Registration<a class="headerlink" href="#approach-1-manual-registration" title="Permanent link">&para;</a></h2>
 <p><strong>Idea:</strong> The programmer explicitly calls a <code>register()</code> function for every class, as a separate step after defining it.</p>
 <div class="highlight"><pre><span></span><code><span class="c1"># --- A. The registry itself ---</span>

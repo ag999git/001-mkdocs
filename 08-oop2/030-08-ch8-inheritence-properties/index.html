@@ -8186,7 +8186,7 @@
 - <strong>DRY Principle</strong> — "Don't Repeat Yourself," a general programming principle that inheritance directly supports, by letting a child class reuse a parent's code instead of copying it. (<a href="https://en.wikipedia.org/wiki/Don%27t_repeat_yourself">Wikipedia: DRY</a>)
 - <strong>C3 Linearization</strong> — the specific algorithm Python actually uses internally to calculate the MRO (Method Resolution Order) for classes with multiple inheritance. You don't need to know the algorithm's details to use Python — just that <code>.__mro__</code> shows you its result. (<a href="https://docs.python.org/3/library/stdtypes.html#class.__mro__">Python docs: MRO</a>)
 - <strong>Object lifecycle</strong> — the sequence an object goes through from creation (<code>__init__</code> running) through use, to eventual cleanup (see the earlier chapter page on <code>del</code> and <code>__del__()</code>).</p>
-<p><em>(Several of these terms — <code>super()</code>, MRO, encapsulation, polymorphism, dynamic binding — are also covered in the two earlier Chapter 8 pages on the Animal Management System and implicit inheritance from <code>object</code>; this page assumes familiarity with both.)</em></p>
+<p><em>(Several of these terms — <code>super()</code>, MRO, encapsulation, polymorphism, dynamic binding — are also covered in the earlier Animal Management System page and the Chapter 7 page on implicit inheritance from <code>object</code>; this page assumes familiarity with both.)</em></p>
 <hr />
 <h2 id="problem-statement">Problem Statement<a class="headerlink" href="#problem-statement" title="Permanent link">&para;</a></h2>
 <blockquote>
@@ -8210,7 +8210,14 @@
 <p>The assignment demonstrates <em>single-level</em> inheritance (<code>Pet → Dog</code>, <code>Pet → Cat</code>). As a natural extension: <strong>what changes if you add a third level</strong> — for example, a <code>Puppy</code> class that inherits from <code>Dog</code>? Specifically, predict what <code>Puppy.__mro__</code> would look like, and whether calling <code>super().__init__()</code> inside <code>Puppy</code> would still correctly reach all the way back to <code>Pet</code>'s constructor. (This connects to row 13 of the summary table below, "Reusability Across Levels," which the original script doesn't fully demonstrate with actual code — a good exercise is to extend the script yourself with a <code>Puppy</code> class and confirm your prediction.)</p>
 <hr />
 <h2 id="visualizing-the-hierarchy">Visualizing the hierarchy<a class="headerlink" href="#visualizing-the-hierarchy" title="Permanent link">&para;</a></h2>
-<p><img alt="Flowchart" src="../../resources/ch-8-august-2026-11-properties-of-inheritence.png" /></p>
+<p><img alt="Flowchart" src="../../resources/S08-LR-ch-8-august-2026-11-properties-of-inheritence.png" /></p>
+<p><strong>Reading the figure</strong></p>
+<ul>
+<li><code>object</code> is the root class that <code>Pet</code> inherits from implicitly.</li>
+<li><code>Pet</code> is the base class, with the attributes <code>name</code> and <code>__secret</code> and the methods <code>walk()</code>, <code>speak()</code> and <code>show_secret()</code>.</li>
+<li><code>Dog</code> inherits from <code>Pet</code>, adds the attribute <code>color</code>, and overrides both <code>speak()</code> and <code>walk()</code> (its <code>walk()</code> also calls <code>super().walk()</code>).</li>
+<li><code>Cat</code> inherits from <code>Pet</code> and overrides only <code>speak()</code>. Each child has only one parent: this is single inheritance.</li>
+</ul>
 <p>Unlike the earlier Animal Management System assignment, <code>Dog</code> and <code>Cat</code> each have <strong>only one</strong> parent here (<code>Pet</code>) — this is single inheritance, not multiple inheritance, which is why the MRO for both classes will be shorter and simpler.</p>
 <hr />
 <h2 id="the-script">The script<a class="headerlink" href="#the-script" title="Permanent link">&para;</a></h2>
@@ -8292,7 +8299,7 @@
 <span class="n">c</span> <span class="o">=</span> <span class="n">Cat</span><span class="p">(</span><span class="s2">"Kitty"</span><span class="p">)</span>
 
 <span class="c1"># --- 1. Code Reuse ---</span>
-<span class="n">d</span><span class="o">.</span><span class="n">walk</span><span class="p">()</span>   <span class="c1"># -&gt; Dog walks like a dog, THEN Tommy is walking (Pet method)</span>
+<span class="n">d</span><span class="o">.</span><span class="n">walk</span><span class="p">()</span>   <span class="c1"># -&gt; Tommy walks like a dog, THEN Tommy is walking (Pet method)</span>
 <span class="n">c</span><span class="o">.</span><span class="n">walk</span><span class="p">()</span>   <span class="c1"># -&gt; Kitty is walking (Pet method) -- Cat reuses Pet's walk() untouched</span>
 
 <span class="c1"># --- 2. Overriding ---</span>
@@ -8336,8 +8343,8 @@
 <span class="c1"># needing to modify Pet.</span>
 </code></pre></div>
 <h3 id="expected-output">Expected output<a class="headerlink" href="#expected-output" title="Permanent link">&para;</a></h3>
-<div class="highlight"><pre><span></span><code>Pet constructor called
-Dog constructor called
+<div class="highlight"><pre><span></span><code>Dog constructor called
+Pet constructor called
 Pet constructor called
 Tommy walks like a dog
 Tommy is walking (Pet method)
@@ -8356,7 +8363,7 @@ Dog MRO: (&lt;class '__main__.Dog'&gt;, &lt;class '__main__.Pet'&gt;, &lt;class 
 Cat MRO: (&lt;class '__main__.Cat'&gt;, &lt;class '__main__.Pet'&gt;, &lt;class 'object'&gt;)
 Black
 </code></pre></div>
-<p>Notice the very first two lines: <code>"Pet constructor called"</code> prints for <strong>both</strong> <code>d = Dog(...)</code> and <code>c = Cat(...)</code> — proof that every <code>Pet</code> subclass, whether or not it defines its own <code>__init__</code>, always ends up running <code>Pet.__init__</code> somewhere in the process (directly for <code>Cat</code>, via <code>super()</code> for <code>Dog</code>).</p>
+<p>Notice the first three lines: <code>"Pet constructor called"</code> prints <strong>twice</strong> — once for <code>d = Dog(...)</code> (after <code>"Dog constructor called"</code>, because <code>Dog.__init__</code> prints its message before calling <code>super().__init__()</code>) and once for <code>c = Cat(...)</code> — proof that every <code>Pet</code> subclass, whether or not it defines its own <code>__init__</code>, always ends up running <code>Pet.__init__</code> somewhere in the process (directly for <code>Cat</code>, via <code>super()</code> for <code>Dog</code>).</p>
 <hr />
 <h2 id="summary-table-the-eleven-plus-related-properties-of-inheritance">Summary table: the eleven (plus related) properties of inheritance<a class="headerlink" href="#summary-table-the-eleven-plus-related-properties-of-inheritance" title="Permanent link">&para;</a></h2>
 <table>

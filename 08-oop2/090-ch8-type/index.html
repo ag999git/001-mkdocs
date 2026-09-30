@@ -8326,7 +8326,13 @@
 <li><strong>Metaclass → creates → Class</strong> (e.g., <code>type</code> creates <code>Dog</code>)</li>
 <li><strong>Class → creates → Object</strong> (e.g., <code>Dog</code> creates <code>dog</code>)</li>
 </ol>
-<p><img alt="Flowchart" src="../../resources/ch-8-august-2026-metaclass-part1.png" /></p>
+<p><img alt="Flowchart" src="../../resources/S08-LR-ch-8-august-2026-metaclass-part1.png" /></p>
+<p><strong>Reading the figure</strong></p>
+<ul>
+<li><code>type</code> is Python's built-in metaclass: it creates classes.</li>
+<li><code>Dog</code> is a class created by <code>type</code>, whether you write <code>class Dog:</code> or call <code>type("Dog", (), {...})</code> yourself.</li>
+<li><code>dog = Dog()</code> is an object created by the class <code>Dog</code>.</li>
+</ul>
 <hr />
 <h2 id="what-happens-behind-the-scenes-when-you-create-a-class">What happens behind the scenes when you create a class<a class="headerlink" href="#what-happens-behind-the-scenes-when-you-create-a-class" title="Permanent link">&para;</a></h2>
 <p>Suppose you write a completely ordinary class, without ever mentioning metaclasses:</p>
@@ -8426,7 +8432,21 @@
 <span class="nb">print</span><span class="p">(</span><span class="n">dog_instance</span><span class="o">.</span><span class="n">speak</span><span class="p">())</span>   <span class="c1"># -&gt; Woof!</span>
 </code></pre></div>
 <h2 id="diagram-showing-the-flow-of-execution-of-above-script">Diagram showing the flow of execution of above script<a class="headerlink" href="#diagram-showing-the-flow-of-execution-of-above-script" title="Permanent link">&para;</a></h2>
-<p><img alt="Diagram" src="/001-mkdocs/gitbook-assets/ch-8-type-explain.png" /></p>
+<p><img alt="Diagram" src="../../resources/S08-LR-ch-8-type-explain.png" /></p>
+<p><strong>Reading the figure</strong></p>
+<ul>
+<li><strong>Step 1:</strong> <code>Dog = type("Dog", (), {"sound": "Woof"})</code> creates a class named <code>Dog</code> with no explicit parents and one class attribute.</li>
+<li><strong>Step 2:</strong> <code>print(Dog.sound)</code> prints <code>Woof</code>.</li>
+<li><strong>Step 3:</strong> <code>dict_attributes = {"sound": "Woof", "breed": "Labrador"}</code> holds two attributes.</li>
+<li><strong>Step 4:</strong> <code>type("Dog", (), dict_attributes)</code> creates a new <code>Dog</code> class with both attributes.</li>
+<li><strong>Step 5:</strong> <code>Dog.sound</code> and <code>Dog.breed</code> print <code>Woof</code> and <code>Labrador</code>.</li>
+<li><strong>Step 6:</strong> An ordinary function <code>speak(self)</code> is defined outside any class; it returns <code>self.sound</code> followed by <code>"!"</code>.</li>
+<li><strong>Step 7:</strong> <code>dict_methods = {"speak": speak}</code> puts the function in a dictionary, ready to become a method.</li>
+<li><strong>Step 8:</strong> <code>dict_merged = {**dict_attributes, **dict_methods}</code> combines attributes and method into one dictionary, because <code>type()</code> takes a single dictionary.</li>
+<li><strong>Step 9:</strong> <code>type("Dog", (), dict_merged)</code> creates the final <code>Dog</code> class with both attributes and the <code>speak()</code> method.</li>
+<li><strong>Step 10:</strong> <code>dog_instance = Dog()</code> creates an object from this class, exactly as with a normal class.</li>
+<li><strong>Step 11:</strong> <code>dog_instance.speak()</code> returns <code>Woof!</code>.</li>
+</ul>
 <h3 id="what-this-script-demonstrates">What this script demonstrates<a class="headerlink" href="#what-this-script-demonstrates" title="Permanent link">&para;</a></h3>
 <ul>
 <li>You are <strong>directly calling the metaclass</strong> (<code>type</code>) yourself, instead of letting the <code>class</code> keyword call it for you behind the scenes.</li>

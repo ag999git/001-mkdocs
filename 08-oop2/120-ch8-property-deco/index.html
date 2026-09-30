@@ -8321,7 +8321,14 @@ They're **built into Python itself** — no import is needed. Internally, `prope
 
 </details>
 
-<p><img alt="Flowchart" src="../../resources/ch-8-august-2026-property-decorator.png" /></p>
+<p><img alt="Flowchart" src="../../resources/S08-LR-ch-8-august-2026-property-decorator.png" /></p>
+<p><strong>Reading the figure</strong></p>
+<ul>
+<li><code>@property</code> turns <code>age</code> into a property object, which holds up to three functions.</li>
+<li><code>fget</code> is the getter: reading <code>p.age</code> calls it, and it returns <code>self._age</code>.</li>
+<li><code>fset</code> is the setter, attached with <code>@age.setter</code>: <code>p.age = value</code> calls it; it rejects negative values and stores the rest in <code>self._age</code>.</li>
+<li><code>fdel</code> is the deleter. It is optional and is <code>None</code> here, because no deleter was defined.</li>
+</ul>
 <hr />
 <h2 id="project-assignment-task">Project / Assignment Task<a class="headerlink" href="#project-assignment-task" title="Permanent link">&para;</a></h2>
 <p><em>(Kept exactly as set in the assignment.)</em></p>
@@ -8386,14 +8393,11 @@ They're **built into Python itself** — no import is needed. Internally, `prope
 <span class="k">class</span><span class="w"> </span><span class="nc">Pet</span><span class="p">:</span>
     <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">age</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="n">name</span>
-        <span class="c1"># Step 1: Notice we assign to self._age here, NOT self.age --</span>
-        <span class="c1"># this deliberately bypasses the property's setter during</span>
-        <span class="c1"># initial construction... actually, in Python, assigning to</span>
-        <span class="c1"># self._age directly is a plain, ordinary attribute assignment</span>
-        <span class="c1"># (there's no property named "_age"), while self.age = age</span>
-        <span class="c1"># WOULD go through the property setter below. Either works</span>
-        <span class="c1"># here since the value is already valid, but going through</span>
-        <span class="c1"># self._age keeps this line simple and explicit.</span>
+        <span class="c1"># Step 1: Notice we assign to self._age here, NOT self.age.</span>
+        <span class="c1"># Assigning to self._age is a plain, ordinary attribute</span>
+        <span class="c1"># assignment, so it does NOT go through the property's setter</span>
+        <span class="c1"># below. Writing self.age = age instead WOULD go through the</span>
+        <span class="c1"># setter, and would also validate the starting age.</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_age</span> <span class="o">=</span> <span class="n">age</span>
 
     <span class="c1"># ------------------------------------------------------------</span>

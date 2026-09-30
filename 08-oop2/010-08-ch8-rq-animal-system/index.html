@@ -2465,10 +2465,10 @@
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#the-following-flowchart-shows-the-parent-and-the-derived-classes" class="md-nav__link">
+  <a href="#the-following-diagram-shows-the-parent-and-the-derived-classes" class="md-nav__link">
     <span class="md-ellipsis">
       
-        The following flowchart shows the parent and the derived classes
+        The following diagram shows the parent and the derived classes
       
     </span>
   </a>
@@ -8226,7 +8226,7 @@
 - <strong>Multiple inheritance</strong> — when a class inherits from more than one parent class at once (here, <code>Dog</code> inherits from both <code>Animal</code> and <code>Friendly</code>).
 - <strong>Polymorphism</strong> — the ability to call the <em>same</em> method name on different types of objects, and have each one respond in its own way. (<a href="https://docs.python.org/3/tutorial/classes.html">Python docs: Polymorphism overview</a>)
 - <strong>Dynamic binding</strong> — Python deciding <em>which</em> version of an overridden method to actually run, at the moment the method is called, based on the real type of the object — not decided in advance.
-- <strong>MRO (Method Resolution Order)</strong> — covered in more depth on the previous page, "Implicit Inheritance from <code>object</code>."</p>
+- <strong>MRO (Method Resolution Order)</strong> — covered in more depth on the Chapter 7 page, "Implicit Inheritance from <code>object</code>."</p>
 <hr />
 <h2 id="part-a-class-design">PART A: Class Design<a class="headerlink" href="#part-a-class-design" title="Permanent link">&para;</a></h2>
 <h3 id="1-create-an-abstract-base-class">1. Create an Abstract Base Class<a class="headerlink" href="#1-create-an-abstract-base-class" title="Permanent link">&para;</a></h3>
@@ -8273,11 +8273,20 @@
 <hr />
 <h2 id="visualizing-the-class-hierarchy">Visualizing the class hierarchy<a class="headerlink" href="#visualizing-the-class-hierarchy" title="Permanent link">&para;</a></h2>
 <p><img alt="Flowchart" src="../../resources/ch8-inheritene-august2026-animal-management-system.png" /></p>
-<p><em>(This diagram uses plain <code>graph TD</code> syntax with simple boxes and arrows only — no subgraphs, no styled/labeled edges, no special characters in labels — so it should paste cleanly into draw.io via Extras → Edit Diagram.)</em></p>
+<p><strong>Another view of the same diagram</strong></p>
+<p><img alt="Flowchart" src="../../resources/S08-LR-ch8-inheritene-august2026-animal-management-system.png" /></p>
+<p><strong>Reading the figure</strong></p>
+<ul>
+<li><code>object</code> is the root class: <code>Animal</code> and <code>Friendly</code> both inherit from it implicitly.</li>
+<li><code>Animal</code> is the abstract base class. It provides <code>walk()</code> and declares the abstract method <code>speak()</code>.</li>
+<li><code>Friendly</code> is a separate, unrelated parent class that provides <code>nature()</code>.</li>
+<li><code>Cat</code> inherits from <code>Animal</code> only (single inheritance).</li>
+<li><code>Dog</code> has two arrows coming in, from <code>Animal</code> and from <code>Friendly</code>: this is multiple inheritance. Its MRO is <code>Dog</code>, <code>Animal</code>, <code>Friendly</code>, <code>object</code>.</li>
+</ul>
 <p>Notice <code>Dog</code> has <strong>two</strong> arrows pointing into it — one from <code>Animal</code>, one from <code>Friendly</code> — this is exactly what multiple inheritance looks like: a single class combining behaviour from two separate parents at once.</p>
 <hr />
 <h2 id="solution">SOLUTION<a class="headerlink" href="#solution" title="Permanent link">&para;</a></h2>
-<p>The script below implements every requirement from Part A and Part B, with comments added at each step explaining what's happening and why. (One small fix from the original: the code comment inside <code>Dog.speak()</code> was cut off mid-sentence in the source file — it's completed below.)</p>
+<p>The script below implements every requirement from Part A and Part B, with comments added at each step explaining what's happening and why. </p>
 <div class="highlight"><pre><span></span><code><span class="kn">from</span><span class="w"> </span><span class="nn">abc</span><span class="w"> </span><span class="kn">import</span> <span class="n">ABC</span><span class="p">,</span> <span class="n">abstractmethod</span>
 
 <span class="c1"># --- STEP 1: The Abstract Base Class ---</span>
@@ -8524,9 +8533,16 @@
 </tbody>
 </table>
 <hr />
-<h3 id="the-following-flowchart-shows-the-parent-and-the-derived-classes">The following flowchart shows the parent and the derived classes<a class="headerlink" href="#the-following-flowchart-shows-the-parent-and-the-derived-classes" title="Permanent link">&para;</a></h3>
+<h3 id="the-following-diagram-shows-the-parent-and-the-derived-classes">The following diagram shows the parent and the derived classes<a class="headerlink" href="#the-following-diagram-shows-the-parent-and-the-derived-classes" title="Permanent link">&para;</a></h3>
 <p>It also shows the attributes and methods of each class.</p>
-<p><img alt="Diagram" src="/001-mkdocs/gitbook-assets/ch8-inheritence-cat-dog.png" /></p>
+<p><img alt="Diagram" src="../../resources/S08-LR-ch8-inheritence-cat-dog.png" /></p>
+<p><strong>Reading the figure</strong></p>
+<ul>
+<li><code>Animal</code> (the abstract base class) has the public attribute <code>name</code> and the private attribute <code>__secret</code>. Its methods are <code>__init__(name)</code>, the concrete <code>walk()</code> and the abstract <code>speak()</code>.</li>
+<li><code>Friendly</code> has no attributes and one concrete method, <code>nature()</code>.</li>
+<li><code>Cat</code> inherits from <code>Animal</code> only. It gets <code>name</code>, <code>__secret</code>, <code>__init__()</code> and <code>walk()</code> from <code>Animal</code>, and provides its own <code>speak()</code>.</li>
+<li><code>Dog</code> inherits from both <code>Animal</code> and <code>Friendly</code>. It adds <code>color</code>, its own <code>__init__(name, color)</code> (which calls <code>super().__init__(name)</code>), its own <code>speak()</code> and <code>show_secret()</code>, and inherits <code>walk()</code> from <code>Animal</code> and <code>nature()</code> from <code>Friendly</code>.</li>
+</ul>
 <h2 id="quick-recap">Quick recap<a class="headerlink" href="#quick-recap" title="Permanent link">&para;</a></h2>
 <ul>
 <li>An <strong>Abstract Base Class</strong> (<code>Animal</code>) defines a required shape — including at least one <code>@abstractmethod</code> — that every subclass must fill in before it can be used to create real objects.</li>

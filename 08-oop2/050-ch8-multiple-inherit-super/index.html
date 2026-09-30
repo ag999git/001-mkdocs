@@ -8261,6 +8261,15 @@
 <h2 id="the-diamond-structure">The diamond structure<a class="headerlink" href="#the-diamond-structure" title="Permanent link">&para;</a></h2>
 <p>A very common shape in multiple inheritance looks like this: two classes (<code>Walker</code> and <code>Swimmer</code>) both inherit from the same base class (<code>Pet</code>), and a further class (<code>Dog</code>) inherits from both of them.</p>
 <p><img alt="Flowchart" src="../../resources/ch-8-august-2026-11-diamond-structure.png" /></p>
+<p><strong>Another view of the same diagram</strong></p>
+<p><img alt="Flowchart" src="../../resources/S08-LR-ch-8-august-2026-11-diamond-structure.png" /></p>
+<p><strong>Reading the figure</strong></p>
+<ul>
+<li><code>Pet</code> is the shared base class.</li>
+<li><code>Walker</code> inherits from <code>Pet</code>: one side of the diamond.</li>
+<li><code>Swimmer</code> also inherits from <code>Pet</code>: the other side of the diamond.</li>
+<li><code>Dog</code> inherits from both <code>Walker</code> and <code>Swimmer</code>, closing the diamond. <code>Pet</code> is reachable by two paths, but thanks to the MRO its <code>__init__()</code> runs only once.</li>
+</ul>
 <p>The shape gives this pattern its name: <code>Pet</code> sits at the top, <code>Walker</code> and <code>Swimmer</code> form the two "sides," and <code>Dog</code> sits at the bottom — a diamond. The natural question this raises: <strong>when <code>Dog</code> is created, does <code>Pet.__init__</code> run once, or twice (once via each side)?</strong> The rules below explain exactly how Python guarantees it only ever runs once.</p>
 <hr />
 <h2 id="correct-way-using-super-cooperative-design">Correct way using <code>super()</code> (cooperative design)<a class="headerlink" href="#correct-way-using-super-cooperative-design" title="Permanent link">&para;</a></h2>
@@ -8470,15 +8479,40 @@ Write code to:
 </blockquote>
 <hr />
 <h2 id="constructor-flow-for-dog1-visualized">Constructor flow for <code>Dog1</code>, visualized<a class="headerlink" href="#constructor-flow-for-dog1-visualized" title="Permanent link">&para;</a></h2>
-<p><img alt="Flowchart" src="../../resources/ch-8-august-2026-dog1-constructor.png" /></p>
+<p><img alt="Flowchart" src="../../resources/S08-LR-ch-8-august-2026-dog1-constructor.png" /></p>
+<p><strong>Reading the figure</strong></p>
+<ul>
+<li><strong>Step 1:</strong> <code>d1 = Dog1()</code> runs <code>Dog1.__init__()</code>, which prints "Dog1 constructor" and calls <code>super().__init__()</code>.</li>
+<li><strong>Step 2:</strong> Next in <code>Dog1</code>'s MRO is <code>Walker</code>: it prints "Walker constructor" and calls <code>super().__init__()</code>.</li>
+<li><strong>Step 3:</strong> Next in the MRO is <code>Swimmer</code>, not <code>Pet</code>: it prints "Swimmer constructor" and calls <code>super().__init__()</code>.</li>
+<li><strong>Step 4:</strong> Last comes <code>Pet</code>, which prints "Pet constructor". It runs only once, even though both <code>Walker</code> and <code>Swimmer</code> inherit from it.</li>
+</ul>
 <p><strong>Why this order?</strong> Because <code>Dog1</code>'s MRO is <code>Dog1 → Walker → Swimmer → Pet → object</code>, and each <code>__init__</code> call chains to <code>super().__init__()</code>, which walks straight down this exact sequence, one step at a time.</p>
 <h2 id="method-flow-for-dog1action-visualized">Method flow for <code>Dog1.action()</code>, visualized<a class="headerlink" href="#method-flow-for-dog1action-visualized" title="Permanent link">&para;</a></h2>
-<p><img alt="Flowchart" src="../../resources/ch-8-august-2026-11-dog1-action.png" /></p>
+<p><img alt="Flowchart" src="../../resources/S08-LR-ch-8-august-2026-11-dog1-action.png" /></p>
+<p><strong>Reading the figure</strong></p>
+<ul>
+<li><strong>Step 1:</strong> <code>d1.action()</code> runs <code>Dog1.action()</code>, which prints "Dog1 action" and calls <code>super().action()</code>.</li>
+<li><strong>Step 2:</strong> Next in the MRO is <code>Walker.action()</code>, which prints "Walking..." and calls <code>super().action()</code>.</li>
+<li><strong>Step 3:</strong> Next is <code>Swimmer.action()</code>, which prints "Swimming..." and calls <code>super().action()</code>.</li>
+<li><strong>Step 4:</strong> Last is <code>Pet.action()</code>, which prints "Pet action" and ends the chain. Each class runs exactly once.</li>
+</ul>
 <p>Each class contributes its message exactly once, in MRO order — <strong>no duplication</strong>, even though <code>Pet</code> is technically an ancestor reachable through <em>two</em> different paths (via <code>Walker</code> and via <code>Swimmer</code>). This is the diamond problem being correctly resolved: without the MRO's cooperation rules, a naive design might have printed <code>"Pet action"</code> (or run <code>Pet.__init__</code>) twice.</p>
 <hr />
 <h2 id="flow-chart-alternate">Flow chart (Alternate)<a class="headerlink" href="#flow-chart-alternate" title="Permanent link">&para;</a></h2>
-<p>**The following diagram shows how the MRO works for <code>__init__()</code> and <code>super()</code></p>
-<p><img alt="Diagram" src="/001-mkdocs/gitbook-assets/ch8-multiple-inherit-super2.png" /></p>
+<p><strong>The following diagram shows how the MRO works for <code>__init__()</code> and <code>super()</code></strong></p>
+<p><img alt="Diagram" src="../../resources/S08-LR-ch8-multiple-inherit-super2.png" /></p>
+<p><strong>Reading the figure</strong></p>
+<ul>
+<li>Top row: <code>Dog1</code> lists <code>Walker</code> first, so its <code>__init__()</code> and <code>action()</code> pass the call on to <code>Walker</code> through <code>super()</code>.</li>
+<li><code>Walker</code> prints its message and calls <code>super()</code>, which in <code>Dog1</code>'s MRO leads to <code>Swimmer</code>.</li>
+<li><code>Swimmer</code> prints its message and calls <code>super()</code>, which leads to <code>Pet</code>.</li>
+<li><code>Pet</code> prints its message and ends the chain. MRO: <code>Dog1</code>, <code>Walker</code>, <code>Swimmer</code>, <code>Pet</code>, <code>object</code>.</li>
+<li>Bottom row: <code>Dog2</code> lists <code>Swimmer</code> first, so its <code>super()</code> calls go to <code>Swimmer</code> first.</li>
+<li><code>Swimmer</code> passes the call on to <code>Walker</code>.</li>
+<li><code>Walker</code> passes the call on to <code>Pet</code>.</li>
+<li><code>Pet</code> ends the chain. MRO: <code>Dog2</code>, <code>Swimmer</code>, <code>Walker</code>, <code>Pet</code>, <code>object</code>, the mirror image of <code>Dog1</code>'s.</li>
+</ul>
 <h2 id="quick-recap">Quick recap<a class="headerlink" href="#quick-recap" title="Permanent link">&para;</a></h2>
 <ul>
 <li>In multiple inheritance, <strong><code>super()</code> always means "next in the MRO," never "my direct parent."</strong></li>

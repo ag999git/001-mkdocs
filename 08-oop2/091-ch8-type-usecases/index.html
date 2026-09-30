@@ -8207,7 +8207,15 @@
     <span class="k">pass</span>
 <span class="c1"># Output: TypeError: Cat must implement speak()</span>
 </code></pre></div>
-<p><img alt="Flowchart" src="../../resources/ch-8-august-2026-using-metaclasses-advanced.png" /></p>
+<p><img alt="Flowchart" src="../../resources/S08-LR-ch-8-august-2026-using-metaclasses-advanced.png" /></p>
+<p><strong>Reading the figure</strong></p>
+<ul>
+<li><strong>Step 1:</strong> Python reaches a class statement that names <code>PetMeta</code> as its metaclass, for example <code>class Cat(metaclass=PetMeta):</code>.</li>
+<li><strong>Step 2:</strong> Before the class exists, Python calls <code>PetMeta.__new__()</code> with the class name, its bases and its dictionary <code>dct</code>.</li>
+<li><strong>Step 3:</strong> Does <code>dct</code> contain the key <code>"speak"</code>, that is, did the class body define <code>speak()</code>?</li>
+<li><strong>Step 4:</strong> Yes (as for <code>Dog</code>): <code>super().__new__()</code> builds the class normally.</li>
+<li><strong>Step 5:</strong> No (as for <code>Cat</code>): <code>PetMeta</code> raises <code>TypeError: Cat must implement speak()</code>, and the class is never created.</li>
+</ul>
 <hr />
 <h2 id="use-case-2-automatic-registration">Use Case 2: Automatic Registration<a class="headerlink" href="#use-case-2-automatic-registration" title="Permanent link">&para;</a></h2>
 <p><strong>The idea:</strong> combine the enforcement pattern above with the automatic-registration idea from the earlier chapter page (which used <code>__init_subclass__</code>). A metaclass can do the exact same job — automatically tracking every subclass — but at an even earlier point in the process (class creation itself, rather than a subclass hook).</p>

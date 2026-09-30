@@ -8158,7 +8158,13 @@
 <hr />
 <p><strong>6. Explain the concept of "Transitivity" in inheritance.</strong></p>
 <p>Transitivity means inheritance "passes through" multiple levels automatically: if Class <code>B</code> inherits from Class <code>A</code>, and Class <code>C</code> inherits from Class <code>B</code>, then Class <code>C</code> automatically possesses everything Class <code>A</code> provides too, even though <code>C</code> never mentions <code>A</code> directly.</p>
-<p><img alt="Flowchart" src="../../resources/ch-8-august-2026-conceptual-question-6.png" /></p>
+<p><img alt="Flowchart" src="../../resources/S08-LR-ch-8-august-2026-conceptual-question-6.png" /></p>
+<p><strong>Reading the figure</strong></p>
+<ul>
+<li>Class <code>A</code> defines some attributes and methods.</li>
+<li>Class <code>B</code> inherits from <code>A</code>, so it has everything <code>A</code> has.</li>
+<li>Class <code>C</code> inherits from <code>B</code>, so it also has everything <code>A</code> has, even though it never names <code>A</code>: this is transitivity.</li>
+</ul>
 <p><code>C</code> inherits from <code>B</code>, and <code>B</code> inherits from <code>A</code> — so <code>C</code> transitively has access to everything <code>A</code> originally defined, even without a direct line connecting <code>A</code> and <code>C</code>.</p>
 <hr />
 <p><strong>7. What is Method Overriding?</strong></p>
@@ -8180,9 +8186,17 @@
 <p><strong>Not necessarily.</strong> In multiple inheritance, <code>super()</code> follows the Method Resolution Order (MRO) — which might lead to a "sibling" class (another parent listed alongside the immediate one) before it eventually reaches what you might intuitively think of as "the" parent. This is the single most important and most commonly misunderstood idea covered in the earlier "diamond problem" chapter page — <code>super()</code> means "next in the MRO," never simply "my parent."</p>
 <hr />
 <p><strong>13. What is the "Depth-First, Left-to-Right" rule?</strong></p>
-<p>It's the basic logic Python's MRO calculation uses when resolving multiple inheritance: Python fully searches the leftmost parent (and that parent's <em>entire</em> ancestry) before moving on to the next parent listed to its right.</p>
-<p><img alt="Flowchart" src="../../resources/ch-8-august-2026-conceptual-question-13.png" /></p>
-<p>This is exactly why <code>class Dog1(Walker, Swimmer):</code> and <code>class Dog2(Swimmer, Walker):</code> — covered in the earlier diamond-problem page — end up with genuinely different, mirror-image MROs: Python simply reads the parent list left to right, and follows each one's full chain before continuing to the next name.</p>
+<p>It's the simple rule of thumb behind Python's MRO: Python searches the class itself first, then its parents from left to right, following each parent's own ancestors before moving on to the next parent. There is one important exception, which Python 3 handles with the C3 linearization algorithm: <strong>a shared ancestor is searched only once, and only after every class that inherits from it.</strong> So for <code>class Dog(Walker, Swimmer):</code>, where both parents inherit from <code>Pet</code>, the order is <code>Dog → Walker → Swimmer → Pet → object</code>, not <code>Dog → Walker → Pet → Swimmer</code>. (A pure depth-first search, used by Python 2's old-style classes, would have visited <code>Pet</code> too early; see Question 10 on the "30 More Conceptual Questions" page.)</p>
+<p><img alt="Flowchart" src="../../resources/S08-LR-ch-8-august-2026-conceptual-question-13.png" /></p>
+<p><strong>Reading the figure</strong></p>
+<ul>
+<li><strong>Step 1:</strong> For <code>class Dog(Walker, Swimmer):</code>, where <code>Walker</code> and <code>Swimmer</code> both inherit from <code>Pet</code>, Python first looks in <code>Dog</code> itself.</li>
+<li><strong>Step 2:</strong> Not found: it looks in <code>Walker</code>, the first parent listed (left to right).</li>
+<li><strong>Step 3:</strong> Not found: it looks in <code>Swimmer</code> next, not in <code>Walker</code>'s parent <code>Pet</code>, because <code>Pet</code> is also a parent of <code>Swimmer</code> and must wait until <code>Swimmer</code> has been searched.</li>
+<li><strong>Step 4:</strong> Not found: now it looks in <code>Pet</code>, the shared parent, only once.</li>
+<li><strong>Step 5:</strong> Last comes <code>object</code>. The full MRO is <code>Dog</code>, <code>Walker</code>, <code>Swimmer</code>, <code>Pet</code>, <code>object</code>.</li>
+</ul>
+<p>This is exactly why <code>class Dog1(Walker, Swimmer):</code> and <code>class Dog2(Swimmer, Walker):</code> — covered in the earlier diamond-problem page — end up with genuinely different, mirror-image MROs: Python reads the parent list left to right, and holds back the shared <code>Pet</code> until both <code>Walker</code> and <code>Swimmer</code> have been searched.</p>
 <hr />
 <p><strong>14. What is a "Namespace" in Python?</strong></p>
 <p>A namespace is a container (technically implemented as a dictionary) that maps variable names (the keys) to the actual objects they refer to (the values). See the earlier chapter page, "Namespaces: <code>__dict__</code> and the LEGB Rule," for the full picture.</p>
@@ -8224,7 +8238,13 @@
 <hr />
 <p><strong>23. What is "Hierarchical Inheritance"?</strong></p>
 <p>A structure where a single parent class serves as the base for <em>multiple</em> different, independent subclasses — for example, <code>Pet</code> being the shared parent for both <code>Dog</code> and <code>Cat</code>, as seen throughout this chapter's <code>Pet</code>/<code>Dog</code>/<code>Cat</code> examples.</p>
-<p><img alt="Flowchart" src="../../resources/ch-8-august-2026-conceptual-question-23.png" /></p>
+<p><img alt="Flowchart" src="../../resources/S08-LR-ch-8-august-2026-conceptual-question-23.png" /></p>
+<p><strong>Reading the figure</strong></p>
+<ul>
+<li><code>Pet</code> is the single parent class.</li>
+<li><code>Dog</code> inherits from <code>Pet</code>.</li>
+<li><code>Cat</code> also inherits from <code>Pet</code>. One parent with several independent children is hierarchical inheritance.</li>
+</ul>
 <hr />
 <p><strong>24. Explain "Cooperative Is-A" (Refinement).</strong></p>
 <p>This is a pattern where a child class uses <code>super()</code> to let the parent handle part of a task, while the child adds its own specialized logic on top of (rather than instead of) the parent's behaviour. <code>Dog.walk()</code> in the earlier "Eleven Properties of Inheritance" page is a direct example: it prints its own dog-specific message, and <em>then</em> calls <code>super().walk()</code> to also run the parent's original logic, rather than replacing it outright.</p>
@@ -8239,7 +8259,7 @@
 <p>The parent's constructor is never called at all, and any attributes the parent's <code>__init__</code> would normally have set up simply won't exist on the child object — which can cause confusing <code>AttributeError</code>s later, whenever code tries to access an attribute that was only ever supposed to be set up by the parent. This is exactly why "constructor chaining" via <code>super().__init__()</code> is emphasized so consistently throughout this chapter's scripts (see the earlier "Eleven Properties of Inheritance" and Animal Management System pages).</p>
 <hr />
 <p><strong>28. How does Python link variable names to objects internally?</strong></p>
-<p>Python identifies every object with a unique <code>id()</code> (its memory address — see the earlier chapter page, "Proving That <code>self</code> Is Just the Object Itself," for a hands-on demonstration), and a namespace dictionary maps each variable name to the <code>id()</code> of the object it currently refers to.</p>
+<p>A namespace is a dictionary-like mapping from each variable name to a <strong>reference</strong> to the object it currently refers to. Every object has a unique identity, which <code>id()</code> shows (in CPython, its memory address — see the earlier chapter page, "Proving That <code>self</code> Is Just the Object Itself," for a hands-on demonstration). Two names that refer to the same object therefore have the same <code>id()</code>.</p>
 <hr />
 <p><strong>29. What is the benefit of Composition over Inheritance?</strong></p>
 <p>Composition offers more flexibility, because it lets you combine functionality from <em>multiple, unrelated</em> sources freely, without being constrained by a rigid class hierarchy — you're simply storing an object as an attribute, rather than needing that object's class to fit into an "is-a" relationship at all. This trade-off is explored directly in the earlier "Has-A Relationships" chapter page's follow-up question about <code>Car</code>/<code>Engine</code>, and is often summarized by the design principle <strong>"favor composition over inheritance."</strong> (<a href="https://en.wikipedia.org/wiki/Composition_over_inheritance">Wikipedia: Composition over inheritance</a>)</p>

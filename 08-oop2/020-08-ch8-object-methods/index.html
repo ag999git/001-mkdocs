@@ -8191,7 +8191,14 @@
 <p>The original exercise checks <code>__str__</code> specifically. As a natural extension: <strong>is this true for every inherited method, or could some of them differ?</strong> Try checking <code>Pet.__init__ is object.__init__</code> and <code>Pet.__repr__ is object.__repr__</code> as well — both should also be <code>True</code> for an empty class, for exactly the same reason <code>__str__</code> is. This is explored directly in the extended script below.</p>
 <hr />
 <h2 id="understanding-the-check-visually">Understanding the check, visually<a class="headerlink" href="#understanding-the-check-visually" title="Permanent link">&para;</a></h2>
-<p><img alt="Flowchart" src="../../resources/ch8-august-2026-multiple-inherit-inspecting-built-in.png" /></p>
+<p><img alt="Flowchart" src="../../resources/S08-LR-ch8-august-2026-multiple-inherit-inspecting-built-in.png" /></p>
+<p><strong>Reading the figure</strong></p>
+<ul>
+<li><strong>Step 1:</strong> The <code>object</code> class defines the basic methods every class starts with, such as <code>__str__</code>, <code>__init__</code> and <code>__repr__</code> (<code>dir(object)</code> lists them all).</li>
+<li><strong>Step 2:</strong> <code>class Pet: pass</code> creates a class that defines no methods of its own.</li>
+<li><strong>Step 3:</strong> When you ask for <code>Pet.__str__</code>, Python does not find it in <code>Pet</code>, so it follows the MRO up to <code>object</code> and finds it there.</li>
+<li><strong>Step 4:</strong> <code>Pet.__str__ is object.__str__</code> is <code>True</code>: <code>Pet</code> uses the very same method object as <code>object</code>, not a copy of it.</li>
+</ul>
 <p>Because <code>Pet</code> never defines its own <code>__str__</code>, Python doesn't create a separate copy of <code>object</code>'s version for <code>Pet</code> to use — it simply reuses the <em>exact same</em> method object. That's precisely what the <code>is</code> check below confirms.</p>
 <hr />
 <h2 id="the-script">The script<a class="headerlink" href="#the-script" title="Permanent link">&para;</a></h2>

@@ -8203,7 +8203,7 @@
 </code></pre></div>
 <hr />
 <p><strong>8. Write a script showing "Cooperative Inheritance" where a child method calls <code>super().speak()</code> and then adds its own text.</strong></p>
-<p>Unlike Question 7, this one <em>builds on</em> the parent's logic rather than replacing it — see the earlier "30 Conceptual Questions" page, Q15 and Q24, for the "Cooperative Is-A" pattern this demonstrates.</p>
+<p>Unlike Question 7, this one <em>builds on</em> the parent's logic rather than replacing it — see the earlier "30 Conceptual Questions" page, Q24, and the "30 More Conceptual Questions" page, Q15, for the "Cooperative Is-A" pattern this demonstrates.</p>
 <div class="highlight"><pre><span></span><code><span class="k">class</span><span class="w"> </span><span class="nc">Person</span><span class="p">:</span>
     <span class="k">def</span><span class="w"> </span><span class="nf">speak</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="nb">print</span><span class="p">(</span><span class="s2">"Hello"</span><span class="p">,</span> <span class="n">end</span><span class="o">=</span><span class="s2">" "</span><span class="p">)</span>   <span class="c1"># end=" " avoids a line break, so the</span>
@@ -8237,7 +8237,12 @@
 <span class="n">pc</span> <span class="o">=</span> <span class="n">Computer</span><span class="p">(</span><span class="s2">"MyPC"</span><span class="p">,</span> <span class="s2">"Intel"</span><span class="p">)</span>
 <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"</span><span class="si">{</span><span class="n">pc</span><span class="o">.</span><span class="n">name</span><span class="si">}</span><span class="s2"> has an </span><span class="si">{</span><span class="n">pc</span><span class="o">.</span><span class="n">processor</span><span class="o">.</span><span class="n">brand</span><span class="si">}</span><span class="s2"> CPU"</span><span class="p">)</span>   <span class="c1"># -&gt; MyPC has an Intel CPU</span>
 </code></pre></div>
-<p><img alt="Flowchart" src="../../resources/ch-8-august-2026-scripting-question-09.png" /></p>
+<p><img alt="Flowchart" src="../../resources/S08-LR-ch-8-august-2026-scripting-question-09.png" /></p>
+<p><strong>Reading the figure</strong></p>
+<ul>
+<li>A <code>Computer</code> object stores its <code>name</code> and a <code>processor</code> attribute.</li>
+<li>The <code>CPU</code> object is created inside <code>Computer.__init__()</code> and stored as <code>self.processor</code>: composition, a strong Has-A relationship.</li>
+</ul>
 <hr />
 <p><strong>10. Implement an abstract method using <code>NotImplementedError</code> in a class <code>ElectronicDevice</code>, and implement it in a <code>Phone</code> class.</strong></p>
 <p>This is the "informal" style of abstraction — see the earlier "30 More Conceptual Questions" page, Q21, for how this compares to a formal <code>ABC</code>-based abstract method.</p>
@@ -8287,7 +8292,14 @@
 <span class="c1"># Q10) guarantees this, even though A is reachable through two</span>
 <span class="c1"># separate paths (via B and via C).</span>
 </code></pre></div>
-<p><img alt="Flowchart" src="../../resources/ch-8-august-2026-scripting-question-12.png" /></p>
+<p><img alt="Flowchart" src="../../resources/S08-LR-ch-8-august-2026-scripting-question-12.png" /></p>
+<p><strong>Reading the figure</strong></p>
+<ul>
+<li><code>A</code> is the shared base class.</li>
+<li><code>B</code> inherits from <code>A</code>.</li>
+<li><code>C</code> also inherits from <code>A</code>.</li>
+<li><code>D</code> inherits from both <code>B</code> and <code>C</code>: the diamond. Its MRO is <code>D</code>, <code>B</code>, <code>C</code>, <code>A</code>, <code>object</code>, so <code>A</code> appears only once, at the end.</li>
+</ul>
 <hr />
 <p><strong>13. Create a class <code>Account</code> and manually add an attribute to its instance using the <code>__dict__</code> dictionary.</strong></p>
 <div class="highlight"><pre><span></span><code><span class="k">class</span><span class="w"> </span><span class="nc">Account</span><span class="p">:</span>
@@ -8398,7 +8410,13 @@
 <span class="c1"># Both children reuse the SAME parent method, completely unchanged --</span>
 <span class="c1"># this is hierarchical inheritance: one parent, multiple independent children.</span>
 </code></pre></div>
-<p><img alt="Flowchart" src="../../resources/ch-8-august-2026-scripting-question-19.png" /></p>
+<p><img alt="Flowchart" src="../../resources/S08-LR-ch-8-august-2026-scripting-question-19.png" /></p>
+<p><strong>Reading the figure</strong></p>
+<ul>
+<li><code>Weapon</code> is the single parent class and defines <code>attack()</code>.</li>
+<li><code>Sword</code> inherits from <code>Weapon</code> and reuses <code>attack()</code> unchanged.</li>
+<li><code>Bow</code> also inherits from <code>Weapon</code>. One parent, several children: hierarchical inheritance.</li>
+</ul>
 <hr />
 <p><strong>20. Use <code>__slots__</code> to restrict a <code>Point</code> class to only have <code>x</code> and <code>y</code> attributes, preventing the creation of <code>__dict__</code>.</strong></p>
 <p>See the earlier "<code>__slots__</code>" chapter page for the full memory-optimization project this connects to.</p>

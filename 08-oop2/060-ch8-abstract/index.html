@@ -8202,7 +8202,16 @@
 <p>The script below defines <code>Dog(Walker)</code> and <code>Fish(Swimmer)</code> as single-inheritance classes, and <code>Amphibian(Walker, Swimmer)</code> as the one multiple-inheritance class. As a natural extension: <strong>what would happen if you tried to create a class <code>FlyingFish(Swimmer, Walker)</code> — the same two parents as <code>Amphibian</code>, but listed in reverse order?</strong> Based on the previous chapter page's diamond-problem rules, predict what <code>FlyingFish.__mro__</code> and the order of its <code>move()</code> output would look like, <em>before</em> checking your answer by actually writing and running the class yourself.</p>
 <hr />
 <h2 id="visualizing-the-hierarchy">Visualizing the hierarchy<a class="headerlink" href="#visualizing-the-hierarchy" title="Permanent link">&para;</a></h2>
-<p><img alt="Flowchart" src="../../resources/ch-8-august-2026-ABC-pet-abstract-base-class.png" /></p>
+<p><img alt="Flowchart" src="../../resources/S08-LR-ch-8-august-2026-ABC-pet-abstract-base-class.png" /></p>
+<p><strong>Reading the figure</strong></p>
+<ul>
+<li><code>Pet</code> is the abstract base class: every usable subclass must implement <code>speak()</code> and <code>move()</code>.</li>
+<li><code>Walker</code> inherits from <code>Pet</code> and provides a <code>move()</code> that prints "Walking...".</li>
+<li><code>Swimmer</code> inherits from <code>Pet</code> and provides a <code>move()</code> that prints "Swimming...".</li>
+<li><code>Dog</code> inherits from <code>Walker</code> only (single inheritance).</li>
+<li><code>Amphibian</code> inherits from both <code>Walker</code> and <code>Swimmer</code>: the same diamond shape as on the previous page.</li>
+<li><code>Fish</code> inherits from <code>Swimmer</code> only (single inheritance).</li>
+</ul>
 <p>Notice <code>Amphibian</code> forms exactly the same diamond shape covered on the previous page (<code>Pet</code> → <code>Walker</code>/<code>Swimmer</code> → <code>Amphibian</code>), while <code>Dog</code> and <code>Fish</code> are simpler, single-inheritance branches off to the side.</p>
 <hr />
 <h2 id="the-script">The script<a class="headerlink" href="#the-script" title="Permanent link">&para;</a></h2>
