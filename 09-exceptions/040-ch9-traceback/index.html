@@ -8685,7 +8685,19 @@ ZeroDivisionError: division by zero
 <li>The exception's full information is extracted and displayed</li>
 </ol>
 <h3 id="the-same-flow-as-a-flowchart">The same flow, as a flowchart<a class="headerlink" href="#the-same-flow-as-a-flowchart" title="Permanent link">&para;</a></h3>
-<p><img alt="Flowchart" src="../../resources/ch-9-exceptions-august-2026-digging-into-exceptions-sys-traceback.png" /></p>
+<p><img alt="Flowchart" src="../../resources/S09-LR-ch-9-exceptions-august-2026-digging-into-exceptions-sys-traceback.png" /></p>
+<p><strong>Reading the figure</strong></p>
+<ul>
+<li><strong>Step 1:</strong> Inside the <code>try</code> block, the program calls <code>level1()</code>.</li>
+<li><strong>Step 2:</strong> <code>level1()</code> calls <code>level2()</code>.</li>
+<li><strong>Step 3:</strong> <code>level2()</code> calls <code>level3()</code>.</li>
+<li><strong>Step 4:</strong> In <code>level3()</code>, <code>x = 10 / 0</code> raises <code>ZeroDivisionError</code>.</li>
+<li><strong>Step 5:</strong> None of the three functions has an <code>except</code> block, so the exception travels back up through <code>level3()</code>, <code>level2()</code> and <code>level1()</code>.</li>
+<li><strong>Step 6:</strong> The <code>except Exception as e:</code> block in the main program catches it.</li>
+<li><strong>Step 7:</strong> <code>sys.exc_info()</code> returns the exception's type, its value (the exception object) and the traceback object.</li>
+<li><strong>Step 8:</strong> <code>traceback.extract_tb()</code> lists file, line, function and code for each frame, and <code>traceback.format_exc()</code> gives the full traceback as one string.</li>
+<li><strong>Step 9:</strong> The <code>finally</code> block runs and prints "8. Program continues after exception handling".</li>
+</ul>
 <h3 id="key-concepts-explained">Key Concepts Explained<a class="headerlink" href="#key-concepts-explained" title="Permanent link">&para;</a></h3>
 <h4 id="a-why-use-nested-function-calls">A. Why use nested function calls?<a class="headerlink" href="#a-why-use-nested-function-calls" title="Permanent link">&para;</a></h4>
 <p>Calling <code>level1() → level2() → level3()</code> deliberately creates a multi-step <strong>call stack</strong>, so the resulting traceback has several frames in it — this makes it much easier to see, concretely, how a traceback records an entire <em>chain</em> of calls, not just the single line where the error finally occurred.</p>

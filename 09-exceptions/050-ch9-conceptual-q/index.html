@@ -8590,7 +8590,16 @@ The answers — each one is now broken into logical steps, includes a short runn
 <li>This "bubbling up" repeats, one level at a time, until either a matching handler is found somewhere in the chain of calls, or the very top of the program is reached.</li>
 <li>If it reaches the top without ever being caught, Python's own default handler takes over: it prints a traceback and stops the program.</li>
 </ol>
-<p><img alt="Flowchart" src="../../resources/ch-9-exceptions-august-2026-conceptual-question-bank1.png" /></p>
+<p><img alt="Flowchart" src="../../resources/S09-LR-ch-9-exceptions-august-2026-conceptual-question-bank1.png" /></p>
+<p><strong>Reading the figure</strong></p>
+<ul>
+<li><strong>Step 1:</strong> An exception is raised, for example inside <code>level3()</code>.</li>
+<li><strong>Step 2:</strong> Does the function where it happened have a matching <code>except</code> block?</li>
+<li><strong>Step 3:</strong> Yes: that block handles the exception, and the program continues from there.</li>
+<li><strong>Step 4:</strong> No: the function stops at once, and the exception passes up to the function that called it (from <code>level3()</code> to <code>level2()</code>, then to <code>level1()</code>).</li>
+<li><strong>Step 5:</strong> Has the exception now reached the top level of the program? If not, the same check (Step 2) is made in the caller.</li>
+<li><strong>Step 6:</strong> Yes, and nothing caught it: Python's default handler prints the traceback and stops the program.</li>
+</ul>
 <blockquote>
 <p><strong>New term — "bubbling up" / "propagation":</strong> this is just the everyday name for an exception moving outward through the chain of function calls, level by level, until something catches it. See the <a href="https://docs.python.org/3/reference/compound_stmts.html#the-try-statement">official Python docs on the exception-handling statement</a> for the formal description of this process.</p>
 </blockquote>
@@ -9001,6 +9010,14 @@ The answers — each one is now broken into logical steps, includes a short runn
 <li>This means a single <code>except LookupError:</code> block can catch either problem — useful when your code doesn't care <em>which specific kind</em> of "not found" occurred, just that a lookup failed.</li>
 </ol>
 <p><img alt="Flowchart" src="../../resources/ch-9-exceptions-august-2026-conceptual-question-bank02.png" /></p>
+<p><strong>Another view of the same diagram</strong></p>
+<p><img alt="Flowchart" src="../../resources/S09-LR-ch-9-exceptions-august-2026-conceptual-question-bank02.png" /></p>
+<p><strong>Reading the figure</strong></p>
+<ul>
+<li><code>LookupError</code> is the shared parent for failed lookups, so <code>except LookupError:</code> catches both children.</li>
+<li><code>IndexError</code>: a position that is out of range in a sequence (<code>list</code>, <code>tuple</code>, <code>str</code>).</li>
+<li><code>KeyError</code>: a key that does not exist in a dictionary.</li>
+</ul>
 <div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">get_item</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">key_or_index</span><span class="p">):</span>
     <span class="k">try</span><span class="p">:</span>
         <span class="k">return</span> <span class="n">data</span><span class="p">[</span><span class="n">key_or_index</span><span class="p">]</span>

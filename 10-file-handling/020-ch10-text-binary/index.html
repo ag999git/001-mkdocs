@@ -8355,7 +8355,13 @@
 </table>
 <hr />
 <h2 id="deciding-which-mode-to-use">Deciding which mode to use<a class="headerlink" href="#deciding-which-mode-to-use" title="Permanent link">&para;</a></h2>
-<p><img alt="Flowchart" src="../../resources/ch-10-august-2026-text-vs-binary.png" /></p>
+<p><img alt="Flowchart" src="../../resources/S10-LR-ch-10-august-2026-text-vs-binary.png" /></p>
+<p><strong>Reading the figure</strong></p>
+<ul>
+<li><strong>Step 1:</strong> Is the file meant to be read as human-language text?</li>
+<li><strong>Step 2:</strong> Yes (logs, configuration files, source code, CSV): open it in text mode, <code>"r"</code>, <code>"w"</code> or <code>"a"</code>, with an encoding such as <code>encoding="utf-8"</code>.</li>
+<li><strong>Step 3:</strong> No (images, audio, video, executables): open it in binary mode, <code>"rb"</code>, <code>"wb"</code> or <code>"ab"</code>.</li>
+</ul>
 <p>A simple rule of thumb: if you'd expect to be able to open the file in a plain text editor and read something meaningful, it's a text file. If opening it in a text editor would show you a screen full of unreadable symbols, it's binary.</p>
 <hr />
 <h2 id="worked-examples">Worked examples<a class="headerlink" href="#worked-examples" title="Permanent link">&para;</a></h2>
@@ -8389,9 +8395,15 @@
 <h3 id="what-goes-wrong-if-you-mix-up-the-modes">What goes wrong if you mix up the modes<a class="headerlink" href="#what-goes-wrong-if-you-mix-up-the-modes" title="Permanent link">&para;</a></h3>
 <div class="highlight"><pre><span></span><code><span class="c1"># Trying to open a genuinely binary file in TEXT mode usually raises</span>
 <span class="c1"># an error, because the raw bytes often can't be decoded as valid</span>
-<span class="c1"># text under the assumed encoding:</span>
+<span class="c1"># text under the assumed encoding. (The four bytes in data.bin above</span>
+<span class="c1"># happen to be valid UTF-8, so here we use the first bytes of a real</span>
+<span class="c1"># PNG image instead -- the byte 0x89 is never valid at the start of</span>
+<span class="c1"># a UTF-8 character.)</span>
+<span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="s2">"image_like.bin"</span><span class="p">,</span> <span class="s2">"wb"</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+    <span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="sa">b</span><span class="s2">"</span><span class="se">\x89</span><span class="s2">PNG</span><span class="se">\r\n\x1a\n</span><span class="s2">"</span><span class="p">)</span>
+
 <span class="k">try</span><span class="p">:</span>
-    <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="s2">"data.bin"</span><span class="p">,</span> <span class="s2">"r"</span><span class="p">,</span> <span class="n">encoding</span><span class="o">=</span><span class="s2">"utf-8"</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+    <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="s2">"image_like.bin"</span><span class="p">,</span> <span class="s2">"r"</span><span class="p">,</span> <span class="n">encoding</span><span class="o">=</span><span class="s2">"utf-8"</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
         <span class="n">content</span> <span class="o">=</span> <span class="n">f</span><span class="o">.</span><span class="n">read</span><span class="p">()</span>
 <span class="k">except</span> <span class="ne">UnicodeDecodeError</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
     <span class="nb">print</span><span class="p">(</span><span class="s2">"Cannot read binary data as text:"</span><span class="p">,</span> <span class="n">e</span><span class="p">)</span>

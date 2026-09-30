@@ -8382,8 +8382,8 @@
 </tr>
 <tr>
 <td>Checking for HTTP errors</td>
-<td>You must check <code>response.status</code> yourself</td>
-<td><code>response.raise_for_status()</code> does it for you in one call</td>
+<td><code>urlopen()</code> raises <code>HTTPError</code> automatically for 4xx/5xx responses</td>
+<td><code>requests.get()</code> does <strong>not</strong> raise on its own; you call <code>response.raise_for_status()</code></td>
 </tr>
 <tr>
 <td>Error types</td>
@@ -8417,7 +8417,7 @@
 <div class="highlight"><pre><span></span><code><span class="n">response</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">url</span><span class="p">)</span>
 <span class="n">response</span><span class="o">.</span><span class="n">raise_for_status</span><span class="p">()</span>   <span class="c1"># raises HTTPError here if the request failed</span>
 </code></pre></div>
-<p>This is one of the biggest conveniences <code>requests</code> offers over <code>urllib</code>: instead of manually checking <code>if response.status != 200: ...</code>, you get proper exception-based error handling in a single line.</p>
+<p>This matters because, unlike <code>urllib.request.urlopen()</code> (which raises <code>HTTPError</code> automatically), <code>requests.get()</code> happily returns a response for a 404 or a 500 without raising anything. One call to <code>raise_for_status()</code> turns such a response into a proper exception, so you don't have to write <code>if response.status_code != 200: ...</code> yourself.</p>
 <h3 id="step-5-common-exceptions-in-requests">Step 5: Common exceptions in <code>requests</code><a class="headerlink" href="#step-5-common-exceptions-in-requests" title="Permanent link">&para;</a></h3>
 <p>All of the exceptions <code>requests</code> can raise share a common ancestor, <code>RequestException</code> — which matters for the same reason it did with <code>urllib.error.URLError</code> in the previous section (see Part 4 below for the full hierarchy).</p>
 <table>
@@ -8577,10 +8577,11 @@
 <span class="n">read_online_file</span><span class="p">(</span><span class="s2">"https://raw.githubusercontent.com/python/cpython/main/NOFILE.txt"</span><span class="p">)</span>
 <span class="c1"># Flow: try -&gt; except(HTTPError) -&gt; finally</span>
 
-<span class="c1"># Case 4: a URL engineered to respond very slowly, longer than our</span>
-<span class="c1"># 5-second timeout -- triggers Timeout</span>
+<span class="c1"># Case 4: a URL engineered to respond very slowly (httpbin.org waits</span>
+<span class="c1"># 7 seconds before answering), longer than our 5-second timeout --</span>
+<span class="c1"># triggers Timeout</span>
 <span class="nb">print</span><span class="p">(</span><span class="s2">"Case 4: Timeout simulation (very slow site)"</span><span class="p">)</span>
-<span class="n">read_online_file</span><span class="p">(</span><span class="s2">"https://httpstat.us/200?sleep=7000"</span><span class="p">)</span>
+<span class="n">read_online_file</span><span class="p">(</span><span class="s2">"https://httpbin.org/delay/7"</span><span class="p">)</span>
 <span class="c1"># Flow: try -&gt; except(Timeout) -&gt; finally</span>
 </code></pre></div>
 <h3 id="what-each-test-case-demonstrates">What Each Test Case Demonstrates<a class="headerlink" href="#what-each-test-case-demonstrates" title="Permanent link">&para;</a></h3>
@@ -8664,7 +8665,15 @@
 └── TooManyRedirects
 </code></pre></div>
 <p>The same relationship, as a flowchart </p>
-<p><img alt="Flowchart" src="../../resources/ch-9-exceptions-august-2026-exceptions-for-internet-project.png" /></p>
+<p><img alt="Flowchart" src="../../resources/S09-LR-ch-9-exceptions-august-2026-exceptions-for-internet-project.png" /></p>
+<p><strong>Reading the figure</strong></p>
+<ul>
+<li><code>requests.exceptions.RequestException</code> is the parent of every exception <code>requests</code> raises, so it must be the last <code>except</code> block.</li>
+<li><code>HTTPError</code>: the server answered with an error status (404, 500 and so on); raised by <code>raise_for_status()</code>.</li>
+<li><code>ConnectionError</code>: the server could not be reached at all.</li>
+<li><code>Timeout</code>: the server took longer than the <code>timeout</code> you gave.</li>
+<li><code>TooManyRedirects</code>: the server kept redirecting the request more times than allowed.</li>
+</ul>
 <blockquote>
 <p><strong>Why the order of <code>except</code> blocks still matters here too:</strong> exactly as explained for <code>urllib</code> in the previous section, Python checks <code>except</code> blocks from top to bottom and stops at the first match. Since every exception in this tree — <code>HTTPError</code>, <code>ConnectionError</code>, <code>Timeout</code>, and <code>TooManyRedirects</code> — is <em>also</em> a <code>RequestException</code>, a generic <code>except requests.exceptions.RequestException:</code> block placed too early would catch all of them, and the more specific, more informative blocks below it would never run. That's why the script in Part 3 lists its <code>except</code> blocks from most specific to most general, with <code>RequestException</code> last.</p>
 </blockquote>
@@ -8701,8 +8710,8 @@
 </tr>
 <tr>
 <td>Checking for HTTP errors</td>
-<td>Manual — check <code>response.status</code> yourself</td>
-<td>One call: <code>.raise_for_status()</code></td>
+<td>Automatic — <code>urlopen()</code> raises <code>HTTPError</code></td>
+<td>You call <code>.raise_for_status()</code></td>
 </tr>
 <tr>
 <td>Error handling</td>

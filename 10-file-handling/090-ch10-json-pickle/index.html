@@ -8414,7 +8414,16 @@
 </code></pre></div>
 <h4 id="flowchart">Flowchart<a class="headerlink" href="#flowchart" title="Permanent link">&para;</a></h4>
 <p>The following diagram shows the flow of execution in JSON vs pickling</p>
-<p><img alt="Flowchart" src="/001-mkdocs/gitbook-assets/ch10-files-json-pickle.png" /></p>
+<p><img alt="Flowchart" src="../../resources/S10-LR-ch10-files-json-pickle.png" /></p>
+<p><strong>Reading the figure</strong></p>
+<ul>
+<li><strong>Step 1:</strong> The script creates a dictionary <code>data</code> and an object of the custom class <code>Student</code>.</li>
+<li><strong>Step 2:</strong> JSON serialization: <code>json.dumps(data)</code> turns the dictionary into a JSON string.</li>
+<li><strong>Step 3:</strong> JSON deserialization: <code>json.loads()</code> turns the string back into a dictionary.</li>
+<li><strong>Step 4:</strong> Pickle serialization: <code>pickle.dump(data, f)</code> writes the dictionary to <code>data.pkl</code> in binary form.</li>
+<li><strong>Step 5:</strong> Pickle deserialization: <code>pickle.load(f)</code> reads it back as a dictionary.</li>
+<li><strong>Step 6:</strong> Comparing the two: JSON cannot store the <code>Student</code> object directly (it needs <code>student.__dict__</code>), while pickle stores and reloads the object itself, but must never be used on untrusted files.</li>
+</ul>
 
 
 

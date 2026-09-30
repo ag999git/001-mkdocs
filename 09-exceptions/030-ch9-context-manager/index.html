@@ -3324,10 +3324,10 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#original-flowchart" class="md-nav__link">
+  <a href="#the-complete-flow-including-an-error-inside-__enter__" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Original Flowchart
+        The complete flow, including an error inside __enter__()
       
     </span>
   </a>
@@ -8505,7 +8505,7 @@
 <span class="n">x</span> <span class="o">=</span> <span class="n">manager</span><span class="o">.</span><span class="fm">__enter__</span><span class="p">()</span>
 <span class="k">try</span><span class="p">:</span>
     <span class="n">do_something</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
-<span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+<span class="k">except</span> <span class="ne">BaseException</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
     <span class="c1"># manager.__exit__() decides whether to re-raise this exception</span>
     <span class="k">if</span> <span class="ow">not</span> <span class="n">manager</span><span class="o">.</span><span class="fm">__exit__</span><span class="p">(</span><span class="nb">type</span><span class="p">(</span><span class="n">e</span><span class="p">),</span> <span class="n">e</span><span class="p">,</span> <span class="n">e</span><span class="o">.</span><span class="n">__traceback__</span><span class="p">):</span>
         <span class="k">raise</span>
@@ -8776,7 +8776,19 @@
 <div class="highlight"><pre><span></span><code>__enter__() -&gt; error raised -&gt; __exit__() -&gt; error is NOT suppressed -&gt; program may stop
 </code></pre></div>
 <p>The same three cases, as a flowchart:</p>
-<p><img alt="Flowchart" src="../../resources/ch-9-exceptions-august-2026-context-manager-project.png" /></p>
+<p><img alt="Flowchart" src="../../resources/S09-LR-ch-9-exceptions-august-2026-context-manager-project.png" /></p>
+<p><strong>Reading the figure</strong></p>
+<ul>
+<li><strong>Step 1:</strong> The <code>with</code> statement creates a <code>SafeFileHandler</code> object.</li>
+<li><strong>Step 2:</strong> Python calls its <code>__enter__()</code> method, which opens the file and returns the file object as <code>f</code>.</li>
+<li><strong>Step 3:</strong> The code inside the <code>with</code> block runs.</li>
+<li><strong>Step 4:</strong> Did that code raise an exception?</li>
+<li><strong>Step 5:</strong> No: Python calls <code>__exit__(None, None, None)</code>, which closes the file.</li>
+<li><strong>Step 6:</strong> Yes, a <code>ValueError</code>: <code>__exit__()</code> closes the file and returns <code>True</code>, so the exception is suppressed.</li>
+<li><strong>Step 7:</strong> Yes, any other exception (for example <code>KeyError</code>): <code>__exit__()</code> closes the file and returns <code>False</code>.</li>
+<li><strong>Step 8:</strong> The exception then propagates as usual and may stop the program.</li>
+<li><strong>Step 9:</strong> In the first two cases the program simply continues after the <code>with</code> block.</li>
+</ul>
 <h3 id="8-key-learning-points">8. Key learning points<a class="headerlink" href="#8-key-learning-points" title="Permanent link">&para;</a></h3>
 <table>
 <thead>
@@ -8809,9 +8821,22 @@
 </tbody>
 </table>
 <hr />
-<h2 id="original-flowchart">Original Flowchart<a class="headerlink" href="#original-flowchart" title="Permanent link">&para;</a></h2>
-<p>The following flowchart (from the printed book) shows the same flow of execution for the script above:</p>
-<p><img alt="Diagram" src="/001-mkdocs/gitbook-assets/ch9-exceptions-context-manager.png" /></p>
+<h2 id="the-complete-flow-including-an-error-inside-__enter__">The complete flow, including an error inside <code>__enter__()</code><a class="headerlink" href="#the-complete-flow-including-an-error-inside-__enter__" title="Permanent link">&para;</a></h2>
+<p>The following flowchart adds the case from Note 6 above, where opening the file fails inside <code>__enter__()</code>:</p>
+<p><img alt="Diagram" src="../../resources/S09-LR-ch9-exceptions-context-manager.png" /></p>
+<p><strong>Reading the figure</strong></p>
+<ul>
+<li><strong>Step 1:</strong> <code>with SafeFileHandler(fileName, "r") as f:</code> creates the object, and Python calls its <code>__enter__()</code> method, which tries to open the file.</li>
+<li><strong>Step 2:</strong> Did opening the file fail, for example because it does not exist?</li>
+<li><strong>Step 3:</strong> Yes: <code>FileNotFoundError</code> propagates straight away. The <code>with</code> block never started, so <code>__exit__()</code> is not called.</li>
+<li><strong>Step 4:</strong> No: the file is open, and the code inside the <code>with</code> block runs.</li>
+<li><strong>Step 5:</strong> Did the code inside the block raise an exception?</li>
+<li><strong>Step 6:</strong> No: <code>__exit__(None, None, None)</code> closes the file.</li>
+<li><strong>Step 7:</strong> Yes, a <code>ValueError</code>: <code>__exit__()</code> closes the file and returns <code>True</code>, so the exception is suppressed.</li>
+<li><strong>Step 8:</strong> Yes, any other exception: <code>__exit__()</code> closes the file and returns <code>False</code>.</li>
+<li><strong>Step 9:</strong> That exception then propagates and may stop the program.</li>
+<li><strong>Step 10:</strong> After Steps 6 and 7 the program continues normally after the <code>with</code> block.</li>
+</ul>
 <hr />
 <h2 id="conclusion">Conclusion<a class="headerlink" href="#conclusion" title="Permanent link">&para;</a></h2>
 <p>A context manager uses <code>__enter__()</code> to acquire a resource and <code>__exit__()</code> to release it, while also providing controlled, deliberate handling of exceptions that occur inside the <code>with</code> block. It packages the same guarantee a <code>try</code>/<code>finally</code> block gives you — cleanup always happens — into a reusable, self-contained object, which is exactly why so much of Python's standard library (file handling, threading locks, database connections, and more) is built around this same protocol.</p>

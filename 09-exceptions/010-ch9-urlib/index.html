@@ -8458,16 +8458,14 @@
 
     <span class="k">try</span><span class="p">:</span>
         <span class="c1"># Step 1: try to open a connection to the URL.</span>
-        <span class="c1"># This is the step most likely to raise URLError -- for</span>
-        <span class="c1"># example, if the domain name doesn't exist, or there's</span>
-        <span class="c1"># no internet connection at all.</span>
+        <span class="c1"># This is the step that raises URLError (for example, the</span>
+        <span class="c1"># domain name doesn't exist, or there's no internet connection)</span>
+        <span class="c1"># and also HTTPError (the server answered with an error status,</span>
+        <span class="c1"># like 404 Not Found) -- urlopen() raises HTTPError automatically.</span>
         <span class="nb">print</span><span class="p">(</span><span class="s2">"1. Connecting..."</span><span class="p">)</span>
         <span class="n">response</span> <span class="o">=</span> <span class="n">urllib</span><span class="o">.</span><span class="n">request</span><span class="o">.</span><span class="n">urlopen</span><span class="p">(</span><span class="n">url</span><span class="p">)</span>
 
         <span class="c1"># Step 2: read the raw bytes the server sent back.</span>
-        <span class="c1"># This is where HTTPError shows up -- the connection itself</span>
-        <span class="c1"># succeeded, but the server responded with an error status</span>
-        <span class="c1"># (like 404 Not Found).</span>
         <span class="nb">print</span><span class="p">(</span><span class="s2">"2. Reading data..."</span><span class="p">)</span>
         <span class="n">data</span> <span class="o">=</span> <span class="n">response</span><span class="o">.</span><span class="n">read</span><span class="p">()</span>
 
@@ -8529,10 +8527,10 @@
 <span class="nb">print</span><span class="p">(</span><span class="s2">"Case 3: HTTP Error (404)"</span><span class="p">)</span>
 <span class="n">read_online_file</span><span class="p">(</span><span class="s2">"https://raw.githubusercontent.com/python/cpython/main/NOFILE.txt"</span><span class="p">)</span>
 
-<span class="c1"># Case 4: a URL pointing at binary (non-text) content --</span>
-<span class="c1"># .decode("utf-8") will fail on this -- triggers UnicodeDecodeError</span>
-<span class="nb">print</span><span class="p">(</span><span class="s2">"Case 4: Encoding issue (rare but possible)"</span><span class="p">)</span>
-<span class="n">read_online_file</span><span class="p">(</span><span class="s2">"https://example.com/binaryfile"</span><span class="p">)</span>
+<span class="c1"># Case 4: a URL pointing at binary (non-text) content -- here, a PNG</span>
+<span class="c1"># image -- .decode("utf-8") will fail on this -- triggers UnicodeDecodeError</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">"Case 4: Encoding issue (binary file)"</span><span class="p">)</span>
+<span class="n">read_online_file</span><span class="p">(</span><span class="s2">"https://raw.githubusercontent.com/ag999git/001-Python-book-2026/main/resources/ch-10-file-handling-1.png"</span><span class="p">)</span>
 </code></pre></div>
 <h3 id="what-each-test-case-demonstrates">What Each Test Case Demonstrates<a class="headerlink" href="#what-each-test-case-demonstrates" title="Permanent link">&para;</a></h3>
 <table>
@@ -8565,7 +8563,7 @@
 </tr>
 <tr>
 <td>4</td>
-<td>A URL returning non-text data</td>
+<td>A URL returning non-text data (a PNG image)</td>
 <td><code>except UnicodeDecodeError</code></td>
 <td>Wrong/incompatible encoding</td>
 </tr>
@@ -8609,15 +8607,29 @@
 <p>Python's exceptions are organized into a hierarchy — some exception types are more <em>specific</em> versions of a more <em>general</em> one. Understanding this hierarchy explains why the order of <code>except</code> blocks in the script above matters. Here it is as a simple tree:</p>
 <div class="highlight"><pre><span></span><code>Exception
 │
-├── URLError
-│     └── HTTPError
+├── OSError
+│     └── URLError
+│           └── HTTPError
 │
-├── UnicodeDecodeError
+├── ValueError
+│     └── UnicodeError
+│           └── UnicodeDecodeError
 │
 └── (all other exception types)
 </code></pre></div>
 <h3 id="the-same-relationship-drawn-as-a-flowchart">The same relationship, drawn as a flowchart<a class="headerlink" href="#the-same-relationship-drawn-as-a-flowchart" title="Permanent link">&para;</a></h3>
-<p><img alt="Flowchart" src="../../resources/ch-9-exceptions-august-2026-urlib-project.png" /></p>
+<p><img alt="Flowchart" src="../../resources/S09-LR-ch-9-exceptions-august-2026-urlib-project.png" /></p>
+<p><strong>Reading the figure</strong></p>
+<ul>
+<li><code>Exception</code> is the parent of every ordinary error, so <code>except Exception</code> catches all of them.</li>
+<li><code>OSError</code> covers errors from the operating system and the network.</li>
+<li><code>URLError</code> is a kind of <code>OSError</code>: the server could not be reached at all.</li>
+<li><code>HTTPError</code> is a kind of <code>URLError</code>: the server answered, but with an error status such as 404. Because every <code>HTTPError</code> is also a <code>URLError</code>, <code>except HTTPError</code> must come before <code>except URLError</code>.</li>
+<li><code>ValueError</code> covers values of the right type but the wrong content.</li>
+<li><code>UnicodeError</code> is a kind of <code>ValueError</code> for text-encoding problems.</li>
+<li><code>UnicodeDecodeError</code> is a kind of <code>UnicodeError</code>: the bytes could not be decoded with the chosen encoding.</li>
+<li>Every other exception type also sits somewhere under <code>Exception</code>, which is why <code>except Exception</code> goes last.</li>
+</ul>
 <h3 id="important-note-order-matters">Important Note: Order Matters<a class="headerlink" href="#important-note-order-matters" title="Permanent link">&para;</a></h3>
 <p><code>HTTPError</code> is a <strong>subclass</strong> of <code>URLError</code> — in other words, every <code>HTTPError</code> <em>is also</em> a <code>URLError</code>, but not the other way around. (A quick primer on this idea, if it's new to you: a "subclass" is a more specific version of a more general category — the same way "a poodle" is a specific kind of "a dog." The book's later chapter on Object-Oriented Programming covers this idea properly.)</p>
 <p>This matters because Python checks <code>except</code> blocks <strong>in the order they're written</strong>, and stops at the <em>first</em> one that matches. So:</p>

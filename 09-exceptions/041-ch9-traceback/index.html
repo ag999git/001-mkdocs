@@ -8545,7 +8545,19 @@ Extract file, line, function, code
 (Optional) traceback.format_exc() → full string
 </code></pre></div>
 <p>The same flow, as a flowchart </p>
-<p><img alt="Flowchart" src="../../resources/ch-9-exceptions-august-2026-exception-object-traceback-module.png" /></p>
+<p><img alt="Flowchart" src="../../resources/S09-LR-ch-9-exceptions-august-2026-exception-object-traceback-module.png" /></p>
+<p><strong>Reading the figure</strong></p>
+<ul>
+<li><strong>Step 1:</strong> <code>10 / 0</code> inside <code>level3()</code> raises <code>ZeroDivisionError</code>.</li>
+<li><strong>Step 2:</strong> Python creates the exception object, which <code>except Exception as e:</code> catches as <code>e</code>.</li>
+<li><strong>Step 3:</strong> <code>e.__traceback__</code> holds the raw traceback object, with no need for <code>sys</code>.</li>
+<li><strong>Step 4:</strong> <code>traceback.extract_tb()</code> converts that raw object into readable frame summaries.</li>
+<li><strong>Step 5:</strong> The result, <code>tb_list</code>, has one entry for each function call in the chain.</li>
+<li><strong>Step 6:</strong> A <code>for</code> loop goes through the frames one by one.</li>
+<li><strong>Step 7:</strong> For each frame it prints the file name, line number, function name and line of code.</li>
+<li><strong>Step 8:</strong> <code>traceback.format_exc()</code> returns the whole traceback as one formatted string, ready to print or log.</li>
+<li><strong>Step 9:</strong> The <code>finally</code> block runs, and the program carries on.</li>
+</ul>
 <h3 id="the-script">The Script<a class="headerlink" href="#the-script" title="Permanent link">&para;</a></h3>
 <div class="highlight"><pre><span></span><code><span class="kn">import</span><span class="w"> </span><span class="nn">traceback</span>
 

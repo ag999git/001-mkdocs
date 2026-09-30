@@ -8300,7 +8300,15 @@
     <span class="c1"># strings -- one entry per line.</span>
     <span class="nb">print</span><span class="p">(</span><span class="s2">"Remaining lines:"</span><span class="p">,</span> <span class="n">f</span><span class="o">.</span><span class="n">readlines</span><span class="p">())</span>   <span class="c1"># -&gt; ['Line 2: Python File Handling\n']</span>
 </code></pre></div>
-<p><img alt="Flowchart" src="../../resources/ch-10-file-object-behavior-2.png" /></p>
+<p><img alt="Flowchart" src="../../resources/S10-LR-ch-10-file-object-behavior-2.png" /></p>
+<p><strong>Reading the figure</strong></p>
+<ul>
+<li><strong>Step 1:</strong> When the file is opened for reading, the pointer is at position 0; <code>tell()</code> returns 0.</li>
+<li><strong>Step 2:</strong> <code>f.read(10)</code> returns <code>"Line 1: He"</code> and moves the pointer forward to 10.</li>
+<li><strong>Step 3:</strong> <code>f.seek(0)</code> moves the pointer back to the start of the file.</li>
+<li><strong>Step 4:</strong> <code>f.readline()</code> reads the first line, including its newline, and moves the pointer to the start of line 2.</li>
+<li><strong>Step 5:</strong> <code>f.readlines()</code> reads all the remaining lines into a list: <code>['Line 2: Python File Handling\n']</code>.</li>
+</ul>
 <h3 id="step-3-demonstrating-buffering-and-errors">Step 3 — Demonstrating <code>buffering</code> and <code>errors</code><a class="headerlink" href="#step-3-demonstrating-buffering-and-errors" title="Permanent link">&para;</a></h3>
 <div class="highlight"><pre><span></span><code><span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="s2">"research_demo.txt"</span><span class="p">,</span> <span class="n">mode</span><span class="o">=</span><span class="s2">"r"</span><span class="p">,</span> <span class="n">encoding</span><span class="o">=</span><span class="s2">"utf-8"</span><span class="p">,</span> <span class="n">buffering</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">errors</span><span class="o">=</span><span class="s2">"strict"</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
     <span class="c1"># buffering=1 requests LINE buffering (data is handled one line</span>
@@ -8353,7 +8361,7 @@
 
 <span class="c1"># ERROR 4: Wrong mode for the operation you're trying to do</span>
 <span class="c1"># f = open("research_demo.txt", "r")   # Opened for READING only.</span>
-<span class="c1"># f.write("Hello")   # Fails -- writing isn't allowed in read-only mode.</span>
+<span class="c1"># f.write("Hello")   # io.UnsupportedOperation: not writable -- writing isn't allowed in read-only mode.</span>
 
 <span class="c1"># ERROR 5: Forgetting to add a newline between writes</span>
 <span class="c1"># with open("file.txt", "w") as f:</span>
@@ -8386,7 +8394,18 @@
 </code></pre></div>
 <hr />
 <h2 id="deciding-which-exception-to-expect">Deciding which exception to expect<a class="headerlink" href="#deciding-which-exception-to-expect" title="Permanent link">&para;</a></h2>
-<p><img alt="Flowchart" src="../../resources/ch-10-file-object-behavior.png" /></p>
+<p><img alt="Flowchart" src="../../resources/S10-LR-ch-10-file-object-behavior.png" /></p>
+<p><strong>Reading the figure</strong></p>
+<ul>
+<li><strong>Step 1:</strong> Your code opens a file and reads from it.</li>
+<li><strong>Step 2:</strong> Does the file exist at the given path?</li>
+<li><strong>Step 3:</strong> No: <code>open()</code> raises <code>FileNotFoundError</code>.</li>
+<li><strong>Step 4:</strong> Yes: does your program have permission to open it in this mode?</li>
+<li><strong>Step 5:</strong> No: <code>open()</code> raises <code>PermissionError</code>.</li>
+<li><strong>Step 6:</strong> Yes: when reading in text mode, can the file's bytes be decoded with the chosen encoding?</li>
+<li><strong>Step 7:</strong> No (for example a file containing <code>é</code> read with <code>encoding="ascii"</code>): reading raises <code>UnicodeDecodeError</code>.</li>
+<li><strong>Step 8:</strong> Yes: no error, and the program proceeds normally.</li>
+</ul>
 <hr />
 <h2 id="quick-recap">Quick recap<a class="headerlink" href="#quick-recap" title="Permanent link">&para;</a></h2>
 <ul>

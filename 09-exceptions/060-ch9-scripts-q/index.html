@@ -8508,13 +8508,10 @@
 
 <h1 id="chapter-9-forty-script-based-exception-exercises">Chapter 9: Forty Script-Based Exception Exercises<a class="headerlink" href="#chapter-9-forty-script-based-exception-exercises" title="Permanent link">&para;</a></h1>
 <p>This section complements the conceptual Q&amp;A elsewhere in this chapter with something more hands-on: forty short, self-contained scripts, each built around a single exception-handling idea. Where the conceptual questions asked "why does Python behave this way?", these are "here's a small script — read it, run it, and see that behavior for yourself." They move from the fundamentals (catching a <code>TypeError</code>, using <code>try</code>/<code>except</code>/<code>else</code>/<code>finally</code>) through the standard built-in exception types, into custom exceptions, and finish with a set of more advanced topics — exception chaining, exception groups, and context managers — marked <em>(Advanced)</em> since they build on ideas from later in the chapter.</p>
-<p>Each exercise keeps its <strong>original prompt exactly as printed in the book</strong>. The scripts and explanations underneath have been reworked: extra explanation has been added before and after each one, every script now has step-by-step comments, and one real bug from the original file has been fixed — see Exercise 1 below.</p>
+<p>Each exercise keeps its <strong>original prompt exactly as printed in the book</strong>. The scripts and explanations underneath have been reworked: extra explanation has been added before and after each one, and every script now has step-by-step comments.</p>
 <p>A tip on working through these: try writing your own solution to each prompt <em>before</em> looking at the answer given here. The value of these exercises is in the attempt, not just in reading the final code.</p>
 <hr />
 <h3 id="1-write-a-script-that-attempts-to-add-a-string-and-an-integer-wrap-this-in-a-try-except-block-to-catch-the-specific-exception-and-print-a-helpful-message">1. Write a script that attempts to add a string and an integer. Wrap this in a <code>try</code>-<code>except</code> block to catch the specific exception and print a helpful message.<a class="headerlink" href="#1-write-a-script-that-attempts-to-add-a-string-and-an-integer-wrap-this-in-a-try-except-block-to-catch-the-specific-exception-and-print-a-helpful-message" title="Permanent link">&para;</a></h3>
-<blockquote>
-<p><strong>Note:</strong> the original version of this script had a copy-paste error — a stray fragment of markdown formatting had been accidentally pasted directly into the Python string, which would have caused this script to fail with a <code>SyntaxError</code> before it could even demonstrate the <code>TypeError</code> it was meant to show. The corrected version below fixes that.</p>
-</blockquote>
 <div class="highlight"><pre><span></span><code><span class="k">try</span><span class="p">:</span>
     <span class="c1"># Step 1: attempt an operation that mixes incompatible types --</span>
     <span class="c1"># Python cannot automatically combine a string and an integer with +</span>
@@ -8558,8 +8555,8 @@
 
 <span class="k">try</span><span class="p">:</span>
     <span class="c1"># Step 2: the error below only happens once this line actually</span>
-    <span class="c1"># RUNS -- Python has no way of knowing in advance that num2 will</span>
-    <span class="c1"># be zero just by reading the code structurally.</span>
+    <span class="c1"># RUNS -- checking the structure of the code (parsing) does not</span>
+    <span class="c1"># carry out the division, so the problem only shows up at runtime.</span>
     <span class="n">calculation</span> <span class="o">=</span> <span class="mi">10</span> <span class="o">/</span> <span class="mi">0</span>
 
 <span class="k">except</span> <span class="ne">ZeroDivisionError</span><span class="p">:</span>
@@ -8768,7 +8765,14 @@
     <span class="c1"># line will never run, no matter what.</span>
     <span class="nb">print</span><span class="p">(</span><span class="s2">"Caught by Child block."</span><span class="p">)</span>
 </code></pre></div>
-<p><img alt="Flowchart" src="../../resources/ch-9-exceptions-august-2026-scripting-question-bank01.png" /></p>
+<p><img alt="Flowchart" src="../../resources/S09-LR-ch-9-exceptions-august-2026-scripting-question-bank01.png" /></p>
+<p><strong>Reading the figure</strong></p>
+<ul>
+<li><strong>Step 1:</strong> The <code>try</code> block raises a <code>ChildError</code>.</li>
+<li><strong>Step 2:</strong> Python checks the <code>except</code> blocks from top to bottom. The first is <code>except ParentError</code>, and it matches, because a <code>ChildError</code> is also a <code>ParentError</code>.</li>
+<li><strong>Step 3:</strong> That block runs and prints "Caught by Parent block."</li>
+<li><strong>Step 4:</strong> The exception has now been handled, so the <code>except ChildError</code> block below is never reached: it is unreachable code.</li>
+</ul>
 <hr />
 <h3 id="15-write-a-script-that-defines-a-custom-exception-insufficientfundserror-that-takes-balance-and-amount-in-its-__init__-method">15. Write a script that defines a custom exception <code>InsufficientFundsError</code> that takes <code>balance</code> and <code>amount</code> in its <code>__init__</code> method.<a class="headerlink" href="#15-write-a-script-that-defines-a-custom-exception-insufficientfundserror-that-takes-balance-and-amount-in-its-__init__-method" title="Permanent link">&para;</a></h3>
 <div class="highlight"><pre><span></span><code><span class="k">class</span><span class="w"> </span><span class="nc">InsufficientFundsError</span><span class="p">(</span><span class="ne">Exception</span><span class="p">):</span>
@@ -8966,7 +8970,14 @@
 <span class="n">result</span> <span class="o">=</span> <span class="n">check_finally</span><span class="p">()</span>
 <span class="nb">print</span><span class="p">(</span><span class="n">result</span><span class="p">)</span>
 </code></pre></div>
-<p><img alt="Flowchart" src="../../resources/ch-9-exceptions-august-2026-scripting-question9.png" /></p>
+<p><img alt="Flowchart" src="../../resources/S09-LR-ch-9-exceptions-august-2026-scripting-question9.png" /></p>
+<p><strong>Reading the figure</strong></p>
+<ul>
+<li><strong>Step 1:</strong> Inside <code>check_finally()</code>, the <code>try</code> block prints "Inside try block" and reaches <code>return "Returning from try"</code>.</li>
+<li><strong>Step 2:</strong> Python does not leave the function yet; it keeps the return value aside.</li>
+<li><strong>Step 3:</strong> The <code>finally</code> block runs and prints "Finally block executing after return statement!".</li>
+<li><strong>Step 4:</strong> Only now does the function return the held value, which the caller prints.</li>
+</ul>
 <hr />
 <h3 id="28-use-a-generic-except-to-catch-a-keyboardinterrupt-and-print-user-aborted-but-add-a-comment-explaining-why-this-is-usually-avoided">28. Use a generic except to catch a <code>KeyboardInterrupt</code> and print "User aborted", but add a comment explaining why this is usually avoided.<a class="headerlink" href="#28-use-a-generic-except-to-catch-a-keyboardinterrupt-and-print-user-aborted-but-add-a-comment-explaining-why-this-is-usually-avoided" title="Permanent link">&para;</a></h3>
 <div class="highlight"><pre><span></span><code><span class="kn">import</span><span class="w"> </span><span class="nn">time</span>
@@ -9170,7 +9181,14 @@
     <span class="c1"># it has no idea a FileNotFoundError was involved at all</span>
     <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"Outer: Caught converted exception: </span><span class="si">{</span><span class="n">e</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
 </code></pre></div>
-<p><img alt="Flowchart" src="../../resources/ch-9-exceptions-august-2026-scripting-question39.png" /></p>
+<p><img alt="Flowchart" src="../../resources/S09-LR-ch-9-exceptions-august-2026-scripting-question39.png" /></p>
+<p><strong>Reading the figure</strong></p>
+<ul>
+<li><strong>Step 1:</strong> The inner <code>try</code> block tries to open <code>none.txt</code>.</li>
+<li><strong>Step 2:</strong> The file does not exist, so <code>FileNotFoundError</code> is raised.</li>
+<li><strong>Step 3:</strong> The inner <code>except</code> block catches it, prints "Inner: File missing. Raising ValueError instead." and raises a new <code>ValueError("Configuration missing")</code>.</li>
+<li><strong>Step 4:</strong> The outer <code>except ValueError</code> block catches this converted error and prints its message.</li>
+</ul>
 <hr />
 <h3 id="40-advanced-write-a-script-that-checks-for-mro-method-resolution-order-issues-in-custom-exceptions-when-multiple-inheritance-is-used">40. <em>(Advanced)</em> Write a script that checks for "MRO" (Method Resolution Order) issues in custom exceptions when multiple inheritance is used.<a class="headerlink" href="#40-advanced-write-a-script-that-checks-for-mro-method-resolution-order-issues-in-custom-exceptions-when-multiple-inheritance-is-used" title="Permanent link">&para;</a></h3>
 <div class="highlight"><pre><span></span><code><span class="k">class</span><span class="w"> </span><span class="nc">Base</span><span class="p">(</span><span class="ne">Exception</span><span class="p">):</span>
