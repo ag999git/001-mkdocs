@@ -8362,7 +8362,15 @@
 <li><strong>Structured format (long)</strong> → for reporting / storage</li>
 </ul>
 <h3 id="the-reshaping-cycle-at-a-glance">The Reshaping Cycle at a Glance<a class="headerlink" href="#the-reshaping-cycle-at-a-glance" title="Permanent link">&para;</a></h3>
-<p><img alt="Flowchart" src="../../resources/ch12-august-2026-hierarcichal-data-analysis-01.png" /></p>
+<p><img alt="Flowchart" src="../../resources/S12-LR-ch12-august-2026-hierarcichal-data-analysis-01.png" /></p>
+<p><strong>Reading the figure</strong></p>
+<ul>
+<li><strong>Step 1:</strong> Start with the flat table: one row per penguin.</li>
+<li><strong>Step 2:</strong> <code>groupby(['species', 'sex'])['flipper_length_mm'].mean()</code> gives a Series with a two-level MultiIndex, in long format.</li>
+<li><strong>Step 3:</strong> <code>unstack(level='sex')</code> moves <code>sex</code> into the columns: a wide table with <code>Female</code> and <code>Male</code> side by side, ready for comparison.</li>
+<li><strong>Step 4:</strong> A vectorized calculation adds the difference column <code>diff_M_F = Male - Female</code>.</li>
+<li><strong>Step 5:</strong> <code>stack()</code> moves the columns back into the index, giving a long, hierarchical result for reporting or storage.</li>
+</ul>
 <hr />
 <h2 id="step-by-step-discussion">STEP BY STEP DISCUSSION<a class="headerlink" href="#step-by-step-discussion" title="Permanent link">&para;</a></h2>
 <h3 id="step-1-raw-data-flat-structure">Step 1 → Raw Data (Flat Structure)<a class="headerlink" href="#step-1-raw-data-flat-structure" title="Permanent link">&para;</a></h3>
@@ -8370,7 +8378,7 @@
 <div class="highlight"><pre><span></span><code>   <span class="n">species</span>   <span class="n">sex</span>         <span class="n">flipper_length_mm</span>
 <span class="mi">0</span>  <span class="n">Adelie</span>    <span class="n">Male</span>        <span class="mi">181</span>
 <span class="mi">1</span>  <span class="n">Adelie</span>    <span class="n">Female</span>      <span class="mi">186</span>
-<span class="mi">2</span>  <span class="n">Gentoo</span>    <span class="n">Male</span>        <span class="mi">210</span>
+<span class="mi">2</span>  <span class="n">Adelie</span>    <span class="n">Female</span>      <span class="mi">195</span>
 <span class="o">...</span>
 </code></pre></div>
 <p><strong>1. (b) What this represents:</strong></p>
@@ -8559,7 +8567,7 @@ Gentoo     212.706897  221.540984  8.834087
 <hr />
 <h3 id="step-6-reporting-format-back-to-multiindex">Step 6 → Reporting Format (Back to MultiIndex)<a class="headerlink" href="#step-6-reporting-format-back-to-multiindex" title="Permanent link">&para;</a></h3>
 <p><strong>6. (a) Method:</strong> <code>stack()</code></p>
-<div class="highlight"><pre><span></span><code><span class="n">species</span>     <span class="n">variable</span>
+<div class="highlight"><pre><span></span><code><span class="n">species</span>     <span class="n">sex</span>
 <span class="n">Adelie</span>      <span class="n">Female</span>       <span class="mi">187</span>
             <span class="n">Male</span>         <span class="mi">192</span>
             <span class="n">diff_M_F</span>       <span class="mi">5</span>
@@ -8567,7 +8575,7 @@ Gentoo     212.706897  221.540984  8.834087
 <p><strong>6. (b) What changed?</strong></p>
 <ul>
 <li>Columns → rows</li>
-<li>New index level: <code>variable</code></li>
+<li>The columns go back into the <code>sex</code> level of the index (which now also holds <code>diff_M_F</code>)</li>
 </ul>
 <p><strong>6. (c) What transformation happened?</strong></p>
 <ul>
@@ -8633,7 +8641,7 @@ dtype: float64
 <ol>
 <li>Wrong column:</li>
 </ol>
-<div class="highlight"><pre><span></span><code><span class="n">df</span><span class="o">.</span><span class="n">groupby</span><span class="p">([</span><span class="s1">'species'</span><span class="p">])[</span><span class="s1">'wrong'</span><span class="p">]</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span>   <span class="c1"># KeyError: 'wrong'</span>
+<div class="highlight"><pre><span></span><code><span class="n">df</span><span class="o">.</span><span class="n">groupby</span><span class="p">([</span><span class="s1">'species'</span><span class="p">])[</span><span class="s1">'wrong'</span><span class="p">]</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span>   <span class="c1"># KeyError: 'Column not found: wrong'</span>
 </code></pre></div>
 <ol>
 <li>Invalid unstack:</li>
@@ -8922,7 +8930,7 @@ dtype: float64
 <span class="c1"># Error 1: No aggregation → returns a GroupBy object, not a table</span>
 <span class="c1"># df.groupby(['species','sex'])</span>
 
-<span class="c1"># Error 2: Wrong column → KeyError: 'wrong'</span>
+<span class="c1"># Error 2: Wrong column → KeyError: 'Column not found: wrong'</span>
 <span class="c1"># df.groupby(['species'])['wrong'].mean()</span>
 
 <span class="c1"># Error 3: Invalid unstack level → KeyError</span>
@@ -8955,7 +8963,20 @@ dtype: float64
 <span class="s2">"""</span><span class="p">)</span>
 </code></pre></div>
 <h3 id="flowchart-showing-steps-in-the-script">Flowchart showing steps in the script<a class="headerlink" href="#flowchart-showing-steps-in-the-script" title="Permanent link">&para;</a></h3>
-<p><img alt="Flowchart showing steps in the script" src="/001-mkdocs/gitbook-assets/ch12-pivot-table2.png" /></p>
+<p><img alt="Flowchart showing steps in the script" src="../../resources/S12-LR-ch12-pivot-table2.png" /></p>
+<p><strong>Reading the figure</strong></p>
+<ul>
+<li>Step 0: import pandas and seaborn.</li>
+<li>Step 1: load the penguins and drop rows with missing values.</li>
+<li>Step 2: <code>groupby(['species', 'sex'])</code> and <code>mean()</code> give a Series with a MultiIndex.</li>
+<li>Step 3: look at the index levels (<code>species</code>, <code>sex</code>) to understand the hierarchy.</li>
+<li>Step 4: <code>unstack(level='sex')</code> gives a wide table, one column per sex.</li>
+<li>Step 5: subtract the columns to get <code>diff_M_F</code>.</li>
+<li>Step 6: <code>stack()</code> turns the wide table back into a MultiIndex Series.</li>
+<li>Step 7: pick out a single value with <code>.loc[]</code>.</li>
+<li>Step 8: common errors (commented out), such as a wrong column name or a wrong level name.</li>
+<li>Step 9: print the summary of key ideas.</li>
+</ul>
 <hr />
 <h2 id="advanced-discussion-multi-column-grouping-multiindex-in-pandas">Advanced Discussion — Multi-Column Grouping &amp; MultiIndex in Pandas<a class="headerlink" href="#advanced-discussion-multi-column-grouping-multiindex-in-pandas" title="Permanent link">&para;</a></h2>
 <details>
@@ -8973,10 +8994,10 @@ When `groupby()` is applied on **more than one column**, Pandas creates a **hier
 #### Output Structure
 
 <div class="highlight"><pre><span></span><code><span class="n">species</span>   <span class="n">sex</span>
-<span class="n">Adelie</span>    <span class="n">Male</span>      <span class="mf">192.4</span>
-          <span class="n">Female</span>    <span class="mf">187.7</span>
-<span class="n">Gentoo</span>    <span class="n">Male</span>      <span class="mf">221.5</span>
-          <span class="n">Female</span>    <span class="mf">212.4</span>
+<span class="n">Adelie</span>    <span class="n">Female</span>    <span class="mf">187.8</span>
+          <span class="n">Male</span>      <span class="mf">192.4</span>
+<span class="n">Gentoo</span>    <span class="n">Female</span>    <span class="mf">212.7</span>
+          <span class="n">Male</span>      <span class="mf">221.5</span>
 </code></pre></div>
 
 #### Interpretation
@@ -9051,7 +9072,7 @@ Notice:
 
 #### Class
 
-`pandas.core.indexes.multi.MultiIndex`
+`pandas.MultiIndex` (defined in the module `pandas.core.indexes.multi`)
 
 #### Check in Code
 
@@ -9060,7 +9081,7 @@ Notice:
 <span class="nb">print</span><span class="p">(</span><span class="nb">type</span><span class="p">(</span><span class="n">grp</span><span class="o">.</span><span class="n">index</span><span class="p">))</span>
 
 <span class="c1"># Output hint:</span>
-<span class="c1"># &lt;class 'pandas.core.indexes.multi.MultiIndex'&gt;</span>
+<span class="c1"># &lt;class 'pandas.MultiIndex'&gt;   (pandas 2.x: &lt;class 'pandas.core.indexes.multi.MultiIndex'&gt;)</span>
 </code></pre></div>
 
 ***
@@ -9095,7 +9116,7 @@ A MultiIndex consists of:
 
 #### Method 1: From `groupby()` — **most common**
 
-`df.groupby(['species', 'sex']).mean()`
+`df.groupby(['species', 'sex']).mean(numeric_only=True)`
 
 #### Method 2: From Tuples
 
@@ -9190,7 +9211,7 @@ Not just rows — columns can also be hierarchical.
 
 #### Example
 
-`df.groupby(['species', 'sex']).agg(['mean', 'max'])`
+`df.groupby(['species', 'sex'])[['flipper_length_mm', 'body_mass_g']].agg(['mean', 'max'])`
 
 #### Output
 

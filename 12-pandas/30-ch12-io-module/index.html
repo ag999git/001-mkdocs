@@ -8279,7 +8279,20 @@
 <h2 id="1-overview-of-the-io-module">1. Overview of the <code>io</code> Module<a class="headerlink" href="#1-overview-of-the-io-module" title="Permanent link">&para;</a></h2>
 <p>The <code>io</code> module is Python's built-in toolkit for handling input and output — reading and writing data, generally. Most beginners think of "I/O" purely in terms of real files sitting on a hard drive, but the <code>io</code> module also lets you treat an ordinary string or a chunk of bytes as if it were a file, entirely in memory. This turns out to be genuinely useful in data work, especially when data arrives from a web API, or is generated dynamically by your own program, rather than starting out as a file on disk.</p>
 <p><strong>Visual hierarchy of the <code>io</code> module:</strong></p>
-<p><img alt="Visual Hierarchy of io Module" src="/001-mkdocs/gitbook-assets/ch12-io-module.png" /></p>
+<p><img alt="Visual Hierarchy of io Module" src="../../resources/S12-LR-ch12-io-module.png" /></p>
+<p><strong>Reading the figure</strong></p>
+<ul>
+<li>The <code>io</code> module groups its stream classes into three families.</li>
+<li>Text I/O reads and writes <code>str</code> objects.</li>
+<li>Binary I/O reads and writes <code>bytes</code>, with a buffer in between for speed.</li>
+<li>Raw I/O is the low-level, unbuffered layer.</li>
+<li><code>TextIOWrapper</code> is the object you get from <code>open('file.txt')</code> in text mode.</li>
+<li><code>StringIO</code> is a text stream that lives in memory.</li>
+<li><code>BufferedReader</code> and <code>BufferedWriter</code> are the objects you get from <code>open(..., 'rb')</code> and <code>open(..., 'wb')</code>.</li>
+<li><code>BytesIO</code> is a binary stream that lives in memory.</li>
+<li><code>BufferedRandom</code> is used when a binary file is opened for both reading and writing, <code>'r+b'</code>.</li>
+<li><code>FileIO</code> is the raw file that the buffered classes sit on top of.</li>
+</ul>
 <hr />
 <h2 id="2-core-comparison-stringio-vs-bytesio">2. Core Comparison: <code>StringIO</code> vs. <code>BytesIO</code><a class="headerlink" href="#2-core-comparison-stringio-vs-bytesio" title="Permanent link">&para;</a></h2>
 <p>When working with Pandas, picking the right one of these two matters: <code>pd.read_csv()</code> generally expects text, while <code>pd.read_excel()</code> or <code>pd.read_parquet()</code> need binary data instead.</p>
@@ -8314,7 +8327,14 @@
 </tr>
 </tbody>
 </table>
-<p><img alt="Flowchart" src="../../resources/ch12-august-2026-memory-based-IO-01.png" /></p>
+<p><img alt="Flowchart" src="../../resources/S12-LR-ch12-august-2026-memory-based-IO-01.png" /></p>
+<p><strong>Reading the figure</strong></p>
+<ul>
+<li><strong>Step 2:</strong> You have data to hand to a pandas reading function, without a file on disk.</li>
+<li><strong>Step 1:</strong> Is the data plain text (a <code>str</code>), or binary (<code>bytes</code>)?</li>
+<li><strong>Step 3:</strong> Text: use <code>io.StringIO</code> for formats such as CSV, JSON and XML.</li>
+<li><strong>Step 4:</strong> Binary: use <code>io.BytesIO</code> for formats such as Excel (<code>.xlsx</code>), Parquet and HDF5.</li>
+</ul>
 <hr />
 <h2 id="3-iostringio">3. <code>io.StringIO</code><a class="headerlink" href="#3-iostringio" title="Permanent link">&para;</a></h2>
 <p><code>io.StringIO</code> is a text-based buffer — it stores data as a regular Python string, which makes it a natural fit for <code>pd.read_csv()</code> and <code>pd.read_json()</code>.</p>
@@ -8436,7 +8456,15 @@
 <span class="n">buf</span><span class="o">.</span><span class="n">seek</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>   <span class="c1"># Reset the cursor back to the beginning...</span>
 <span class="nb">print</span><span class="p">(</span><span class="n">buf</span><span class="o">.</span><span class="n">read</span><span class="p">())</span>   <span class="c1"># -&gt; "Data"  (...now this works correctly)</span>
 </code></pre></div>
-<p><img alt="Flowchart" src="../../resources/ch12-august-2026-memory-based-IO-02.png" /></p>
+<p><img alt="Flowchart" src="../../resources/S12-LR-ch12-august-2026-memory-based-IO-02.png" /></p>
+<p><strong>Reading the figure</strong></p>
+<ul>
+<li><strong>Step 1:</strong> Create an empty buffer with <code>io.StringIO()</code>. The cursor is at position 0.</li>
+<li><strong>Step 2:</strong> <code>buf.write("Data")</code> writes 4 characters and leaves the cursor at the end, position 4.</li>
+<li><strong>Step 3:</strong> Has <code>buf.seek(0)</code> been called to move the cursor back to the start?</li>
+<li><strong>Step 4:</strong> Yes: <code>buf.read()</code> reads from position 0 and returns <code>"Data"</code>.</li>
+<li><strong>Step 5:</strong> No: <code>buf.read()</code> starts at the end, finds nothing left, and returns an empty string <code>''</code>. A pandas reader would see an empty file.</li>
+</ul>
 <p><strong>Rule to remember:</strong> always call <code>.seek(0)</code> on a buffer you've just written to, before handing it to a Pandas reading function — otherwise, Pandas will see what looks like an empty file.</p>
 <hr />
 <h2 id="7-summary-table">7. Summary Table<a class="headerlink" href="#7-summary-table" title="Permanent link">&para;</a></h2>

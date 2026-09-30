@@ -4857,17 +4857,6 @@
   
 </li>
       
-        <li class="md-nav__item">
-  <a href="#_1" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        
-      
-    </span>
-  </a>
-  
-</li>
-      
     </ul>
   
 </nav>
@@ -8108,14 +8097,26 @@
 <p>The companion supplement (<code>98-ch12-orient-json.md</code>) introduced the <code>orient</code> parameter of <code>pd.read_json()</code> with small, hand-made examples. This file goes one step further and walks through, <strong>line by line, the full script given in the printed book</strong>: it takes one real dataset (the famous <strong>tips</strong> dataset — records of restaurant bills and tips), saves it into <strong>four different JSON storage formats</strong>, loads each one back, peeks at the <strong>raw JSON text</strong> to see what pandas actually wrote, and finally proves that all four routes rebuild the <strong>same</strong> DataFrame.</p>
 <p>By the end you should be able to answer these questions for yourself:</p>
 <ul>
-<li>What does each <code>orient</code> value like <em>as actual JSON text on disk</em>?</li>
+<li>What does each <code>orient</code> value look like <em>as actual JSON text on disk</em>?</li>
 <li>Why do all four formats rebuild to the same table?</li>
 <li>What is the difference between "simple 2-level nesting" (which pandas reads fine) and "true nesting" (which needs <code>json_normalize()</code>)?</li>
 </ul>
 <p><strong>Relevance:</strong> this is the practical half of Chapter 12's JSON material — the earlier file gave you the vocabulary (<code>orient</code>, index, records), this file shows the whole workflow on real data. Glossary of terms used below: <strong>DataFrame</strong> (pandas' table object), <strong>index</strong> (row labels), <strong>JSON</strong> (text format for data as dictionaries/lists — see <a href="https://www.json.org/json-en.html">json.org</a>), <strong>round-trip</strong> (save → load with nothing lost). Docs: <a href="https://pandas.pydata.org/docs/reference/api/pandas.DataFrame.to_json.html">to_json</a> · <a href="https://pandas.pydata.org/docs/reference/api/pandas.read_json.html">read_json</a> · <a href="https://pandas.pydata.org/docs/reference/api/pandas.json_normalize.html">json_normalize</a>.</p>
 <hr />
 <h2 id="the-whole-journey-at-a-glance">The Whole Journey at a Glance<a class="headerlink" href="#the-whole-journey-at-a-glance" title="Permanent link">&para;</a></h2>
-<h2 id="_1"><img alt="Flowchart" src="../../resources/ch12-august-2026-JSON-4-formats-01.png" /><a class="headerlink" href="#_1" title="Permanent link">&para;</a></h2>
+<p><img alt="Flowchart" src="../../resources/S12-LR-ch12-august-2026-JSON-4-formats-01.png" /></p>
+<p><strong>Reading the figure</strong></p>
+<ul>
+<li><code>pd.read_csv()</code> loads the tips dataset, a CSV file on the web with 244 rows of restaurant bills and tips, into a DataFrame in memory.</li>
+<li><code>to_json()</code> is called four times, once per format.</li>
+<li><code>orient='records'</code> writes <code>tips_records.json</code>, a list of row dictionaries.</li>
+<li><code>orient='columns'</code> writes <code>tips_columns.json</code>, a dictionary of columns.</li>
+<li><code>orient='index'</code> writes <code>tips_index.json</code>, a dictionary of rows keyed by index.</li>
+<li><code>orient='split'</code> writes <code>tips_split.json</code>, with separate <code>index</code>, <code>columns</code> and <code>data</code>.</li>
+<li>Each file is read back with <code>read_json()</code> and the same <code>orient</code> it was written with.</li>
+<li>The four DataFrames are identical: <code>.equals()</code> returns <code>True</code> for each pair.</li>
+</ul>
+<hr />
 <h1 id="detailed-discussion-on-the-script-given-in-the-book">Detailed Discussion on the Script Given in the Book<a class="headerlink" href="#detailed-discussion-on-the-script-given-in-the-book" title="Permanent link">&para;</a></h1>
 <h2 id="step-1-load-data-from-csv">STEP 1: Load Data from CSV<a class="headerlink" href="#step-1-load-data-from-csv" title="Permanent link">&para;</a></h2>
 <h3 id="code-snippet">Code Snippet<a class="headerlink" href="#code-snippet" title="Permanent link">&para;</a></h3>
@@ -8160,7 +8161,7 @@
 <h3 id="concept_1">Concept<a class="headerlink" href="#concept_1" title="Permanent link">&para;</a></h3>
 <blockquote>
 <p>Same data → <strong>4 different storage structures</strong></p>
-<p><strong>Why bother with four formats?</strong> Different consumers prefer different shapes: web front-ends love <code>records</code> (it maps directly to a list of objects); column-oriented stores like <code>columns</code>; <code>split</code> is the best for lossless <strong>round-trips</strong> (save → load with nothing changed, including dtypes); <code>index</code> mirrors "keyed" data like time series.</p>
+<p><strong>Why bother with four formats?</strong> Different consumers prefer different shapes: web front-ends love <code>records</code> (it maps directly to a list of objects); column-oriented stores like <code>columns</code>; <code>split</code> is the best of the four for <strong>round-trips</strong> (labels preserved exactly); <code>index</code> mirrors "keyed" data like time series.</p>
 </blockquote>
 <hr />
 <h2 id="step-3-read-json-back-records">STEP 3: Read JSON Back (<code>records</code>)<a class="headerlink" href="#step-3-read-json-back-records" title="Permanent link">&para;</a></h2>
@@ -8206,7 +8207,7 @@
 <p>Hierarchy:</p>
 <div class="highlight"><pre><span></span><code>list
  ├── dict (row 1)
- ── dict (row 2)
+ └── dict (row 2)
 </code></pre></div>
 <hr />
 <h2 id="step-5-read-json-back-columns">STEP 5: Read JSON Back (<code>columns</code>)<a class="headerlink" href="#step-5-read-json-back-columns" title="Permanent link">&para;</a></h2>
@@ -8253,7 +8254,7 @@
 <h3 id="structure_1">Structure<a class="headerlink" href="#structure_1" title="Permanent link">&para;</a></h3>
 <div class="highlight"><pre><span></span><code><span class="p">{</span>
  <span class="s2">"0"</span><span class="p">:</span> <span class="p">{</span><span class="s2">"total_bill"</span><span class="p">:</span> <span class="mf">16.99</span><span class="p">,</span> <span class="s2">"tip"</span><span class="p">:</span> <span class="mf">1.01</span><span class="p">,</span> <span class="o">...</span><span class="p">},</span>
- <span class="s2">"1"</span><span class="p">:</span> <span class="p">{</span><span class="s2">"total_bill"</span><span class="p">:</span> <span class="mf">10.34</span><span class="p">,</span> <span class="s2">""</span><span class="p">:</span> <span class="mf">1.66</span><span class="p">,</span> <span class="o">...</span><span class="p">}</span>
+ <span class="s2">"1"</span><span class="p">:</span> <span class="p">{</span><span class="s2">"total_bill"</span><span class="p">:</span> <span class="mf">10.34</span><span class="p">,</span> <span class="s2">"tip"</span><span class="p">:</span> <span class="mf">1.66</span><span class="p">,</span> <span class="o">...</span><span class="p">}</span>
 <span class="p">}</span>
 </code></pre></div>
 <h3 id="concept_7">Concept<a class="headerlink" href="#concept_7" title="Permanent link">&para;</a></h3>
@@ -8298,7 +8299,7 @@
  └── list of lists (data)
 </code></pre></div>
 <blockquote>
-<p><strong>Why <code>split</code> round-trips best:</strong> column names and index labels are stored <em>explicitly</em>, and the values sit in a plain rectangle — so pandas can restore dtypes from the metadata rather than re-guessing them. <code>records</code>/<code>index</code>/<code>columns</code> all force pandas to re-infer things on the way back in.</p>
+<p><strong>Why <code>split</code> round-trips best of the four:</strong> column names and index labels are stored <em>explicitly</em>, and the values sit in a plain rectangle — so the labels come back exactly. The dtypes are still re-inferred from the values (only <code>orient='table'</code> stores a dtype schema). <code>records</code>/<code>index</code>/<code>columns</code> all force pandas to re-infer things on the way back in.</p>
 </blockquote>
 <hr />
 <h2 id="step-11-verify-equality">STEP 11: Verify Equality<a class="headerlink" href="#step-11-verify-equality" title="Permanent link">&para;</a></h2>
@@ -8316,7 +8317,7 @@ True
 <h3 id="concept_10">Concept<a class="headerlink" href="#concept_10" title="Permanent link">&para;</a></h3>
 <blockquote>
 <p>Different formats → <strong>same data</strong>. <code>DataFrame.equals()</code> checks both values <strong>and</strong> dtypes — so these <code>True</code>s are a strong guarantee, not just "looks similar".</p>
-<p><strong>Beginner caveat:</strong> equality holds here because the values happen to re-infer to the same dtypes. With trickier data (dates, mixed types, missing values), <code>records</code>/<code>columns</code>/<code>index</code> can come back with slightly different dtypes than the original, whilesplit<code>(and</code>table<code>) preserve them. When in doubt, compare with</code>df.dtypes<code>, not just</code>.equals()`.</p>
+<p><strong>Beginner caveat:</strong> equality holds here because the values happen to re-infer to the same dtypes. With trickier data (dates, mixed types, missing values), <code>records</code>/<code>columns</code>/<code>index</code> can come back with slightly different dtypes than the original — and so can <code>split</code>; only <code>table</code> stores the dtypes. When in doubt, compare with <code>df.dtypes</code>, not just <code>.equals()</code>.</p>
 </blockquote>
 <hr />
 <h2 id="step-12-about-nested-json">STEP 12: About Nested JSON<a class="headerlink" href="#step-12-about-nested-json" title="Permanent link">&para;</a></h2>
@@ -8407,7 +8408,7 @@ True
 <td>dict with <code>columns</code> + <code>index</code> + <code>data</code></td>
 <td>dict (metadata)</td>
 <td>list of lists (values)</td>
-<td><strong>Best</strong> — labels and dtypes explicit</td>
+<td><strong>Best of the four</strong> — labels explicit (dtypes still inferred)</td>
 </tr>
 </tbody>
 </table>
@@ -8518,7 +8519,7 @@ True
     <span class="n">data_index</span> <span class="o">=</span> <span class="n">json</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">f</span><span class="p">)</span>
 
 <span class="nb">print</span><span class="p">(</span><span class="nb">type</span><span class="p">(</span><span class="n">data_index</span><span class="p">))</span>          <span class="c1"># &lt;class 'dict'&gt;</span>
-<span class="n">keys</span> <span class="nb">list</span><span class="p">(</span><span class="n">data_index</span><span class="o">.</span><span class="n">keys</span><span class="p">())</span>
+<span class="n">keys</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">data_index</span><span class="o">.</span><span class="n">keys</span><span class="p">())</span>
 <span class="nb">print</span><span class="p">(</span><span class="s2">"Row indices:"</span><span class="p">,</span> <span class="n">keys</span><span class="p">[:</span><span class="mi">5</span><span class="p">])</span>  <span class="c1"># ['0', '1', '2', '3', '4']  (as STRINGS)</span>
 <span class="nb">print</span><span class="p">(</span><span class="s2">"First row data:"</span><span class="p">,</span> <span class="p">{</span><span class="n">keys</span><span class="p">[</span><span class="mi">0</span><span class="p">]:</span> <span class="n">data_index</span><span class="p">[</span><span class="n">keys</span><span class="p">[</span><span class="mi">0</span><span class="p">]]})</span>
 
@@ -8580,7 +8581,7 @@ True
    total_bill   tip     sex smoker  day    time  size
 0        16.99  1.01  Female     No  Sun  Dinner     2
 1        10.34  1.66    Male     No  Sun  Dinner     3
-Shape: (244 7)
+Shape: (244, 7)
 
 STEP 4: RAW JSON (records FORMAT)
 &lt;class 'list'&gt;
@@ -8601,13 +8602,13 @@ STEP 12: Flattened DataFrame:
 1    Bob           80              75
 </code></pre></div>
 <blockquote>
-<p>⚠️ <strong>Two technical notes on the original output hints:</strong> (1) in the raw <code>index</code>/<code>columns</code> files the row labels are <strong>strings</strong> (<code>'0'</code>, <code>'1'</code>), not integers — JSON object keys are always strings; pandas converts them back to integers on reload. (2) In modern pandas, reloading with <code>orient='split'</code> may require <code>typ='frame'</code> explicitly if the file was written by <code>Series.to_json</code> — for DataFrames as here, the defaults work fine.</p>
+<p>⚠️ <strong>Two technical notes on the original output hints:</strong> (1) in the raw <code>index</code>/<code>columns</code> files the row labels are <strong>strings</strong> (<code>'0'</code>, <code>'1'</code>), not integers — JSON object keys are always strings; pandas converts them back to integers on reload. (2) If a file was written by <code>Series.to_json</code>, reload it with <code>typ='series'</code> (the default, <code>typ='frame'</code>, expects a DataFrame) — for DataFrames as here, the defaults work fine.</p>
 </blockquote>
 <hr />
 <h2 id="practice-questions-follow-up">Practice Questions (Follow-up)<a class="headerlink" href="#practice-questions-follow-up" title="Permanent link">&para;</a></h2>
 <ol>
 <li>Write the four JSON files to disk, then open <code>tips_records.json</code> in a text editor. How does what you see differ from the pretty-printed version in Step 4? (Hint: try <code>json.dumps(data_records[:2], indent=2)</code>.)</li>
-<li>In Step 11, replace the third check with <code>df_split(df)</code> — comparing against the <strong>original</strong> DataFrame. Is it still <code>True</code>? If not, print <code>df.dtypes</code> vs <code>df_split.dtypes</code> and find the difference.</li>
+<li>In Step 11, replace the third check with <code>df_split.equals(df)</code> — comparing against the <strong>original</strong> DataFrame. Is it still <code>True</code>? If not, print <code>df.dtypes</code> vs <code>df_split.dtypes</code> and find the difference.</li>
 <li>Delete the <code>orient</code> argument from one of the Step 3/5/7/9 <code>read_json</code> calls. Does it still work? (Recall the pandas-version default changed — see supplement <code>98-ch12-orient-json.md</code>.)</li>
 <li>Add a fifth save: <code>df.to_json("tips_table.json", orient="table")</code> and read it back with <code>orient="table"</code>. Does <code>.equals(df)</code> hold? Why is <code>table</code> even better than <code>split</code> for round-trips?</li>
 <li>Take the Step 12 nested data and add a third record with an extra key <code>"age": 21</code>. What does <code>json_normalize</code> put in the other rows' <code>age</code> column? What happens if Bob instead has a <em>missing</em> <code>grades</code> dict entirely?</li>

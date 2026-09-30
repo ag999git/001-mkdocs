@@ -8376,7 +8376,14 @@ cond_not.head()-&gt;        species island  bill_length_mm  bill_depth_mm  flipp
 156  Chinstrap  Dream            52.7           19.8              197.0       3725.0    Male
 </code></pre></div>
 <p><strong>Why <code>&amp;</code>/<code>|</code>/<code>~</code> instead of <code>and</code>/<code>or</code>/<code>not</code>?</strong> Python's built-in <code>and</code>/<code>or</code>/<code>not</code> expect a <em>single</em> <code>True</code> or <code>False</code> value — but <code>df['species'] == 'Adelie'</code> produces an entire <em>Series</em> of hundreds of <code>True</code>/<code>False</code> values, one per row, not just one. Pandas's <code>&amp;</code>, <code>|</code>, and <code>~</code> are specifically designed to compare two Series <em>element by element</em> (a "vectorized" operation, mentioned in the glossary above), which is exactly what's needed here.</p>
-<p><img alt="Flowchart" src="../../resources/ch12-august-2026-conditional-filtering-01.png" /></p>
+<p><img alt="Flowchart" src="../../resources/S12-LR-ch12-august-2026-conditional-filtering-01.png" /></p>
+<p><strong>Reading the figure</strong></p>
+<ul>
+<li>Each condition, such as <code>df['species'] == 'Adelie'</code>, gives one <code>True</code> or <code>False</code> for every row.</li>
+<li>AND, <code>&amp;</code>: keeps a row only when both conditions are <code>True</code>.</li>
+<li>OR, <code>|</code>: keeps a row when at least one of the conditions is <code>True</code>.</li>
+<li>NOT, <code>~</code>: flips every <code>True</code> to <code>False</code> and every <code>False</code> to <code>True</code>, keeping the rows that do not match.</li>
+</ul>
 <p><strong>Important:</strong> always wrap each individual condition in its own parentheses — skipping this is one of the most common sources of errors, covered directly in Step 6.</p>
 <hr />
 <h3 id="step-3-using-isin">Step 3: Using <code>.isin()</code><a class="headerlink" href="#step-3-using-isin" title="Permanent link">&para;</a></h3>
@@ -8447,6 +8454,7 @@ safe_filter.head()-&gt;   species     island  bill_length_mm  bill_depth_mm  fli
 5  Adelie  Torgersen            39.3           20.6              190.0       3650.0    Male
 </code></pre></div>
 <p>Notice row 3 (which had a missing <code>sex</code> value, as seen back in Step 0's output) is correctly and cleanly excluded here, rather than causing an error.</p>
+<p>Notice also that rows with <code>Female</code> are kept as well: the pattern <code>'male'</code> (with <code>case=False</code>) is found <em>inside</em> the word <code>Female</code>. To keep only the males, compare exactly, <code>df['sex'] == 'Male'</code>, or anchor the pattern to the whole value, <code>df['sex'].str.contains('^male$', case=False, na=False)</code>.</p>
 <hr />
 <h3 id="step-6-understanding-common-errors">Step 6: Understanding Common Errors<a class="headerlink" href="#step-6-understanding-common-errors" title="Permanent link">&para;</a></h3>
 <p><strong>Why:</strong> recognizing these specific mistakes in your own code is far faster than debugging them from scratch each time.</p>
@@ -8480,6 +8488,10 @@ safe_filter.head()-&gt;   species     island  bill_length_mm  bill_depth_mm  fli
 <span class="c1"># (rather than True or False) in the result -- and Pandas cannot use</span>
 <span class="c1"># a mask containing NaN to filter rows, raising: ValueError: Cannot</span>
 <span class="c1"># mask with non-boolean array containing NA / NaN values.</span>
+<span class="c1"># (This is the behaviour of pandas 1.x and 2.x. From pandas 3, text</span>
+<span class="c1"># columns use a string type that treats a missing value as "no match",</span>
+<span class="c1"># so no error is raised -- but na=False is still the clear, portable</span>
+<span class="c1"># way to say what you mean.)</span>
 </code></pre></div>
 <p><strong>Error-type summary:</strong></p>
 <table>
@@ -8514,11 +8526,23 @@ safe_filter.head()-&gt;   species     island  bill_length_mm  bill_depth_mm  fli
 <td>4</td>
 <td>Forgetting <code>na=False</code> on a column with missing values</td>
 <td>A <code>NaN</code> in the filtering mask can't be interpreted as True/False</td>
-<td><code>ValueError</code></td>
+<td><code>ValueError</code> (pandas 1.x/2.x)</td>
 </tr>
 </tbody>
 </table>
-<p><img alt="Flowchart" src="../../resources/ch12-august-2026-conditional-filtering-02.png" /></p>
+<p><img alt="Flowchart" src="../../resources/S12-LR-ch12-august-2026-conditional-filtering-02.png" /></p>
+<p><strong>Reading the figure</strong></p>
+<ul>
+<li><strong>Step 1:</strong> The filtering line raises an error.</li>
+<li><strong>Step 2:</strong> Did you leave out the parentheses around each condition, as in <code>df[df['body_mass_g'] &gt; 4000 &amp; df['species'] == 'Adelie']</code>?</li>
+<li><strong>Step 3:</strong> Yes: <code>&amp;</code> is evaluated before <code>&gt;</code> and <code>==</code>, so Python first tries <code>4000 &amp; df['species']</code>, which raises <code>TypeError</code>.</li>
+<li><strong>Step 4:</strong> No: did you use <code>and</code> / <code>or</code> instead of <code>&amp;</code> / <code>|</code>?</li>
+<li><strong>Step 5:</strong> Yes: <code>and</code> and <code>or</code> need a single <code>True</code> or <code>False</code>, but each side is a whole Series, so pandas raises <code>ValueError: The truth value of a Series is ambiguous</code>.</li>
+<li><strong>Step 6:</strong> No: did you use <code>.str</code> on a column that does not hold text, such as <code>body_mass_g</code>?</li>
+<li><strong>Step 7:</strong> Yes: <code>AttributeError: Can only use .str accessor with string values</code>.</li>
+<li><strong>Step 8:</strong> No: did you call <code>.str.contains()</code> on a column with missing values without <code>na=False</code>?</li>
+<li><strong>Step 9:</strong> Yes: in pandas 2.x the missing values make the mask contain NaN and pandas raises <code>ValueError: Cannot mask with non-boolean array containing NA / NaN values</code>. (pandas 3 treats a missing value as no match, but <code>na=False</code> makes your intention clear in every version.)</li>
+</ul>
 <hr />
 <h3 id="step-7-summary">Step 7: Summary<a class="headerlink" href="#step-7-summary" title="Permanent link">&para;</a></h3>
 <div class="highlight"><pre><span></span><code><span class="nb">print</span><span class="p">(</span><span class="s2">"""</span>
@@ -8538,7 +8562,18 @@ safe_filter.head()-&gt;   species     island  bill_length_mm  bill_depth_mm  fli
 <hr />
 <h2 id="flowchart">Flowchart<a class="headerlink" href="#flowchart" title="Permanent link">&para;</a></h2>
 <p>The following diagram (from the book's own resources) shows the full sequence of steps in this project:</p>
-<p><img alt="Filtering Flowchart" src="/001-mkdocs/gitbook-assets/ch12-filtering.png" /></p>
+<p><img alt="Filtering Flowchart" src="../../resources/S12-LR-ch12-filtering.png" /></p>
+<p><strong>Reading the figure</strong></p>
+<ul>
+<li>Step 0: import pandas and seaborn and load the penguins dataset into a DataFrame.</li>
+<li>Step 1: filter with a single condition, <code>df[df['body_mass_g'] &gt; 4000]</code>: the condition is a boolean Series, one <code>True</code>/<code>False</code> per row.</li>
+<li>Step 2: combine conditions with <code>&amp;</code> (and), <code>|</code> (or) and <code>~</code> (not), each condition in its own parentheses.</li>
+<li>Step 3: <code>.isin([...])</code> keeps rows whose value matches any of several exact values.</li>
+<li>Step 4: <code>.str.contains()</code> searches text columns for a pattern, with options for case and regular expressions.</li>
+<li>Step 5: <code>na=False</code> makes missing values count as "no match".</li>
+<li>Step 6: the four common errors: missing parentheses, <code>and</code>/<code>or</code> instead of <code>&amp;</code>/<code>|</code>, <code>.str</code> on a non-text column, and a mask containing NaN.</li>
+<li>Step 7: a printed summary of the key learnings and best practice.</li>
+</ul>
 <hr />
 <h2 id="quick-recap">Quick recap<a class="headerlink" href="#quick-recap" title="Permanent link">&para;</a></h2>
 <ul>

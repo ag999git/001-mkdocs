@@ -9240,7 +9240,19 @@ Now .mean() works: 23.333333333333332
 <li><strong>Type-Specific Operations</strong> — the "specialised tools" stage: methods that only make sense for a particular kind of column, reached through <strong>accessors</strong> like <code>.str</code> (for text) and <code>.dt</code> (for dates) — see Question 22/45.</li>
 </ol>
 <p>The flowchart below lays these four out side by side, with a few representative methods under each, so you can see at a glance which pillar a method you've just learned belongs to.</p>
-<p><img alt="Flowchart" src="../../resources/ch12-august-2026-conceptual-question-13.png" /></p>
+<p><img alt="Flowchart" src="../../resources/S12-LR-ch12-august-2026-conceptual-question-13.png" /></p>
+<p><strong>Reading the figure</strong></p>
+<ul>
+<li>pandas methods are grouped into four pillars.</li>
+<li>Pillar 1, Inspection &amp; Retrieval: look at the data and pull out parts of it.</li>
+<li>Pillar 2, Analysis &amp; Summarization: statistics and comparisons between groups.</li>
+<li>Pillar 3, Cleaning &amp; Manipulation: fix, rename and reshape.</li>
+<li>Pillar 4, Type-Specific Operations: tools for text and dates.</li>
+<li>Examples: <code>.head()</code>, <code>.sample()</code>, <code>.loc[]</code>, <code>.iloc[]</code>.</li>
+<li>Examples: <code>.describe()</code>, <code>.groupby()</code>, <code>.pivot_table()</code>.</li>
+<li>Examples: <code>.dropna()</code>, <code>.fillna()</code>, <code>.rename()</code>, <code>.set_index()</code>, <code>.stack()</code>/<code>.unstack()</code>.</li>
+<li>Examples: the <code>.str</code> accessor for text and the <code>.dt</code> accessor for dates.</li>
+</ul>
 <p>Following these four pillars roughly in order — inspect, analyse, clean, then reach for type-specific tools as needed — is a reasonable default workflow for a new dataset, though in practice you'll often loop back to earlier pillars (cleaning frequently follows analysis, once you've spotted a problem in the summary statistics).</p>
 <hr />
 <p><a id="q14"></a></p>
@@ -9340,7 +9352,13 @@ max        NaN       50.000000
 <li><strong>Combine</strong> — the individual results from every pile are stitched back together into a single, tidy summary table, with the group labels (island names) now acting as the row index.</li>
 </ol>
 <p>The practical benefit is that you go from one giant average for the whole dataset to a side-by-side comparison across meaningful segments — which is almost always the more useful question ("how does body mass differ <em>by</em> island?" rather than just "what's the average body mass overall?").</p>
-<p><img alt="Flowchart" src="../../resources/ch12-august-2026-conceptual-question-16.png" /></p>
+<p><img alt="Flowchart" src="../../resources/S12-LR-ch12-august-2026-conceptual-question-16.png" /></p>
+<p><strong>Reading the figure</strong></p>
+<ul>
+<li><strong>Step 1:</strong> Split: pandas divides the rows into groups, one per value of the grouping column (for example one per <code>island</code>). Nothing is calculated yet.</li>
+<li><strong>Step 2:</strong> Apply: a function such as <code>mean()</code> runs on each group separately.</li>
+<li><strong>Step 3:</strong> Combine: the per-group results are joined into one table, with the group labels as the index.</li>
+</ul>
 <div class="highlight"><pre><span></span><code><span class="kn">import</span><span class="w"> </span><span class="nn">pandas</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">pd</span>
 
 <span class="n">penguins_gb</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">({</span>
@@ -9680,7 +9698,7 @@ tables[1]:
 <hr />
 <p><a id="q24"></a></p>
 <h3 id="24-explain-the-importance-of-sending-a-user-agent-header-when-using-requestsget-to-fetch-data-for-read_html">24. Explain the importance of sending a "User-Agent" header when using requests.get() to fetch data for read_html().<a class="headerlink" href="#24-explain-the-importance-of-sending-a-user-agent-header-when-using-requestsget-to-fetch-data-for-read_html" title="Permanent link">&para;</a></h3>
-<p><strong>In short:</strong> many websites automatically block requests that don't "look like" they came from a real web browser — sending a <code>User-Agent</code> header that mimics one (for example, <code>"Mozilla/5.0 ..."</code>) is a standard way to get past that block, and since <code>pd.read_html()</code> itself has no built-in option to set custom headers, the usual workaround is to fetch the page yourself first with the <code>requests</code> library and hand the resulting HTML text to pandas.</p>
+<p><strong>In short:</strong> many websites automatically block requests that don't "look like" they came from a real web browser — sending a <code>User-Agent</code> header that mimics one (for example, <code>"Mozilla/5.0 ..."</code>) is a standard way to get past that block, and since older versions of <code>pd.read_html()</code> had no option to set custom headers (pandas 2.1 and later accept <code>storage_options={'User-Agent': ...}</code>), the classic workaround is to fetch the page yourself first with the <code>requests</code> library and hand the resulting HTML text to pandas.</p>
 <p>Step by step, why this pattern is needed:</p>
 <ol>
 <li>Websites often reject automated, script-driven requests (to reduce scraping load or abuse) by checking the <code>User-Agent</code> header that every HTTP request carries — an empty or clearly non-browser value can trigger an <strong>"HTTP 403 Forbidden"</strong> response before your code ever sees any actual page content.</li>
@@ -10075,7 +10093,13 @@ Number of columns pandas found: 2
 <li><strong>Wide format</strong> — the same information, but spread out: one row per shop, with a separate column for each item's amount. This is easier for a person to read at a glance — comparing Pen vs. Pencil sales for Shop1 means looking along one row, rather than scanning down a long list of Long-format rows and mentally filtering.</li>
 <li>The two are not competitors so much as complementary views of the same data — pandas' <code>.stack()</code> / <code>.unstack()</code> (Question 19/54) and <code>.pivot_table()</code> (Question 17) are exactly the tools for converting between them as the situation calls for one or the other.</li>
 </ol>
-<p><img alt="Flowchart" src="../../resources/ch12-august-2026-conceptual-question-35.png" /></p>
+<p><img alt="Flowchart" src="../../resources/S12-LR-ch12-august-2026-conceptual-question-35.png" /></p>
+<p><strong>Reading the figure</strong></p>
+<ul>
+<li>Long format: every row is one fact, such as <code>(Shop1, Pen, 100)</code>. New shops or items only add rows, so the table structure never changes; this suits databases.</li>
+<li><code>.unstack()</code> or <code>.pivot_table()</code> spreads the items into columns: wide format, one row per shop, easy for a person to compare at a glance.</li>
+<li><code>.stack()</code> or <code>.melt()</code> turns the wide table back into long format.</li>
+</ul>
 <p><em>Learn more:</em> <a href="https://pandas.pydata.org/docs/user_guide/reshaping.html">Reshaping and pivot tables</a></p>
 <hr />
 <p><a id="q36"></a></p>
@@ -10290,13 +10314,13 @@ List of lists WITH columns=['score','name']:
 0  1.0
 2  3.0
 
-After reassignment df = df.dropna() (original untouched):
+Original, untouched by the reassignment approach:
       a
 0  1.0
 1  NaN
 2  3.0 
 
-(new object):
+The new, separate cleaned object:
       a
 0  1.0
 2  3.0
@@ -10611,8 +10635,6 @@ merge (joining on the 'id' key):
     id   name  score
 0   1  Alice     85
 1   2    Bob     90
-
-ALL DONE
 </code></pre></div>
 <p><em>Learn more:</em> <a href="https://pandas.pydata.org/docs/reference/api/pandas.concat.html">pd.concat() reference</a> · <a href="https://pandas.pydata.org/docs/user_guide/merging.html">pd.merge() reference / Merge, join, concatenate guide</a></p>
 <hr />

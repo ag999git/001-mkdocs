@@ -5061,23 +5061,7 @@
     </span>
   </a>
   
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#_1" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        
-      
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="">
+    <nav class="md-nav" aria-label="3. The Python Script">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
@@ -5176,6 +5160,11 @@
       
     </span>
   </a>
+  
+</li>
+        
+      </ul>
+    </nav>
   
 </li>
         
@@ -8693,7 +8682,20 @@
 <div class="highlight"><pre><span></span><code>pip install openpyxl
 </code></pre></div>
 <p>Here is a bird's-eye view of the whole solution before we go through it one step at a time:</p>
-<h2 id="_1"><img alt="Flowchart" src="../../resources/ch12-august-2026-exploring-penguin-data-01.png" /><a class="headerlink" href="#_1" title="Permanent link">&para;</a></h2>
+<p><img alt="Flowchart" src="../../resources/S12-LR-ch12-august-2026-exploring-penguin-data-01.png" /></p>
+<p><strong>Reading the figure</strong></p>
+<ul>
+<li><strong>Step 1:</strong> Load the Palmer Penguins dataset.</li>
+<li><strong>Step 2:</strong> Rename the <code>species</code> column and preview the first row, transposed.</li>
+<li><strong>Step 3:</strong> Check the column names and data types, and select a single column.</li>
+<li><strong>Step 4:</strong> Count the unique species and how often each appears.</li>
+<li><strong>Step 5:</strong> Produce summary statistics for every column.</li>
+<li><strong>Step 6:</strong> Find the missing values and remove the affected rows.</li>
+<li><strong>Step 7:</strong> Convert <code>island</code> to the more efficient <code>category</code> type.</li>
+<li><strong>Step 8:</strong> Group by island and count the penguins in each group.</li>
+<li><strong>Step 9:</strong> Plot the counts as a bar chart.</li>
+</ul>
+<hr />
 <h4 id="step-1-load-data-and-inspect-shape">Step 1: Load Data and Inspect Shape<a class="headerlink" href="#step-1-load-data-and-inspect-shape" title="Permanent link">&para;</a></h4>
 <p>The first task in any data project is to load the data into the computer's memory so Python can work with it.</p>
 <p>For this exercise we use the Palmer Penguins dataset, released under the CC0 (Creative Commons Zero) licence. This dataset is built directly into the seaborn library, so it can be loaded with a single function call and no separate download. (You can also load the same data from a direct CSV link on GitHub: <a href="https://raw.githubusercontent.com/allisonhorst/palmerpenguins/main/inst/extdata/penguins.csv"><strong>https://raw.githubusercontent.com/allisonhorst/palmerpenguins/main/inst/extdata/penguins.csv</strong></a>.)</p>
@@ -8987,9 +8989,21 @@ Torgersen     47
 </code></pre></div>
 <p><strong>A note on the <code>try</code>/<code>except</code> block:</strong> matplotlib's built-in style names have changed over the years — a style once simply called <code>'seaborn'</code> was renamed to <code>'seaborn-v0_8-whitegrid'</code> (and similar <code>seaborn-v0_8-*</code> names) in matplotlib 3.6 to reflect that it mimics an older version of the seaborn library's look. The <code>try</code>/<code>except</code> here means "use the modern name if it exists; otherwise, fall back to the old name" — a small defensive habit that makes a script more likely to run unchanged on both older and newer installations. If both style names are unavailable on your system, you can safely delete this block altogether and the chart will simply use matplotlib's default style.</p>
 <h3 id="flowchart-showing-flow-of-execution-of-above-script">Flowchart showing flow of execution of above script<a class="headerlink" href="#flowchart-showing-flow-of-execution-of-above-script" title="Permanent link">&para;</a></h3>
-<p><img alt="Project1" src="/001-mkdocs/gitbook-assets/ch12-project1-palmer-penguin.png" /></p>
+<p><img alt="Project1" src="../../resources/S12-LR-ch12-project1-palmer-penguin.png" /></p>
+<p><strong>Reading the figure</strong></p>
+<ul>
+<li><strong>Step 1:</strong> Step 1: load the dataset with <code>sns.load_dataset('penguins')</code> and check its size with <code>.shape</code>: 344 rows, 7 columns.</li>
+<li><strong>Step 2:</strong> Step 2: rename <code>species</code> to <code>penguin_species</code> with <code>.rename()</code>, and view the first row transposed with <code>.head(1).T</code>.</li>
+<li><strong>Step 3:</strong> Step 3: check the data types with <code>.dtypes</code> and select a single column.</li>
+<li><strong>Step 4:</strong> Step 4: <code>.nunique()</code> and <code>.value_counts()</code> show how many species there are and how often each appears.</li>
+<li><strong>Step 5:</strong> Step 5: <code>.describe(include='all')</code> summarises numeric and text columns.</li>
+<li><strong>Step 6:</strong> Step 6: <code>.isnull().sum()</code> counts the missing values; <code>.dropna()</code> removes those rows, leaving 333.</li>
+<li><strong>Step 7:</strong> Step 7: convert <code>island</code> with <code>.astype('category')</code> to save memory.</li>
+<li><strong>Step 8:</strong> Step 8: group by island and count the penguins, with <code>observed=True</code>.</li>
+<li><strong>Step 9:</strong> Step 9: draw a bar chart, set the labels and title, and show it with <code>plt.show()</code>.</li>
+</ul>
 <h3 id="the-resulting-plot-is-as-follows">The resulting plot is as follows<a class="headerlink" href="#the-resulting-plot-is-as-follows" title="Permanent link">&para;</a></h3>
-<p><img alt="Plot" src="/001-mkdocs/gitbook-assets/ch12-project1-palmer-penguin-image.png" /></p>
+<p><img alt="Plot" src="../../resources/ch12-project1-palmer-penguin-image.png" /></p>
 <p>With <code>plt.show()</code>, you should see a bar chart with three bars — Biscoe, Dream, and Torgersen along the x-axis, and the penguin count on the y-axis — matching the <code>df_penguins</code> table printed in Step 8.</p>
 <hr />
 <h2 id="object-vs-category-explained">Object vs. Category, Explained<a class="headerlink" href="#object-vs-category-explained" title="Permanent link">&para;</a></h2>
@@ -9035,7 +9049,7 @@ The table above gives you the numbers; these two flowcharts show *why* those num
 
 ##### Flowchart 1 of 2 — How `object`/`str` storage works
 
-![Flowchart](../resources/ch12-august-2026-exploring-penguin-data-02.png)
+![Flowchart](../resources/S12-LR-ch12-august-2026-exploring-penguin-data-02.png)
 
 * **Box 1** — Row 1's value is "Biscoe". Pandas writes the complete word "Biscoe" into memory for this row.
 * **Box 2** — Row 2's value is also "Biscoe". Pandas writes the complete word "Biscoe" into memory *again*, as if row 1 never happened — nothing is shared or reused between rows.
@@ -9045,7 +9059,7 @@ Notice that the text "Biscoe" was written out in full twice. That repeated, unco
 
 ##### Flowchart 2 of 2 — How `category` storage works
 
-![Flowchart](../resources/ch12-august-2026-exploring-penguin-data-03.png)
+![Flowchart](../resources/S12-LR-ch12-august-2026-exploring-penguin-data-03.png)
 
 * **Box 1** — Row 1's value is "Biscoe". Instead of storing the text itself, pandas assigns it a short numeric code: `0`.
 * **Box 2** — Row 2's value is also "Biscoe", so it *reuses* the same code, `0`. No new text is written anywhere — just the small number `0` again.

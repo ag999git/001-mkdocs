@@ -9304,7 +9304,15 @@ Last 3 Adelie penguins (sorted by mass):
 </ul>
 <h4 id="important-observation">Important Observation<a class="headerlink" href="#important-observation" title="Permanent link">&para;</a></h4>
 <p>Look carefully at the very last row: <code>body_mass_g = 0.0</code>. This isn't a real penguin that happened to weigh nothing — it comes directly from Phase 1's <code>fillna(0)</code>. So what actually happened here is: <strong>an originally missing value has, by the end of this pipeline, been sorted in as if it were the single lightest penguin in the entire dataset.</strong></p>
-<p><img alt="Flowchart" src="../../resources/ch12-august-2026-data-deriving-matrices-01.png" /></p>
+<p><img alt="Flowchart" src="../../resources/S12-LR-ch12-august-2026-data-deriving-matrices-01.png" /></p>
+<p><strong>Reading the figure</strong></p>
+<ul>
+<li><strong>Step 1:</strong> Row 3 of the dataset has no measurements at all: its <code>body_mass_g</code> (and the bill measurements) are NaN.</li>
+<li><strong>Step 2:</strong> Phase 1 runs <code>df.fillna(0)</code>, so every missing measurement becomes <code>0.0</code>.</li>
+<li><strong>Step 3:</strong> A side effect in Phase 2: <code>slenderness_index</code> for row 3 is <code>0.0 / 0.0</code>, which is NaN (undefined), a visible symptom of the missing data.</li>
+<li><strong>Step 4:</strong> Phase 4 sorts by <code>body_mass_g</code> in descending order.</li>
+<li><strong>Step 5:</strong> Row 3, with its fake <code>0.0</code>, lands at the very end, looking like the lightest Adelie penguin instead of a missing measurement.</li>
+</ul>
 <h4 id="important-hidden-lesson">Important Hidden Lesson<a class="headerlink" href="#important-hidden-lesson" title="Permanent link">&para;</a></h4>
 <p>Filling missing values with <code>0</code> can genuinely mislead an analysis — not through some obscure edge case, but through exactly the ordinary, expected behavior of every method used in this script.</p>
 <blockquote>

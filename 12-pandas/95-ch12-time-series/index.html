@@ -4978,6 +4978,17 @@
   
 </li>
         
+          <li class="md-nav__item">
+  <a href="#step-7-it-is-just-a-summary" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        STEP 7 (It is just a summary)
+      
+    </span>
+  </a>
+  
+</li>
+        
       </ul>
     </nav>
   
@@ -8355,7 +8366,7 @@
 <hr />
 <h2 id="research-topic-temporal-analysis-of-airline-passenger-traffic">Research Topic: Temporal Analysis of Airline Passenger Traffic<a class="headerlink" href="#research-topic-temporal-analysis-of-airline-passenger-traffic" title="Permanent link">&para;</a></h2>
 <p><strong>Research Question:</strong> <em>How can raw multi-column temporal data be converted into a Datetime Index to facilitate analysis of seasonal fluctuations and long-term growth trends?</em></p>
-<p><strong>Project Scenario:</strong> The "Airline Passenger Traffic" dataset (<code>flights</code>) provides monthly counts of airline passengers from 1949 to 1960. While the dataset contains time information, it is currently split across two distinct columns: <code>year</code> (Integer) and <code>month</code> (String). To perform effective time series analysis, one must first engineer a unified datetime object. The objective is to:</p>
+<p><strong>Project Scenario:</strong> The "Airline Passenger Traffic" dataset (<code>flights</code>) provides monthly counts of airline passengers from 1949 to 1960. While the dataset contains time information, it is currently split across two distinct columns: <code>year</code> (Integer) and <code>month</code> (month names, stored as a <code>category</code> column). To perform effective time series analysis, one must first engineer a unified datetime object. The objective is to:</p>
 <ol>
 <li><strong>Construct a single Datetime Index</strong> from the separate year and month columns.</li>
 <li><strong>Slice the data</strong> to isolate specific eras (e.g., the 1950s).</li>
@@ -8387,7 +8398,15 @@
 <li><strong>Upsampling:</strong> Increasing frequency (e.g., Monthly → Daily). Requires <em>interpolation</em> (<em>guessing in-between values</em>).</li>
 <li><strong>Downsampling:</strong> Decreasing frequency (e.g., Monthly → Yearly). Requires <em>aggregation</em> (Sum, Mean, Max).</li>
 </ul>
-<p><img alt="Flowchart" src="../../resources/ch12-august-2026-time-series-00.png" /></p>
+<p><img alt="Flowchart" src="../../resources/S12-LR-ch12-august-2026-time-series-00.png" /></p>
+<p><strong>Reading the figure</strong></p>
+<ul>
+<li><strong>Step 1:</strong> Start with monthly data: 144 rows, one per month from 1949 to 1960.</li>
+<li><strong>Step 2:</strong> Are you changing to a lower frequency, such as quarterly (<code>'QE'</code>) or yearly (<code>'YE'</code>)?</li>
+<li><strong>Step 3:</strong> Yes, downsampling: several months fall into each new period, so they must be aggregated, for example <code>mean()</code> for a smoother trend or <code>sum()</code> for yearly totals.</li>
+<li><strong>Step 4:</strong> No, upsampling to a higher frequency such as daily: more rows than you have data for.</li>
+<li><strong>Step 5:</strong> The new in-between rows must be filled, usually by interpolation.</li>
+</ul>
 <p><strong>Table of Resampling Offsets for Flights Data</strong></p>
 <table>
 <thead>
@@ -8409,7 +8428,7 @@
 <td>Smoother trend (3-month averages).</td>
 </tr>
 <tr>
-<td><code>YE</code> / <code>A</code></td>
+<td><code>YE</code></td>
 <td>Year End</td>
 <td>Shows total passengers per year (Annual growth).</td>
 </tr>
@@ -8421,7 +8440,7 @@
 </tbody>
 </table>
 <blockquote>
-<p><strong>Deprecation note:</strong> In older tutorials you will see <code>'M'</code>, <code>'Q'</code>, <code>'Y'</code>, <code>'A'</code>. Recent pandas versions replaced these with <code>'ME'</code>, <code>'QE'</code>, <code>'YE'</code> — the old codes still work but print a <code>FutureWarning</code>. See <a href="https://pandas.pydata.org/docs/user_guide/timeseries.html#offset-aliases">Offset aliases in the pandas docs</a>.</p>
+<p><strong>Deprecation note:</strong> In older tutorials you will see <code>'M'</code>, <code>'Q'</code>, <code>'Y'</code>, <code>'A'</code>. Recent pandas versions replaced these with <code>'ME'</code>, <code>'QE'</code>, <code>'YE'</code> — in pandas 2.2 the old codes still work with a <code>FutureWarning</code>; in pandas 3 they raise <code>ValueError: Invalid frequency</code>. See <a href="https://pandas.pydata.org/docs/user_guide/timeseries.html#offset-aliases">Offset aliases in the pandas docs</a>.</p>
 </blockquote>
 <hr />
 <h2 id="script-implementing-the-research-problem-project">Script Implementing the Research Problem / Project<a class="headerlink" href="#script-implementing-the-research-problem-project" title="Permanent link">&para;</a></h2>
@@ -8538,8 +8557,8 @@
 
 
 <span class="c1"># ERROR EXAMPLE:</span>
-<span class="c1"># pd.to_datetime(df['month'])  # Fails because month alone is not a complete date</span>
-<span class="c1"># → Not a complete date</span>
+<span class="c1"># pd.to_datetime(df['month'])  # Does NOT give real dates: month alone is not a complete date</span>
+<span class="c1"># → 'Jan' is parsed as 0001-01-01 (with a UserWarning)</span>
 
 
 <span class="c1"># ==========================================================</span>
@@ -8667,7 +8686,7 @@
 <span class="c1"># apply to the data within each new time period.</span>
 <span class="c1"># The resulting quarterly_avg Series will have a DatetimeIndex with the end of each quarter as the index and the average number of passengers</span>
 <span class="c1"># for that quarter as the values.</span>
-<span class="c1"># NOTE: 'QE' is the modern alias. Older pandas used 'Q', which now raises a FutureWarning.</span>
+<span class="c1"># NOTE: 'QE' is the modern alias. Older pandas used 'Q' (a FutureWarning in pandas 2.2, a ValueError in pandas 3).</span>
 
 <span class="n">quarterly_avg</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="s1">'passengers'</span><span class="p">]</span><span class="o">.</span><span class="n">resample</span><span class="p">(</span><span class="s1">'QE'</span><span class="p">)</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span>
 
@@ -8687,7 +8706,7 @@
 <span class="c1"># for that year as the values.</span>
 <span class="c1"># This allows us to see the overall trend in passenger numbers on a yearly basis, which can be useful for identifying long-term</span>
 <span class="c1"># growth patterns or seasonality in the data.</span>
-<span class="c1"># NOTE: 'YE' is the modern alias. Older pandas used 'Y' (or 'A'), which now raises a FutureWarning.</span>
+<span class="c1"># NOTE: 'YE' is the modern alias. Older pandas used 'Y' (or 'A') (a FutureWarning in pandas 2.2, a ValueError in pandas 3).</span>
 
 <span class="n">yearly_total</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="s1">'passengers'</span><span class="p">]</span><span class="o">.</span><span class="n">resample</span><span class="p">(</span><span class="s1">'YE'</span><span class="p">)</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span>
 
@@ -8725,7 +8744,7 @@
 <span class="s2">- Prefer vectorized operations over apply()</span>
 <span class="s2">- Use structured datetime creation for reliability</span>
 <span class="s2">- Always set datetime as index before resampling</span>
-<span class="s2">- Validate transformations using head() and shape()</span>
+<span class="s2">- Validate transformations using `.head()` and `.shape`</span>
 <span class="s2">- Use modern frequency aliases: ME / QE / YE (not M / Q / Y)</span>
 <span class="s2">"""</span><span class="p">)</span>
 </code></pre></div>
@@ -8737,11 +8756,35 @@
 
 <summary>Flowchart of the script</summary>
 
-![Flowchart of the script](/001-mkdocs/gitbook-assets/ch12-timeline.png)
+![Flowchart of the script](../resources/S12-LR-ch12-timeline.png)
+
+**Reading the figure**
+
+- **Step 1:** Load the flights dataset: 144 rows of `year`, `month` and `passengers`.
+- **Step 2:** Inspect it with `.head()`, `.dtypes` and `.shape`.
+- **Step 3:** Map the month names to numbers (`'Jan'` → 1, `'Feb'` → 2, ...) in a new `month_num` column.
+- **Step 4:** Build a real date with `pd.to_datetime(dict(year=..., month=..., day=1))`.
+- **Step 5:** Check that the new `date` column has a datetime type.
+- **Step 6:** Make `date` the index with `set_index('date')`, giving a DatetimeIndex.
+- **Step 7:** Drop the columns that are no longer needed: `year`, `month` and `month_num`.
+- **Step 8:** Extract components from the index: `.year`, `.quarter`, `.month`.
+- **Step 9:** Slice by time: `df.loc['1950':'1959']` selects the 1950s.
+- **Step 10:** Resample: quarterly averages with `resample('QE').mean()` and yearly totals with `resample('YE').sum()`.
+- **Step 11:** Print the key learnings: the trend, the growth and the seasonal pattern.
 
 ### Another flow chart
 
-![Flowchart](../resources/ch12-august-2026-time-series-01.png)
+![Flowchart](../resources/S12-LR-ch12-august-2026-time-series-01.png)
+
+**Reading the figure**
+
+- **Step 1:** Load the flights dataset (144 rows).
+- **Step 2:** Map the month names to month numbers.
+- **Step 3:** Combine year, month number and `day=1` into a `date` column.
+- **Step 4:** Make `date` the index and drop the redundant columns, leaving a DatetimeIndex and one column, `passengers`.
+- **Step 5:** Extract the year, quarter and month from the index.
+- **Step 6:** Slice the 1950s by date string.
+- **Step 7:** Downsample: the quarterly average and the yearly total.
 
 </details>
 
@@ -9102,7 +9145,7 @@ Index → quarter-end dates
 <span class="nb">print</span><span class="p">(</span><span class="n">df</span><span class="o">.</span><span class="n">head</span><span class="p">())</span>
 
 <span class="c1"># OUTPUT HINT:</span>
-<span class="c1"># Columns → (int), month (category), passengers (int)</span>
+<span class="c1"># Columns → year (int), month (category), passengers (int)</span>
 </code></pre></div>
 <p><strong>Output</strong></p>
 <p><div class="highlight"><pre><span></span><code>STEP 0: IMPORT LIBRARIES
@@ -9112,14 +9155,14 @@ STEP 1: LOAD DATASET
 First 5 rows:
    year month  passengers
 0  1949   Jan         112
-1  49   Feb         118
-2  1949   Mar 132
+1  1949   Feb         118
+2  1949   Mar         132
 3  1949   Apr         129
 4  1949   May         121
 </code></pre></div>
 <strong>EXPLANATION STEP 1: LOAD AND INSPECT DATA</strong></p>
 <hr />
-<p><strong>STEP 1.: First 5 Rows</strong></p>
+<p><strong>STEP 1.1: First 5 Rows</strong></p>
 <p><strong>Output Explanation</strong></p>
 <ul>
 <li>Displays first 5 rows of the dataset.</li>
@@ -9164,8 +9207,8 @@ Shape: (144, 3)
 
 # We create a mapping dictionary to convert month names to their corresponding numeric values.
 month_map = {
-    'Jan': 1, '': 2, 'Mar': 3, 'Apr': 4,
-    'May': 5, 'Jun': 6 'Jul': 7, 'Aug': 8,
+    'Jan': 1, 'Feb': 2, 'Mar': 3, 'Apr': 4,
+    'May': 5, 'Jun': 6, 'Jul': 7, 'Aug': 8,
     'Sep': 9, 'Oct': 10, 'Nov': 11, 'Dec': 12
 }
 
@@ -9175,11 +9218,12 @@ df['month_num'] = df['month'].map(month_map)
 print("\nMonth Mapping Preview:")
 print(df[['month', 'month_num']].head())
 </code></pre></div>
-<p>**Output STEP 2 and 2.1</p>
+<p><strong>Output STEP 2 and 2.1</strong></p>
 <div class="highlight"><pre><span></span><code>STEP 2: CREATE DATETIME COLUMN (ROBUST METHOD)
 
 Month Mapping Preview:
-  month month_num0   Jan         1
+  month  month_num
+0   Jan          1
 1   Feb         2
 2   Mar         3
 3   Apr         4
@@ -9200,7 +9244,8 @@ Month Mapping Preview:
 <span class="c1"># ----------------------------------------------------------</span>
 
 <span class="c1"># We create a new 'date' column by combining the 'year' and 'month_num' columns into a proper datetime format.</span>
-<span class="c1"># We set the day to 1 for all entries since we only have year and month informationdf['date'] = pd.to_datetime(</span>
+<span class="c1"># We set the day to 1 for all entries since we only have year and month information</span>
+<span class="n">df</span><span class="p">[</span><span class="s1">'date'</span><span class="p">]</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">to_datetime</span><span class="p">(</span>
     <span class="nb">dict</span><span class="p">(</span><span class="n">year</span><span class="o">=</span><span class="n">df</span><span class="p">[</span><span class="s1">'year'</span><span class="p">],</span> <span class="n">month</span><span class="o">=</span><span class="n">df</span><span class="p">[</span><span class="s1">'month_num'</span><span class="p">],</span> <span class="n">day</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
 <span class="p">)</span>
 
@@ -9214,7 +9259,7 @@ Month Mapping Preview:
 1  1949   Feb         118         2 1949-02-01
 2  1949   Mar         132         3 1949-03-01
 </code></pre></div>
-<p><strong>PLANATION: STEP 2.2: Datetime Creation</strong></p>
+<p><strong>EXPLANATION: STEP 2.2: Datetime Creation</strong></p>
 <p><strong>Output Explanation</strong></p>
 <ul>
 <li>A new column <code>date</code> is created.</li>
@@ -9268,7 +9313,7 @@ Shape: (144, 1)
 <p><strong>Output Explanation</strong></p>
 <ul>
 <li>The <code>date</code> column becomes the index of the DataFrame.</li>
-<li>Old columns (<code>year</code>, <code>month</code>month_num`) are removed.</li>
+<li>Old columns (<code>year</code>, <code>month</code>, <code>month_num</code>) are removed.</li>
 <li>Now:</li>
 <li>Index → datetime values</li>
 <li>Column → only <code>passengers</code></li>
@@ -9298,7 +9343,7 @@ Shape: (144, 1)
 <span class="nb">print</span><span class="p">(</span><span class="n">df</span><span class="o">.</span><span class="n">head</span><span class="p">())</span>
 </code></pre></div>
 <p><strong>Output STEP 4, 4.1 and 4.2</strong></p>
-<div class="highlight"><pre><span></span><code>STEP 4: EXTRACT TIME COMPONENT
+<div class="highlight"><pre><span></span><code>STEP 4: EXTRACT TIME COMPONENTS
 
 Data with extracted components:
             passengers  Year  Quarter  Month
@@ -9311,29 +9356,33 @@ date
 </code></pre></div>
 <p><strong>EXPLANATION: STEP 4: EXTRACT TIME COMPONENTS</strong></p>
 <hr />
-<p><strong>Output Explanation* New columns are added:
-  * <code>Year</code> → extracted from index
-  <code>Quarter</code> → values from 1 to 4
-  * <code>Month</code> → numeric month (1–12)
-* The dataset now contains both:
-  * Original data (<code>passengers</code>)
-  * time features
-* Useful for grouping and analysis.
-* </strong>Notice how the Quarter changes automatically:** January–March are Quarter 1, April–June are Quarter 2 — Pandas works this out from the datetime index, with no extra code from you.</p>
+<p><strong>Output Explanation</strong></p>
+<ul>
+<li>New columns are added:</li>
+<li><code>Year</code> → extracted from index</li>
+<li><code>Quarter</code> → values from 1 to 4</li>
+<li><code>Month</code> → numeric month (1–12)</li>
+<li>The dataset now contains both:</li>
+<li>Original data (<code>passengers</code>)</li>
+<li>time features</li>
+<li>Useful for grouping and analysis.</li>
+<li><strong>Notice how the Quarter changes automatically:</strong> January–March are Quarter 1, April–June are Quarter 2 — Pandas works this out from the datetime index, with no extra code from you.</li>
+</ul>
 <h4 id="step-5-51-and-52">STEP 5, 5.1 and 5.2<a class="headerlink" href="#step-5-51-and-52" title="Permanent link">&para;</a></h4>
 <div class="highlight"><pre><span></span><code><span class="nb">print</span><span class="p">(</span><span class="s2">"</span><span class="se">\n</span><span class="s2">STEP 5: TIME-BASED SLICING"</span><span class="p">)</span>
 
 <span class="c1"># ----------------------------------------------------------</span>
 <span class="c1"># STEP 5.1: FILTER 1950s DATA</span>
- <span class="o">----------------------------------------------------------</span>
+<span class="c1"># ----------------------------------------------------------</span>
 
 <span class="c1"># (Full explanation retained in the combined script — see Part 1. In brief: string-based</span>
 <span class="c1">#  slicing on a DatetimeIndex selects rows between two dates, both inclusive.)</span>
 
-<span class="n">fifties_data</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="s1">'19501959'</span><span class="p">]</span>
+<span class="n">fifties_data</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="s1">'1950'</span><span class="p">:</span><span class="s1">'1959'</span><span class="p">]</span>
 
 <span class="c1"># ----------------------------------------------------------</span>
-<span class="c1"># STEP 5.2: ANALYZE# ----------------------------------------------------------</span>
+<span class="c1"># STEP 5.2: ANALYZE</span>
+<span class="c1"># ----------------------------------------------------------</span>
 
 <span class="nb">print</span><span class="p">(</span><span class="s2">"</span><span class="se">\n</span><span class="s2">1950s Summary:"</span><span class="p">)</span>
 
@@ -9364,13 +9413,14 @@ Average passengers: 276.075
 <li><code>Total passengers: 33129</code></li>
 <li>Sum of all passengers in the 1950s (120 monthly values: 10 years × 12 months)</li>
 <li><code>Average passengers: 276.075</code></li>
-<li>monthly passengers in that decade (33129 ÷ 120 = 276.075)</li>
+<li>Average monthly passengers in that decade (33129 ÷ 120 = 276.075)</li>
 <li>Indicates <strong>growth trend</strong> compared to earlier years (the 1949 average was around 126 — more than double in a decade).</li>
 </ul>
 <h4 id="step-6-and-61">STEP 6 and 6.1<a class="headerlink" href="#step-6-and-61" title="Permanent link">&para;</a></h4>
 <div class="highlight"><pre><span></span><code><span class="nb">print</span><span class="p">(</span><span class="s2">"</span><span class="se">\n</span><span class="s2">STEP 6: RESAMPLING"</span><span class="p">)</span>
 
-<span class="c1"># ------------------------------------------------# STEP 6.1: QUARTERLY AVERAGE</span>
+<span class="c1"># ----------------------------------------------------------</span>
+<span class="c1"># STEP 6.1: QUARTERLY AVERAGE</span>
 <span class="c1"># ----------------------------------------------------------</span>
 
 <span class="c1"># (Full explanation retained in the combined script — see Part 1.)</span>
@@ -9393,17 +9443,17 @@ date
 Freq: QE-DEC, Name: passengers, dtype: float64
 </code></pre></div>
 <blockquote>
-<p><strong>Note:</strong> The script above uses <code>'QE'</code>, if instead you use <code>resample('Q')</code> then a message like
-<code>FutureWarning</code> (<code>'Q' is deprecated ... use 'QE' instead</code>) appears</p>
+<p><strong>Note:</strong> The script above uses <code>'QE'</code>. With the old code, <code>resample('Q')</code>, pandas 2.2 still gives the result below but shows a
+<code>FutureWarning</code> (<code>'Q' is deprecated ... use 'QE' instead</code>); pandas 3 raises <code>ValueError: Invalid frequency: Q</code> instead.</p>
+</blockquote>
 <div class="highlight"><pre><span></span><code>Quarterly Average:
 date
-199-03-31    120.666667
+1949-03-31    120.666667
 1949-06-30    128.333333
 1949-09-30    144.000000
 1949-12-31    113.666667
 1950-03-31    127.333333
 </code></pre></div>
-</blockquote>
 <p><strong>EXPLANATION: STEP 6: RESAMPLING</strong></p>
 <hr />
 <p><strong>STEP 6.1: Quarterly Average</strong></p>
@@ -9421,7 +9471,7 @@ date
 <li>In the original run a warning was shown:</li>
 <li><code>'Q' is deprecated → use 'QE'</code></li>
 <li>This indicates newer pandas prefers updated codes.</li>
-<li><strong>Watch the seasonal pattern in the numbers:</strong> the third quarter (July–, value 144) is consistently the highest — summer holiday travel. The first quarter (Jan–Mar) is the lowest. Resampling makes this seasonal rhythm easy to see; the monthly table hides it among 144 rows.</li>
+<li><strong>Watch the seasonal pattern in the numbers:</strong> the third quarter (July–Sep, value 144) is consistently the highest — summer holiday travel. The first quarter (Jan–Mar) is usually the lowest (in a few years, such as 1949, the fourth quarter is lower still). Resampling makes this seasonal rhythm easy to see; the monthly table hides it among 144 rows.</li>
 </ul>
 <h4 id="step-62">STEP 6.2<a class="headerlink" href="#step-62" title="Permanent link">&para;</a></h4>
 <div class="highlight"><pre><span></span><code><span class="c1"># ----------------------------------------------------------</span>
@@ -9438,7 +9488,7 @@ date
 <h4 id="output">OUTPUT<a class="headerlink" href="#output" title="Permanent link">&para;</a></h4>
 <div class="highlight"><pre><span></span><code>Yearly Total:
 date
-1949-12-    1520
+1949-12-31    1520
 1950-12-31    1676
 1951-12-31    2042
 1952-12-31    2364
@@ -9448,7 +9498,7 @@ Freq: YE-DEC, Name: passengers, dtype: int64
 <p><strong>EXPLANATION: STEP6.2: Yearly Total</strong></p>
 <p><strong>Output Explanation</strong></p>
 <ul>
-<li>Data is grouped year.</li>
+<li>Data is grouped by year.</li>
 <li>Each value shows <strong>total passengers in that year</strong>:</li>
 <li>e.g., <code>1520</code> = sum of the 12 monthly values of 1949</li>
 <li>Index shows year-end dates:</li>
@@ -9461,7 +9511,7 @@ Freq: YE-DEC, Name: passengers, dtype: int64
 <li>The original run used <code>'Y'</code>, which triggered: <code>'Y' is deprecated → use 'YE'</code></li>
 <li>Same reason as above (updated pandas standards). The script in this chapter uses <code>'YE'</code>, so no warning appears.</li>
 </ul>
-<p><strong>sampling vs Upsampling — recap with this output</strong></p>
+<p><strong>Downsampling vs Upsampling — recap with this output</strong></p>
 <table>
 <thead>
 <tr>
@@ -9488,27 +9538,30 @@ Freq: YE-DEC, Name: passengers, dtype: int64
 <td>Monthly → Daily</td>
 <td>Upsampling</td>
 <td>144 → ~4,380</td>
-<td>Needs interpolation (not shown here)### STEP 7 (It is just a summary)</td>
+<td>Needs interpolation (not shown here)</td>
 </tr>
 </tbody>
 </table>
+<h3 id="step-7-it-is-just-a-summary">STEP 7 (It is just a summary)<a class="headerlink" href="#step-7-it-is-just-a-summary" title="Permanent link">&para;</a></h3>
 <div class="highlight"><pre><span></span><code><span class="nb">print</span><span class="p">(</span><span class="s2">"</span><span class="se">\n</span><span class="s2">STEP 7: SUMMARY"</span><span class="p">)</span>
 
-<span class="n">printKEY</span> <span class="n">LEARNINGS</span><span class="p">:</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">"""</span>
+<span class="s2">KEY LEARNINGS:</span>
 
-<span class="mf">1.</span> <span class="n">Datetime</span> <span class="n">can</span> <span class="n">be</span> <span class="n">created</span> <span class="n">using</span> <span class="n">structured</span> <span class="nb">input</span> <span class="p">(</span><span class="n">year</span><span class="p">,</span> <span class="n">month</span><span class="p">,</span> <span class="n">day</span><span class="p">)</span>
-<span class="mf">2.</span> <span class="n">Avoid</span> <span class="n">string</span> <span class="n">parsing</span> <span class="n">when</span> <span class="n">possible</span>
-<span class="mf">3.</span> <span class="n">DatetimeIndex</span> <span class="n">enables</span> <span class="n">powerful</span> <span class="n">time</span><span class="o">-</span><span class="n">based</span> <span class="n">operations</span>
-<span class="mf">4.</span> <span class="o">.</span><span class="n">loc</span> <span class="n">allows</span> <span class="n">intuitive</span> <span class="n">time</span> <span class="n">slicing</span>
-<span class="mf">5.</span> <span class="n">resample</span><span class="p">()</span> <span class="n">changes</span> <span class="n">frequency</span> <span class="n">of</span> <span class="n">time</span> <span class="n">series</span>
+<span class="s2">1. Datetime can be created using structured input (year, month, day)</span>
+<span class="s2">2. Avoid string parsing when possible</span>
+<span class="s2">3. DatetimeIndex enables powerful time-based operations</span>
+<span class="s2">4. .loc allows intuitive time slicing</span>
+<span class="s2">5. resample() changes frequency of time series</span>
 
-<span class="n">BESTRACTICES</span><span class="p">:</span>
+<span class="s2">BEST PRACTICES:</span>
 
-<span class="o">-</span> <span class="n">Prefer</span> <span class="n">vectorized</span> <span class="n">operations</span> <span class="n">over</span> <span class="n">apply</span><span class="p">()</span>
-<span class="o">-</span> <span class="n">Use</span> <span class="n">structured</span> <span class="n">datetime</span> <span class="n">creation</span> <span class="k">for</span> <span class="n">reliability</span><span class="o">-</span> <span class="n">Always</span> <span class="nb">set</span> <span class="n">datetime</span> <span class="k">as</span> <span class="n">index</span> <span class="n">before</span> <span class="n">resampling</span>
-<span class="o">-</span> <span class="n">Validate</span> <span class="n">transformations</span> <span class="n">using</span> <span class="n">head</span><span class="p">()</span> <span class="ow">and</span> <span class="n">shape</span><span class="p">()</span>
-<span class="o">-</span> <span class="n">Use</span> <span class="n">modern</span> <span class="n">frequency</span> <span class="n">aliases</span><span class="p">:</span> <span class="n">ME</span> <span class="o">/</span> <span class="n">QE</span> <span class="o">/</span> <span class="n">YE</span> <span class="p">(</span><span class="ow">not</span> <span class="n">M</span> <span class="o">/</span> <span class="n">Q</span> <span class="o">/</span> <span class="n">Y</span><span class="p">)</span>
-<span class="s2">""")</span>
+<span class="s2">- Prefer vectorized operations over apply()</span>
+<span class="s2">- Use structured datetime creation for reliability</span>
+<span class="s2">- Always set datetime as index before resampling</span>
+<span class="s2">- Validate transformations using `.head()` and `.shape`</span>
+<span class="s2">- Use modern frequency aliases: ME / QE / YE (not M / Q / Y)</span>
+<span class="s2">"""</span><span class="p">)</span>
 </code></pre></div>
 <p><strong>EXPLANATION STEP 7 SUMMARY</strong></p>
 <p><strong>Output Explanation</strong></p>
@@ -9528,7 +9581,7 @@ Freq: YE-DEC, Name: passengers, dtype: int64
                       →  pd.to_datetime(dict(year, month, day=1))
                       →  set_index('date')        [DatetimeIndex]
                       →  .loc['1950':'1959']      [time slicing]
-                      →  resampleQE'/'YE')      [downsampling + aggregation]
+                      →  resample('QE'/'YE')    [downsampling + aggregation]
 </code></pre></div>
 <table>
 <thead>
@@ -9547,16 +9600,16 @@ Freq: YE-DEC, Name: passengers, dtype: int64
 <tr>
 <td>2. Slice a specific era</td>
 <td>Step 5</td>
-<td>1950s subset: total 33129, 276.075</td>
+<td>1950s subset: total 33129, monthly average 276.075</td>
 </tr>
 <tr>
 <td>3. Resample for trends</td>
-<td>6</td>
-<td>averages (48 rows, smoothed) and yearly totals (12 rows, clear growth: 1520 → 2700)</td>
+<td>Step 6</td>
+<td>Quarterly averages (48 rows, smoothed) and yearly totals (12 rows, clear growth: 1520 → 2700)</td>
 </tr>
 </tbody>
 </table>
-<p><strong>Answering the Research Question:</strong> Raw multi-column temporal data (<code>year</code> as integer and <code>month</code> as a string) was converted into a single <code>datetime64</code> column using structured input to <code>pd.to_datetime</code>, then promoted to a DatetimeIndex. This index unlocked time-based slicing (<code>df.loc['1950':'1959']</code>) with no filtering code, and enabled resampling — downsampling the noisy 144 monthly observations into 48 quarterly averages and 12 yearly totals, which made both the seasonal rhythm (Q3 peaks) and the strong long-term growth (passengers nearly doubling over the decade) immediately visible.</p>
+<p><strong>Answering the Research Question:</strong> Raw multi-column temporal data (<code>year</code> as integer and <code>month</code> as month names) was converted into a single <code>datetime64</code> column using structured input to <code>pd.to_datetime</code>, then promoted to a DatetimeIndex. This index unlocked time-based slicing (<code>df.loc['1950':'1959']</code>) with no filtering code, and enabled resampling — downsampling the noisy 144 monthly observations into 48 quarterly averages and 12 yearly totals, which made both the seasonal rhythm (Q3 peaks) and the strong long-term growth (yearly passengers nearly quadrupling from 1949 to 1960) immediately visible.</p>
 <p><strong>DO it yourself (follow-up sub-questions recap):</strong></p>
 <ul>
 <li>(a) Why <code>day=1</code>? — Try removing it and read the error.</li>

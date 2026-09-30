@@ -8596,9 +8596,24 @@
 </tbody>
 </table>
 <h3 id="14-choosing-the-right-orient-a-decision-guide">1.4 Choosing the Right <code>orient</code> — A Decision Guide<a class="headerlink" href="#14-choosing-the-right-orient-a-decision-guide" title="Permanent link">&para;</a></h3>
-<p><img alt="Flowchart" src="../../resources/ch12-august-2026-JSON-into-pandas-01.png" /></p>
+<p><img alt="Flowchart" src="../../resources/S12-LR-ch12-august-2026-JSON-into-pandas-01.png" /></p>
+<p><strong>Reading the figure</strong></p>
+<ul>
+<li><strong>Step 1:</strong> You have JSON data to load with <code>pd.read_json()</code>.</li>
+<li><strong>Step 2:</strong> Is it a list of dictionaries, one dictionary per row?</li>
+<li><strong>Step 3:</strong> Yes: <code>orient='records'</code>, the shape most web APIs return.</li>
+<li><strong>Step 4:</strong> No: is it a list of lists (just the values)?</li>
+<li><strong>Step 5:</strong> Yes: <code>orient='values'</code>; the row and column labels are lost.</li>
+<li><strong>Step 6:</strong> No: does it have a <code>"schema"</code> key and a <code>"data"</code> key?</li>
+<li><strong>Step 7:</strong> Yes: <code>orient='table'</code>, which also stores the column types.</li>
+<li><strong>Step 8:</strong> No: does it have the three keys <code>"index"</code>, <code>"columns"</code> and <code>"data"</code>?</li>
+<li><strong>Step 9:</strong> Yes: <code>orient='split'</code>.</li>
+<li><strong>Step 10:</strong> No, so it is a dictionary of dictionaries: are the outer keys row labels, such as IDs or dates?</li>
+<li><strong>Step 11:</strong> Yes: <code>orient='index'</code>.</li>
+<li><strong>Step 12:</strong> No, the outer keys are column names: <code>orient='columns'</code>, the default for a DataFrame.</li>
+</ul>
 <blockquote>
-<p><strong>Version note:</strong> In older pandas versions (≤ 1.x) the default <code>orient</code> was <code>'columns'</code>; from pandas 2.0 the default is <code>'records'</code>. It is good practice to <strong>always specify <code>orient</code> explicitly</strong> rather than relying on the default.</p>
+<p><strong>Version note:</strong> For a DataFrame, the default <code>orient</code> of <code>read_json()</code> and <code>to_json()</code> is <code>'columns'</code> (for a Series it is <code>'index'</code>), and this has not changed in pandas 2 or 3. It is still good practice to <strong>always specify <code>orient</code> explicitly</strong> rather than relying on the default.</p>
 </blockquote>
 <h2 id="15-basic-examples-and-expected-outputs">1.5 Basic Examples and Expected Outputs<a class="headerlink" href="#15-basic-examples-and-expected-outputs" title="Permanent link">&para;</a></h2>
 <blockquote>
@@ -8739,7 +8754,7 @@ dtype: object
 <span class="c1"># Step 2: Read with orient='index'</span>
 <span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_json</span><span class="p">(</span><span class="n">StringIO</span><span class="p">(</span><span class="n">json_data</span><span class="p">),</span> <span class="n">orient</span><span class="o">=</span><span class="s1">'index'</span><span class="p">)</span>
 
-<span class="c1"># Step 3: Inspect the index (dates kept as strings)</span>
+<span class="c1"># Step 3: Inspect the index (the date keys become a DatetimeIndex)</span>
 <span class="nb">print</span><span class="p">(</span><span class="n">df</span><span class="o">.</span><span class="n">index</span><span class="p">)</span>
 
 <span class="c1"># Step 4: Inspect the data types</span>
@@ -8749,27 +8764,27 @@ dtype: object
 <span class="nb">print</span><span class="p">(</span><span class="n">df</span><span class="p">)</span>
 </code></pre></div>
 <p><strong>Output:</strong></p>
-<div class="highlight"><pre><span></span><code>Index(['2023-01-01', '2023-01-02', '2023-01-03'], dtype='object')
+<div class="highlight"><pre><span></span><code>DatetimeIndex(['2023-01-01', '2023-01-02', '2023-01-03'], dtype='datetime64[us]', freq=None)
 
 open     float64
-high     float64
+high       int64
 low      float64
 close    float64
 dtype: object
 
-            open   high    low  close
-2023-01-01  100.5  105.0   99.5  104.0
-2023-01-02  104.0  108.0  103.5  107.5
-2023-01-03  107.5  110.0  107.0  109.5
+             open  high    low  close
+2023-01-01  100.5   105   99.5  104.0
+2023-01-02  104.0   108  103.5  107.5
+2023-01-03  107.5   110  107.0  109.5
 </code></pre></div>
 <p><strong>Constraints and Errors</strong>:</p>
 <ul>
 <li><strong>Unique Index Required</strong>: If outer dictionary keys are not unique, pandas will raise a <code>ValueError</code> (in JSON, duplicate keys are technically possible but meaningless — pandas refuses to guess)</li>
-<li><strong>Index Type Preservation</strong>: The index type is preserved as string (can be converted with <code>convert_axes=True</code>)</li>
+<li><strong>Index Conversion</strong>: date-like keys are converted to a <code>DatetimeIndex</code> automatically (<code>convert_axes=True</code> is the default; pass <code>convert_axes=False</code> to keep them as strings). Whole-number floats such as <code>105.0</code> may also come back as integers (<code>high</code> above), because <code>read_json()</code> infers the types again</li>
 <li><strong>Column Uniqueness</strong>: Column names must be unique across all inner dictionaries</li>
 </ul>
 <blockquote>
-<p><strong>Beginner tip:</strong> to turn the string index into a proper DatetimeIndex (as used in the earlier flights chapter), add <code>df.index = pd.to_datetime(df.index)</code> after loading.</p>
+<p><strong>Beginner tip:</strong> if you load with <code>convert_axes=False</code>, or the dates reach you as strings some other way, <code>df.index = pd.to_datetime(df.index)</code> turns them into a proper DatetimeIndex (as used in the earlier flights chapter).</p>
 </blockquote>
 <h3 id="orientcolumns"><code>orient='columns'</code><a class="headerlink" href="#orientcolumns" title="Permanent link">&para;</a></h3>
 <p>The <code>'columns'</code> format is less common but useful for column-oriented operations.</p>
@@ -8951,7 +8966,6 @@ row3     7     8     9
 </code></pre></div>
 <p><strong>Output:</strong></p>
 <div class="highlight"><pre><span></span><code>        id     name   value
-index
 row1     1    Alice   100.5
 row2     2      Bob   200.7
 row3     3  Charlie   150.3
@@ -9003,7 +9017,15 @@ dtype: object
 <p><code>json_normalize()</code> transforms semi-structured JSON data into a structured tabular format by flattening nested fields.</p>
 </blockquote>
 <h3 id="the-normalization-process-at-a-glance">The Normalization Process at a Glance<a class="headerlink" href="#the-normalization-process-at-a-glance" title="Permanent link">&para;</a></h3>
-<p><img alt="Flowchart" src="../../resources/ch12-august-2026-JSON-into-pandas-02.png" /></p>
+<p><img alt="Flowchart" src="../../resources/S12-LR-ch12-august-2026-JSON-into-pandas-02.png" /></p>
+<p><strong>Reading the figure</strong></p>
+<ul>
+<li>Each student record contains a nested dictionary, <code>"grades": {"math": 90, "english": 85}</code>.</li>
+<li><code>pd.json_normalize()</code> flattens the nested keys.</li>
+<li><code>pd.DataFrame()</code> alone does not flatten anything.</li>
+<li>Result: separate <code>grades.math</code> and <code>grades.english</code> columns, ready to filter, aggregate and plot.</li>
+<li>Result: a <code>grades</code> column whose cells are whole dictionaries, which cannot be used directly for calculations.</li>
+</ul>
 <h2 id="1-what-is-nested-json">1. What is "Nested JSON"?<a class="headerlink" href="#1-what-is-nested-json" title="Permanent link">&para;</a></h2>
 <h3 id="example-json">Example JSON<a class="headerlink" href="#example-json" title="Permanent link">&para;</a></h3>
 <div class="highlight"><pre><span></span><code><span class="p">{</span>
@@ -9118,7 +9140,7 @@ Students with math &gt; 85:
 <h2 id="combined-script-part-a-all-eight-orient-examples-in-one-runnable-file">Combined Script (Part A — all eight <code>orient</code> examples in one runnable file)<a class="headerlink" href="#combined-script-part-a-all-eight-orient-examples-in-one-runnable-file" title="Permanent link">&para;</a></h2>
 <div class="highlight"><pre><span></span><code><span class="sd">"""</span>
 <span class="sd">SUPPLEMENT: pd.read_json() — the orient parameter</span>
-<span class="sd">Demonstrates all six common orient values with runnable examples.</span>
+<span class="sd">Demonstrates all eight orient examples with runnable code.</span>
 <span class="sd">"""</span>
 
 <span class="c1"># ==========================================================</span>
@@ -9179,7 +9201,7 @@ Students with math &gt; 85:
 <span class="n">json_data</span> <span class="o">=</span> <span class="s1">'''{</span>
 <span class="s1">    "2023-01-01": {"open": 100.5, "high": 105.0, "low": 99.5, "close": 104.0},</span>
 <span class="s1">    "2023-01-02": {"open": 104.0, "high": 108.0, "low": 103.5, "close": 107.5},</span>
-<span class="s1">    "2023-01-03": {"open": 107.5, "high": 110.0, "low": 1070, "close": 109.5}</span>
+<span class="s1">    "2023-01-03": {"open": 107.5, "high": 110.0, "low": 107.0, "close": 109.5}</span>
 <span class="s1">}'''</span>
 <span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_json</span><span class="p">(</span><span class="n">StringIO</span><span class="p">(</span><span class="n">json_data</span><span class="p">),</span> <span class="n">orient</span><span class="o">=</span><span class="s1">'index'</span><span class="p">)</span>
 <span class="nb">print</span><span class="p">(</span><span class="n">df</span><span class="o">.</span><span class="n">index</span><span class="p">)</span>
@@ -9243,11 +9265,6 @@ Students with math &gt; 85:
 <span class="s1">            {"name": "value", "type": "number"}</span>
 <span class="s1">        ],</span>
 <span class="s1">        "primaryKey": ["index"],</span>
-
-
-
-
-<span class="s1">```python</span>
 <span class="s1">        "pandas_version": "1.4.0"</span>
 <span class="s1">    },</span>
 <span class="s1">    "data": [</span>
@@ -9369,7 +9386,7 @@ Students with math &gt; 85:
 <hr />
 <h2 id="practice-questions-follow-up">Practice Questions (Follow-up)<a class="headerlink" href="#practice-questions-follow-up" title="Permanent link">&para;</a></h2>
 <ol>
-<li>In Example 4, the index is a set of <em>strings</em>. Write one line to convert it to a real <code>DatetimeIndex</code> (hint: <code>pd.to_datetime</code>). Why does that matter for the resampling techniques used earlier in this chapter?</li>
+<li>In Example 4, <code>read_json()</code> turned the date keys into a <code>DatetimeIndex</code> for you. Load the same JSON again with <code>convert_axes=False</code>, check <code>df.index</code>, and write one line to convert it to a real <code>DatetimeIndex</code> (hint: <code>pd.to_datetime</code>). Why does that matter for the resampling techniques used earlier in this chapter?</li>
 <li>Take Example 7's <code>'values'</code> output and add column names afterward using <code>df.columns = ['a', 'b', 'c']</code>. What have you <em>not</em> recovered compared to <code>'split'</code> format?</li>
 <li>Load Example 2's records with <code>pd.json_normalize(...)</code> instead of <code>pd.read_json(...)</code> — what happens to the nested <code>scores</code> dictionary? (Hint: <code>pd.json_normalize</code> accepts a list of dicts directly.)</li>
 <li>Round-trip test: save Example 6's DataFrame with <code>to_json('x.json', orient='split')</code>, reload it, and compare with <code>df.equals(...)</code>. Repeat with <code>orient='values'</code> — which one survives the round trip intact and why?</li>

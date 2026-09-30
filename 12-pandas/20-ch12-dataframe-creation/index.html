@@ -8198,7 +8198,14 @@
 - <strong>In-memory file simulation</strong> (<code>io.StringIO</code>/<code>io.BytesIO</code>) — covered in its own dedicated section below, since it's genuinely useful to understand but easy to find confusing at first glance.</p>
 <hr />
 <h2 id="the-three-categories-at-a-glance">The three categories, at a glance<a class="headerlink" href="#the-three-categories-at-a-glance" title="Permanent link">&para;</a></h2>
-<p><img alt="Flowchart" src="../../resources/ch12-august-2026-DataFrame-creation-01.png" /></p>
+<p><img alt="Flowchart" src="../../resources/S12-LR-ch12-august-2026-DataFrame-creation-01.png" /></p>
+<p><strong>Reading the figure</strong></p>
+<ul>
+<li>Every way of creating a <code>DataFrame</code> falls into one of three categories.</li>
+<li>Category A, standard Python structures: a dictionary of lists, a list of dictionaries, or a list of lists with column names (Methods 1 to 3). Good for small data typed by hand.</li>
+<li>Category B, external data sources: <code>pd.read_csv()</code>, <code>pd.read_excel()</code> and <code>pd.read_json()</code> (Methods 4 to 6). This is how most real analysis begins.</li>
+<li>Category C, existing pandas or NumPy objects: a dictionary of <code>Series</code>, a 2D NumPy array, or an empty DataFrame that is filled in later (Methods 7 to 9).</li>
+</ul>
 <hr />
 <h2 id="category-a-from-standard-python-structures">Category A: From Standard Python Structures<a class="headerlink" href="#category-a-from-standard-python-structures" title="Permanent link">&para;</a></h2>
 <p><strong>When you'd use this:</strong> typing out data manually, for learning, testing small logic, or building a quick lookup table — not typically how real, large datasets get loaded.</p>
@@ -8255,7 +8262,16 @@
 <li><strong><code>io.BytesIO</code></strong> — used for more complex, binary formats (like <code>.xlsx</code> Excel files), since Excel files aren't plain text at all — they're actually compressed archives containing multiple internal files. <code>BytesIO</code> simulates the raw binary data such a file would contain.</li>
 </ul>
 <p><strong>A practical note:</strong> in real projects, you will almost always use genuine file paths rather than these in-memory tools — they're used here purely so this script can be copied, pasted, and run immediately, without you needing to first create any actual files on your own computer.</p>
-<p><img alt="Flowchart" src="../../resources/ch12-august-2026-DataFrame-creation-02.png" /></p>
+<p><img alt="Flowchart" src="../../resources/S12-LR-ch12-august-2026-DataFrame-creation-02.png" /></p>
+<p><strong>Reading the figure</strong></p>
+<ul>
+<li>The normal way: pass the path of a real file on disk, for example <code>pd.read_csv('data.csv')</code>.</li>
+<li>If the text (such as CSV data) is already in a Python string, there is no file to open.</li>
+<li>If binary data (such as an <code>.xlsx</code> workbook) is already in a <code>bytes</code> object, there is no file either.</li>
+<li><code>io.StringIO</code> wraps the string so that it behaves like an open text file, entirely in memory.</li>
+<li><code>io.BytesIO</code> wraps the bytes so that they behave like an open binary file, entirely in memory.</li>
+<li>The pandas reading function accepts the real file or either wrapper in the same way.</li>
+</ul>
 <h3 id="the-script">The script<a class="headerlink" href="#the-script" title="Permanent link">&para;</a></h3>
 <div class="highlight"><pre><span></span><code><span class="kn">import</span><span class="w"> </span><span class="nn">pandas</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">pd</span>
 <span class="kn">import</span><span class="w"> </span><span class="nn">io</span>
@@ -8305,7 +8321,7 @@
 <span class="c1"># databases (like MongoDB).</span>
 <span class="c1"># ------------------------------------------------------------</span>
 <span class="n">json_data</span> <span class="o">=</span> <span class="s1">'[{"Name": "Alice", "Age": 25}, {"Name": "Bob", "Age": 30}]'</span>
-<span class="n">df6</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_json</span><span class="p">(</span><span class="n">json_data</span><span class="p">)</span>
+<span class="n">df6</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_json</span><span class="p">(</span><span class="n">io</span><span class="o">.</span><span class="n">StringIO</span><span class="p">(</span><span class="n">json_data</span><span class="p">))</span>
 <span class="nb">print</span><span class="p">(</span><span class="s2">"</span><span class="se">\n</span><span class="s2">6. From JSON (.read_json):</span><span class="se">\n</span><span class="s2">"</span><span class="p">,</span> <span class="n">df6</span><span class="p">)</span>
 </code></pre></div>
 <hr />
@@ -8400,7 +8416,7 @@
     <span class="nb">print</span><span class="p">(</span><span class="s2">"  [Skipped] Please install openpyxl to run this: pip install openpyxl"</span><span class="p">)</span>
 
 <span class="n">json_data</span> <span class="o">=</span> <span class="s1">'[{"Name": "Alice", "Age": 25}, {"Name": "Bob", "Age": 30}]'</span>
-<span class="n">df6</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_json</span><span class="p">(</span><span class="n">json_data</span><span class="p">)</span>
+<span class="n">df6</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_json</span><span class="p">(</span><span class="n">io</span><span class="o">.</span><span class="n">StringIO</span><span class="p">(</span><span class="n">json_data</span><span class="p">))</span>
 <span class="nb">print</span><span class="p">(</span><span class="s2">"</span><span class="se">\n</span><span class="s2">6. From JSON (.read_json):</span><span class="se">\n</span><span class="s2">"</span><span class="p">,</span> <span class="n">df6</span><span class="p">)</span>
 
 

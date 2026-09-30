@@ -8171,7 +8171,17 @@
 <li>Interpret outputs meaningfully (not just run code)</li>
 </ul>
 <h2 id="flowchart-showing-the-steps-of-essential-data-exploration-in-pandas">Flowchart showing the steps of Essential Data Exploration in Pandas<a class="headerlink" href="#flowchart-showing-the-steps-of-essential-data-exploration-in-pandas" title="Permanent link">&para;</a></h2>
-<p><img alt="Essential Data Exploration in Pandas" src="/001-mkdocs/gitbook-assets/ch12-Essential-Data-Exploration.png" /></p>
+<p><img alt="Essential Data Exploration in Pandas" src="../../resources/S12-LR-ch12-Essential-Data-Exploration.png" /></p>
+<p><strong>Reading the figure</strong></p>
+<ul>
+<li><strong>Step 1:</strong> Load the Palmer Penguins dataset into a DataFrame with <code>sns.load_dataset('penguins')</code>.</li>
+<li><strong>Step 2:</strong> Peek at the rows: <code>head()</code> for the first rows, <code>tail()</code> for the last rows, <code>sample()</code> for random rows.</li>
+<li><strong>Step 3:</strong> Structural summary with <code>info()</code>: column names, data types and non-null counts.</li>
+<li><strong>Step 4:</strong> Statistical summary with <code>describe()</code>: count, mean, standard deviation, minimum, quartiles and maximum (and, with <code>include='all'</code>, the text columns too).</li>
+<li><strong>Step 5:</strong> <code>nunique()</code> counts the distinct values in each column.</li>
+<li><strong>Step 6:</strong> <code>value_counts()</code> shows how often each species and each island appears.</li>
+<li><strong>Step 7:</strong> <code>isnull().sum()</code> counts the missing values in each column.</li>
+</ul>
 <h2 id="script-showing-usage-of-pandas-dataframe-exploration-methods-such-as-head-tail-sample-info-describe-value_counts-and-nunique">Script showing usage of Pandas DataFrame exploration methods such as <code>.head()</code>, <code>.tail()</code>, <code>.sample()</code>, <code>.info()</code>, <code>.describe()</code>, <code>.value_counts()</code>, and <code>.nunique()</code><a class="headerlink" href="#script-showing-usage-of-pandas-dataframe-exploration-methods-such-as-head-tail-sample-info-describe-value_counts-and-nunique" title="Permanent link">&para;</a></h2>
 <div class="highlight"><pre><span></span><code><span class="kn">import</span><span class="w"> </span><span class="nn">pandas</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">pd</span>
 <span class="kn">import</span><span class="w"> </span><span class="nn">seaborn</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">sns</span>
@@ -8188,7 +8198,7 @@
 <span class="c1"># 1 Adelie Torgersen 39.5 17.4 186  3800 Female</span>
 <span class="c1"># 2 Adelie Torgersen 40.3 18.0 195  3250 Female</span>
 <span class="c1"># 3 Adelie Torgersen NaN NaN NaN NaN NaN    </span>
-<span class="c1"># 4 Adelie Torgersen 36.7 19.3 193  3450 Male</span>
+<span class="c1"># 4 Adelie Torgersen 36.7 19.3 193  3450 Female</span>
 
 
 <span class="c1"># STEP 2: Peeking at Data</span>
@@ -8247,13 +8257,13 @@
 <span class="c1"># max → maximum value</span>
 <span class="c1"># ACTUAL OUTPUT</span>
 <span class="c1"># bill_length_mm bill_depth_mm flipper_length_mm body_mass_g</span>
-<span class="c1"># count 344.000000 344.000000 344.000000 344.000000</span>
-<span class="c1"># mean 43.921512 17.151163 200.915698 4201.754651</span>
-<span class="c1"># std 5.459584 1.974603 14.061714 801.954236</span>
+<span class="c1"># count 342.000000 342.000000 342.000000 342.000000</span>
+<span class="c1"># mean 43.921930 17.151170 200.915205 4201.754386</span>
+<span class="c1"># std 5.459584 1.974793 14.061714 801.954536</span>
 <span class="c1"># min 32.100000 13.100000 172.000000 2700.000000</span>
 <span class="c1"># 25% 39.225000 15.600000 190.000000 3550.000000</span>
 <span class="c1"># 50% 44.450000 17.300000 197.000000 4050.000000</span>
-<span class="c1"># 75% 48.100000 18.700000 213.000000 4750.000000</span>
+<span class="c1"># 75% 48.500000 18.700000 213.000000 4750.000000</span>
 <span class="c1"># max 59.600000 21.500000 231.000000 6300.000000</span>
 
 
@@ -8266,16 +8276,16 @@
 
 <span class="c1"># ACTUAL OUTPUT</span>
 <span class="c1"># species island bill_length_mm bill_depth_mm flipper_length_mm body_mass_g sex</span>
-<span class="c1"># count 344 344 344 344 344 344 344 </span>
+<span class="c1"># count 344 344 342 342 342 342 333 </span>
 <span class="c1"># unique 3 3 NaN NaN NaN NaN 2</span>
-<span class="c1"># top Adelie Torgersen NaN NaN NaN NaN Male</span>
+<span class="c1"># top Adelie Biscoe NaN NaN NaN NaN Male</span>
 <span class="c1"># freq 152 168 NaN NaN NaN NaN 168  </span>
-<span class="c1"># mean NaN NaN 43.921512 17.151163 200.915698 4201.754651 NaN</span>
-<span class="c1"># std NaN NaN 5.459584 1.974603 14.061714 801.954236 NaN</span>
+<span class="c1"># mean NaN NaN 43.921930 17.151170 200.915205 4201.754386 NaN</span>
+<span class="c1"># std NaN NaN 5.459584 1.974793 14.061714 801.954536 NaN</span>
 <span class="c1"># min NaN NaN 32.100000 13.100000 172.000000 2700.000000 NaN</span>
 <span class="c1"># 25% NaN NaN 39.225000 15.600000 190.000000 3550.000000 NaN</span>
 <span class="c1"># 50% NaN NaN 44.450000 17.300000 197.000000 4050.000000 NaN</span>
-<span class="c1"># 75% NaN NaN 48.100000 18.700000 213.000000 4750.000000 NaN</span>
+<span class="c1"># 75% NaN NaN 48.500000 18.700000 213.000000 4750.000000 NaN</span>
 <span class="c1"># max NaN NaN 59.600000 21.500000 231.000000 6300.000000 NaN</span>
 
 <span class="c1"># STEP 5: Unique Values Analysis</span>
@@ -8286,10 +8296,10 @@
 <span class="c1"># ACTUAL OUTPUT:</span>
 <span class="c1"># species 3</span>
 <span class="c1"># island 3</span>
-<span class="c1"># bill_length_mm 168</span>
-<span class="c1"># bill_depth_mm 168</span>
-<span class="c1"># flipper_length_mm 70  </span>
-<span class="c1"># body_mass_g 123</span>
+<span class="c1"># bill_length_mm 164</span>
+<span class="c1"># bill_depth_mm 80</span>
+<span class="c1"># flipper_length_mm 55  </span>
+<span class="c1"># body_mass_g 94</span>
 <span class="c1"># sex 2 </span>
 <span class="c1"># dtype: int64</span>
 
@@ -8307,9 +8317,9 @@
 <span class="nb">print</span><span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="s1">'island'</span><span class="p">]</span><span class="o">.</span><span class="n">value_counts</span><span class="p">())</span>
 
 <span class="c1"># ACTUAL OUTPUT:</span>
-<span class="c1"># Torgersen 168</span>
-<span class="c1"># Biscoe 124</span>
-<span class="c1"># Dream 52</span>
+<span class="c1"># Biscoe 168</span>
+<span class="c1"># Dream 124</span>
+<span class="c1"># Torgersen 52</span>
 
 
 <span class="c1"># STEP 7: Handling Missing Values (Optional Insight)</span>

@@ -8561,7 +8561,18 @@
 </ol>
 <p>The DataFrame is not actually copied into separate variables; it is <strong>virtually partitioned</strong> (that is, Pandas only <em>remembers</em> which rows belong to which group — no new data is created until you apply a function).</p>
 <p><strong>Flowchart of Grouping:</strong></p>
-<p><img alt="Flowchart of Grouping" src="/001-mkdocs/gitbook-assets/ch12-grouping.png" /></p>
+<p><img alt="Flowchart of Grouping" src="../../resources/S12-LR-ch12-grouping.png" /></p>
+<p><strong>Reading the figure</strong></p>
+<ul>
+<li><code>df.groupby('species')</code> looks at the grouping key, <code>species</code>.</li>
+<li>Split: the Adelie rows form one group.</li>
+<li>Split: the Chinstrap rows form another group.</li>
+<li>Split: the Gentoo rows form the third group.</li>
+<li>Apply: the aggregation (for example <code>.mean()</code>) runs on the Adelie group alone.</li>
+<li>Apply: the same function runs on the Chinstrap group.</li>
+<li>Apply: and on the Gentoo group.</li>
+<li>Combine: the three results are put together in one table, with the species names as the index.</li>
+</ul>
 <h3 id="the-three-stages-in-a-table">The Three Stages in a Table<a class="headerlink" href="#the-three-stages-in-a-table" title="Permanent link">&para;</a></h3>
 <table>
 <thead>
@@ -8599,7 +8610,6 @@
 <h3 id="method-signature">Method Signature<a class="headerlink" href="#method-signature" title="Permanent link">&para;</a></h3>
 <div class="highlight"><pre><span></span><code><span class="n">DataFrame</span><span class="o">.</span><span class="n">groupby</span><span class="p">(</span>
     <span class="n">by</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>        <span class="c1"># what to group by</span>
-    <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span>         <span class="c1"># group along rows (0) or columns (1)</span>
     <span class="n">level</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>     <span class="c1"># for MultiIndex grouping</span>
     <span class="n">as_index</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>  <span class="c1"># group labels become the index?</span>
     <span class="n">sort</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>      <span class="c1"># sort group?</span>
@@ -8687,7 +8697,7 @@
 <div class="highlight"><pre><span></span><code><span class="n">grouped</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">groupby</span><span class="p">(</span><span class="s2">"species"</span><span class="p">)</span>
 <span class="nb">print</span><span class="p">(</span><span class="nb">type</span><span class="p">(</span><span class="n">grouped</span><span class="p">))</span>
 </code></pre></div>
-<div class="highlight"><pre><span></span><code>&lt;class 'pandas.core.groupby.generic.DataFrameGroupBy'&gt;
+<div class="highlight"><pre><span></span><code>&lt;class 'pandas.api.typing.DataFrameGroupBy'&gt;
 </code></pre></div>
 <hr />
 <h2 id="3-typical-usage-patterns-with-expected-outputs">3. Typical Usage Patterns (with expected outputs)<a class="headerlink" href="#3-typical-usage-patterns-with-expected-outputs" title="Permanent link">&para;</a></h2>
@@ -8701,10 +8711,10 @@ Gentoo       5076.02
 Name: body_mass_g, dtype: float64
 </code></pre></div>
 <h3 id="b-multiple-aggregations-dataframe-multiindex-columns">B. Multiple Aggregations → <code>DataFrame</code> (MultiIndex columns)<a class="headerlink" href="#b-multiple-aggregations-dataframe-multiindex-columns" title="Permanent link">&para;</a></h3>
-<div class="highlight"><pre><span></span><code><span class="n">df</span><span class="o">.</span><span class="n">groupby</span><span class="p">(</span><span class="s2">"species"</span><span class="p">)</span><span class="o">.</span><span class="n">agg</span><span class="p">([</span><span class="s2">"mean"</span><span class="p">,</span> <span class="s2">"max"</span><span class="p">])</span>
+<div class="highlight"><pre><span></span><code><span class="n">df</span><span class="o">.</span><span class="n">groupby</span><span class="p">(</span><span class="s2">"species"</span><span class="p">)[[</span><span class="s2">"bill_length_mm"</span><span class="p">,</span> <span class="s2">"body_mass_g"</span><span class="p">]]</span><span class="o">.</span><span class="n">agg</span><span class="p">([</span><span class="s2">"mean"</span><span class="p">,</span> <span class="s2">"max"</span><span class="p">])</span>
 </code></pre></div>
 <h3 id="c-multi-column-grouping-multiindex">C. Multi-column Grouping → MultiIndex<a class="headerlink" href="#c-multi-column-grouping-multiindex" title="Permanent link">&para;</a></h3>
-<div class="highlight"><pre><span></span><code><span class="n">df</span><span class="o">.</span><span class="n">groupby</span><span class="p">([</span><span class="s2">"species"</span><span class="p">,</span> <span class="s2">"island"</span><span class="p">])</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span>
+<div class="highlight"><pre><span></span><code><span class="n">df</span><span class="o">.</span><span class="n">groupby</span><span class="p">([</span><span class="s2">"species"</span><span class="p">,</span> <span class="s2">"island"</span><span class="p">])</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">numeric_only</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 </code></pre></div>
 <h3 id="d-filtering-groups-filtered-dataframe">D. Filtering Groups → Filtered <code>DataFrame</code><a class="headerlink" href="#d-filtering-groups-filtered-dataframe" title="Permanent link">&para;</a></h3>
 <div class="highlight"><pre><span></span><code><span class="n">df</span><span class="o">.</span><span class="n">groupby</span><span class="p">(</span><span class="s2">"species"</span><span class="p">)</span><span class="o">.</span><span class="n">filter</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span><span class="p">[</span><span class="s2">"body_mass_g"</span><span class="p">]</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span> <span class="o">&gt;</span> <span class="mi">4000</span><span class="p">)</span>
@@ -8879,11 +8889,11 @@ Name: body_mass_g, dtype: float64
 <p><strong>Output</strong></p>
 <div class="highlight"><pre><span></span><code>--- FIRST 5 ROWS ---
   species     island  bill_length_mm  ...  body_mass_g     sex
-0  Adelie  Torgersen            39.1  ...       3750.0  MALE
-1  Adelie  Torgersen            39.5  ...       3800.0  FEMALE
-2  Adelie  Torgersen            40.3  ...       3250.0  FEMALE
-3  Adelie orgersen             NaN  ...          NaN  NaN
-4  Adelie  Torgersen            36.7  ...       3450.0  FEMALE
+0  Adelie  Torgersen            39.1  ...       3750.0  Male
+1  Adelie  Torgersen            39.5  ...       3800.0  Female
+2  Adelie  Torgersen            40.3  ...       3250.0  Female
+3  Adelie  Torgersen            NaN  ...          NaN  NaN
+4  Adelie  Torgersen            36.7  ...       3450.0  Female
 
 --- SHAPE OF DATA ---
 Shape: (344, 7)
@@ -8917,7 +8927,7 @@ Gentoo              47.50             217.19
 <blockquote>
 <p>A quick sanity check that <code>groupby()</code> is lazy:
 <div class="highlight"><pre><span></span><code><span class="nb">print</span><span class="p">(</span><span class="nb">type</span><span class="p">(</span><span class="n">grouped_species</span><span class="p">))</span>
-<span class="c1"># &lt;class 'pandas.core.groupby.generic.DataFrameGroupBy'&gt;</span>
+<span class="c1"># &lt;class 'pandas.api.typing.DataFrameGroupBy'&gt;   (pandas 2.x: pandas.core.groupby.generic.DataFrameGroupBy)</span>
 </code></pre></div>
 No computation happens at the <code>groupby()</code> line itself — only when <code>.mean()</code> is called.</p>
 </blockquote>
@@ -8953,8 +8963,8 @@ Torgersen   3706.37    4700.0
 <div class="highlight"><pre><span></span><code>          body_mass_g            
                  mean     max
 island                       
-Biscoe     4716.017442  6300.0
-Dream      3712.900000  4800.0
+Biscoe     4716.017964  6300.0
+Dream      3712.903226  4800.0
 Torgersen  3706.372549  4700.0
 </code></pre></div>
 <p>Note the <strong>MultiIndex columns</strong> (two levels: column name on top, function name below) in the dictionary version.</p>
@@ -9102,7 +9112,7 @@ Islands remaining: ['Biscoe' 'Dream']
 <span class="nb">print</span><span class="p">(</span><span class="s2">"--- FIRST 5 ROWS ---"</span><span class="p">)</span>
 <span class="nb">print</span><span class="p">(</span><span class="n">df</span><span class="o">.</span><span class="n">head</span><span class="p">())</span>
 <span class="nb">print</span><span class="p">(</span><span class="s2">"</span><span class="se">\n</span><span class="s2">--- SHAPE OF DATA ---"</span><span class="p">)</span>
-<span class="n">printShape</span><span class="p">:</span><span class="s2">", df.shape)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">"Shape:"</span><span class="p">,</span> <span class="n">df</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
 
 <span class="c1"># Step 1: Descriptive statistics — mean bill and flipper length per species</span>
 <span class="n">grouped_species</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">groupby</span><span class="p">(</span><span class="s2">"species"</span><span class="p">)</span>          <span class="c1"># Step 1a: SPLIT (lazy — nothing computed yet)</span>
@@ -9118,7 +9128,7 @@ Islands remaining: ['Biscoe' 'Dream']
 <span class="p">)</span>
 
 <span class="nb">print</span><span class="p">(</span><span class="s2">"</span><span class="se">\n</span><span class="s2">--- MEAN AND MAX BODY MASS PER ISLAND ---"</span><span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span><span class="n">is_stats</span><span class="o">.</span><span class="n">round</span><span class="p">(</span><span class="mi">2</span><span class="p">))</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">island_stats</span><span class="o">.</span><span class="n">round</span><span class="p">(</span><span class="mi">2</span><span class="p">))</span>
 
 <span class="c1"># Step 2 (alternative): dictionary style — produces MultiIndex columns</span>
 <span class="n">alt_style</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">groupby</span><span class="p">(</span><span class="s2">"island"</span><span class="p">)</span><span class="o">.</span><span class="n">agg</span><span class="p">({</span><span class="s2">"body_mass_g"</span><span class="p">:</span> <span class="p">[</span><span class="s2">"mean"</span><span class="p">,</span> <span class="s2">"max"</span><span class="p">]})</span>
@@ -9139,7 +9149,7 @@ Islands remaining: ['Biscoe' 'Dream']
 
 <span class="c1"># Step 4: Bonus — .transform() adds group averages back to every row</span>
 <span class="n">df</span><span class="p">[</span><span class="s2">"species_mean_mass"</span><span class="p">]</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">groupby</span><span class="p">(</span><span class="s2">"species"</span><span class="p">)[</span><span class="s2">"body_mass_g"</span><span class="p">]</span><span class="o">.</span><span class="n">transform</span><span class="p">(</span><span class="s2">"mean"</span><span class="p">)</span>
-<span class="n">df</span><span class="p">[</span><span class="s2">"deviation_from_mean"</span><span class="p">]</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="s2">"body_mass_g"</span><span class="p">]</span> <span class="o">-</span> <span class="n">df</span><span class="p">[</span><span class="s2">"species_mean"</span><span class="p">]</span>
+<span class="n">df</span><span class="p">[</span><span class="s2">"deviation_from_mean"</span><span class="p">]</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="s2">"body_mass_g"</span><span class="p">]</span> <span class="o">-</span> <span class="n">df</span><span class="p">[</span><span class="s2">"species_mean_mass"</span><span class="p">]</span>
 
 <span class="nb">print</span><span class="p">(</span><span class="s2">"</span><span class="se">\n</span><span class="s2">--- ROW-LEVEL COMPARISON (first 5 valid rows) ---"</span><span class="p">)</span>
 <span class="nb">print</span><span class="p">(</span>
@@ -9180,11 +9190,11 @@ Islands remaining: ['Biscoe' 'Dream']
 <h3 id="full-expected-output">Full expected output:<a class="headerlink" href="#full-expected-output" title="Permanent link">&para;</a></h3>
 <div class="highlight"><pre><span></span><code>--- FIRST 5 ROWS ---
   species     island  bill_length_mm  ...  body_mass_g     sex
-0  Adelie  Torgersen            39.1  ...       3750.0  MALE
-1  Adelie  Torgersen            39.5  ...       3800.0  FEMALE
-2  Adelie  Torgersen            40.3  ...       3250.0  FEMALE
+0  Adelie  Torgersen            39.1  ...       3750.0  Male
+1  Adelie  Torgersen            39.5  ...       3800.0  Female
+2  Adelie  Torgersen            40.3  ...       3250.0  Female
 3  Adelie  Torgersen             NaN  ...          NaN  NaN
-4  Adelie  Torgersen            36.7  ...       3450.0  FEMALE
+4  Adelie  Torgersen            36.7  ...       3450.0  Female
 
 --- SHAPE OF DATA ---
 Shape: (344, 7)
@@ -9198,7 +9208,7 @@ Gentoo              47.50             217.19
 
 --- MEAN AND MAX BODY MASS PER ISLAND ---
            mean_mass  max_mass
-land
+island
 Biscoe      4716.02    6300.0
 Dream       3712.90    4800.0
 Torgersen   3706.37    4700.0
@@ -9207,9 +9217,9 @@ Torgersen   3706.37    4700.0
           body_mass_g            
                  mean     max
 island                       
-Biscoe     4716.    6300.0
+Biscoe     4716.02    6300.0
 Dream      3712.90    4800.0
-Torgersen  3706.37    40.0
+Torgersen  3706.37    4700.0
 
 --- OBSERVATIONS PER ISLAND ---
 island
@@ -9237,7 +9247,7 @@ Islands remaining: ['Biscoe' 'Dream']
 1     Adelie      Dream      3688.39
 2     Adelie  Torgersen      3706.37
 3  Chinstrap      Dream      3733.09
-4     Gentoo     Biscoe      507.02
+4     Gentoo     Biscoe      5076.02
 </code></pre></div>
 <hr />
 <h2 id="7-chapter-summary">7. Chapter Summary<a class="headerlink" href="#7-chapter-summary" title="Permanent link">&para;</a></h2>

@@ -8286,6 +8286,7 @@ Data columns (total 7 columns):
  6   sex                333 non-null    object
 dtypes: float64(4), object(3)
 memory usage: 18.9+ KB
+df.info():-&gt; None
 </code></pre></div>
 <p>Notice the pattern immediately: several numeric columns show <code>342 non-null</code> out of <code>344</code> total rows — meaning 2 rows are missing those measurements — and <code>sex</code> is missing even more (<code>333</code> out of <code>344</code>). This is exactly the kind of thing <code>.info()</code> is designed to surface at a glance. (One small detail worth knowing: <code>.info()</code> <em>prints</em> its summary directly and returns <code>None</code> — that's why the code above shows <code>None</code> printed right after the summary table.)</p>
 <p><strong>2(B) — <code>df.describe()</code>: a statistical summary</strong></p>
@@ -8298,12 +8299,12 @@ memory usage: 18.9+ KB
 <strong>Output</strong></p>
 <div class="highlight"><pre><span></span><code>       bill_length_mm  bill_depth_mm  flipper_length_mm  body_mass_g
 count      342.000000     342.000000         342.000000    342.000000
-mean        43.921930      17.151754         200.915205   4201.754386
-std          5.459584       1.974603          14.061714    801.954380
+mean        43.921930      17.151170         200.915205   4201.754386
+std          5.459584       1.974793          14.061714    801.954536
 min         32.100000      13.100000         172.000000   2700.000000
 25%         39.225000      15.600000         190.000000   3550.000000
 50%         44.450000      17.300000         197.000000   4050.000000
-75%         48.100000      18.700000         213.000000   4750.000000
+75%         48.500000      18.700000         213.000000   4750.000000
 max         59.600000      21.500000         231.000000   6300.000000
 </code></pre></div>
 <p><strong>2(C) and 2(D) — column names and row labels</strong></p>
@@ -8504,7 +8505,14 @@ Name: 0, dtype: object
 4  Adelie  Torgersen            36.7
 </code></pre></div>
 <p><strong>The single most important thing to notice across Steps 4(A) and 4(B):</strong> <code>df.loc[0:5]</code> returned <strong>6</strong> rows (0 through 5, inclusive), while <code>df.iloc[0:5]</code> returned only <strong>5</strong> rows (0 through 4). This is <em>the</em> core practical difference between the two — and a very common source of off-by-one confusion for anyone new to Pandas.</p>
-<p><img alt="Flowchart" src="../../resources/ch12-august-2026-indexing-and-selection-01.png" /></p>
+<p><img alt="Flowchart" src="../../resources/S12-LR-ch12-august-2026-indexing-and-selection-01.png" /></p>
+<p><strong>Reading the figure</strong></p>
+<ul>
+<li><code>df.loc[0:5]</code> slices by row label.</li>
+<li><code>df.iloc[0:5]</code> slices by integer position.</li>
+<li><code>.loc[]</code> includes the end label, so it returns 6 rows, labelled 0 to 5.</li>
+<li><code>.iloc[]</code> excludes the end position, like ordinary Python slicing, so it returns 5 rows, positions 0 to 4.</li>
+</ul>
 <p><strong>Comparison table: <code>.loc[]</code> vs. <code>.iloc[]</code></strong></p>
 <table>
 <thead>
@@ -8546,17 +8554,17 @@ Name: 0, dtype: object
 <strong>Output</strong></p>
 <p><div class="highlight"><pre><span></span><code>slice_loc-&gt;
    species     island  body_mass_g
-10  Adelie  Torgersen       3750.0
-11  Adelie  Torgersen       3800.0
-12  Adelie  Torgersen       3250.0
-13  Adelie  Torgersen          NaN
-14  Adelie  Torgersen       3450.0
-15  Adelie  Torgersen       3650.0
-16  Adelie  Torgersen       3800.0
-17  Adelie  Torgersen       3700.0
-18  Adelie  Torgersen       3600.0
-19  Adelie  Torgersen       3500.0
-20  Adelie  Torgersen       3400.0
+10  Adelie  Torgersen       3300.0
+11  Adelie  Torgersen       3700.0
+12  Adelie  Torgersen       3200.0
+13  Adelie  Torgersen       3800.0
+14  Adelie  Torgersen       4400.0
+15  Adelie  Torgersen       3700.0
+16  Adelie  Torgersen       3450.0
+17  Adelie  Torgersen       4500.0
+18  Adelie  Torgersen       3325.0
+19  Adelie  Torgersen       4200.0
+20  Adelie     Biscoe       3400.0
 </code></pre></div>
 Notice this correctly includes row 20, since <code>.loc[]</code> slicing is inclusive of the end label.</p>
 <p><strong>5(B) — Using <code>.iloc[]</code> for slicing by integer position</strong></p>
@@ -8617,7 +8625,20 @@ Notice this correctly stops at row 19 (position 20 is excluded), and only 3 colu
 </table>
 <h3 id="flowchart">Flowchart<a class="headerlink" href="#flowchart" title="Permanent link">&para;</a></h3>
 <p>The following diagram illustrates the overall indexing decision process:</p>
-<p><img alt="FlowChart" src="/001-mkdocs/gitbook-assets/ch12-pandas-indexing.png" /></p>
+<p><img alt="FlowChart" src="../../resources/S12-LR-ch12-pandas-indexing.png" /></p>
+<p><strong>Reading the figure</strong></p>
+<ul>
+<li>Start with what you want to select.</li>
+<li>Columns only.</li>
+<li>Rows only.</li>
+<li>Rows and columns together.</li>
+<li>One column: <code>df['col']</code> (dot notation, <code>df.col</code>, also works for simple names, but brackets are safer).</li>
+<li>Several columns: a list inside the brackets, <code>df[['col1', 'col2']]</code>.</li>
+<li>Rows by label: <code>df.loc[...]</code> (the end of a slice is included).</li>
+<li>Rows by position: <code>df.iloc[...]</code> (the end of a slice is excluded).</li>
+<li>Rows and columns by label: <code>df.loc[rows, cols]</code>.</li>
+<li>Rows and columns by position: <code>df.iloc[rows, cols]</code>.</li>
+</ul>
 <hr />
 <h2 id="quick-recap">Quick recap<a class="headerlink" href="#quick-recap" title="Permanent link">&para;</a></h2>
 <ul>
