@@ -8808,7 +8808,17 @@
 </ul>
 <p><a href="./#table-of-contents">Back to the Table of Contents</a></p>
 <h3 id="visual-representation">Visual Representation<a class="headerlink" href="#visual-representation" title="Permanent link">&para;</a></h3>
-<p><img alt="Visual Representation" src="../../resources/ch16-pytest-080-flags-mental-model.png" /></p>
+<p><img alt="Visual Representation" src="../../resources/S20-LR-ch16-pytest-080-flags-mental-model.png" /></p>
+<p><strong>Reading the figure</strong></p>
+<ul>
+<li>Each flag added to the <code>pytest</code> command changes one thing.</li>
+<li><code>-v</code> (verbose) changes what you see.</li>
+<li><code>-s</code> (show) also changes what you see.</li>
+<li><code>-k</code> (keyword) changes what runs.</li>
+<li>With <code>-v</code>, each test is listed by name with PASSED or FAILED, instead of a single dot.</li>
+<li>With <code>-s</code>, <code>print()</code> output is not captured, so it appears on the screen as the tests run.</li>
+<li>With <code>-k</code>, only the tests whose names contain the given text are run; the others are deselected.</li>
+</ul>
 <p><a href="./#table-of-contents">Back to the Table of Contents</a></p>
 <h3 id="important-terminology">Important Terminology<a class="headerlink" href="#important-terminology" title="Permanent link">&para;</a></h3>
 <table>
@@ -8864,7 +8874,18 @@
 <li>It runs the selected tests. If you did not use <code>-s</code>, it captures any <code>print()</code> output.</li>
 <li>It displays the results, in short form or in detail (with <code>-v</code>).</li>
 </ol>
-<p><img alt="How pytest processes flags" src="../../resources/ch16-pytest-090-how-process-flags.png" /></p>
+<p><img alt="How pytest processes flags" src="../../resources/S20-LR-ch16-pytest-090-how-process-flags.png" /></p>
+<p><strong>Reading the figure</strong></p>
+<ul>
+<li><strong>Step 1:</strong> Pytest reads the command and the flags you typed.</li>
+<li><strong>Step 2:</strong> It discovers (collects) all the tests.</li>
+<li><strong>Step 3:</strong> Was <code>-k</code> given?</li>
+<li><strong>Step 4:</strong> Yes: only the tests whose names match are kept; the rest are deselected.</li>
+<li><strong>Step 5:</strong> The selected tests are run (with no <code>-k</code>, every collected test).</li>
+<li><strong>Step 6:</strong> While each test runs: was <code>-s</code> given?</li>
+<li><strong>Step 7:</strong> Yes: <code>print()</code> output goes straight to the screen.</li>
+<li><strong>Step 8:</strong> Finally the results are displayed: a dot per test, or one line per test with <code>-v</code>. Without <code>-s</code>, captured output is shown only for failing tests.</li>
+</ul>
 <p><a href="./#table-of-contents">Back to the Table of Contents</a></p>
 <h2 id="the-v-flag-verbose-mode">The -v Flag (Verbose Mode)<a class="headerlink" href="#the-v-flag-verbose-mode" title="Permanent link">&para;</a></h2>
 <h3 id="purpose-of-v">Purpose of -v<a class="headerlink" href="#purpose-of-v" title="Permanent link">&para;</a></h3>
@@ -9040,7 +9061,16 @@ test_demo.py Hello
 <p>You can read more in the pytest guide on <a href="https://docs.pytest.org/en/stable/how-to/capture-stdout-stderr.html">capturing output</a>.</p>
 <p><a href="./#table-of-contents">Back to the Table of Contents</a></p>
 <h3 id="output-capture-flow">Output Capture Flow<a class="headerlink" href="#output-capture-flow" title="Permanent link">&para;</a></h3>
-<p><img alt="Output Capture Flow" src="../../resources/ch16-pytest-092-flags-output-capture.png" /></p>
+<p><img alt="Output Capture Flow" src="../../resources/S20-LR-ch16-pytest-092-flags-output-capture.png" /></p>
+<p><strong>Reading the figure</strong></p>
+<ul>
+<li><strong>Step 1:</strong> Inside a test, <code>print()</code> sends text to standard output.</li>
+<li><strong>Step 2:</strong> Was pytest run with <code>-s</code>?</li>
+<li><strong>Step 3:</strong> Yes: nothing is captured; the text appears on the screen immediately, whether the test passes or fails.</li>
+<li><strong>Step 4:</strong> No (the default): pytest redirects the text into a temporary store.</li>
+<li><strong>Step 5:</strong> Did the test pass? If it did, the stored text is simply thrown away.</li>
+<li><strong>Step 6:</strong> If it failed, the stored text is shown in the report under <code>Captured stdout call</code>, to help find the problem.</li>
+</ul>
 <p><a href="./#table-of-contents">Back to the Table of Contents</a></p>
 <h3 id="what-happens-when-a-test-fails">What Happens When a Test Fails?<a class="headerlink" href="#what-happens-when-a-test-fails" title="Permanent link">&para;</a></h3>
 <p>This point often surprises beginners, so let us see it in action. Save this code as <code>test_discount.py</code>. The test has a deliberate mistake: a 10% discount on 200 gives 180, not 190.</p>
@@ -9251,7 +9281,16 @@ test_deposit_large_amount
 <p>The message <code>Running withdraw test</code> does not appear because <code>test_withdraw</code> was never run.</p>
 <p><a href="./#table-of-contents">Back to the Table of Contents</a></p>
 <h3 id="how-k-works">How -k Works<a class="headerlink" href="#how-k-works" title="Permanent link">&para;</a></h3>
-<p><img alt="How -k works" src="../../resources/ch16-pytest-095-flag-k.png" /></p>
+<p><img alt="How -k works" src="../../resources/S20-LR-ch16-pytest-095-flag-k.png" /></p>
+<p><strong>Reading the figure</strong></p>
+<ul>
+<li><strong>Step 1:</strong> Run <code>pytest -k deposit</code>.</li>
+<li><strong>Step 2:</strong> Pytest collects all the tests first.</li>
+<li><strong>Step 3:</strong> For each test: does its name contain the text <code>deposit</code> (case does not matter)?</li>
+<li><strong>Step 4:</strong> Yes: the test is selected and run.</li>
+<li><strong>Step 5:</strong> No: the test is deselected and not run.</li>
+<li><strong>Step 6:</strong> The summary reports both numbers, for example <code>2 passed, 1 deselected</code>.</li>
+</ul>
 <p>In simple steps:</p>
 <ol>
 <li>Pytest collects all the tests.</li>
@@ -9367,7 +9406,15 @@ test_bank.py::test_deposit PASSED                                        [100%]
 <p>When no file name is given, as here, pytest searches the current folder (and the folders inside it) for test files.</p>
 <p><a href="./#table-of-contents">Back to the Table of Contents</a></p>
 <h3 id="combined-execution-flow">Combined Execution Flow<a class="headerlink" href="#combined-execution-flow" title="Permanent link">&para;</a></h3>
-<p><img alt="Combined Execution Flow" src="../../resources/ch16-pytest-096-combining-tests.png" /></p>
+<p><img alt="Combined Execution Flow" src="../../resources/S20-LR-ch16-pytest-096-combining-tests.png" /></p>
+<p><strong>Reading the figure</strong></p>
+<ul>
+<li><strong>Step 1:</strong> The three flags are combined in one command: <code>pytest -v -s -k deposit</code>.</li>
+<li><strong>Step 2:</strong> <code>-k deposit</code> keeps only the tests whose names contain <code>deposit</code>.</li>
+<li><strong>Step 3:</strong> Only those selected tests are run.</li>
+<li><strong>Step 4:</strong> <code>-s</code> lets their <code>print()</code> messages appear on the screen as they run.</li>
+<li><strong>Step 5:</strong> <code>-v</code> lists each test by its full name with its result.</li>
+</ul>
 <p><a href="./#table-of-contents">Back to the Table of Contents</a></p>
 <h3 id="common-development-scenarios">Common Development Scenarios<a class="headerlink" href="#common-development-scenarios" title="Permanent link">&para;</a></h3>
 <table>
