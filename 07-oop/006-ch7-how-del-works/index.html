@@ -2092,10 +2092,10 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#note-about-overriding-del" class="md-nav__link">
+  <a href="#note-about-overriding-__del__" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Note about overriding del()
+        Note about overriding __del__()
       
     </span>
   </a>
@@ -8250,6 +8250,13 @@
 </table>
 <p>A variable name in the Stack doesn't hold the object itself — it holds the <strong>memory address</strong> of the object on the Heap. This link between a name and an object is called a <strong>reference</strong>.</p>
 <p><img alt="Flowchart" src="../../resources/ch-7-oop-del-working-memory-ref.png" /></p>
+<p><img alt="Flowchart" src="../../resources/S07-LR-ch-7-oop-del-working-memory-ref.png" /></p>
+<p><strong>Reading the figure</strong></p>
+<ul>
+<li>On the Stack, the name <code>p1</code> holds only a reference: the address of an object on the Heap.</li>
+<li><code>p2 = p1</code> creates a second name, <code>p2</code>, holding a reference to the same object. Nothing is copied.</li>
+<li>On the Heap there is just one <code>Pet</code> object, with <code>name = 'Tiger'</code>. Two names refer to it, so its reference count is 2.</li>
+</ul>
 <p>In the diagram above, <code>p1</code> and <code>p2</code> are two different <em>names</em>, but both point at the <strong>same single object</strong> on the Heap. This is exactly what happens when you write <code>p2 = p1</code> — you're not copying the <code>Pet</code>, you're just creating a second label for the same warehouse shelf.</p>
 <hr />
 <h2 id="2-what-del-actually-does">2. What <code>del</code> actually does<a class="headerlink" href="#2-what-del-actually-does" title="Permanent link">&para;</a></h2>
@@ -8295,7 +8302,7 @@
 </table>
 <p>A useful way to think of it: <code>__del__()</code> is a <strong>patient</strong> method. It doesn't fire the moment you type <code>del p1</code> — it waits until the <em>very last</em> link to that object is broken, however many <code>del</code> statements (or reassignments, or the variable going out of scope) that takes.</p>
 <blockquote>
-<p><strong>Timing note:</strong> you can rely on <code>__del__()</code> eventually running once the refcount hits zero, but not on it running <em>immediately</em> — Python's garbage collector may briefly delay it if it's busy with other work. This is one reason <code>__del__()</code> is a poor place to put critical cleanup logic (use a context manager / <code>with</code> statement for anything that truly must happen on time, such as closing a file).</p>
+<p><strong>Timing note:</strong> in CPython (the standard Python you download from python.org), <code>__del__()</code> runs immediately when the refcount hits zero, as the script below shows. The language itself does not guarantee this, though: other implementations such as PyPy may run it later, and objects still alive when the program exits may never have <code>__del__()</code> called at all. This is one reason <code>__del__()</code> is a poor place to put critical cleanup logic (use a context manager / <code>with</code> statement for anything that truly must happen on time, such as closing a file).</p>
 </blockquote>
 <hr />
 <h2 id="4-counting-references-with-sysgetrefcount">4. Counting references with <code>sys.getrefcount()</code><a class="headerlink" href="#4-counting-references-with-sysgetrefcount" title="Permanent link">&para;</a></h2>
@@ -8379,28 +8386,56 @@ End of script.
 </tbody>
 </table>
 <p><img alt="Sequence Diagram" src="../../resources/ch-7-august-2026-del-diagram-2.png" /></p>
+<p><img alt="Sequence Diagram" src="../../resources/S07-LR-ch-7-august-2026-del-diagram-2.png" /></p>
+<p><strong>Reading the figure</strong></p>
+<ul>
+<li><strong>Step 1:</strong> <code>p1 = Pet("Tiger")</code> creates the <code>Pet</code> object on the Heap and puts the name <code>p1</code> on the Stack. The reference count is 1.</li>
+<li><strong>Step 2:</strong> <code>p2 = p1</code> adds a second name for the same object. The reference count becomes 2.</li>
+<li><strong>Step 3:</strong> <code>del p1</code> removes the name <code>p1</code> from the Stack. The reference count drops to 1.</li>
+<li><strong>Step 4:</strong> The object survives, because <code>p2</code> still points to it. <code>__del__()</code> does not run yet.</li>
+<li><strong>Step 5:</strong> <code>del p2</code> removes the last name. The reference count drops to 0.</li>
+<li><strong>Step 6:</strong> At that moment Python calls the object's <code>__del__()</code> method automatically, which prints "Reference count is 0. Memory for Pet Tiger is freed".</li>
+<li><strong>Step 7:</strong> Python then frees the memory the object occupied on the Heap.</li>
+</ul>
 <h3 id="another-way-of-visualizing-how-__del__-operates-is-as-follows">Another way of visualizing how <code>__del__()</code> operates is as follows:<a class="headerlink" href="#another-way-of-visualizing-how-__del__-operates-is-as-follows" title="Permanent link">&para;</a></h3>
-<p><img alt="Figure: How del works" src="/001-mkdocs/gitbook-assets/ch07-oop-del.png" /></p>
+<p><img alt="Figure: How del works" src="../../resources/ch07-oop-del.png" /></p>
+<p><img alt="Figure: How del works" src="../../resources/S07-LR-ch07-oop-del.png" /></p>
+<p><strong>Reading the figure</strong></p>
+<ul>
+<li>The name <code>p1</code> on the Stack refers to the <code>Pet</code> object.</li>
+<li>The name <code>p2</code> on the Stack refers to the same object.</li>
+<li>The <code>Pet</code> object lives on the Heap and occupies memory for as long as at least one name refers to it.</li>
+<li>When <code>del p1</code> and <code>del p2</code> have removed both names, the reference count is 0: Python calls <code>__del__()</code> and then frees the memory.</li>
+</ul>
 <hr />
 <h2 id="6-what-happens-when-you-override-__del__">6. What happens when you override <code>__del__()</code><a class="headerlink" href="#6-what-happens-when-you-override-__del__" title="Permanent link">&para;</a></h2>
 <p>Overriding <code>__del__()</code> in your own class does <strong>not</strong> give you control over memory management itself — it just lets you "hook in" with your own cleanup code at the exact moment right before Python frees the memory. The full sequence looks like this:</p>
 <p><img alt="Flowchart" src="../../resources/ch-7-august-2026-del-diagram.png" /></p>
-<h2 id="note-about-overriding-del">Note about overriding <strong>del</strong>()<a class="headerlink" href="#note-about-overriding-del" title="Permanent link">&para;</a></h2>
-<p>When you "override" <strong>del</strong>, you aren't replacing Python's ability to delete memory.</p>
+<p><img alt="Flowchart" src="../../resources/S07-LR-ch-7-august-2026-del-diagram.png" /></p>
+<p><strong>Reading the figure</strong></p>
+<ul>
+<li><strong>Step 1:</strong> The trigger: the last reference to the object has gone, so its reference count is 0.</li>
+<li><strong>Step 2:</strong> Does the object's class define a <code>__del__()</code> method?</li>
+<li><strong>Step 3:</strong> Yes: Python calls your <code>__del__()</code> first. This is your chance to close files, log messages or clean up your own data.</li>
+<li><strong>Step 4:</strong> Once your code has finished (or at once, if there is no <code>__del__()</code>), Python's memory manager takes over.</li>
+<li><strong>Step 5:</strong> Python's internal C code frees the memory on the Heap. You cannot override or stop this step.</li>
+</ul>
+<h2 id="note-about-overriding-__del__">Note about overriding <code>__del__()</code><a class="headerlink" href="#note-about-overriding-__del__" title="Permanent link">&para;</a></h2>
+<p>When you "override" <code>__del__()</code>, you aren't replacing Python's ability to delete memory.</p>
 <p>When the reference count hits zero, the following sequence takes place:</p>
 <ol>
-<li><strong>The Trigger:</strong> is when the reference count for your object reaches zero. (Meaning all references to the object have been deleted.)</li>
-<li><strong>The User's Turn:</strong> Python looks at your class. It sees you have overridden <strong>del</strong>. It calls your method first. This allows you to close files, log messages, or clean up your own data.</li>
-<li><strong>The System's Turn:</strong> Once <em>your</em> code in <strong>del</strong> finishes running, Python’s internal <strong>Garbage Collector</strong> takes over. It performs the actual "low-level" work of clearing the bits and bytes from the RAM (the Heap).</li>
-<li><strong>You don't "kill" the process:</strong> Overriding <strong>del</strong> does not stop Python from reclaiming memory. It just allows you to "hook" into the moment right before it happens.</li>
-<li><strong>Automatic Execution:</strong> You never have to manually call <strong>del</strong>. The interpreter handles the call automatically.</li>
-<li><strong>The Final Step:</strong> Python's internal memory management is written in <strong>C</strong>. After your Python-level <strong>del</strong> finishes, the C-level code (which you cannot override) actually wipes the memory address.</li>
+<li><strong>The Trigger:</strong> the reference count for your object reaches zero. (Meaning all references to the object have been deleted.)</li>
+<li><strong>The User's Turn:</strong> Python looks at your class. It sees you have overridden <code>__del__()</code>. It calls your method first. This allows you to close files, log messages, or clean up your own data.</li>
+<li><strong>The System's Turn:</strong> Once <em>your</em> code in <code>__del__()</code> finishes running, Python’s internal <strong>memory manager</strong> takes over. It performs the actual "low-level" work of clearing the bits and bytes from the RAM (the Heap).</li>
+<li><strong>You don't "kill" the process:</strong> Overriding <code>__del__()</code> does not stop Python from reclaiming memory. It just allows you to "hook" into the moment right before it happens.</li>
+<li><strong>Automatic Execution:</strong> You never have to manually call <code>__del__()</code>. The interpreter handles the call automatically.</li>
+<li><strong>The Final Step:</strong> Python's internal memory management is written in <strong>C</strong>. After your Python-level <code>__del__()</code> finishes, the C-level code (which you cannot override) actually wipes the memory address.</li>
 </ol>
 <h2 id="a-few-important-guarantees">A few important guarantees:<a class="headerlink" href="#a-few-important-guarantees" title="Permanent link">&para;</a></h2>
 <ol>
 <li><strong>You never call <code>__del__()</code> yourself.</strong> The interpreter calls it automatically, only once, only when the refcount hits zero.</li>
 <li><strong>Your <code>__del__()</code> code runs first</strong>, giving you a chance to do cleanup (closing files, logging, releasing external resources).</li>
-<li><strong>After your code finishes</strong>, Python's internal Garbage Collector — implemented in C — does the actual low-level work of clearing the memory. This final step is not something you can intercept or override.</li>
+<li><strong>After your code finishes</strong>, Python's internal memory manager — implemented in C — does the actual low-level work of clearing the memory. This final step is not something you can intercept or override.</li>
 <li><strong>Overriding <code>__del__()</code> never stops or delays memory being reclaimed</strong> — it just adds your own code to run immediately beforehand.</li>
 </ol>
 <hr />
@@ -8410,7 +8445,7 @@ End of script.
 <li><code>del name</code> removes a <strong>name</strong>, not an object. The object is only cleaned up once <strong>every</strong> name pointing to it has been removed.</li>
 <li><code>__del__()</code> is Python's automatic destructor — it runs exactly once, exactly when an object's reference count hits zero, and you should never call it directly.</li>
 <li><code>sys.getrefcount(obj)</code> is handy for learning/debugging, but always <strong>subtract 1</strong> from its result, since calling the function itself adds a temporary reference.</li>
-<li>Overriding <code>__del__()</code> lets you add your own cleanup step, but the actual memory-freeing is always handled afterwards by Python's C-level Garbage Collector, which you cannot override.</li>
+<li>Overriding <code>__del__()</code> lets you add your own cleanup step, but the actual memory-freeing is always handled afterwards by Python's C-level memory manager, which you cannot override.</li>
 </ul>
 
 

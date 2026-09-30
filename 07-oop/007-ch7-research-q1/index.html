@@ -8282,6 +8282,14 @@
 </tbody>
 </table>
 <p><img alt="Flowchart" src="../../resources/ch-7august-2026-circular-reference.png" /></p>
+<p><img alt="Flowchart" src="../../resources/S07-LR-ch-7august-2026-circular-reference.png" /></p>
+<p><strong>Reading the figure</strong></p>
+<ul>
+<li><code>dog</code> is a label on the Stack, reachable from your code. The dotted arrow is the link that <code>del dog</code> removes.</li>
+<li><code>cat</code> is the second Stack label. The dotted arrow is the link that <code>del cat</code> removes.</li>
+<li>The Tiger object's <code>friend</code> attribute refers to Kitty.</li>
+<li>The Kitty object's <code>friend</code> attribute refers back to Tiger. After both labels are deleted, the two objects form an "island of isolation" on the Heap: your code cannot reach them, yet each still has a reference count of 1.</li>
+</ul>
 <p>The dotted arrows above show the links that <code>del dog</code> and <code>del cat</code> remove. Notice that even after both are deleted, the solid arrows — <code>Tiger.friend → Kitty</code> and <code>Kitty.friend → Tiger</code> — remain, keeping both objects alive as far as reference counting is concerned.</p>
 <hr />
 <h2 id="the-script-building-and-breaking-a-circular-reference">The script: building and breaking a circular reference<a class="headerlink" href="#the-script-building-and-breaking-a-circular-reference" title="Permanent link">&para;</a></h2>
@@ -8444,12 +8452,27 @@ End of Script.
 <p>This design rests on one observation from real-world programs: <strong>most objects die young</strong> (a temporary variable inside a function, for instance). So the GC checks Generation 0 most often, and only occasionally checks the older, more stable generations — saving a lot of unnecessary work.</p>
 <h3 id="the-mechanism-step-by-step">The mechanism, step by step<a class="headerlink" href="#the-mechanism-step-by-step" title="Permanent link">&para;</a></h3>
 <p><img alt="Flowchart" src="../../resources/ch-7august-2026-circular-reference--2.png" /></p>
-<ol>
-<li><strong>Detection:</strong> calling <code>gc.collect()</code> briefly pauses your running program.</li>
+<p><img alt="Flowchart" src="../../resources/S07-LR-ch-7august-2026-circular-reference--2.png" /></p>
+<p><strong>Reading the figure</strong></p>
+<ul>
+<li><strong>Step 1:</strong> You call <code>gc.collect()</code> (or Python runs it automatically when a threshold is crossed).</li>
+<li><strong>Step 2:</strong> Your program briefly pauses while the collector works ("stop the world").</li>
+<li><strong>Step 3:</strong> The garbage collector traces every reference between the objects in the generation it is checking.</li>
+<li><strong>Step 4:</strong> Has it found a group of objects that refer to each other, but that nothing in your running code can reach?</li>
+<li><strong>Step 5:</strong> No: there is no island, so nothing is collected.</li>
+<li><strong>Step 6:</strong> Yes: the whole group is marked as garbage, an "island of isolation".</li>
+<li><strong>Step 7:</strong> The collector breaks the circular links between the objects.</li>
+<li><strong>Step 8:</strong> Their reference counts drop to 0, so <code>__del__()</code> runs for each object and its memory on the Heap is freed.</li>
+<li>
+<p><strong>Step 9:</strong> Your program carries on from where it paused. <code>gc.collect()</code> returns the number of unreachable objects it found.</p>
+</li>
+<li>
+<p><strong>Detection:</strong> calling <code>gc.collect()</code> briefly pauses your running program.</p>
+</li>
 <li><strong>Tracing:</strong> the GC walks through every object in the generation it's checking, following every reference ("arrow") it can find.</li>
 <li><strong>Island hunting:</strong> if it finds a cluster of objects that reference each other, but that cluster isn't reachable from anything in the Stack (no external label), it flags the whole cluster as garbage.</li>
 <li><strong>The wipe:</strong> it breaks the circular links itself, which finally drops the affected reference counts to zero — triggering <code>__del__()</code> for each object and freeing their memory on the Heap.</li>
-</ol>
+</ul>
 <h3 id="why-call-gccollect-manually">Why call <code>gc.collect()</code> manually?<a class="headerlink" href="#why-call-gccollect-manually" title="Permanent link">&para;</a></h3>
 <p>Python normally runs this process automatically once the number of objects in Generation 0 crosses an internal threshold. Calling it yourself is mainly useful in a few specific situations:</p>
 <ul>

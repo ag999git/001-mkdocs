@@ -8234,6 +8234,15 @@
 </table>
 <h3 id="visualizing-the-difference">Visualizing the difference<a class="headerlink" href="#visualizing-the-difference" title="Permanent link">&para;</a></h3>
 <p><img alt="Flowchart" src="../../resources/ch-7-august-2026-deep-copy.png" /></p>
+<p><img alt="Flowchart" src="../../resources/S07-LR-ch-7-august-2026-deep-copy.png" /></p>
+<p><strong>Reading the figure</strong></p>
+<ul>
+<li><code>original_shelter</code> is a list whose slot 0 refers to the Tiger object.</li>
+<li><code>shallow_shelter = copy.copy(original_shelter)</code> is a new list, but its slot 0 refers to the very same Tiger object.</li>
+<li><code>deep_shelter = copy.deepcopy(original_shelter)</code> is also a new list, and its slot 0 refers to a separate clone.</li>
+<li>The one Tiger object shared by the original list and the shallow copy. Renaming it to <code>'Sheru'</code> shows through both lists.</li>
+<li>The independent clone made by the deep copy. It keeps the name <code>'Tiger'</code> after the rename.</li>
+</ul>
 <p>Notice that <code>original_shelter[0]</code> and <code>shallow_shelter[0]</code> both point at the <strong>same</strong> <code>Tiger</code> object — that's what "shallow" means here. <code>deep_shelter[0]</code>, on the other hand, points at a completely separate <code>Tiger</code> clone, with its own independent memory address.</p>
 <hr />
 <h2 id="the-script-with-explanatory-comments">The script, with explanatory comments<a class="headerlink" href="#the-script-with-explanatory-comments" title="Permanent link">&para;</a></h2>
@@ -8316,8 +8325,17 @@ Deep ID:     140312831239120 -&gt; Different from Original
 <hr />
 <h2 id="when-should-you-use-which">When should you use which?<a class="headerlink" href="#when-should-you-use-which" title="Permanent link">&para;</a></h2>
 <p><img alt="Flowchart" src="../../resources/ch-7-august-2026-deep-copy-2.png" /></p>
+<p><img alt="Flowchart" src="../../resources/S07-LR-ch-7-august-2026-deep-copy-2.png" /></p>
+<p><strong>Reading the figure</strong></p>
 <ul>
-<li><strong>Choose a shallow copy</strong> when the inner objects are immutable (like numbers or strings), or when you specifically <em>want</em> the copy and original to stay linked — for example, two different "views" over the same underlying data that should always agree.</li>
+<li><strong>Step 1:</strong> Do you need to modify the inner objects of the copy independently of the original?</li>
+<li><strong>Step 2:</strong> No, the data is read-only or immutable: use a shallow copy, <code>copy.copy()</code>. It is faster and uses less memory.</li>
+<li>
+<p><strong>Step 3:</strong> Yes, the inner objects will be modified separately: use a deep copy, <code>copy.deepcopy()</code>. It is slower, but the copy is fully independent.</p>
+</li>
+<li>
+<p><strong>Choose a shallow copy</strong> when the inner objects are immutable (like numbers or strings), or when you specifically <em>want</em> the copy and original to stay linked — for example, two different "views" over the same underlying data that should always agree.</p>
+</li>
 <li><strong>Choose a deep copy</strong> whenever you're duplicating a structure of <strong>mutable</strong> objects (like a list of <code>Pet</code> objects) and you need the copy to be a truly independent snapshot — for example, saving a backup of a game state before letting the player make changes, where the backup must never be affected by what happens next.</li>
 <li><strong>Watch the cost:</strong> deep copies take more time and memory, especially for large or deeply nested structures, since every object at every level gets recursively cloned. For simple, small structures the difference is negligible; for large object graphs, it's worth being deliberate about which one you actually need.</li>
 </ul>

@@ -8197,6 +8197,16 @@
 </tbody>
 </table>
 <p><img alt="Flowchart" src="../../resources/ch-7august-2026-memory-leak.png" /></p>
+<p><img alt="Flowchart" src="../../resources/S07-LR-ch-7august-2026-memory-leak.png" /></p>
+<p><strong>Reading the figure</strong></p>
+<ul>
+<li><strong>Step 1:</strong> The program starts running.</li>
+<li><strong>Step 2:</strong> During normal work, the program keeps creating objects.</li>
+<li><strong>Step 3:</strong> Are the references to old objects removed once those objects are no longer needed?</li>
+<li><strong>Step 4:</strong> Yes: the objects become unreachable and Python frees their memory. The program carries on (back to Step 2) with steady memory use.</li>
+<li><strong>Step 5:</strong> No, something still refers to them (for example a list that only ever grows): the objects stay alive, and RAM use keeps climbing.</li>
+<li><strong>Step 6:</strong> Eventually the program slows down or crashes because it runs out of memory.</li>
+</ul>
 <hr />
 <h2 id="a-classic-example-the-forgotten-reference-leak">A classic example: the "forgotten reference" leak<a class="headerlink" href="#a-classic-example-the-forgotten-reference-leak" title="Permanent link">&para;</a></h2>
 <p>The most common real-world Python memory leak looks nothing like a bug at first glance — it's usually a list or dictionary that's meant to be a temporary cache, but nothing ever removes old entries from it.</p>

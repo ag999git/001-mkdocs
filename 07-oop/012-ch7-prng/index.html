@@ -8269,6 +8269,15 @@
 <h3 id="the-mathematical-vulnerability">The mathematical vulnerability<a class="headerlink" href="#the-mathematical-vulnerability" title="Permanent link">&para;</a></h3>
 <p>Because the formula above is <strong>linear</strong> (no squaring, no exponentials — just multiplication and addition), seeing just a few consecutive outputs is enough to set up simple equations and solve for the hidden constants. There are two attack scenarios, depending on how much the attacker already knows:</p>
 <p><img alt="Flowchart" src="../../resources/ch-7-oop-prng-vulnerability.png" /></p>
+<p><img alt="Flowchart" src="../../resources/S07-LR-ch-7-oop-prng-vulnerability.png" /></p>
+<p><strong>Reading the figure</strong></p>
+<ul>
+<li><strong>Step 1:</strong> The attacker sees a few consecutive outputs of the LCG, for example session tokens or reset codes.</li>
+<li><strong>Step 2:</strong> Are the multiplier <code>a</code> and the modulus <code>m</code> already known?</li>
+<li><strong>Step 3:</strong> Yes, only <code>c</code> is unknown: Attack 1 recovers <code>c</code> from two outputs, <code>c = (X1 - a * X0) % m</code>.</li>
+<li><strong>Step 4:</strong> No, only <code>m</code> is known: Attack 2 recovers both <code>a</code> and <code>c</code> from three outputs, using a modular inverse.</li>
+<li><strong>Step 5:</strong> With <code>a</code>, <code>c</code> and <code>m</code> known, the attacker can predict every value the generator will ever produce.</li>
+</ul>
 <h4 id="attack-1-finding-c-when-a-and-m-are-already-known">Attack 1 — Finding <code>c</code> (when <code>a</code> and <code>m</code> are already known)<a class="headerlink" href="#attack-1-finding-c-when-a-and-m-are-already-known" title="Permanent link">&para;</a></h4>
 <p>With just two consecutive outputs, <span class="arithmatex">\(X_0\)</span> and <span class="arithmatex">\(X_1\)</span>, we can rearrange the LCG formula to isolate <span class="arithmatex">\(c\)</span>:</p>
 <div class="arithmatex">\[c \equiv (X_1 - a \cdot X_0) \pmod m\]</div>
@@ -8412,7 +8421,7 @@ Recovered a: 1103515245
 Recovered c: 12345
 
 --- Proof: predicting a future output using recovered a and c ---
-Predicted next output: &lt;a specific number, fully determined by the recovered a and c&gt;
+Predicted next output: 1357823696
 </code></pre></div>
 <p>Both attacks correctly recover the LCG's real hidden constants (<code>a = 1103515245</code>, <code>c = 12345</code> — the same defaults used to build the original generator), confirmed by seeing them come back exactly as expected. The final "proof" step goes one step further: it builds a brand-new <code>LCG</code> object using only the recovered constants, and uses it to predict a value the attacker never actually saw — demonstrating the real-world danger described above.</p>
 <hr />

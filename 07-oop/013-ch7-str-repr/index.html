@@ -8263,6 +8263,19 @@
 <h3 id="the-important-fallback-rule">The important fallback rule<a class="headerlink" href="#the-important-fallback-rule" title="Permanent link">&para;</a></h3>
 <p>If a class defines <code>__repr__()</code> but does <strong>not</strong> define <code>__str__()</code>, then calling <code>str()</code> (or <code>print()</code>) will automatically <strong>fall back to using <code>__repr__()</code> instead.</strong> Python only does this substitution in one direction — <code>__repr__()</code> is treated as the more fundamental, "always available" representation.</p>
 <p><img alt="Flowchart" src="../../resources/ch-7-august-2026-str-versus-repr.png" /></p>
+<p><img alt="Flowchart" src="../../resources/S07-LR-ch-7-august-2026-str-versus-repr.png" /></p>
+<p><strong>Reading the figure</strong></p>
+<ul>
+<li><strong>Step 1:</strong> <code>print(obj)</code> or <code>str(obj)</code> asks for the object's user-friendly text.</li>
+<li><strong>Step 2:</strong> Does the class define <code>__str__()</code>?</li>
+<li><strong>Step 3:</strong> Yes: its text is used, for example <code>Tommy is a Dog</code>.</li>
+<li><strong>Step 4:</strong> No: does the class define <code>__repr__()</code>?</li>
+<li><strong>Step 5:</strong> Yes: Python falls back to the <code>__repr__()</code> text, for example <code>Pet(name='Tommy', animal_type='Dog')</code>.</li>
+<li><strong>Step 6:</strong> No: Python uses its own generic default, <code>&lt;__main__.Pet object at 0x...&gt;</code>, which shows only the class name and the memory address.</li>
+<li><strong>Step 7:</strong> <code>repr(obj)</code> asks for the object's official, developer-facing text.</li>
+<li><strong>Step 8:</strong> Does the class define <code>__repr__()</code>? Note that <code>repr()</code> never falls back to <code>__str__()</code>.</li>
+<li><strong>Step 9:</strong> Yes: the <code>__repr__()</code> text is used. No: the flow goes to Step 6, Python's generic default.</li>
+</ul>
 <p>Notice the asymmetry: <code>repr()</code> <strong>never</strong> falls back to <code>__str__()</code>. Only <code>str()</code>/<code>print()</code> are willing to fall back to <code>__repr__()</code>. This is why defining <code>__repr__()</code> alone still gives you working, sensible output everywhere, while defining <code>__str__()</code> alone leaves <code>repr()</code> using Python's generic, not-very-useful default.</p>
 <hr />
 <h2 id="task-instructions-from-the-book">Task instructions (from the book)<a class="headerlink" href="#task-instructions-from-the-book" title="Permanent link">&para;</a></h2>
@@ -8381,8 +8394,15 @@
 </code></pre></div>
 <p><strong>What this shows:</strong> with neither method defined, both <code>print()</code>/<code>str()</code> and <code>repr()</code> fall all the way back to Python's own built-in default — a message that only tells you the class name and the object's memory address (see the earlier chapter page on <code>id()</code> and <code>self</code> for more on what that address means), with none of the object's actual data visible.</p>
 <hr />
-<p><strong>The following figure shows how str() and repr() interact:</strong></p>
-<p><img alt="Figure" src="/001-mkdocs/gitbook-assets/ch-7-oop-str-vs-repr.png" /></p>
+<p><strong>The following figure shows how <code>str()</code> and <code>repr()</code> interact:</strong></p>
+<p><img alt="Figure" src="../../resources/ch-7-oop-str-vs-repr.png" /></p>
+<p><img alt="Figure" src="../../resources/S07-LR-ch-7-oop-str-vs-repr.png" /></p>
+<p><strong>Reading the figure</strong></p>
+<ul>
+<li>A <code>Pet</code> object can be turned into text in two ways.</li>
+<li><code>str()</code> and <code>print()</code> use <code>__str__()</code>, the user-friendly text.</li>
+<li><code>repr()</code> uses <code>__repr__()</code>, the developer-friendly text. If <code>__str__()</code> is not defined, <code>str()</code> and <code>print()</code> fall back to <code>__repr__()</code> (the dashed arrow); the reverse never happens.</li>
+</ul>
 <h2 id="comparing-all-four-cases">Comparing all four cases<a class="headerlink" href="#comparing-all-four-cases" title="Permanent link">&para;</a></h2>
 <table>
 <thead>

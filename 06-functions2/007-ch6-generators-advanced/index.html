@@ -8146,6 +8146,17 @@
 <p>This is <strong>not an error in your program</strong> — it's a normal, expected signal that simply means <em>"there is nothing left to yield."</em> Every iterator in Python (not just generators) uses this same mechanism to announce that it's exhausted.</p>
 <p>The diagram below shows the flow of control as a generator function runs, pauses at each <code>yield</code>, and eventually raises <code>StopIteration</code> once its body finishes:</p>
 <p><img alt="StopIteration Diagram" src="../../resources/ch6-generators-stopiteration.png" /></p>
+<p><img alt="StopIteration Diagram" src="../../resources/S06-LR-ch6-generators-stopiteration.png" /></p>
+<p><strong>Reading the figure</strong></p>
+<ul>
+<li><strong>Step 1:</strong> <code>gen = simple_generator()</code> only creates a generator object. None of the function's code runs yet.</li>
+<li><strong>Step 2:</strong> The first <code>next(gen)</code> starts the body from its first line.</li>
+<li><strong>Step 3:</strong> The code runs until it reaches a <code>yield</code>, or until the body ends.</li>
+<li><strong>Step 4:</strong> No <code>yield</code> is left and the body ends: Python raises <code>StopIteration</code>. With <code>next()</code> you see the exception; a <code>for</code> loop catches it and simply stops.</li>
+<li><strong>Step 5:</strong> Yes: the value after <code>yield</code> is handed to the caller, and the generator pauses.</li>
+<li><strong>Step 6:</strong> The generator waits, with all its local variables frozen, until the next <code>next()</code> call.</li>
+<li><strong>Step 7:</strong> <code>next()</code> is called again: the code resumes on the line after that <code>yield</code> and runs on, back to Step 3.</li>
+</ul>
 <h3 id="script-demonstrating-stopiteration">Script Demonstrating <code>StopIteration</code><a class="headerlink" href="#script-demonstrating-stopiteration" title="Permanent link">&para;</a></h3>
 <div class="highlight"><pre><span></span><code><span class="c1"># Demonstration of a simple generator and StopIteration.</span>
 <span class="c1">#</span>

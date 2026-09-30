@@ -1930,10 +1930,10 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#diagram-shows-situation-without-and-with-using-functools" class="md-nav__link">
+  <a href="#diagram-the-situation-without-and-with-functoolswraps" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Diagram shows situation without and with using functools
+        Diagram: the situation without and with functools.wraps
       
     </span>
   </a>
@@ -8286,7 +8286,7 @@
 </tr>
 </tbody>
 </table>
-<p>This chapter focuses only on <code>wraps</code>, since it's the one you'll use every single time you write a decorator.</p>
+<p>This page focuses only on <code>wraps</code>, since it's the one you'll use every single time you write a decorator.</p>
 <hr />
 <h2 id="2-why-functoolswraps-matters-for-decorators">2. Why <code>functools.wraps</code> matters for decorators<a class="headerlink" href="#2-why-functoolswraps-matters-for-decorators" title="Permanent link">&para;</a></h2>
 <p>When you apply a decorator, the <strong>original function gets wrapped by another function</strong> — usually one just called <code>wrapper</code>. If you're not careful, Python ends up "forgetting" some important facts about the original function, including:</p>
@@ -8441,8 +8441,18 @@
 </tr>
 </tbody>
 </table>
-<h3 id="diagram-shows-situation-without-and-with-using-functools">Diagram shows situation without and with using functools<a class="headerlink" href="#diagram-shows-situation-without-and-with-using-functools" title="Permanent link">&para;</a></h3>
-<p><img alt="Diagram shows situation without and with using functools" src="/001-mkdocs/gitbook-assets/ch-6-using-functools.png" /></p>
+<h3 id="diagram-the-situation-without-and-with-functoolswraps">Diagram: the situation without and with <code>functools.wraps</code><a class="headerlink" href="#diagram-the-situation-without-and-with-functoolswraps" title="Permanent link">&para;</a></h3>
+<p><img alt="Diagram shows situation without and with using functools" src="../../resources/ch-6-using-functools.png" /></p>
+<p><img alt="Diagram shows situation without and with using functools" src="../../resources/S06-LR-ch-6-using-functools.png" /></p>
+<p><strong>Reading the figure</strong></p>
+<ul>
+<li>Top row, without <code>functools.wraps</code>: the original <code>bark()</code> has the name <code>'bark'</code> and the docstring <code>'Make Sound'</code>.</li>
+<li>The decorator replaces it with <code>wrapper</code>, whose own name is <code>'wrapper'</code> and whose docstring is <code>None</code>.</li>
+<li>Result: <code>bark.__name__</code> gives <code>'wrapper'</code> and <code>bark.__doc__</code> gives <code>None</code>. The function has lost its identity.</li>
+<li>Bottom row, with <code>functools.wraps</code>: the same original <code>bark()</code>.</li>
+<li><code>@functools.wraps(func)</code> reads the original function's name, docstring and other metadata.</li>
+<li>It copies them onto <code>wrapper</code>, so <code>bark.__name__</code> is <code>'bark'</code> and <code>bark.__doc__</code> is <code>'Make Sound'</code>.</li>
+</ul>
 <hr />
 <h2 id="4-example-2-the-manual-approach-and-why-functoolswraps-is-better">4. Example 2: The manual approach (and why <code>functools.wraps</code> is better)<a class="headerlink" href="#4-example-2-the-manual-approach-and-why-functoolswraps-is-better" title="Permanent link">&para;</a></h2>
 <p>Before <code>functools.wraps</code> existed (or if you ever need to see what it's doing under the hood), you could fix the identity problem by hand, by copying each attribute across yourself.</p>
