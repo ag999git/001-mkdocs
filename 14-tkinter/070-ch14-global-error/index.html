@@ -8652,7 +8652,16 @@ IndexError
 <p><a href="#table-of-contents">Back to Table of Contents</a></p>
 <h3 id="a2-how-does-python-normally-respond-to-unhandled-exceptions">A2. How Does Python Normally Respond to Unhandled Exceptions?<a class="headerlink" href="#a2-how-does-python-normally-respond-to-unhandled-exceptions" title="Permanent link">&para;</a></h3>
 <p>By default, Python follows this sequence:</p>
-<p><img alt="Flowchart" src="../../resources/ch14-tkinter-September-2026-uncaught-exceptions-001.png" /></p>
+<p><img alt="Flowchart" src="../../resources/S14-LR-ch14-tkinter-September-2026-uncaught-exceptions-001.png" /></p>
+<p><strong>Reading the figure</strong></p>
+<ul>
+<li><strong>Step 1:</strong> An exception is raised.</li>
+<li><strong>Step 2:</strong> Python looks for a matching <code>try-except</code>, first in the current function and then in each caller in turn.</li>
+<li><strong>Step 3:</strong> None of them has a matching handler, so the exception is uncaught.</li>
+<li><strong>Step 4:</strong> Python calls <code>sys.excepthook</code>.</li>
+<li><strong>Step 5:</strong> The default hook prints the traceback to stderr.</li>
+<li><strong>Step 6:</strong> The program ends with exit status 1.</li>
+</ul>
 <p>Notice the fourth box, which the short version of this story usually leaves out. Printing the traceback is not something Python does directly — it is done <em>by</em> <code>sys.excepthook</code>, which is simply the function Python happens to have installed there by default. That is exactly why replacing it changes what happens.</p>
 <p>Example:</p>
 <div class="highlight"><pre><span></span><code><span class="n">x</span> <span class="o">=</span> <span class="mi">10</span> <span class="o">/</span> <span class="mi">0</span>
@@ -8685,7 +8694,13 @@ ZeroDivisionError: division by zero
 <p><strong>what Python should do when an uncaught exception occurs</strong></p>
 </blockquote>
 <p>By default:</p>
-<p><img alt="Flowchart" src="../../resources/ch14-tkinter-September-2026-uncaught-exceptions-002.png" /></p>
+<p><img alt="Flowchart" src="../../resources/S14-LR-ch14-tkinter-September-2026-uncaught-exceptions-002.png" /></p>
+<p><strong>Reading the figure</strong></p>
+<ul>
+<li><strong>Step 1:</strong> An exception reaches the top of the program without being caught.</li>
+<li><strong>Step 2:</strong> The default <code>sys.excepthook</code> prints the traceback to stderr.</li>
+<li><strong>Step 3:</strong> The program ends (exit status 1).</li>
+</ul>
 <p>However, programmers can replace Python’s default behaviour:</p>
 <div class="highlight"><pre><span></span><code><span class="n">sys</span><span class="o">.</span><span class="n">excepthook</span> <span class="o">=</span> <span class="n">handle_uncaught</span>
 </code></pre></div>
@@ -8694,7 +8709,7 @@ ZeroDivisionError: division by zero
 <li>display a friendly popup,</li>
 <li>save errors to a log file,</li>
 <li>notify the user,</li>
-<li>prevent abrupt crashes.</li>
+<li>replace an unexplained crash with a clear message (the program still ends afterwards).</li>
 </ul>
 <p>Thus:</p>
 <blockquote>
@@ -8776,7 +8791,7 @@ ZeroDivisionError: division by zero
 <tr>
 <td>Can the program continue afterwards?</td>
 <td>Yes, normally by design</td>
-<td>Only if your handler is written to allow it</td>
+<td>No — <code>sys.excepthook</code> runs just before the program exits (only Tkinter's <code>report_callback_exception</code> lets a GUI carry on)</td>
 </tr>
 <tr>
 <td>What it is for</td>
@@ -8803,9 +8818,22 @@ ZeroDivisionError: division by zero
 <p>Hence: <strong>global exception handling</strong>.</p>
 <p><strong>Visual difference</strong></p>
 <p>Local handling:</p>
-<p><img alt="Flowchart" src="../../resources/ch14-tkinter-September-2026-uncaught-exceptions-003.png" /></p>
+<p><img alt="Flowchart" src="../../resources/S14-LR-ch14-tkinter-September-2026-uncaught-exceptions-003.png" /></p>
+<p><strong>Reading the figure</strong></p>
+<ul>
+<li><strong>Step 1:</strong> An exception is raised inside a block of code.</li>
+<li><strong>Step 2:</strong> That block is wrapped in a matching <code>try-except</code>.</li>
+<li><strong>Step 3:</strong> The <code>except</code> block deals with it on the spot, and the program carries on: local exception handling.</li>
+</ul>
 <p>Global handling:</p>
-<p><img alt="Flowchart" src="../../resources/ch14-tkinter-September-2026-uncaught-exceptions-004.png" /></p>
+<p><img alt="Flowchart" src="../../resources/S14-LR-ch14-tkinter-September-2026-uncaught-exceptions-004.png" /></p>
+<p><strong>Reading the figure</strong></p>
+<ul>
+<li><strong>Step 1:</strong> An exception is raised.</li>
+<li><strong>Step 2:</strong> No <code>try-except</code> handles it anywhere up the chain of calls.</li>
+<li><strong>Step 3:</strong> Python calls <code>sys.excepthook</code>, which you have replaced with your own function.</li>
+<li><strong>Step 4:</strong> Your global handler runs, for example logging the error and showing a message, before the program ends.</li>
+</ul>
 <p><strong>They are partners, not rivals.</strong> It is tempting to conclude that a global handler makes <code>try-except</code> unnecessary. It does not, and it is worth understanding why. A <code>try-except</code> block knows exactly what went wrong and exactly where, so it can recover intelligently — ask the user to retype a number, fall back to a default setting, retry a download. A global handler knows only that <em>something</em> failed <em>somewhere</em>, so all it can sensibly do is record the problem and apologise. Use <code>try-except</code> wherever you can foresee a failure, and treat the global handler as the safety net for everything you could not foresee.</p>
 <p><a href="#table-of-contents">Back to Table of Contents</a></p>
 <h3 id="a5-why-do-gui-applications-prefer-friendly-popup-messages">A5. Why Do GUI Applications Prefer Friendly Popup Messages?<a class="headerlink" href="#a5-why-do-gui-applications-prefer-friendly-popup-messages" title="Permanent link">&para;</a></h3>
@@ -8899,7 +8927,7 @@ Traceback (most recent call last):
   File "/usr/lib/python3.12/tkinter/__init__.py", line 1967, in __call__
     return self.func(*args)
            ^^^^^^^^^^^^^^^^
-  File "demo_compare.py", line 12, in boom
+  File "demo_compare.py", line 13, in boom
     print(undefined_variable)
           ^^^^^^^^^^^^^^^^^^
 NameError: name 'undefined_variable' is not defined
@@ -8940,14 +8968,50 @@ Test 2: report_callback_exception installed as well
 </tr>
 </tbody>
 </table>
-<p><img alt="Flowchart" src="../../resources/ch14-tkinter-September-2026-uncaught-exceptions-005.png" /></p>
+<p><img alt="Flowchart" src="../../resources/S14-LR-ch14-tkinter-September-2026-uncaught-exceptions-005.png" /></p>
+<p><strong>Reading the figure</strong></p>
+<ul>
+<li><strong>Step 1:</strong> An exception is raised in a Tkinter program.</li>
+<li><strong>Step 2:</strong> Was it raised inside a Tkinter callback: a button's <code>command</code>, an <code>after()</code> job, a <code>bind()</code> handler or a variable trace?</li>
+<li><strong>Step 3:</strong> Yes: Tkinter catches it before anything else can.</li>
+<li><strong>Step 4:</strong> Tkinter calls <code>root.report_callback_exception</code>.</li>
+<li><strong>Step 5:</strong> No, it is ordinary top-level code: the exception travels up the chain of calls.</li>
+<li><strong>Step 6:</strong> Python calls <code>sys.excepthook</code>.</li>
+<li><strong>Step 7:</strong> Assign the same handler function to both, so every case is covered.</li>
+</ul>
 <p><strong>The conclusion for Part B.</strong> The question asks you to override Python's default exception route using <code>sys.excepthook</code>, and the model program below does exactly that. But it also assigns the same function to <code>root.report_callback_exception</code>, because that is the only way the button in requirement 7 can produce the friendly popup in requirement 8. Pointing both names at one handler function costs one extra line and makes the program behave the way the question describes.</p>
 <p><a href="#table-of-contents">Back to Table of Contents</a></p>
 <hr />
 <h2 id="flowchart-showing-the-execution-of-the-script">Flowchart Showing the Execution of the Script<a class="headerlink" href="#flowchart-showing-the-execution-of-the-script" title="Permanent link">&para;</a></h2>
-<p><img alt="Flowchart handling global exceptions" src="../../resources/ch14-tkinter-exceptions.png" /></p>
+<p><img alt="Flowchart handling global exceptions" src="../../resources/S14-LR-ch14-tkinter-exceptions.png" /></p>
+<p><strong>Reading the figure</strong></p>
+<ul>
+<li><strong>Step 1:</strong> Import everything the program needs: <code>tkinter</code>, <code>messagebox</code>, <code>sys</code> and <code>logging</code>.</li>
+<li><strong>Step 2:</strong> Configure logging so that every error is saved to <code>error_log.txt</code>.</li>
+<li><strong>Step 3:</strong> Create the main window.</li>
+<li><strong>Step 4:</strong> Create the live log panel, a <code>Text</code> widget that shows what is happening.</li>
+<li><strong>Step 5:</strong> Define the global handler, <code>handle_uncaught(exc_type, exc_value, exc_traceback)</code>.</li>
+<li><strong>Step 6:</strong> Install the handler in both places: <code>sys.excepthook</code> (top-level errors) and <code>root.report_callback_exception</code> (callback errors).</li>
+<li><strong>Step 7:</strong> Add the Trigger button and start <code>root.mainloop()</code>.</li>
+<li><strong>Step 8:</strong> The user clicks the button; <code>trigger_error()</code> runs <code>print(undefined_variable)</code>, which raises <code>NameError</code>.</li>
+<li><strong>Step 9:</strong> There is no <code>try-except</code>, so Tkinter catches the error and calls <code>root.report_callback_exception</code>, which is <code>handle_uncaught()</code>.</li>
+<li><strong>Step 10:</strong> The handler writes to the log panel, saves the full traceback in <code>error_log.txt</code>, and shows a friendly popup.</li>
+<li><strong>Step 11:</strong> The window stays open and the program carries on.</li>
+</ul>
 <p>The same sequence in text form, showing what happens from the moment the button is clicked:</p>
-<p><img alt="Flowchart" src="../../resources/ch14-tkinter-September-2026-uncaught-exceptions-006.png" /></p>
+<p><img alt="Flowchart" src="../../resources/S14-LR-ch14-tkinter-September-2026-uncaught-exceptions-006.png" /></p>
+<p><strong>Reading the figure</strong></p>
+<ul>
+<li><strong>Step 1:</strong> The user clicks the Trigger NameError button.</li>
+<li><strong>Step 2:</strong> <code>trigger_error()</code> first writes a line to the log panel.</li>
+<li><strong>Step 3:</strong> The line <code>print(undefined_variable)</code> raises <code>NameError</code>.</li>
+<li><strong>Step 4:</strong> There is no <code>try-except</code>, so Tkinter catches the error itself.</li>
+<li><strong>Step 5:</strong> Tkinter calls <code>root.report_callback_exception</code>, which has been set to <code>handle_uncaught()</code>.</li>
+<li><strong>Step 6:</strong> The handler writes two lines into the log panel.</li>
+<li><strong>Step 7:</strong> It saves the full traceback in <code>error_log.txt</code>.</li>
+<li><strong>Step 8:</strong> It shows a friendly popup to the user.</li>
+<li><strong>Step 9:</strong> The window stays open and remains usable.</li>
+</ul>
 <p><a href="#table-of-contents">Back to Table of Contents</a></p>
 <hr />
 <h2 id="answer-to-part-b-the-model-script">Answer to Part B — The Model Script<a class="headerlink" href="#answer-to-part-b-the-model-script" title="Permanent link">&para;</a></h2>
@@ -9236,7 +9300,7 @@ NameError: name 'undefined_variable' is not defined
 <tr>
 <td>Unsaved work</td>
 <td>Lost on a top-level error</td>
-<td>The window stays open, so it can be saved</td>
+<td>Still lost on a top-level error (the program ends once the hook returns); after a callback error the window stays open, so it can be saved</td>
 </tr>
 <tr>
 <td>Can the programmer investigate later?</td>
@@ -9300,7 +9364,20 @@ NameError: name 'undefined_variable' is not defined
 </tr>
 </tbody>
 </table>
-<p><img alt="Flowchart" src="../../resources/ch14-tkinter-September-2026-uncaught-exceptions-007.png" /></p>
+<p><img alt="Flowchart" src="../../resources/S14-LR-ch14-tkinter-September-2026-uncaught-exceptions-007.png" /></p>
+<p><strong>Reading the figure</strong></p>
+<ul>
+<li><strong>Step 1:</strong> The global error handler does not seem to work.</li>
+<li><strong>Step 2:</strong> Did the error come from a button click, an <code>after()</code> job or another callback?</li>
+<li><strong>Step 3:</strong> Yes: callbacks never reach <code>sys.excepthook</code>; assign the handler to <code>root.report_callback_exception</code> as well.</li>
+<li><strong>Step 4:</strong> No: does the handler accept exactly three arguments?</li>
+<li><strong>Step 5:</strong> No: it must accept <code>exc_type</code>, <code>exc_value</code> and <code>exc_traceback</code>.</li>
+<li><strong>Step 6:</strong> Yes: is <code>error_log.txt</code> empty?</li>
+<li><strong>Step 7:</strong> Yes: the handler never ran; check that both hooks are installed.</li>
+<li><strong>Step 8:</strong> No: is the traceback missing from the file?</li>
+<li><strong>Step 9:</strong> Yes: pass <code>exc_info=(exc_type, exc_value, exc_traceback)</code> to <code>logging.error()</code>.</li>
+<li><strong>Step 10:</strong> No: if the error was raised in a separate thread, <code>sys.excepthook</code> does not see it; use <code>threading.excepthook</code>.</li>
+</ul>
 <p><a href="#table-of-contents">Back to Table of Contents</a></p>
 
 

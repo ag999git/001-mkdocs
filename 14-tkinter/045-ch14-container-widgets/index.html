@@ -8365,7 +8365,7 @@
 </table>
 <hr />
 <h2 id="1-unified-core-options-all-containers">1. Unified Core Options (All Containers)<a class="headerlink" href="#1-unified-core-options-all-containers" title="Permanent link">&para;</a></h2>
-<p>The options below form the base configuration shared across the whole container family. Not every container accepts every option below — the per-widget sections in Part 2 note any exceptions — but these are the ones worth learning first, because they show up again and again.</p>
+<p>The options below form the base configuration shared across the whole container family. Not every container accepts every option below — the per-widget sections in Section 2 note any exceptions — but these are the ones worth learning first, because they show up again and again.</p>
 <table>
 <thead>
 <tr>
@@ -8448,9 +8448,30 @@
 </tbody>
 </table>
 <p>The following diagram gives the same guidance visually, as a simple decision flow.</p>
-<p><img alt="Flowchart" src="../../resources/ch14-tkinter-September-2026-container-family-001.png" /></p>
+<p><img alt="Flowchart" src="../../resources/S14-LR-ch14-tkinter-September-2026-container-family-001.png" /></p>
+<p><strong>Reading the figure</strong></p>
+<ul>
+<li><strong>Step 1:</strong> Do you need a genuinely separate operating-system window (a dialog, a pop-up form)?</li>
+<li><strong>Step 2:</strong> Yes: use <code>tk.Toplevel</code>.</li>
+<li><strong>Step 3:</strong> No: do you need several pages that the user switches between with tabs?</li>
+<li><strong>Step 4:</strong> Yes: use <code>ttk.Notebook</code>.</li>
+<li><strong>Step 5:</strong> No: should the user be able to drag a divider to resize two areas?</li>
+<li><strong>Step 6:</strong> Yes: use <code>ttk.PanedWindow</code>.</li>
+<li><strong>Step 7:</strong> No: do you want a visible border with a caption around the group?</li>
+<li><strong>Step 8:</strong> Yes: use <code>ttk.LabelFrame</code>.</li>
+<li><strong>Step 9:</strong> No: a plain, invisible <code>ttk.Frame</code> is enough.</li>
+</ul>
 <p>The image below is an alternate view of the same process</p>
-<p><img alt="Flowchart" src="../../resources/ch14-tkinter-container-widgets.png" /></p>
+<p><img alt="Flowchart" src="../../resources/S14-LR-ch14-tkinter-container-widgets.png" /></p>
+<p><strong>Reading the figure</strong></p>
+<ul>
+<li>The container family: widgets whose job is to hold other widgets.</li>
+<li><code>ttk.Frame</code> groups and isolates widgets, with no border or caption.</li>
+<li><code>ttk.LabelFrame</code> groups widgets inside a visible border with a title.</li>
+<li><code>ttk.Notebook</code> shows one of several pages at a time, chosen by tabs.</li>
+<li><code>ttk.PanedWindow</code> splits an area into panes with draggable dividers (the classic <code>tk.PanedWindow</code> also exists).</li>
+<li><code>tk.Toplevel</code> is a separate window of its own, managed by the operating system.</li>
+</ul>
 <h3 id="21-ttkframe-the-invisible-layout-divider">2.1 <code>ttk.Frame</code> — The Invisible Layout Divider<a class="headerlink" href="#21-ttkframe-the-invisible-layout-divider" title="Permanent link">&para;</a></h3>
 <p><strong>In plain words:</strong> the plainest possible container — an empty box with no border and no caption, used purely to group other widgets together so they can be positioned as one unit.</p>
 <ul>
@@ -8478,7 +8499,7 @@
 <li><strong>Core API methods:</strong></li>
 <li><code>.add(child_widget, text="Tab Title")</code>: adds an existing frame (or other widget) to the notebook as a new tab, using <code>text</code> as the label shown on the tab itself.</li>
 <li><code>.select(tab_index)</code>: switches the notebook to show a particular tab, by its position (or by passing the child widget directly).</li>
-<li><code>.tabs()</code>: returns a list of the Tkinter widget identifiers (short internal name strings, not memory addresses) for every tab currently in the notebook, in tab order — useful when you need to loop over all the open tabs.</li>
+<li><code>.tabs()</code>: returns a tuple of the Tkinter widget identifiers (short internal name strings, not memory addresses) for every tab currently in the notebook, in tab order — useful when you need to loop over all the open tabs.</li>
 </ul>
 <h3 id="24-ttkpanedwindow-the-resizable-workspace-splitter">2.4 <code>ttk.PanedWindow</code> — The Resizable Workspace Splitter<a class="headerlink" href="#24-ttkpanedwindow-the-resizable-workspace-splitter" title="Permanent link">&para;</a></h3>
 <p><strong>In plain words:</strong> a container split into two or more sections with a thin bar (called a "sash") between them that the user can click and drag to make one section bigger and the other smaller.</p>
@@ -8488,7 +8509,7 @@
 <li><strong>When to use it:</strong> dashboards or tools where the user should be able to manually control how much screen space each section takes up — for example, a file list next to a preview area.</li>
 <li><strong>Special sub-parameters and methods:</strong></li>
 <li><code>orient</code>: set to <code>tk.HORIZONTAL</code> (panes arranged side by side) or <code>tk.VERTICAL</code> (panes stacked one above another).</li>
-<li><code>sashwidth</code> (<code>int</code>): sets the pixel thickness of the draggable divider line.</li>
+<li><code>sashwidth</code> (<code>int</code>): classic <code>tk.PanedWindow</code> only. <code>ttk.PanedWindow</code> has no such option (<code>ttk.PanedWindow(root, sashwidth=5)</code> raises <code>TclError: unknown option "-sashwidth"</code>); a themed sash is styled through <code>ttk.Style</code>.</li>
 <li><code>.add(child, weight=1)</code>: adds a pane. The <code>weight</code> value decides how much of any <em>extra</em> space is given to that particular pane when the whole <code>PanedWindow</code> is resized — a pane with <code>weight=2</code> grows twice as fast as one with <code>weight=1</code> when the window is stretched.</li>
 </ul>
 <h3 id="25-tktoplevel-the-independent-window">2.5 <code>tk.Toplevel</code> — The Independent Window<a class="headerlink" href="#25-tktoplevel-the-independent-window" title="Permanent link">&para;</a></h3>
@@ -8505,10 +8526,15 @@
 </ul>
 <hr />
 <h2 id="3-production-architecture-dos-and-donts">3. Production Architecture: Dos and Don'ts<a class="headerlink" href="#3-production-architecture-dos-and-donts" title="Permanent link">&para;</a></h2>
-<p><em>(The original heading for this section repeated the word "Architecture" twice — corrected here.)</em></p>
 <h3 id="31-the-architectural-layout-rule">3.1 The Architectural Layout Rule<a class="headerlink" href="#31-the-architectural-layout-rule" title="Permanent link">&para;</a></h3>
 <p>Structure every layout using the same predictable, three-step sequence, so that the coordinate system stays easy to reason about as the interface grows:</p>
-<p><img alt="Flowchart" src="../../resources/ch14-tkinter-September-2026-container-family-002.png" /></p>
+<p><img alt="Flowchart" src="../../resources/S14-LR-ch14-tkinter-September-2026-container-family-002.png" /></p>
+<p><strong>Reading the figure</strong></p>
+<ul>
+<li><strong>Step 1:</strong> Create the container first, for example <code>form_frame = ttk.Frame(root, padding=10)</code>.</li>
+<li><strong>Step 2:</strong> Place the container itself with a geometry manager, for example <code>form_frame.pack(fill="both", expand=True)</code>.</li>
+<li><strong>Step 3:</strong> Create the child widgets with the container as their parent, and place them inside it, for example with <code>grid()</code>.</li>
+</ul>
 <p>In code, that three-step pattern looks like this:</p>
 <div class="highlight"><pre><span></span><code><span class="c1"># Step 1: Instantiate the parent container.</span>
 <span class="n">form_frame</span> <span class="o">=</span> <span class="n">ttk</span><span class="o">.</span><span class="n">Frame</span><span class="p">(</span><span class="n">root</span><span class="p">,</span> <span class="n">padding</span><span class="o">=</span><span class="mi">10</span><span class="p">)</span>
@@ -8532,8 +8558,15 @@ root
  +-- bottom_action_frame  (Holds execution buttons)
 </code></pre></div>
 <p>The same structure, shown as a flow chart:</p>
-<p><img alt="Flowchart" src="../../resources/ch14-tkinter-September-2026-container-family-003.png" /></p>
+<p><img alt="Flowchart" src="../../resources/S14-LR-ch14-tkinter-September-2026-container-family-003.png" /></p>
+<p><strong>Reading the figure</strong></p>
 <ul>
+<li>The root window holds only three frames, not dozens of loose widgets.</li>
+<li><code>top_header_frame</code> holds the status labels.</li>
+<li><code>body_form_frame</code> holds the data entry fields.</li>
+<li>
+<p><code>bottom_action_frame</code> holds the buttons that carry out actions.</p>
+</li>
 <li>
 <p><strong>DON'T dump dozens of interactive widgets directly onto the top-level <code>root</code> window.</strong> This makes it very difficult to control alignment and scaling once the window is resized, because every widget is now competing for space in a single, unstructured container instead of a small number of well-defined zones.</p>
 </li>
@@ -8597,7 +8630,7 @@ root
 </table>
 <hr />
 <h2 id="5-a-complete-worked-example-building-a-simple-registration-form">5. A Complete Worked Example: Building a Simple Registration Form<a class="headerlink" href="#5-a-complete-worked-example-building-a-simple-registration-form" title="Permanent link">&para;</a></h2>
-<p>Sections 1 to 4 describe each container and each rule in isolation. This section puts them to work together in one small, complete, runnable program: a registration form with a header, a bordered form area, and a row of buttons — built by deliberately following the "Do" list from Section 3.2 and deliberately avoiding the "Don't" list. The program was actually run (using a virtual display, since it has no visible screen of its own) to confirm it works and to capture real console output, shown in Section 5.5 below. Teaching-only <code>print()</code> statements were added throughout, exactly as in the "Do" and "Don't" style used elsewhere on this page, so you can see what is happening at each step even though most of what this script does is visual.</p>
+<p>Sections 1 to 4 describe each container and each rule in isolation. This section puts them to work together in one small, complete, runnable program: a registration form with a header, a bordered form area, and a row of buttons — built by deliberately following the "Do" list from Section 3.2 and deliberately avoiding the "Don't" list. Its real console output is shown in Section 5.5 below. Teaching-only <code>print()</code> statements were added throughout, exactly as in the "Do" and "Don't" style used elsewhere on this page, so you can see what is happening at each step even though most of what this script does is visual.</p>
 <h3 id="51-imports-and-a-small-helper-function">5.1 Imports and a Small Helper Function<a class="headerlink" href="#51-imports-and-a-small-helper-function" title="Permanent link">&para;</a></h3>
 <p>Besides the two standard imports, this example defines one small helper function, <code>print_widget_tree()</code>. It is not part of Tkinter — it is written here purely so that the container hierarchy described in Section 3.2's "Correct Layout Tree Structure" diagram can be printed as real, verified text once the widgets actually exist.</p>
 <div class="highlight"><pre><span></span><code><span class="c1"># Step 1: Import tkinter and the ttk (themed Tk) module, which contains</span>

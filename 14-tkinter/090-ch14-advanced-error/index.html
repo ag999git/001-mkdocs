@@ -8722,10 +8722,22 @@
 </blockquote>
 <p>It controls what Python does when an uncaught exception happens.</p>
 <p>Normally the sequence of execution is as follows:</p>
-<p><img alt="Flowchart" src="../../resources/ch14-tkinter-September-2026-professional-error-handling-001.png" /></p>
+<p><img alt="Flowchart" src="../../resources/S14-LR-ch14-tkinter-September-2026-professional-error-handling-001.png" /></p>
+<p><strong>Reading the figure</strong></p>
+<ul>
+<li><strong>Step 1:</strong> An exception is not caught anywhere.</li>
+<li><strong>Step 2:</strong> The default <code>sys.excepthook</code> prints a traceback.</li>
+<li><strong>Step 3:</strong> The program ends.</li>
+</ul>
 <p>But <code>sys.excepthook = handle_error</code> changes the route.</p>
 <p>Now the sequence is as follows:</p>
-<p><img alt="Flowchart" src="../../resources/ch14-tkinter-September-2026-professional-error-handling-002.png" /></p>
+<p><img alt="Flowchart" src="../../resources/S14-LR-ch14-tkinter-September-2026-professional-error-handling-002.png" /></p>
+<p><strong>Reading the figure</strong></p>
+<ul>
+<li><strong>Step 1:</strong> An exception is not caught anywhere.</li>
+<li><strong>Step 2:</strong> Because of <code>sys.excepthook = handle_error</code>, your own function runs instead of the default hook.</li>
+<li><strong>Step 3:</strong> It can show a popup and write a log entry (for top-level errors, the program still ends afterwards).</li>
+</ul>
 <p>This improves application safety.</p>
 <p><strong>The shape your function must have.</strong> Python does not pass a single error object to the hook. It passes exactly three values, so your replacement must accept three:</p>
 <div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">handle_error</span><span class="p">(</span><span class="n">exc_type</span><span class="p">,</span> <span class="n">exc_value</span><span class="p">,</span> <span class="n">exc_traceback</span><span class="p">):</span>
@@ -8795,12 +8807,20 @@
 </tbody>
 </table>
 <p>Miss any one of the three and nothing happens: a <code>StringVar</code> with no <code>textvariable</code> is never updated, and an Entry with no trace is never watched.</p>
-<p><img alt="Flowchart" src="../../resources/ch14-tkinter-September-2026-professional-error-handling-003.png" /></p>
+<p><img alt="Flowchart" src="../../resources/S14-LR-ch14-tkinter-September-2026-professional-error-handling-003.png" /></p>
+<p><strong>Reading the figure</strong></p>
+<ul>
+<li><strong>Step 1:</strong> The user presses a key in the Entry box.</li>
+<li><strong>Step 2:</strong> Because of <code>textvariable=input_var</code>, the new text is written into the <code>StringVar</code>.</li>
+<li><strong>Step 3:</strong> The trace added with <code>input_var.trace_add("write", validate)</code> notices the write.</li>
+<li><strong>Step 4:</strong> <code>validate()</code> runs automatically.</li>
+<li><strong>Step 5:</strong> It updates the status label.</li>
+</ul>
 <p><strong>Two details that surprise beginners:</strong></p>
 <p>First, <code>"write"</code> is the mode. Tkinter also offers <code>"read"</code> and <code>"unset"</code>, but <code>"write"</code> is the one used for validation.</p>
 <p>Second, Tkinter passes three arguments to the traced function, which is why it is normally written as <code>def validate(*args):</code>. Printing them shows what they are:</p>
 <div class="highlight"><pre><span></span><code>What trace_add reports as its three arguments:
-    ('input_var', '', 'write')
+    ('PY_VAR0', '', 'write')
 </code></pre></div>
 <p>They are the variable's internal name, an index (used only for array-style variables), and the mode that triggered the call. Almost no validation function needs any of them, so <code>*args</code> simply accepts and ignores them. But the function must still be <em>able</em> to accept them — writing <code>def validate():</code> with no parameters causes a <code>TypeError</code> every time the user types.</p>
 <p><a href="#table-of-contents">Back to Table of Contents</a></p>
@@ -8988,7 +9008,17 @@ program bug appears
 </tr>
 </tbody>
 </table>
-<p><img alt="Flowchart" src="../../resources/ch14-tkinter-September-2026-professional-error-handling-004.png" /></p>
+<p><img alt="Flowchart" src="../../resources/S14-LR-ch14-tkinter-September-2026-professional-error-handling-004.png" /></p>
+<p><strong>Reading the figure</strong></p>
+<ul>
+<li><strong>Step 1:</strong> An exception is raised in a Tkinter program.</li>
+<li><strong>Step 2:</strong> Was it raised inside a callback: a button click, an <code>after()</code> job, a <code>bind()</code> handler or a <code>trace_add()</code> callback?</li>
+<li><strong>Step 3:</strong> Yes: Tkinter catches it before anything else can.</li>
+<li><strong>Step 4:</strong> Tkinter calls <code>root.report_callback_exception</code>.</li>
+<li><strong>Step 5:</strong> No: the exception travels up the chain of calls to the top level.</li>
+<li><strong>Step 6:</strong> Python calls <code>sys.excepthook</code>.</li>
+<li><strong>Step 7:</strong> Assign the same <code>handle_error</code> function to both, so every error arrives at one handler.</li>
+</ul>
 <p>Note the fourth row of the table above. The validation function attached with <code>trace_add()</code> is also a callback, so if a bug ever crept into <code>validate()</code>, the same rule would apply to it.</p>
 <p><a href="#table-of-contents">Back to Table of Contents</a></p>
 <hr />
@@ -9375,7 +9405,7 @@ Traceback (most recent call last):
   File "/usr/lib/python3.12/tkinter/__init__.py", line 1967, in __call__
     return self.func(*args)
            ^^^^^^^^^^^^^^^^
-  File "advanced_validation.py", line 146, in trigger_error
+  File "advanced_validation.py", line 147, in trigger_error
     print(unknown_variable)
           ^^^^^^^^^^^^^^^^
 NameError: name 'unknown_variable' is not defined
@@ -9390,10 +9420,47 @@ NameError: name 'unknown_variable' is not defined
 <hr />
 <h2 id="flowchart">Flowchart<a class="headerlink" href="#flowchart" title="Permanent link">&para;</a></h2>
 <p>The flowchart shows the steps in execution of the given script:</p>
-<p><img alt="Flowchart" src="../../resources/ch14-tkinter-professional-error-handling.png" /></p>
+<p><img alt="Flowchart" src="../../resources/S14-LR-ch14-tkinter-professional-error-handling.png" /></p>
+<p><strong>Reading the figure</strong></p>
+<ul>
+<li><strong>Step 1:</strong> Configure logging, so activity and errors are saved to <code>app_log.txt</code>.</li>
+<li><strong>Step 2:</strong> Create the main window and the log panel.</li>
+<li><strong>Step 3:</strong> Install <code>handle_error</code> as both <code>sys.excepthook</code> and <code>root.report_callback_exception</code>.</li>
+<li><strong>Step 4:</strong> Create the <code>StringVar</code> <code>input_var</code> and attach <code>validate</code> with <code>trace_add("write", validate)</code>.</li>
+<li><strong>Step 5:</strong> Create the Entry (linked with <code>textvariable=input_var</code>) and the Trigger Error button.</li>
+<li><strong>Step 6:</strong> <code>root.mainloop()</code> waits: what does the user do?</li>
+<li><strong>Step 7:</strong> The user types: every change to <code>input_var</code> runs <code>validate()</code>.</li>
+<li><strong>Step 8:</strong> Can the text be turned into a whole number? (An empty box shows "Waiting".)</li>
+<li><strong>Step 9:</strong> Yes: the status shows "Valid input" and the activity is logged.</li>
+<li><strong>Step 10:</strong> No: the status shows "Numbers only" and the activity is logged.</li>
+<li><strong>Step 11:</strong> The user clicks Trigger Error: <code>trigger_error()</code> runs.</li>
+<li><strong>Step 12:</strong> Using <code>unknown_variable</code> raises <code>NameError</code>; there is no <code>try-except</code>, so Tkinter calls <code>report_callback_exception</code>.</li>
+<li><strong>Step 13:</strong> <code>handle_error()</code> logs the error with its traceback and shows a popup; the GUI carries on.</li>
+</ul>
 <p>The same two journeys through the program in text form — typing into the box, and clicking the button:</p>
-<p><img alt="Flowchart" src="../../resources/ch14-tkinter-September-2026-professional-error-handling-005.png" /></p>
-<p><img alt="Flowchart" src="../../resources/ch14-tkinter-September-2026-professional-error-handling-006.png" /></p>
+<p><img alt="Flowchart" src="../../resources/S14-LR-ch14-tkinter-September-2026-professional-error-handling-005.png" /></p>
+<p><strong>Reading the figure</strong></p>
+<ul>
+<li><strong>Step 1:</strong> The user presses a key in the Entry box.</li>
+<li><strong>Step 2:</strong> The text is written into <code>input_var</code>.</li>
+<li><strong>Step 3:</strong> The trace notices the change and runs <code>validate()</code>.</li>
+<li><strong>Step 4:</strong> Is the box empty?</li>
+<li><strong>Step 5:</strong> Yes: the status shows "Waiting".</li>
+<li><strong>Step 6:</strong> No: can the text be turned into a whole number?</li>
+<li><strong>Step 7:</strong> Yes: the status shows "Valid input", and the activity is logged.</li>
+<li><strong>Step 8:</strong> No: the status shows "Numbers only", and the activity is logged.</li>
+</ul>
+<p><img alt="Flowchart" src="../../resources/S14-LR-ch14-tkinter-September-2026-professional-error-handling-006.png" /></p>
+<p><strong>Reading the figure</strong></p>
+<ul>
+<li><strong>Step 1:</strong> The user clicks the Trigger Error button.</li>
+<li><strong>Step 2:</strong> <code>trigger_error()</code> first logs the click.</li>
+<li><strong>Step 3:</strong> Using <code>unknown_variable</code> raises <code>NameError</code>.</li>
+<li><strong>Step 4:</strong> There is no <code>try-except</code>, so Tkinter catches the error.</li>
+<li><strong>Step 5:</strong> Tkinter calls <code>root.report_callback_exception</code>, which is <code>handle_error()</code>.</li>
+<li><strong>Step 6:</strong> The error and its full traceback are written to <code>app_log.txt</code>.</li>
+<li><strong>Step 7:</strong> A friendly popup is shown, and the window stays open.</li>
+</ul>
 <p><a href="#table-of-contents">Back to Table of Contents</a></p>
 <hr />
 <h2 id="common-errors-and-how-to-fix-them">Common Errors and How to Fix Them<a class="headerlink" href="#common-errors-and-how-to-fix-them" title="Permanent link">&para;</a></h2>
@@ -9458,7 +9525,20 @@ NameError: name 'unknown_variable' is not defined
 </tr>
 </tbody>
 </table>
-<p><img alt="Flowchart" src="../../resources/ch14-tkinter-September-2026-professional-error-handling-007.png" /></p>
+<p><img alt="Flowchart" src="../../resources/S14-LR-ch14-tkinter-September-2026-professional-error-handling-007.png" /></p>
+<p><strong>Reading the figure</strong></p>
+<ul>
+<li><strong>Step 1:</strong> Something in the program is not working.</li>
+<li><strong>Step 2:</strong> Does the Trigger Error button produce no popup and no ERROR entry?</li>
+<li><strong>Step 3:</strong> Yes: install the handler on <code>root.report_callback_exception</code> too.</li>
+<li><strong>Step 4:</strong> No: does typing fail to trigger validation?</li>
+<li><strong>Step 5:</strong> Yes: check <code>textvariable=input_var</code> on the Entry and <code>trace_add()</code> on that same variable.</li>
+<li><strong>Step 6:</strong> No: is there a <code>TypeError</code> about the number of arguments?</li>
+<li><strong>Step 7:</strong> Yes: Tkinter passes three values to a trace callback, so write <code>def validate(*args):</code>.</li>
+<li><strong>Step 8:</strong> No: is the log file empty, or missing timestamps?</li>
+<li><strong>Step 9:</strong> Yes: call <code>logging.basicConfig()</code> once near the top, with a <code>format</code> that includes <code>%(asctime)s</code>.</li>
+<li><strong>Step 10:</strong> No: check the log level, and pass <code>exc_info</code> so the traceback is recorded.</li>
+</ul>
 <p><a href="#table-of-contents">Back to Table of Contents</a></p>
 <hr />
 

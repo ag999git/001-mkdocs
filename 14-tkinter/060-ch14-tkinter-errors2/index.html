@@ -8607,10 +8607,10 @@
 <h3 id="tkinter-delayed-tasks-safe-callbacks-and-multiple-windows">Tkinter Delayed Tasks, Safe Callbacks and Multiple Windows<a class="headerlink" href="#tkinter-delayed-tasks-safe-callbacks-and-multiple-windows" title="Permanent link">&para;</a></h3>
 <p>In many GUI applications, some tasks do not run immediately. Instead, they run <strong>after a delay</strong>.</p>
 <p>Examples:</p>
-<div class="highlight"><pre><span></span><code><span class="n">Show</span> <span class="n">reminder</span> <span class="n">after</span> <span class="mi">5</span> <span class="n">seconds</span>
-<span class="n">Auto</span><span class="o">-</span><span class="n">save</span> <span class="n">after</span> <span class="n">some</span> <span class="n">time</span>
-<span class="n">Load</span> <span class="n">data</span> <span class="n">after</span> <span class="n">startup</span>
-<span class="n">Display</span> <span class="n">notification</span> <span class="n">later</span>
+<div class="highlight"><pre><span></span><code>Show reminder after 5 seconds
+Auto-save after some time
+Load data after startup
+Display notification later
 </code></pre></div>
 <p>Tkinter provides the: <code>after()</code> method for scheduling delayed actions.</p>
 <p>However, delayed tasks may sometimes fail and cause errors. Therefore, programmers must use <strong>safe callbacks</strong> with proper <strong>error handling</strong>.</p>
@@ -8985,7 +8985,19 @@ RESULT: ['the program is still running']
 <li>Write your own message rather than showing Python's.</li>
 <li>Update the on-screen status as well as the pop-up, so there is a visible record after the dialog is dismissed.</li>
 </ol>
-<p><img alt="Flowchart" src="../../resources/ch14-tkinter-September-2026-safe-callback-001.png" /></p>
+<p><img alt="Flowchart" src="../../resources/S14-LR-ch14-tkinter-September-2026-safe-callback-001.png" /></p>
+<p><strong>Reading the figure</strong></p>
+<ul>
+<li><strong>Step 1:</strong> The delayed callback (scheduled with <code>after()</code>) starts.</li>
+<li><strong>Step 2:</strong> Does the window still exist, <code>winfo_exists()</code>?</li>
+<li><strong>Step 3:</strong> No: there is nothing to update, so return quietly.</li>
+<li><strong>Step 4:</strong> Yes: read the current text from the entry box, fresh, inside the callback.</li>
+<li><strong>Step 5:</strong> Inside <code>try-except</code>: can the text be converted to a whole number?</li>
+<li><strong>Step 6:</strong> Yes: is the number between 0 and 100?</li>
+<li><strong>Step 7:</strong> No to either check: show a friendly message written by you, not Python's own error text.</li>
+<li><strong>Step 8:</strong> Yes: show the success message.</li>
+<li><strong>Step 9:</strong> Either way, update the on-screen status label as a visible record.</li>
+</ul>
 <p><a href="#table-of-contents">Back to Table of Contents</a></p>
 <h3 id="a4-the-toplevel-window">A4. The <code>Toplevel()</code> Window<a class="headerlink" href="#a4-the-toplevel-window" title="Permanent link">&para;</a></h3>
 <p><strong>Purpose of <code>Toplevel()</code></strong></p>
@@ -9055,8 +9067,8 @@ RESULT: ['the program is still running']
 <td>Verified: putting a <code>PhotoImage</code> created for the first window into a widget of the second raises <code>TclError: image "pyimage1" doesn't exist</code>.</td>
 </tr>
 <tr>
-<td>Only one event loop runs</td>
-<td><code>mainloop()</code> serves the window it was called on. The second window's clicks are not processed until the first loop ends, so it appears frozen.</td>
+<td>One loop keeps running for both</td>
+<td>A single <code>mainloop()</code> processes events for every <code>Tk()</code> window, and it does not return until all of them are destroyed, so closing the "main" window can leave the program running.</td>
 </tr>
 <tr>
 <td>Shutdown becomes unpredictable</td>
@@ -9074,14 +9086,22 @@ RESULT: ['the program is still running']
 <span class="n">win</span><span class="o">.</span><span class="n">transient</span><span class="p">(</span><span class="n">root</span><span class="p">)</span>   <span class="c1"># keeps this window above its parent, and minimises with it</span>
 <span class="n">win</span><span class="o">.</span><span class="n">grab_set</span><span class="p">()</span>        <span class="c1"># makes it modal: the user must deal with it before returning to the parent</span>
 </code></pre></div>
-<p><img alt="Flowchart" src="../../resources/ch14-tkinter-September-2026-safe-callback-002.png" /></p>
+<p><img alt="Flowchart" src="../../resources/S14-LR-ch14-tkinter-September-2026-safe-callback-002.png" /></p>
+<p><strong>Reading the figure</strong></p>
+<ul>
+<li>Create exactly one <code>tk.Tk()</code> window; it owns the Tk engine and runs the single <code>mainloop()</code>.</li>
+<li>Every extra window, such as a task window, is a <code>tk.Toplevel(root)</code>.</li>
+<li>A settings window is another <code>Toplevel</code>.</li>
+<li>An about box is another <code>Toplevel</code>.</li>
+<li>All of them use the same engine and event loop, so images, fonts and variables can be shared freely.</li>
+</ul>
 <p><a href="#table-of-contents">Back to Table of Contents</a></p>
 <h3 id="a5-best-practices">A5. Best Practices<a class="headerlink" href="#a5-best-practices" title="Permanent link">&para;</a></h3>
 <p>The five rules asked for by the question, each with the reason behind it:</p>
 <ol>
 <li><strong>Prefer <code>after()</code> over <code>time.sleep()</code> in Tkinter.</strong> <code>sleep()</code> stops the event loop, so the window freezes and stops redrawing. <code>after()</code> schedules the work and lets the loop carry on.</li>
 <li><strong>Always use <code>try-except</code> in delayed tasks.</strong> A delayed task runs in a world that may have changed since it was scheduled, and an uncaught error fails silently, leaving the user with no idea what went wrong.</li>
-<li><strong>Use <code>Toplevel()</code> for extra windows.</strong> A second <code>Tk()</code> starts a second engine that cannot share images or variables and is not served by your <code>mainloop()</code>.</li>
+<li><strong>Use <code>Toplevel()</code> for extra windows.</strong> A second <code>Tk()</code> starts a second engine that cannot share images or variables with the first, and it keeps <code>mainloop()</code> running after the main window is closed.</li>
 <li><strong>Validate input before processing.</strong> Check both that the value <em>can</em> be converted and that the converted value is in range, and treat those as two separate checks with two separate messages.</li>
 <li><strong>Show friendly errors using <code>messagebox</code>.</strong> Write the message yourself in plain language rather than forwarding Python's internal wording to the user.</li>
 </ol>
@@ -9411,7 +9431,7 @@ start_task(): scheduled process_number in 3 seconds, job id = after#8
 <ul>
 <li>Every invalid case produced a message written in plain English. Nothing that Python said internally reached the user.</li>
 <li>In the double-click test, the second click cancelled the first job — <code>job id = after#6</code> was cancelled and replaced by <code>after#7</code>, so only one pop-up appeared instead of two.</li>
-<li>In the final test the window was closed during the wait. Nothing crashed, and no error appeared. A job scheduled with <code>win_top.after(...)</code> is cancelled automatically when <code>win_top</code> is destroyed, so the callback never ran at all. The <code>winfo_exists()</code> check in Step 5a is a second line of defence, and it becomes essential if the job is ever scheduled on <code>root</code> instead of on the child window.</li>
+<li>In the final test the window was closed during the wait. Nothing crashed, and no error appeared. When <code>win_top</code> is destroyed, Tkinter deletes the Tcl command that the scheduled job points to, so when the timer fires the Python callback is never called. The <code>winfo_exists()</code> check in Step 5a is a second line of defence, and it becomes essential if the job is ever scheduled on <code>root</code> instead of on the child window.</li>
 </ul>
 <p><a href="#table-of-contents">Back to Table of Contents</a></p>
 <h3 id="b7-optional-enhancement-a-live-countdown">B7. Optional Enhancement — A Live Countdown<a class="headerlink" href="#b7-optional-enhancement-a-live-countdown" title="Permanent link">&para;</a></h3>
@@ -9496,13 +9516,28 @@ start_task(): scheduled process_number in 3 seconds, job id = after#8
 <td>Create one <code>Tk()</code> and use <code>Toplevel()</code> for every other window.</td>
 </tr>
 <tr>
-<td>The second window never responds to clicks</td>
-<td>Two <code>Tk()</code> objects were created, and <code>mainloop()</code> is only serving the first.</td>
+<td>The program keeps running after the main window is closed</td>
+<td>Two <code>Tk()</code> objects were created; <code>mainloop()</code> only returns once every <code>Tk()</code> window has been destroyed.</td>
 <td>Same fix: one <code>Tk()</code>, and <code>Toplevel()</code> for the rest.</td>
 </tr>
 </tbody>
 </table>
-<p><img alt="Flowchart" src="../../resources/ch14-tkinter-September-2026-safe-callback-003.png" /></p>
+<p><img alt="Flowchart" src="../../resources/S14-LR-ch14-tkinter-September-2026-safe-callback-003.png" /></p>
+<p><strong>Reading the figure</strong></p>
+<ul>
+<li><strong>Step 1:</strong> The delayed task is not behaving as expected.</li>
+<li><strong>Step 2:</strong> Did it run immediately instead of waiting?</li>
+<li><strong>Step 3:</strong> Yes: the function was called, <code>after(3000, task())</code>; pass its name without brackets, <code>after(3000, task)</code>.</li>
+<li><strong>Step 4:</strong> No: did it run far too soon?</li>
+<li><strong>Step 5:</strong> Yes: <code>after()</code> counts milliseconds, so three seconds is <code>3000</code>, not <code>3</code>.</li>
+<li><strong>Step 6:</strong> No: did the window freeze during the wait?</li>
+<li><strong>Step 7:</strong> Yes: <code>time.sleep()</code> was used; replace it with <code>after()</code>.</li>
+<li><strong>Step 8:</strong> No: did nothing at all appear to happen?</li>
+<li><strong>Step 9:</strong> Yes: an exception was raised inside the callback; look for a traceback in the console and add <code>try-except</code> with a message.</li>
+<li><strong>Step 10:</strong> No: did you get <code>TclError: invalid command name</code>?</li>
+<li><strong>Step 11:</strong> Yes: the callback touched a destroyed widget; check <code>winfo_exists()</code> first, or cancel pending jobs when the window closes.</li>
+<li><strong>Step 12:</strong> Otherwise, several jobs may be stacking up: store the job id and call <code>after_cancel()</code> before scheduling again.</li>
+</ul>
 <p><a href="#table-of-contents">Back to Table of Contents</a></p>
 
 

@@ -8515,7 +8515,7 @@
 <hr />
 <h2 id="1-how-tkinter-talks-to-your-operating-system">1. How Tkinter Talks to Your Operating System<a class="headerlink" href="#1-how-tkinter-talks-to-your-operating-system" title="Permanent link">&para;</a></h2>
 <p>Every time your program creates a root window with <code>root = tk.Tk()</code>, Tkinter opens a direct line of communication with your operating system's Window Manager. On Windows this is the Desktop Window Manager; on macOS it is Quartz/Aqua; on Linux it is typically X11 or Wayland. You do not need to remember these names — the point is simply that a different piece of software on every operating system is actually responsible for drawing the window frame and deciding where it sits on the screen, and Tkinter's job is to ask that software for what you want.</p>
-<p>This leads to an important idea that is easy to miss as a beginner: <strong>when you call a method like <code>window.geometry(...)</code> or <code>window.state(...)</code>, you are not directly drawing pixels on the screen.</strong> You are sending a <em>request</em> to the Window Manager, which then decides how to honor it. Almost all of the time your request is granted exactly as asked, which is why the distinction rarely matters in practice — but it explains a few things that otherwise seem strange, such as why <code>window.state("zoomed")</code> behaves slightly differently on Linux than it does on Windows (see the table in the next section), or why setting <code>-alpha</code> (transparency) may be ignored on a Linux system that does not have visual compositing turned on.</p>
+<p>This leads to an important idea that is easy to miss as a beginner: <strong>when you call a method like <code>window.geometry(...)</code> or <code>window.state(...)</code>, you are not directly drawing pixels on the screen.</strong> You are sending a <em>request</em> to the Window Manager, which then decides how to honor it. Almost all of the time your request is granted exactly as asked, which is why the distinction rarely matters in practice — but it explains a few things that otherwise seem strange, such as why <code>window.state("zoomed")</code> works on Windows and macOS but is rejected with a <code>TclError</code> on Linux (X11), where <code>window.attributes("-zoomed", True)</code> is used instead (see the table in the next section), or why setting <code>-alpha</code> (transparency) may be ignored on a Linux system that does not have visual compositing turned on.</p>
 <p>Understanding this distinction is useful for a very practical reason: it lets you deliberately shape how a user is allowed to experience your application. For example, you can:</p>
 <ul>
 <li>Prevent a user from shrinking a form so far that its text wraps into unreadable blocks, by setting a sensible <code>minsize()</code>.</li>
@@ -8679,7 +8679,7 @@
 </tr>
 <tr>
 <td>Default behavior</td>
-<td>If you never call this method, the window automatically shrinks or grows to fit whatever widgets are packed inside it, and opens at position <code>+0+0</code> (the top-left corner of the screen).</td>
+<td>If you never call this method, the window automatically shrinks or grows to fit whatever widgets are packed inside it, and the window manager decides where it first appears on screen.</td>
 </tr>
 <tr>
 <td>What happens under the hood</td>
@@ -8739,7 +8739,7 @@
 </tr>
 <tr>
 <td>Common mistakes</td>
-<td>Passing the strings <code>"True"</code>/<code>"False"</code> instead of the actual Boolean values <code>True</code>/<code>False</code> will raise a <code>TypeError</code>. Also, be careful not to lock resizing so aggressively that content becomes inaccessible on a small screen.</td>
+<td>Passing the strings <code>"True"</code>/<code>"False"</code> instead of the actual Boolean values <code>True</code>/<code>False</code> is unnecessary but harmless (Tcl reads them as booleans), while any other string, such as <code>"yes please"</code>, raises a <code>TclError</code>. Also, be careful not to lock resizing so aggressively that content becomes inaccessible on a small screen.</td>
 </tr>
 <tr>
 <td>Cross-platform note</td>
@@ -8767,7 +8767,7 @@
 </tr>
 <tr>
 <td>Default behavior</td>
-<td>Defaults to <code>0, 0</code>, meaning the user could compress the window down to a practically invisible sliver.</td>
+<td>Defaults to <code>1, 1</code>, meaning the user could compress the window down to a practically invisible sliver.</td>
 </tr>
 <tr>
 <td>What happens under the hood</td>
@@ -8875,7 +8875,7 @@
 </tr>
 <tr>
 <td>Cross-platform note</td>
-<td><code>"zoomed"</code> works as expected on Windows and macOS. On Linux, some window managers (for example, certain GNOME or KDE configurations) may ignore the exact "zoomed" flag and simply treat the request as a standard maximize.</td>
+<td><code>"zoomed"</code> works as expected on Windows and macOS. On Linux (X11), Tk does not accept "zoomed" at all: <code>window.state("zoomed")</code> raises <code>TclError: bad argument "zoomed": must be normal, iconic, or withdrawn</code>. Use <code>window.attributes("-zoomed", True)</code> there instead.</td>
 </tr>
 </tbody>
 </table>
@@ -9227,7 +9227,7 @@
 </tr>
 <tr>
 <td>Cross-platform note</td>
-<td><code>destroy()</code> is the safest, recommended way to close a window on every platform. <code>quit()</code> is considered legacy and is best avoided in modern code.</td>
+<td><code>destroy()</code> is the safest, recommended way to close a window on every platform. <code>quit()</code> is not deprecated, but it only stops the event loop, so use <code>destroy()</code> when you actually want the window closed.</td>
 </tr>
 </tbody>
 </table>
@@ -9276,9 +9276,16 @@
 </tbody>
 </table>
 <h3 id="23-visualizing-the-window-lifecycle">2.3 Visualizing the Window Lifecycle<a class="headerlink" href="#23-visualizing-the-window-lifecycle" title="Permanent link">&para;</a></h3>
-<p>The four states controlled by <code>state()</code> (plus the special "withdrawn" state controlled by <code>withdraw()</code>/<code>deiconify()</code>) form a small cycle. The diagram below shows how a window moves between them. It uses plain flowchart syntax so that it can also be opened and edited inside diagramming tools such as draw.io.</p>
-<p><img alt="Flowchart" src="../../resources/ch14-tkinter-September-2026-window-configuration-lifecycle-management.png" /></p>
-<p>Reading this diagram: a window starts out <strong>Normal</strong>. Calling <code>state("iconic")</code> sends it to <strong>Iconic</strong> (minimized); calling <code>deiconify()</code> or <code>state("normal")</code> brings it back. Calling <code>state("zoomed")</code> sends it to <strong>Zoomed</strong> (maximized); calling <code>state("normal")</code> restores it. Calling <code>withdraw()</code> sends it to <strong>Withdrawn</strong>, the most complete form of hiding — the window disappears from the taskbar entirely — and only <code>deiconify()</code> can bring it back.</p>
+<p>The four states that <code>state()</code> can report and set (normal, iconic, zoomed, and withdrawn, the last also reachable with <code>withdraw()</code>/<code>deiconify()</code>) form a small cycle. The diagram below shows how a window moves between them. It uses plain flowchart syntax so that it can also be opened and edited inside diagramming tools such as draw.io.</p>
+<p><img alt="Flowchart" src="../../resources/S14-LR-ch14-tkinter-September-2026-window-configuration-lifecycle-management.png" /></p>
+<p><strong>Reading the figure</strong></p>
+<ul>
+<li>A window starts out Normal: visible, with its usual size and position.</li>
+<li>Iconic: <code>state("iconic")</code> or <code>iconify()</code> minimizes it to the taskbar; <code>state("normal")</code> or <code>deiconify()</code> brings it back.</li>
+<li>Zoomed: <code>state("zoomed")</code> maximizes it on Windows and macOS (on Linux use <code>attributes("-zoomed", True)</code>); <code>state("normal")</code> restores it.</li>
+<li>Withdrawn: <code>withdraw()</code> hides it completely, even from the taskbar; <code>deiconify()</code> (or <code>state("normal")</code>) brings it back.</li>
+</ul>
+<p>Reading this diagram: a window starts out <strong>Normal</strong>. Calling <code>state("iconic")</code> sends it to <strong>Iconic</strong> (minimized); calling <code>deiconify()</code> or <code>state("normal")</code> brings it back. Calling <code>state("zoomed")</code> (on Linux, <code>attributes("-zoomed", True)</code>) sends it to <strong>Zoomed</strong> (maximized); calling <code>state("normal")</code> restores it. Calling <code>withdraw()</code> sends it to <strong>Withdrawn</strong>, the most complete form of hiding — the window disappears from the taskbar entirely — and <code>deiconify()</code> (or <code>state("normal")</code>) brings it back.</p>
 <hr />
 <h2 id="3-bringing-it-all-together-the-complete-example-script">3. Bringing It All Together: The Complete Example Script<a class="headerlink" href="#3-bringing-it-all-together-the-complete-example-script" title="Permanent link">&para;</a></h2>
 <p>The script below puts every method from Section 2 to work inside one small, complete application. Rather than only showing the finished file, this section builds it up piece by piece, the way you might type it yourself, explaining what each step does and — since a GUI does not normally print anything to the console — adding a few teaching-only <code>print()</code> statements so you can see, in text, exactly what is happening at each stage. Those <code>print()</code> calls are not required for the application to work; they exist purely so that as you click buttons in the window, you can watch a matching line of confirmation appear in the terminal you launched the script from.</p>
@@ -9621,7 +9628,18 @@
 </code></pre></div>
 <h3 id="36-visualizing-the-hide-parent-show-auxiliary-flow">3.6 Visualizing the "Hide Parent, Show Auxiliary" Flow<a class="headerlink" href="#36-visualizing-the-hide-parent-show-auxiliary-flow" title="Permanent link">&para;</a></h3>
 <p>The <code>open_auxiliary()</code> method above is a good example of <code>withdraw()</code> and <code>deiconify()</code> working as a pair. The flowchart below traces that sequence of events from the moment the user clicks the button to the moment the main window reappears.</p>
-<p><img alt="Flowchart" src="../../resources/ch14-tkinter-September-2026-window-configuration-lifecycle-management-02.png" /></p>
+<p><img alt="Flowchart" src="../../resources/S14-LR-ch14-tkinter-September-2026-window-configuration-lifecycle-management-02.png" /></p>
+<p><strong>Reading the figure</strong></p>
+<ul>
+<li><strong>Step 1:</strong> The main application window is open.</li>
+<li><strong>Step 2:</strong> The user clicks the button that calls <code>open_auxiliary()</code>.</li>
+<li><strong>Step 3:</strong> <code>self.withdraw()</code> hides the main window completely.</li>
+<li><strong>Step 4:</strong> A <code>tk.Toplevel</code> auxiliary window is created and shown.</li>
+<li><strong>Step 5:</strong> The user closes the auxiliary window with its close button.</li>
+<li><strong>Step 6:</strong> Because of <code>aux.protocol("WM_DELETE_WINDOW", on_aux_close)</code>, the handler <code>on_aux_close()</code> runs instead of the default close.</li>
+<li><strong>Step 7:</strong> <code>aux.destroy()</code> removes the auxiliary window.</li>
+<li><strong>Step 8:</strong> <code>self.deiconify()</code> (and <code>self.lift()</code>) makes the main window visible again.</li>
+</ul>
 <h3 id="37-starting-the-application">3.7 Starting the Application<a class="headerlink" href="#37-starting-the-application" title="Permanent link">&para;</a></h3>
 <p>Finally, the standard <code>if __name__ == "__main__":</code> guard creates one instance of the class and starts the event loop.</p>
 <div class="highlight"><pre><span></span><code><span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s2">"__main__"</span><span class="p">:</span>

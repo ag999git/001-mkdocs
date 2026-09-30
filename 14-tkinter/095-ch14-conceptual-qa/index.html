@@ -8772,7 +8772,16 @@
 <p>When you write <code>lbl = tk.Label(root, text=self.text_var)</code>, you are performing a one-time string read at the moment the widget is created. Since <code>self.text_var</code> is a <code>StringVar</code> object rather than a plain string, Tkinter converts it to text and displays its internal name, such as <code>PY_VAR0</code>. That value never changes, because the label is not wired to the variable — it simply took a snapshot.</p>
 <p>When you write <code>lbl = tk.Label(root, textvariable=self.text_var)</code>, you create a lasting connection. The label subscribes to the variable, and whenever the <code>StringVar</code>'s value changes — through <code>.set()</code>, or because the user typed into a bound <code>Entry</code> — the engine pushes the new content to the label, which repaints immediately.</p>
 <p>The key rule is: <strong><code>text=</code> is a static assignment; <code>textvariable=</code> is a live binding.</strong></p>
-<p><img alt="Flowchart" src="../../resources/ch14-tkinter-September-2026-conceptual-QA-001.png" /></p>
+<p><img alt="Flowchart" src="../../resources/S14-LR-ch14-tkinter-September-2026-conceptual-QA-001.png" /></p>
+<p><strong>Reading the figure</strong></p>
+<ul>
+<li><strong>Step 1:</strong> Somewhere in the program, <code>var.set(...)</code> gives the <code>StringVar</code> a new value.</li>
+<li><strong>Step 2:</strong> How was the Label created?</li>
+<li><strong>Step 3:</strong> With <code>textvariable=var</code>: the Label is linked to the variable.</li>
+<li><strong>Step 4:</strong> Tk pushes the new value to the Label, which repaints immediately.</li>
+<li><strong>Step 5:</strong> With <code>text=var</code>: at creation Tkinter turned the variable into text, its internal name such as <code>PY_VAR0</code>, and copied that once.</li>
+<li><strong>Step 6:</strong> The Label keeps showing <code>PY_VAR0</code> and never changes.</li>
+</ul>
 <p>A short demonstration, with its real output:</p>
 <div class="highlight"><pre><span></span><code><span class="c1"># Step 1: One variable, two labels built in the two different ways.</span>
 <span class="kn">import</span><span class="w"> </span><span class="nn">tkinter</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">tk</span>
@@ -8865,7 +8874,7 @@ var.get()       gives 'JohnDoe'
 <span class="n">widget</span><span class="o">.</span><span class="n">bind</span><span class="p">(</span><span class="s2">"&lt;Button-1&gt;"</span><span class="p">,</span> <span class="n">on_click</span><span class="p">)</span>
 </code></pre></div>
 <p>Useful attributes on that event object include <code>event.x</code> and <code>event.y</code> (position), <code>event.char</code> and <code>event.keysym</code> (the key pressed), and <code>event.widget</code> (which widget it happened to).</p>
-<p><strong><code>bind("&lt;&lt;ListboxSelect&gt;&gt;")</code></strong> attaches a handler to a <em>virtual</em> event, written with double angle brackets. Virtual events describe a logical change rather than a physical action — the selection in a <code>Listbox</code> actually changed, a <code>Combobox</code> value was chosen, and so on. This is the smarter choice when you care about the data rather than the mouse, because it does not fire for clicks that change nothing.</p>
+<p><strong><code>bind("&lt;&lt;ListboxSelect&gt;&gt;")</code></strong> attaches a handler to a <em>virtual</em> event, written with double angle brackets. Virtual events describe a logical change rather than a physical action — the selection in a <code>Listbox</code> actually changed, a <code>Combobox</code> value was chosen, and so on. This is the smarter choice when you care about the data rather than the mouse, because it fires only for selection actions, not for every mouse event (note that it does still fire when the user clicks the item that is already selected).</p>
 <table>
 <thead>
 <tr>
@@ -8904,7 +8913,7 @@ var.get()       gives 'JohnDoe'
 <td>Fires on a click that changes nothing?</td>
 <td>Not applicable</td>
 <td>Yes</td>
-<td>No</td>
+<td>Yes (re-clicking the selected item still fires it)</td>
 </tr>
 <tr>
 <td>Typical use</td>
@@ -8932,7 +8941,17 @@ TclError: cannot use geometry manager grid inside .!frame which already has slav
 <p>The error names the problem precisely: this container already has children managed by <code>pack</code>, so <code>grid</code> will not touch it. There is no loop and no hang; the exception is raised in a few thousandths of a second. If it happens while your program is starting up, the uncaught error stops the script, which can look like a crash. If it happens inside a button's handler, Tkinter prints the error to the console and the window carries on.</p>
 <p><code>pack()</code> stacks children in blocks, top to bottom or side to side. <code>grid()</code> places them in a table of rows and columns. The two use completely different bookkeeping for the same container, which is why Tk refuses to combine them rather than trying.</p>
 <p>What you <strong>can</strong> do — and should — is use different managers in <em>different</em> containers:</p>
-<p><img alt="Flowchart" src="../../resources/ch14-tkinter-September-2026-conceptual-QA-004.png" /></p>
+<p><img alt="Flowchart" src="../../resources/S14-LR-ch14-tkinter-September-2026-conceptual-QA-004.png" /></p>
+<p><strong>Reading the figure</strong></p>
+<ul>
+<li>Bad: in one container, some children are placed with <code>pack()</code> and others with <code>grid()</code>.</li>
+<li>Tk refuses at once: <code>TclError: cannot use geometry manager grid inside … which already has slaves managed by pack</code>.</li>
+<li>Good: the root window holds frames.</li>
+<li><code>frame_one</code> is placed in the root with <code>pack()</code>.</li>
+<li><code>frame_two</code> is also placed in the root with <code>pack()</code>.</li>
+<li>Inside <code>frame_one</code>, every child uses <code>grid()</code>: allowed, because it is a different container.</li>
+<li>Inside <code>frame_two</code>, every child uses <code>pack()</code>: also allowed.</li>
+</ul>
 <p>Each container is judged on its own, so a frame can be packed into the root while everything inside that frame uses grid. The rule only forbids two managers competing for the same parent.</p>
 <p><a href="#table-of-contents">Back to Table of Contents</a></p>
 <h3 id="7-what-is-the-golden-rule-for-radiobutton-variables-and-what-happens-if-each-radiobutton-gets-its-own-variable-instead-of-sharing-one">7. What is the "Golden Rule" for Radiobutton variables, and what happens if each Radiobutton gets its own variable instead of sharing one?<a class="headerlink" href="#7-what-is-the-golden-rule-for-radiobutton-variables-and-what-happens-if-each-radiobutton-gets-its-own-variable-instead-of-sharing-one" title="Permanent link">&para;</a></h3>
@@ -8985,7 +9004,15 @@ separate variables hold: ['S', 'M', ''] - two buttons selected at the same time
 </tr>
 </tbody>
 </table>
-<p><img alt="Flowchart" src="../../resources/ch14-tkinter-September-2026-conceptual-QA-005.png" /></p>
+<p><img alt="Flowchart" src="../../resources/S14-LR-ch14-tkinter-September-2026-conceptual-QA-005.png" /></p>
+<p><strong>Reading the figure</strong></p>
+<ul>
+<li><strong>Step 1:</strong> Layer 1: your Python code creates a widget, such as <code>tk.Button(...)</code>.</li>
+<li><strong>Step 2:</strong> Layer 2: Tkinter translates the call into a Tcl command.</li>
+<li><strong>Step 3:</strong> Layer 3: the embedded Tcl interpreter passes it to the Tk toolkit, which knows how each widget behaves and looks.</li>
+<li><strong>Step 4:</strong> Layer 4: Tk asks the operating system for a window and a drawing surface.</li>
+<li><strong>Step 5:</strong> The operating system renders the actual pixels on screen.</li>
+</ul>
 <p><strong>On the appearance question</strong>, one clarification is worth making. The difference is not really macOS against Windows — it is which widget family you used.</p>
 <ul>
 <li>A <strong><code>ttk</code> widget</strong> asks the operating system's own theming system to draw it, so it takes on the native appearance of whatever platform it runs on. A <code>ttk.Button</code> looks like a macOS button on macOS and like a modern Windows button on Windows.</li>
@@ -9245,7 +9272,7 @@ columnspan=3, sticky='ew' -&gt; 360 pixels wide
 </code></pre></div>
 <p>If you do not keep the identifier, you have no way to stop the job. It will still fire when its time comes, even if the user has moved to another screen or the work is no longer relevant — and if it then tries to update a widget that has since been destroyed, it can raise an error of its own.</p>
 <p>This matters most for repeating jobs. A function that re-books itself with <code>after()</code> at the end of every run will keep going forever unless something cancels it, so a clock or an animation should always store its latest identifier. The habit worth forming is: <strong>if you can start it, make sure you can stop it.</strong></p>
-<p><strong>On the related method in the question's original wording:</strong> <code>trace_add()</code> also returns something — a handle string identifying that watch — which you can pass to <code>variable.trace_remove("write", handle)</code> to stop watching a variable. The two are easy to confuse because both hand back a string you may need later, but they cancel quite different things: <code>after_cancel()</code> stops a delayed job, and <code>trace_remove()</code> stops a variable watch.</p>
+<p><strong>A related method worth knowing:</strong> <code>trace_add()</code> also returns something — a handle string identifying that watch — which you can pass to <code>variable.trace_remove("write", handle)</code> to stop watching a variable. The two are easy to confuse because both hand back a string you may need later, but they cancel quite different things: <code>after_cancel()</code> stops a delayed job, and <code>trace_remove()</code> stops a variable watch.</p>
 <p><a href="#table-of-contents">Back to Table of Contents</a></p>
 <h3 id="18-why-is-toplevel-used-instead-of-creating-a-second-tk-window-what-happens-if-you-create-multiple-tk-instances">18. Why is <code>Toplevel()</code> used instead of creating a second Tk() window? What happens if you create multiple <code>Tk()</code> instances?<a class="headerlink" href="#18-why-is-toplevel-used-instead-of-creating-a-second-tk-window-what-happens-if-you-create-multiple-tk-instances" title="Permanent link">&para;</a></h3>
 <p>A Tkinter application should have exactly <strong>one</strong> <code>Tk()</code> instance. Creating <code>Tk()</code> does far more than open a window: it starts a Tcl interpreter, loads the Tk toolkit and sets up the event system. A second <code>Tk()</code> therefore starts a second, entirely separate copy of all of that, and the two know nothing about each other.</p>
@@ -9269,7 +9296,7 @@ columnspan=3, sticky='ew' -&gt; 360 pixels wide
 </tr>
 <tr>
 <td>Served by your existing <code>mainloop()</code></td>
-<td>No</td>
+<td>Yes, but it keeps the loop alive after the main window closes</td>
 <td>Yes</td>
 </tr>
 <tr>
@@ -9289,10 +9316,10 @@ columnspan=3, sticky='ew' -&gt; 360 pixels wide
 </tr>
 </tbody>
 </table>
-<p>The practical symptoms of two <code>Tk()</code> objects are hard to diagnose: the second window may not respond to clicks at all, because <code>mainloop()</code> is serving the first; images created for one cannot be used in the other; and shutting the program down cleanly becomes unpredictable. A <code>Toplevel</code> avoids all of it, has its own title bar and close button, and is removed completely when you call <code>.destroy()</code> on it while the rest of the application carries on.</p>
+<p>The practical symptoms of two <code>Tk()</code> objects are hard to diagnose: closing the main window may not end the program, because <code>mainloop()</code> keeps running until every <code>Tk()</code> window is destroyed; images created for one cannot be used in the other; and shutting the program down cleanly becomes unpredictable. A <code>Toplevel</code> avoids all of it, has its own title bar and close button, and is removed completely when you call <code>.destroy()</code> on it while the rest of the application carries on.</p>
 <p><a href="#table-of-contents">Back to Table of Contents</a></p>
 <h3 id="19-what-is-sysexcepthook-and-why-is-it-important-for-tkinter-applications-specifically">19. What is sys.excepthook, and why is it important for Tkinter applications specifically?<a class="headerlink" href="#19-what-is-sysexcepthook-and-why-is-it-important-for-tkinter-applications-specifically" title="Permanent link">&para;</a></h3>
-<p><code>sys.excepthook</code> is the function Python calls when an exception reaches the top of the program without any <code>try-except</code> having caught it. Normally it prints a traceback and the program ends. Replacing it lets you take over that moment — show a friendly dialog, write the details to a log file, and keep the program alive:</p>
+<p><code>sys.excepthook</code> is the function Python calls when an exception reaches the top of the program without any <code>try-except</code> having caught it. Normally it prints a traceback and the program ends. Replacing it lets you take over that moment — show a friendly dialog, and write the details to a log file before the program ends:</p>
 <div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">handle_error</span><span class="p">(</span><span class="n">exc_type</span><span class="p">,</span> <span class="n">exc_value</span><span class="p">,</span> <span class="n">exc_traceback</span><span class="p">):</span>
     <span class="n">messagebox</span><span class="o">.</span><span class="n">showerror</span><span class="p">(</span><span class="s2">"Unexpected Error"</span><span class="p">,</span> <span class="sa">f</span><span class="s2">"</span><span class="si">{</span><span class="n">exc_type</span><span class="o">.</span><span class="vm">__name__</span><span class="si">}</span><span class="s2">: </span><span class="si">{</span><span class="n">exc_value</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
 
@@ -9310,7 +9337,17 @@ columnspan=3, sticky='ew' -&gt; 360 pixels wide
 <span class="n">root</span><span class="o">.</span><span class="n">report_callback_exception</span> <span class="o">=</span> <span class="n">handle_error</span>
 </code></pre></div>
 <p>Why this matters so much in a GUI is that the default behaviour for a callback error is close to the worst possible one for a user. The program does not crash — Tkinter prints a traceback to the console and carries on — so the user clicks a button, absolutely nothing happens, no message appears, and the only explanation is in a terminal they are probably not looking at. A global handler converts that silence into a clear message.</p>
-<p><img alt="Flowchart" src="../../resources/ch14-tkinter-September-2026-conceptual-QA-006.png" /></p>
+<p><img alt="Flowchart" src="../../resources/S14-LR-ch14-tkinter-September-2026-conceptual-QA-006.png" /></p>
+<p><strong>Reading the figure</strong></p>
+<ul>
+<li><strong>Step 1:</strong> An exception is raised somewhere in the program.</li>
+<li><strong>Step 2:</strong> Was it raised inside a Tkinter callback: a button click, an <code>after()</code> job, a <code>bind()</code> handler or a variable trace?</li>
+<li><strong>Step 3:</strong> Yes: Tkinter catches it first.</li>
+<li><strong>Step 4:</strong> Tkinter calls <code>root.report_callback_exception</code> (set on the root window).</li>
+<li><strong>Step 5:</strong> No, ordinary top-level code: the exception travels up the chain of calls.</li>
+<li><strong>Step 6:</strong> Python calls <code>sys.excepthook</code>.</li>
+<li><strong>Step 7:</strong> Point both names at the same handler function to cover every case.</li>
+</ul>
 <p><a href="#table-of-contents">Back to Table of Contents</a></p>
 <h3 id="20-explain-the-unlock-edit-lock-pattern-used-with-read-only-widgets-like-spinbox-and-combobox-why-is-it-necessary">20. Explain the "Unlock-Edit-Lock" pattern used with read-only widgets like Spinbox and Combobox. Why is it necessary?<a class="headerlink" href="#20-explain-the-unlock-edit-lock-pattern-used-with-read-only-widgets-like-spinbox-and-combobox-why-is-it-necessary" title="Permanent link">&para;</a></h3>
 <p>The pattern itself is:</p>
@@ -9606,7 +9643,16 @@ second mainloop() returned after 0.0000s, no error
 <h3 id="28-why-does-the-document-say-dont-dump-dozens-of-input-controls-directly-onto-the-root-level-what-is-the-recommended-organizational-pattern">28. Why does the document say "Don't dump dozens of input controls directly onto the root level"? What is the recommended organizational pattern?<a class="headerlink" href="#28-why-does-the-document-say-dont-dump-dozens-of-input-controls-directly-onto-the-root-level-what-is-the-recommended-organizational-pattern" title="Permanent link">&para;</a></h3>
 <p>Putting every widget straight onto the root window produces a flat layout with no structure. It causes three practical problems: the arrangement is hard to change later, because everything is one long list of placements; it resizes badly, since there are no groups that can grow or stay fixed independently; and you are forced to use a single geometry manager for the whole interface, because of the rule in question 6.</p>
 <p>The recommended pattern is to build a small hierarchy of containers first, then place the actual controls inside them:</p>
-<p><img alt="Flowchart" src="../../resources/ch14-tkinter-September-2026-conceptual-QA-007.png" /></p>
+<p><img alt="Flowchart" src="../../resources/S14-LR-ch14-tkinter-September-2026-conceptual-QA-007.png" /></p>
+<p><strong>Reading the figure</strong></p>
+<ul>
+<li>The root window holds a few frames instead of many loose widgets.</li>
+<li>A header frame for the title and status.</li>
+<li>A body frame for the data entry fields.</li>
+<li>A footer frame for the action buttons.</li>
+<li>Inside the body frame, labels and entry boxes are arranged with <code>grid()</code>.</li>
+<li>Inside the footer frame, the buttons are arranged with <code>pack()</code> — a different manager is fine, because it is a different container.</li>
+</ul>
 <div class="highlight"><pre><span></span><code><span class="c1"># Step 1: Create the zones and place them in the window.</span>
 <span class="n">header</span> <span class="o">=</span> <span class="n">ttk</span><span class="o">.</span><span class="n">Frame</span><span class="p">(</span><span class="n">root</span><span class="p">);</span> <span class="n">header</span><span class="o">.</span><span class="n">pack</span><span class="p">(</span><span class="n">fill</span><span class="o">=</span><span class="s2">"x"</span><span class="p">)</span>
 <span class="n">body</span> <span class="o">=</span> <span class="n">ttk</span><span class="o">.</span><span class="n">LabelFrame</span><span class="p">(</span><span class="n">root</span><span class="p">,</span> <span class="n">text</span><span class="o">=</span><span class="s2">"Details"</span><span class="p">);</span> <span class="n">body</span><span class="o">.</span><span class="n">pack</span><span class="p">(</span><span class="n">fill</span><span class="o">=</span><span class="s2">"both"</span><span class="p">,</span> <span class="n">expand</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
