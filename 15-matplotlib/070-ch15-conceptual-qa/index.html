@@ -8522,7 +8522,7 @@
 40-49: [ nan 48.7 54.  41.2 53.3 53.4 44.2 42.6 46.3 47.3]
 50-59: [51.4 48.8 59.8 42.  44.2 43.2 53.1 45.1 49.3 44.9]
 </code></pre></div>
-<p><img alt="Line plot of 200 readings with a sharp dip and a gap" src="../../resources/ch15-qa2-q1-anomalies.png" /></p>
+<p><img alt="Line plot of 60 readings with a sharp dip and a gap" src="../../resources/ch15-qa2-q1-anomalies.png" /></p>
 <p><strong>Finding the problems, step by step:</strong></p>
 <ol>
 <li>In the printed table, the <code>-15.</code> in row 20 and the <code>nan</code> in row 40 are there, but you have to read all 60 numbers to find them. With 10,000 numbers this would take a very long time.</li>
@@ -8744,7 +8744,17 @@ Right title: Object-oriented: cubes
 <p>The top container is the <strong>Figure</strong> (usually stored in the variable <code>fig</code>). It is the outer frame. It handles the window, the overall background, the size of the image and the layout of everything inside it. It can also hold a figure-wide title.</p>
 <p>Inside the Figure sit one or more <strong>Axes</strong> objects (usually stored in <code>ax</code>). An Axes is the actual drawing area. It contains the coordinate plane, the grid lines, the title of that plot and the plotted data. Note the spelling: an <strong>Axes</strong> is a whole plot area, while an <strong>Axis</strong> is a single number line. Every Axes owns an x-<strong>Axis</strong> and a y-<strong>Axis</strong>, and each Axis manages its own ticks, tick labels and axis label.</p>
 <p>Everything that is drawn, from lines and bars to text, is called an <strong>Artist</strong>. Lines are <code>Line2D</code> artists, bars are <code>Rectangle</code> artists (a kind of patch), and labels are <code>Text</code> artists. See <a href="https://matplotlib.org/stable/gallery/showcase/anatomy.html">Anatomy of a figure (Matplotlib)</a>.</p>
-<p><img alt="How a Figure, its Axes and the objects inside them fit together" src="../../resources/ch-15-fig-21-anatomy-of-a-figure.png" /></p>
+<p><img alt="How a Figure, its Axes and the objects inside them fit together" src="../../resources/S15-LR-ch-15-fig-21-anatomy-of-a-figure.png" /></p>
+<p><strong>Reading the figure</strong></p>
+<ul>
+<li>The Figure is the outer frame, the whole window or image.</li>
+<li>A Figure holds one or more Axes; each Axes is one plotting area.</li>
+<li>A second Axes is another plotting area in the same Figure.</li>
+<li>Each Axes has an x-axis, with its ticks, tick labels and axis label.</li>
+<li>It also has a y-axis, with its ticks, tick labels and axis label.</li>
+<li>The things drawn inside it are artists: lines, bars, markers and text.</li>
+<li>Each Axes also has its own title, grid and legend.</li>
+</ul>
 <p>Axes 2 contains the same kinds of parts (x-axis, y-axis, artists, title) as Axes 1.</p>
 <table>
 <thead>
@@ -9084,7 +9094,7 @@ All three windows open together. The script continues only after all three have 
 <li>a marker character, such as <code>'o'</code> (circle), <code>'s'</code> (square), <code>'^'</code> (triangle)</li>
 <li>a line style, such as <code>'-'</code> (solid), <code>'--'</code> (dashed), <code>':'</code> (dotted)</li>
 </ul>
-<p>Format strings come from MATLAB and are handy for quick test plots. They are not deprecated, so they still work fully in current Matplotlib. Their limitation is that they cover only these basic choices. They cannot set a hex color code such as <code>'#FF5733'</code>, a line width, a marker fill color, a marker size or transparency. For those you use <strong>keyword arguments</strong> such as <code>color='#FF5733'</code>, <code>marker='o'</code>, <code>linestyle='-'</code>, <code>linewidth=3</code> and <code>markerfacecolor='white'</code>. Keyword arguments are clearer to read, so they are preferred in finished code. The two can also be combined: <code>ax.plot(x, y, 'bs--', linewidth=1)</code>.</p>
+<p>Format strings come from MATLAB and are handy for quick test plots. They are not deprecated, so they still work fully in current Matplotlib. Their limitation is that they cover only these basic choices. They cannot combine a hex color code such as <code>'#FF5733'</code> with a marker or line style, and they cannot set a line width, a marker fill color, a marker size or transparency. For those you use <strong>keyword arguments</strong> such as <code>color='#FF5733'</code>, <code>marker='o'</code>, <code>linestyle='-'</code>, <code>linewidth=3</code> and <code>markerfacecolor='white'</code>. Keyword arguments are clearer to read, so they are preferred in finished code. The two can also be combined: <code>ax.plot(x, y, 'bs--', linewidth=1)</code>.</p>
 <p>See the "Format Strings" section of <a href="https://matplotlib.org/stable/api/_as_gen/matplotlib.pyplot.plot.html">matplotlib.pyplot.plot</a>.</p>
 <div class="highlight"><pre><span></span><code><span class="c1"># Step 1 - Import pyplot</span>
 <span class="kn">import</span><span class="w"> </span><span class="nn">matplotlib.pyplot</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">plt</span>
@@ -9135,7 +9145,7 @@ Keyword version -&gt; color: #FF5733 linewidth: 3.0 marker face: white
 </tr>
 <tr>
 <td>Any color, e.g. hex code</td>
-<td>Not possible</td>
+<td>Only if the format string is the colour alone (<code>'#FF5733'</code>)</td>
 <td><code>color='#FF5733'</code></td>
 </tr>
 <tr>
@@ -9184,7 +9194,16 @@ A green line drawn as a dotted line, with triangle markers at the data points.
 <li><strong>Render</strong> (draw) one rectangle per bin, with its height equal to the count. The rectangles touch because the bins are next to each other on the number line.</li>
 </ol>
 <p>"Sorting" here means placing each value into the right bin, not arranging the values in order. The counting is done by NumPy's <code>histogram()</code> function. See <a href="https://matplotlib.org/stable/api/_as_gen/matplotlib.axes.Axes.hist.html">matplotlib.axes.Axes.hist</a> and <a href="https://numpy.org/doc/stable/reference/generated/numpy.histogram.html">numpy.histogram</a>.</p>
-<p><img alt="The six things ax.hist() does for you" src="../../resources/ch-15-fig-22-what-hist-does.png" /></p>
+<p><img alt="The six things ax.hist() does for you" src="../../resources/S15-LR-ch-15-fig-22-what-hist-does.png" /></p>
+<p><strong>Reading the figure</strong></p>
+<ul>
+<li><strong>Step 1:</strong> <code>ax.hist()</code> reads the raw values.</li>
+<li><strong>Step 2:</strong> It finds the minimum and the maximum.</li>
+<li><strong>Step 3:</strong> It splits that range into equal bins (10 by default).</li>
+<li><strong>Step 4:</strong> It places each value in its bin and counts them.</li>
+<li><strong>Step 5:</strong> It draws one bar per bin, with no gaps between bars.</li>
+<li><strong>Step 6:</strong> It returns three things: the counts, the bin edges and the bar objects.</li>
+</ul>
 <div class="highlight"><pre><span></span><code><span class="c1"># Description: Demonstrates how ax.hist() places values into bins and counts them</span>
 
 <span class="c1"># Step 1 - Import pyplot</span>
@@ -9390,11 +9409,11 @@ Colors       : ['#1f77b4', '#ff7f0e']
 Lines drawn in total: 3
 Legend text  : ['Revenue', 'Costs']
 </code></pre></div>
-<p><strong>A note on the colour line.</strong> On Matplotlib 3.10 and later you will see the two colours printed as triples of decimal numbers instead of as text:</p>
+<p><strong>A note on the colour line.</strong> Depending on how a line's colour was set, <code>get_color()</code> can also return the colour as a triple of decimal numbers instead of text, for example:</p>
 <div class="highlight"><pre><span></span><code>Colors       : [(0.12156862745098039, 0.4666666666666667, 0.7058823529411765),
                 (1.0, 0.4980392156862745, 0.054901960784313725)]
 </code></pre></div>
-<p>These are the same two colours. <code>#1f77b4</code> is simply the hexadecimal way of writing red 0.1216, green 0.4667, blue 0.7059, and <code>#ff7f0e</code> is the same for the second colour. Newer versions of Matplotlib store the default colour cycle as numbers, so <code>get_color()</code> hands back numbers. If you prefer the short hexadecimal form, convert it:</p>
+<p>These are the same two colours. <code>#1f77b4</code> is simply the hexadecimal way of writing red 0.1216, green 0.4667, blue 0.7059, and <code>#ff7f0e</code> is the same for the second colour. In that case <code>get_color()</code> hands back numbers. If you prefer the short hexadecimal form, convert it:</p>
 <div class="highlight"><pre><span></span><code><span class="c1"># Add this import at the top of the script, then use this line</span>
 <span class="c1"># in place of the "Colors" line in Step 3.</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">matplotlib.colors</span><span class="w"> </span><span class="kn">import</span> <span class="n">to_hex</span>
@@ -9402,7 +9421,16 @@ Legend text  : ['Revenue', 'Costs']
 </code></pre></div>
 <p>Written that way, the output reads <code>Colors       : ['#1f77b4', '#ff7f0e']</code> on every version of Matplotlib.</p>
 <p><img alt="Plot with a legend showing only the labelled lines" src="../../resources/ch15-qa2-q12-legend.png" /></p>
-<p><img alt="What ax.legend() does behind the scenes" src="../../resources/ch-15-fig-23-how-a-legend-is-built.png" /></p>
+<p><img alt="What ax.legend() does behind the scenes" src="../../resources/S15-LR-ch-15-fig-23-how-a-legend-is-built.png" /></p>
+<p><strong>Reading the figure</strong></p>
+<ul>
+<li><strong>Step 1:</strong> Plot the lines, giving some of them a <code>label=</code>.</li>
+<li><strong>Step 2:</strong> Call <code>ax.legend()</code>.</li>
+<li><strong>Step 3:</strong> Matplotlib collects every artist on the axes that has a label.</li>
+<li><strong>Step 4:</strong> Lines without a label are skipped.</li>
+<li><strong>Step 5:</strong> For each labelled line it draws a short sample of the line beside its label.</li>
+<li><strong>Step 6:</strong> It places the legend box, using <code>loc</code> (<code>"best"</code> by default).</li>
+</ul>
 <p><strong>Follow-up question:</strong> How can you give a line a label but still keep it out of the legend?</p>
 <details>
 <summary>Show answer</summary>
@@ -9704,7 +9732,16 @@ Step 17: Figure closed. Open figures: []
 <li><strong>Map to a color:</strong> it looks up each 0-to-1 number in a <strong>colormap</strong>, a smooth scale of colors. In the default colormap, "viridis", 0 is dark purple and 1 is bright yellow.</li>
 </ol>
 <p>In this way a table of raw numbers becomes a picture of color intensities, called a <strong>heat map</strong>. See <a href="https://en.wikipedia.org/wiki/Heat_map">Heat map (Wikipedia)</a>, <a href="https://matplotlib.org/stable/users/explain/colors/colormapnorms.html">Colormap normalization (Matplotlib)</a> and <a href="https://matplotlib.org/stable/users/explain/colors/colormaps.html">Choosing colormaps (Matplotlib)</a>.</p>
-<p><img alt="How a number in a matrix becomes a coloured square" src="../../resources/ch-15-fig-24-how-imshow-colours-a-matrix.png" /></p>
+<p><img alt="How a number in a matrix becomes a coloured square" src="../../resources/S15-LR-ch-15-fig-24-how-imshow-colours-a-matrix.png" /></p>
+<p><strong>Reading the figure</strong></p>
+<ul>
+<li><strong>Step 1:</strong> Start with a matrix of values in rows and columns.</li>
+<li><strong>Step 2:</strong> <code>imshow()</code> finds the smallest and the largest value (unless <code>vmin</code>/<code>vmax</code> are given).</li>
+<li><strong>Step 3:</strong> It rescales every value to a number between 0 and 1.</li>
+<li><strong>Step 4:</strong> It looks that number up in the colormap to get a colour.</li>
+<li><strong>Step 5:</strong> It draws one coloured square per cell; row 0 is at the top by default.</li>
+<li><strong>Step 6:</strong> <code>plt.colorbar()</code> adds a colour bar as the key.</li>
+</ul>
 <div class="highlight"><pre><span></span><code><span class="c1"># Step 1 - Import the libraries</span>
 <span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
 <span class="kn">import</span><span class="w"> </span><span class="nn">matplotlib.pyplot</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">plt</span>
@@ -9950,7 +9987,7 @@ ax[1, 1] is ax.flat[3]? True
 </code></pre></div>
 <p><img alt="Two by two grid of subplots with titles" src="../../resources/ch15-qa2-q16-subplot-grid.png" /></p>
 <p><strong>Why <code>ax[3]</code> fails:</strong> in a 2-D array, a single number selects a <strong>row</strong>. There are only rows 0 and 1, so asking for row 3 raises <code>IndexError: index 3 is out of bounds for axis 0 with size 2</code>. To count the panels one after another as 0, 1, 2, 3, use <code>ax.flat[3]</code> or <code>ax.flatten()[3]</code>. The output confirms that <code>ax.flat[3]</code> is the same panel as <code>ax[1, 1]</code>.</p>
-<p>The error line in the original example was kept inside comments so that the script would not stop. In this version it is placed inside <code>try</code> and <code>except</code>, which catches the error, prints its message and lets the script carry on.</p>
+<p>The error line is placed inside <code>try</code> and <code>except</code>, which catches the error, prints its message and lets the script carry on instead of stopping.</p>
 <p><strong>Follow-up question:</strong> What does <code>ax[1]</code> give in a 2 × 2 grid?</p>
 <details>
 <summary>Show answer</summary>
@@ -10171,7 +10208,17 @@ Use `ax.text()` with axes coordinates:
 </tr>
 </tbody>
 </table>
-<p><img alt="Why a figure must be closed each time round a loop that saves many plots" src="../../resources/ch-15-fig-25-closing-figures-in-a-loop.png" /></p>
+<p><img alt="Why a figure must be closed each time round a loop that saves many plots" src="../../resources/S15-LR-ch-15-fig-25-closing-figures-in-a-loop.png" /></p>
+<p><strong>Reading the figure</strong></p>
+<ul>
+<li><strong>Step 1:</strong> Start the loop that makes many plots.</li>
+<li><strong>Step 2:</strong> Create a new figure.</li>
+<li><strong>Step 3:</strong> Draw the plot on it.</li>
+<li><strong>Step 4:</strong> Save the figure to a file.</li>
+<li><strong>Step 5:</strong> Close it with <code>plt.close(fig)</code>, which frees the memory it was using; without this, every figure stays open.</li>
+<li><strong>Step 6:</strong> Are there more plots to make? If so, go round again.</li>
+<li><strong>Step 7:</strong> No: the loop finishes.</li>
+</ul>
 <div class="highlight"><pre><span></span><code><span class="c1"># =====================================================================</span>
 <span class="c1"># Example: Clearing Memory When Generating Many Plots</span>
 <span class="c1">#</span>
@@ -10190,7 +10237,7 @@ Use `ax.text()` with axes coordinates:
 <span class="c1">#</span>
 <span class="c1"># after saving or displaying each figure.</span>
 <span class="c1">#</span>
-<span class="c1"># The original example made 1000 plots. Here NUMBER_OF_PLOTS is set to 50</span>
+<span class="c1"># NUMBER_OF_PLOTS is set to 50 here</span>
 <span class="c1"># so that the script runs quickly and does not fill your folder with files.</span>
 <span class="c1"># Change it to 1000 to see the full batch.</span>
 <span class="c1"># =====================================================================</span>
@@ -10533,7 +10580,7 @@ Sidebar  rows [1, 2]  columns [0]
 Main     rows [1, 2]  columns [1, 2]
 </code></pre></div>
 <p><img alt="Dashboard layout made with subplot2grid" src="../../resources/ch15-qa2-q20-subplot2grid.png" /></p>
-<p>The printed rows and columns match the table above. For example, the Main panel uses rows 1 and 2 and columns 1 and 2. A <code>figsize</code> of 10 × 7 inches was added at the start so that the three panels have enough room.</p>
+<p>The printed rows and columns match the table above. For example, the Main panel uses rows 1 and 2 and columns 1 and 2. The <code>figsize</code> of 10 × 7 inches set at the start gives the three panels enough room.</p>
 <p><strong>Follow-up question:</strong> How would you change the layout so that the sidebar is on the right and the main panel on the left?</p>
 <details>
 <summary>Show answer</summary>

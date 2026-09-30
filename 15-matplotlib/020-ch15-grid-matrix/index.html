@@ -9673,7 +9673,20 @@ Temperature in Ranchi in Mar = 22
 <p><a href="#table-of-contents">Back to the Table of Contents</a></p>
 <h4 id="flowchart-types-of-plot-data">Flowchart: Types of Plot Data<a class="headerlink" href="#flowchart-types-of-plot-data" title="Permanent link">&para;</a></h4>
 <p>The flowchart below shows how to decide which kind of data you have and which method to use.</p>
-<p><img alt="Deciding whether your data is coordinate data or grid data, and which method to use" src="../../resources/ch-15-fig-07-coordinate-or-grid-data.png" /></p>
+<p><img alt="Deciding whether your data is coordinate data or grid data, and which method to use" src="../../resources/S15-LR-ch-15-fig-07-coordinate-or-grid-data.png" /></p>
+<p><strong>Reading the figure</strong></p>
+<ul>
+<li><strong>Step 1:</strong> Look at how the values in your data are arranged.</li>
+<li><strong>Step 2:</strong> Is each reading a pair of x and y values?</li>
+<li><strong>Step 3:</strong> Yes: it is coordinate data.</li>
+<li><strong>Step 4:</strong> No: are the values arranged in rows and columns?</li>
+<li><strong>Step 5:</strong> No: reorganise the data first, for example with <code>pivot</code>.</li>
+<li><strong>Step 6:</strong> Yes (or once reorganised): it is grid, or matrix, data.</li>
+<li><strong>Step 7:</strong> For grid data: should each value become a coloured cell, or should the graph show lines of equal value?</li>
+<li><strong>Step 8:</strong> For coordinate data: a trend or change over time uses <code>plot()</code>; separate points or a relationship use <code>scatter()</code>.</li>
+<li><strong>Step 9:</strong> Each value as a coloured cell: <code>imshow()</code>.</li>
+<li><strong>Step 10:</strong> Lines, or filled bands, of equal value: <code>contour()</code> or <code>contourf()</code>.</li>
+</ul>
 <p><a href="#table-of-contents">Back to the Table of Contents</a></p>
 <h4 id="important-note-on-two-variables">Important Note on Two Variables<a class="headerlink" href="#important-note-on-two-variables" title="Permanent link">&para;</a></h4>
 <blockquote>
@@ -10251,7 +10264,17 @@ Reshaped data:
 </code></pre></div>
 <p><a href="#table-of-contents">Back to the Table of Contents</a></p>
 <h4 id="flowchart-matrix-slicing">Flowchart: Matrix Slicing<a class="headerlink" href="#flowchart-matrix-slicing" title="Permanent link">&para;</a></h4>
-<p><img alt="Writing a matrix slice, one decision at a time" src="../../resources/ch-15-fig-08-matrix-slicing-steps.png" /></p>
+<p><img alt="Writing a matrix slice, one decision at a time" src="../../resources/S15-LR-ch-15-fig-08-matrix-slicing-steps.png" /></p>
+<p><strong>Reading the figure</strong></p>
+<ul>
+<li><strong>Step 1:</strong> Start with a two-dimensional NumPy matrix.</li>
+<li><strong>Step 2:</strong> Decide which rows you need: the first one and the last one.</li>
+<li><strong>Step 3:</strong> The row part of the slice is <code>row_start:row_end</code>, where <code>row_end</code> is the last row index plus 1 (the end is excluded).</li>
+<li><strong>Step 4:</strong> Do you need every column?</li>
+<li><strong>Step 5:</strong> No: the column part is <code>col_start:col_end</code>, again with the end one past the last column you want.</li>
+<li><strong>Step 6:</strong> Write the slice as <code>matrix[row part, column part]</code>; if all columns are needed, the column part is just a single colon, <code>:</code>.</li>
+<li><strong>Step 7:</strong> Print the result and check that its <code>.shape</code> is what you expected.</li>
+</ul>
 <p><a href="#table-of-contents">Back to the Table of Contents</a></p>
 <h4 id="small-concept-script">Small Concept Script<a class="headerlink" href="#small-concept-script" title="Permanent link">&para;</a></h4>
 <div class="highlight"><pre><span></span><code><span class="c1"># Step 1 - Import NumPy</span>
@@ -10483,7 +10506,17 @@ A[::2, ::2] =
 <p><a href="#table-of-contents">Back to the Table of Contents</a></p>
 <h2 id="solution-to-part-b">Solution to Part B<a class="headerlink" href="#solution-to-part-b" title="Permanent link">&para;</a></h2>
 <p>The six tasks follow one path. The flights data starts as a long table, is reshaped into a matrix, is sliced, and is then plotted in two different ways.</p>
-<p><img alt="The six tasks of the flights script, and how the two routes meet again at the comparison" src="../../resources/ch-15-fig-09-flights-script-tasks.png" /></p>
+<p><img alt="The six tasks of the flights script, and how the two routes meet again at the comparison" src="../../resources/S15-LR-ch-15-fig-09-flights-script-tasks.png" /></p>
+<p><strong>Reading the figure</strong></p>
+<ul>
+<li>Task 1: load the seaborn flights table, 144 rows of year, month and passengers.</li>
+<li>Grid route, task 2: pivot it into a 12 × 12 matrix of years by months.</li>
+<li>Task 3: convert the matrix to a NumPy array and slice out the years 1952 to 1958.</li>
+<li>Task 4: plot the sliced matrix as grid data with <code>imshow()</code> and <code>contourf()</code>.</li>
+<li>Coordinate route, task 5: pick one year and treat its 12 months as coordinate data.</li>
+<li>Task 6: draw that year as a line plot and a scatter plot.</li>
+<li>The two routes meet again: compare what each kind of graph shows.</li>
+</ul>
 <p><a href="#table-of-contents">Back to the Table of Contents</a></p>
 <h3 id="solution-to-task-1-load-the-dataset">Solution to Task 1: Load the Dataset<a class="headerlink" href="#solution-to-task-1-load-the-dataset" title="Permanent link">&para;</a></h3>
 <p><strong>Objective</strong></p>
@@ -10654,7 +10687,13 @@ Most passengers in a month  : 622
 <li>values → passengers</li>
 </ul>
 <p>The pandas method <code>pivot()</code> does this. It takes one column for the row labels, one column for the column labels, and one column for the values that fill the cells. See <a href="https://pandas.pydata.org/docs/reference/api/pandas.DataFrame.pivot.html">pandas DataFrame.pivot</a>.</p>
-<p><img alt="A long table becomes a matrix when it is pivoted" src="../../resources/ch-15-fig-10-pivot-long-to-matrix.png" /></p>
+<p><img alt="A long table becomes a matrix when it is pivoted" src="../../resources/S15-LR-ch-15-fig-10-pivot-long-to-matrix.png" /></p>
+<p><strong>Reading the figure</strong></p>
+<ul>
+<li><strong>Step 1:</strong> The long table has one row per observation: <code>year</code>, <code>month</code> and <code>passengers</code>, 144 rows in all.</li>
+<li><strong>Step 2:</strong> <code>pivot</code> makes each year a row label, each month a column label, and fills the cells with the passenger counts.</li>
+<li><strong>Step 3:</strong> The result is a matrix of 12 rows (years) by 12 columns (months), ready for <code>imshow()</code> or <code>contourf()</code>.</li>
+</ul>
 <p>The small table below shows what <code>pivot()</code> does with the first two months of 1949 and 1950.</p>
 <table>
 <thead>

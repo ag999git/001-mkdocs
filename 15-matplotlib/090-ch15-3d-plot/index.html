@@ -9107,7 +9107,14 @@
 <li><strong>Plots that work in both 2D and 3D</strong></li>
 <li><strong>Plots specifically designed for 3D visualization</strong></li>
 </ol>
-<p><img alt="Which Matplotlib methods work in two dimensions, in both, or only in three" src="../../resources/ch-15-fig-32-which-methods-work-in-3d.png" /></p>
+<p><img alt="Which Matplotlib methods work in two dimensions, in both, or only in three" src="../../resources/S15-LR-ch-15-fig-32-which-methods-work-in-3d.png" /></p>
+<p><strong>Reading the figure</strong></p>
+<ul>
+<li>Matplotlib's plotting methods fall into three groups.</li>
+<li>These work only on ordinary 2D axes: <code>pie()</code>, <code>boxplot()</code>, <code>violinplot()</code>, <code>imshow()</code> and <code>hist()</code>.</li>
+<li>These work on both 2D axes and 3D axes (with an extra z argument in 3D): <code>plot()</code>, <code>scatter()</code>, <code>bar()</code>, <code>stem()</code>, <code>contour()</code> and <code>text()</code>.</li>
+<li>These exist only on 3D axes: <code>plot_surface()</code>, <code>plot_wireframe()</code>, <code>plot_trisurf()</code> and <code>voxels()</code>.</li>
+</ul>
 <p>The following sections discuss these three categories.</p>
 <p><a href="#table-of-contents">Back to the Table of Contents</a></p>
 <h2 id="1-plots-primarily-used-only-in-2d">1. Plots Primarily Used Only in 2D<a class="headerlink" href="#1-plots-primarily-used-only-in-2d" title="Permanent link">&para;</a></h2>
@@ -9520,7 +9527,17 @@ voxels array shape: (6, 6, 6) - filled cells: 81
 <p>This is explained fully in the section <a href="#understanding-npmeshgrid">Understanding np.meshgrid()</a>.</p>
 <p><a href="#table-of-contents">Back to the Table of Contents</a></p>
 <h3 id="surface-plot-workflow">Surface Plot Workflow<a class="headerlink" href="#surface-plot-workflow" title="Permanent link">&para;</a></h3>
-<p><img alt="Two one-dimensional lists become two grids, and those grids give Z" src="../../resources/ch-15-fig-33-how-meshgrid-works.png" /></p>
+<p><img alt="Two one-dimensional lists become two grids, and those grids give Z" src="../../resources/S15-LR-ch-15-fig-33-how-meshgrid-works.png" /></p>
+<p><strong>Reading the figure</strong></p>
+<ul>
+<li>Make the one-dimensional x values.</li>
+<li>Make the one-dimensional y values.</li>
+<li>Pass both to <code>np.meshgrid(x, y)</code>.</li>
+<li>It returns the <code>X</code> grid: the x values repeated down every row.</li>
+<li>And the <code>Y</code> grid: the y values repeated across every column.</li>
+<li>Calculate <code>Z</code> from <code>X</code> and <code>Y</code>, giving one height for every point of the grid.</li>
+<li>Draw the result with <code>ax.plot_surface(X, Y, Z)</code>.</li>
+</ul>
 <p><a href="#table-of-contents">Back to the Table of Contents</a></p>
 <h3 id="surface-plot-vs-wireframe-plot">Surface Plot vs Wireframe Plot<a class="headerlink" href="#surface-plot-vs-wireframe-plot" title="Permanent link">&para;</a></h3>
 <table>
@@ -10129,7 +10146,17 @@ Wireframe ⟶ Shows structure
 <h3 id="introductory-note-to-script-1">Introductory Note to Script 1<a class="headerlink" href="#introductory-note-to-script-1" title="Permanent link">&para;</a></h3>
 <p>A <strong>helix</strong> may be thought of as a circle that gradually rises in height, like a spring or a spiral staircase. As a point moves around the circumference of the circle, its z-coordinate continuously increases. This example demonstrates the use of the 3D version of <code>plot()</code>, which requires x, y and z coordinates. See <a href="https://en.wikipedia.org/wiki/Helix">Helix (Wikipedia)</a>.</p>
 <p>The circle is made with the functions cosine and sine. For an angle <code>t</code>, the point <code>(r × cos(t), r × sin(t))</code> lies on a circle of radius <code>r</code>. As <code>t</code> grows, the point travels around the circle. See <a href="https://en.wikipedia.org/wiki/Unit_circle">Unit circle (Wikipedia)</a>.</p>
-<p><img alt="The seven steps of the 3D helix script" src="../../resources/ch-15-fig-34-helix-script-steps.png" /></p>
+<p><img alt="The seven steps of the 3D helix script" src="../../resources/S15-LR-ch-15-fig-34-helix-script-steps.png" /></p>
+<p><strong>Reading the figure</strong></p>
+<ul>
+<li><strong>Step 1:</strong> Create a figure with 3D axes, <code>projection="3d"</code>.</li>
+<li><strong>Step 2:</strong> Make 1000 angle values <code>t</code> from 0 to 20π (ten full turns).</li>
+<li><strong>Step 3:</strong> <code>x = r * cos(t)</code> and <code>y = r * sin(t)</code>, with <code>r = 5</code>, trace a circle.</li>
+<li><strong>Step 4:</strong> <code>z</code> rises evenly from 0 to 10, lifting the circle into a spiral.</li>
+<li><strong>Step 5:</strong> Print the shapes of the arrays and some statistics.</li>
+<li><strong>Step 6:</strong> <code>ax.plot(x, y, z)</code> draws the helix.</li>
+<li><strong>Step 7:</strong> Add the axis labels and title, and show the figure.</li>
+</ul>
 <p><a href="#table-of-contents">Back to the Table of Contents</a></p>
 <h3 id="script-1-3d-helix-using-plotx-y-z">Script 1: 3D Helix Using plot(x, y, z)<a class="headerlink" href="#script-1-3d-helix-using-plotx-y-z" title="Permanent link">&para;</a></h3>
 <div class="highlight"><pre><span></span><code><span class="c1"># Step 1 - Import required modules</span>
@@ -10509,7 +10536,19 @@ Lowest z = 0.007, highest z = 18.0
 </table>
 <p><a href="#table-of-contents">Back to the Table of Contents</a></p>
 <h3 id="workflow-of-script-3">Workflow of Script 3<a class="headerlink" href="#workflow-of-script-3" title="Permanent link">&para;</a></h3>
-<p><img alt="The nine steps that draw a coloured surface with its colour bar" src="../../resources/ch-15-fig-35-surface-with-a-colormap.png" /></p>
+<p><img alt="The nine steps that draw a coloured surface with its colour bar" src="../../resources/S15-LR-ch-15-fig-35-surface-with-a-colormap.png" /></p>
+<p><strong>Reading the figure</strong></p>
+<ul>
+<li><strong>Step 1:</strong> Make the one-dimensional x values.</li>
+<li><strong>Step 2:</strong> Make the one-dimensional y values.</li>
+<li><strong>Step 3:</strong> Pass them to <code>np.meshgrid()</code>.</li>
+<li><strong>Step 4:</strong> Receive the <code>X</code> grid.</li>
+<li><strong>Step 5:</strong> Receive the <code>Y</code> grid.</li>
+<li><strong>Step 6:</strong> Calculate <code>Z</code> at every grid point.</li>
+<li><strong>Step 7:</strong> Draw the surface with <code>ax.plot_surface(X, Y, Z, ...)</code>.</li>
+<li><strong>Step 8:</strong> Colour it with a colormap, <code>cmap=</code>.</li>
+<li><strong>Step 9:</strong> Add a colour bar with <code>fig.colorbar()</code> so the colours can be read as values.</li>
+</ul>
 <p><a href="#table-of-contents">Back to the Table of Contents</a></p>
 <h3 id="follow-up-question-on-script-3">Follow-up Question on Script 3<a class="headerlink" href="#follow-up-question-on-script-3" title="Permanent link">&para;</a></h3>
 <p>What shape would you get with <code>Z = X**2 - Y**2</code>?</p>
@@ -10595,7 +10634,7 @@ A **saddle** shape. Along the x direction the surface curves upward, like a bowl
     <span class="n">cstride</span><span class="o">=</span><span class="mi">2</span>
 <span class="p">)</span>
 
-<span class="nb">print</span><span class="p">(</span><span class="s2">"Wireframe lines drawn along each direction:"</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">50</span><span class="p">,</span> <span class="mi">2</span><span class="p">)))</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">"Wireframe lines drawn along each direction:"</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">50</span><span class="p">,</span> <span class="mi">2</span><span class="p">))</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span>   <span class="c1"># rows 0, 2, ..., 48 plus the last row, 49</span>
 
 <span class="n">ax</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s2">"Wireframe Plot"</span><span class="p">)</span>
 <span class="n">ax</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s2">"X-axis"</span><span class="p">)</span>
@@ -10621,7 +10660,7 @@ A **saddle** shape. Along the x direction the surface curves upward, like a bowl
 <p><a href="#table-of-contents">Back to the Table of Contents</a></p>
 <h3 id="output-of-script-4-on-the-terminal">Output of Script 4 on the Terminal<a class="headerlink" href="#output-of-script-4-on-the-terminal" title="Permanent link">&para;</a></h3>
 <div class="highlight"><pre><span></span><code>Grid size: (50, 50) = 2500 points
-Wireframe lines drawn along each direction: 25
+Wireframe lines drawn along each direction: 26
 Left view : elev = 25  azim = 45
 Right view: elev = 25  azim = 45
 </code></pre></div>
@@ -10631,7 +10670,7 @@ Right view: elev = 25  azim = 45
 <p><strong>Reading the output:</strong></p>
 <ol>
 <li>The grid has 50 × 50 = 2,500 points, the same as in Script 3.</li>
-<li>With <code>rstride=2</code> and <code>cstride=2</code>, a line is drawn for every second row and every second column, so 25 lines run in each direction instead of 50. This keeps the wireframe from looking too crowded.</li>
+<li>With <code>rstride=2</code> and <code>cstride=2</code>, a line is drawn for every second row and every second column (Matplotlib also always draws the last one), so 26 lines run in each direction instead of 50. This keeps the wireframe from looking too crowded.</li>
 <li>Both plots use the same viewing angle (elev = 25, azim = 45), so they can be compared directly.</li>
 </ol>
 <p><a href="#table-of-contents">Back to the Table of Contents</a></p>
@@ -10680,7 +10719,7 @@ Right view: elev = 25  azim = 45
 <details>
 <summary>Show answer</summary>
 
-Only every fifth row and column is drawn, so there are 10 lines in each direction instead of 25. The mesh becomes much more open and faster to draw, but the curved shape looks less smooth. The surface plot on the left is not affected.
+Only every fifth row and column (plus the last one) is drawn, so there are 11 lines in each direction instead of 26. The mesh becomes much more open and faster to draw, but the curved shape looks less smooth. The surface plot on the left is not affected.
 
 </details>
 

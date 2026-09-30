@@ -8465,7 +8465,16 @@
 <p><strong>How to use this page:</strong> read the question and try to write the script yourself first. Then compare your script with the answer, run it, and check that your printed output and graph match the ones shown. Finally, try the follow-up question. Its answer is hidden; click "Show answer" to see it.</p>
 <p><strong>About the scripts:</strong> every script was run with Python 3.11, Matplotlib 3.10, NumPy 2 and pandas 3.0. <code>print()</code> statements have been added so that you can check the numbers behind each graph. When a script calls <code>plt.show()</code>, a graph window opens; the picture below the output shows what that window contains.</p>
 <p><strong>The basic pattern that every script follows:</strong></p>
-<p><img alt="The skeleton that every script in this chapter follows" src="../../resources/ch-15-fig-26-script-skeleton.png" /></p>
+<p><img alt="The skeleton that every script in this chapter follows" src="../../resources/S15-LR-ch-15-fig-26-script-skeleton.png" /></p>
+<p><strong>Reading the figure</strong></p>
+<ul>
+<li><strong>Step 1:</strong> Import Matplotlib and any other libraries the script needs.</li>
+<li><strong>Step 2:</strong> Prepare the data.</li>
+<li><strong>Step 3:</strong> Create the plot.</li>
+<li><strong>Step 4:</strong> Add the title, labels, legend and grid.</li>
+<li><strong>Step 5:</strong> Save the figure if you need a file.</li>
+<li><strong>Step 6:</strong> Show the figure.</li>
+</ul>
 <h2 id="table-of-contents">Table of Contents<a class="headerlink" href="#table-of-contents" title="Permanent link">&para;</a></h2>
 <ul>
 <li><a href="#matplotlib-scripting-questions-and-answers">Matplotlib: Scripting Questions and Answers</a></li>
@@ -9228,7 +9237,18 @@ Series plotted x = [0, 1, 2, 3, 4], y = [10, 15, 20, 25, 30]
 </tbody>
 </table>
 <p><strong>How data reaches the finished graph:</strong></p>
-<p><img alt="A list, a NumPy array and a pandas Series all reach ax.plot() the same way" src="../../resources/ch-15-fig-27-list-array-series.png" /></p>
+<p><img alt="A list, a NumPy array and a pandas Series all reach ax.plot() the same way" src="../../resources/S15-LR-ch-15-fig-27-list-array-series.png" /></p>
+<p><strong>Reading the figure</strong></p>
+<ul>
+<li>Choose the form of the input data.</li>
+<li>It can be an ordinary Python list.</li>
+<li>It can be a NumPy array.</li>
+<li>It can be a pandas Series.</li>
+<li><code>ax.plot()</code> accepts all three in the same way and draws the line.</li>
+<li>Add the title of each subplot.</li>
+<li>Add the axis labels and the grid.</li>
+<li>The finished figure has three subplots that look the same.</li>
+</ul>
 <p><strong>Follow-up question:</strong> If the Series were created as <code>pd.Series([10, 15, 20, 25, 30], index=[2020, 2021, 2022, 2023, 2024])</code>, what would the third subplot show on its x-axis?</p>
 <details>
 <summary>Show answer</summary>
@@ -9694,7 +9714,17 @@ The height of the plot always stays the same. A narrow y-range spreads a small c
 <p><strong>Answer</strong></p>
 <p>A combined chart uses bars for one variable and a line for another. The bars show sales month by month and the line shows how profit moves.</p>
 <p>Sales (120 to 260) are much larger than profit (15 to 45). If both are drawn on the same y-axis, the profit line is squashed near the bottom of the chart and its changes are hard to see. So the script draws the profit line on a <strong>second y-axis</strong> created with <code>twinx()</code>. The two charts share the same months along the bottom, but each has its own scale: sales on the left and profit on the right. See <a href="https://matplotlib.org/stable/api/_as_gen/matplotlib.axes.Axes.twinx.html">matplotlib.axes.Axes.twinx</a>.</p>
-<p><img alt="The seven steps that put two different scales on one chart" src="../../resources/ch-15-fig-28-twinx-steps.png" /></p>
+<p><img alt="The seven steps that put two different scales on one chart" src="../../resources/S15-LR-ch-15-fig-28-twinx-steps.png" /></p>
+<p><strong>Reading the figure</strong></p>
+<ul>
+<li><strong>Step 1:</strong> Create the figure and the first axes, for sales.</li>
+<li><strong>Step 2:</strong> Draw the sales as bars on the first axes.</li>
+<li><strong>Step 3:</strong> <code>ax.twinx()</code> creates a second axes that shares the x-axis but has its own y-axis on the right.</li>
+<li><strong>Step 4:</strong> Draw the profit as a line on the twin axes.</li>
+<li><strong>Step 5:</strong> Label both y-axes.</li>
+<li><strong>Step 6:</strong> Each axes has its own legend, so combine their handles and labels into one legend.</li>
+<li><strong>Step 7:</strong> Add the grid and show the chart.</li>
+</ul>
 <div class="highlight"><pre><span></span><code><span class="c1"># ==========================================================</span>
 <span class="c1"># COMBINED BAR + LINE CHART</span>
 <span class="c1"># ==========================================================</span>
@@ -10027,7 +10057,17 @@ Create three plotting areas and draw one line in each:
 <h3 id="11-create-a-bar-chart-project-showing-the-number-of-books-issued-by-different-departments-in-a-college-library-add-data-labels-title-labels-legend-and-gridlines">11. Create a bar chart project showing the number of books issued by different departments in a college library. Add data labels, title, labels, legend, and gridlines.<a class="headerlink" href="#11-create-a-bar-chart-project-showing-the-number-of-books-issued-by-different-departments-in-a-college-library-add-data-labels-title-labels-legend-and-gridlines" title="Permanent link">&para;</a></h3>
 <p><strong>Answer</strong></p>
 <p>A bar chart compares amounts across separate categories, here the college departments. <strong>Data labels</strong> are numbers written on or above each bar so that the reader does not have to estimate the value from the axis. <code>plt.bar()</code> returns a container of bar objects. Looping over it gives the position and height of each bar, which tells us where to place its label. See <a href="https://matplotlib.org/stable/api/_as_gen/matplotlib.pyplot.bar.html">matplotlib.pyplot.bar</a>.</p>
-<p><img alt="The loop that writes a value above each bar" src="../../resources/ch-15-fig-29-labelling-every-bar.png" /></p>
+<p><img alt="The loop that writes a value above each bar" src="../../resources/S15-LR-ch-15-fig-29-labelling-every-bar.png" /></p>
+<p><strong>Reading the figure</strong></p>
+<ul>
+<li><strong>Step 1:</strong> Prepare the department names and the book counts.</li>
+<li><strong>Step 2:</strong> Draw the bars and keep them in a variable, <code>bars = ax.bar(...)</code>.</li>
+<li><strong>Step 3:</strong> Take the next bar from <code>bars</code>.</li>
+<li><strong>Step 4:</strong> Find its centre, <code>bar.get_x() + bar.get_width() / 2</code>, and its height, <code>bar.get_height()</code>.</li>
+<li><strong>Step 5:</strong> Write the height as text just above the bar with <code>ax.text()</code>.</li>
+<li><strong>Step 6:</strong> Are there any bars left? If so, take the next one.</li>
+<li><strong>Step 7:</strong> No: add the title, labels, grid and legend, then show the chart.</li>
+</ul>
 <div class="highlight"><pre><span></span><code><span class="c1"># ==========================================================</span>
 <span class="c1"># BAR CHART PROJECT</span>
 <span class="c1"># ==========================================================</span>
@@ -10440,7 +10480,7 @@ It could be removed by starting the edges at 40, and the counts of the other bin
 <h3 id="14-create-a-scatter-plot-to-study-the-relationship-between-study-hours-and-examination-marks-identify-possible-trends-and-outliers">14. Create a scatter plot to study the relationship between study hours and examination marks. Identify possible trends and outliers.<a class="headerlink" href="#14-create-a-scatter-plot-to-study-the-relationship-between-study-hours-and-examination-marks-identify-possible-trends-and-outliers" title="Permanent link">&para;</a></h3>
 <p><strong>Answer</strong></p>
 <p>A scatter plot draws one dot per student, with study hours along the x-axis and marks along the y-axis. The pattern of the dots shows the <strong>trend</strong>: if they rise from left to right, more study goes with higher marks, which is a <strong>positive correlation</strong>. An <strong>outlier</strong> is a dot that lies far from the trend.</p>
-<p>In the original data all ten points lie almost on a straight line, so there is nothing to find. The script therefore adds two students who do not fit the pattern. It then fits a trend line with <code>np.polyfit()</code>, measures the <strong>correlation coefficient</strong> with <code>np.corrcoef()</code>, and marks any student more than 20 marks away from the trend line as a possible outlier. See <a href="https://numpy.org/doc/stable/reference/generated/numpy.polyfit.html">numpy.polyfit</a>, <a href="https://numpy.org/doc/stable/reference/generated/numpy.corrcoef.html">numpy.corrcoef</a> and <a href="https://en.wikipedia.org/wiki/Outlier">Outlier (Wikipedia)</a>.</p>
+<p>If only ten students who follow the usual pattern were used, all the points would lie almost on a straight line, and there would be nothing to find. The script therefore adds two students who do not fit the pattern. It then fits a trend line with <code>np.polyfit()</code>, measures the <strong>correlation coefficient</strong> with <code>np.corrcoef()</code>, and marks any student more than 20 marks away from the trend line as a possible outlier. See <a href="https://numpy.org/doc/stable/reference/generated/numpy.polyfit.html">numpy.polyfit</a>, <a href="https://numpy.org/doc/stable/reference/generated/numpy.corrcoef.html">numpy.corrcoef</a> and <a href="https://en.wikipedia.org/wiki/Outlier">Outlier (Wikipedia)</a>.</p>
 <div class="highlight"><pre><span></span><code><span class="c1"># ==========================================================</span>
 <span class="c1"># SCATTER PLOT ANALYSIS</span>
 <span class="c1"># ==========================================================</span>
@@ -10998,7 +11038,16 @@ Colors are good for spotting patterns, but it is hard to read an exact number fr
 <p><strong>Answer</strong></p>
 <p>A <strong>surface</strong> gives a height z for every point (x, y). To draw it, we need z values on a grid of points. <code>np.meshgrid()</code> builds that grid from two 1-D ranges. <code>contour()</code> then draws <strong>contour lines</strong> joining points of equal z, like height lines on a map, and <code>contourf()</code> fills the bands between levels with color. See <a href="https://numpy.org/doc/stable/reference/generated/numpy.meshgrid.html">numpy.meshgrid</a>, <a href="https://matplotlib.org/stable/api/_as_gen/matplotlib.pyplot.contour.html">matplotlib.pyplot.contour</a> and <a href="https://matplotlib.org/stable/api/_as_gen/matplotlib.pyplot.contourf.html">matplotlib.pyplot.contourf</a>.</p>
 <p>Since x² + y² is the squared distance from the centre, every point at the same distance from (0, 0) has the same z. That is why both plots show <strong>rings</strong>. The rings get closer together further out, because x² + y² grows faster and faster, so the sine wave goes up and down more quickly.</p>
-<p><img alt="contour() and contourf() draw the same grid in two different ways" src="../../resources/ch-15-fig-30-contour-and-contourf.png" /></p>
+<p><img alt="contour() and contourf() draw the same grid in two different ways" src="../../resources/S15-LR-ch-15-fig-30-contour-and-contourf.png" /></p>
+<p><strong>Reading the figure</strong></p>
+<ul>
+<li>Make 200 x-values and 200 y-values with <code>np.linspace()</code>.</li>
+<li><code>np.meshgrid()</code> turns them into a 200 × 200 grid of points.</li>
+<li>Calculate <code>z</code> at every point of the grid.</li>
+<li><code>contour()</code> draws lines joining points of equal <code>z</code>, like the contour lines on a map.</li>
+<li><code>contourf()</code> fills the bands between those levels with colour.</li>
+<li>Add the labels and the colour bar, then show the figure.</li>
+</ul>
 <div class="highlight"><pre><span></span><code><span class="c1"># ==========================================================</span>
 <span class="c1"># CONTOUR AND CONTOURF VISUALIZATION</span>
 <span class="c1"># ==========================================================</span>
@@ -11496,7 +11545,7 @@ Default background color again   : [1.0, 1.0, 1.0]
 </tr>
 </tbody>
 </table>
-<p><strong>Follow-up question:</strong> The original version of this script used <code>plt.style.use("dark_background")</code>. If you then added a third graph at the end of the script, what style would it have?</p>
+<p><strong>Follow-up question:</strong> Suppose the second graph had been made after <code>plt.style.use("dark_background")</code> instead of inside a <code>with</code> block. If you then added a third graph at the end of the script, what style would it have?</p>
 <details>
 <summary>Show answer</summary>
 
@@ -11534,7 +11583,17 @@ It would still have the dark_background style, because `plt.style.use()` changes
 </tr>
 </tbody>
 </table>
-<p><img alt="Saving a figure in three formats and checking that each file really exists" src="../../resources/ch-15-fig-31-saving-and-checking-files.png" /></p>
+<p><img alt="Saving a figure in three formats and checking that each file really exists" src="../../resources/S15-LR-ch-15-fig-31-saving-and-checking-files.png" /></p>
+<p><strong>Reading the figure</strong></p>
+<ul>
+<li><strong>Step 1:</strong> Create the graph and add its labels.</li>
+<li><strong>Step 2:</strong> Save it three times, as PNG, PDF and SVG, with <code>savefig()</code>.</li>
+<li><strong>Step 3:</strong> For each file, check with <code>os.path.exists()</code> and <code>os.path.getsize()</code> that it exists and is not empty.</li>
+<li><strong>Step 4:</strong> Were all three files saved correctly?</li>
+<li><strong>Step 5:</strong> Yes: print the success message.</li>
+<li><strong>Step 6:</strong> No: print a warning naming the problem.</li>
+<li><strong>Step 7:</strong> Show the graph.</li>
+</ul>
 <div class="highlight"><pre><span></span><code><span class="c1"># ==========================================================</span>
 <span class="c1"># SAVING GRAPHS USING savefig()</span>
 <span class="c1"># ==========================================================</span>
@@ -11660,7 +11719,7 @@ Files saved successfully.
 <li><code>all(...)</code> is True only if every file exists, so the success message appears only when all three were saved.</li>
 <li><code>plt.show()</code> displays the graph last.</li>
 </ol>
-<p>The files are saved in the folder from which the script is run. The original version printed "Files saved successfully." without checking; the checks here make that message trustworthy.</p>
+<p>The files are saved in the folder from which the script is run. The message "Files saved successfully." is printed only after the checks pass, so it can be trusted.</p>
 <p><strong>Follow-up question:</strong> How would you save the files into a folder called <code>charts</code> instead of the current folder?</p>
 <details>
 <summary>Show answer</summary>
