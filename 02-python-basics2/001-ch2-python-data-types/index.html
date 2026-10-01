@@ -992,6 +992,23 @@
     </span>
   </a>
   
+    <nav class="md-nav" aria-label="5. Advanced Concept: How the Left Shift Works (Example: 10 Shifted Left by 3)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#explanation-of-the-bitwise-operation-10-3" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Explanation of the bitwise operation 10 &lt;&lt; 3
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
 </li>
       
         <li class="md-nav__item">
@@ -1002,6 +1019,23 @@
       
     </span>
   </a>
+  
+    <nav class="md-nav" aria-label="6. Advanced Concept: Shifting Very Large Integers">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#what-does-large-integers-can-be-shifted-arbitrarily-because-python-supports-arbitrary-precision-mean" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        What does "Large integers can be shifted arbitrarily because Python supports arbitrary precision" mean?
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
   
 </li>
       
@@ -1329,6 +1363,23 @@
       
     </span>
   </a>
+  
+    <nav class="md-nav" aria-label="14. Advanced Concept: Understanding Performance of Integer Operations in Python">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#performance-of-small-and-large-integers" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Performance of small and large integers
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
   
 </li>
       
@@ -9553,71 +9604,78 @@ a &gt;&gt; 2 = 11 = 3
 <p>Learn more: <a href="https://docs.python.org/3/library/stdtypes.html#bitwise-operations-on-integer-types">Bitwise operations on integer types</a>.</p>
 <p><a href="#table-of-contents">Back to the Table of Contents</a></p>
 <h2 id="5-advanced-concept-how-the-left-shift-works-example-10-shifted-left-by-3">5. Advanced Concept: How the Left Shift Works (Example: 10 Shifted Left by 3)<a class="headerlink" href="#5-advanced-concept-how-the-left-shift-works-example-10-shifted-left-by-3" title="Permanent link">&para;</a></h2>
-<details>
-
-<summary>Click to open this section: explanation of the bitwise operation 10 &lt;&lt; 3</summary>
-
-The operator `<<` is the **bitwise left shift** operator. It shifts the binary form of a number **to the left** by the number of places you give it. Empty places on the right are filled with zeros.
-
-**Step 1: Convert 10 to binary**
-
+<h3 id="explanation-of-the-bitwise-operation-10-3">Explanation of the bitwise operation 10 &lt;&lt; 3<a class="headerlink" href="#explanation-of-the-bitwise-operation-10-3" title="Permanent link">&para;</a></h3>
+<p>The operator <code>&lt;&lt;</code> is the <strong>bitwise left shift</strong> operator. It shifts the binary form of a number <strong>to the left</strong> by the number of places you give it. Empty places on the right are filled with zeros.</p>
+<p><strong>Step 1: Convert 10 to binary</strong></p>
 <div class="highlight"><pre><span></span><code>10 (decimal) = 1010 (binary)
 </code></pre></div>
-
-This is because 10 = 8 + 2, and 8 and 2 are the place values of the two 1s in `1010`.
-
-**Step 2: Shift left by 3 positions**
-
-`10 << 3` means "move every bit 3 places to the left":
-
+<p>This is because 10 = 8 + 2, and 8 and 2 are the place values of the two 1s in <code>1010</code>.</p>
+<p><strong>Step 2: Shift left by 3 positions</strong></p>
+<p><code>10 &lt;&lt; 3</code> means "move every bit 3 places to the left":</p>
 <div class="highlight"><pre><span></span><code>1010 &lt;&lt; 3 = 1010000
 </code></pre></div>
-
-Three zeros are added on the right.
-
-**Step 3: Convert the result back to decimal**
-
-| Place value | 64 | 32 | 16 | 8 | 4 | 2 | 1 |
-| ----------- | -- | -- | -- | - | - | - | - |
-| `10` | | | | 1 | 0 | 1 | 0 |
-| `10 << 3` | 1 | 0 | 1 | 0 | 0 | 0 | 0 |
-
-Binary `1010000` has 1s in the 64 place and the 16 place:
-
+<p>Three zeros are added on the right.</p>
+<p><strong>Step 3: Convert the result back to decimal</strong></p>
+<table>
+<thead>
+<tr>
+<th>Place value</th>
+<th>64</th>
+<th>32</th>
+<th>16</th>
+<th>8</th>
+<th>4</th>
+<th>2</th>
+<th>1</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>10</code></td>
+<td></td>
+<td></td>
+<td></td>
+<td>1</td>
+<td>0</td>
+<td>1</td>
+<td>0</td>
+</tr>
+<tr>
+<td><code>10 &lt;&lt; 3</code></td>
+<td>1</td>
+<td>0</td>
+<td>1</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+</tr>
+</tbody>
+</table>
+<p>Binary <code>1010000</code> has 1s in the 64 place and the 16 place:</p>
 <div class="highlight"><pre><span></span><code>1×64 + 1×16 = 80
 </code></pre></div>
-
-So:
-
+<p>So:</p>
 <div class="highlight"><pre><span></span><code>10 &lt;&lt; 3 = 80
 </code></pre></div>
-
-**Why it works**
-
-Each step to the left doubles a bit's place value, just as each step to the left in decimal multiplies by 10. So shifting left by `n` bits is the same as multiplying by `2ⁿ`:
-
+<p><strong>Why it works</strong></p>
+<p>Each step to the left doubles a bit's place value, just as each step to the left in decimal multiplies by 10. So shifting left by <code>n</code> bits is the same as multiplying by <code>2ⁿ</code>:</p>
 <div class="highlight"><pre><span></span><code>10 &lt;&lt; 3  =  10 × (2³)
          =  10 × 8
          =  80
 </code></pre></div>
-
-**The same steps as a flowchart**
-
-
-
-![How the left shift works: 10 shifted left by 3](../resources/S02-LR-ch02-python-data-types-fig-02.png)
-
-**Reading the figure**
-
-- **Step 1:** Start with the number 10.
-- **Step 2:** Write it in binary: `1010` (8 + 2).
-- **Step 3:** `10 << 3` shifts every bit three places to the left, adding three zeros on the right.
-- **Step 4:** The new binary number is `1010000`.
-- **Step 5:** Converting back: 64 + 16 = 80.
-- **Step 6:** Check: shifting left by 3 multiplies by 2³ = 8, and 10 × 8 = 80.
-
-**The same steps in Python**
-
+<p><strong>The same steps as a flowchart</strong></p>
+<p><img alt="How the left shift works: 10 shifted left by 3" src="../../resources/S02-LR-ch02-python-data-types-fig-02.png" /></p>
+<p><strong>Reading the figure</strong></p>
+<ul>
+<li><strong>Step 1:</strong> Start with the number 10.</li>
+<li><strong>Step 2:</strong> Write it in binary: <code>1010</code> (8 + 2).</li>
+<li><strong>Step 3:</strong> <code>10 &lt;&lt; 3</code> shifts every bit three places to the left, adding three zeros on the right.</li>
+<li><strong>Step 4:</strong> The new binary number is <code>1010000</code>.</li>
+<li><strong>Step 5:</strong> Converting back: 64 + 16 = 80.</li>
+<li><strong>Step 6:</strong> Check: shifting left by 3 multiplies by 2³ = 8, and 10 × 8 = 80.</li>
+</ul>
+<p><strong>The same steps in Python</strong></p>
 <div class="highlight"><pre><span></span><code><span class="c1"># Step 1: Look at 10 in binary</span>
 <span class="n">number</span> <span class="o">=</span> <span class="mi">10</span>
 <span class="nb">print</span><span class="p">(</span><span class="s2">"10 in binary      :"</span><span class="p">,</span> <span class="nb">bin</span><span class="p">(</span><span class="n">number</span><span class="p">))</span>
@@ -9632,59 +9690,45 @@ Each step to the left doubles a bit's place value, just as each step to the left
 <span class="c1"># Step 4: Check that shifting left by 3 is the same as multiplying by 2**3</span>
 <span class="nb">print</span><span class="p">(</span><span class="s2">"10 * 2**3         :"</span><span class="p">,</span> <span class="n">number</span> <span class="o">*</span> <span class="mi">2</span> <span class="o">**</span> <span class="mi">3</span><span class="p">)</span>
 </code></pre></div>
-
-Output:
-
+<p>Output:</p>
 <div class="highlight"><pre><span></span><code>10 in binary      : 0b1010
 After &lt;&lt; 3        : 0b1010000
 Result in decimal : 80
 10 * 2**3         : 80
 </code></pre></div>
-
-**Final answer**
-
+<p><strong>Final answer</strong></p>
 <div class="highlight"><pre><span></span><code>10 &lt;&lt; 3 = 80
 </code></pre></div>
-
-</details>
-
 <p><a href="#table-of-contents">Back to the Table of Contents</a></p>
 <h2 id="6-advanced-concept-shifting-very-large-integers">6. Advanced Concept: Shifting Very Large Integers<a class="headerlink" href="#6-advanced-concept-shifting-very-large-integers" title="Permanent link">&para;</a></h2>
-<details>
-
-<summary>Click to open this section: what does "Large integers can be shifted arbitrarily because Python supports arbitrary precision" mean?</summary>
-
-Let us understand the statement: **"Large integers can be shifted arbitrarily because Python supports arbitrary precision."**
-
-**Step 1: What is arbitrary precision?**
-
-* In many languages (C, C++, Java), integers have a **fixed number of bits**, for example 32 or 64.
-* This means numbers have a maximum possible size.
-* Shifting such a number too far can cause:
-  * overflow (the result is too big to fit),
-  * loss of bits (bits fall off the left end and disappear),
-  * wrap-around (a big positive number suddenly becomes negative),
-  * undefined behaviour (in C and C++, the language does not say what the result should be, so anything may happen).
-
-Python is different:
-
-* Python integers have **no fixed size limit**.
-* They grow automatically to any size, limited only by the available memory.
-
-**Step 2: What does "shifted arbitrarily" mean?**
-
-* The left shift `<<` adds zeros to the right side of a binary number, so the number gets longer.
-* In fixed-size languages, shifting too far is impossible or unsafe. In C, for example, shifting a 32-bit number by 32 or more places is undefined.
-* **In Python, you can shift a number by any number of bits**, even thousands or millions.
-
+<h3 id="what-does-large-integers-can-be-shifted-arbitrarily-because-python-supports-arbitrary-precision-mean">What does "Large integers can be shifted arbitrarily because Python supports arbitrary precision" mean?<a class="headerlink" href="#what-does-large-integers-can-be-shifted-arbitrarily-because-python-supports-arbitrary-precision-mean" title="Permanent link">&para;</a></h3>
+<p>Let us understand the statement: <strong>"Large integers can be shifted arbitrarily because Python supports arbitrary precision."</strong></p>
+<p><strong>Step 1: What is arbitrary precision?</strong></p>
+<ul>
+<li>In many languages (C, C++, Java), integers have a <strong>fixed number of bits</strong>, for example 32 or 64.</li>
+<li>This means numbers have a maximum possible size.</li>
+<li>Shifting such a number too far can cause:</li>
+<li>overflow (the result is too big to fit),</li>
+<li>loss of bits (bits fall off the left end and disappear),</li>
+<li>wrap-around (a big positive number suddenly becomes negative),</li>
+<li>undefined behaviour (in C and C++, the language does not say what the result should be, so anything may happen).</li>
+</ul>
+<p>Python is different:</p>
+<ul>
+<li>Python integers have <strong>no fixed size limit</strong>.</li>
+<li>They grow automatically to any size, limited only by the available memory.</li>
+</ul>
+<p><strong>Step 2: What does "shifted arbitrarily" mean?</strong></p>
+<ul>
+<li>The left shift <code>&lt;&lt;</code> adds zeros to the right side of a binary number, so the number gets longer.</li>
+<li>In fixed-size languages, shifting too far is impossible or unsafe. In C, for example, shifting a 32-bit number by 32 or more places is undefined.</li>
+<li><strong>In Python, you can shift a number by any number of bits</strong>, even thousands or millions.</li>
+</ul>
 <div class="highlight"><pre><span></span><code><span class="n">x</span> <span class="o">=</span> <span class="mi">5</span>
 <span class="n">y</span> <span class="o">=</span> <span class="n">x</span> <span class="o">&lt;&lt;</span> <span class="mi">1000</span>    <span class="c1"># shift by 1000 bits</span>
 </code></pre></div>
-
-This works normally in Python.
-
-**Step 3: Example of a large shift**
-
+<p>This works normally in Python.</p>
+<p><strong>Step 3: Example of a large shift</strong></p>
 <div class="highlight"><pre><span></span><code><span class="c1"># Step 1: Shift 1 left by 200 bits (the same as 2 ** 200)</span>
 <span class="n">x</span> <span class="o">=</span> <span class="mi">1</span>
 <span class="n">y</span> <span class="o">=</span> <span class="n">x</span> <span class="o">&lt;&lt;</span> <span class="mi">200</span>
@@ -9698,33 +9742,27 @@ This works normally in Python.
 <span class="c1"># Step 3: Shift back by 1000 bits and we get 5 again</span>
 <span class="nb">print</span><span class="p">(</span><span class="s2">"z &gt;&gt; 1000  :"</span><span class="p">,</span> <span class="n">z</span> <span class="o">&gt;&gt;</span> <span class="mi">1000</span><span class="p">)</span>
 </code></pre></div>
-
-Output:
-
+<p>Output:</p>
 <div class="highlight"><pre><span></span><code>1606938044258990275541962092341162602522202993782792835301376
 Digits in z: 302
 Bits in z  : 1003
 z &gt;&gt; 1000  : 5
 </code></pre></div>
-
-The first line is `2 ** 200`, a 61-digit number. Python handles it, and the much bigger `5 << 1000`, without any trouble because it makes the integer bigger as needed. Shifting back with `>>` returns the original `5`, which shows that no bits were lost.
-
-**Step 4: Why Python can do this**
-
-* A left shift creates a longer binary number.
-* Python does not limit integers to 32 or 64 bits.
-* It creates a larger integer object whenever one is needed.
-* Therefore, no overflow occurs.
-
-**Summary**
-
-* Python integers can grow to any size. This is called **arbitrary precision**.
-* A left shift (`<<`) can be done by any number of places.
-* Python automatically sets aside more memory to store the larger integer.
-* This is why **large integers can be shifted arbitrarily** in Python.
-
-</details>
-
+<p>The first line is <code>2 ** 200</code>, a 61-digit number. Python handles it, and the much bigger <code>5 &lt;&lt; 1000</code>, without any trouble because it makes the integer bigger as needed. Shifting back with <code>&gt;&gt;</code> returns the original <code>5</code>, which shows that no bits were lost.</p>
+<p><strong>Step 4: Why Python can do this</strong></p>
+<ul>
+<li>A left shift creates a longer binary number.</li>
+<li>Python does not limit integers to 32 or 64 bits.</li>
+<li>It creates a larger integer object whenever one is needed.</li>
+<li>Therefore, no overflow occurs.</li>
+</ul>
+<p><strong>Summary</strong></p>
+<ul>
+<li>Python integers can grow to any size. This is called <strong>arbitrary precision</strong>.</li>
+<li>A left shift (<code>&lt;&lt;</code>) can be done by any number of places.</li>
+<li>Python automatically sets aside more memory to store the larger integer.</li>
+<li>This is why <strong>large integers can be shifted arbitrarily</strong> in Python.</li>
+</ul>
 <p><a href="#table-of-contents">Back to the Table of Contents</a></p>
 <h2 id="7-type-conversions-turning-other-values-into-int">7. Type Conversions: Turning Other Values into int<a class="headerlink" href="#7-type-conversions-turning-other-values-into-int" title="Permanent link">&para;</a></h2>
 <p>The built-in function <a href="https://docs.python.org/3/library/functions.html#int"><code>int()</code></a> converts a value into an integer. It accepts:</p>
@@ -10607,27 +10645,18 @@ False
 </code></pre></div>
 <p><a href="#table-of-contents">Back to the Table of Contents</a></p>
 <h2 id="13-advanced-concept-big-integer-mathematics">13. Advanced Concept: Big Integer Mathematics<a class="headerlink" href="#13-advanced-concept-big-integer-mathematics" title="Permanent link">&para;</a></h2>
-<details>
-
-<summary>Click to open this section: big integer mathematics</summary>
-
-Because Python integers are exact at any size, Python is a good tool for number work such as cryptography, number theory and puzzles. Python's `int` supports:
-
-* exact big integer arithmetic,
-* modular arithmetic (working with remainders),
-* number-theory functions in the built-in [`math`](https://docs.python.org/3/library/math.html) module and in outside libraries such as [SymPy](https://www.sympy.org/).
-
-**Fast modular exponentiation with pow()**
-
-The built-in [`pow()`](https://docs.python.org/3/library/functions.html#pow) function takes an optional third argument:
-
+<p>Because Python integers are exact at any size, Python is a good tool for number work such as cryptography, number theory and puzzles. Python's <code>int</code> supports:</p>
+<ul>
+<li>exact big integer arithmetic,</li>
+<li>modular arithmetic (working with remainders),</li>
+<li>number-theory functions in the built-in <a href="https://docs.python.org/3/library/math.html"><code>math</code></a> module and in outside libraries such as <a href="https://www.sympy.org/">SymPy</a>.</li>
+</ul>
+<p><strong>Fast modular exponentiation with pow()</strong></p>
+<p>The built-in <a href="https://docs.python.org/3/library/functions.html#pow"><code>pow()</code></a> function takes an optional third argument:</p>
 <div class="highlight"><pre><span></span><code><span class="nb">pow</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">,</span> <span class="n">mod</span><span class="p">)</span>  <span class="c1"># fast modular exponentiation: same answer as (a ** b) % mod</span>
 </code></pre></div>
-
-It works out `(a ** b) % mod` without ever building the full value of `a ** b`. Instead, it takes the remainder after every step, so the numbers stay small. This matters a lot in cryptography, where `b` can have hundreds of digits.
-
-**Examples**
-
+<p>It works out <code>(a ** b) % mod</code> without ever building the full value of <code>a ** b</code>. Instead, it takes the remainder after every step, so the numbers stay small. This matters a lot in cryptography, where <code>b</code> can have hundreds of digits.</p>
+<p><strong>Examples</strong></p>
 <div class="highlight"><pre><span></span><code><span class="kn">import</span><span class="w"> </span><span class="nn">math</span>
 
 <span class="c1"># Step 1: Modular exponentiation - the last three digits of 7 ** 222</span>
@@ -10650,9 +10679,7 @@ It works out `(a ** b) % mod` without ever building the full value of `a ** b`. 
 <span class="nb">print</span><span class="p">(</span><span class="n">math</span><span class="o">.</span><span class="n">factorial</span><span class="p">(</span><span class="mi">30</span><span class="p">))</span>    <span class="c1"># 30! = 1 x 2 x 3 x ... x 30</span>
 <span class="nb">print</span><span class="p">(</span><span class="n">math</span><span class="o">.</span><span class="n">comb</span><span class="p">(</span><span class="mi">100</span><span class="p">,</span> <span class="mi">50</span><span class="p">))</span>    <span class="c1"># ways to choose 50 items out of 100</span>
 </code></pre></div>
-
-Output:
-
+<p>Output:</p>
 <div class="highlight"><pre><span></span><code>49
 49
 5 1
@@ -10662,65 +10689,52 @@ Output:
 265252859812191058636308480000000
 100891344545564193334812497256
 </code></pre></div>
-
-How to read this output:
-
-* `49` means the last three digits of `7 ** 222` are `049`. Both methods agree, but `pow(7, 222, 1000)` never had to build the 188-digit number.
-* `5 1` means `pow(3, -1, 7)` found `5`, and indeed `(3 × 5) % 7 = 15 % 7 = 1`. The number 5 is called the **modular inverse** of 3.
-* `math.isqrt(2 * 10 ** 40)` gives `141421356237309504880`, which are the first 21 digits of the square root of 2 (1.41421356...). This is exact whole-number arithmetic. A float would give only about 16 correct digits.
-
-**Summary**
-
-* Python `int` is **arbitrary precision**, immutable and very flexible.
-* It is written in C and stores large numbers as a list of 30-bit pieces.
-* It supports caching of small numbers, bitwise operations, type widening and conversion.
-* It is much safer to use than the fixed-size integers of compiled languages, because it never overflows.
-
-</details>
-
+<p>How to read this output:</p>
+<ul>
+<li><code>49</code> means the last three digits of <code>7 ** 222</code> are <code>049</code>. Both methods agree, but <code>pow(7, 222, 1000)</code> never had to build the 188-digit number.</li>
+<li><code>5 1</code> means <code>pow(3, -1, 7)</code> found <code>5</code>, and indeed <code>(3 × 5) % 7 = 15 % 7 = 1</code>. The number 5 is called the <strong>modular inverse</strong> of 3.</li>
+<li><code>math.isqrt(2 * 10 ** 40)</code> gives <code>141421356237309504880</code>, which are the first 21 digits of the square root of 2 (1.41421356...). This is exact whole-number arithmetic. A float would give only about 16 correct digits.</li>
+</ul>
+<p><strong>Summary</strong></p>
+<ul>
+<li>Python <code>int</code> is <strong>arbitrary precision</strong>, immutable and very flexible.</li>
+<li>It is written in C and stores large numbers as a list of 30-bit pieces.</li>
+<li>It supports caching of small numbers, bitwise operations, type widening and conversion.</li>
+<li>It is much safer to use than the fixed-size integers of compiled languages, because it never overflows.</li>
+</ul>
 <p><a href="#table-of-contents">Back to the Table of Contents</a></p>
 <h2 id="14-advanced-concept-understanding-performance-of-integer-operations-in-python">14. Advanced Concept: Understanding Performance of Integer Operations in Python<a class="headerlink" href="#14-advanced-concept-understanding-performance-of-integer-operations-in-python" title="Permanent link">&para;</a></h2>
-<details>
-
-<summary>Click to open this section: performance of small and large integers</summary>
-
-Python's `int` is very powerful because it supports **arbitrary precision**. Integers can grow to any size. But speed differs between **small** and **large** integers because of the way they are stored and processed inside Python.
-
-**Part 1: Small integers are fast, partly because of caching**
-
-* When CPython starts, it creates the integers from **-5 to 256** once and keeps them ready. This store is called a **cache**.
-* Whenever your program needs an integer in this range, Python hands out the ready-made object. It does **not** create a new one.
-
-Example:
-
+<h3 id="performance-of-small-and-large-integers">Performance of small and large integers<a class="headerlink" href="#performance-of-small-and-large-integers" title="Permanent link">&para;</a></h3>
+<p>Python's <code>int</code> is very powerful because it supports <strong>arbitrary precision</strong>. Integers can grow to any size. But speed differs between <strong>small</strong> and <strong>large</strong> integers because of the way they are stored and processed inside Python.</p>
+<p><strong>Part 1: Small integers are fast, partly because of caching</strong></p>
+<ul>
+<li>When CPython starts, it creates the integers from <strong>-5 to 256</strong> once and keeps them ready. This store is called a <strong>cache</strong>.</li>
+<li>Whenever your program needs an integer in this range, Python hands out the ready-made object. It does <strong>not</strong> create a new one.</li>
+</ul>
+<p>Example:</p>
 <div class="highlight"><pre><span></span><code><span class="n">a</span> <span class="o">=</span> <span class="mi">100</span>
 <span class="n">b</span> <span class="o">=</span> <span class="mi">100</span>
 <span class="n">a</span> <span class="ow">is</span> <span class="n">b</span>     <span class="c1"># True — both refer to the same cached object</span>
 </code></pre></div>
-
-**Why this is fast:**
-
-* No memory has to be set aside.
-* No new object has to be created.
-* Python simply returns a reference to the cached integer.
-
-Small numbers such as loop counters and list positions are used all the time, so this saves a lot of work.
-
-The flowchart shows what Python does when it needs an integer.
-
-![What Python does when it needs an integer](../resources/S02-LR-0000-22-what-python-does-when-it-needs-an-integer.png)
-
-**Reading the figure**
-
-- **Step 1:** Python needs an integer object with the value `v`.
-- **Step 2:** Is `v` between -5 and 256?
-- **Step 3:** Yes: Python takes the ready-made object from its small-integer cache; no memory is set aside.
-- **Step 4:** No: Python sets aside memory for a new `int` object.
-- **Step 5:** It stores the value `v` in the new object.
-- **Step 6:** The object is given to your variable.
-
-The script below shows the cache at work. It uses `int("100")` instead of the literal `100` on purpose. When the same literal appears twice in one script, Python may reuse one object for both, even for large numbers, which would hide the effect we want to see.
-
+<p><strong>Why this is fast:</strong></p>
+<ul>
+<li>No memory has to be set aside.</li>
+<li>No new object has to be created.</li>
+<li>Python simply returns a reference to the cached integer.</li>
+</ul>
+<p>Small numbers such as loop counters and list positions are used all the time, so this saves a lot of work.</p>
+<p>The flowchart shows what Python does when it needs an integer.</p>
+<p><img alt="What Python does when it needs an integer" src="../../resources/S02-LR-0000-22-what-python-does-when-it-needs-an-integer.png" /></p>
+<p><strong>Reading the figure</strong></p>
+<ul>
+<li><strong>Step 1:</strong> Python needs an integer object with the value <code>v</code>.</li>
+<li><strong>Step 2:</strong> Is <code>v</code> between -5 and 256?</li>
+<li><strong>Step 3:</strong> Yes: Python takes the ready-made object from its small-integer cache; no memory is set aside.</li>
+<li><strong>Step 4:</strong> No: Python sets aside memory for a new <code>int</code> object.</li>
+<li><strong>Step 5:</strong> It stores the value <code>v</code> in the new object.</li>
+<li><strong>Step 6:</strong> The object is given to your variable.</li>
+</ul>
+<p>The script below shows the cache at work. It uses <code>int("100")</code> instead of the literal <code>100</code> on purpose. When the same literal appears twice in one script, Python may reuse one object for both, even for large numbers, which would hide the effect we want to see.</p>
 <div class="highlight"><pre><span></span><code><span class="c1"># Step 1: Two small numbers made at run time</span>
 <span class="n">a</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="s2">"100"</span><span class="p">)</span>
 <span class="n">b</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="s2">"100"</span><span class="p">)</span>
@@ -10734,72 +10748,88 @@ The script below shows the cache at work. It uses `int("100")` instead of the li
 <span class="c1"># Step 3: The values are equal in both cases</span>
 <span class="nb">print</span><span class="p">(</span><span class="s2">"Values equal?"</span><span class="p">,</span> <span class="n">a</span> <span class="o">==</span> <span class="n">b</span><span class="p">,</span> <span class="n">c</span> <span class="o">==</span> <span class="n">d</span><span class="p">)</span>
 </code></pre></div>
-
-Output:
-
+<p>Output:</p>
 <div class="highlight"><pre><span></span><code>100 : same object? True
 1000: same object? False
 Values equal? True True
 </code></pre></div>
-
-The cache is a detail of CPython, not a rule of the Python language. Never write programs that depend on it. Use `==`, not `is`, to compare numbers.
-
-**Part 2: Large integers take more time**
-
-A small integer fits in one 30-bit piece, and the processor can handle it in one step. When integers get large (hundreds or thousands of digits):
-
-* They no longer fit in a single piece.
-* Python stores them as a **list of 30-bit pieces** (15-bit pieces on some older or unusual builds).
-* Arithmetic has to work through **many pieces**, not just one.
-
-So a very large integer behaves more like a long list of numbers than like a single number.
-
-**Time complexity overview**
-
-In the table, **n is the number of 30-bit pieces** in the number, not the number of decimal digits. One piece holds about 9 decimal digits.
-
-| Operation | Time complexity | Reason |
-| --------- | --------------- | ------ |
-| Addition, subtraction | **O(n)** | Each piece is visited once, carrying from one piece to the next |
-| Comparison | **O(1)** to **O(n)** | Python first compares the signs and lengths. Only if they match does it compare piece by piece, starting from the most significant end |
-| Multiplication (smaller numbers) | **O(n²)** | Schoolbook method: every piece of one number is multiplied by every piece of the other |
-| Multiplication (large numbers) | **O(n^1.585)** | Karatsuba method, which Python switches to automatically |
-| Division and remainder | About **O(n²)** | Long division, piece by piece |
-| Converting to or from decimal text | About **O(n²)** | This is why the 4300-digit limit exists (see section 2.2). Python 3.12 added faster methods for very large numbers |
-
-**Part 3: Multiplication uses a faster method for large numbers**
-
-CPython picks the multiplication method based on the size of the numbers.
-
-*a) Schoolbook multiplication (smaller numbers)*
-
-* This is the method you learned at school: multiply each piece by each piece and add up the results.
-* Time complexity: **O(n²)**. Doubling the length makes it about four times slower.
-
-*b) Karatsuba multiplication (large numbers)*
-
-* CPython switches to the [Karatsuba algorithm](https://en.wikipedia.org/wiki/Karatsuba_algorithm) when **both** numbers have about **70 or more** 30-bit pieces. That is roughly 630 or more decimal digits.
-* Karatsuba splits each number into two halves. With a clever trick it needs **three** half-size multiplications instead of four, and it repeats this trick on each half.
-* Time complexity: **O(n^1.585)**. For very large numbers this is much faster than O(n²).
-
-CPython's `int` does **not** use FFT-based methods (such as the Schönhage–Strassen algorithm). These are faster still for numbers with many thousands of digits. If you need that speed, the outside library [gmpy2](https://pypi.org/project/gmpy2/) provides it. Python's own [`decimal`](https://docs.python.org/3/library/decimal.html) module also uses a fast transform-based method for very large numbers.
-
-
-
-![How Python chooses a method to multiply two integers](../resources/S02-LR-0000-23.png)
-
-**Reading the figure**
-
-- **Step 1:** Python multiplies two integers, `a * b`.
-- **Step 2:** Are both numbers below 2³⁰, so each fits in one 30-bit piece?
-- **Step 3:** Yes: a single quick machine multiplication is enough.
-- **Step 4:** No: do both numbers have about 70 or more 30-bit pieces (roughly 630 or more decimal digits)?
-- **Step 5:** Yes: CPython uses the Karatsuba method, about O(n^1.585).
-- **Step 6:** No: it uses the schoolbook method, O(n²).
-- **Step 7:** Either way, the result is returned as a new `int` object.
-
-</details>
-
+<p>The cache is a detail of CPython, not a rule of the Python language. Never write programs that depend on it. Use <code>==</code>, not <code>is</code>, to compare numbers.</p>
+<p><strong>Part 2: Large integers take more time</strong></p>
+<p>A small integer fits in one 30-bit piece, and the processor can handle it in one step. When integers get large (hundreds or thousands of digits):</p>
+<ul>
+<li>They no longer fit in a single piece.</li>
+<li>Python stores them as a <strong>list of 30-bit pieces</strong> (15-bit pieces on some older or unusual builds).</li>
+<li>Arithmetic has to work through <strong>many pieces</strong>, not just one.</li>
+</ul>
+<p>So a very large integer behaves more like a long list of numbers than like a single number.</p>
+<p><strong>Time complexity overview</strong></p>
+<p>In the table, <strong>n is the number of 30-bit pieces</strong> in the number, not the number of decimal digits. One piece holds about 9 decimal digits.</p>
+<table>
+<thead>
+<tr>
+<th>Operation</th>
+<th>Time complexity</th>
+<th>Reason</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Addition, subtraction</td>
+<td><strong>O(n)</strong></td>
+<td>Each piece is visited once, carrying from one piece to the next</td>
+</tr>
+<tr>
+<td>Comparison</td>
+<td><strong>O(1)</strong> to <strong>O(n)</strong></td>
+<td>Python first compares the signs and lengths. Only if they match does it compare piece by piece, starting from the most significant end</td>
+</tr>
+<tr>
+<td>Multiplication (smaller numbers)</td>
+<td><strong>O(n²)</strong></td>
+<td>Schoolbook method: every piece of one number is multiplied by every piece of the other</td>
+</tr>
+<tr>
+<td>Multiplication (large numbers)</td>
+<td><strong>O(n^1.585)</strong></td>
+<td>Karatsuba method, which Python switches to automatically</td>
+</tr>
+<tr>
+<td>Division and remainder</td>
+<td>About <strong>O(n²)</strong></td>
+<td>Long division, piece by piece</td>
+</tr>
+<tr>
+<td>Converting to or from decimal text</td>
+<td>About <strong>O(n²)</strong></td>
+<td>This is why the 4300-digit limit exists (see section 2.2). Python 3.12 added faster methods for very large numbers</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Part 3: Multiplication uses a faster method for large numbers</strong></p>
+<p>CPython picks the multiplication method based on the size of the numbers.</p>
+<p><em>a) Schoolbook multiplication (smaller numbers)</em></p>
+<ul>
+<li>This is the method you learned at school: multiply each piece by each piece and add up the results.</li>
+<li>Time complexity: <strong>O(n²)</strong>. Doubling the length makes it about four times slower.</li>
+</ul>
+<p><em>b) Karatsuba multiplication (large numbers)</em></p>
+<ul>
+<li>CPython switches to the <a href="https://en.wikipedia.org/wiki/Karatsuba_algorithm">Karatsuba algorithm</a> when <strong>both</strong> numbers have about <strong>70 or more</strong> 30-bit pieces. That is roughly 630 or more decimal digits.</li>
+<li>Karatsuba splits each number into two halves. With a clever trick it needs <strong>three</strong> half-size multiplications instead of four, and it repeats this trick on each half.</li>
+<li>Time complexity: <strong>O(n^1.585)</strong>. For very large numbers this is much faster than O(n²).</li>
+</ul>
+<p>CPython's <code>int</code> does <strong>not</strong> use FFT-based methods (such as the Schönhage–Strassen algorithm). These are faster still for numbers with many thousands of digits. If you need that speed, the outside library <a href="https://pypi.org/project/gmpy2/">gmpy2</a> provides it. Python's own <a href="https://docs.python.org/3/library/decimal.html"><code>decimal</code></a> module also uses a fast transform-based method for very large numbers.</p>
+<p><img alt="How Python chooses a method to multiply two integers" src="../../resources/S02-LR-0000-23.png" /></p>
+<p><strong>Reading the figure</strong></p>
+<ul>
+<li><strong>Step 1:</strong> Python multiplies two integers, <code>a * b</code>.</li>
+<li><strong>Step 2:</strong> Are both numbers below 2³⁰, so each fits in one 30-bit piece?</li>
+<li><strong>Step 3:</strong> Yes: a single quick machine multiplication is enough.</li>
+<li><strong>Step 4:</strong> No: do both numbers have about 70 or more 30-bit pieces (roughly 630 or more decimal digits)?</li>
+<li><strong>Step 5:</strong> Yes: CPython uses the Karatsuba method, about O(n^1.585).</li>
+<li><strong>Step 6:</strong> No: it uses the schoolbook method, O(n²).</li>
+<li><strong>Step 7:</strong> Either way, the result is returned as a new <code>int</code> object.</li>
+</ul>
 <p><a href="#table-of-contents">Back to the Table of Contents</a></p>
 <h2 id="15-advanced-concept-internal-representation-cpython">15. Advanced Concept: Internal Representation (CPython)<a class="headerlink" href="#15-advanced-concept-internal-representation-cpython" title="Permanent link">&para;</a></h2>
 <p>CPython stores every integer in a C structure called <code>PyLongObject</code>. In simple terms, it holds:</p>
