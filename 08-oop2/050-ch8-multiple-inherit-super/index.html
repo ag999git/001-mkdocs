@@ -2581,6 +2581,67 @@
   
 </li>
         
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#problem-statement-and-solution-to-use-of-super-and-mro-in-multiple-inheritance" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Problem statement and solution to use of super() and MRO in Multiple Inheritance
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Problem statement and solution to use of super() and MRO in Multiple Inheritance">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#problem-statement" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Problem Statement
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#part-a-class-design" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Part A: Class Design
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#part-b-multiple-inheritance" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Part B: Multiple Inheritance
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#part-c-execution" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Part C: Execution
+      
+    </span>
+  </a>
+  
+</li>
+        
           <li class="md-nav__item">
   <a href="#a-follow-up-question-worth-exploring" class="md-nav__link">
     <span class="md-ellipsis">
@@ -8292,55 +8353,40 @@
 </code></pre></div></p>
 <p>Calling <code>Pet.__init__(self)</code> directly bypasses the MRO entirely — it hardcodes exactly which class runs next, which defeats the entire purpose of cooperative inheritance and can easily lead to a shared ancestor's method running more than once in a diamond hierarchy.</p>
 <hr />
-<details>
-<summary>Problem statement and solution: use of <code>super()</code> and MRO in Multiple Inheritance</summary>
-
-## Problem statement and solution to use of `super()` and MRO in Multiple Inheritance
-
-
-
-### Problem Statement
-
-You are required to design a Python program to demonstrate how `super()` works in **multiple inheritance**, and how Python uses **Method Resolution Order (MRO)** to control execution.
-
-### Part A: Class Design
-
-1. A base class `Pet` with:
-   - A constructor that prints: `"Pet constructor"`
-   - A method `action()` that prints: `"Pet action"`
-
-2. Two parent classes:
-
-   **(a) `Walker`**
-   - Inherits from `Pet`
-   - Constructor should: print `"Walker constructor"`, then call the parent constructor using `super()`
-   - Method `action()`: print `"Walking..."`, then call the next method using `super()`
-
-   **(b) `Swimmer`**
-   - Same structure as `Walker`, but with output replaced by `"Swimming..."`
-
-### Part B: Multiple Inheritance
-
-Create two child classes:
-
-**(a) `Dog1`**
-- Inherits from `Walker, Swimmer`
-- Constructor: print `"Dog1 constructor"`, then call `super()`
-- Method `action()`: print `"Dog1 action"`, then call `super()`
-
-**(b) `Dog2`**
-- Inherits from `Swimmer, Walker`
-- Same structure as `Dog1`
-
-### Part C: Execution
-
-Write code to:
-1. Print the MRO of both classes: `Dog1.__mro__`, `Dog2.__mro__`
-2. Create objects: `d1 = Dog1()`, `d2 = Dog2()`
-3. Call: `d1.action()`, `d2.action()`
-
-</details>
-
+<h2 id="problem-statement-and-solution-to-use-of-super-and-mro-in-multiple-inheritance">Problem statement and solution to use of <code>super()</code> and MRO in Multiple Inheritance<a class="headerlink" href="#problem-statement-and-solution-to-use-of-super-and-mro-in-multiple-inheritance" title="Permanent link">&para;</a></h2>
+<h3 id="problem-statement">Problem Statement<a class="headerlink" href="#problem-statement" title="Permanent link">&para;</a></h3>
+<p>You are required to design a Python program to demonstrate how <code>super()</code> works in <strong>multiple inheritance</strong>, and how Python uses <strong>Method Resolution Order (MRO)</strong> to control execution.</p>
+<h3 id="part-a-class-design">Part A: Class Design<a class="headerlink" href="#part-a-class-design" title="Permanent link">&para;</a></h3>
+<ol>
+<li>A base class <code>Pet</code> with:</li>
+<li>A constructor that prints: <code>"Pet constructor"</code></li>
+<li>
+<p>A method <code>action()</code> that prints: <code>"Pet action"</code></p>
+</li>
+<li>
+<p>Two parent classes:</p>
+</li>
+</ol>
+<p><strong>(a) <code>Walker</code></strong>
+   - Inherits from <code>Pet</code>
+   - Constructor should: print <code>"Walker constructor"</code>, then call the parent constructor using <code>super()</code>
+   - Method <code>action()</code>: print <code>"Walking..."</code>, then call the next method using <code>super()</code></p>
+<p><strong>(b) <code>Swimmer</code></strong>
+   - Same structure as <code>Walker</code>, but with output replaced by <code>"Swimming..."</code></p>
+<h3 id="part-b-multiple-inheritance">Part B: Multiple Inheritance<a class="headerlink" href="#part-b-multiple-inheritance" title="Permanent link">&para;</a></h3>
+<p>Create two child classes:</p>
+<p><strong>(a) <code>Dog1</code></strong>
+- Inherits from <code>Walker, Swimmer</code>
+- Constructor: print <code>"Dog1 constructor"</code>, then call <code>super()</code>
+- Method <code>action()</code>: print <code>"Dog1 action"</code>, then call <code>super()</code></p>
+<p><strong>(b) <code>Dog2</code></strong>
+- Inherits from <code>Swimmer, Walker</code>
+- Same structure as <code>Dog1</code></p>
+<h3 id="part-c-execution">Part C: Execution<a class="headerlink" href="#part-c-execution" title="Permanent link">&para;</a></h3>
+<p>Write code to:
+1. Print the MRO of both classes: <code>Dog1.__mro__</code>, <code>Dog2.__mro__</code>
+2. Create objects: <code>d1 = Dog1()</code>, <code>d2 = Dog2()</code>
+3. Call: <code>d1.action()</code>, <code>d2.action()</code></p>
 <h3 id="a-follow-up-question-worth-exploring">A follow-up question worth exploring<a class="headerlink" href="#a-follow-up-question-worth-exploring" title="Permanent link">&para;</a></h3>
 <p>The original assignment only checks <code>Dog1.__mro__</code> and <code>Dog2.__mro__</code> after creating the objects. As a natural extension: <strong>before running the script, try to predict both MROs and both <code>action()</code> output orders from the class definitions alone</strong>, based purely on the order <code>Walker</code>/<code>Swimmer</code> are listed in each class's parentheses. Then compare your predictions against the actual output below. (Hint: the rule is straightforward once you see it — Python always checks the classes in the exact order they're listed, left to right, before moving up to their shared ancestor.)</p>
 <hr />

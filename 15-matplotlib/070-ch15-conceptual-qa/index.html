@@ -8530,13 +8530,8 @@
 <li>The missing value appears as a <strong>gap</strong> in the line at reading 40. Matplotlib cannot draw a line to a missing point, so it leaves a break.</li>
 </ol>
 <p><strong>Follow-up question:</strong> Would a histogram of these 60 readings also show both problems?</p>
-<details>
-<summary>Show answer</summary>
-
-It would show the negative value, as a lonely bar far to the left of all the others. It would not show the missing value at all, because `hist()` quietly leaves out `NaN` values when it counts. A line plot in reading order shows both problems, and it also shows *where* in the sequence they happened.
-
-</details>
-
+<p><strong>Answer</strong></p>
+<p>It would show the negative value, as a lonely bar far to the left of all the others. It would not show the missing value at all, because <code>hist()</code> quietly leaves out <code>NaN</code> values when it counts. A line plot in reading order shows both problems, and it also shows <em>where</em> in the sequence they happened.</p>
 <p><a href="#table-of-contents">Back to the Table of Contents</a></p>
 <h3 id="2-contrast-nominal-ordinal-interval-and-ratio-data-visualization-strategies">2. Contrast nominal, ordinal, interval, and ratio data visualization strategies.<a class="headerlink" href="#2-contrast-nominal-ordinal-interval-and-ratio-data-visualization-strategies" title="Permanent link">&para;</a></h3>
 <p><strong>Answer</strong></p>
@@ -8650,13 +8645,8 @@ Ratio    -&gt; scatter / bubbles: {'A': 2.4, 'B': 7.5, 'C': 4.2, 'D': 1.1}
 <p><img alt="Four panels showing a suitable plot for each data type" src="../../resources/ch15-qa2-q2-data-types.png" /></p>
 <p><strong>What to notice:</strong> the city bars could be rearranged without losing meaning. The rating bars are kept in the order Poor, Fair, Good, Excellent even though "Good" is the longest. The temperature line crosses zero, which is allowed for interval data. The bubble for shop B is the largest because its revenue is the largest; this works only because revenue has a true zero.</p>
 <p><strong>Follow-up question:</strong> Why would it be wrong to size bubbles by temperature in °C?</p>
-<details>
-<summary>Show answer</summary>
-
-Temperature in °C has no true zero. A day at 10 °C would get a bubble half the size of a day at 20 °C, suggesting it had "half the temperature", which is meaningless. A day at -5 °C would need a negative size, which is impossible. Bubble sizes need ratio data.
-
-</details>
-
+<p><strong>Answer</strong></p>
+<p>Temperature in °C has no true zero. A day at 10 °C would get a bubble half the size of a day at 20 °C, suggesting it had "half the temperature", which is meaningless. A day at -5 °C would need a negative size, which is impossible. Bubble sizes need ratio data.</p>
 <p><a href="#table-of-contents">Back to the Table of Contents</a></p>
 <h2 id="part-2-how-a-matplotlib-chart-is-built">Part 2: How a Matplotlib Chart Is Built<a class="headerlink" href="#part-2-how-a-matplotlib-chart-is-built" title="Permanent link">&para;</a></h2>
 <h3 id="3-differentiate-between-the-pyplot-state-based-interface-and-the-object-oriented-api">3. Differentiate between the pyplot state-based interface and the object-oriented API.<a class="headerlink" href="#3-differentiate-between-the-pyplot-state-based-interface-and-the-object-oriented-api" title="Permanent link">&para;</a></h3>
@@ -8730,13 +8720,8 @@ Right title: Object-oriented: cubes
 <p><img alt="Plot made with the state-based interface" src="../../resources/ch15-qa2-q3-state-based.png" /></p>
 <p><img alt="Two plots made with the object-oriented interface" src="../../resources/ch15-qa2-q3-object-oriented.png" /></p>
 <p><strong>Follow-up question:</strong> In the object-oriented part of the script, what would happen if you wrote <code>plt.title("Cubes")</code> instead of <code>ax_right.set_title(...)</code>?</p>
-<details>
-<summary>Show answer</summary>
-
-`plt.title()` sets the title of the "current" axes. After `plt.subplots(1, 2)`, the current axes is the last one created, which is the right-hand one, so it would happen to work. But if the code later drew on `ax_left`, the "current" axes could change and the title could land on the wrong plot. Using `ax_right.set_title()` removes this uncertainty.
-
-</details>
-
+<p><strong>Answer</strong></p>
+<p><code>plt.title()</code> sets the title of the "current" axes. After <code>plt.subplots(1, 2)</code>, the current axes is the last one created, which is the right-hand one, so it would happen to work. But if the code later drew on <code>ax_left</code>, the "current" axes could change and the title could land on the wrong plot. Using <code>ax_right.set_title()</code> removes this uncertainty.</p>
 <p><a href="#table-of-contents">Back to the Table of Contents</a></p>
 <h3 id="4-explain-the-physical-components-and-structural-hierarchy-of-a-matplotlib-chart-window">4. Explain the physical components and structural hierarchy of a Matplotlib chart window.<a class="headerlink" href="#4-explain-the-physical-components-and-structural-hierarchy-of-a-matplotlib-chart-window" title="Permanent link">&para;</a></h3>
 <p><strong>Answer</strong></p>
@@ -8831,13 +8816,8 @@ Bars in Axes 2         : 3 Rectangle objects
 </code></pre></div>
 <p><img alt="One figure containing two axes" src="../../resources/ch15-qa2-q4-figure-axes.png" /></p>
 <p><strong>Follow-up question:</strong> Which object would you use to save the whole chart to a file: the Figure or an Axes?</p>
-<details>
-<summary>Show answer</summary>
-
-The Figure, with `fig.savefig("chart.png")`. Saving belongs to the whole frame, which contains all the Axes. An Axes has no `savefig()` method.
-
-</details>
-
+<p><strong>Answer</strong></p>
+<p>The Figure, with <code>fig.savefig("chart.png")</code>. Saving belongs to the whole frame, which contains all the Axes. An Axes has no <code>savefig()</code> method.</p>
 <p><a href="#table-of-contents">Back to the Table of Contents</a></p>
 <h3 id="5-what-happens-behind-the-scenes-if-lenx-does-not-equal-leny">5. What happens behind the scenes if len(x) does not equal len(y)?<a class="headerlink" href="#5-what-happens-behind-the-scenes-if-lenx-does-not-equal-leny" title="Permanent link">&para;</a></h3>
 <p><strong>Answer</strong></p>
@@ -8879,13 +8859,8 @@ Lines on the axes after the error: 0
 <li>Stop. The last line of output confirms that no line was drawn.</li>
 </ol>
 <p><strong>Follow-up question:</strong> Does Matplotlib quietly drop the two extra x-values and plot the first three pairs?</p>
-<details>
-<summary>Show answer</summary>
-
-No. Matplotlib never guesses which values you meant to pair. It refuses to plot and raises the error, so that the mistake is noticed and fixed in the data.
-
-</details>
-
+<p><strong>Answer</strong></p>
+<p>No. Matplotlib never guesses which values you meant to pair. It refuses to plot and raises the error, so that the mistake is noticed and fixed in the data.</p>
 <p><a href="#table-of-contents">Back to the Table of Contents</a></p>
 <h3 id="6-why-does-a-single-array-input-to-axplot-still-generate-an-x-axis">6. Why does a single-array input to ax.plot() still generate an X-axis?<a class="headerlink" href="#6-why-does-a-single-array-input-to-axplot-still-generate-an-x-axis" title="Permanent link">&para;</a></h3>
 <p><strong>Answer</strong></p>
@@ -8918,13 +8893,8 @@ range(len(y))     : [0, 1, 2, 3, 4]
 <p><img alt="Line plot with x-values created automatically" src="../../resources/ch15-qa2-q6-y-only.png" /></p>
 <p>The generated x-values are stored as decimal numbers (0.0, 1.0, ...), but they match <code>range(len(y))</code> exactly.</p>
 <p><strong>Follow-up question:</strong> You want the five values to appear at x = 1 to 5 instead of 0 to 4. What is the simplest change?</p>
-<details>
-<summary>Show answer</summary>
-
-Give the x-values explicitly: `ax.plot(range(1, len(y) + 1), y)` or `ax.plot([1, 2, 3, 4, 5], y)`.
-
-</details>
-
+<p><strong>Answer</strong></p>
+<p>Give the x-values explicitly: <code>ax.plot(range(1, len(y) + 1), y)</code> or <code>ax.plot([1, 2, 3, 4, 5], y)</code>.</p>
 <p><a href="#table-of-contents">Back to the Table of Contents</a></p>
 <h3 id="7-contrast-standard-lists-numpy-arrays-and-pandas-dataframes-as-inputs">7. Contrast standard lists, NumPy arrays, and Pandas DataFrames as inputs.<a class="headerlink" href="#7-contrast-standard-lists-numpy-arrays-and-pandas-dataframes-as-inputs" title="Permanent link">&para;</a></h3>
 <p><strong>Answer</strong></p>
@@ -9007,16 +8977,10 @@ Input Series -&gt; stored y-data type: ndarray
 <li>Whatever the input type, Matplotlib stores the plotted values as a NumPy array.</li>
 </ol>
 <p><strong>Follow-up question:</strong> You have a DataFrame <code>df</code> with columns "month" and "sales". Write the line that plots sales against month on an existing <code>ax</code>.</p>
-<details>
-<summary>Show answer</summary>
-
+<p><strong>Answer</strong></p>
 <div class="highlight"><pre><span></span><code><span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="s2">"month"</span><span class="p">],</span> <span class="n">df</span><span class="p">[</span><span class="s2">"sales"</span><span class="p">])</span>
 </code></pre></div>
-
-Each column is a Series, which Matplotlib accepts directly.
-
-</details>
-
+<p>Each column is a Series, which Matplotlib accepts directly.</p>
 <p><a href="#table-of-contents">Back to the Table of Contents</a></p>
 <h3 id="8-why-does-calling-pltshow-pause-script-execution">8. Why does calling plt.show() pause script execution?<a class="headerlink" href="#8-why-does-calling-pltshow-pause-script-execution" title="Permanent link">&para;</a></h3>
 <p><strong>Answer</strong></p>
@@ -9077,13 +9041,8 @@ Interactive mode is on? False
 <p><img alt="Simple plot shown by plt.show()" src="../../resources/ch15-qa2-q8-show.png" /></p>
 <p>When you run this script, line 1 is printed at once, the window opens, and line 2 is printed only after you close the window. The last line shows that interactive mode is off, which is the normal state for a script.</p>
 <p><strong>Follow-up question:</strong> A script creates three figures and then calls <code>plt.show()</code> once at the end. How many windows open, and when does the script continue?</p>
-<details>
-<summary>Show answer</summary>
-
-All three windows open together. The script continues only after all three have been closed.
-
-</details>
-
+<p><strong>Answer</strong></p>
+<p>All three windows open together. The script continues only after all three have been closed.</p>
 <p><a href="#table-of-contents">Back to the Table of Contents</a></p>
 <h3 id="9-detail-the-syntax-mechanics-and-limitations-of-legacy-shortcut-format-strings">9. Detail the syntax mechanics and limitations of legacy shortcut format strings.<a class="headerlink" href="#9-detail-the-syntax-mechanics-and-limitations-of-legacy-shortcut-format-strings" title="Permanent link">&para;</a></h3>
 <p><strong>Answer</strong></p>
@@ -9176,13 +9135,8 @@ Keyword version -&gt; color: #FF5733 linewidth: 3.0 marker face: white
 </tbody>
 </table>
 <p><strong>Follow-up question:</strong> What does the format string <code>'g^:'</code> produce?</p>
-<details>
-<summary>Show answer</summary>
-
-A green line drawn as a dotted line, with triangle markers at the data points.
-
-</details>
-
+<p><strong>Answer</strong></p>
+<p>A green line drawn as a dotted line, with triangle markers at the data points.</p>
 <p><a href="#table-of-contents">Back to the Table of Contents</a></p>
 <h3 id="10-explain-the-sorting-and-rendering-workflow-of-the-axhist-method">10. Explain the sorting and rendering workflow of the ax.hist() method.<a class="headerlink" href="#10-explain-the-sorting-and-rendering-workflow-of-the-axhist-method" title="Permanent link">&para;</a></h3>
 <p><strong>Answer</strong></p>
@@ -9267,13 +9221,8 @@ Bin 3 [27.33, 35.00]: [28, 29, 31, 35] -&gt; 4 values
 <li>So the counts are 3, 3 and 4, exactly as Matplotlib calculated.</li>
 </ol>
 <p><strong>Follow-up question:</strong> If the value 27.33 were in the data, which bin would it go into?</p>
-<details>
-<summary>Show answer</summary>
-
-The second edge is really 27.333..., slightly larger than 27.33, so 27.33 would go into Bin 2. A value exactly equal to an inner edge always goes into the bin on its right, because each bin includes its left edge but not its right edge.
-
-</details>
-
+<p><strong>Answer</strong></p>
+<p>The second edge is really 27.333..., slightly larger than 27.33, so 27.33 would go into Bin 2. A value exactly equal to an inner edge always goes into the bin on its right, because each bin includes its left edge but not its right edge.</p>
 <p><a href="#table-of-contents">Back to the Table of Contents</a></p>
 <h2 id="part-3-summaries-legends-and-two-y-axes">Part 3: Summaries, Legends and Two Y-Axes<a class="headerlink" href="#part-3-summaries-legends-and-two-y-axes" title="Permanent link">&para;</a></h2>
 <h3 id="11-contrast-the-structural-insights-provided-by-box-plots-vs-violin-plots">11. Contrast the structural insights provided by box plots vs. violin plots.<a class="headerlink" href="#11-contrast-the-structural-insights-provided-by-box-plots-vs-violin-plots" title="Permanent link">&para;</a></h3>
@@ -9363,13 +9312,8 @@ Scores between 60 and 70: 2 of 200
 <li>The violin plot is narrow exactly at that gap and bulges around 50 and 80, where the two groups really are.</li>
 </ol>
 <p><strong>Follow-up question:</strong> When would you still choose a box plot over a violin plot?</p>
-<details>
-<summary>Show answer</summary>
-
-When you need to compare many groups in a small space, when outliers must be marked clearly, or when the audience already knows how to read box plots. For a quick check of shape, a violin plot or histogram is better.
-
-</details>
-
+<p><strong>Answer</strong></p>
+<p>When you need to compare many groups in a small space, when outliers must be marked clearly, or when the audience already knows how to read box plots. For a quick check of shape, a violin plot or histogram is better.</p>
 <p><a href="#table-of-contents">Back to the Table of Contents</a></p>
 <h3 id="12-how-does-axlegend-match-label-strings-to-colored-chart-lines">12. How does ax.legend() match label strings to colored chart lines?<a class="headerlink" href="#12-how-does-axlegend-match-label-strings-to-colored-chart-lines" title="Permanent link">&para;</a></h3>
 <p><strong>Answer</strong></p>
@@ -9432,13 +9376,8 @@ Legend text  : ['Revenue', 'Costs']
 <li><strong>Step 6:</strong> It places the legend box, using <code>loc</code> (<code>"best"</code> by default).</li>
 </ul>
 <p><strong>Follow-up question:</strong> How can you give a line a label but still keep it out of the legend?</p>
-<details>
-<summary>Show answer</summary>
-
-Start the label with an underscore, for example `label="_hidden"`. Matplotlib ignores labels that begin with an underscore when it builds the legend.
-
-</details>
-
+<p><strong>Answer</strong></p>
+<p>Start the label with an underscore, for example <code>label="_hidden"</code>. Matplotlib ignores labels that begin with an underscore when it builds the legend.</p>
 <p><a href="#table-of-contents">Back to the Table of Contents</a></p>
 <h3 id="13-why-does-axtwinx-create-an-independent-y-axis-on-a-shared-x-axis">13. Why does ax.twinx() create an independent Y-axis on a shared X-axis?<a class="headerlink" href="#13-why-does-axtwinx-create-an-independent-y-axis-on-a-shared-x-axis" title="Permanent link">&para;</a></h3>
 <p><strong>Answer</strong></p>
@@ -9714,13 +9653,8 @@ Step 17: Figure closed. Open figures: []
 </ol>
 <p><strong>About <code>plt.show(block=False)</code> and <code>plt.pause(5)</code>:</strong> these keep the window open for 5 seconds and then let the script close it. If you prefer the usual behavior, replace Steps 15 to 17 with a single <code>plt.show()</code>, and the window will stay open until you close it.</p>
 <p><strong>Follow-up question:</strong> Why does the script use <code>ax1.set_title()</code> rather than <code>plt.title()</code>?</p>
-<details>
-<summary>Show answer</summary>
-
-`plt.title()` sets the title of the "current" Axes. After `ax1.twinx()` runs, the current Axes becomes `ax2`, so the title would be attached to `ax2`. It would still appear at the top, but the code would be misleading. `ax1.set_title()` states clearly where the title belongs.
-
-</details>
-
+<p><strong>Answer</strong></p>
+<p><code>plt.title()</code> sets the title of the "current" Axes. After <code>ax1.twinx()</code> runs, the current Axes becomes <code>ax2</code>, so the title would be attached to <code>ax2</code>. It would still appear at the top, but the code would be misleading. <code>ax1.set_title()</code> states clearly where the title belongs.</p>
 <p><a href="#table-of-contents">Back to the Table of Contents</a></p>
 <h2 id="part-4-heat-maps-layouts-and-grids">Part 4: Heat Maps, Layouts and Grids<a class="headerlink" href="#part-4-heat-maps-layouts-and-grids" title="Permanent link">&para;</a></h2>
 <h3 id="14-explain-how-multi-dimensional-datasets-map-to-a-2-d-heatmap-via-aximshow">14. Explain how multi-dimensional datasets map to a 2-D heatmap via ax.imshow().<a class="headerlink" href="#14-explain-how-multi-dimensional-datasets-map-to-a-2-d-heatmap-via-aximshow" title="Permanent link">&para;</a></h3>
@@ -9803,13 +9737,8 @@ Color for 50 (highest): (0.99, 0.91, 0.14) (bright yellow)
 <p><img alt="Small matrix drawn as colored squares" src="../../resources/ch15-qa2-q14-imshow.png" /></p>
 <p><strong>Following one value through the steps:</strong> the value 30 lies halfway between the smallest value (10) and the largest (50), so it is normalized to 0.5. The middle of the viridis colormap is a teal green, which is the color of the cell holding 30.</p>
 <p><strong>Follow-up question:</strong> If you add <code>vmin=0, vmax=100</code> to <code>imshow()</code>, what happens to the colors?</p>
-<details>
-<summary>Show answer</summary>
-
-The value 10 would normalize to 0.1 and 50 to 0.5 instead of 0 and 1. All the cells would shift toward the dark, lower half of the colormap, and no cell would be bright yellow. Fixing `vmin` and `vmax` is useful when several heat maps must use the same color scale so that they can be compared.
-
-</details>
-
+<p><strong>Answer</strong></p>
+<p>The value 10 would normalize to 0.1 and 50 to 0.5 instead of 0 and 1. All the cells would shift toward the dark, lower half of the colormap, and no cell would be bright yellow. Fixing <code>vmin</code> and <code>vmax</code> is useful when several heat maps must use the same color scale so that they can be compared.</p>
 <p><a href="#table-of-contents">Back to the Table of Contents</a></p>
 <h3 id="15-differentiate-between-plttight_layout-and-layoutconstrained">15. Differentiate between plt.tight_layout() and layout="constrained".<a class="headerlink" href="#15-differentiate-between-plttight_layout-and-layoutconstrained" title="Permanent link">&para;</a></h3>
 <p><strong>Answer</strong></p>
@@ -9893,13 +9822,8 @@ Constrained figure uses: ConstrainedLayoutEngine
 <p><img alt="Figure arranged with constrained layout" src="../../resources/ch15-qa2-q15-constrained-layout.png" /></p>
 <p><strong>Reading the output:</strong> before <code>tight_layout()</code> the figure has no layout engine (<code>NoneType</code>). After the call it holds only a placeholder, which shows that the adjustment happened once and is not running any more. The constrained figure keeps a real <code>ConstrainedLayoutEngine</code>, which works each time the figure is drawn. For this fairly simple figure both pictures look similar; the difference grows as figures become more crowded or are changed after the layout step.</p>
 <p><strong>Follow-up question:</strong> You call <code>fig.tight_layout()</code> and then add a long figure title with <code>fig.suptitle()</code>. What might go wrong?</p>
-<details>
-<summary>Show answer</summary>
-
-`tight_layout()` has already run, so it did not leave room for the new title. The title may overlap the top row of subplots. Either call `tight_layout()` again after adding the title, or create the figure with `layout="constrained"`, which handles the title automatically.
-
-</details>
-
+<p><strong>Answer</strong></p>
+<p><code>tight_layout()</code> has already run, so it did not leave room for the new title. The title may overlap the top row of subplots. Either call <code>tight_layout()</code> again after adding the title, or create the figure with <code>layout="constrained"</code>, which handles the title automatically.</p>
 <p><a href="#table-of-contents">Back to the Table of Contents</a></p>
 <h3 id="16-how-does-indexing-work-when-pltsubplots-creates-a-multi-row-grid">16. How does indexing work when plt.subplots() creates a multi-row grid?<a class="headerlink" href="#16-how-does-indexing-work-when-pltsubplots-creates-a-multi-row-grid" title="Permanent link">&para;</a></h3>
 <p><strong>Answer</strong></p>
@@ -9989,13 +9913,8 @@ ax[1, 1] is ax.flat[3]? True
 <p><strong>Why <code>ax[3]</code> fails:</strong> in a 2-D array, a single number selects a <strong>row</strong>. There are only rows 0 and 1, so asking for row 3 raises <code>IndexError: index 3 is out of bounds for axis 0 with size 2</code>. To count the panels one after another as 0, 1, 2, 3, use <code>ax.flat[3]</code> or <code>ax.flatten()[3]</code>. The output confirms that <code>ax.flat[3]</code> is the same panel as <code>ax[1, 1]</code>.</p>
 <p>The error line is placed inside <code>try</code> and <code>except</code>, which catches the error, prints its message and lets the script carry on instead of stopping.</p>
 <p><strong>Follow-up question:</strong> What does <code>ax[1]</code> give in a 2 × 2 grid?</p>
-<details>
-<summary>Show answer</summary>
-
-It gives the whole second row, which is a 1-D array of two Axes: `ax[1, 0]` and `ax[1, 1]`. It does not give a single plot, so calling `ax[1].plot(...)` raises an error.
-
-</details>
-
+<p><strong>Answer</strong></p>
+<p>It gives the whole second row, which is a 1-D array of two Axes: <code>ax[1, 0]</code> and <code>ax[1, 1]</code>. It does not give a single plot, so calling <code>ax[1].plot(...)</code> raises an error.</p>
 <p><a href="#table-of-contents">Back to the Table of Contents</a></p>
 <h2 id="part-5-styles-and-labels">Part 5: Styles and Labels<a class="headerlink" href="#part-5-styles-and-labels" title="Permanent link">&para;</a></h2>
 <h3 id="17-what-is-the-execution-danger-of-mixing-global-styles-with-local-overrides">17. What is the execution danger of mixing global styles with local overrides?<a class="headerlink" href="#17-what-is-the-execution-danger-of-mixing-global-styles-with-local-overrides" title="Permanent link">&para;</a></h3>
@@ -10065,13 +9984,8 @@ After the with-block, background      : [1.0, 1.0, 1.0]
 <li>Inside the <code>with plt.style.context("ggplot"):</code> block, a new figure gets the ggplot look. Just after the block, a new figure is back to the default white, so the temporary style did not leak out.</li>
 </ol>
 <p><strong>Follow-up question:</strong> Where in a script is the best place to call <code>plt.style.use()</code>?</p>
-<details>
-<summary>Show answer</summary>
-
-At the top, straight after the imports and before any figure is created. Then every figure in the script uses the same style, and nothing depends on the order of later lines.
-
-</details>
-
+<p><strong>Answer</strong></p>
+<p>At the top, straight after the imports and before any figure is created. Then every figure in the script uses the same style, and nothing depends on the order of later lines.</p>
 <p><a href="#table-of-contents">Back to the Table of Contents</a></p>
 <h3 id="18-why-does-axtext-use-data-coordinates-while-annotations-use-reference-arrows">18. Why does ax.text() use data coordinates while annotations use reference arrows?<a class="headerlink" href="#18-why-does-axtext-use-data-coordinates-while-annotations-use-reference-arrows" title="Permanent link">&para;</a></h3>
 <p><strong>Answer</strong></p>
@@ -10163,19 +10077,12 @@ Annotation text keeps its offset from the point (4, 40)
 <p><img alt="Plot with text labels and an annotation arrow" src="../../resources/ch15-qa2-q18-text-annotate.png" /></p>
 <p><strong>What to notice:</strong> the green text sits at the data position (2, 36). The purple text stays in the top-left corner of the axes. The arrow points at the peak value (4, 40), and the label "Festival sale" sits 40 points to the right of and 30 points below it. If the y-limits were changed again, the green text and the arrow's target would move with the data, the purple text would stay in its corner, and the annotation text would keep the same offset from its target.</p>
 <p><strong>Follow-up question:</strong> You want a small note "Source: sales register" to stay in the bottom-right corner of the plot, however the data changes. Which method and settings would you use?</p>
-<details>
-<summary>Show answer</summary>
-
-Use `ax.text()` with axes coordinates:
-
+<p><strong>Answer</strong></p>
+<p>Use <code>ax.text()</code> with axes coordinates:</p>
 <div class="highlight"><pre><span></span><code><span class="n">ax</span><span class="o">.</span><span class="n">text</span><span class="p">(</span><span class="mf">0.98</span><span class="p">,</span> <span class="mf">0.02</span><span class="p">,</span> <span class="s2">"Source: sales register"</span><span class="p">,</span> <span class="n">transform</span><span class="o">=</span><span class="n">ax</span><span class="o">.</span><span class="n">transAxes</span><span class="p">,</span>
         <span class="n">ha</span><span class="o">=</span><span class="s2">"right"</span><span class="p">,</span> <span class="n">va</span><span class="o">=</span><span class="s2">"bottom"</span><span class="p">)</span>
 </code></pre></div>
-
-`ha="right"` and `va="bottom"` line up the right-hand and bottom edges of the text with that corner position.
-
-</details>
-
+<p><code>ha="right"</code> and <code>va="bottom"</code> line up the right-hand and bottom edges of the text with that corner position.</p>
 <p><a href="#table-of-contents">Back to the Table of Contents</a></p>
 <h2 id="part-6-memory-and-dashboard-layouts">Part 6: Memory and Dashboard Layouts<a class="headerlink" href="#part-6-memory-and-dashboard-layouts" title="Permanent link">&para;</a></h2>
 <h3 id="19-detail-how-to-clear-memory-when-drawing-thousands-of-plots-in-a-loop">19. Detail how to clear memory when drawing thousands of plots in a loop.<a class="headerlink" href="#19-detail-how-to-clear-memory-when-drawing-thousands-of-plots-in-a-loop" title="Permanent link">&para;</a></h3>
@@ -10316,13 +10223,8 @@ closed and may consume too much memory.
 <li>All 50 images were saved, so closing a figure after <code>savefig()</code> does not affect the saved file.</li>
 </ol>
 <p><strong>Follow-up question:</strong> Is it enough to write <code>fig = None</code> or reuse the variable name <code>fig</code> in the next loop pass instead of calling <code>plt.close(fig)</code>?</p>
-<details>
-<summary>Show answer</summary>
-
-No. pyplot still holds its own reference to the figure in its list of open figures, so the memory is not freed. Only `plt.close()` removes the figure from that list.
-
-</details>
-
+<p><strong>Answer</strong></p>
+<p>No. pyplot still holds its own reference to the figure in its list of open figures, so the memory is not freed. Only <code>plt.close()</code> removes the figure from that list.</p>
 <p><a href="#table-of-contents">Back to the Table of Contents</a></p>
 <h3 id="20-how-does-pltsubplot2grid-build-irregular-grid-layouts">20. How does plt.subplot2grid() build irregular grid layouts?<a class="headerlink" href="#20-how-does-pltsubplot2grid-build-irregular-grid-layouts" title="Permanent link">&para;</a></h3>
 <p><strong>Answer</strong></p>
@@ -10582,17 +10484,10 @@ Main     rows [1, 2]  columns [1, 2]
 <p><img alt="Dashboard layout made with subplot2grid" src="../../resources/ch15-qa2-q20-subplot2grid.png" /></p>
 <p>The printed rows and columns match the table above. For example, the Main panel uses rows 1 and 2 and columns 1 and 2. The <code>figsize</code> of 10 × 7 inches set at the start gives the three panels enough room.</p>
 <p><strong>Follow-up question:</strong> How would you change the layout so that the sidebar is on the right and the main panel on the left?</p>
-<details>
-<summary>Show answer</summary>
-
-Step 1 - Start the main panel at the left: `loc=(1, 0)`, keeping `rowspan=2` and `colspan=2`. It now uses columns 0 and 1.
-
-Step 2 - Start the sidebar in the last column: `loc=(1, 2)`, keeping `rowspan=2`.
-
-Step 3 - Leave the banner unchanged. The panels still fill all nine cells without overlapping.
-
-</details>
-
+<p><strong>Answer</strong></p>
+<p>Step 1 - Start the main panel at the left: <code>loc=(1, 0)</code>, keeping <code>rowspan=2</code> and <code>colspan=2</code>. It now uses columns 0 and 1.</p>
+<p>Step 2 - Start the sidebar in the last column: <code>loc=(1, 2)</code>, keeping <code>rowspan=2</code>.</p>
+<p>Step 3 - Leave the banner unchanged. The panels still fill all nine cells without overlapping.</p>
 <p><a href="#table-of-contents">Back to the Table of Contents</a></p>
 <h2 id="quick-revision-table">Quick Revision Table<a class="headerlink" href="#quick-revision-table" title="Permanent link">&para;</a></h2>
 <table>

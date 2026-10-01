@@ -2714,6 +2714,106 @@
     </span>
   </a>
   
+    <nav class="md-nav" aria-label="What this page covers">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#understanding-the-three-attributes-fget-fset-and-fdel-every-property-object-has-these" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Understanding the three attributes fget, fset, and fdel (every property object has these)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#before-we-proceed-further-we-need-to-understand-fget-fset-and-fdel" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Before we proceed further, we need to understand fget, fset, and fdel
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Before we proceed further, we need to understand fget, fset, and fdel">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#step-by-step-understanding" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Step-by-step understanding
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#discussion-on-property-and-agesetter" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Discussion on @property and @age.setter
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#a-property" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        A. @property
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#b-agesetter" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        B. @age.setter
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#c-the-link-between-property-and-agesetter" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        C. The link between @property and @age.setter
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#d-where-are-property-and-agesetter-actually-defined" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        D. Where are @property and @age.setter actually defined?
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
 </li>
       
         <li class="md-nav__item">
@@ -8193,44 +8293,47 @@
 <p>The earlier "OOP Conceptual Questions" page (Q22) briefly introduced <code>@property</code> as a way to combine attribute-style access with the control of a method. This page goes much deeper: it explains exactly what a <code>property</code> object <em>is</em> internally, how <code>@property</code> and <code>@age.setter</code> connect to each other, and then applies all of that in a full project — adding validated encapsulation to a <code>Pet</code> class's <code>age</code> attribute.</p>
 <p>This is one of the most practically useful patterns in everyday Python: it lets you start with a plain, simple attribute, and later add validation or other logic <em>without ever changing how the rest of your code accesses it</em> — <code>obj.age</code> and <code>obj.age = value</code> keep working exactly the same, even after a property quietly starts running extra logic behind the scenes.</p>
 <hr />
-<details>
-<summary>Understanding the three attributes <code>fget</code>, <code>fset</code>, and <code>fdel</code> (every property object has these) — click ► to expand</summary>
-
-### Before we proceed further, we need to understand `fget`, `fset`, and `fdel`
-
-**What is `fset` in `Pet.age.fset(p, 10)`?**
-
-`fset` is the **setter function** associated with the property. So `Pet.age.fset(p, 10)` means: *"call the setter function of the property `age` manually."*
-
-#### Step-by-step understanding
-
-**1. What is `Pet.age` actually?**
-
+<h3 id="understanding-the-three-attributes-fget-fset-and-fdel-every-property-object-has-these">Understanding the three attributes <code>fget</code>, <code>fset</code>, and <code>fdel</code> (every property object has these)<a class="headerlink" href="#understanding-the-three-attributes-fget-fset-and-fdel-every-property-object-has-these" title="Permanent link">&para;</a></h3>
+<h3 id="before-we-proceed-further-we-need-to-understand-fget-fset-and-fdel">Before we proceed further, we need to understand <code>fget</code>, <code>fset</code>, and <code>fdel</code><a class="headerlink" href="#before-we-proceed-further-we-need-to-understand-fget-fset-and-fdel" title="Permanent link">&para;</a></h3>
+<p><strong>What is <code>fset</code> in <code>Pet.age.fset(p, 10)</code>?</strong></p>
+<p><code>fset</code> is the <strong>setter function</strong> associated with the property. So <code>Pet.age.fset(p, 10)</code> means: <em>"call the setter function of the property <code>age</code> manually."</em></p>
+<h4 id="step-by-step-understanding">Step-by-step understanding<a class="headerlink" href="#step-by-step-understanding" title="Permanent link">&para;</a></h4>
+<p><strong>1. What is <code>Pet.age</code> actually?</strong></p>
 <div class="highlight"><pre><span></span><code><span class="k">class</span><span class="w"> </span><span class="nc">Pet</span><span class="p">:</span>
     <span class="nd">@property</span>
     <span class="k">def</span><span class="w"> </span><span class="nf">age</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_age</span>
 </code></pre></div>
-
-Once decorated with `@property`, `age` is **not a normal method anymore** — it becomes a **property object**.
-
-<div class="highlight"><pre><span></span><code><span class="nb">print</span><span class="p">(</span><span class="nb">type</span><span class="p">(</span><span class="n">Pet</span><span class="o">.</span><span class="n">age</span><span class="p">))</span>
+<p>Once decorated with <code>@property</code>, <code>age</code> is <strong>not a normal method anymore</strong> — it becomes a <strong>property object</strong>.</p>
+<p><div class="highlight"><pre><span></span><code><span class="nb">print</span><span class="p">(</span><span class="nb">type</span><span class="p">(</span><span class="n">Pet</span><span class="o">.</span><span class="n">age</span><span class="p">))</span>
 </code></pre></div>
-Output: `<class 'property'>`
-
-**2. What does a property object contain?**
-
-A property internally stores three important functions:
-
-| Attribute | Meaning |
-|---|---|
-| `fget` | The getter function |
-| `fset` | The setter function |
-| `fdel` | The deleter function |
-
-**3. What your class internally becomes**
-
-Your code:
+Output: <code>&lt;class 'property'&gt;</code></p>
+<p><strong>2. What does a property object contain?</strong></p>
+<p>A property internally stores three important functions:</p>
+<table>
+<thead>
+<tr>
+<th>Attribute</th>
+<th>Meaning</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>fget</code></td>
+<td>The getter function</td>
+</tr>
+<tr>
+<td><code>fset</code></td>
+<td>The setter function</td>
+</tr>
+<tr>
+<td><code>fdel</code></td>
+<td>The deleter function</td>
+</tr>
+</tbody>
+</table>
+<p><strong>3. What your class internally becomes</strong></p>
+<p>Your code:
 <div class="highlight"><pre><span></span><code><span class="k">class</span><span class="w"> </span><span class="nc">Pet</span><span class="p">:</span>
     <span class="nd">@property</span>
     <span class="k">def</span><span class="w"> </span><span class="nf">age</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
@@ -8239,9 +8342,8 @@ Your code:
     <span class="nd">@age</span><span class="o">.</span><span class="n">setter</span>
     <span class="k">def</span><span class="w"> </span><span class="nf">age</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_age</span> <span class="o">=</span> <span class="n">value</span>
-</code></pre></div>
-
-...is internally equivalent to:
+</code></pre></div></p>
+<p>...is internally equivalent to:
 <div class="highlight"><pre><span></span><code><span class="k">class</span><span class="w"> </span><span class="nc">Pet</span><span class="p">:</span>
     <span class="k">def</span><span class="w"> </span><span class="nf">get_age</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_age</span>
@@ -8250,77 +8352,54 @@ Your code:
         <span class="bp">self</span><span class="o">.</span><span class="n">_age</span> <span class="o">=</span> <span class="n">value</span>
 
     <span class="n">age</span> <span class="o">=</span> <span class="nb">property</span><span class="p">(</span><span class="n">get_age</span><span class="p">,</span> <span class="n">set_age</span><span class="p">)</span>
-</code></pre></div>
-
-**What happens in `Pet.age.fset(p, 10)`, step by step:**
-
-1. `Pet.age` → the property object itself
-2. `.fset` → its stored setter function
-3. `(p, 10)` → call that setter function directly, with `self = p` and `value = 10`
-
-So this ultimately executes: `p._age = 10`.
-
-**Key takeaways:**
-- Every property has `fget`, `fset`, and `fdel` — though any of them may be `None` if you never defined that part.
-- These are **not** dunder methods — they don't start and end with double underscores.
-- They belong to the **property object itself**, not directly to the class.
-- They store the *actual functions* used for controlling attribute access.
-
-</details>
-
-<details>
-<summary>Discussion on <code>@property</code> and <code>@age.setter</code> — click ► to expand</summary>
-
-Before taking up the project, it's worth understanding exactly how `@property` and `@age.setter` work together.
-
-### A. `@property`
-
-**The core idea:** `@property` **converts a method into something that behaves like an attribute.**
-
-Without `@property`, you'd have to call it like an ordinary method:
+</code></pre></div></p>
+<p><strong>What happens in <code>Pet.age.fset(p, 10)</code>, step by step:</strong></p>
+<ol>
+<li><code>Pet.age</code> → the property object itself</li>
+<li><code>.fset</code> → its stored setter function</li>
+<li><code>(p, 10)</code> → call that setter function directly, with <code>self = p</code> and <code>value = 10</code></li>
+</ol>
+<p>So this ultimately executes: <code>p._age = 10</code>.</p>
+<p><strong>Key takeaways:</strong>
+- Every property has <code>fget</code>, <code>fset</code>, and <code>fdel</code> — though any of them may be <code>None</code> if you never defined that part.
+- These are <strong>not</strong> dunder methods — they don't start and end with double underscores.
+- They belong to the <strong>property object itself</strong>, not directly to the class.
+- They store the <em>actual functions</em> used for controlling attribute access.</p>
+<h3 id="discussion-on-property-and-agesetter">Discussion on <code>@property</code> and <code>@age.setter</code><a class="headerlink" href="#discussion-on-property-and-agesetter" title="Permanent link">&para;</a></h3>
+<p>Before taking up the project, it's worth understanding exactly how <code>@property</code> and <code>@age.setter</code> work together.</p>
+<h3 id="a-property">A. <code>@property</code><a class="headerlink" href="#a-property" title="Permanent link">&para;</a></h3>
+<p><strong>The core idea:</strong> <code>@property</code> <strong>converts a method into something that behaves like an attribute.</strong></p>
+<p>Without <code>@property</code>, you'd have to call it like an ordinary method:
 <div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">age</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
     <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_age</span>
 
 <span class="nb">print</span><span class="p">(</span><span class="n">p</span><span class="o">.</span><span class="n">age</span><span class="p">())</span>   <span class="c1"># must call it like a function, with parentheses</span>
-</code></pre></div>
-
-With `@property`, the same method can be accessed without parentheses at all:
+</code></pre></div></p>
+<p>With <code>@property</code>, the same method can be accessed without parentheses at all:
 <div class="highlight"><pre><span></span><code><span class="nd">@property</span>
 <span class="k">def</span><span class="w"> </span><span class="nf">age</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
     <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_age</span>
 
 <span class="nb">print</span><span class="p">(</span><span class="n">p</span><span class="o">.</span><span class="n">age</span><span class="p">)</span>   <span class="c1"># looks and behaves exactly like a plain attribute</span>
-</code></pre></div>
-
-**So:** `@property` allows a method to behave like a variable, from the caller's point of view.
-
-### B. `@age.setter`
-
-**The core idea:** it defines what should happen when you *assign* a value, e.g. `p.age = 10`.
-
-Internally, Python converts that assignment into: `Pet.age.fset(p, 10)`, which in turn calls your actual setter method, `def age(self, value):`.
-
-**So:** `@age.setter` defines exactly how assignment is handled.
-
-### C. The link between `@property` and `@age.setter`
-
-This is the single most important concept on this page.
-
-1. **`@property` creates a property object.** Writing `@property` above `def age(self):` is equivalent to `age = property(getter_function)`.
-2. **`@age.setter` attaches a setter to that *same* property object**, rather than creating a second, separate one. Writing `@age.setter` above a second `def age(self, value):` modifies the existing property, effectively becoming `age = property(getter, setter)`.
-3. **So both the getter and setter belong to one single property object.** You can visualize this as:
-
+</code></pre></div></p>
+<p><strong>So:</strong> <code>@property</code> allows a method to behave like a variable, from the caller's point of view.</p>
+<h3 id="b-agesetter">B. <code>@age.setter</code><a class="headerlink" href="#b-agesetter" title="Permanent link">&para;</a></h3>
+<p><strong>The core idea:</strong> it defines what should happen when you <em>assign</em> a value, e.g. <code>p.age = 10</code>.</p>
+<p>Internally, Python converts that assignment into: <code>Pet.age.fset(p, 10)</code>, which in turn calls your actual setter method, <code>def age(self, value):</code>.</p>
+<p><strong>So:</strong> <code>@age.setter</code> defines exactly how assignment is handled.</p>
+<h3 id="c-the-link-between-property-and-agesetter">C. The link between <code>@property</code> and <code>@age.setter</code><a class="headerlink" href="#c-the-link-between-property-and-agesetter" title="Permanent link">&para;</a></h3>
+<p>This is the single most important concept on this page.</p>
+<ol>
+<li><strong><code>@property</code> creates a property object.</strong> Writing <code>@property</code> above <code>def age(self):</code> is equivalent to <code>age = property(getter_function)</code>.</li>
+<li><strong><code>@age.setter</code> attaches a setter to that <em>same</em> property object</strong>, rather than creating a second, separate one. Writing <code>@age.setter</code> above a second <code>def age(self, value):</code> modifies the existing property, effectively becoming <code>age = property(getter, setter)</code>.</li>
+<li><strong>So both the getter and setter belong to one single property object.</strong> You can visualize this as:</li>
+</ol>
 <div class="highlight"><pre><span></span><code>age (property object)
 ├── getter -&gt; returns _age
 └── setter -&gt; validates and sets _age
 </code></pre></div>
-
-### D. Where are `@property` and `@age.setter` actually defined?
-
-They're **built into Python itself** — no import is needed. Internally, `property` is simply a built-in class, and `@property` (along with `@age.setter`) is just convenient syntactic sugar layered on top of it.
-
-</details>
-
+<h3 id="d-where-are-property-and-agesetter-actually-defined">D. Where are <code>@property</code> and <code>@age.setter</code> actually defined?<a class="headerlink" href="#d-where-are-property-and-agesetter-actually-defined" title="Permanent link">&para;</a></h3>
+<p>They're <strong>built into Python itself</strong> — no import is needed. Internally, <code>property</code> is simply a built-in class, and <code>@property</code> (along with <code>@age.setter</code>) is just convenient syntactic sugar layered on top of it.</p>
 <p><img alt="Flowchart" src="../../resources/S08-LR-ch-8-august-2026-property-decorator.png" /></p>
 <p><strong>Reading the figure</strong></p>
 <ul>

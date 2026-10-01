@@ -5073,6 +5073,23 @@
     </span>
   </a>
   
+    <nav class="md-nav" aria-label="Step 1: Load Data and Inspect Shape">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#alternative-ways-to-load-the-same-dataset" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Alternative ways to load the same dataset
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
 </li>
         
           <li class="md-nav__item">
@@ -5203,6 +5220,68 @@
       
     </span>
   </a>
+  
+    <nav class="md-nav" aria-label="Object vs. Category, Explained">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#the-difference-between-objectstr-and-category" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        The Difference Between object/str and category
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="The Difference Between object/str and category">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#visualising-it-two-small-flowcharts" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Visualising it: two small flowcharts
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Visualising it: two small flowcharts">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#flowchart-1-of-2-how-objectstr-storage-works" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Flowchart 1 of 2 — How object/str storage works
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#flowchart-2-of-2-how-category-storage-works" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Flowchart 2 of 2 — How category storage works
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
   
 </li>
       
@@ -8719,11 +8798,8 @@
 Rows: 344
 Columns: 7
 </code></pre></div>
-<details>
-<summary>Alternative ways to load the same dataset (click to expand)</summary>
-
-The project brief deliberately allows you to load the data from an Excel file, a CSV file, or an online dataset. All three end up giving you the same 344 rows and 7 columns. Here's what each looks like in code:
-
+<h5 id="alternative-ways-to-load-the-same-dataset">Alternative ways to load the same dataset<a class="headerlink" href="#alternative-ways-to-load-the-same-dataset" title="Permanent link">&para;</a></h5>
+<p>The project brief deliberately allows you to load the data from an Excel file, a CSV file, or an online dataset. All three end up giving you the same 344 rows and 7 columns. Here's what each looks like in code:</p>
 <div class="highlight"><pre><span></span><code><span class="c1"># Option A - what this solution uses: seaborn's built-in copy (no download needed)</span>
 <span class="n">my_df</span> <span class="o">=</span> <span class="n">sns</span><span class="o">.</span><span class="n">load_dataset</span><span class="p">(</span><span class="s1">'penguins'</span><span class="p">)</span>
 
@@ -8734,11 +8810,7 @@ The project brief deliberately allows you to load the data from an Excel file, a
 <span class="c1"># Option C - from a local Excel file (requires: pip install openpyxl)</span>
 <span class="n">my_df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_excel</span><span class="p">(</span><span class="s1">'penguins.xlsx'</span><span class="p">)</span>
 </code></pre></div>
-
-`read_csv()` and `read_excel()` are close cousins — they take a file path (or a web address, for `read_csv()`) and return a DataFrame. The only real difference is which file format they expect. See the [pandas I/O guide](https://pandas.pydata.org/docs/user_guide/io.html) for the full family of `read_*()` functions pandas offers.
-
-</details>
-
+<p><code>read_csv()</code> and <code>read_excel()</code> are close cousins — they take a file path (or a web address, for <code>read_csv()</code>) and return a DataFrame. The only real difference is which file format they expect. See the <a href="https://pandas.pydata.org/docs/user_guide/io.html">pandas I/O guide</a> for the full family of <code>read_*()</code> functions pandas offers.</p>
 <hr />
 <h4 id="step-2-rename-column-and-transpose-view">Step 2: Rename Column and Transpose View<a class="headerlink" href="#step-2-rename-column-and-transpose-view" title="Permanent link">&para;</a></h4>
 <p>Column names should always be clear and descriptive. The dataset originally calls the first column <code>species</code>, but we rename it to <code>penguin_species</code> to be more specific — useful if, later, this DataFrame is combined with other data that also has a generic <code>species</code> column.</p>
@@ -9007,69 +9079,72 @@ Torgersen     47
 <p>With <code>plt.show()</code>, you should see a bar chart with three bars — Biscoe, Dream, and Torgersen along the x-axis, and the penguin count on the y-axis — matching the <code>df_penguins</code> table printed in Step 8.</p>
 <hr />
 <h2 id="object-vs-category-explained">Object vs. Category, Explained<a class="headerlink" href="#object-vs-category-explained" title="Permanent link">&para;</a></h2>
-<details open>
-<summary><strong>Click to expand or collapse: The Difference Between object/str and category</strong></summary>
-
-Pandas has more than one way to store text-like columns, and choosing the right one matters once your data gets larger.
-
-**1. `object` or `str` (the usual default for text)**
-
-When pandas reads a text column, by default it stores each value more or less as-is, as an ordinary Python string.
-
-* **How it works:** if the word "Biscoe" appears 168 times in the dataset, pandas keeps the full text "Biscoe" stored separately, 168 times over.
-* **Pros:** very flexible — a column like this can hold anything: short labels, full sentences, mixed-length text.
-* **Cons:** it uses more memory than necessary, and can be slower for operations like sorting or grouping, especially as the same values repeat over and over.
-
-**2. `category` (the optimised type for repeating labels)**
-
-The `category` dtype is designed specifically for columns that have a limited, fixed set of possible values — like "Male/Female" or a short list of island names.
-
-* **How it works:** instead of saving the word "Biscoe" 168 separate times, pandas builds an internal lookup system, a bit like an ID card scheme:
-  * it assigns "Biscoe" a code number (say, `0`);
-  * it assigns "Dream" a code number (say, `1`);
-  * it assigns "Torgersen" a code number (say, `2`).
-* In the actual data column, pandas now only stores the small numbers `0`, `1`, `2` — repeated as many times as needed — plus one small master list (technically called the **categories**) that records `0 = Biscoe`, `1 = Dream`, `2 = Torgersen`.
-* **Pros:** it uses far less memory, and it noticeably speeds up operations like grouping, sorting, and comparing values.
-* **Cons:** it's only worth using when the number of distinct values is small relative to the number of rows. If every single row had a completely different value (like a unique ID column), converting to `category` wouldn't help — there would be no repetition left to compress.
-
-**Why we use it for `island`:** in the Penguins dataset there are only 3 distinct islands, but 333 rows (after cleaning) referencing them. Since those 3 names repeat over a hundred times each, converting the column to `category` is a clear win.
-
-**A concrete before-and-after, measured on this exact dataset:**
-
-| | `object`/`str` (before) | `category` (after) | Change |
-|---|---|---|---|
-| Memory used by the `island` column alone | ~23,661 bytes | ~3,188 bytes | ~86% smaller |
-| Memory used by the whole DataFrame | ~76,143 bytes | ~55,670 bytes | ~27% smaller |
-
-You can reproduce these numbers yourself with `my_df['island'].memory_usage(deep=True)`, before and after the `.astype('category')` conversion in Step 7. (Exact byte counts can vary slightly by pandas version and platform, but the direction and rough scale of the saving will not.)
-
-#### Visualising it: two small flowcharts
-
-The table above gives you the numbers; these two flowcharts show *why* those numbers come out the way they do. Each box is numbered so the explanation underneath can refer back to it directly. Both diagrams show the same 3 example rows (Biscoe, Biscoe, Dream) so you can compare them side by side.
-
-##### Flowchart 1 of 2 — How `object`/`str` storage works
-
-![Flowchart](../resources/S12-LR-ch12-august-2026-exploring-penguin-data-02.png)
-
-* **Box 1** — Row 1's value is "Biscoe". Pandas writes the complete word "Biscoe" into memory for this row.
-* **Box 2** — Row 2's value is also "Biscoe". Pandas writes the complete word "Biscoe" into memory *again*, as if row 1 never happened — nothing is shared or reused between rows.
-* **Box 3** — Row 3's value is "Dream". Pandas writes the complete word "Dream" into memory.
-
-Notice that the text "Biscoe" was written out in full twice. That repeated, uncompressed text is exactly the extra memory cost that `object`/`str` storage doesn't avoid.
-
-##### Flowchart 2 of 2 — How `category` storage works
-
-![Flowchart](../resources/S12-LR-ch12-august-2026-exploring-penguin-data-03.png)
-
-* **Box 1** — Row 1's value is "Biscoe". Instead of storing the text itself, pandas assigns it a short numeric code: `0`.
-* **Box 2** — Row 2's value is also "Biscoe", so it *reuses* the same code, `0`. No new text is written anywhere — just the small number `0` again.
-* **Box 3** — Row 3's value is "Dream", a value pandas hasn't seen yet in this example, so it gets a new code, `1`.
-* **Box 4** — This is the lookup table. Unlike boxes 1–3, it is kept only **once per column**, not once per row. It records what each code means — `0 = Biscoe`, `1 = Dream`, `2 = Torgersen` — and pandas checks it any time it needs to display the real value or compare two rows.
-
-Put side by side, the difference is exactly what makes `category` smaller: Flowchart 1 wrote the word "Biscoe" out in full, twice. Flowchart 2 wrote the number `0` twice and paid for the word "Biscoe" only once, inside the shared lookup table. Multiply that saving across 163 Biscoe rows instead of 2, and you get the ~86% reduction shown in the table above.
-
-</details>
-
+<h3 id="the-difference-between-objectstr-and-category">The Difference Between object/str and category<a class="headerlink" href="#the-difference-between-objectstr-and-category" title="Permanent link">&para;</a></h3>
+<p>Pandas has more than one way to store text-like columns, and choosing the right one matters once your data gets larger.</p>
+<p><strong>1. <code>object</code> or <code>str</code> (the usual default for text)</strong></p>
+<p>When pandas reads a text column, by default it stores each value more or less as-is, as an ordinary Python string.</p>
+<ul>
+<li><strong>How it works:</strong> if the word "Biscoe" appears 168 times in the dataset, pandas keeps the full text "Biscoe" stored separately, 168 times over.</li>
+<li><strong>Pros:</strong> very flexible — a column like this can hold anything: short labels, full sentences, mixed-length text.</li>
+<li><strong>Cons:</strong> it uses more memory than necessary, and can be slower for operations like sorting or grouping, especially as the same values repeat over and over.</li>
+</ul>
+<p><strong>2. <code>category</code> (the optimised type for repeating labels)</strong></p>
+<p>The <code>category</code> dtype is designed specifically for columns that have a limited, fixed set of possible values — like "Male/Female" or a short list of island names.</p>
+<ul>
+<li><strong>How it works:</strong> instead of saving the word "Biscoe" 168 separate times, pandas builds an internal lookup system, a bit like an ID card scheme:</li>
+<li>it assigns "Biscoe" a code number (say, <code>0</code>);</li>
+<li>it assigns "Dream" a code number (say, <code>1</code>);</li>
+<li>it assigns "Torgersen" a code number (say, <code>2</code>).</li>
+<li>In the actual data column, pandas now only stores the small numbers <code>0</code>, <code>1</code>, <code>2</code> — repeated as many times as needed — plus one small master list (technically called the <strong>categories</strong>) that records <code>0 = Biscoe</code>, <code>1 = Dream</code>, <code>2 = Torgersen</code>.</li>
+<li><strong>Pros:</strong> it uses far less memory, and it noticeably speeds up operations like grouping, sorting, and comparing values.</li>
+<li><strong>Cons:</strong> it's only worth using when the number of distinct values is small relative to the number of rows. If every single row had a completely different value (like a unique ID column), converting to <code>category</code> wouldn't help — there would be no repetition left to compress.</li>
+</ul>
+<p><strong>Why we use it for <code>island</code>:</strong> in the Penguins dataset there are only 3 distinct islands, but 333 rows (after cleaning) referencing them. Since those 3 names repeat over a hundred times each, converting the column to <code>category</code> is a clear win.</p>
+<p><strong>A concrete before-and-after, measured on this exact dataset:</strong></p>
+<table>
+<thead>
+<tr>
+<th></th>
+<th><code>object</code>/<code>str</code> (before)</th>
+<th><code>category</code> (after)</th>
+<th>Change</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Memory used by the <code>island</code> column alone</td>
+<td>~23,661 bytes</td>
+<td>~3,188 bytes</td>
+<td>~86% smaller</td>
+</tr>
+<tr>
+<td>Memory used by the whole DataFrame</td>
+<td>~76,143 bytes</td>
+<td>~55,670 bytes</td>
+<td>~27% smaller</td>
+</tr>
+</tbody>
+</table>
+<p>You can reproduce these numbers yourself with <code>my_df['island'].memory_usage(deep=True)</code>, before and after the <code>.astype('category')</code> conversion in Step 7. (Exact byte counts can vary slightly by pandas version and platform, but the direction and rough scale of the saving will not.)</p>
+<h4 id="visualising-it-two-small-flowcharts">Visualising it: two small flowcharts<a class="headerlink" href="#visualising-it-two-small-flowcharts" title="Permanent link">&para;</a></h4>
+<p>The table above gives you the numbers; these two flowcharts show <em>why</em> those numbers come out the way they do. Each box is numbered so the explanation underneath can refer back to it directly. Both diagrams show the same 3 example rows (Biscoe, Biscoe, Dream) so you can compare them side by side.</p>
+<h5 id="flowchart-1-of-2-how-objectstr-storage-works">Flowchart 1 of 2 — How <code>object</code>/<code>str</code> storage works<a class="headerlink" href="#flowchart-1-of-2-how-objectstr-storage-works" title="Permanent link">&para;</a></h5>
+<p><img alt="Flowchart" src="../../resources/S12-LR-ch12-august-2026-exploring-penguin-data-02.png" /></p>
+<ul>
+<li><strong>Box 1</strong> — Row 1's value is "Biscoe". Pandas writes the complete word "Biscoe" into memory for this row.</li>
+<li><strong>Box 2</strong> — Row 2's value is also "Biscoe". Pandas writes the complete word "Biscoe" into memory <em>again</em>, as if row 1 never happened — nothing is shared or reused between rows.</li>
+<li><strong>Box 3</strong> — Row 3's value is "Dream". Pandas writes the complete word "Dream" into memory.</li>
+</ul>
+<p>Notice that the text "Biscoe" was written out in full twice. That repeated, uncompressed text is exactly the extra memory cost that <code>object</code>/<code>str</code> storage doesn't avoid.</p>
+<h5 id="flowchart-2-of-2-how-category-storage-works">Flowchart 2 of 2 — How <code>category</code> storage works<a class="headerlink" href="#flowchart-2-of-2-how-category-storage-works" title="Permanent link">&para;</a></h5>
+<p><img alt="Flowchart" src="../../resources/S12-LR-ch12-august-2026-exploring-penguin-data-03.png" /></p>
+<ul>
+<li><strong>Box 1</strong> — Row 1's value is "Biscoe". Instead of storing the text itself, pandas assigns it a short numeric code: <code>0</code>.</li>
+<li><strong>Box 2</strong> — Row 2's value is also "Biscoe", so it <em>reuses</em> the same code, <code>0</code>. No new text is written anywhere — just the small number <code>0</code> again.</li>
+<li><strong>Box 3</strong> — Row 3's value is "Dream", a value pandas hasn't seen yet in this example, so it gets a new code, <code>1</code>.</li>
+<li><strong>Box 4</strong> — This is the lookup table. Unlike boxes 1–3, it is kept only <strong>once per column</strong>, not once per row. It records what each code means — <code>0 = Biscoe</code>, <code>1 = Dream</code>, <code>2 = Torgersen</code> — and pandas checks it any time it needs to display the real value or compare two rows.</li>
+</ul>
+<p>Put side by side, the difference is exactly what makes <code>category</code> smaller: Flowchart 1 wrote the word "Biscoe" out in full, twice. Flowchart 2 wrote the number <code>0</code> twice and paid for the word "Biscoe" only once, inside the shared lookup table. Multiply that saving across 163 Biscoe rows instead of 2, and you get the ~86% reduction shown in the table above.</p>
 <hr />
 <h2 id="the-complete-script">The Complete Script<a class="headerlink" href="#the-complete-script" title="Permanent link">&para;</a></h2>
 <p>Below is the entire solution as a single, runnable block, combining every step above with all of the small improvements described along the way (the <code>observed=True</code> addition in Step 8, and the safer style-fallback in Step 9). Copy this into a <code>.py</code> file or a notebook cell to run the whole project end to end.</p>

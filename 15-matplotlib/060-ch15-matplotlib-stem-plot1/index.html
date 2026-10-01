@@ -9005,36 +9005,18 @@ Step 4: Parts returned by ax.stem()
 <p><a href="#table-of-contents">Back to the Table of Contents</a></p>
 <h3 id="follow-up-questions-on-script-1">Follow-up Questions on Script 1<a class="headerlink" href="#follow-up-questions-on-script-1" title="Permanent link">&para;</a></h3>
 <p><strong>Question 1:</strong> What happens if you leave out the <code>x</code> list and write <code>ax.stem(y)</code>?</p>
-<details>
-<summary>Show answer</summary>
-
-Matplotlib uses the positions 0, 1, 2, 3, 4, 5 as the x-values. The plot looks the same, but the stems are placed at 0 to 5 instead of 1 to 6. This is because Python counts from 0.
-
-</details>
-
+<p><strong>Answer</strong></p>
+<p>Matplotlib uses the positions 0, 1, 2, 3, 4, 5 as the x-values. The plot looks the same, but the stems are placed at 0 to 5 instead of 1 to 6. This is because Python counts from 0.</p>
 <p><strong>Question 2:</strong> How would you draw green dashed stems with black square markers and no visible baseline?</p>
-<details>
-<summary>Show answer</summary>
-
-Step 1 - Green dashed stems: `linefmt="g--"`.
-
-Step 2 - Black square markers: `markerfmt="ks"`.
-
-Step 3 - Hide the baseline: use a format string with no line, `basefmt=" "` (a single space).
-
+<p><strong>Answer</strong></p>
+<p>Step 1 - Green dashed stems: <code>linefmt="g--"</code>.</p>
+<p>Step 2 - Black square markers: <code>markerfmt="ks"</code>.</p>
+<p>Step 3 - Hide the baseline: use a format string with no line, <code>basefmt=" "</code> (a single space).</p>
 <div class="highlight"><pre><span></span><code><span class="n">ax</span><span class="o">.</span><span class="n">stem</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">linefmt</span><span class="o">=</span><span class="s2">"g--"</span><span class="p">,</span> <span class="n">markerfmt</span><span class="o">=</span><span class="s2">"ks"</span><span class="p">,</span> <span class="n">basefmt</span><span class="o">=</span><span class="s2">" "</span><span class="p">)</span>
 </code></pre></div>
-
-</details>
-
 <p><strong>Question 3:</strong> Why does the vertical axis go down to 0 (in fact slightly below it) even though the smallest value is 3?</p>
-<details>
-<summary>Show answer</summary>
-
-The baseline is drawn at 0 (the default value of `bottom`), and every stem starts from the baseline. Matplotlib makes the axis big enough to show the whole baseline and all the stems, so the axis must include 0. It then adds a small margin, which is why the axis starts a little below 0.
-
-</details>
-
+<p><strong>Answer</strong></p>
+<p>The baseline is drawn at 0 (the default value of <code>bottom</code>), and every stem starts from the baseline. Matplotlib makes the axis big enough to show the whole baseline and all the stems, so the axis must include 0. It then adds a small margin, which is why the axis starts a little below 0.</p>
 <p><a href="#table-of-contents">Back to the Table of Contents</a></p>
 <h2 id="when-should-we-use-stem-plots">When Should We Use Stem Plots?<a class="headerlink" href="#when-should-we-use-stem-plots" title="Permanent link">&para;</a></h2>
 <p>Use a stem plot when:</p>
@@ -9446,26 +9428,14 @@ connecting observations
 <p><a href="#table-of-contents">Back to the Table of Contents</a></p>
 <h3 id="follow-up-questions-on-script-2">Follow-up Questions on Script 2<a class="headerlink" href="#follow-up-questions-on-script-2" title="Permanent link">&para;</a></h3>
 <p><strong>Question 1:</strong> In the line plot, halfway between sample 1 (value 2) and sample 2 (value 7), the line passes through the value 4.5. Was 4.5 ever measured?</p>
-<details>
-<summary>Show answer</summary>
-
-No. Only whole-number samples 1 to 8 were measured. The line simply joins the measured points with straight segments. This is why a line plot can be misleading for separate samples: it suggests values between the samples that were never recorded. The stem plot avoids this.
-
-</details>
-
+<p><strong>Answer</strong></p>
+<p>No. Only whole-number samples 1 to 8 were measured. The line simply joins the measured points with straight segments. This is why a line plot can be misleading for separate samples: it suggests values between the samples that were never recorded. The stem plot avoids this.</p>
 <p><strong>Question 2:</strong> The three panels line up here only because they happen to use the same x-values. How could you make sure they always line up, even if one panel had different data?</p>
-<details>
-<summary>Show answer</summary>
-
-Add `sharex=True` to `plt.subplots()`:
-
+<p><strong>Answer</strong></p>
+<p>Add <code>sharex=True</code> to <code>plt.subplots()</code>:</p>
 <div class="highlight"><pre><span></span><code><span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">8</span><span class="p">,</span> <span class="mi">8</span><span class="p">),</span> <span class="n">sharex</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 </code></pre></div>
-
-All three panels then use one common x-axis, so sample 4 in the top panel sits exactly above sample 4 in the other two.
-
-</details>
-
+<p>All three panels then use one common x-axis, so sample 4 in the top panel sits exactly above sample 4 in the other two.</p>
 <p><a href="#table-of-contents">Back to the Table of Contents</a></p>
 <h2 id="script-3-stem-plot-of-a-sampled-signal">Script 3: Stem Plot of a Sampled Signal<a class="headerlink" href="#script-3-stem-plot-of-a-sampled-signal" title="Permanent link">&para;</a></h2>
 <p>The first two scripts had only positive values. Real signals, such as sound, go above and below zero. This script shows where stem plots are used most: displaying the <strong>samples</strong> taken from a smooth signal. Each sample is a reading of the signal at one moment. The smooth wave is drawn as a faint dashed line so that you can see where the samples come from.</p>

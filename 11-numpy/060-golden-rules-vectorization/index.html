@@ -8467,40 +8467,25 @@
 <span class="nb">print</span><span class="p">(</span><span class="s2">"Vectorized Time:"</span><span class="p">,</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span> <span class="o">-</span> <span class="n">start</span><span class="p">)</span>
 <span class="c1"># Output: Vectorized Time: 0.00001 seconds (varies based on machine)</span>
 </code></pre></div>
-<details>
-  <summary>RULE 2: Why `np.append()` in a loop is BAD (Click to expand!)</summary>
-
-### RULE 2: Why `np.append()` in a loop is BAD
-First Understand What You Think is Happening
-
-When you write:
-
+<h3 id="rule-2-why-npappend-in-a-loop-is-bad">RULE 2: Why <code>np.append()</code> in a loop is BAD<a class="headerlink" href="#rule-2-why-npappend-in-a-loop-is-bad" title="Permanent link">&para;</a></h3>
+<p>First Understand What You Think is Happening</p>
+<p>When you write:</p>
 <div class="highlight"><pre><span></span><code><span class="n">arr</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([])</span>
 <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">5</span><span class="p">):</span>
     <span class="n">arr</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">arr</span><span class="p">,</span> <span class="n">i</span><span class="p">)</span>
 </code></pre></div>
-
-You might think: “I am just adding one element to the same array”
-
-What is Actually Happening Internally
-
-NumPy arrays are fixed-size (like a fixed container).
-
-So every time you do:
-
-`arr = np.append(arr, i)`
-
-NumPy does this:
-
-Step 1: Create a NEW array of bigger size
+<p>You might think: “I am just adding one element to the same array”</p>
+<p>What is Actually Happening Internally</p>
+<p>NumPy arrays are fixed-size (like a fixed container).</p>
+<p>So every time you do:</p>
+<p><code>arr = np.append(arr, i)</code></p>
+<p>NumPy does this:</p>
+<p>Step 1: Create a NEW array of bigger size
 Step 2: Copy ALL old elements into it
 Step 3: Add new element
-Step 4: Delete old array
-
-Step-by-Step Example
-
-Let’s simulate:
-
+Step 4: Delete old array</p>
+<p>Step-by-Step Example</p>
+<p>Let’s simulate:</p>
 <div class="highlight"><pre><span></span><code><span class="n">Iteration</span> <span class="mi">1</span><span class="p">:</span>
 <span class="p">[]</span> <span class="err">→</span> <span class="p">[</span><span class="mi">0</span><span class="p">]</span>
 <span class="n">Iteration</span> <span class="mi">2</span><span class="p">:</span>
@@ -8513,62 +8498,44 @@ Let’s simulate:
 <span class="n">Total</span> <span class="n">work</span> <span class="n">becomes</span><span class="p">:</span>
 <span class="mi">1</span> <span class="o">+</span> <span class="mi">2</span> <span class="o">+</span> <span class="mi">3</span> <span class="o">+</span> <span class="o">...</span> <span class="o">+</span> <span class="n">n</span>  <span class="err">→</span> <span class="n">O</span><span class="p">(</span><span class="n">n</span><span class="err">²</span><span class="p">)</span>
 </code></pre></div>
-
-
-### Why Python List is Better
-
-Python lists are dynamic (resizable).
-
-`temp = []`
-`temp.append(i)`
-
-**What happens:**
-
->List has extra space reserved
->No copying every time
->Occasional resizing only
-
-### So complexity is: O(n) instead of O(n²)
-
-**Correct Approach Flow**
-
+<h3 id="why-python-list-is-better">Why Python List is Better<a class="headerlink" href="#why-python-list-is-better" title="Permanent link">&para;</a></h3>
+<p>Python lists are dynamic (resizable).</p>
+<p><code>temp = []</code>
+<code>temp.append(i)</code></p>
+<p><strong>What happens:</strong></p>
+<blockquote>
+<p>List has extra space reserved
+No copying every time
+Occasional resizing only</p>
+</blockquote>
+<h3 id="so-complexity-is-on-instead-of-on2">So complexity is: O(n) instead of O(n²)<a class="headerlink" href="#so-complexity-is-on-instead-of-on2" title="Permanent link">&para;</a></h3>
+<p><strong>Correct Approach Flow</strong></p>
 <div class="highlight"><pre><span></span><code><span class="n">temp</span> <span class="o">=</span> <span class="p">[]</span>          <span class="c1"># Fast growing structure</span>
 <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">5000</span><span class="p">):</span>
     <span class="n">temp</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">i</span><span class="p">)</span>
 
 <span class="n">arr</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">temp</span><span class="p">)</span>   <span class="c1"># Convert once</span>
 </code></pre></div>
-
-### Key Idea
--    NumPy arrays = fixed size → expensive to grow
--    Lists = flexible → cheap to grow
-
-
-
-</details>
-
-<details>
-  <summary>RULE 3: Boolean Masking (Click to expand!)</summary>
-
-
-### RULE 3: Boolean Masking (Most Important Concept)
-What You Are Doing in Loop
-
+<h3 id="key-idea">Key Idea<a class="headerlink" href="#key-idea" title="Permanent link">&para;</a></h3>
+<ul>
+<li>NumPy arrays = fixed size → expensive to grow</li>
+<li>Lists = flexible → cheap to grow</li>
+</ul>
+<h3 id="rule-3-boolean-masking-most-important-concept">RULE 3: Boolean Masking (Most Important Concept)<a class="headerlink" href="#rule-3-boolean-masking-most-important-concept" title="Permanent link">&para;</a></h3>
+<p>What You Are Doing in Loop</p>
 <div class="highlight"><pre><span></span><code><span class="n">result</span> <span class="o">=</span> <span class="p">[]</span>
 <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">data</span><span class="p">:</span>
     <span class="k">if</span> <span class="n">x</span> <span class="o">&gt;</span> <span class="mi">15</span><span class="p">:</span>
         <span class="n">result</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
 </code></pre></div>
-#### You are doing 2 things:
-
--    Check condition
--    Select elements
-
-NumPy does Both at once
-data[data > 15]
-
-Let’s break this into steps.
-
+<h4 id="you-are-doing-2-things">You are doing 2 things:<a class="headerlink" href="#you-are-doing-2-things" title="Permanent link">&para;</a></h4>
+<ul>
+<li>Check condition</li>
+<li>Select elements</li>
+</ul>
+<p>NumPy does Both at once
+data[data &gt; 15]</p>
+<p>Let’s break this into steps.</p>
 <div class="highlight"><pre><span></span><code><span class="c1"># Step 1: Create Boolean Mask</span>
 <span class="n">data</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mi">5</span><span class="p">,</span> <span class="mi">15</span><span class="p">,</span> <span class="mi">25</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">30</span><span class="p">])</span>
 
@@ -8589,18 +8556,30 @@ Let’s break this into steps.
 <span class="n">mask</span> <span class="o">=</span> <span class="n">data</span> <span class="o">&gt;</span> <span class="mi">15</span>
 <span class="n">result</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="n">mask</span><span class="p">]</span>
 </code></pre></div>
-
-### Why this is powerful  
-
-| Loop Version | NumPy Version |
-| --- | --- |
-| Check each element manually | Done internally |
-| Append manually | Done automatically |
-| Python execution | C-level execution |
-
-
-Visual Explanation
-
+<h3 id="why-this-is-powerful">Why this is powerful<a class="headerlink" href="#why-this-is-powerful" title="Permanent link">&para;</a></h3>
+<table>
+<thead>
+<tr>
+<th>Loop Version</th>
+<th>NumPy Version</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Check each element manually</td>
+<td>Done internally</td>
+</tr>
+<tr>
+<td>Append manually</td>
+<td>Done automatically</td>
+</tr>
+<tr>
+<td>Python execution</td>
+<td>C-level execution</td>
+</tr>
+</tbody>
+</table>
+<p>Visual Explanation</p>
 <div class="highlight"><pre><span></span><code><span class="n">data</span><span class="p">:</span>   <span class="p">[</span> <span class="mi">5</span>   <span class="mi">15</span>   <span class="mi">25</span>   <span class="mi">10</span>   <span class="mi">30</span> <span class="p">]</span>
 <span class="n">mask</span><span class="p">:</span>   <span class="p">[</span> <span class="n">F</span>    <span class="n">F</span>    <span class="n">T</span>    <span class="n">F</span>    <span class="n">T</span> <span class="p">]</span>
 
@@ -8608,37 +8587,48 @@ Visual Explanation
 
 <span class="n">Final</span><span class="p">:</span>  <span class="p">[</span><span class="mi">25</span><span class="p">,</span> <span class="mi">30</span><span class="p">]</span>
 </code></pre></div>
-
-**Why Boolean Masking is Faster**
-
-Because:
+<p><strong>Why Boolean Masking is Faster</strong></p>
+<p>Because:
 -    No Python loop
 -    No repeated append
--    Entire operation runs in optimized C code
-
-
-### Additional possibility with mask: Modify Data Using Mask
-`data[data > 15] = 100`
-
-Result:
-
-`[5, 15, 100, 10, 100]`
-
-This is very powerful and not possible easily with loops
-
-
-### Final Comparison
-
-
-| Concept | Loop Approach | NumPy Approach |
-| --- | --- | --- |
-| Building array | append repeatedly | build list → convert |
-| Filtering | if condition inside loop | boolean mask |
-| Speed | slow | very fast |
-| Code | long | short |
-
-
-</details>
+-    Entire operation runs in optimized C code</p>
+<h3 id="additional-possibility-with-mask-modify-data-using-mask">Additional possibility with mask: Modify Data Using Mask<a class="headerlink" href="#additional-possibility-with-mask-modify-data-using-mask" title="Permanent link">&para;</a></h3>
+<p><code>data[data &gt; 15] = 100</code></p>
+<p>Result:</p>
+<p><code>[5, 15, 100, 10, 100]</code></p>
+<p>This is very powerful and not possible easily with loops</p>
+<h3 id="final-comparison">Final Comparison<a class="headerlink" href="#final-comparison" title="Permanent link">&para;</a></h3>
+<table>
+<thead>
+<tr>
+<th>Concept</th>
+<th>Loop Approach</th>
+<th>NumPy Approach</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Building array</td>
+<td>append repeatedly</td>
+<td>build list → convert</td>
+</tr>
+<tr>
+<td>Filtering</td>
+<td>if condition inside loop</td>
+<td>boolean mask</td>
+</tr>
+<tr>
+<td>Speed</td>
+<td>slow</td>
+<td>very fast</td>
+</tr>
+<tr>
+<td>Code</td>
+<td>long</td>
+<td>short</td>
+</tr>
+</tbody>
+</table>
 
 
 

@@ -8729,12 +8729,29 @@
 <h4 id="methods-used">Methods Used<a class="headerlink" href="#methods-used" title="Permanent link">&para;</a></h4>
 <p><strong><code>sns.load_dataset(name)</code></strong>
 <div class="highlight"><pre><span></span><code><span class="n">df</span> <span class="o">=</span> <span class="n">sns</span><span class="o">.</span><span class="n">load_dataset</span><span class="p">(</span><span class="s2">"penguins"</span><span class="p">)</span>
-</code></pre></div>
-| Aspect | Detail |
-| --- | --- |
-| Input | Dataset name (string) |
-| Output | Pandas DataFrame |
-| Limitation | May require internet access the first time it's used |</p>
+</code></pre></div></p>
+<table>
+<thead>
+<tr>
+<th>Aspect</th>
+<th>Detail</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Input</td>
+<td>Dataset name (string)</td>
+</tr>
+<tr>
+<td>Output</td>
+<td>Pandas DataFrame</td>
+</tr>
+<tr>
+<td>Limitation</td>
+<td>May require internet access the first time it's used</td>
+</tr>
+</tbody>
+</table>
 <p><strong><code>df.head()</code>, <code>df.columns</code>, <code>df.dtypes</code></strong></p>
 <table>
 <thead>
@@ -8814,13 +8831,30 @@ Original dataset df_raw shape:-&gt; (344, 7)
 <div class="highlight"><pre><span></span><code><span class="n">df_raw</span><span class="p">[</span><span class="s1">'BLmm'</span><span class="p">]</span> <span class="o">=</span> <span class="n">df_raw</span><span class="p">[</span><span class="s1">'BLmm'</span><span class="p">]</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">str</span><span class="p">)</span>
 </code></pre></div>
 <p><strong><code>.astype()</code> Signature</strong></p>
-<p><div class="highlight"><pre><span></span><code><span class="n">Series</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="n">dtype</span><span class="p">)</span>
+<div class="highlight"><pre><span></span><code><span class="n">Series</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="n">dtype</span><span class="p">)</span>
 </code></pre></div>
-| Aspect | Detail |
-| --- | --- |
-| Input | Target data type |
-| Output | A new, converted Series |
-| Limitation | Fails with an error if the conversion is genuinely incompatible |</p>
+<table>
+<thead>
+<tr>
+<th>Aspect</th>
+<th>Detail</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Input</td>
+<td>Target data type</td>
+</tr>
+<tr>
+<td>Output</td>
+<td>A new, converted Series</td>
+</tr>
+<tr>
+<td>Limitation</td>
+<td>Fails with an error if the conversion is genuinely incompatible</td>
+</tr>
+</tbody>
+</table>
 <blockquote>
 <p><strong>Did you know?</strong> What happens to missing (<code>NaN</code>) values here depends on your pandas version. In pandas 1.x and 2.x, <code>.astype(str)</code> turns each one into the literal three-letter string <code>"nan"</code>; converting the column back to <code>float</code> in Step 2.2 still works, because Python's <code>float()</code> function recognizes the text <code>"nan"</code> and turns it back into a genuine <code>NaN</code>. In pandas 3, the new string type keeps them as genuine missing values, so nothing changes in the round trip. Either way, don't rely on this in general — if the missing values had instead been written as <code>"N/A"</code>, <code>"missing"</code>, or blank strings, converting back to <code>float</code> would raise an error rather than silently succeeding.</p>
 </blockquote>
@@ -8894,13 +8928,30 @@ Messy dataset df_messy tail (showing the appended duplicates):-&gt;
 <p><strong>Why:</strong> clear, consistent, descriptive column names make code far more readable, and prevent bugs caused by typos or mismatched naming conventions across different parts of a project.</p>
 <p><strong>How:</strong> a dictionary mapping the messy names back to descriptive names is passed to <code>.rename()</code>.</p>
 <p><strong>Signature</strong></p>
-<p><div class="highlight"><pre><span></span><code><span class="n">DataFrame</span><span class="o">.</span><span class="n">rename</span><span class="p">(</span><span class="n">columns</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">index</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">inplace</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+<div class="highlight"><pre><span></span><code><span class="n">DataFrame</span><span class="o">.</span><span class="n">rename</span><span class="p">(</span><span class="n">columns</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">index</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">inplace</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
 </code></pre></div>
-| Aspect | Detail |
-| --- | --- |
-| Input | A dictionary (or function) mapping old names to new ones |
-| Output | A new DataFrame, unless <code>inplace=True</code> is used |
-| Limitation | <strong>Silently does nothing</strong> if a name in the dictionary doesn't actually exist in the DataFrame — no error, no warning, by default |</p>
+<table>
+<thead>
+<tr>
+<th>Aspect</th>
+<th>Detail</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Input</td>
+<td>A dictionary (or function) mapping old names to new ones</td>
+</tr>
+<tr>
+<td>Output</td>
+<td>A new DataFrame, unless <code>inplace=True</code> is used</td>
+</tr>
+<tr>
+<td>Limitation</td>
+<td><strong>Silently does nothing</strong> if a name in the dictionary doesn't actually exist in the DataFrame — no error, no warning, by default</td>
+</tr>
+</tbody>
+</table>
 <h4 id="script-for-step-21">Script for Step 2.1<a class="headerlink" href="#script-for-step-21" title="Permanent link">&para;</a></h4>
 <p><div class="highlight"><pre><span></span><code><span class="nb">print</span><span class="p">(</span><span class="s2">"</span><span class="se">\n</span><span class="s2"> STEP 2.1: RENAMING COLUMNS ================"</span><span class="p">)</span>
 
@@ -9006,18 +9057,46 @@ dtype: object
 <p><strong>Methods Used</strong></p>
 <p><strong><code>.duplicated()</code></strong>
 <div class="highlight"><pre><span></span><code><span class="n">df</span><span class="o">.</span><span class="n">duplicated</span><span class="p">(</span><span class="n">keep</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
-</code></pre></div>
-| Aspect | Detail |
-| --- | --- |
-| Output | A Boolean Series, one value per row |
-| Use | Identify which rows are duplicates, without removing anything yet |</p>
+</code></pre></div></p>
+<table>
+<thead>
+<tr>
+<th>Aspect</th>
+<th>Detail</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Output</td>
+<td>A Boolean Series, one value per row</td>
+</tr>
+<tr>
+<td>Use</td>
+<td>Identify which rows are duplicates, without removing anything yet</td>
+</tr>
+</tbody>
+</table>
 <p><strong><code>.drop_duplicates()</code></strong>
 <div class="highlight"><pre><span></span><code><span class="n">df</span><span class="o">.</span><span class="n">drop_duplicates</span><span class="p">()</span>
-</code></pre></div>
-| Aspect | Detail |
-| --- | --- |
-| Output | A new, cleaned DataFrame |
-| Default | <code>keep='first'</code> — the first occurrence of each duplicated row is kept, later copies are removed |</p>
+</code></pre></div></p>
+<table>
+<thead>
+<tr>
+<th>Aspect</th>
+<th>Detail</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Output</td>
+<td>A new, cleaned DataFrame</td>
+</tr>
+<tr>
+<td>Default</td>
+<td><code>keep='first'</code> — the first occurrence of each duplicated row is kept, later copies are removed</td>
+</tr>
+</tbody>
+</table>
 <h4 id="script-for-step-23">Script for Step 2.3<a class="headerlink" href="#script-for-step-23" title="Permanent link">&para;</a></h4>
 <p><div class="highlight"><pre><span></span><code><span class="nb">print</span><span class="p">(</span><span class="s2">"</span><span class="se">\n</span><span class="s2"> STEP 2.3: REMOVING DUPLICATES ================"</span><span class="p">)</span>
 

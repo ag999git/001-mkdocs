@@ -10501,37 +10501,21 @@ Step 8: Figure saved as data_types_visualization_matrix.png
 <p><a href="#table-of-contents">Back to the Table of Contents</a></p>
 <h3 id="follow-up-questions-on-script-1">Follow-up Questions on Script 1<a class="headerlink" href="#follow-up-questions-on-script-1" title="Permanent link">&para;</a></h3>
 <p><strong>Question 1.1:</strong> Why does the bar chart show the days in the order Sat, Sun, Thur, Fri instead of Thur, Fri, Sat, Sun?</p>
-<details>
-<summary>Show answer</summary>
-
-`value_counts()` sorts its result from the highest count to the lowest. Saturday has the most tables (87), so it comes first. To keep the calendar order instead, use `data["day"].value_counts(sort=False)`. Because `day` is a category column with the order Thur, Fri, Sat, Sun, the bars will then follow that order.
-
-</details>
-
+<p><strong>Answer</strong></p>
+<p><code>value_counts()</code> sorts its result from the highest count to the lowest. Saturday has the most tables (87), so it comes first. To keep the calendar order instead, use <code>data["day"].value_counts(sort=False)</code>. Because <code>day</code> is a category column with the order Thur, Fri, Sat, Sun, the bars will then follow that order.</p>
 <p><strong>Question 1.2:</strong> The line plot of Lunch and Dinner has a y-axis that starts at about 17. How could this mislead a reader, and how would you fix it?</p>
-<details>
-<summary>Show answer</summary>
-
-Step 1 - Read the values: the averages are \$17.17 and \$20.80, a rise of about 21 percent.
-
-Step 2 - Look at the picture: because the axis starts near 17, the Dinner point sits at the very top and the Lunch point at the very bottom. The rise looks enormous.
-
-Step 3 - Fix it: add `axes[0, 0].set_ylim(bottom=0)` so that the axis starts at zero, or draw a bar chart of the two averages. Bars should always start at zero because readers judge them by their length.
-
-</details>
-
+<p><strong>Answer</strong></p>
+<p>Step 1 - Read the values: the averages are $17.17 and $20.80, a rise of about 21 percent.</p>
+<p>Step 2 - Look at the picture: because the axis starts near 17, the Dinner point sits at the very top and the Lunch point at the very bottom. The rise looks enormous.</p>
+<p>Step 3 - Fix it: add <code>axes[0, 0].set_ylim(bottom=0)</code> so that the axis starts at zero, or draw a bar chart of the two averages. Bars should always start at zero because readers judge them by their length.</p>
 <p><strong>Question 1.3:</strong> Which column of the tips dataset is discrete, and which plot would suit it?</p>
-<details>
-<summary>Show answer</summary>
-
-`size` (the number of people at a table) is discrete, because it is a count. A bar chart of how many tables had 1, 2, 3, 4, 5 or 6 people would suit it:
-
+<p><strong>Answer</strong></p>
+<p><code>size</code> (the number of people at a table) is discrete, because it is a count. A bar chart of how many tables had 1, 2, 3, 4, 5 or 6 people would suit it:</p>
 <div class="highlight"><pre><span></span><code><span class="n">size_counts</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="s2">"size"</span><span class="p">]</span><span class="o">.</span><span class="n">value_counts</span><span class="p">()</span><span class="o">.</span><span class="n">sort_index</span><span class="p">()</span>   <span class="c1"># Sort by party size, not by count</span>
 <span class="nb">print</span><span class="p">(</span><span class="n">size_counts</span><span class="p">)</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">bar</span><span class="p">(</span><span class="n">size_counts</span><span class="o">.</span><span class="n">index</span><span class="p">,</span> <span class="n">size_counts</span><span class="o">.</span><span class="n">values</span><span class="p">)</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
 </code></pre></div>
-
 <div class="highlight"><pre><span></span><code>size
 1      4
 2    156
@@ -10541,9 +10525,6 @@ Step 3 - Fix it: add `axes[0, 0].set_ylim(bottom=0)` so that the axis starts at 
 6      4
 Name: count, dtype: int64
 </code></pre></div>
-
-</details>
-
 <p><a href="#table-of-contents">Back to the Table of Contents</a></p>
 <h2 id="script-2-case-study-analyzing-continuous-groups-with-box-plots">Script 2: Case Study - Analyzing Continuous Groups with Box Plots<a class="headerlink" href="#script-2-case-study-analyzing-continuous-groups-with-box-plots" title="Permanent link">&para;</a></h2>
 <h3 id="explanatory-note-before-script-2">Explanatory Note Before Script 2<a class="headerlink" href="#explanatory-note-before-script-2" title="Permanent link">&para;</a></h3>
@@ -11040,35 +11021,17 @@ Step 7: Plot saved as penguins_boxplot_distribution.png
 <p><a href="#table-of-contents">Back to the Table of Contents</a></p>
 <h3 id="follow-up-questions-on-script-2">Follow-up Questions on Script 2<a class="headerlink" href="#follow-up-questions-on-script-2" title="Permanent link">&para;</a></h3>
 <p><strong>Question 2.1:</strong> Why is a box plot better than a bar chart of average mass for this question?</p>
-<details>
-<summary>Show answer</summary>
-
-A bar chart of averages would show only one number per species. Adelie (average 3706.2 g) and Chinstrap (average 3733.1 g) would look almost identical. The box plot also shows the spread, the median and the outliers. It reveals that Chinstrap masses are more tightly grouped and that two Chinstrap penguins are unusually light or heavy. None of this is visible in a bar chart of averages.
-
-</details>
-
+<p><strong>Answer</strong></p>
+<p>A bar chart of averages would show only one number per species. Adelie (average 3706.2 g) and Chinstrap (average 3733.1 g) would look almost identical. The box plot also shows the spread, the median and the outliers. It reveals that Chinstrap masses are more tightly grouped and that two Chinstrap penguins are unusually light or heavy. None of this is visible in a bar chart of averages.</p>
 <p><strong>Question 2.2:</strong> Work out by hand whether a Chinstrap penguin weighing 4800 g is an outlier.</p>
-<details>
-<summary>Show answer</summary>
-
-Step 1 - Note the quartiles from the output: Q1 = 3487.5 g and Q3 = 3950 g.
-
-Step 2 - Find the IQR: 3950 - 3487.5 = 462.5 g.
-
-Step 3 - Find the upper limit: Q3 + 1.5 × IQR = 3950 + 693.75 = 4643.75 g.
-
-Step 4 - Compare: 4800 g is greater than 4643.75 g, so it is an outlier. This matches the dot drawn above the Chinstrap box.
-
-</details>
-
+<p><strong>Answer</strong></p>
+<p>Step 1 - Note the quartiles from the output: Q1 = 3487.5 g and Q3 = 3950 g.</p>
+<p>Step 2 - Find the IQR: 3950 - 3487.5 = 462.5 g.</p>
+<p>Step 3 - Find the upper limit: Q3 + 1.5 × IQR = 3950 + 693.75 = 4643.75 g.</p>
+<p>Step 4 - Compare: 4800 g is greater than 4643.75 g, so it is an outlier. This matches the dot drawn above the Chinstrap box.</p>
 <p><strong>Question 2.3:</strong> How would you change the script to compare flipper length instead of body mass?</p>
-<details>
-<summary>Show answer</summary>
-
-Change `y="body_mass_g"` to `y="flipper_length_mm"` in `sns.boxplot()`, and change the y-axis label to something like `"Flipper Length in mm (Ratio Scale)"`. Also update the column name used in Step 3 so that the printed summary matches the new plot. Flipper length is also a ratio, continuous variable, so a box plot remains a suitable choice.
-
-</details>
-
+<p><strong>Answer</strong></p>
+<p>Change <code>y="body_mass_g"</code> to <code>y="flipper_length_mm"</code> in <code>sns.boxplot()</code>, and change the y-axis label to something like <code>"Flipper Length in mm (Ratio Scale)"</code>. Also update the column name used in Step 3 so that the printed summary matches the new plot. Flipper length is also a ratio, continuous variable, so a box plot remains a suitable choice.</p>
 <p><a href="#table-of-contents">Back to the Table of Contents</a></p>
 <h2 id="script-3-the-histogram-visualizing-single-variable-distribution">Script 3: The Histogram (Visualizing Single-Variable Distribution)<a class="headerlink" href="#script-3-the-histogram-visualizing-single-variable-distribution" title="Permanent link">&para;</a></h2>
 <h3 id="explanatory-note-before-script-3">Explanatory Note Before Script 3<a class="headerlink" href="#explanatory-note-before-script-3" title="Permanent link">&para;</a></h3>
@@ -11391,9 +11354,7 @@ Step 6: Plot saved as total_bill_histogram.png
 <p><a href="#table-of-contents">Back to the Table of Contents</a></p>
 <h3 id="follow-up-questions-on-script-3">Follow-up Questions on Script 3<a class="headerlink" href="#follow-up-questions-on-script-3" title="Permanent link">&para;</a></h3>
 <p><strong>Question 3.1:</strong> Draw the same data with 3, 15 and 100 bins. What changes?</p>
-<details>
-<summary>Show answer</summary>
-
+<p><strong>Answer</strong></p>
 <div class="highlight"><pre><span></span><code><span class="kn">import</span><span class="w"> </span><span class="nn">matplotlib.pyplot</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">plt</span>
 <span class="kn">import</span><span class="w"> </span><span class="nn">seaborn</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">sns</span>
 
@@ -11415,7 +11376,6 @@ Step 6: Plot saved as total_bill_histogram.png
 <span class="n">plt</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">()</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
 </code></pre></div>
-
 <div class="highlight"><pre><span></span><code>bins = 3
   Tallest bar holds : 140 bills
   Empty bins        : 0
@@ -11426,31 +11386,15 @@ bins = 100
   Tallest bar holds : 11 bills
   Empty bins        : 32
 </code></pre></div>
-
-With 3 bins, one bar holds 140 of the 244 bills and the shape is lost. With 15 bins, the peak and the right tail are both clear. With 100 bins, 32 bins are empty and the tallest bar holds only 11 bills, so the chart looks broken and spiky. The data is the same in all three cases; only the picture changes.
-
-</details>
-
+<p>With 3 bins, one bar holds 140 of the 244 bills and the shape is lost. With 15 bins, the peak and the right tail are both clear. With 100 bins, 32 bins are empty and the tallest bar holds only 11 bills, so the chart looks broken and spiky. The data is the same in all three cases; only the picture changes.</p>
 <p><strong>Question 3.2:</strong> Why would a bar chart with one bar for every different bill amount be a poor choice here?</p>
-<details>
-<summary>Show answer</summary>
-
-Almost every bill amount is different (such as \$16.99, \$10.34, \$21.01). A bar chart would have hundreds of bars, most of height 1, and would show no pattern at all. A histogram groups nearby values into bins, which is what reveals the shape of the distribution.
-
-</details>
-
+<p><strong>Answer</strong></p>
+<p>Almost every bill amount is different (such as $16.99, $10.34, $21.01). A bar chart would have hundreds of bars, most of height 1, and would show no pattern at all. A histogram groups nearby values into bins, which is what reveals the shape of the distribution.</p>
 <p><strong>Question 3.3:</strong> If one table had a bill of $500, what would happen to the mean and the median, and how would the histogram change?</p>
-<details>
-<summary>Show answer</summary>
-
-Step 1 - The median would hardly move, because it depends only on the middle of the ordered values.
-
-Step 2 - The mean would rise noticeably, because the \$500 is added into the total before dividing by the count. The new mean would be (19.79 × 244 + 500) / 245, which is about \$21.75.
-
-Step 3 - The histogram's x-axis would stretch to \$500. With 15 bins, each bin would now be more than \$30 wide, so almost all the normal bills would be squeezed into the first two bars, with one lonely bar far to the right. This shows why outliers should be checked before choosing the number of bins.
-
-</details>
-
+<p><strong>Answer</strong></p>
+<p>Step 1 - The median would hardly move, because it depends only on the middle of the ordered values.</p>
+<p>Step 2 - The mean would rise noticeably, because the $500 is added into the total before dividing by the count. The new mean would be (19.79 × 244 + 500) / 245, which is about $21.75.</p>
+<p>Step 3 - The histogram's x-axis would stretch to $500. With 15 bins, each bin would now be more than $30 wide, so almost all the normal bills would be squeezed into the first two bars, with one lonely bar far to the right. This shows why outliers should be checked before choosing the number of bins.</p>
 <p><a href="#table-of-contents">Back to the Table of Contents</a></p>
 <h2 id="script-4-the-scatter-plot-visualizing-two-variable-correlation">Script 4: The Scatter Plot (Visualizing Two-Variable Correlation)<a class="headerlink" href="#script-4-the-scatter-plot-visualizing-two-variable-correlation" title="Permanent link">&para;</a></h2>
 <h3 id="explanatory-note-before-script-4">Explanatory Note Before Script 4<a class="headerlink" href="#explanatory-note-before-script-4" title="Permanent link">&para;</a></h3>
@@ -11718,27 +11662,14 @@ Step 7: Plot saved as bill_vs_tip_scatterplot.png
 <p><a href="#table-of-contents">Back to the Table of Contents</a></p>
 <h3 id="follow-up-questions-on-script-4">Follow-up Questions on Script 4<a class="headerlink" href="#follow-up-questions-on-script-4" title="Permanent link">&para;</a></h3>
 <p><strong>Question 4.1:</strong> Suppose you swap the axes and put <code>tip</code> on the x-axis and <code>total_bill</code> on the y-axis. Does the correlation change?</p>
-<details>
-<summary>Show answer</summary>
-
-No. The correlation coefficient is the same (0.68) whichever variable is on which axis, because it only measures how closely the two variables move together. The picture will look like a mirror image across the diagonal. However, the usual convention is to put the explanatory variable (`total_bill`) on the x-axis, because the bill comes first and the tip is decided afterwards.
-
-</details>
-
+<p><strong>Answer</strong></p>
+<p>No. The correlation coefficient is the same (0.68) whichever variable is on which axis, because it only measures how closely the two variables move together. The picture will look like a mirror image across the diagonal. However, the usual convention is to put the explanatory variable (<code>total_bill</code>) on the x-axis, because the bill comes first and the tip is decided afterwards.</p>
 <p><strong>Question 4.2:</strong> Does this plot prove that a larger bill <em>causes</em> a larger tip?</p>
-<details>
-<summary>Show answer</summary>
-
-Not by itself. The plot shows a strong association. In this case a causal link is believable, because many people calculate the tip as a percentage of the bill. But other factors could also play a part. For example, larger groups (`size`) run up bigger bills and may also tip more. To claim cause and effect, you need more than a scatter plot, such as knowledge of how tips are decided or a controlled study.
-
-</details>
-
+<p><strong>Answer</strong></p>
+<p>Not by itself. The plot shows a strong association. In this case a causal link is believable, because many people calculate the tip as a percentage of the bill. But other factors could also play a part. For example, larger groups (<code>size</code>) run up bigger bills and may also tip more. To claim cause and effect, you need more than a scatter plot, such as knowledge of how tips are decided or a controlled study.</p>
 <p><strong>Question 4.3:</strong> How can you add a third, nominal variable such as <code>smoker</code> to the same scatter plot?</p>
-<details>
-<summary>Show answer</summary>
-
-Give each group its own color and add a legend:
-
+<p><strong>Answer</strong></p>
+<p>Give each group its own color and add a legend:</p>
 <div class="highlight"><pre><span></span><code><span class="kn">import</span><span class="w"> </span><span class="nn">matplotlib.pyplot</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">plt</span>
 <span class="kn">import</span><span class="w"> </span><span class="nn">seaborn</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">sns</span>
 
@@ -11762,15 +11693,10 @@ Give each group its own color and add a legend:
 <span class="n">ax</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s2">"Tip Amount ($)"</span><span class="p">)</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
 </code></pre></div>
-
 <div class="highlight"><pre><span></span><code>Smoker = Yes  tables =  93  correlation = 0.49
 Smoker = No   tables = 151  correlation = 0.82
 </code></pre></div>
-
-The relationship between bill and tip is much stronger for non-smoking tables (0.82) than for smoking tables (0.49). Adding a nominal variable as color can reveal differences between groups that a single-color plot hides.
-
-</details>
-
+<p>The relationship between bill and tip is much stronger for non-smoking tables (0.82) than for smoking tables (0.49). Adding a nominal variable as color can reveal differences between groups that a single-color plot hides.</p>
 <p><a href="#table-of-contents">Back to the Table of Contents</a></p>
 <h2 id="summary">Summary<a class="headerlink" href="#summary" title="Permanent link">&para;</a></h2>
 <ul>
