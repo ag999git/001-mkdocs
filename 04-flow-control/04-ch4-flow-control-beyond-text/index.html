@@ -8471,17 +8471,18 @@ Error caught: Insufficient funds
 <li><strong>Logical Gap Test:</strong> "impossible" is never returned, whatever number we try. No number can be greater than 5 and less than 2 at the same time.</li>
 <li><strong>Raise Test:</strong> "Sorry, not enough money." never appears. <code>raise</code> stopped the function, and the error was caught outside it, by the <code>try</code>/<code>except</code> in the main program.</li>
 </ul>
-<p>The flowchart below shows the path through <code>find_treasure()</code>. Notice that no arrow ever leads into box 6, the dead line.</p>
-<p><img alt="Example Script: How Dead Code Creeps In" src="../../resources/LR-ch4-flow-control-beyond-text-fig-01.png" /></p>
+<p>The flowchart below shows the path through <code>find_treasure()</code>. Notice that box 7, the dead line, is reached only by a dashed arrow: no real path through the function ever leads to it.</p>
+<p><img alt="Example Script: How Dead Code Creeps In" src="../../resources/S04-LR-ch4-flow-control-beyond-text-fig-01.png" /></p>
 <p><strong>Reading the figure</strong></p>
 <ul>
-<li><strong>Step 1:</strong> <code>find_treasure()</code> takes the next item from the list.</li>
-<li><strong>Step 2:</strong> Is the item "Gold"?</li>
-<li><strong>Step 3:</strong> No: print "Checking: item" and go back to Step 1.</li>
-<li><strong>Step 4:</strong> Yes: print "Found the Gold!".</li>
-<li><strong>Step 5:</strong> <code>break</code> leaves the loop at once.</li>
-<li><strong>Step 6:</strong> The line written after <code>break</code>, inside the loop, is dead code: no path ever leads to it, shown by the dashed arrow.</li>
-<li><strong>Step 7:</strong> The function ends. "Silver" is never checked, because the loop stopped at "Gold".</li>
+<li><strong>Step 1:</strong> <code>find_treasure()</code> checks whether any items are left in the list.</li>
+<li><strong>Step 2:</strong> Yes: take the next item.</li>
+<li><strong>Step 3:</strong> Is the item "Gold"?</li>
+<li><strong>Step 4:</strong> No: print "Checking: item" and go back to Step 1.</li>
+<li><strong>Step 5:</strong> Yes: print "Found the Gold!".</li>
+<li><strong>Step 6:</strong> <code>break</code> leaves the loop at once.</li>
+<li><strong>Step 7:</strong> The line written after <code>break</code>, inside the loop, is dead code: no real path ever leads to it, which the dashed arrow shows.</li>
+<li><strong>Step 8:</strong> The function ends, either because <code>break</code> ran or because no items were left. In the example, "Silver" is never checked, because the loop stopped at "Gold".</li>
 </ul>
 <p><a href="#table-of-contents">Back to the Table of Contents</a></p>
 <h3 id="tools-that-spot-dead-code">Tools That Spot Dead Code<a class="headerlink" href="#tools-that-spot-dead-code" title="Permanent link">&para;</a></h3>
@@ -8559,7 +8560,7 @@ Result: dark
 <p><em>Answer:</em> In <code>check_weather()</code>, the last line <code>return "Stay inside."</code> is <em>not</em> dead: it runs whenever <code>is_sunny</code> is <code>False</code>, as the second call in the script shows. A line is dead only if <strong>no</strong> input can ever reach it. Always check with more than one input before deciding a line is dead.</p>
 <p><a href="#table-of-contents">Back to the Table of Contents</a></p>
 <h2 id="2-the-iterator-protocol-the-no-for-loop-challenge">2. The Iterator Protocol: The "No-For-Loop" Challenge<a class="headerlink" href="#2-the-iterator-protocol-the-no-for-loop-challenge" title="Permanent link">&para;</a></h2>
-<p>This is the solution to the Beyond Text problem given in Chapter 4 Flow Control.</p>
+<p>This is the solution to the Beyond the Text problem given in Chapter 4 Flow Control.</p>
 <p>In Python, we often use <code>for</code> loops to go through lists or strings. But have you ever wondered how the <code>for</code> loop actually "talks" to the list? It uses the <strong>Iterator Protocol</strong>.</p>
 <p>The task is to study (1) Iterable (2) Iterators (3) Using the <code>iter()</code> function to create an iterator. (4) Understand how to use the <code>next()</code> function to grab the next item.</p>
 <p><a href="#table-of-contents">Back to the Table of Contents</a></p>
@@ -8651,18 +8652,16 @@ Result: dark
 <li><strong>Handle</strong> the boundary condition: <code>except StopIteration</code> catches the signal that the list has run out.</li>
 <li><strong>Terminate</strong> the process: print "Loop Finished" and <code>break</code> out of the <code>while True</code> loop.</li>
 </ol>
-<p><img alt="Solution Script" src="../../resources/LR-ch4-flow-control-beyond-text-fig-02.png" /></p>
+<p><img alt="Solution Script" src="../../resources/S04-LR-ch4-flow-control-beyond-text-fig-02.png" /></p>
 <p><strong>Reading the figure</strong></p>
 <ul>
-<li><strong>Step 1:</strong> Initialise: <code>color_cursor = iter(colors)</code> creates an iterator over the list of colours.</li>
-<li><strong>Step 2:</strong> Start an endless <code>while True</code> loop.</li>
-<li><strong>Step 3:</strong> Attempt: inside <code>try</code>, call <code>next(color_cursor)</code>.</li>
-<li><strong>Step 4:</strong> Was an item returned?</li>
-<li><strong>Step 5:</strong> Yes: print "Processing" with the colour, and go back to Step 3.</li>
-<li><strong>Step 6:</strong> No: <code>next()</code> raised <code>StopIteration</code>, the signal that the list has run out. <code>except StopIteration</code> catches it.</li>
-<li><strong>Step 7:</strong> Print "Loop Finished".</li>
-<li><strong>Step 8:</strong> Terminate: <code>break</code> leaves the <code>while True</code> loop.</li>
-<li><strong>Step 9:</strong> The program continues normally after the loop.</li>
+<li><strong>Step 1:</strong> Initialise: <code>color_cursor = iter(colors)</code> creates an iterator over the list of colours. Then an endless <code>while True</code> loop starts.</li>
+<li><strong>Step 2:</strong> Attempt: inside <code>try</code>, call <code>next(color_cursor)</code>.</li>
+<li><strong>Step 3:</strong> Was an item returned?</li>
+<li><strong>Step 4:</strong> Yes: print "Processing" with the colour, and go back to Step 2.</li>
+<li><strong>Step 5:</strong> No: <code>next()</code> raised <code>StopIteration</code>, the signal that the list has run out. <code>except StopIteration</code> catches it.</li>
+<li><strong>Step 6:</strong> Print "Loop Finished", then terminate: <code>break</code> leaves the <code>while True</code> loop.</li>
+<li><strong>Step 7:</strong> The program continues normally after the loop.</li>
 </ul>
 <div class="highlight"><pre><span></span><code><span class="c1"># --- BEYOND TEXT: MANUAL ITERATION ---</span>
 

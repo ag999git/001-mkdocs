@@ -9865,7 +9865,7 @@ A Python variable does not hold an object. It holds a reference, which is the ad
 <p><strong>Step 3. See what copying does.</strong>
 <code>b = a[:]</code> or <code>b = a.copy()</code> makes a second bag with the same things inside, and ties <code>b</code> to it. Now there are two objects.</p>
 <p><strong>Step 4. Put the two in one picture.</strong></p>
-<p><img alt="Q11. Assigning a list versus copying a list" src="../../resources/LR-ch18-qa-fig-02.png" /></p>
+<p><img alt="Q11. Assigning a list versus copying a list" src="../../resources/S18-LR-ch18-qa-fig-02.png" /></p>
 <p><strong>Reading the figure</strong></p>
 <ul>
 <li><strong>Step 1:</strong> The line <code>a = [1, 2, 3]</code> creates one list object and ties the name <code>a</code> to it.</li>
@@ -9969,7 +9969,7 @@ If the object cannot be changed, two names for it do no harm. Nobody can change 
 </code></pre></div>
 <p>Nothing was appended to <code>list1</code>, yet <code>list1</code> grew. It grew because <code>list1</code> and <code>list2</code> were never two lists. They were one list with two names.</p>
 <p><strong>Step 4. Picture what happened.</strong></p>
-<p><img alt="Q12. Aliasing and the bugs it causes" src="../../resources/LR-ch18-qa-fig-03.png" /></p>
+<p><img alt="Q12. Aliasing and the bugs it causes" src="../../resources/S18-LR-ch18-qa-fig-03.png" /></p>
 <p><strong>Reading the figure</strong></p>
 <ul>
 <li><strong>Step 1:</strong> <code>list1 = [1, 2]</code> builds one list object and ties the name <code>list1</code> to it.</li>
@@ -10121,7 +10121,7 @@ Both are shallow. They copy the outer list only. If the list holds other lists, 
 <p><strong>Step 3. Follow the consequence.</strong>
 <code>my_matrix[0]</code>, <code>my_matrix[1]</code>, <code>my_matrix[2]</code> and <code>my_matrix[3]</code> are four names for one row. Change a value through any of them and the change appears in all four.</p>
 <p><strong>Step 4. Picture it.</strong></p>
-<p><img alt="Q14. Why a repeated row is not four rows" src="../../resources/LR-ch18-qa-fig-04.png" /></p>
+<p><img alt="Q14. Why a repeated row is not four rows" src="../../resources/S18-LR-ch18-qa-fig-04.png" /></p>
 <p><strong>Reading the figure</strong></p>
 <ul>
 <li><strong>Step 1:</strong> The result depends on how the matrix is built: with the outer multiply, or with a list comprehension.</li>
@@ -10890,19 +10890,17 @@ Defaults after f(1)   : ([1],)
 Defaults after f(2)   : ([1, 2],)
 </code></pre></div>
 <p><strong>Step 5. Follow the whole story in a diagram.</strong></p>
-<p><img alt="Q21. The mutable default argument" src="../../resources/LR-ch18-qa-fig-05.png" /></p>
+<p><img alt="Q21. The mutable default argument" src="../../resources/S18-LR-ch18-qa-fig-05.png" /></p>
 <p><strong>Reading the figure</strong></p>
 <ul>
 <li><strong>Step 1:</strong> Python runs the <code>def</code> line only once, when the function is defined, and builds one empty list for <code>lst</code> at that moment.</li>
 <li><strong>Step 2:</strong> That list is stored on the function object as the default value. You can see it in <code>f.__defaults__</code>.</li>
 <li><strong>Step 3:</strong> The function is called, for example <code>f(1)</code>.</li>
-<li><strong>Step 4:</strong> Python checks whether the caller passed a list for <code>lst</code>.</li>
-<li><strong>Step 5:</strong> Yes: the caller's own list is used as <code>lst</code>.</li>
-<li><strong>Step 6:</strong> <code>x</code> is appended to the caller's list.</li>
-<li><strong>Step 7:</strong> The stored default list is not touched by this call. This branch ends here.</li>
-<li><strong>Step 8:</strong> No: <code>lst</code> refers to the one stored default list.</li>
-<li><strong>Step 9:</strong> <code>x</code> is appended to that stored list.</li>
-<li><strong>Step 10:</strong> The stored list is now one item longer, and the next call without a list starts from it (back to Step 3). That is why <code>f(1)</code>, <code>f(2)</code> and <code>f(3)</code> return <code>[1]</code>, <code>[1, 2]</code> and <code>[1, 2, 3]</code>.</li>
+<li><strong>Step 4:</strong> Did the caller pass a list for <code>lst</code>?</li>
+<li><strong>Step 5:</strong> Yes: <code>x</code> is appended to the caller's own list.</li>
+<li><strong>Step 6:</strong> The stored default list is not touched by this call. This branch ends here.</li>
+<li><strong>Step 7:</strong> No: <code>lst</code> refers to the one stored default list, and <code>x</code> is appended to it.</li>
+<li><strong>Step 8:</strong> The stored list is now one item longer, and the next call without a list starts from it (back to Step 3). That is why <code>f(1)</code>, <code>f(2)</code> and <code>f(3)</code> return <code>[1]</code>, <code>[1, 2]</code> and <code>[1, 2, 3]</code>.</li>
 </ul>
 <p><strong>Step 6. Write the corrected function.</strong>
 The cure is to use <code>None</code> as the default. <code>None</code> is immutable, so it cannot grow. Inside the function, check for it and build a fresh list.</p>
@@ -11326,17 +11324,16 @@ Walk through the list once. Keep a record of what has already been seen. Add an 
 <p><strong>Step 3. Choose the right record keeper.</strong>
 Use a set for the record, not a list. Checking <code>x in some_set</code> is fast whatever the size. Checking <code>x in some_list</code> gets slower as the list grows, because Python has to look at every item. The answer list keeps the order, the set does the checking.</p>
 <p><strong>Step 4. Follow the logic in a diagram.</strong></p>
-<p><img alt="Q29. Remove duplicates and keep the order" src="../../resources/LR-ch18-qa-fig-06.png" /></p>
+<p><img alt="Q29. Remove duplicates and keep the order" src="../../resources/S18-LR-ch18-qa-fig-06.png" /></p>
 <p><strong>Reading the figure</strong></p>
 <ul>
 <li><strong>Step 1:</strong> Start with an empty list <code>result</code>, which keeps the order, and an empty set <code>seen</code>, which remembers what has turned up.</li>
-<li><strong>Step 2:</strong> Take the next item <code>x</code> from the input list, working from left to right.</li>
-<li><strong>Step 3:</strong> Check whether <code>x</code> is already in <code>seen</code>. A set answers this quickly, whatever its size.</li>
-<li><strong>Step 4:</strong> Yes: <code>x</code> has appeared before, so skip it and go on to Step 7.</li>
+<li><strong>Step 2:</strong> Are there any items left in the input list? (For an empty input list the answer is No at once, and an empty list is returned.)</li>
+<li><strong>Step 3:</strong> Yes: take the next item <code>x</code>, working from left to right.</li>
+<li><strong>Step 4:</strong> Is <code>x</code> already in <code>seen</code>? A set answers this quickly, whatever its size. Yes: <code>x</code> has appeared before, so skip it and go back to Step 2.</li>
 <li><strong>Step 5:</strong> No: this is the first time <code>x</code> has appeared, so append it to <code>result</code>.</li>
-<li><strong>Step 6:</strong> Add <code>x</code> to <code>seen</code>, so that any later copy of it will be skipped.</li>
-<li><strong>Step 7:</strong> If there are more items in the input list, go back to Step 2.</li>
-<li><strong>Step 8:</strong> When no items are left, return <code>result</code>. It holds each item once, in the order of its first appearance.</li>
+<li><strong>Step 6:</strong> Add <code>x</code> to <code>seen</code>, so that any later copy of it will be skipped. Then go back to Step 2.</li>
+<li><strong>Step 7:</strong> When no items are left, return <code>result</code>. It holds each item once, in the order of its first appearance.</li>
 </ul>
 <p><strong>Step 5. Write the function.</strong></p>
 <div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">remove_dupes</span><span class="p">(</span><span class="n">lst</span><span class="p">):</span>
@@ -11722,19 +11719,17 @@ This is the heart of the problem. Because each list is already in order, the sma
 Keep one marker on each list, both starting at 0. Compare the two items the markers point at. Move the smaller one across to the answer and push that marker forward by one. Repeat.</p>
 <p><strong>Step 3. Handle the leftovers.</strong>
 One list will run out before the other. Everything still left in the other list is already sorted and is larger than everything moved so far, so it can be tipped in at the end without any comparison.</p>
-<p><strong>Step 4. Follow the whole method in a diagram.</strong>
-The two branches at the comparison are numbered 4a and 4b, because they do the same job on different lists and both lead back to the same next step.</p>
-<p><img alt="Q34. Merging two sorted lists" src="../../resources/LR-ch18-qa-fig-07.png" /></p>
+<p><strong>Step 4. Follow the whole method in a diagram.</strong></p>
+<p><img alt="Q34. Merging two sorted lists" src="../../resources/S18-LR-ch18-qa-fig-07.png" /></p>
 <p><strong>Reading the figure</strong></p>
 <ul>
 <li><strong>Step 1:</strong> Start with an empty result list <code>res</code> and two markers, <code>i</code> on <code>l1</code> and <code>j</code> on <code>l2</code>, both at 0.</li>
 <li><strong>Step 2:</strong> Check whether both lists still have unused items: <code>i &lt; len(l1) and j &lt; len(l2)</code>.</li>
-<li><strong>Step 3:</strong> Yes: compare the two front items, <code>l1[i]</code> and <code>l2[j]</code>.</li>
-<li><strong>Step 4:</strong> If <code>l1[i]</code> is smaller, append it to <code>res</code> and move <code>i</code> forward by one. Then go back to Step 2.</li>
-<li><strong>Step 5:</strong> Otherwise (<code>l2[j]</code> is smaller, or the two are equal), append <code>l2[j]</code> to <code>res</code> and move <code>j</code> forward by one. Then go back to Step 2.</li>
-<li><strong>Step 6:</strong> No: at least one list is finished. Add whatever is left of <code>l1</code> with <code>res.extend(l1[i:])</code>. If <code>l1</code> is finished, this adds nothing.</li>
-<li><strong>Step 7:</strong> Add whatever is left of <code>l2</code> with <code>res.extend(l2[j:])</code>. The leftovers are already sorted and no smaller than anything in <code>res</code>, so no more comparisons are needed.</li>
-<li><strong>Step 8:</strong> Return <code>res</code>. It now holds every item of both lists, in sorted order.</li>
+<li><strong>Step 3:</strong> Yes: compare the two front items, <code>l1[i]</code> and <code>l2[j]</code>, and append the smaller one to <code>res</code>. If <code>l1[i] &lt; l2[j]</code> is false (<code>l2[j]</code> is smaller, or the two are equal), <code>l2[j]</code> is taken.</li>
+<li><strong>Step 4:</strong> Move the marker of the list that item came from forward by one (<code>i += 1</code> or <code>j += 1</code>). Then go back to Step 2.</li>
+<li><strong>Step 5:</strong> No: at least one list is finished. Add whatever is left of <code>l1</code> with <code>res.extend(l1[i:])</code>. If <code>l1</code> is finished, this adds nothing.</li>
+<li><strong>Step 6:</strong> Add whatever is left of <code>l2</code> with <code>res.extend(l2[j:])</code>. The leftovers are already sorted and no smaller than anything in <code>res</code>, so no more comparisons are needed.</li>
+<li><strong>Step 7:</strong> Return <code>res</code>. It now holds every item of both lists, in sorted order.</li>
 </ul>
 <p><strong>Step 5. Trace it once by hand.</strong>
 Merging <code>[1, 4, 9]</code> with <code>[2, 3, 10, 12]</code>:</p>
@@ -11800,10 +11795,10 @@ Merging <code>[1, 4, 9]</code> with <code>[2, 3, 10, 12]</code>:</p>
 <td>6</td>
 <td>3</td>
 <td>2</td>
-<td>list1 is finished</td>
+<td><code>l1</code> is finished</td>
 <td></td>
 <td></td>
-<td>Tip in the rest of list2</td>
+<td>Tip in the rest of <code>l2</code></td>
 </tr>
 <tr>
 <td>end</td>
@@ -12503,8 +12498,8 @@ Split the sentence into words. Remove the duplicates while keeping the order. Jo
 <span class="nb">print</span><span class="p">(</span><span class="s2">"Result   :"</span><span class="p">,</span> <span class="s2">" "</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">unique_words</span><span class="p">))</span>
 </code></pre></div>
 <div class="highlight"><pre><span></span><code>Original : cat dog and cat run with dog and sheep
-Words    : ['cat', 'dog', 'and', 'cat', 'run', 'with', 'dog', 'and', 'sheep'] count: 9
-Unique   : ['cat', 'dog', 'and', 'run', 'with', 'sheep'] count: 6
+Words    : ['cat', 'dog', 'and', 'cat', 'run', 'with', 'dog', 'and', 'sheep']  count: 9
+Unique   : ['cat', 'dog', 'and', 'run', 'with', 'sheep']  count: 6
 Result   : cat dog and run with sheep
 </code></pre></div>
 <p><strong>Step 3. Note what <code>split()</code> does with untidy spacing.</strong>
@@ -12709,7 +12704,7 @@ Items in all groups : 20  Original length : 20
 </code></pre></div>
 <p><strong>Step 6. Turn it into a reusable function.</strong></p>
 <div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">group_into</span><span class="p">(</span><span class="n">lst</span><span class="p">,</span> <span class="n">size</span><span class="p">):</span>
-    <span class="c1"># Step 1 - refuse a size that makes no sense, or the loop would never end.</span>
+    <span class="c1"># Step 1 - refuse a size that makes no sense. range() rejects a step of 0, and a negative size would quietly give [].</span>
     <span class="k">if</span> <span class="n">size</span> <span class="o">&lt;</span> <span class="mi">1</span><span class="p">:</span>
         <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">"size must be at least 1"</span><span class="p">)</span>
     <span class="c1"># Step 2 - one slice for each starting point.</span>
@@ -12772,6 +12767,7 @@ Growing precision:
    7 decimal places : 1.4142136
    8 decimal places : 1.41421356
    9 decimal places : 1.414213562
+Type of the first item : str
 </code></pre></div>
 <p><strong>Step 6. Look carefully at rounding.</strong>
 The formatting rounds, it does not cut. The full value is <code>1.4142135623...</code>. At 6 decimal places the next digit is a 5 followed by more digits, so the sixth digit is rounded up from 3 to 4, giving <code>1.414214</code>. At 7 places you get <code>1.4142136</code>, again rounded up. So the strings are not simply longer and longer pieces of the same digits. Compare them and you will see the last digit change.</p>
@@ -12870,20 +12866,18 @@ row1      4     5     6               row1       2     5
 <p><strong>Step 2. Work out the plan.</strong>
 The new matrix has one row for every column of the old one. To build new row <code>i</code>, collect the item at index <code>i</code> from every old row.</p>
 <p><strong>Step 3. Follow the plan in a diagram.</strong></p>
-<p><img alt="Q47 and Q48. Transposing a matrix" src="../../resources/LR-ch18-qa-fig-08.png" /></p>
+<p><img alt="Q47 and Q48. Transposing a matrix" src="../../resources/S18-LR-ch18-qa-fig-08.png" /></p>
 <p><strong>Reading the figure</strong></p>
 <ul>
-<li><strong>Step 1:</strong> Note the shape of the old matrix: R rows and C columns. C is <code>len(matrix[0])</code>.</li>
-<li><strong>Step 2:</strong> The transposed matrix will have C rows and R columns. It starts as an empty list.</li>
-<li><strong>Step 3:</strong> Set <code>i = 0</code>. <code>i</code> is the column of the old matrix that is being turned into a new row.</li>
-<li><strong>Step 4:</strong> Start an empty list, <code>new_row</code>.</li>
-<li><strong>Step 5:</strong> Take the next row of the old matrix.</li>
-<li><strong>Step 6:</strong> Append <code>row[i]</code>, the item in column <code>i</code> of that row, to <code>new_row</code>.</li>
-<li><strong>Step 7:</strong> If old rows are left, go back to Step 5.</li>
-<li><strong>Step 8:</strong> No old rows are left, so <code>new_row</code> is complete. Append it to the new matrix.</li>
-<li><strong>Step 9:</strong> Check whether <code>i &lt; C - 1</code>, that is, whether any column of the old matrix is still waiting to become a row.</li>
-<li><strong>Step 10:</strong> Yes: add 1 to <code>i</code> and go back to Step 4 to build the next new row.</li>
-<li><strong>Step 11:</strong> No: every column has become a row, and the transposed matrix is complete.</li>
+<li><strong>Step 1:</strong> Note the shape of the old matrix: R rows and C columns, where C is <code>len(matrix[0])</code>. The transposed matrix will have C rows and R columns. It starts as an empty list.</li>
+<li><strong>Step 2:</strong> Set <code>i = 0</code>. <code>i</code> is the column of the old matrix that is being turned into a new row.</li>
+<li><strong>Step 3:</strong> Start an empty list, <code>new_row</code>.</li>
+<li><strong>Step 4:</strong> Are any rows of the old matrix left to visit?</li>
+<li><strong>Step 5:</strong> Yes: take the next old row and append <code>row[i]</code>, the item in column <code>i</code> of that row, to <code>new_row</code>. Then go back to Step 4.</li>
+<li><strong>Step 6:</strong> No: <code>new_row</code> is complete. Append it to the new matrix.</li>
+<li><strong>Step 7:</strong> Check whether <code>i &lt; C - 1</code>, that is, whether any column of the old matrix is still waiting to become a row.</li>
+<li><strong>Step 8:</strong> Yes: add 1 to <code>i</code> and go back to Step 3 to build the next new row.</li>
+<li><strong>Step 9:</strong> No: every column has become a row, and the transposed matrix is complete.</li>
 </ul>
 <p><strong>Step 4. Q47, the list comprehension version.</strong></p>
 <div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">matrix_transpose</span><span class="p">(</span><span class="n">matrix</span><span class="p">):</span>
@@ -13339,7 +13333,7 @@ Picture a bag of numbered balls.</p>
 </tr>
 </tbody>
 </table>
-<p>Question 49 used <code>random.choice()</code> in a loop, which is sampling <strong>with</strong> replacement, and repeats did appear. This question asks for the other kind.</p>
+<p>Question 49 used <code>random.choice()</code> in a loop, which is sampling <strong>with</strong> replacement, so repeats can appear. This question asks for the other kind.</p>
 <p><strong>Step 2. Check that the request is possible.</strong>
 You are asking for 20 different numbers from the range 10 to 100. That range holds 91 numbers, so 20 is easily possible. Had you asked for 200, no method could satisfy you, and <code>random.sample()</code> would raise a <code>ValueError</code>. It is worth knowing that it fails loudly rather than quietly returning too few.</p>
 <p><strong>Step 3. Fix the range.</strong>
@@ -13412,7 +13406,7 @@ If you were asked to do this without <code>random.sample()</code>, the method wo
 All different: True
 </code></pre></div>
 <p><strong>Step 7. Note why the built in is better.</strong>
-The hand written loop above works, but it wastes effort. As the set fills up, more and more of its draws are thrown away. If you asked it for 90 values out of 91, it would spend a very long time hunting for the last one. <code>random.sample()</code> uses a smarter method and never loops like this. Prefer the built in.</p>
+The hand written loop above works, but it wastes effort. As the set fills up, more and more of its draws are thrown away. If you asked it for 90 values out of 91, it would need dozens of tries to find each of the last few values. <code>random.sample()</code> is smarter: when a large share of the pool is wanted, it switches to a method that never throws a draw away. Prefer the built in.</p>
 <p><strong>Step 8. Note one related function.</strong>
 If you want all the values in a new order rather than a few of them, use <code>random.shuffle()</code>, which works in place and returns <code>None</code>, in the style of <code>sort()</code> and <code>reverse()</code>.</p>
 <div class="highlight"><pre><span></span><code><span class="kn">import</span><span class="w"> </span><span class="nn">random</span>

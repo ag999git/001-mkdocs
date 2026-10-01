@@ -8871,16 +8871,15 @@ HTMLReportApp created HTMLReport
 </code></pre></div>
 <p>Both forms share the same core idea: client code does not create the concrete object itself. Read more at <a href="https://refactoring.guru/design-patterns/factory-method">Refactoring Guru: Factory Method</a>.</p>
 <p><strong>Flowchart of the simple factory script</strong></p>
-<p><img alt="Q3. Explain the Factory Method Pattern. What problem does it solve? How does it improve software compared to directly creating objects?" src="../../resources/LR-ch21-conceptualqa-fig-01.png" /></p>
+<p><img alt="Q3. Explain the Factory Method Pattern. What problem does it solve? How does it improve software compared to directly creating objects?" src="../../resources/S21-LR-ch21-conceptualqa-fig-01.png" /></p>
 <p><strong>Reading the figure</strong></p>
 <ul>
 <li><strong>Step 1:</strong> The client asks the factory for a report of a given type, for example <code>"pdf"</code>. It never names the concrete class itself.</li>
 <li><strong>Step 2:</strong> The factory looks up that type in its dictionary of known report classes.</li>
 <li><strong>Step 3:</strong> Is the type known?</li>
 <li><strong>Step 4:</strong> No: the factory raises <code>ValueError</code>, so a mistake in the type name is reported at once.</li>
-<li><strong>Step 5:</strong> Yes: the factory creates an object of the matching class.</li>
-<li><strong>Step 6:</strong> The object is returned to the client.</li>
-<li><strong>Step 7:</strong> The client calls <code>generate()</code> on it, without knowing or caring which concrete class it got.</li>
+<li><strong>Step 5:</strong> Yes: the factory creates an object of the matching class and returns it to the client.</li>
+<li><strong>Step 6:</strong> The client calls <code>generate()</code> on it, without knowing or caring which concrete class it got.</li>
 </ul>
 <p><strong>Advantages</strong></p>
 <ul>
@@ -9242,8 +9241,8 @@ Coffee + Milk + Sugar = 65
 <p><strong>Reading the figure</strong></p>
 <ul>
 <li><strong>Step 1:</strong> Start with an ordinary function such as <code>greet(name)</code>.</li>
-<li><strong>Step 2:</strong> The decorator syntax <code>@log_call</code> replaces <code>greet</code> with a wrapper function around it; <code>functools.wraps</code> keeps its name and docstring.</li>
-<li><strong>Step 3:</strong> The caller still writes <code>greet("Asha")</code>, exactly as before.</li>
+<li><strong>Step 2:</strong> <code>log_call</code> wraps the function in a wrapper function. This is done either with the <code>@log_call</code> line above a <code>def</code> (as for <code>greet_loudly</code>) or by an ordinary call, <code>logged_greet = log_call(greet)</code>. <code>functools.wraps</code> keeps the original name and docstring.</li>
+<li><strong>Step 3:</strong> The caller calls the decorated function in the usual way, for example <code>greet_loudly("Asha")</code> or <code>logged_greet("Ravi")</code>.</li>
 <li><strong>Step 4:</strong> The wrapper runs first and adds its extra behaviour, such as logging the call.</li>
 <li><strong>Step 5:</strong> The wrapper then calls the original function and returns its result. The original code was never changed.</li>
 </ul>
@@ -9801,11 +9800,11 @@ Shutting down the home theatre...
 <p><strong>Reading the figure</strong></p>
 <ul>
 <li>The client makes one simple call.</li>
-<li><code>watch_movie(movie)</code> on the facade hides all the separate steps.</li>
-<li>The facade switches the television on.</li>
+<li><code>watch_movie(movie)</code> on the facade hides all the separate steps, and runs them in a fixed order (numbered in the figure).</li>
+<li>First, it dims the lights.</li>
+<li>It switches the television on.</li>
 <li>It switches the sound system on and sets the volume.</li>
-<li>It starts the streaming device playing the movie.</li>
-<li>It dims the lights. The subsystems still exist and can be used directly when needed.</li>
+<li>It starts the streaming device playing the movie. The subsystems still exist and can be used directly when needed.</li>
 </ul>
 <p><strong>Follow-up questions</strong></p>
 <ol>
@@ -10073,12 +10072,13 @@ Count for one employee: 1
 <p><img alt="Flowchart: Composite pattern" src="../../resources/S21-LR-ch16-21-august-2026-qa-question-11.png" /></p>
 <p><strong>Reading the figure</strong></p>
 <ul>
-<li>The company is a <code>Department</code> object that contains other departments: a group made of groups.</li>
-<li>Department A is a group containing employees.</li>
-<li>Department B is another group.</li>
-<li>Employee 1 is a single object (a leaf).</li>
-<li>Employee 2 is another leaf.</li>
-<li>Employee 3 is a leaf. Calling <code>display()</code> or <code>count()</code> on the company works the same way on every level: each group simply calls the same method on its members.</li>
+<li>The company, Head Office, is a <code>Department</code> object. It holds one employee directly and two other departments: a group made of groups.</li>
+<li>Sunil, the Director, is an <code>Employee</code> placed straight under Head Office. He is a single object, a leaf.</li>
+<li>IT is a department inside Head Office.</li>
+<li>HR is another department inside Head Office.</li>
+<li>Meena, a Developer, is a leaf in IT.</li>
+<li>Arjun, a Tester, is another leaf in IT.</li>
+<li>Kavita, a Recruiter, is a leaf in HR. Calling <code>display()</code> on Head Office works the same way on every level: each department simply calls <code>display()</code> on its members.</li>
 </ul>
 <p><strong>Follow-up questions</strong></p>
 <ol>
@@ -10167,7 +10167,7 @@ Guest tries to view an image:
 <li>The guest is stopped by the proxy, so <code>secret.png</code> is never loaded at all.</li>
 </ul>
 <p><strong>Flowchart of the script</strong></p>
-<p><img alt="Q12. Explain the Proxy Pattern. Why is it used? Compare it with directly accessing an object." src="../../resources/LR-ch21-conceptualqa-fig-02.png" /></p>
+<p><img alt="Q12. Explain the Proxy Pattern. Why is it used? Compare it with directly accessing an object." src="../../resources/S21-LR-ch21-conceptualqa-fig-02.png" /></p>
 <p><strong>Reading the figure</strong></p>
 <ul>
 <li><strong>Step 1:</strong> The client calls <code>show()</code> on the proxy, exactly as it would on a real image.</li>
@@ -10308,12 +10308,12 @@ Station: temperature changed to 30 C
 <p><strong>Reading the figure</strong></p>
 <ul>
 <li><strong>Step 1:</strong> Create the <code>WeatherStation</code>, the subject that others want to watch.</li>
-<li><strong>Step 2:</strong> Attach two observers, a <code>PhoneDisplay</code> and an <code>AlertSystem</code>. The station keeps them in a list.</li>
-<li><strong>Step 3:</strong> The temperature changes.</li>
-<li><strong>Step 4:</strong> The subject calls its <code>notify()</code> method.</li>
-<li><strong>Step 5:</strong> <code>notify()</code> calls <code>update()</code> on every observer in the list. The station does not need to know what kind of object each one is.</li>
+<li><strong>Step 2:</strong> Attach two observers, a <code>PhoneDisplay</code> and an <code>AlertSystem</code>, with <code>station.attach()</code>. The station keeps them in a list.</li>
+<li><strong>Step 3:</strong> The temperature changes: <code>set_temperature()</code> stores the new value.</li>
+<li><strong>Step 4:</strong> The subject calls its <code>_notify()</code> method itself. The underscore shows it is meant for use inside the class only.</li>
+<li><strong>Step 5:</strong> <code>_notify()</code> calls <code>update()</code> on every observer in the list. The station does not need to know what kind of object each one is.</li>
 <li><strong>Step 6:</strong> Each observer reacts in its own way: the display shows the value, and the alert system checks it.</li>
-<li><strong>Step 7:</strong> An observer can call <code>detach()</code> at any time. After <code>detach(phone)</code>, only the alert system reacts to later changes.</li>
+<li><strong>Step 7:</strong> An observer can be removed with <code>detach()</code> at any time. After <code>station.detach(phone)</code>, only the alert system reacts to later changes.</li>
 </ul>
 <p>Read more at <a href="https://refactoring.guru/design-patterns/observer">Refactoring Guru: Observer</a>.</p>
 <p><strong>Comparison table</strong></p>
@@ -10609,7 +10609,7 @@ After running the queue: 'Hello!!'
 <li>In Step 6 the two commands are created first and run later. This is the idea behind task queues.</li>
 </ul>
 <p><strong>Flowchart of the undo process</strong></p>
-<p><img alt="Q15. Explain the Command Pattern. How does it help in implementing undo operations, menus and task queues?" src="../../resources/LR-ch21-conceptualqa-fig-04.png" /></p>
+<p><img alt="Q15. Explain the Command Pattern. How does it help in implementing undo operations, menus and task queues?" src="../../resources/S21-LR-ch21-conceptualqa-fig-04.png" /></p>
 <p><strong>Reading the figure</strong></p>
 <ul>
 <li><strong>Step 1:</strong> The user performs an action.</li>
@@ -10860,7 +10860,7 @@ Running AttendanceReport:
 <p><a href="#table-of-contents">Back to the Table of Contents</a></p>
 <h3 id="q17-explain-pythonic-design-patterns-how-do-python-features-such-as-decorators-context-managers-mixins-duck-typing-and-dataclasses-simplify-classical-design-patterns">Q17. Explain Pythonic Design Patterns. How do Python features such as decorators, context managers, mixins, duck typing and dataclasses simplify classical design patterns?<a class="headerlink" href="#q17-explain-pythonic-design-patterns-how-do-python-features-such-as-decorators-context-managers-mixins-duck-typing-and-dataclasses-simplify-classical-design-patterns" title="Permanent link">&para;</a></h3>
 <p><strong>Answer</strong></p>
-<p>Many classical design patterns were first developed for languages such as C++ and Java. At that time, these languages had fewer high-level features, so programmers had to build certain solutions by hand, using extra classes and interfaces.</p>
+<p>Many classical design patterns were first described for languages such as C++ and Smalltalk. At that time, these languages had fewer high-level features, so programmers had to build certain solutions by hand, using extra classes and interfaces.</p>
 <p>Python includes many language features that support the same design goals with much less code. Solutions that use these features are often called <strong>Pythonic patterns</strong>. ("Pythonic" means written in the natural style of Python, as described in <a href="https://peps.python.org/pep-0020/">PEP 20, The Zen of Python</a>.)</p>
 <p>For example:</p>
 <ul>

@@ -8282,7 +8282,7 @@
 <li>The <strong>matrix multiplication operator</strong> <code>@</code>, which is used a lot in data science, machine learning and graphics, mostly with the NumPy library.</li>
 <li>The <strong>set operators</strong> <code>|</code>, <code>&amp;</code>, <code>-</code> and <code>^</code>, which let you combine and compare sets with a single symbol, the same way you would in school mathematics.</li>
 </ol>
-<p>Both topics show an important idea about Python operators. The same symbol can do different jobs depending on the type of data it works on. For example, <code>-</code> subtracts numbers but finds the "difference" of two sets. And <code>@</code> does nothing at all for plain lists, but multiplies matrices when you use NumPy arrays.</p>
+<p>Both topics show an important idea about Python operators. The same symbol can do different jobs depending on the type of data it works on. For example, <code>-</code> subtracts numbers but finds the "difference" of two sets. And <code>@</code> does not work on plain lists at all (it raises a <code>TypeError</code>), but multiplies matrices when you use NumPy arrays.</p>
 <p>Each section explains the idea in simple steps, gives scripts with <code># Step</code> comments, and shows the output you should see. A combined script is given at the end of each section so that you can run everything in one go.</p>
 <h2 id="table-of-contents">Table of Contents<a class="headerlink" href="#table-of-contents" title="Permanent link">&para;</a></h2>
 <ul>
@@ -8472,18 +8472,17 @@
 <li>For <strong>matrix @ vector</strong>, the number of <strong>columns in the matrix</strong> must equal the number of <strong>elements in the vector</strong>.</li>
 <li>The answer has the rows of the first matrix and the columns of the second. A (2, 3) matrix <code>@</code> a (3, 2) matrix gives a (2, 2) matrix.</li>
 </ul>
-<p><img alt="How Matrix Multiplication Works" src="../../resources/LR-ch3-beyond-text-fig-01.png" /></p>
+<p><img alt="How Matrix Multiplication Works" src="../../resources/S03-LR-ch3-beyond-text-fig-01.png" /></p>
 <p><strong>Reading the figure</strong></p>
 <ul>
 <li><strong>Step 1:</strong> Start with the matrix product <code>A @ B</code>.</li>
 <li><strong>Step 2:</strong> Check the shapes: is the number of columns in A equal to the number of rows in B?</li>
 <li><strong>Step 3:</strong> No: the shapes do not fit, so NumPy raises a <code>ValueError</code> and stops.</li>
 <li><strong>Step 4:</strong> Yes: pick row <code>i</code> of A and column <code>j</code> of B.</li>
-<li><strong>Step 5:</strong> Multiply the matching pairs: the first item of the row with the first item of the column, the second with the second, and so on.</li>
-<li><strong>Step 6:</strong> Add all those products together.</li>
-<li><strong>Step 7:</strong> Write the total in cell <code>(i, j)</code> of the answer.</li>
-<li><strong>Step 8:</strong> If any cells of the answer are still empty, go back to Step 4 for the next row and column.</li>
-<li><strong>Step 9:</strong> No cells are left, so the answer is ready. A (2, 3) matrix <code>@</code> a (3, 2) matrix gives a (2, 2) answer.</li>
+<li><strong>Step 5:</strong> Multiply the matching pairs (the first item of the row with the first item of the column, the second with the second, and so on) and add all those products together.</li>
+<li><strong>Step 6:</strong> Write the total in cell <code>(i, j)</code> of the answer.</li>
+<li><strong>Step 7:</strong> Are any cells of the answer still empty? Yes: go back to Step 4 for the next row and column.</li>
+<li><strong>Step 8:</strong> No: the answer is ready. A (2, 3) matrix <code>@</code> a (3, 2) matrix gives a (2, 2) answer.</li>
 </ul>
 <p><a href="#table-of-contents">Back to the Table of Contents</a></p>
 <hr />
