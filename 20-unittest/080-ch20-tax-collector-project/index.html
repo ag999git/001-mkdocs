@@ -8770,22 +8770,19 @@ test_tax_calculator3.py::test_tax_values[10.0-1.0] PASSED                [100%]
 <p><code>pytest.approx()</code> is still strict enough to catch real mistakes. For example, <code>0.110001 == pytest.approx(0.11)</code> is <code>False</code>.</p>
 <p><a href="./#table-of-contents">Back to the Table of Contents</a></p>
 <h2 id="9-flowchart-parametrized-testing-and-execution">9. Flowchart: Parametrized Testing and Execution<a class="headerlink" href="#9-flowchart-parametrized-testing-and-execution" title="Permanent link">&para;</a></h2>
-<p><img alt="Project: The &quot;Micro-Precision&quot; Tax Calculator (Using Parameterized Testing)" src="../../resources/LR-ch20-tax-collector-project-fig-01.png" /></p>
+<p><img alt="Project: The &quot;Micro-Precision&quot; Tax Calculator (Using Parameterized Testing)" src="../../resources/S20-LR-ch20-tax-collector-project-fig-01.png" /></p>
 <p><strong>Reading the figure</strong></p>
 <ul>
-<li><strong>Step 1:</strong> pytest collects the test function <code>test_tax_values</code>.</li>
-<li><strong>Step 2:</strong> It reads the <code>@pytest.mark.parametrize</code> list, which holds 5 tuples.</li>
-<li><strong>Step 3:</strong> It creates 5 separate test cases, one for each tuple. Each one passes or fails on its own.</li>
-<li><strong>Step 4:</strong> Take the next test case.</li>
-<li><strong>Step 5:</strong> Put that tuple's values into the parameters <code>price</code> and <code>expected</code>.</li>
-<li><strong>Step 6:</strong> Call <code>calculate_tax(price)</code>.</li>
-<li><strong>Step 7:</strong> Does the result equal <code>pytest.approx(expected)</code>? <code>approx</code> allows a tiny floating-point difference.</li>
-<li><strong>Step 8:</strong> Yes: mark this case PASSED.</li>
-<li><strong>Step 9:</strong> No: mark this case FAILED and record the details, including the values that were compared.</li>
-<li><strong>Step 10:</strong> If more test cases are left, go back to Step 4.</li>
-<li><strong>Step 11:</strong> No: print the summary of all 5 cases.</li>
+<li><strong>Step 1:</strong> pytest collects the test function <code>test_tax_values</code>, reads the <code>@pytest.mark.parametrize</code> list of 5 tuples and creates 5 separate test cases, one for each tuple. Each one passes or fails on its own.</li>
+<li><strong>Step 2:</strong> Take the next test case and put that tuple's values into the parameters <code>price</code> and <code>expected</code>.</li>
+<li><strong>Step 3:</strong> Call <code>calculate_tax(price)</code>.</li>
+<li><strong>Step 4:</strong> Does the result equal <code>pytest.approx(expected)</code>? <code>approx</code> allows a tiny floating-point difference.</li>
+<li><strong>Step 5:</strong> Yes: mark this case PASSED.</li>
+<li><strong>Step 6:</strong> No: mark this case FAILED and record the details, including the values that were compared.</li>
+<li><strong>Step 7:</strong> Either way, go back to Step 2 for the next case, until all 5 have run.</li>
+<li><strong>Step 8:</strong> Print the summary of all 5 cases.</li>
 </ul>
-<p>Notice that step 9 does not stop the run. It records the failure and moves on to the next case. The next section explains why this matters.</p>
+<p>Notice that step 6 does not stop the run. It records the failure and moves on to the next case. The next section explains why this matters.</p>
 <p><a href="./#table-of-contents">Back to the Table of Contents</a></p>
 <h2 id="10-tests-are-separate">10. Tests Are Separate<a class="headerlink" href="#10-tests-are-separate" title="Permanent link">&para;</a></h2>
 <blockquote>

@@ -8901,7 +8901,7 @@
 <p>Reading the scripts is useful, but you will learn much more by running them yourself and watching the output appear. This section explains, step by step, how to download the six scripts, install pytest and run the scripts in <strong>Visual Studio Code (VS Code)</strong>, a free code editor that many Python programmers use.</p>
 <p>The steps are written for Windows. Where macOS or Linux is different, this is noted.</p>
 <p>The whole process looks like this:</p>
-<p><img alt="Running the Scripts on Your Computer" src="../../resources/LR-ch20-unittest-disadvantage-rigid-oop-style-fig-01.png" /></p>
+<p><img alt="Running the Scripts on Your Computer" src="../../resources/S20-LR-ch20-unittest-disadvantage-rigid-oop-style-fig-01.png" /></p>
 <p><strong>Reading the figure</strong></p>
 <ul>
 <li><strong>Step 1:</strong> Check that Python is installed, for example with <code>python --version</code> in a terminal.</li>
@@ -9264,17 +9264,16 @@ PASSED
 <p><a href="./#table-of-contents">Back to the Table of Contents</a></p>
 <h3 id="how-the-xunit-setup-runs">How the xUnit Setup Runs<a class="headerlink" href="#how-the-xunit-setup-runs" title="Permanent link">&para;</a></h3>
 <p>The flowchart shows the order in which pytest handles a test class that has a <code>setup_method</code>.</p>
-<p><img alt="How the xUnit Setup Runs" src="../../resources/LR-ch20-unittest-disadvantage-rigid-oop-style-fig-02.png" /></p>
+<p><img alt="How the xUnit Setup Runs" src="../../resources/S20-LR-ch20-unittest-disadvantage-rigid-oop-style-fig-02.png" /></p>
 <p><strong>Reading the figure</strong></p>
 <ul>
 <li><strong>Step 1:</strong> pytest finds the test class <code>TestBankAccount</code>.</li>
-<li><strong>Step 2:</strong> Take the next test method in the class.</li>
-<li><strong>Step 3:</strong> Create a brand-new instance of the class for this one method, so no state leaks between tests.</li>
+<li><strong>Step 2:</strong> Are any test methods left in the class?</li>
+<li><strong>Step 3:</strong> Yes: take the next test method and create a brand-new instance of the class for it, so no state leaks between tests.</li>
 <li><strong>Step 4:</strong> Run <code>setup_method</code>, which creates a fresh <code>self.account</code>.</li>
 <li><strong>Step 5:</strong> Run the test method itself.</li>
-<li><strong>Step 6:</strong> Run <code>teardown_method</code> to clean up.</li>
-<li><strong>Step 7:</strong> If more test methods are left, go back to Step 2.</li>
-<li><strong>Step 8:</strong> No: report the results.</li>
+<li><strong>Step 6:</strong> Run <code>teardown_method</code> to clean up, then go back to Step 2.</li>
+<li><strong>Step 7:</strong> No methods are left: report the results.</li>
 </ul>
 <p>Notice that step 4 has no choice in it. There is no question like "does this test need an account?". The setup runs for every test method, every time.</p>
 <p><a href="./#table-of-contents">Back to the Table of Contents</a></p>
@@ -9474,19 +9473,18 @@ PASSED
 </ul>
 <p><a href="./#table-of-contents">Back to the Table of Contents</a></p>
 <h3 id="how-pytest-supplies-a-fixture">How Pytest Supplies a Fixture<a class="headerlink" href="#how-pytest-supplies-a-fixture" title="Permanent link">&para;</a></h3>
-<p><img alt="How Pytest Supplies a Fixture" src="../../resources/LR-ch20-unittest-disadvantage-rigid-oop-style-fig-03.png" /></p>
+<p><img alt="How Pytest Supplies a Fixture" src="../../resources/S20-LR-ch20-unittest-disadvantage-rigid-oop-style-fig-03.png" /></p>
 <p><strong>Reading the figure</strong></p>
 <ul>
 <li><strong>Step 1:</strong> pytest finds the next test function.</li>
 <li><strong>Step 2:</strong> It reads the names of the test's parameters.</li>
-<li><strong>Step 3:</strong> Does a parameter name match a fixture?</li>
-<li><strong>Step 4:</strong> No: run the test with no setup.</li>
-<li><strong>Step 5:</strong> Yes: run the fixture's code up to <code>yield</code>. This is the setup.</li>
-<li><strong>Step 6:</strong> Pass the object after <code>yield</code> into the test as the argument.</li>
-<li><strong>Step 7:</strong> Run the test.</li>
-<li><strong>Step 8:</strong> Run the rest of the fixture, the code after <code>yield</code>. This is the teardown, and it runs even if the test failed.</li>
-<li><strong>Step 9:</strong> If more tests are left, go back to Step 1.</li>
-<li><strong>Step 10:</strong> No: report the results.</li>
+<li><strong>Step 3:</strong> Does the test have any parameters?</li>
+<li><strong>Step 4:</strong> No: run the test with no fixture setup.</li>
+<li><strong>Step 5:</strong> Yes: does every parameter name match a fixture?</li>
+<li><strong>Step 6:</strong> No: pytest stops this test with an error, <code>fixture '...' not found</code>. The test does not run.</li>
+<li><strong>Step 7:</strong> Yes: run each fixture's code up to <code>yield</code> (the setup), and pass the object after <code>yield</code> into the test as the argument.</li>
+<li><strong>Step 8:</strong> Run the test.</li>
+<li><strong>Step 9:</strong> Run the rest of the fixture, the code after <code>yield</code>. This is the teardown, and it runs even if the test failed.</li>
 </ul>
 <p>Compare this with the xUnit flowchart earlier. There, the setup ran for every test with no choice. Here, step 3 makes a decision for each test, based only on the parameters the test asks for.</p>
 <p><a href="./#table-of-contents">Back to the Table of Contents</a></p>

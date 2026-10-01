@@ -8583,7 +8583,7 @@
 <li>Pytest runs tests one after another, not at the same time (unless you use a plugin for parallel runs, discussed later). So "shared" means the same object is handed to one test after another.</li>
 </ol>
 <p>The flowchart below shows the order of events when a run has one session-scoped fixture, and two test files that each have a module-scoped fixture.</p>
-<p><img alt="The Fixture Lifecycle Hierarchy" src="../../resources/LR-ch20-payment-gateway-fig-01.png" /></p>
+<p><img alt="The Fixture Lifecycle Hierarchy" src="../../resources/S20-LR-ch20-payment-gateway-fig-01.png" /></p>
 <p><strong>Reading the figure</strong></p>
 <ul>
 <li><strong>Step 1:</strong> The pytest run starts.</li>
@@ -8891,7 +8891,7 @@ PASSED
 <li>The fixture then pauses while the tests run. How long it pauses depends on its scope: for a function-scoped fixture, until that one test ends; for a session-scoped fixture, until the last test of the whole run ends.</li>
 <li>Everything <strong>after</strong> <code>yield</code> is the <strong>teardown phase</strong>, where resources are released (here, the gateway is closed). This part runs even if a test fails.</li>
 </ol>
-<p><img alt="The Mechanics of yield Statements" src="../../resources/LR-ch20-payment-gateway-fig-02.png" /></p>
+<p><img alt="The Mechanics of yield Statements" src="../../resources/S20-LR-ch20-payment-gateway-fig-02.png" /></p>
 <p><strong>Reading the figure</strong></p>
 <ul>
 <li><strong>Step 1:</strong> The first test that needs the session-scoped fixture <code>gateway_session</code> asks for it.</li>
@@ -9348,7 +9348,7 @@ PASSED
 </tr>
 </tbody>
 </table>
-<p><img alt="Choosing the Right Scope" src="../../resources/LR-ch20-payment-gateway-fig-03.png" /></p>
+<p><img alt="Choosing the Right Scope" src="../../resources/S20-LR-ch20-payment-gateway-fig-03.png" /></p>
 <p><strong>Reading the figure</strong></p>
 <ul>
 <li><strong>Step 1:</strong> Is the fixture's setup slow?</li>
@@ -9380,7 +9380,7 @@ PASSED
 </ol>
 <p><a href="./#table-of-contents">Back to the Table of Contents</a></p>
 <h3 id="question-3-why-did-a-correct-test-fail">Question 3: Why Did a Correct Test Fail?<a class="headerlink" href="#question-3-why-did-a-correct-test-fail" title="Permanent link">&para;</a></h3>
-<p>In <code>test_contamination.py</code>, <code>test_normal_payment</code> fails. The test itself has no mistake. Why does it fail, and give two ways to fix the problem.</p>
+<p>In <code>test_contamination.py</code>, <code>test_normal_payment</code> fails. The test itself has no mistake. Why does it fail? Give two ways to fix the problem.</p>
 <p><strong>Answer:</strong></p>
 <ol>
 <li>Both tests share one session-scoped gateway.</li>

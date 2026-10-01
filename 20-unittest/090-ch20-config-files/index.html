@@ -8834,7 +8834,7 @@
 <p>If you have ever used <code>pip install -r requirements.txt</code>, you have already used a file of this kind. The <code>requirements.txt</code> file is simply a list (package names and versions) that tells pip what to install. There is no magic: you write a list in a file, and a tool reads it. Configuration files work on the same principle.</p>
 <p><a href="./#table-of-contents">Back to the Table of Contents</a></p>
 <h4 id="flowchart-explaining-how-a-configuration-file-is-used">Flowchart Explaining How a Configuration File Is Used<a class="headerlink" href="#flowchart-explaining-how-a-configuration-file-is-used" title="Permanent link">&para;</a></h4>
-<p><img alt="Configuration Files in the Python World" src="../../resources/LR-ch20-config-files-fig-01.png" /></p>
+<p><img alt="Configuration Files in the Python World" src="../../resources/S20-LR-ch20-config-files-fig-01.png" /></p>
 <p><strong>Reading the figure</strong></p>
 <ul>
 <li><strong>Step 1:</strong> You type <code>pytest</code> in the terminal.</li>
@@ -9020,14 +9020,14 @@ ERROR test_backup.py - Failed: 'slow' not found in `markers` configuration op...
 <p>This is why you can run <code>pytest</code> from inside the <code>tests</code> folder and still get your settings: pytest walks up and finds <code>pytest.ini</code> in the folder above.</p>
 <p><a href="./#table-of-contents">Back to the Table of Contents</a></p>
 <h3 id="flowchart-showing-how-pytest-finds-the-configuration-file">Flowchart Showing How Pytest Finds the Configuration File<a class="headerlink" href="#flowchart-showing-how-pytest-finds-the-configuration-file" title="Permanent link">&para;</a></h3>
-<p><img alt="Where Does the File Live?" src="../../resources/LR-ch20-config-files-fig-02.png" /></p>
+<p><img alt="Where Does the File Live?" src="../../resources/S20-LR-ch20-config-files-fig-02.png" /></p>
 <p><strong>Reading the figure</strong></p>
 <ul>
-<li><strong>Step 1:</strong> pytest starts looking in the current folder.</li>
-<li><strong>Step 2:</strong> Is there a configuration file here that contains pytest settings?</li>
+<li><strong>Step 1:</strong> pytest looks for a configuration file, starting in the current folder.</li>
+<li><strong>Step 2:</strong> Is there a configuration file in this folder that contains pytest settings?</li>
 <li><strong>Step 3:</strong> Yes: use it. This folder becomes the <code>rootdir</code>, the root of the project.</li>
 <li><strong>Step 4:</strong> No: is there a parent folder above this one?</li>
-<li><strong>Step 5:</strong> Yes: move up to the parent folder and go back to Step 2.</li>
+<li><strong>Step 5:</strong> Yes: move up to the parent folder and go back to Step 1 to look there.</li>
 <li><strong>Step 6:</strong> No: the top of the file system was reached with no config file found, so pytest uses its built-in defaults.</li>
 </ul>
 <p><a href="./#table-of-contents">Back to the Table of Contents</a></p>
@@ -9035,7 +9035,7 @@ ERROR test_backup.py - Failed: 'slow' not found in `markers` configuration op...
 <p>Let us create a <code>pytest.ini</code> file to register the <code>slow</code> and <code>fast</code> markers (and a third one, <code>db</code>) for the <code>test_backup.py</code> example.</p>
 <p><a href="./#table-of-contents">Back to the Table of Contents</a></p>
 <h3 id="step-1-create-the-file">Step 1: Create the File<a class="headerlink" href="#step-1-create-the-file" title="Permanent link">&para;</a></h3>
-<p>Create a file named <code>pytest.ini</code> in your project root, next to <code>test_backup.py</code>. The first line must be <code>[pytest]</code>.</p>
+<p>Create a file named <code>pytest.ini</code> in your project root, next to <code>test_backup.py</code>. It must contain the section header <code>[pytest]</code>, with the settings below it (comment lines starting with <code>#</code> may come before it).</p>
 <p>Take care that the name is exactly <code>pytest.ini</code>. In Windows, turn on <strong>View &gt; Show &gt; File name extensions</strong> in File Explorer to make sure it has not been saved as <code>pytest.ini.txt</code>.</p>
 <p><a href="./#table-of-contents">Back to the Table of Contents</a></p>
 <h3 id="step-2-add-the-markers-setting">Step 2: Add the markers Setting<a class="headerlink" href="#step-2-add-the-markers-setting" title="Permanent link">&para;</a></h3>
@@ -9128,7 +9128,7 @@ test_backup.py .                                                         [100%]
 <p>More settings, and the rules for where pytest looks for them, are described in the pytest guide on <a href="https://docs.pytest.org/en/stable/reference/customize.html">configuration</a>.</p>
 <p><a href="./#table-of-contents">Back to the Table of Contents</a></p>
 <h2 id="7-visualizing-the-lifecycle-flowchart">7. Visualizing the Lifecycle (Flowchart)<a class="headerlink" href="#7-visualizing-the-lifecycle-flowchart" title="Permanent link">&para;</a></h2>
-<p><img alt="Visualizing the Lifecycle (Flowchart)" src="../../resources/LR-ch20-config-files-fig-03.png" /></p>
+<p><img alt="Visualizing the Lifecycle (Flowchart)" src="../../resources/S20-LR-ch20-config-files-fig-03.png" /></p>
 <p><strong>Reading the figure</strong></p>
 <ul>
 <li><strong>Step 1:</strong> You type <code>pytest -m fast</code>.</li>
@@ -9320,7 +9320,7 @@ tests/test_bank.py::test_deposit_small_amount PASSED                     [100%]
 <tr>
 <td>Create the file</td>
 <td><code>pytest.ini</code> in the project root</td>
-<td>Must start with the <code>[pytest]</code> header</td>
+<td>Must contain the <code>[pytest]</code> section header</td>
 </tr>
 <tr>
 <td>Register a marker</td>

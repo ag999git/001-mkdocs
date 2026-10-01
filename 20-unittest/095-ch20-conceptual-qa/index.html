@@ -8585,7 +8585,7 @@
 <p><img alt="What is unit testing? Why do we test code even when the program runs correctly?" src="../../resources/S20-LR-ch20-conceptual-qa-fig-01.png" /></p>
 <p><strong>Reading the figure</strong></p>
 <ul>
-<li><strong>Step 1:</strong> Arrange: prepare everything the test needs, such as the input values and the expected result.</li>
+<li><strong>Step 1:</strong> Arrange: prepare everything the test needs, such as the input values.</li>
 <li><strong>Step 2:</strong> Act: call the function or code being tested, once.</li>
 <li><strong>Step 3:</strong> Assert: check that the result is what was expected. If it is not, the test fails and tells you so.</li>
 </ul>
@@ -8699,16 +8699,16 @@ test_q01_aaa.py::test_square_of_negative_number PASSED                   [100%]
         └── test_add()       &lt;-- test function
 </code></pre></div>
 <p>Execution flow:</p>
-<p><img alt="How does pytest discover test files and test functions automatically?" src="../../resources/LR-ch20-conceptual-qa-fig-02.png" /></p>
+<p><img alt="How does pytest discover test files and test functions automatically?" src="../../resources/S20-LR-ch20-conceptual-qa-fig-02.png" /></p>
 <p><strong>Reading the figure</strong></p>
 <ul>
 <li><strong>Step 1:</strong> You type <code>pytest</code> in the terminal.</li>
 <li><strong>Step 2:</strong> pytest searches the current folder and all its sub-folders for files.</li>
-<li><strong>Step 3:</strong> Does the file name match <code>test_*.py</code> or <code>*_test.py</code>?</li>
-<li><strong>Step 4:</strong> No: skip the file.</li>
+<li><strong>Step 3:</strong> Are any files left to look at?</li>
+<li><strong>Step 4:</strong> Yes: does the next file name match <code>test_*.py</code> or <code>*_test.py</code>? No: skip the file and go back to Step 3.</li>
 <li><strong>Step 5:</strong> Yes: import the file.</li>
-<li><strong>Step 6:</strong> Collect the functions whose names start with <code>test</code>, and the classes whose names start with <code>Test</code>.</li>
-<li><strong>Step 7:</strong> Run each collected test and record whether it PASSED or FAILED.</li>
+<li><strong>Step 6:</strong> Collect the functions whose names start with <code>test</code>, and the classes whose names start with <code>Test</code>. Then go back to Step 3.</li>
+<li><strong>Step 7:</strong> No files are left: run each collected test and record whether it PASSED or FAILED.</li>
 <li><strong>Step 8:</strong> Print the summary.</li>
 </ul>
 <p>This automatic discovery removes the need to call every test function yourself.</p>
@@ -8818,7 +8818,7 @@ Testing code       (the test)
     <span class="k">assert</span> <span class="n">database</span><span class="o">.</span><span class="n">connect</span><span class="p">()</span>
 </code></pre></div>
 <p>Execution:</p>
-<p><img alt="Explain pytest dependency injection using fixtures. Why does the fixture name become the test parameter name?" src="../../resources/LR-ch20-conceptual-qa-fig-03.png" /></p>
+<p><img alt="Explain pytest dependency injection using fixtures. Why does the fixture name become the test parameter name?" src="../../resources/S20-LR-ch20-conceptual-qa-fig-03.png" /></p>
 <p><strong>Reading the figure</strong></p>
 <ul>
 <li><strong>Step 1:</strong> pytest collects the test function <code>test_connection</code>.</li>
@@ -9264,7 +9264,7 @@ PASSED
 <p>The test passes because the expected exception was raised inside the <code>with</code> block. <code>pytest.raises()</code> catches it, so it does not stop the test.</p>
 <p>The test fails if:</p>
 <ul>
-<li>no exception occurs (pytest reports <code>DID NOT RAISE &lt;class 'ValueError'&gt;</code>)</li>
+<li>no exception occurs (pytest reports <code>DID NOT RAISE &lt;class 'ValueError'&gt;</code>, or <code>DID NOT RAISE ValueError</code> in pytest 9.1 and later)</li>
 <li>a different kind of exception occurs (it is not caught, and the test fails with that exception)</li>
 </ul>
 <p>In this way, <code>pytest.raises()</code> checks that the program handles invalid situations correctly.</p>

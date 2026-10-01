@@ -8935,7 +8935,7 @@ ERROR test_name_mismatch.py::test_wrong_name
 <ol>
 <li>The result is <code>ERROR</code>, not <code>FAILED</code>. The test never started, because its setup could not be completed.</li>
 <li>The message <code>fixture 'database' not found</code> names the missing fixture exactly.</li>
-<li>Pytest lists the fixtures that <strong>are</strong> available, and <code>db</code> is among them. This is a strong hint that the parameter name was misspelled or chosen wrongly. The other names in the list are fixtures built into pytest, and the list may be longer on your computer if you have pytest plugins installed.</li>
+<li>Pytest lists the fixtures that <strong>are</strong> available, and <code>db</code> is among them. This is a strong hint that the parameter name was misspelled or chosen wrongly. The other names in the list are fixtures built into pytest, and the list may be different on your computer, depending on your pytest version and any plugins you have installed.</li>
 </ol>
 <p><strong>A useful detail:</strong> strictly speaking, it is the fixture's <strong>name</strong> that must match the parameter, not the Python function's name. By default they are the same. But you can give a fixture a different name with the <code>name</code> argument. Save this as <code>test_fixture_name.py</code>:</p>
 <div class="highlight"><pre><span></span><code><span class="c1"># test_fixture_name.py</span>
@@ -9014,7 +9014,7 @@ PASSED
 <p><a href="./#table-of-contents">Back to the Table of Contents</a></p>
 <h3 id="flow-for-each-test-test_injection-test_connect-test_state">Flow for EACH test (test_injection / test_connect / test_state)<a class="headerlink" href="#flow-for-each-test-test_injection-test_connect-test_state" title="Permanent link">&para;</a></h3>
 <p>The flowchart below shows what happens for <code>test_injection</code>. The order of events is the same for every test in the file.</p>
-<p><img alt="Flow for EACH test (testinjection / testconnect / teststate)" src="../../resources/LR-ch20-dependency-injection-fig-01.png" /></p>
+<p><img alt="Flow for EACH test (test_injection / test_connect / test_state)" src="../../resources/S20-LR-ch20-dependency-injection-fig-01.png" /></p>
 <p><strong>Reading the figure</strong></p>
 <ul>
 <li><strong>Step 1:</strong> pytest collects the test function <code>test_injection</code>.</li>
@@ -9022,12 +9022,10 @@ PASSED
 <li><strong>Step 3:</strong> It searches for a fixture with that exact name.</li>
 <li><strong>Step 4:</strong> Was a fixture named <code>db</code> found?</li>
 <li><strong>Step 5:</strong> No: pytest reports an error, <code>fixture 'db' not found</code>, and the test does not run.</li>
-<li><strong>Step 6:</strong> Yes: pytest calls the fixture function <code>db()</code>.</li>
-<li><strong>Step 7:</strong> Inside the fixture, a <code>Database()</code> object is created.</li>
-<li><strong>Step 8:</strong> The fixture returns the <code>Database</code> object.</li>
-<li><strong>Step 9:</strong> pytest calls <code>test_injection</code> and passes that object in as the argument <code>db</code>. This is dependency injection.</li>
-<li><strong>Step 10:</strong> The test body runs: it checks <code>type(db)</code> and <code>isinstance(db, Database)</code>.</li>
-<li><strong>Step 11:</strong> The test completes, as PASSED or FAILED.</li>
+<li><strong>Step 6:</strong> Yes: pytest calls the fixture function <code>db()</code>. Inside it, a <code>Database()</code> object is created and returned.</li>
+<li><strong>Step 7:</strong> pytest calls <code>test_injection</code> and passes that object in as the argument <code>db</code>. This is dependency injection.</li>
+<li><strong>Step 8:</strong> The test body runs: it checks <code>type(db)</code> and <code>isinstance(db, Database)</code>.</li>
+<li><strong>Step 9:</strong> The test completes, as PASSED or FAILED.</li>
 </ul>
 <p>In words:</p>
 <ol>
@@ -9111,7 +9109,7 @@ PASSED
 <p>The key row is step 4. Because the fixture has the default <strong>function scope</strong>, it runs once for <strong>each</strong> test, and each test gets its own new object. The fourth test in the file, <code>test_fresh_object</code>, proves this: the <code>new_flag</code> added in <code>test_state</code> is not present in the object that <code>test_fresh_object</code> receives.</p>
 <p><a href="./#table-of-contents">Back to the Table of Contents</a></p>
 <h3 id="for-test_connectdb">For test_connect(db)<a class="headerlink" href="#for-test_connectdb" title="Permanent link">&para;</a></h3>
-<p><img alt="For testconnect(db)" src="../../resources/LR-ch20-dependency-injection-fig-02.png" /></p>
+<p><img alt="For test_connect(db)" src="../../resources/S20-LR-ch20-dependency-injection-fig-02.png" /></p>
 <p><strong>Reading the figure</strong></p>
 <ul>
 <li><strong>Step 1:</strong> pytest sees that <code>test_connect</code> has a parameter called <code>db</code>.</li>
@@ -9125,7 +9123,7 @@ PASSED
 </ul>
 <p><a href="./#table-of-contents">Back to the Table of Contents</a></p>
 <h3 id="for-test_statedb">For test_state(db)<a class="headerlink" href="#for-test_statedb" title="Permanent link">&para;</a></h3>
-<p><img alt="For teststate(db)" src="../../resources/LR-ch20-dependency-injection-fig-03.png" /></p>
+<p><img alt="For test_state(db)" src="../../resources/S20-LR-ch20-dependency-injection-fig-03.png" /></p>
 <p><strong>Reading the figure</strong></p>
 <ul>
 <li><strong>Step 1:</strong> pytest sees that <code>test_state</code> has a parameter called <code>db</code>.</li>

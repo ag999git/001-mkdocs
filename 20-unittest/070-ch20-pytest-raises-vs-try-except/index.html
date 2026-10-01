@@ -8561,7 +8561,7 @@
 <p>A test that passes in both cases cannot tell a working function from a broken one. It checks nothing.</p>
 <p><a href="./#table-of-contents">Back to the Table of Contents</a></p>
 <h4 id="flow-chart-using-only-tryexcept-without-else">Flow chart (Using only try/except without else)<a class="headerlink" href="#flow-chart-using-only-tryexcept-without-else" title="Permanent link">&para;</a></h4>
-<p><img alt="Flow chart (Using only try/except without else)" src="../../resources/LR-ch20-pytest-raises-vs-try-except-fig-01.png" /></p>
+<p><img alt="Flow chart (Using only try/except without else)" src="../../resources/S20-LR-ch20-pytest-raises-vs-try-except-fig-01.png" /></p>
 <p><strong>Reading the figure</strong></p>
 <ul>
 <li><strong>Step 1:</strong> The test calls <code>create_user(10)</code> inside a <code>try</code> block. An age of 10 should raise <code>ValueError</code>.</li>
@@ -8596,7 +8596,7 @@
 <p>A small improvement: instead of <code>assert False, "..."</code>, pytest provides <code>pytest.fail("...")</code>, which says more clearly that the test should fail at this point.</p>
 <p><a href="./#table-of-contents">Back to the Table of Contents</a></p>
 <h4 id="flow-chart-for-tryexcept-with-else">Flow chart for try/except with else<a class="headerlink" href="#flow-chart-for-tryexcept-with-else" title="Permanent link">&para;</a></h4>
-<p><img alt="Flow chart for try/except with else" src="../../resources/LR-ch20-pytest-raises-vs-try-except-fig-02.png" /></p>
+<p><img alt="Flow chart for try/except with else" src="../../resources/S20-LR-ch20-pytest-raises-vs-try-except-fig-02.png" /></p>
 <p><strong>Reading the figure</strong></p>
 <ul>
 <li><strong>Step 1:</strong> The test calls <code>create_user(10)</code> inside a <code>try</code> block.</li>
@@ -8617,13 +8617,13 @@
 </code></pre></div>
 <p><a href="./#table-of-contents">Back to the Table of Contents</a></p>
 <h3 id="flow-chart-of-pytest-raises">Flow chart of pytest raises<a class="headerlink" href="#flow-chart-of-pytest-raises" title="Permanent link">&para;</a></h3>
-<p><img alt="Flow chart of pytest raises" src="../../resources/LR-ch20-pytest-raises-vs-try-except-fig-03.png" /></p>
+<p><img alt="Flow chart of pytest raises" src="../../resources/S20-LR-ch20-pytest-raises-vs-try-except-fig-03.png" /></p>
 <p><strong>Reading the figure</strong></p>
 <ul>
 <li><strong>Step 1:</strong> The test enters the block <code>with pytest.raises(ValueError):</code>.</li>
 <li><strong>Step 2:</strong> Inside the block it calls <code>create_user(10)</code>.</li>
 <li><strong>Step 3:</strong> Was an exception raised?</li>
-<li><strong>Step 4:</strong> No: the test fails with <code>DID NOT RAISE &lt;class 'ValueError'&gt;</code>.</li>
+<li><strong>Step 4:</strong> No: the test fails with <code>DID NOT RAISE &lt;class 'ValueError'&gt;</code> (pytest 9.1 and later print <code>DID NOT RAISE ValueError</code>).</li>
 <li><strong>Step 5:</strong> Yes: is it a <code>ValueError</code>?</li>
 <li><strong>Step 6:</strong> Yes: <code>pytest.raises</code> catches it, and the test passes.</li>
 <li><strong>Step 7:</strong> No: a different exception is not caught, so it passes through and the test fails.</li>
@@ -8836,7 +8836,7 @@ FAILED test_three_approaches.py::test_C_pytest_raises_broken - Failed: DID NO...
 </tr>
 </tbody>
 </table>
-<p>The key line is <code>test_A_try_except_only_broken PASSED</code>. The function is broken, yet the test passes. Approaches B and C both fail on the broken version, which is exactly what a good test should do. Notice also that approach C gives the clearest message, <code>DID NOT RAISE &lt;class 'ValueError'&gt;</code>, without us having to write one.</p>
+<p>The key line is <code>test_A_try_except_only_broken PASSED</code>. The function is broken, yet the test passes. Approaches B and C both fail on the broken version, which is exactly what a good test should do. Notice also that approach C gives the clearest message, <code>DID NOT RAISE &lt;class 'ValueError'&gt;</code> (pytest 9.1 and later shorten this to <code>DID NOT RAISE ValueError</code>), without us having to write one.</p>
 <p><a href="./#table-of-contents">Back to the Table of Contents</a></p>
 <h2 id="7-key-insight-black-box-testing">7. Key Insight: Black-box Testing<a class="headerlink" href="#7-key-insight-black-box-testing" title="Permanent link">&para;</a></h2>
 <p>Tests do NOT inspect internal logic like:</p>
