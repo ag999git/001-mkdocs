@@ -8854,7 +8854,7 @@
 <span class="c1"># Step 3: Compare identities - x now points to a different object</span>
 <span class="nb">print</span><span class="p">(</span><span class="s2">"Same object as before?"</span><span class="p">,</span> <span class="nb">id</span><span class="p">(</span><span class="n">x</span><span class="p">)</span> <span class="o">==</span> <span class="n">old_id</span><span class="p">)</span>
 
-<span class="c1"># Step 4: Integers have no methods that change them in place</span>
+<span class="c1"># Step 4: An integer cannot be changed in place, not even through its attributes</span>
 <span class="k">try</span><span class="p">:</span>
     <span class="n">x</span><span class="o">.</span><span class="n">real</span> <span class="o">=</span> <span class="mi">5</span>
 <span class="k">except</span> <span class="ne">AttributeError</span> <span class="k">as</span> <span class="n">error</span><span class="p">:</span>
@@ -9304,15 +9304,17 @@ not known
 <h3 id="17-why-must-dictionary-keys-be-immutable">17. Why must dictionary keys be immutable?<a class="headerlink" href="#17-why-must-dictionary-keys-be-immutable" title="Permanent link">&para;</a></h3>
 <p>Dictionary keys are stored using hash values worked out from the key objects. If a key could change, its contents and its hash could change after it was stored, and the dictionary would look for it in the wrong place. Immutable objects such as strings, integers and tuples of immutable items have hash values that never change. Therefore, Python allows only <strong>hashable</strong> objects as dictionary keys. In practice these are mostly immutable objects.</p>
 <p>How a lookup such as <code>d["a"]</code> works:</p>
-<p><img alt="Why must dictionary keys be immutable?" src="../../resources/LR-ch02-2-ch2-more-conceptual-qa-fig-02.png" /></p>
+<p><img alt="Why must dictionary keys be immutable?" src="../../resources/S02-LR-ch02-2-ch2-more-conceptual-qa-fig-02.png" /></p>
 <p><strong>Reading the figure</strong></p>
 <ul>
 <li><strong>Step 1:</strong> You ask for a value, for example <code>d["a"]</code>.</li>
 <li><strong>Step 2:</strong> Python works out <code>hash(key)</code>, a number calculated from the key's contents.</li>
 <li><strong>Step 3:</strong> The hash tells Python which slot of the dictionary's table to look in, so it does not have to search every item.</li>
-<li><strong>Step 4:</strong> Is a key equal to the one you asked for stored there? (If two keys share a slot, Python checks the next slots too.)</li>
-<li><strong>Step 5:</strong> Yes: return its value.</li>
-<li><strong>Step 6:</strong> No: raise <code>KeyError</code>. If a key could change after being stored, its hash would change too, and Python would look in the wrong slot. That is why keys must be immutable.</li>
+<li><strong>Step 4:</strong> Is that slot empty?</li>
+<li><strong>Step 5:</strong> Yes: the key is not in the dictionary, so Python raises <code>KeyError</code>.</li>
+<li><strong>Step 6:</strong> No: is the key stored there the one you asked for? Python first compares the hashes, then checks with <code>==</code>.</li>
+<li><strong>Step 7:</strong> Yes: return its value.</li>
+<li><strong>Step 8:</strong> No: another key landed in this slot first, so Python looks at the next slot in its search order and goes back to Step 4. If a key could change after being stored, its hash would change too, and Python would look in the wrong slot. That is why keys must be immutable.</li>
 </ul>
 <p>If the key could change after being stored, its hash at step 2 would no longer point to the slot where it was stored, and the lookup would fail.</p>
 <div class="highlight"><pre><span></span><code><span class="c1"># Step 1: Strings, numbers and tuples work as keys</span>
@@ -9534,7 +9536,7 @@ In five years you will be 30
 </tr>
 <tr>
 <td>Can lose information?</td>
-<td>No, it only goes to a wider type</td>
+<td>Usually not, it goes to a wider type (but very large ints can lose digits: <code>float(2**53 + 1)</code> gives <code>9007199254740992.0</code>)</td>
 <td>Yes, for example <code>int(7.9)</code> gives <code>7</code></td>
 </tr>
 </tbody>
@@ -9553,12 +9555,12 @@ In five years you will be 30
 5.0
 99 marks
 </code></pre></div>
-<p><img alt="What is the difference between implicit and explicit type conversion?" src="../../resources/LR-ch02-2-ch2-more-conceptual-qa-fig-03.png" /></p>
+<p><img alt="What is the difference between implicit and explicit type conversion?" src="../../resources/S02-LR-ch02-2-ch2-more-conceptual-qa-fig-03.png" /></p>
 <p><strong>Reading the figure</strong></p>
 <ul>
 <li><strong>Step 1:</strong> An operation such as <code>+</code> is given two values of different types.</li>
 <li><strong>Step 2:</strong> Are both values numbers, for example an <code>int</code> and a <code>float</code>?</li>
-<li><strong>Step 3:</strong> Yes: Python converts implicitly, turning the narrower type into the wider one, here <code>int</code> to <code>float</code>, so no information is lost.</li>
+<li><strong>Step 3:</strong> Yes: Python converts implicitly, turning the narrower type into the wider one, here <code>int</code> to <code>float</code>. Usually no information is lost, but a very large <code>int</code> can lose its last digits: <code>float(2**53 + 1)</code> gives <code>9007199254740992.0</code>.</li>
 <li><strong>Step 4:</strong> The operation runs: <code>3 + 1.5</code> gives <code>4.5</code>.</li>
 <li><strong>Step 5:</strong> No: for a mix such as <code>"5" + 3</code>, Python will not guess, so it raises <code>TypeError</code>.</li>
 <li><strong>Step 6:</strong> The programmer converts explicitly, on purpose, with a function such as <code>int()</code>, <code>float()</code> or <code>str()</code>.</li>
@@ -9794,7 +9796,7 @@ NameError: name 'sqrt' is not defined
 True
 True
 </code></pre></div>
-<p><img alt="Why does Python cache imported modules in sys.modules?" src="../../resources/LR-ch02-2-ch2-more-conceptual-qa-fig-05.png" /></p>
+<p><img alt="Why does Python cache imported modules in sys.modules?" src="../../resources/S02-LR-ch02-2-ch2-more-conceptual-qa-fig-05.png" /></p>
 <p><strong>Reading the figure</strong></p>
 <ul>
 <li><strong>Step 1:</strong> Python runs the statement <code>import name</code>.</li>
@@ -9997,7 +9999,7 @@ Python
 <div class="highlight"><pre><span></span><code>Please enter your name
 Guest
 </code></pre></div>
-<p>The <code>or</code> in Step 2 returns the first truthy value, so an empty name is replaced by <code>"Guest"</code>. See question 27 for the full list of falsy values.</p>
+<p>The <code>or</code> in Step 2 returns the first truthy value (or the last value if none is truthy), so an empty name is replaced by <code>"Guest"</code>. See question 27 for more examples of falsy values.</p>
 <p><a href="#table-of-contents">Back to the Table of Contents</a></p>
 <h3 id="39-why-are-immutable-objects-generally-safer-in-concurrent-or-shared-environments">39. Why are immutable objects generally safer in concurrent or shared environments?<a class="headerlink" href="#39-why-are-immutable-objects-generally-safer-in-concurrent-or-shared-environments" title="Permanent link">&para;</a></h3>
 <p>Immutable objects cannot be changed after they are created, so different parts of a program can share them without fear of accidental changes. This reduces bugs in programs that do several things at once (multi-threaded or parallel programs). Since immutable data stays constant, it is also easier to reason about how the program behaves. Many modern programming styles encourage immutability for this reason.</p>

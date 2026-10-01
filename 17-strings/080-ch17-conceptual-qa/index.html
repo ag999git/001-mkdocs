@@ -9423,15 +9423,16 @@ He said "Hello"
 Are both the same string? True
 </code></pre></div>
 <p><strong>Flowchart</strong></p>
-<p><img alt="Question 6. Escape Sequences" src="../../resources/LR-ch17-conceptual-qa-fig-04.png" /></p>
+<p><img alt="Question 6. Escape Sequences" src="../../resources/S17-LR-ch17-conceptual-qa-fig-04.png" /></p>
 <p><strong>Reading the figure</strong></p>
 <ul>
-<li><strong>Step 1:</strong> Python reads the string literal one character at a time.</li>
+<li><strong>Step 1:</strong> Python reads the string literal one character at a time: take the next character.</li>
 <li><strong>Step 2:</strong> Is the character a backslash, <code>\</code>?</li>
 <li><strong>Step 3:</strong> No: store the character as it is.</li>
 <li><strong>Step 4:</strong> Yes: read the next character as well.</li>
 <li><strong>Step 5:</strong> Store the single special character the pair stands for. <code>\n</code> becomes one newline character, and <code>\t</code> one tab.</li>
-<li><strong>Step 6:</strong> Move on to the next character.</li>
+<li><strong>Step 6:</strong> Are there more characters in the literal? Yes: go back to Step 1.</li>
+<li><strong>Step 7:</strong> No: the string is complete.</li>
 </ul>
 <p><strong>Common beginner mistakes</strong></p>
 <table>
@@ -9460,7 +9461,7 @@ Are both the same string? True
 </tr>
 </tbody>
 </table>
-<p>The last row deserves a note. A sequence such as <code>"\d"</code> has no meaning in Python. Older versions simply kept both characters. Current versions still keep them, but they also give a <code>SyntaxWarning</code>, because such a sequence is almost always a mistake. The safe answer is to write <code>"\\d"</code> or to use a raw string, which the next question explains.</p>
+<p>The last row deserves a note. A sequence such as <code>"\d"</code> has no meaning in Python. Python keeps both characters. From Python 3.12 it also gives a <code>SyntaxWarning</code> (3.11 gives a <code>DeprecationWarning</code>, which is hidden by default), because such a sequence is almost always a mistake. The safe answer is to write <code>"\\d"</code> or to use a raw string, which the next question explains.</p>
 <p><strong>Follow-up questions</strong></p>
 <p><strong>6.1 How do I print a Windows path such as <code>C:\new\table</code>?</strong></p>
 <p>Every backslash must be doubled, or a raw string must be used.</p>
@@ -9591,7 +9592,7 @@ Stored form: 'a\\tb'
 </ul>
 <p>Regular expressions are the most common use of all. There the backslash has its own meaning, for example <code>\d</code> for "any digit", and that meaning must survive untouched into the pattern. You will meet them in the chapter on regular expressions, and the <a href="https://docs.python.org/3/library/re.html">Python documentation on the <code>re</code> module</a> recommends raw strings for exactly this reason.</p>
 <p><strong>Diagram</strong></p>
-<p><img alt="Question 7. Raw Strings" src="../../resources/LR-ch17-conceptual-qa-fig-05.png" /></p>
+<p><img alt="Question 7. Raw Strings" src="../../resources/S17-LR-ch17-conceptual-qa-fig-05.png" /></p>
 <p><strong>Reading the figure</strong></p>
 <ul>
 <li><strong>Step 1:</strong> Python meets a backslash inside a string literal.</li>
@@ -9833,21 +9834,19 @@ Number of vowels: 3
 </code></pre></div>
 <p>Both loops give 3. The <code>for</code> loop is shorter, so it is the better choice here.</p>
 <p><strong>Flowchart</strong></p>
-<p><img alt="Question 8. Traversing a String With for and while" src="../../resources/LR-ch17-conceptual-qa-fig-06.png" /></p>
+<p><img alt="Question 8. Traversing a String With for and while" src="../../resources/S17-LR-ch17-conceptual-qa-fig-06.png" /></p>
 <p><strong>Reading the figure</strong></p>
 <ul>
-<li><strong>Step 1:</strong> Start.</li>
-<li><strong>Step 2:</strong> Get the string to traverse.</li>
-<li><strong>Step 3:</strong> Which traversal method is used?</li>
-<li><strong>Step 4:</strong> <code>for</code>: the loop itself hands over the next character. No index is needed.</li>
-<li><strong>Step 5:</strong> Process the character, for example count it.</li>
-<li><strong>Step 6:</strong> If characters are left, go back to Step 4. If not, go to Step 12.</li>
-<li><strong>Step 7:</strong> <code>while</code>: set the index to 0 yourself.</li>
-<li><strong>Step 8:</strong> Read the character at the index, <code>text[i]</code>.</li>
-<li><strong>Step 9:</strong> Process the character.</li>
-<li><strong>Step 10:</strong> Add 1 to the index. Forgetting this line makes the loop run for ever.</li>
-<li><strong>Step 11:</strong> Is the index still less than <code>len(text)</code>? If so, go back to Step 8. If not, go to Step 12.</li>
-<li><strong>Step 12:</strong> End. Both loops give the same result, and the <code>for</code> loop is shorter.</li>
+<li><strong>Step 1:</strong> Get the string to traverse.</li>
+<li><strong>Step 2:</strong> Which traversal method is used?</li>
+<li><strong>Step 3:</strong> <code>for</code>: are there characters left? The loop checks this itself before every round, so an empty string simply runs no rounds.</li>
+<li><strong>Step 4:</strong> Yes: the loop hands over the next character. No index is needed.</li>
+<li><strong>Step 5:</strong> Process the character, for example count it, then go back to Step 3.</li>
+<li><strong>Step 6:</strong> <code>while</code>: set the index to 0 yourself.</li>
+<li><strong>Step 7:</strong> Is the index still in range, <code>i &lt; len(text)</code>? This test comes first, so an empty string is never read.</li>
+<li><strong>Step 8:</strong> Yes: read the character at the index, <code>text[i]</code>, and process it.</li>
+<li><strong>Step 9:</strong> Add 1 to the index, then go back to Step 7. Forgetting this line makes the loop run for ever.</li>
+<li><strong>Step 10:</strong> End. Both loops give the same result, and the <code>for</code> loop is shorter.</li>
 </ul>
 <p><strong>Common beginner mistakes</strong></p>
 <table>
@@ -9916,8 +9915,8 @@ n o h t y P
 </code></pre></div>
 <p>The <code>end=" "</code> argument tells <code>print()</code> to finish with a space instead of a newline, which keeps the letters on one line. The bare <code>print()</code> afterwards moves to the next line.</p>
 <p><strong>8.2 Can I traverse a string without a loop at all?</strong></p>
-<p>Often yes, because a method or a built-in function already does the loop for you. Counting vowels, for example, can be done in one line with a comprehension.</p>
-<div class="highlight"><pre><span></span><code><span class="c1"># Step 1: The comprehension builds a list of 1 for every vowel found</span>
+<p>Often yes, because a method or a built-in function already does the loop for you. Counting vowels, for example, can be done in one line with a generator expression.</p>
+<div class="highlight"><pre><span></span><code><span class="c1"># Step 1: The generator expression produces a 1 for every vowel found</span>
 <span class="n">text</span> <span class="o">=</span> <span class="s2">"Programming"</span>
 <span class="n">count</span> <span class="o">=</span> <span class="nb">sum</span><span class="p">(</span><span class="mi">1</span> <span class="k">for</span> <span class="n">ch</span> <span class="ow">in</span> <span class="n">text</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span> <span class="k">if</span> <span class="n">ch</span> <span class="ow">in</span> <span class="s2">"aeiou"</span><span class="p">)</span>
 <span class="nb">print</span><span class="p">(</span><span class="s2">"Vowels counted in one line:"</span><span class="p">,</span> <span class="n">count</span><span class="p">)</span>
@@ -10309,13 +10308,13 @@ Pormig
 <li>Repeats until the stop index is reached or passed.</li>
 </ol>
 <p><strong>Flowchart</strong></p>
-<p><img alt="Question 10. String Slicing" src="../../resources/LR-ch17-conceptual-qa-fig-08.png" /></p>
+<p><img alt="Question 10. String Slicing" src="../../resources/S17-LR-ch17-conceptual-qa-fig-08.png" /></p>
 <p><strong>Reading the figure</strong></p>
 <ul>
 <li><strong>Step 1:</strong> Go to the start index of the slice.</li>
-<li><strong>Step 2:</strong> Copy the character at that position into the new string.</li>
-<li><strong>Step 3:</strong> Move forward by the step, for example two positions for <code>[::2]</code>.</li>
-<li><strong>Step 4:</strong> Has the stop index been reached or passed? If not, go back to Step 2. The character at the stop index itself is never copied.</li>
+<li><strong>Step 2:</strong> Has the stop index been reached or passed? This test comes first, so a slice such as <code>s[3:3]</code> copies nothing. The character at the stop index itself is never copied.</li>
+<li><strong>Step 3:</strong> No: copy the character at that position into the new string.</li>
+<li><strong>Step 4:</strong> Move forward by the step, for example two positions for <code>[::2]</code>, then go back to Step 2.</li>
 <li><strong>Step 5:</strong> Yes: return the new string. The original string is not changed.</li>
 </ul>
 <p><strong>Examples</strong></p>
@@ -10363,7 +10362,7 @@ FGHI
 <div class="highlight"><pre><span></span><code>.pdf
 </code></pre></div>
 <p>This returns <code>.pdf</code> without requiring loops. A more reliable way for real programs is to search for the last dot, because not every extension has three letters.</p>
-<div class="highlight"><pre><span></span><code><span class="c1"># Step 1: Two file names with extensions of different lengths</span>
+<div class="highlight"><pre><span></span><code><span class="c1"># Step 1: Three file names with extensions of different lengths</span>
 <span class="n">names</span> <span class="o">=</span> <span class="p">[</span><span class="s2">"report.pdf"</span><span class="p">,</span> <span class="s2">"archive.tar.gz"</span><span class="p">,</span> <span class="s2">"notes.markdown"</span><span class="p">]</span>
 
 <span class="c1"># Step 2: For each name, find the last dot and slice from there</span>
@@ -10910,7 +10909,7 @@ False
 <p>Notice that uppercase <code>P</code> and lowercase <code>p</code> have different Unicode values.</p>
 <p><strong>Lexicographical comparison</strong></p>
 <p>The operators <code>&lt;</code>, <code>&gt;</code>, <code>&lt;=</code> and <code>&gt;=</code> perform dictionary-style comparisons. Python compares the strings character by character.</p>
-<p>Suppose we have <code>"Apple"</code> and <code>"Application"</code>. The first four characters match. The comparison continues until a difference is found: at the fifth character, <code>e</code> meets <code>c</code>, and since <code>c</code> comes earlier, <code>"Application"</code> is the smaller string.</p>
+<p>Suppose we have <code>"Apple"</code> and <code>"Application"</code>. The first four characters match. The comparison continues until a difference is found: at the fifth character, <code>e</code> meets <code>i</code>, and since <code>e</code> comes earlier, <code>"Apple"</code> is the smaller string.</p>
 <p>If one string ends first and everything up to that point matches, the shorter string is considered smaller. So <code>"Apple"</code> is less than <code>"Apples"</code>.</p>
 <p><strong>Unicode ordering</strong></p>
 <p>Python actually compares Unicode code points.</p>
@@ -10945,10 +10944,10 @@ cat &gt; Car      : True
 Apple &lt; Apples : True
 ord('c') = 99 and ord('C') = 67
 </code></pre></div>
-<p>The third line surprises most beginners. In a dictionary, "Car" would come before "cat" only because of the letters, and case would be ignored. Python is stricter: it compares the first characters, <code>c</code> and <code>C</code>, finds 99 against 67, and decides at once.</p>
+<p>The third line gives the dictionary's answer, but for a different reason. A dictionary puts "Car" before "cat" because r comes before t, ignoring case. Python is stricter: it compares the first characters, <code>c</code> and <code>C</code>, finds 99 against 67, and decides at once.</p>
 <p><strong>Why is comparison case-sensitive?</strong></p>
 <p>Uppercase and lowercase letters occupy different Unicode positions. Python compares positions, not meanings, so <code>"Python" == "python"</code> returns <code>False</code>.</p>
-<p>This is the right default. A password check must be case-sensitive, and so must a comparison of two file names on most systems. When you do want case to be ignored, you have to say so.</p>
+<p>This is the right default. A password check must be case-sensitive, and so must a comparison of two file names on Linux. When you do want case to be ignored, you have to say so.</p>
 <p><strong>Case-insensitive comparison</strong></p>
 <p>Convert both strings to the same case before comparing.</p>
 <div class="highlight"><pre><span></span><code><span class="c1"># Step 1: Two spellings of the same word</span>
@@ -11019,7 +11018,7 @@ Case-free sort:   ['Apple', 'banana', 'cherry']
 <span class="nb">print</span><span class="p">(</span><span class="s2">"a is b:"</span><span class="p">,</span> <span class="n">a</span> <span class="ow">is</span> <span class="n">b</span><span class="p">)</span>
 
 <span class="c1"># Step 2: The same value, but built while the program runs</span>
-<span class="n">c</span> <span class="o">=</span> <span class="s2">"Py"</span> <span class="o">+</span> <span class="s2">"thon"</span>
+<span class="n">c</span> <span class="o">=</span> <span class="s2">""</span><span class="o">.</span><span class="n">join</span><span class="p">([</span><span class="s2">"Pyt"</span><span class="p">,</span> <span class="s2">"hon"</span><span class="p">])</span>
 <span class="n">d</span> <span class="o">=</span> <span class="s2">""</span><span class="o">.</span><span class="n">join</span><span class="p">([</span><span class="s2">"Py"</span><span class="p">,</span> <span class="s2">"thon"</span><span class="p">])</span>
 <span class="nb">print</span><span class="p">(</span><span class="s2">"c == d:"</span><span class="p">,</span> <span class="n">c</span> <span class="o">==</span> <span class="n">d</span><span class="p">)</span>
 <span class="nb">print</span><span class="p">(</span><span class="s2">"c is d:"</span><span class="p">,</span> <span class="n">c</span> <span class="ow">is</span> <span class="n">d</span><span class="p">)</span>
@@ -11113,7 +11112,7 @@ Class of the object: &lt;class 'str'&gt;
     |-- replace()
     |-- find()
     |-- startswith()
-    |-- ... and about seventy more
+    |-- ... and about forty more
 </code></pre></div>
 <p>You can ask Python itself for the list.</p>
 <div class="highlight"><pre><span></span><code><span class="c1"># Step 1: dir() lists everything a string object can do.</span>
@@ -11773,7 +11772,7 @@ Invalid input. Please type digits only.
 </code></pre></div>
 <p>Validation therefore improves program reliability. Note the order of the steps: test first, convert second. Reversing them defeats the purpose.</p>
 <p><strong>Flowchart</strong></p>
-<p><img alt="Question 15. The is Family of Methods" src="../../resources/LR-ch17-conceptual-qa-fig-13.png" /></p>
+<p><img alt="Question 15. The is Family of Methods" src="../../resources/S17-LR-ch17-conceptual-qa-fig-13.png" /></p>
 <p><strong>Reading the figure</strong></p>
 <ul>
 <li><strong>Step 1:</strong> Read the input as text. <code>input()</code> always returns a string.</li>
@@ -12343,17 +12342,16 @@ Result: Palindrome
 <p>Every comparison checks two characters at once. For a string of length <code>n</code>, only <code>n // 2</code> comparisons are needed. Comparing the whole string would simply repeat every test in the opposite order.</p>
 <p>For a word of 5 letters that means 2 comparisons instead of 5. For a sentence of 1000 characters it means 500 instead of 1000.</p>
 <p><strong>Flowchart</strong></p>
-<p><img alt="Question 17. Palindrome Using Indexing" src="../../resources/LR-ch17-conceptual-qa-fig-15.png" /></p>
+<p><img alt="Question 17. Palindrome Using Indexing" src="../../resources/S17-LR-ch17-conceptual-qa-fig-15.png" /></p>
 <p><strong>Reading the figure</strong></p>
 <ul>
 <li><strong>Step 1:</strong> Start with the string to test.</li>
-<li><strong>Step 2:</strong> Set <code>i</code> to 0 and assume, for now, that the string is a palindrome.</li>
-<li><strong>Step 3:</strong> Compare the character at <code>i</code> with the one at the matching place from the end, <code>text[-(i + 1)]</code>.</li>
-<li><strong>Step 4:</strong> Are they equal?</li>
+<li><strong>Step 2:</strong> Set <code>i</code> to 0.</li>
+<li><strong>Step 3:</strong> Is <code>i</code> still less than half the length, <code>len(text) // 2</code>? The test comes first, so an empty string is never read.</li>
+<li><strong>Step 4:</strong> Yes: compare the character at <code>i</code> with the one at the matching place from the end, <code>text[-(i + 1)]</code>. Are they equal?</li>
 <li><strong>Step 5:</strong> No: one mismatch is enough. It is not a palindrome, so stop.</li>
-<li><strong>Step 6:</strong> Yes: add 1 to <code>i</code>.</li>
-<li><strong>Step 7:</strong> Has <code>i</code> reached half the length, <code>len(text) // 2</code>? If not, go back to Step 3.</li>
-<li><strong>Step 8:</strong> Yes: every pair matched, so it is a palindrome. Only <code>n // 2</code> comparisons were needed.</li>
+<li><strong>Step 6:</strong> Yes: add 1 to <code>i</code> and go back to Step 3.</li>
+<li><strong>Step 7:</strong> No at Step 3: every pair matched, so it is a palindrome. Only <code>n // 2</code> comparisons were needed.</li>
 </ul>
 <p><strong>Advantages</strong></p>
 <ul>
@@ -12483,7 +12481,7 @@ Reversed: ognam
 Are they equal? False
 </code></pre></div>
 <p><strong>Diagram</strong></p>
-<p><img alt="Question 18. Palindrome Using Slicing" src="../../resources/LR-ch17-conceptual-qa-fig-16.png" /></p>
+<p><img alt="Question 18. Palindrome Using Slicing" src="../../resources/S17-LR-ch17-conceptual-qa-fig-16.png" /></p>
 <p><strong>Reading the figure</strong></p>
 <ul>
 <li><strong>Step 1:</strong> Start with the original string.</li>
@@ -12664,7 +12662,7 @@ ab       indexing: False, slicing: False, agree: True
 <p>For educational purposes, beginners should first learn the <strong>indexing approach</strong>, because it develops logical reasoning and reinforces concepts such as indexing, loops and conditional statements. It is also the version you would have to write in a language that has no slicing.</p>
 <p>After mastering the algorithm, they should learn the slicing approach to appreciate Python's expressive features. In real programs, and in examinations that ask only for a correct answer, the slicing version is the one to write.</p>
 <p><strong>Diagram</strong></p>
-<p><img alt="Question 19. Comparing the Two Palindrome Methods" src="../../resources/LR-ch17-conceptual-qa-fig-17.png" /></p>
+<p><img alt="Question 19. Comparing the Two Palindrome Methods" src="../../resources/S17-LR-ch17-conceptual-qa-fig-17.png" /></p>
 <p><strong>Reading the figure</strong></p>
 <ul>
 <li><strong>Step 1:</strong> A palindrome check is needed.</li>
@@ -12746,7 +12744,7 @@ ab       indexing: False, slicing: False, agree: True
     <span class="c1"># Step 6: Use indexing to pick out the first letter</span>
     <span class="n">initial</span> <span class="o">=</span> <span class="n">name</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
 
-    <span class="c1"># Step 7: Use slicing and a method to work out the family name</span>
+    <span class="c1"># Step 7: Use a method and a negative index to work out the family name</span>
     <span class="n">family_name</span> <span class="o">=</span> <span class="n">name</span><span class="o">.</span><span class="n">split</span><span class="p">()[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="k">if</span> <span class="s2">" "</span> <span class="ow">in</span> <span class="n">name</span> <span class="k">else</span> <span class="n">name</span>
 
     <span class="c1"># Step 8: Build the messages with f-strings</span>

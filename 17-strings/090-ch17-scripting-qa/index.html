@@ -8527,7 +8527,7 @@ Number of newline characters: 1
 </ul>
 <p><strong>Follow-up questions</strong></p>
 <p><strong>1.1 Would triple double quotes work just as well here?</strong></p>
-<p>Not for this text. The block already contains double quote marks around the word <code>Python</code>, and a run of three of them would confuse Python. Triple single quotes are the right choice when the text contains double quotes, and triple double quotes when it contains single quotes or an apostrophe.</p>
+<p>Yes, it would. Inside triple double quotes a single double quote is an ordinary character; only a run of three ends the string. Trouble starts only if the text holds three double quotes in a row or ends with one just before the closing quotes. Triple single quotes are the right choice when the text contains double quotes, and triple double quotes when it contains single quotes or an apostrophe.</p>
 <p><strong>1.2 How do I count the words and the lines instead of the characters?</strong></p>
 <p>Use <code>split()</code> for the words and <code>splitlines()</code> for the lines. Both return a list, and <code>len()</code> then counts its items.</p>
 <div class="highlight"><pre><span></span><code><span class="c1"># Step 1: The same block of text</span>
@@ -8592,14 +8592,14 @@ The original is untouched: Data
 </code></pre></div>
 <p><code>repr()</code> is used in step 1 so that the empty string is visible as a pair of quotes. A plain <code>print()</code> would show an empty line and leave you guessing.</p>
 <p><strong>What the <code>+=</code> really does</strong></p>
-<p><img alt="Question 2. An Empty String, Concatenation and the Immutability Rule" src="../../resources/LR-ch17-scripting-qa-fig-02.png" /></p>
+<p><img alt="Question 2. An Empty String, Concatenation and the Immutability Rule" src="../../resources/S17-LR-ch17-scripting-qa-fig-02.png" /></p>
 <p><strong>Reading the figure</strong></p>
 <ul>
 <li><strong>Step 1:</strong> The name <code>base_container</code> points to an empty string, <code>''</code>.</li>
 <li><strong>Step 2:</strong> The line <code>base_container += 'Data'</code> runs.</li>
 <li><strong>Step 3:</strong> Strings are immutable, so Python builds a brand-new string, <code>'Data'</code>.</li>
 <li><strong>Step 4:</strong> The name <code>base_container</code> is pointed at the new string.</li>
-<li><strong>Step 5:</strong> The old empty string is left behind, and Python clears it away when nothing uses it.</li>
+<li><strong>Step 5:</strong> The old empty string is no longer referenced by <code>base_container</code>. (In CPython the empty string is one shared object that is never freed, so it is not cleared away.)</li>
 <li><strong>Step 6:</strong> Nothing was changed inside the old string at any point. <code>+=</code> on a string always makes a new object.</li>
 </ul>
 <p><strong>Design Pattern Explanation</strong></p>
@@ -8789,7 +8789,7 @@ Adding numbers: 50
 <li>Look at each escape sequence on its own, so that its effect is easy to see.</li>
 </ol>
 <p><strong>Script</strong></p>
-<div class="highlight"><pre><span></span><code><span class="c1"># Step 1: Define a normal string containing multiple escape character escape sequences.</span>
+<div class="highlight"><pre><span></span><code><span class="c1"># Step 1: Define a normal string containing several escape sequences.</span>
 <span class="n">escaped_sequence</span> <span class="o">=</span> <span class="s2">"Line1</span><span class="se">\n</span><span class="s2">Tab</span><span class="se">\t</span><span class="s2">Over</span><span class="se">\r</span><span class="s2">Write</span><span class="se">\b</span><span class="s2">Done"</span>
 <span class="nb">print</span><span class="p">(</span><span class="s2">"--- Normal String Output ---"</span><span class="p">)</span>
 <span class="nb">print</span><span class="p">(</span><span class="n">escaped_sequence</span><span class="p">)</span>
@@ -8927,7 +8927,7 @@ Characters in '12345\rAB': 8
 </tbody>
 </table>
 <p><strong>How Python reads a backslash</strong></p>
-<p><img alt="Question 4. Escape Sequences and the Raw String Prefix" src="../../resources/LR-ch17-scripting-qa-fig-03.png" /></p>
+<p><img alt="Question 4. Escape Sequences and the Raw String Prefix" src="../../resources/S17-LR-ch17-scripting-qa-fig-03.png" /></p>
 <p><strong>Reading the figure</strong></p>
 <ul>
 <li><strong>Step 1:</strong> Python reads the characters of the string literal.</li>
@@ -9804,7 +9804,7 @@ a == c: True and a is c: False
 <li>Print the original and the four results, one under the other, so that the differences stand out.</li>
 </ol>
 <p><strong>Script</strong></p>
-<div class="highlight"><pre><span></span><code><span class="c1"># Step 1: Define a raw string sentence with inconsistent casing.</span>
+<div class="highlight"><pre><span></span><code><span class="c1"># Step 1: Define an untidy sentence with inconsistent casing.</span>
 <span class="n">raw_sentence</span> <span class="o">=</span> <span class="s2">"thE qUicK bRoWn fOx"</span>
 
 <span class="c1"># Step 2: Apply the built-in string case methods.</span>
@@ -9876,9 +9876,9 @@ capitalize(): The quick brown fox
 </ul>
 <p><strong>Follow-up questions</strong></p>
 <p><strong>11.1 Where does <code>title()</code> get it wrong?</strong></p>
-<p>At an apostrophe or a hyphen. It treats them as the end of a word and capitalises the letter that follows.</p>
-<div class="highlight"><pre><span></span><code><span class="c1"># Step 1: Names that title() does not handle as a reader would</span>
-<span class="k">for</span> <span class="n">name</span> <span class="ow">in</span> <span class="p">[</span><span class="s2">"o'brien"</span><span class="p">,</span> <span class="s2">"smith-jones"</span><span class="p">,</span> <span class="s2">"MRS D'SOUZA"</span><span class="p">]:</span>
+<p>At an apostrophe. It treats it as the end of a word and capitalises the letter that follows, which suits O'Brien but not they're.</p>
+<div class="highlight"><pre><span></span><code><span class="c1"># Step 1: Text with apostrophes, where title() is sometimes right and sometimes wrong</span>
+<span class="k">for</span> <span class="n">name</span> <span class="ow">in</span> <span class="p">[</span><span class="s2">"they're here"</span><span class="p">,</span> <span class="s2">"o'brien"</span><span class="p">,</span> <span class="s2">"MRS D'SOUZA"</span><span class="p">]:</span>
     <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"</span><span class="si">{</span><span class="n">name</span><span class="si">!r:</span><span class="s2">&gt;16</span><span class="si">}</span><span class="s2"> -&gt; </span><span class="si">{</span><span class="n">name</span><span class="o">.</span><span class="n">title</span><span class="p">()</span><span class="si">!r}</span><span class="s2">"</span><span class="p">)</span>
 
 <span class="c1"># Step 2: The usual fix for a whole name typed in capitals</span>
@@ -9886,8 +9886,8 @@ capitalize(): The quick brown fox
 <span class="nb">print</span><span class="p">(</span><span class="s2">"Fixed by hand:"</span><span class="p">,</span> <span class="s2">" "</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">word</span><span class="o">.</span><span class="n">capitalize</span><span class="p">()</span> <span class="k">for</span> <span class="n">word</span> <span class="ow">in</span> <span class="n">name</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span><span class="o">.</span><span class="n">split</span><span class="p">()))</span>
 </code></pre></div>
 <p><strong>Output</strong></p>
-<div class="highlight"><pre><span></span><code>       "o'brien" -&gt; "O'Brien"
-   'smith-jones' -&gt; 'Smith-Jones'
+<div class="highlight"><pre><span></span><code>  "they're here" -&gt; "They'Re Here"
+       "o'brien" -&gt; "O'Brien"
    "MRS D'SOUZA" -&gt; "Mrs D'Souza"
 Fixed by hand: Mrs D'souza
 </code></pre></div>
@@ -9978,7 +9978,7 @@ Slicing from the untested result: '.'
 </code></pre></div>
 <p>The last line shows the danger. The slice quietly returned the full stop at the end of the sentence, because <code>-1</code> means the last character. Nothing went wrong on the screen, and the program carried on with the wrong value.</p>
 <p><strong>Choosing between the two methods</strong></p>
-<p><img alt="Question 12. find() and index(), and What Each Does on Failure" src="../../resources/LR-ch17-scripting-qa-fig-07.png" /></p>
+<p><img alt="Question 12. find() and index(), and What Each Does on Failure" src="../../resources/S17-LR-ch17-scripting-qa-fig-07.png" /></p>
 <p><strong>Reading the figure</strong></p>
 <ul>
 <li><strong>Step 1:</strong> Your program needs the position of some text inside a string.</li>
@@ -10159,7 +10159,7 @@ count('aa'): 2
 replace(): 'toomanyspaces'
 split and join: 'too many spaces'
 </code></pre></div>
-<p>The fourth line is the one worth remembering. <code>split()</code> with no argument treats any run of spaces as one separator, so joining the pieces back with a single space tidies the whole line.</p>
+<p>The last line is the one worth remembering. <code>split()</code> with no argument treats any run of spaces as one separator, so joining the pieces back with a single space tidies the whole line.</p>
 <p><a href="#table-of-contents">Back to the Table of Contents</a></p>
 <h3 id="question-14-splitting-a-line-and-joining-it-back">Question 14. Splitting a Line and Joining It Back<a class="headerlink" href="#question-14-splitting-a-line-and-joining-it-back" title="Permanent link">&para;</a></h3>
 <p><strong>14. Split a comma-separated string into a clean list of individual elements. Join those elements back together using a hyphen divider.</strong></p>
@@ -10171,7 +10171,7 @@ split and join: 'too many spaces'
 <li>Print the joined string.</li>
 </ol>
 <p><strong>Script</strong></p>
-<div class="highlight"><pre><span></span><code><span class="c1"># Step 1: Define a raw string containing data values separated by commas.</span>
+<div class="highlight"><pre><span></span><code><span class="c1"># Step 1: Define a string containing data values separated by commas.</span>
 <span class="n">raw_csv_data</span> <span class="o">=</span> <span class="s2">"apple,banana,orange,grape"</span>
 
 <span class="c1"># Step 2: Break the string apart into a list using the comma as a delimiter.</span>
@@ -10812,7 +10812,7 @@ Hi           last two characters: 'Hi'
 Programming  last two characters: 'ng'
 a            last two characters: 'a'
 </code></pre></div>
-<p>Note the last two lines. When the word is shorter than the slice asks for, Python gives back what there is instead of raising an error.</p>
+<p>Note the last line. When the word is shorter than the slice asks for, Python gives back what there is instead of raising an error.</p>
 <p><a href="#table-of-contents">Back to the Table of Contents</a></p>
 <h3 id="question-19-a-decision-taken-on-the-first-character">Question 19. A Decision Taken on the First Character<a class="headerlink" href="#question-19-a-decision-taken-on-the-first-character" title="Permanent link">&para;</a></h3>
 <p><strong>19. Check if a string starts with a lowercase letter. If it does, convert the entire string to uppercase. Otherwise, print it as-is.</strong></p>
@@ -10866,7 +10866,7 @@ Final Processed Output: INTERACTIVE SCRIPT EXECUTION
 </code></pre></div>
 <p>The third and fourth lines are worth a thought. A digit is not a small letter, and neither is a space, so <code>islower()</code> says <code>False</code> for both and the text is left alone. That is the behaviour the question asks for, but in a real program a leading space is usually an accident, so the text would be stripped first.</p>
 <p><strong>The decision in a diagram</strong></p>
-<p><img alt="Question 19. A Decision Taken on the First Character" src="../../resources/LR-ch17-scripting-qa-fig-09.png" /></p>
+<p><img alt="Question 19. A Decision Taken on the First Character" src="../../resources/S17-LR-ch17-scripting-qa-fig-09.png" /></p>
 <p><strong>Reading the figure</strong></p>
 <ul>
 <li><strong>Step 1:</strong> Take the string.</li>
@@ -11053,14 +11053,14 @@ In one line:         Year 2026 Is True
 </tr>
 </tbody>
 </table>
-<p><img alt="Question 20. Building One Sentence From a List of Mixed Values" src="../../resources/LR-ch17-scripting-qa-fig-10.png" /></p>
+<p><img alt="Question 20. Building One Sentence From a List of Mixed Values" src="../../resources/S17-LR-ch17-scripting-qa-fig-10.png" /></p>
 <p><strong>Reading the figure</strong></p>
 <ul>
 <li><strong>Step 1:</strong> Start with an empty string.</li>
-<li><strong>Step 2:</strong> Take the next item from the list, which mixes strings, numbers and Booleans.</li>
-<li><strong>Step 3:</strong> Convert it to text with <code>str()</code>, because <code>+</code> cannot join a string to a number.</li>
-<li><strong>Step 4:</strong> Add it, followed by a space, to the collected string.</li>
-<li><strong>Step 5:</strong> If items are left, go back to Step 2.</li>
+<li><strong>Step 2:</strong> Are there items left in the list, which mixes strings, numbers and Booleans?</li>
+<li><strong>Step 3:</strong> Yes: take the next item.</li>
+<li><strong>Step 4:</strong> Convert it to text with <code>str()</code>, because <code>+</code> cannot join a string to a number.</li>
+<li><strong>Step 5:</strong> Add it, followed by a space, to the collected string, then go back to Step 2.</li>
 <li><strong>Step 6:</strong> No: <code>strip()</code> removes the extra space at the end.</li>
 <li><strong>Step 7:</strong> Print the finished sentence: <code>'Year 2026 Is True'</code>.</li>
 </ul>

@@ -9010,7 +9010,7 @@ AttributeError: 'tuple' object has no attribute 'append'
 </ol>
 <p>So the <em>variable</em> <code>t1</code> now refers to something different, but no tuple has been changed.</p>
 <p>You can see this with the built-in function <code>id()</code>. It returns a number that identifies an object while that object exists. If the number changes, you are looking at a different object.</p>
-<p><img alt="Q5. Explain how t1 = t1 + (4, 5) modifies a variable. Trace memory via id()." src="../../resources/LR-ch19-tuples-conceptual-qa-fig-02.png" /></p>
+<p><img alt="Q5. Explain how t1 = t1 + (4, 5) modifies a variable. Trace memory via id()." src="../../resources/S19-LR-ch19-tuples-conceptual-qa-fig-02.png" /></p>
 <p><strong>Reading the figure</strong></p>
 <ul>
 <li><strong>Step 1:</strong> The name <code>t1</code> points to the tuple <code>(1, 2, 3)</code>. <code>id(t1)</code> gives that object's identity.</li>
@@ -9731,7 +9731,7 @@ Sorted by marks: [('Ravi', 82), ('Anil', 82), ('Asha', 91)]
 </tr>
 </tbody>
 </table>
-<p>Watch the last two rows closely. <code>0</code> on its own is false, but <code>(0,)</code> is true. The comma makes all the difference, just as in <a href="#q1">Q1</a>.</p>
+<p>Compare the second row with the last one. <code>0</code> on its own is false, but <code>(0,)</code> is true. The comma makes all the difference, just as in <a href="#q1">Q1</a>.</p>
 <p><strong>Script: truthiness of tuples</strong></p>
 <div class="highlight"><pre><span></span><code><span class="c1"># Step 1 - A group of tuples to test</span>
 <span class="n">test_cases</span> <span class="o">=</span> <span class="p">[(),</span> <span class="p">(</span><span class="mi">0</span><span class="p">,),</span> <span class="p">(</span><span class="kc">None</span><span class="p">,),</span> <span class="p">(</span><span class="kc">False</span><span class="p">,),</span> <span class="p">((),),</span> <span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">)]</span>
@@ -10270,7 +10270,7 @@ Unpacked: a = 1 | b = 2 | c = 3 | d = 4
 <p>This is an internal choice that Python is free to make. It is not a rule of the language. So to see clearly that two equal tuples can still be separate objects, build at least one of them while the program is running, for example with <code>tuple()</code>. Then the result of <code>is</code> is reliably <code>False</code>.</p>
 <p><strong>How each operator decides, step by step</strong></p>
 <ol>
-<li>For <code>t1 == t2</code>, Python first checks that both tuples have the same length.</li>
+<li>For <code>t1 == t2</code>, Python compares the tuples item by item; they are equal only if every pair of items is equal and both tuples have the same length.</li>
 <li>It then compares the items one pair at a time: first with first, second with second, and so on.</li>
 <li>If every pair is equal, the result is <code>True</code>. As soon as one pair differs, the result is <code>False</code>.</li>
 <li>For <code>t1 is t2</code>, Python does not look at the items at all. It only checks whether the two names point to the same object.</li>

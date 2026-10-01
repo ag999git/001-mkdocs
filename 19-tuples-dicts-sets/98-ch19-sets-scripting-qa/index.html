@@ -8443,7 +8443,7 @@
 </ol>
 <p>For the theory behind these scripts, see the companion page <a href="../95-ch19-sets-conceptual-qa/">Sets in Python: Conceptual Questions and Answers</a>.</p>
 <blockquote>
-<p><strong>A note on the outputs on this page:</strong> A set has no fixed order. When a set of <strong>strings</strong> is printed, the order of the items can even change each time you run the program. So that your output matches this page exactly, many scripts print <code>sorted(my_set)</code>, which shows the items as a sorted <strong>list</strong>. The set itself is not changed. Sets of small whole numbers usually print in the same order every time, so those are printed directly.</p>
+<p><strong>A note on the outputs on this page:</strong> A set has no fixed order. When a set of <strong>strings</strong> is printed, the order of the items can even change each time you run the program. So that your output matches this page exactly, many scripts print <code>sorted(my_set)</code>, which shows the items as a sorted <strong>list</strong>. The set itself is not changed. Sets of small whole numbers usually print in the same order every time, so those are printed directly. Error messages are shown as Python 3.10 to 3.13 print them. From Python 3.14, an unhashable set element or dictionary key gives a longer message, such as <code>cannot use 'list' as a set element (unhashable type: 'list')</code>.</p>
 <p><strong>Tip:</strong> Type the scripts in yourself and run them in IDLE, VS Code, Thonny or Google Colab. Then change the data and predict the output before you run the script again.</p>
 </blockquote>
 <h2 id="table-of-contents">Table of Contents<a class="headerlink" href="#table-of-contents" title="Permanent link">&para;</a></h2>
@@ -8595,12 +8595,12 @@ Number of cities: 3
 <li><strong>Step 4</strong> confirms that the type does not change just because elements were added.</li>
 </ul>
 <p>The rule to remember: whenever you need to start with nothing and build up, use the explicit constructor <code>set()</code> rather than the ambiguous literal <code>{}</code>.</p>
-<p><img alt="Q1. Write script: (a) x = {} — print its type. (b) Create empty set correctly. (c) Add &quot;Delhi&quot;, &quot;Mumbai&quot;, &quot;Pune&quot; to it. (d) Print type before and after adding." src="../../resources/LR-ch19-sets-scripting-qa-fig-01.png" /></p>
+<p><img alt="Q1. Write script: (a) x = {} — print its type. (b) Create empty set correctly. (c) Add &quot;Delhi&quot;, &quot;Mumbai&quot;, &quot;Pune&quot; to it. (d) Print type before and after adding." src="../../resources/S19-LR-ch19-sets-scripting-qa-fig-01.png" /></p>
 <p><strong>Reading the figure</strong></p>
 <ul>
 <li><strong>Step 1:</strong> Write <code>x = {}</code>.</li>
 <li><strong>Step 2:</strong> Python makes an empty dictionary, not a set: <code>type(x)</code> prints <code>&lt;class 'dict'&gt;</code>.</li>
-<li><strong>Step 3:</strong> Write <code>cities = set()</code> instead.</li>
+<li><strong>Step 3:</strong> So write <code>cities = set()</code> instead.</li>
 <li><strong>Step 4:</strong> Python makes an empty set: <code>type(cities)</code> prints <code>&lt;class 'set'&gt;</code>.</li>
 <li><strong>Step 5:</strong> Add three cities, one at a time, with <code>cities.add()</code>.</li>
 <li><strong>Step 6:</strong> It is still a set, now with 3 elements. To start empty and build up, always use <code>set()</code>, not <code>{}</code>.</li>
@@ -8862,11 +8862,11 @@ Total scores: 9 | unique scores: 6
 <li>Because <code>85</code>, <code>90</code> and <code>78</code> each appear twice across the three rows, both ways end with the same <strong>6</strong> unique scores out of 9.</li>
 <li><strong>Step 4</strong>'s equality check confirms that the comprehension is not just shorter to type; it behaves exactly the same as the explicit loop.</li>
 </ul>
-<p><img alt="Q4. examscores = [[78,85,90],[85,92,78],[60,90,100]]. Script: (a) nested set comprehension to get unique scores. (b) same result using explicit nested for loop. (c) confirm both are equal." src="../../resources/S19-LR-ch19-sets-scripting-qa-fig-02.png" /></p>
+<p><img alt="Q4. exam_scores = [[78,85,90],[85,92,78],[60,90,100]]. Script: (a) nested set comprehension to get unique scores. (b) same result using explicit nested for loop. (c) confirm both are equal." src="../../resources/S19-LR-ch19-sets-scripting-qa-fig-02.png" /></p>
 <p><strong>Reading the figure</strong></p>
 <ul>
 <li><strong>Step 1:</strong> Start with an empty set.</li>
-<li><strong>Step 2:</strong> Outer loop, <code>for row in examscores</code>: is there another row?</li>
+<li><strong>Step 2:</strong> Outer loop, <code>for row in exam_scores</code>: is there another row?</li>
 <li><strong>Step 3:</strong> Yes: take the next row, for example <code>[78, 85, 90]</code>.</li>
 <li><strong>Step 4:</strong> Inner loop, <code>for score in row</code>: is there another score in this row? If not, go back to Step 2.</li>
 <li><strong>Step 5:</strong> Yes: take the next score.</li>
@@ -9104,7 +9104,7 @@ Set unchanged: {100}
 <li>When <strong>Step 2</strong> tries <code>.add(t)</code>, Python has to work out a hash for the tuple.</li>
 <li>To do that, it must work out a hash for <strong>every element inside</strong> the tuple.</li>
 <li><code>hash(1)</code> and <code>hash(2)</code> work. The moment it reaches the nested list, hashing fails.</li>
-<li>The error message printed in <strong>Step 3</strong> names <code>'list'</code>, not <code>'tuple'</code>. This confirms that the real culprit is the object nested inside, not the tuple itself.</li>
+<li>The error message printed in <strong>Step 3</strong> ends with <code>unhashable type: 'list'</code>, not <code>'tuple'</code>. This confirms that the real culprit is the object nested inside, not the tuple itself.</li>
 </ol>
 <p>The rule to note: a tuple is hashable only if every element it contains, all the way down, is also hashable. An immutable outer container is necessary, but it is not enough.</p>
 <table>
@@ -9255,7 +9255,7 @@ Shared by fs1 and fs2: frozenset({3})
 <div class="highlight"><pre><span></span><code>Set inside a set -&gt; unhashable type: 'set'
 Set as a dict key -&gt; unhashable type: 'set'
 </code></pre></div>
-<p>In Python 3.14 and later, the second message reads <code>cannot use 'set' as a dict key (unhashable type: 'set')</code>.</p>
+<p>In Python 3.14 and later, both messages change: the first reads <code>cannot use 'set' as a set element (unhashable type: 'set')</code> and the second reads <code>cannot use 'set' as a dict key (unhashable type: 'set')</code>.</p>
 <p><a href="#table-of-contents">Back to the Table of Contents</a></p>
 <hr />
 <p><a id="part-3"></a></p>
@@ -9303,7 +9303,7 @@ After update('bc'): ['a', 'b', 'c'] | length: 3
 <li>Use <strong><code>.update()</code></strong> only when you really want to merge in <strong>every</strong> element of another collection. Be especially careful with strings: they can be looped over in a way that surprises many beginners.</li>
 <li>If you want <code>.update()</code> to add a whole word, wrap it in a list: <code>s.update(["bc"])</code>.</li>
 </ul>
-<p><img alt="Q9. Script: (a) s1={&quot;a&quot;}, do s1.add(&quot;bc&quot;); print. (b) s2={&quot;a&quot;}, do s2.update(&quot;bc&quot;); print. Explain difference in a comment." src="../../resources/LR-ch19-sets-scripting-qa-fig-04.png" /></p>
+<p><img alt="Q9. Script: (a) s1={&quot;a&quot;}, do s1.add(&quot;bc&quot;); print. (b) s2={&quot;a&quot;}, do s2.update(&quot;bc&quot;); print. Explain difference in a comment." src="../../resources/S19-LR-ch19-sets-scripting-qa-fig-04.png" /></p>
 <p><strong>Reading the figure</strong></p>
 <ul>
 <li><strong>Step 1:</strong> Start with a set holding one element, <code>{"a"}</code>.</li>
@@ -9642,7 +9642,7 @@ Final set (odd numbers only): {1, 3, 5, 7}
 <li><strong>Step 3</strong> changes just one thing: <code>for n in nums.copy()</code> loops over a brand-new, separate copy of the set. Removing elements from the <strong>original</strong> <code>nums</code> inside the loop no longer disturbs the loop.</li>
 </ol>
 <p>The general pattern, "loop over a copy, change the original", is the standard fix whenever you need to filter or trim a set (or a dictionary) in place while looping over it.</p>
-<p><img alt="Q13. nums = {1,2,3,4,5,6,7,8}. Script: (a) try removing even numbers while looping directly over nums — catch the resulting error. (b) fix using .copy(), print final set." src="../../resources/LR-ch19-sets-scripting-qa-fig-06.png" /></p>
+<p><img alt="Q13. nums = {1,2,3,4,5,6,7,8}. Script: (a) try removing even numbers while looping directly over nums — catch the resulting error. (b) fix using .copy(), print final set." src="../../resources/S19-LR-ch19-sets-scripting-qa-fig-06.png" /></p>
 <p><strong>Reading the figure</strong></p>
 <ul>
 <li><strong>Step 1:</strong> Loop over the numbers and remove the even ones.</li>
@@ -10207,7 +10207,7 @@ Number of subject groups: 2
 <p><strong>How Python works</strong></p>
 <p><strong>Concept applied: the "immutable key mapping" pattern.</strong> This script shows a practical job that only a frozenset, never a plain set, can do.</p>
 <ul>
-<li><strong>Step 2</strong> builds a dictionary whose <strong>keys</strong> are frozensets. This is allowed only because dictionary keys, like set elements, must be hashable. A frozenset qualifies because its contents can never change after it is created, which gives it one fixed, permanent hash value.</li>
+<li><strong>Step 2</strong> builds a dictionary whose <strong>keys</strong> are frozensets. Dictionary keys, like set elements, must be hashable, and a frozenset is. A frozenset qualifies because its contents can never change after it is created, which gives it one fixed, permanent hash value.</li>
 <li>A plain set in the same position would raise <code>TypeError: unhashable type: 'set'</code>, because a mutable object's hash could change without the dictionary knowing.</li>
 <li><strong>Step 3</strong>'s lookup, <code>classrooms[group1]</code>, works like any other dictionary lookup. Python works out the hash of <code>group1</code> and jumps straight to its value, <code>"Room 101"</code>.</li>
 <li>Because a frozenset has no order, <code>frozenset({"Physics", "Math"})</code> is equal to <code>group1</code> and has the same hash. So it finds the same room. This makes frozensets a natural key for "a combination of things" where the order does not matter.</li>

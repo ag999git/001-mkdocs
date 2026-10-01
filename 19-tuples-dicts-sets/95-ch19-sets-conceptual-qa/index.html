@@ -8539,7 +8539,7 @@
 </tbody>
 </table>
 <blockquote>
-<p><strong>A note on the outputs on this page:</strong> A set has no fixed order, so when you print a set, the items may appear in a different order from the one you typed. For sets of <strong>strings</strong>, the order can even change each time you run the program (the reason is explained in <a href="../80-ch19-dictionary-conceptual-qa/#q6">Q6 on the dictionaries page</a>). So that your output matches this page exactly, many scripts print <code>sorted(my_set)</code>, which shows the items as a sorted <strong>list</strong>. The set itself is unchanged.</p>
+<p><strong>A note on the outputs on this page:</strong> A set has no fixed order, so when you print a set, the items may appear in a different order from the one you typed. For sets of <strong>strings</strong>, the order can even change each time you run the program (the reason is explained in <a href="../80-ch19-dictionary-conceptual-qa/#q6">Q6 on the dictionaries page</a>). So that your output matches this page exactly, many scripts print <code>sorted(my_set)</code>, which shows the items as a sorted <strong>list</strong>. The set itself is unchanged. Error messages are shown as Python 3.10 to 3.13 print them. From Python 3.14, an unhashable set element or dictionary key gives a longer message, such as <code>cannot use 'list' as a set element (unhashable type: 'list')</code>.</p>
 </blockquote>
 <p><a href="#table-of-contents">Back to the Table of Contents</a></p>
 <hr />
@@ -9029,7 +9029,7 @@ len of a list: 3 | len of a string: 5
 <li>This is exactly the order in which you would nest the <code>for</code> statements if you wrote them out in full, as shown above.</li>
 </ol>
 <p>This "left to right = outer to inner" rule is the single most useful trick for reading any nested comprehension, list or set, that you will meet later in the book.</p>
-<p><img alt="Q7. Set comprehension — (a) syntax vs list comprehension (b) what &quot;nested set comprehension&quot; means and (c) how do you read the for clauses in one?" src="../../resources/LR-ch19-sets-conceptual-qa-fig-03.png" /></p>
+<p><img alt="Q7. Set comprehension — (a) syntax vs list comprehension (b) what &quot;nested set comprehension&quot; means and (c) how do you read the for clauses in one?" src="../../resources/S19-LR-ch19-sets-conceptual-qa-fig-03.png" /></p>
 <p><strong>Reading the figure</strong></p>
 <ul>
 <li><strong>Step 1:</strong> Start with an empty set.</li>
@@ -9110,7 +9110,7 @@ Same as the loop? True
 <li><code>False</code> is equal to <code>0</code>, so it is skipped. The set keeps <code>0</code>.</li>
 <li><code>"Python"</code> is added.</li>
 </ol>
-<p>So if <code>1</code> came before <code>True</code> in the source, the set stores <code>1</code>, not <code>True</code>. (Either way, it prints and compares the same, because the two are equal.)</p>
+<p>So if <code>1</code> came before <code>True</code> in the source, the set stores <code>1</code>, not <code>True</code>. (Either way, it compares the same, because the two are equal, but it prints differently: <code>{1}</code> versus <code>{True}</code>.)</p>
 <p>This is a subtle but real trap when you remove duplicates from mixed data. For example, a set of "flags" that mixes booleans and <code>0</code>/<code>1</code> whole numbers from different sources will quietly merge them into one.</p>
 <p>If you need to tell <code>True</code> apart from <code>1</code>, or <code>False</code> apart from <code>0</code>, a set is the wrong tool. Use a <code>list</code>, or check explicitly with <code>type(x) is bool</code>.</p>
 <p><strong>Script: which value survives?</strong></p>
@@ -9786,7 +9786,7 @@ After clear(): set() | the other name sees: set()
 <li>A set difference: <code>numbers -= {n for n in numbers if n % 2 == 0}</code>.</li>
 </ul>
 <p>This "loop over a copy, change the original" pattern is not special to sets. The same technique is used with dictionaries (see <a href="../80-ch19-dictionary-conceptual-qa/#q14">Q14 on the dictionaries page</a>) and with lists. Lists are actually more dangerous: they do not raise an error, but quietly <strong>skip</strong> items, as the script below shows. So it is worth learning this as a general Python habit, not as a set-only rule.</p>
-<p><img alt="Q15. Modifying a set while iterating over it — (a) what happens and why (b) the correct fix" src="../../resources/LR-ch19-sets-conceptual-qa-fig-07.png" /></p>
+<p><img alt="Q15. Modifying a set while iterating over it — (a) what happens and why (b) the correct fix" src="../../resources/S19-LR-ch19-sets-conceptual-qa-fig-07.png" /></p>
 <p><strong>Reading the figure</strong></p>
 <ul>
 <li><strong>Step 1:</strong> You want to remove some elements from a set while looping over it.</li>
@@ -10166,7 +10166,7 @@ P - D == D - P: False
 <p>The difference shows up exactly when <strong>the two sets are equal</strong>:</p>
 <ul>
 <li><code>A &lt;= A</code> is always <code>True</code>, because a set is always a subset of itself.</li>
-<li><code>A &lt; A</code> is always <code>False</code>, because a proper subset also needs B to be <strong>strictly larger</strong>, with at least one element that A lacks.</li>
+<li><code>A &lt; A</code> is always <code>False</code>, because a proper subset needs the other set to be <strong>strictly larger</strong>, with at least one element that A lacks.</li>
 </ul>
 <p>So "subset" allows equality and "proper subset" does not. This matches the everyday maths difference between <code>≤</code> (less than or equal to) and <code>&lt;</code> (less than).</p>
 <table>
@@ -10217,7 +10217,7 @@ P - D == D - P: False
 </tr>
 </tbody>
 </table>
-<p><img alt="Q19. Subset, proper subset, superset, and disjoint — (a) define each (b) exact distinction between subset and proper subset?" src="../../resources/LR-ch19-sets-conceptual-qa-fig-08.png" /></p>
+<p><img alt="Q19. Subset, proper subset, superset, and disjoint — (a) define each (b) exact distinction between subset and proper subset?" src="../../resources/S19-LR-ch19-sets-conceptual-qa-fig-08.png" /></p>
 <p><strong>Reading the figure</strong></p>
 <ul>
 <li><strong>Step 1:</strong> Compare set A with set B.</li>
