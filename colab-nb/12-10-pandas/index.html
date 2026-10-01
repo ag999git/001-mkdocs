@@ -11848,18 +11848,56 @@ Day names in capitals: ['SUN' 'SAT' 'THUR' 'FRI']
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
 <h2 id="1210-research-topics-and-projects"><a name="12-10-research-topics-and-projects"></a>12.10 Research topics and projects<a class="anchor-link" href="#1210-research-topics-and-projects">¶</a></h2><p>Pandas is too large for one chapter, so the book breaks the methods into sub-topics, each with a research question or project whose full solution is online:</p>
-<p>| Sub-topic | What it covers |
-|---|---|
-| 12.10.1 Essential data exploration | <code>.head()</code>, <code>.tail()</code>, <code>.sample()</code>, <code>.info()</code>, <code>.describe()</code>, <code>.value_counts()</code>, <code>.nunique()</code> |
-| 12.10.2 Indexing and selection | <code>[]</code> and dot notation, <code>.loc[]</code>, <code>.iloc[]</code>, slicing rows and columns together |
-| 12.10.3 Conditional filtering | Boolean indexing, combining conditions with <code>&amp;</code>, <code>|</code> and <code>~</code>, <code>.isin()</code>, <code>.str.contains()</code> |
-| 12.10.4 Missing values | <code>.isna()</code>, <code>.isnull()</code>, dropping against filling, <code>.dropna()</code>, <code>.fillna()</code> with mean, median or mode |
-| 12.10.5 Structural changes | <code>.rename()</code>, <code>.astype()</code>, <code>.duplicated()</code>, <code>.drop_duplicates()</code>, <code>.set_index()</code>, <code>.reset_index()</code> |
-| 12.10.6 Basic manipulations | Adding calculated columns, deleting columns, <code>inplace=True</code> against reassignment, <code>.sort_values()</code> |
-| 12.10.7 Grouping and aggregation | The split-apply-combine idea, <code>.groupby()</code>, <code>.agg()</code>, filtering groups |
-| 12.10.8 Merging and joining | <code>pd.concat()</code>, <code>pd.merge()</code>, the four join types, joining on an index |
-| 12.10.9 Time series basics | <code>pd.to_datetime()</code>, pulling out year and month, a datetime index, resampling |
-| 12.10.10 Basic visualization | <code>.plot()</code>, line, bar and histogram charts, scatter plots, saving figures |</p>
+<table>
+<thead>
+<tr>
+<th>Sub-topic</th>
+<th>What it covers</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>12.10.1 Essential data exploration</td>
+<td><code>.head()</code>, <code>.tail()</code>, <code>.sample()</code>, <code>.info()</code>, <code>.describe()</code>, <code>.value_counts()</code>, <code>.nunique()</code></td>
+</tr>
+<tr>
+<td>12.10.2 Indexing and selection</td>
+<td><code>[]</code> and dot notation, <code>.loc[]</code>, <code>.iloc[]</code>, slicing rows and columns together</td>
+</tr>
+<tr>
+<td>12.10.3 Conditional filtering</td>
+<td>Boolean indexing, combining conditions with <code>&amp;</code>, <code>|</code> and <code>~</code>, <code>.isin()</code>, <code>.str.contains()</code></td>
+</tr>
+<tr>
+<td>12.10.4 Missing values</td>
+<td><code>.isna()</code>, <code>.isnull()</code>, dropping against filling, <code>.dropna()</code>, <code>.fillna()</code> with mean, median or mode</td>
+</tr>
+<tr>
+<td>12.10.5 Structural changes</td>
+<td><code>.rename()</code>, <code>.astype()</code>, <code>.duplicated()</code>, <code>.drop_duplicates()</code>, <code>.set_index()</code>, <code>.reset_index()</code></td>
+</tr>
+<tr>
+<td>12.10.6 Basic manipulations</td>
+<td>Adding calculated columns, deleting columns, <code>inplace=True</code> against reassignment, <code>.sort_values()</code></td>
+</tr>
+<tr>
+<td>12.10.7 Grouping and aggregation</td>
+<td>The split-apply-combine idea, <code>.groupby()</code>, <code>.agg()</code>, filtering groups</td>
+</tr>
+<tr>
+<td>12.10.8 Merging and joining</td>
+<td><code>pd.concat()</code>, <code>pd.merge()</code>, the four join types, joining on an index</td>
+</tr>
+<tr>
+<td>12.10.9 Time series basics</td>
+<td><code>pd.to_datetime()</code>, pulling out year and month, a datetime index, resampling</td>
+</tr>
+<tr>
+<td>12.10.10 Basic visualization</td>
+<td><code>.plot()</code>, line, bar and histogram charts, scatter plots, saving figures</td>
+</tr>
+</tbody>
+</table>
 <p><a href="#toc">Back to the Table of Contents</a></p>
 <h2 id="1211-pivot-tables"><a name="12-11-pivot-tables"></a>12.11 Pivot tables<a class="anchor-link" href="#1211-pivot-tables">¶</a></h2><p>A <strong>pivot table</strong> summarises the data of another table. It rotates the data, moving values from rows into columns, to create a matrix or report view. It has three parts: (1) the index (the rows), (2) the columns, and (3) the values that fill each cell.</p>
 <p>An example makes this clear. Here is a table of sales of three items in four shops:</p>
@@ -12603,14 +12641,47 @@ Back to a flat table:
 </table>
 <p>If the separator is wrong, everything lands in one column. If <code>header</code> is wrong, your data becomes the column names, or the names become data.</p>
 <p><a href="#toc">Back to the Table of Contents</a></p>
-<h3 id="common-separators"><a name="common-separators"></a>Common separators<a class="anchor-link" href="#common-separators">¶</a></h3><p>| Separator | Code | Where you meet it |
-|---|---|---|
-| Comma | <code>sep=','</code> | Standard .csv files (the default) |
-| Semicolon | <code>sep=';'</code> | European Excel files, where the comma is the decimal point (1,5 instead of 1.5) |
-| Tab | <code>sep='\t'</code> | .tsv files, and data copied from Excel or the web |
-| Space | <code>sep=r'\s+'</code> | Log files and older fixed-width text files |
-| Colon | <code>sep=':'</code> | Unix configuration files, such as /etc/passwd |
-| Pipe | <code>sep='|'</code> | Database exports, because the pipe almost never appears in ordinary text |</p>
+<h3 id="common-separators"><a name="common-separators"></a>Common separators<a class="anchor-link" href="#common-separators">¶</a></h3><table>
+<thead>
+<tr>
+<th>Separator</th>
+<th>Code</th>
+<th>Where you meet it</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Comma</td>
+<td><code>sep=','</code></td>
+<td>Standard .csv files (the default)</td>
+</tr>
+<tr>
+<td>Semicolon</td>
+<td><code>sep=';'</code></td>
+<td>European Excel files, where the comma is the decimal point (1,5 instead of 1.5)</td>
+</tr>
+<tr>
+<td>Tab</td>
+<td><code>sep='\t'</code></td>
+<td>.tsv files, and data copied from Excel or the web</td>
+</tr>
+<tr>
+<td>Space</td>
+<td><code>sep=r'\s+'</code></td>
+<td>Log files and older fixed-width text files</td>
+</tr>
+<tr>
+<td>Colon</td>
+<td><code>sep=':'</code></td>
+<td>Unix configuration files, such as /etc/passwd</td>
+</tr>
+<tr>
+<td>Pipe</td>
+<td><code>sep='|'</code></td>
+<td>Database exports, because the pipe almost never appears in ordinary text</td>
+</tr>
+</tbody>
+</table>
 <p><strong>A tip:</strong> if you do not know the separator, use <code>sep=None, engine='python'</code> and Pandas tries to work it out for you.</p>
 <p>A word on the name CSV. It is used for two different things: one exact format (comma-separated) and a general family of delimited text files. The ".csv" extension mostly tells your computer to open the file in a spreadsheet program. So "CSV" is often read as "character separated values" rather than "comma separated values".</p>
 <p><a href="#toc">Back to the Table of Contents</a></p>
