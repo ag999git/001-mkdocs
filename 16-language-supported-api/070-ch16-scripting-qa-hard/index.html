@@ -9571,7 +9571,7 @@
 <li>Copy the answer script into a <code>.py</code> file and run it. Compare your output with the output shown.</li>
 <li>Read the explanation, then try the follow-up questions.</li>
 </ol>
-<p>All scripts were tested with Python 3.11 and work with Python 3.8 or later. Scripts that <strong>measure time</strong> will show different numbers on your computer, because timing depends on the machine and on what else it is doing. The pattern of the numbers is what matters. Scripts that use random data set a fixed <strong>seed</strong> with <code>random.seed()</code>, so that you get exactly the same "random" numbers as shown here.</p>
+<p>All scripts were tested with Python 3.11 and work with Python 3.8 or later. Scripts that <strong>measure time</strong> will show different numbers on your computer, because timing depends on the machine and on what else it is doing. The pattern of the numbers is what matters. Scripts whose printed output depends on random data set a fixed <strong>seed</strong> with <code>random.seed()</code>, so that you get exactly the same "random" numbers as shown here.</p>
 <hr />
 <h2 id="table-of-contents">Table of Contents<a class="headerlink" href="#table-of-contents" title="Permanent link">&para;</a></h2>
 <ul>
@@ -9674,17 +9674,16 @@
 <li>Work out the speedup: linear time divided by binary time.</li>
 <li>Print one row of the table.</li>
 </ol>
-<p><img alt="Q1. Linear Search vs Binary Search Timing" src="../../resources/LR-ch16-scripting-qa-hard-fig-01.png" /></p>
+<p><img alt="Q1. Linear Search vs Binary Search Timing" src="../../resources/S16-LR-ch16-scripting-qa-hard-fig-01.png" /></p>
 <p><strong>Reading the figure</strong></p>
 <ul>
-<li><strong>Step 1:</strong> Take the next list size <code>n</code>.</li>
-<li><strong>Step 2:</strong> Build a list of <code>n</code> random numbers, and a sorted copy of it for binary search, which only works on sorted data.</li>
+<li><strong>Step 1:</strong> Are any list sizes left?</li>
+<li><strong>Step 2:</strong> Yes: take the next size <code>n</code> and build a list of <code>n</code> random numbers, and a sorted copy of it for binary search, which only works on sorted data.</li>
 <li><strong>Step 3:</strong> Time linear search on the data 5 times and keep the fastest time, the one least disturbed by other activity on the computer.</li>
 <li><strong>Step 4:</strong> Time binary search on the sorted copy in the same way.</li>
 <li><strong>Step 5:</strong> Work out how many times faster binary search is: <code>speedup = linear time / binary time</code>.</li>
-<li><strong>Step 6:</strong> Print one row of the table: <code>n</code>, both times and the speedup.</li>
-<li><strong>Step 7:</strong> If more sizes are left, go back to Step 1.</li>
-<li><strong>Step 8:</strong> No: print the Big-O summary. Linear search grows like O(n), binary search like O(log n), so the speedup grows as <code>n</code> grows.</li>
+<li><strong>Step 6:</strong> Print one row of the table: <code>n</code>, both times and the speedup. Then go back to Step 1.</li>
+<li><strong>Step 7:</strong> No: print the Big-O summary. Linear search grows like O(n), binary search like O(log n), so the speedup grows as <code>n</code> grows.</li>
 </ul>
 <p><a href="#table-of-contents">Back to the Table of Contents</a></p>
 <h3 id="12-answer-script">1.2 Answer Script<a class="headerlink" href="#12-answer-script" title="Permanent link">&para;</a></h3>
@@ -9808,20 +9807,19 @@ Big-O reminder:
 <li>At the end of the pass, if <code>already_sorted</code> is still <code>True</code>, no item was out of order, so stop.</li>
 </ol>
 <p><strong>Counting comparisons.</strong> Without an early exit, the passes make <code>(n - 1) + (n - 2) + ... + 1</code> comparisons, which adds up to <code>n(n - 1)/2</code>. The largest part of this is <code>n²/2</code>, so the count grows like <code>n²</code>. A simple test: when <code>n</code> doubles, the count should become about <strong>four times</strong> larger.</p>
-<p><img alt="Q2. Bubble Sort with Early Exit" src="../../resources/LR-ch16-scripting-qa-hard-fig-02.png" /></p>
+<p><img alt="Q2. Bubble Sort with Early Exit" src="../../resources/S16-LR-ch16-scripting-qa-hard-fig-02.png" /></p>
 <p><strong>Reading the figure</strong></p>
 <ul>
 <li><strong>Step 1:</strong> Start with the first pass, <code>pass_no = 0</code>.</li>
 <li><strong>Step 2:</strong> At the start of each pass, assume the list is sorted: <code>already_sorted = True</code>.</li>
-<li><strong>Step 3:</strong> Compare the next neighbouring pair in the unsorted part, and count one comparison.</li>
-<li><strong>Step 4:</strong> Is the left item bigger than the right item?</li>
-<li><strong>Step 5:</strong> Yes: swap them and set <code>already_sorted = False</code>, because an item was out of order.</li>
-<li><strong>Step 6:</strong> If more pairs are left in this pass, go back to Step 3. (No from Step 4 comes straight here.)</li>
-<li><strong>Step 7:</strong> The pass is over. Is <code>already_sorted</code> still <code>True</code>?</li>
-<li><strong>Step 8:</strong> Yes: no swap happened in the whole pass, so the list is sorted. Stop early.</li>
-<li><strong>Step 9:</strong> No: are there more passes left?</li>
-<li><strong>Step 10:</strong> Yes: <code>pass_no = pass_no + 1</code>, and go back to Step 2.</li>
-<li><strong>Step 11:</strong> No: all passes are done. Without the early exit the count is <code>n(n - 1)/2</code> comparisons, which grows like <code>n²</code>.</li>
+<li><strong>Step 3:</strong> Is there another neighbouring pair to compare in the unsorted part? If so, compare it and count one comparison.</li>
+<li><strong>Step 4:</strong> Is the left item bigger than the right item? No: go back to Step 3.</li>
+<li><strong>Step 5:</strong> Yes: swap them and set <code>already_sorted = False</code>, because an item was out of order. Then go back to Step 3.</li>
+<li><strong>Step 6:</strong> No pairs are left, so the pass is over. Is <code>already_sorted</code> still <code>True</code>?</li>
+<li><strong>Step 7:</strong> Yes: no swap happened in the whole pass, so the list is sorted. Stop early.</li>
+<li><strong>Step 8:</strong> No: are there more passes left?</li>
+<li><strong>Step 9:</strong> Yes: <code>pass_no = pass_no + 1</code>, and go back to Step 2.</li>
+<li><strong>Step 10:</strong> No: all passes are done. Without the early exit the count is <code>n(n - 1)/2</code> comparisons, which grows like <code>n²</code>.</li>
 </ul>
 <p><a href="#table-of-contents">Back to the Table of Contents</a></p>
 <h3 id="22-answer-script">2.2 Answer Script<a class="headerlink" href="#22-answer-script" title="Permanent link">&para;</a></h3>
@@ -9916,11 +9914,11 @@ Best case (already sorted):
 <li><strong>The Growth column is close to 4x</strong> each time <code>n</code> doubles, and it gets closer to 4 as <code>n</code> grows (4.50, 4.22, 4.11, 4.05). This is the sign of <code>O(n²)</code> growth.</li>
 <li><strong>The Sorted column is always <code>n - 1</code>.</strong> With the early-exit flag, the best case grows only in step with <code>n</code>, which is <code>O(n)</code>.</li>
 </ol>
-<p>Why is the growth not exactly 4? Because <code>n(n-1)/2</code> is not exactly <code>n²/2</code>. The <code>-n</code> part matters for small lists but becomes less and less important as <code>n</code> grows. Big-O keeps only the part that dominates for large <code>n</code>.</p>
+<p>Why is the growth not exactly 4? Because <code>n(n-1)/2</code> is not exactly <code>n²/2</code>. The <code>-n/2</code> part matters for small lists but becomes less and less important as <code>n</code> grows. Big-O keeps only the part that dominates for large <code>n</code>.</p>
 <p><a href="#table-of-contents">Back to the Table of Contents</a></p>
 <h3 id="25-follow-up-questions">2.5 Follow-up Questions<a class="headerlink" href="#25-follow-up-questions" title="Permanent link">&para;</a></h3>
-<p><strong>2.5.1 Does the early-exit flag help on a list that is sorted except for the very first item, such as <code>[9, 1, 2, 3, 4, 5]</code>?</strong></p>
-<p>Very little. The 9 moves only one place to the right per pass, so every pass has a swap until the 9 reaches the end. The flag helps most when the list is fully or almost fully sorted with small items near the front out of place.</p>
+<p><strong>2.5.1 Does the early-exit flag help on a list that is sorted except for the very last item, such as <code>[2, 3, 4, 5, 6, 1]</code>?</strong></p>
+<p>Very little. The 1 moves only one place to the left per pass, so every pass has a swap until the 1 reaches the front, and all 5 passes are needed. (A large item at the front is different: in <code>[9, 1, 2, 3, 4, 5]</code> the 9 bubbles all the way to the end in a single pass, so the flag stops the sort after pass 2.) The flag helps most when the list is already sorted or nearly sorted, with no small item far to the right of its correct place.</p>
 <p><strong>2.5.2 Why does <code>bubble_sort_count</code> begin with <code>numbers = numbers[:]</code>?</strong></p>
 <p>To sort a copy. Otherwise the function would change the caller's list, and later tests using the same list would start from sorted data.</p>
 <p><a href="#table-of-contents">Back to the Table of Contents</a></p>
@@ -9970,18 +9968,17 @@ Best case (already sorted):
 </tbody>
 </table>
 <p>(If a swap is done by hand with a temporary variable, it takes 3 assignments, which makes the difference even larger.)</p>
-<p><img alt="Q3. Insertion Sort: Shifts vs Swaps" src="../../resources/LR-ch16-scripting-qa-hard-fig-03.png" /></p>
+<p><img alt="Q3. Insertion Sort: Shifts vs Swaps" src="../../resources/S16-LR-ch16-scripting-qa-hard-fig-03.png" /></p>
 <p><strong>Reading the figure</strong></p>
 <ul>
 <li><strong>Step 1:</strong> Start with the second item, <code>i = 1</code>.</li>
-<li><strong>Step 2:</strong> Pick up the item as <code>key</code>, and start comparing with the item before it: <code>j = i - 1</code>.</li>
-<li><strong>Step 3:</strong> Is <code>j</code> still inside the list (<code>j &gt;= 0</code>), and is the item at <code>j</code> bigger than <code>key</code>?</li>
-<li><strong>Step 4:</strong> Yes: shift that item one place right, <code>numbers[j + 1] = numbers[j]</code>, and count one shift. A shift writes only one position.</li>
-<li><strong>Step 5:</strong> Move one step left, <code>j = j - 1</code>, and go back to Step 3.</li>
+<li><strong>Step 2:</strong> Are there items left to place?</li>
+<li><strong>Step 3:</strong> Yes: pick up the item as <code>key</code>, and start comparing with the item before it: <code>j = i - 1</code>.</li>
+<li><strong>Step 4:</strong> Is <code>j</code> still inside the list (<code>j &gt;= 0</code>), and is the item at <code>j</code> bigger than <code>key</code>?</li>
+<li><strong>Step 5:</strong> Yes: shift that item one place right, <code>numbers[j + 1] = numbers[j]</code>, and count one shift (a shift writes only one position). Move one step left, <code>j = j - 1</code>, and go back to Step 4.</li>
 <li><strong>Step 6:</strong> No: place <code>key</code> into the gap, <code>numbers[j + 1] = key</code>.</li>
-<li><strong>Step 7:</strong> Are there more items to place?</li>
-<li><strong>Step 8:</strong> Yes: <code>i = i + 1</code>, and go back to Step 2.</li>
-<li><strong>Step 9:</strong> No: the list is sorted.</li>
+<li><strong>Step 7:</strong> <code>i = i + 1</code>, and go back to Step 2.</li>
+<li><strong>Step 8:</strong> No items are left to place: the list is sorted.</li>
 </ul>
 <p><a href="#table-of-contents">Back to the Table of Contents</a></p>
 <h3 id="32-answer-script">3.2 Answer Script<a class="headerlink" href="#32-answer-script" title="Permanent link">&para;</a></h3>
@@ -10274,7 +10271,7 @@ Removing 100,000 items from the front:
 <li>The main program waits for both threads to finish with <code>join()</code>.</li>
 </ol>
 <p>Because two threads print at the same time, their lines could get mixed together. The script uses a <strong>lock</strong> so that only one thread prints at a time.</p>
-<p><img alt="Q5. FIFO Queue and Producer-Consumer Threads" src="../../resources/LR-ch16-scripting-qa-hard-fig-04.png" /></p>
+<p><img alt="Q5. FIFO Queue and Producer-Consumer Threads" src="../../resources/S16-LR-ch16-scripting-qa-hard-fig-04.png" /></p>
 <p><strong>Reading the figure</strong></p>
 <ul>
 <li><strong>Step 1:</strong> The main program starts two threads, the producer and the consumer. They run at the same time.</li>
@@ -10662,7 +10659,7 @@ user_prefs unchanged:   {'theme': 'dark', 'font': 'Consolas'}
 </tbody>
 </table>
 <p>After <code>heapify</code>, the marks list <code>[41, 55, 60, 92, 88, 73]</code> forms this tree:</p>
-<p><img alt="Q7. heapq: Min-Heap, Max-Heap and Priority Queue" src="../../resources/LR-ch16-scripting-qa-hard-fig-05.png" /></p>
+<p><img alt="Q7. heapq: Min-Heap, Max-Heap and Priority Queue" src="../../resources/S16-LR-ch16-scripting-qa-hard-fig-05.png" /></p>
 <p><strong>Reading the figure</strong></p>
 <ul>
 <li>Index 0 holds 41, the root and the smallest mark. It is always at <code>heap[0]</code>.</li>
@@ -10856,14 +10853,14 @@ Processing tasks by priority:
 </tbody>
 </table>
 <p>There must always be one more grade than there are breakpoints.</p>
-<p><img alt="Q8. bisect: Duplicates, Leaderboard and Grade Lookup" src="../../resources/LR-ch16-scripting-qa-hard-fig-06.png" /></p>
+<p><img alt="Q8. bisect: Duplicates, Leaderboard and Grade Lookup" src="../../resources/S16-LR-ch16-scripting-qa-hard-fig-06.png" /></p>
 <p><strong>Reading the figure</strong></p>
 <ul>
-<li><strong>Step 1:</strong> Take the next score.</li>
-<li><strong>Step 2:</strong> <code>bisect(breakpoints, score)</code> counts how many breakpoints are less than or equal to the score. That count is the index.</li>
-<li><strong>Step 3:</strong> Use the index to pick the grade, <code>grade = grades[index]</code>. There is always one more grade than there are breakpoints.</li>
-<li><strong>Step 4:</strong> Print the score with its grade.</li>
-<li><strong>Step 5:</strong> If more scores are left, go back to Step 1.</li>
+<li><strong>Step 1:</strong> Are any scores left?</li>
+<li><strong>Step 2:</strong> Yes: take the next score.</li>
+<li><strong>Step 3:</strong> <code>bisect(breakpoints, score)</code> counts how many breakpoints are less than or equal to the score. That count is the index.</li>
+<li><strong>Step 4:</strong> Use the index to pick the grade, <code>grade = grades[index]</code>. There is always one more grade than there are breakpoints.</li>
+<li><strong>Step 5:</strong> Print the score with its grade, then go back to Step 1.</li>
 <li><strong>Step 6:</strong> No: done.</li>
 </ul>
 <p><a href="#table-of-contents">Back to the Table of Contents</a></p>
@@ -10995,17 +10992,16 @@ Grade lookup using bisect:
 <li>When an item is read or updated, <code>move_to_end(key)</code> marks it as most recently used.</li>
 <li>When the cache is too full, <code>popitem(last=False)</code> removes the item at the front, which is the least recently used.</li>
 </ul>
-<p><img alt="Q9. OrderedDict and an LRU Cache" src="../../resources/LR-ch16-scripting-qa-hard-fig-07.png" /></p>
+<p><img alt="Q9. OrderedDict and an LRU Cache" src="../../resources/S16-LR-ch16-scripting-qa-hard-fig-07.png" /></p>
 <p><strong>Reading the figure</strong></p>
 <ul>
 <li><strong>Step 1:</strong> Call <code>put(key, value)</code> on the LRU cache.</li>
 <li><strong>Step 2:</strong> Is <code>key</code> already in the cache?</li>
 <li><strong>Step 3:</strong> Yes: <code>move_to_end(key)</code> moves it to the end, marking it as the most recently used.</li>
-<li><strong>Step 4:</strong> No: there is nothing to move.</li>
-<li><strong>Step 5:</strong> Store the value at <code>key</code>. A new key is added at the end, as the most recently used.</li>
-<li><strong>Step 6:</strong> Is the cache now holding more items than its capacity?</li>
-<li><strong>Step 7:</strong> Yes: <code>popitem(last=False)</code> removes the item at the front, which is the least recently used.</li>
-<li><strong>Step 8:</strong> Done.</li>
+<li><strong>Step 4:</strong> Store the value at <code>key</code>. A new key is added at the end, as the most recently used. (No from Step 2 comes straight here: there is nothing to move.)</li>
+<li><strong>Step 5:</strong> Is the cache now holding more items than its capacity?</li>
+<li><strong>Step 6:</strong> Yes: <code>popitem(last=False)</code> removes the item at the front, which is the least recently used.</li>
+<li><strong>Step 7:</strong> Done.</li>
 </ul>
 <p><a href="#table-of-contents">Back to the Table of Contents</a></p>
 <h3 id="92-answer-script">9.2 Answer Script<a class="headerlink" href="#92-answer-script" title="Permanent link">&para;</a></h3>
@@ -11666,7 +11662,7 @@ Is 404 NOT_FOUND? True
 </ul>
 <p><strong>The Fibonacci example.</strong> In the <a href="https://en.wikipedia.org/wiki/Fibonacci_sequence">Fibonacci sequence</a> each number is the sum of the two before it: 0, 1, 1, 2, 3, 5, 8, ... The plain recursive <code>fib(n)</code> calls <code>fib(n-1)</code> and <code>fib(n-2)</code>, and each of those calls two more, so the same values are worked out again and again. The number of calls grows exponentially. <code>O(2ⁿ)</code> is the usual simple upper bound; <code>fib(35)</code> actually makes about 30 million calls.</p>
 <p>With the cache, each <code>n</code> from 0 to 35 is worked out only <strong>once</strong>, so the work drops to <code>O(n)</code>.</p>
-<p><img alt="Q13. lrucache and Fibonacci" src="../../resources/LR-ch16-scripting-qa-hard-fig-08.png" /></p>
+<p><img alt="Q13. lru_cache and Fibonacci" src="../../resources/S16-LR-ch16-scripting-qa-hard-fig-08.png" /></p>
 <p><strong>Reading the figure</strong></p>
 <ul>
 <li><strong>Step 1:</strong> <code>fib_cached(n)</code> is called. It is decorated with <code>@lru_cache</code>.</li>
@@ -11849,13 +11845,13 @@ Cache info now: CacheInfo(hits=34, misses=36, maxsize=None, currsize=36)
 </tr>
 </tbody>
 </table>
-<p><img alt="Q14. partial() and reduce()" src="../../resources/LR-ch16-scripting-qa-hard-fig-09.png" /></p>
+<p><img alt="Q14. partial() and reduce()" src="../../resources/S16-LR-ch16-scripting-qa-hard-fig-09.png" /></p>
 <p><strong>Reading the figure</strong></p>
 <ul>
 <li><strong>Step 1:</strong> No starting value is given, so <code>reduce</code> starts with the first item: <code>result = 2</code>.</li>
-<li><strong>Step 2:</strong> Take the next item: 3, then 4, then 5.</li>
-<li><strong>Step 3:</strong> Call the function on the running result and the item, <code>multiply(result, item)</code>, and print the new result: 6, 24, 120.</li>
-<li><strong>Step 4:</strong> If items are left, go back to Step 2.</li>
+<li><strong>Step 2:</strong> Are there items left?</li>
+<li><strong>Step 3:</strong> Yes: take the next item: 3, then 4, then 5.</li>
+<li><strong>Step 4:</strong> Call the function on the running result and the item, <code>multiply(result, item)</code>, and print the new result: 6, 24, 120. Then go back to Step 2.</li>
 <li><strong>Step 5:</strong> No: return the final result, 120.</li>
 </ul>
 <p>GST (Goods and Services Tax) is the tax added to most sales in India. <code>₹</code> is the symbol for the Indian rupee.</p>
@@ -12025,16 +12021,16 @@ math.prod(data) = 120
 </table>
 <p>A <strong>generator</strong> is a function that uses <code>yield</code> instead of <code>return</code>. Each time it is asked for a value, it runs until the next <code>yield</code>, hands that value out, and pauses. A generator with <code>while True:</code> never ends, so it is <strong>infinite</strong>. You can never turn it into a list, but <code>islice()</code> can safely take the first few items. See <a href="https://docs.python.org/3/glossary.html#term-generator">generators</a>.</p>
 <p><strong>Why sort before <code>groupby()</code>?</strong> <code>groupby()</code> starts a new group every time the key changes. If "Engineering" appears, then "HR", then "Engineering" again, you get two separate Engineering groups. Sorting by department first puts all the same departments next to each other.</p>
-<p><img alt="Q15. chain, islice and groupby" src="../../resources/LR-ch16-scripting-qa-hard-fig-10.png" /></p>
+<p><img alt="Q15. chain, islice and groupby" src="../../resources/S16-LR-ch16-scripting-qa-hard-fig-10.png" /></p>
 <p><strong>Reading the figure</strong></p>
 <ul>
 <li><strong>Step 1:</strong> Sort the employees by department first, so that everyone in the same department sits next to each other.</li>
-<li><strong>Step 2:</strong> <code>groupby</code> reads the next employee.</li>
-<li><strong>Step 3:</strong> Is this employee's department the same as the department of the current group?</li>
-<li><strong>Step 4:</strong> Yes: the employee joins the current group.</li>
-<li><strong>Step 5:</strong> No: the key has changed, so <code>groupby</code> starts a new group for this department. Without Step 1, one department could be split into several groups.</li>
-<li><strong>Step 6:</strong> If more employees are left, go back to Step 2.</li>
-<li><strong>Step 7:</strong> No: all the groups have been produced.</li>
+<li><strong>Step 2:</strong> Are any employees left?</li>
+<li><strong>Step 3:</strong> Yes: <code>groupby</code> reads the next employee.</li>
+<li><strong>Step 4:</strong> Is this employee's department the same as the department of the current group?</li>
+<li><strong>Step 5:</strong> Yes: the employee joins the current group. Then go back to Step 2.</li>
+<li><strong>Step 6:</strong> No: the key has changed, so <code>groupby</code> starts a new group for this department, which becomes the current group (then Step 5). Without Step 1, one department could be split into several groups.</li>
+<li><strong>Step 7:</strong> No employees are left: all the groups have been produced.</li>
 </ul>
 <p><a href="#table-of-contents">Back to the Table of Contents</a></p>
 <h3 id="152-answer-script">15.2 Answer Script<a class="headerlink" href="#152-answer-script" title="Permanent link">&para;</a></h3>
@@ -12133,7 +12129,7 @@ Employees by department (sorted first):
 <p><strong>chain()</strong></p>
 <ul>
 <li>Printing the chain object shows only <code>&lt;itertools.chain object at ...&gt;</code>, not the items. Nothing has been produced yet. (The address after "at" will be different on your computer.)</li>
-<li><code>list()</code> then pulled all the items through, in order: two lists, a tuple, another list and a range, all as one sequence.</li>
+<li><code>list()</code> then pulled all the items through, in order: a list, a tuple, another list and a range, all as one sequence.</li>
 <li><code>chain.from_iterable()</code> flattened a list of lists into one list.</li>
 </ul>
 <p><strong>islice()</strong></p>
@@ -12346,22 +12342,17 @@ Totals:
 </tbody>
 </table>
 <p>Selection sort is therefore a good choice when writing data is expensive, for example on flash memory, which wears out a little with every write.</p>
-<p><img alt="Q17. Selection Sort with Trace" src="../../resources/LR-ch16-scripting-qa-hard-fig-11.png" /></p>
+<p><img alt="Q17. Selection Sort with Trace" src="../../resources/S16-LR-ch16-scripting-qa-hard-fig-11.png" /></p>
 <p><strong>Reading the figure</strong></p>
 <ul>
 <li><strong>Step 1:</strong> Start with the first position, <code>i = 0</code>.</li>
-<li><strong>Step 2:</strong> Assume the smallest item in the unsorted part is at <code>i</code>: <code>min_idx = i</code>.</li>
-<li><strong>Step 3:</strong> Take the next index <code>j</code>, from <code>i + 1</code> to the end of the list.</li>
-<li><strong>Step 4:</strong> Is <code>data[j]</code> smaller than the smallest found so far, <code>data[min_idx]</code>?</li>
-<li><strong>Step 5:</strong> Yes: remember it, <code>min_idx = j</code>.</li>
-<li><strong>Step 6:</strong> If more <code>j</code> values are left, go back to Step 3.</li>
-<li><strong>Step 7:</strong> The scan is over. Is <code>min_idx</code> different from <code>i</code>?</li>
-<li><strong>Step 8:</strong> Yes: swap <code>data[i]</code> with <code>data[min_idx]</code> and count one swap.</li>
-<li><strong>Step 9:</strong> No: the smallest item is already in place, so no swap is needed.</li>
-<li><strong>Step 10:</strong> Print the trace for this pass, showing the list and the swap count.</li>
-<li><strong>Step 11:</strong> Is <code>i &lt; n - 2</code>? That is, is there more than one item left in the unsorted part after this pass?</li>
-<li><strong>Step 12:</strong> Yes: <code>i = i + 1</code>, and go back to Step 2.</li>
-<li><strong>Step 13:</strong> No: the list is sorted. Selection sort makes at most <code>n - 1</code> swaps, which is O(n).</li>
+<li><strong>Step 2:</strong> Assume the smallest item in the unsorted part is at <code>i</code> (<code>min_idx = i</code>), then check each index <code>j</code> from <code>i + 1</code> to the end; whenever <code>data[j]</code> is smaller than <code>data[min_idx]</code>, remember it with <code>min_idx = j</code>.</li>
+<li><strong>Step 3:</strong> The scan is over. Is the smallest item already at <code>i</code>, that is, <code>min_idx == i</code>?</li>
+<li><strong>Step 4:</strong> No: swap <code>data[i]</code> with <code>data[min_idx]</code> and count one swap.</li>
+<li><strong>Step 5:</strong> Print the trace for this pass, showing the list and the swap count. (Yes from Step 3 comes straight here, with no swap.)</li>
+<li><strong>Step 6:</strong> Is <code>i &lt; n - 2</code>? That is, is there more than one item left in the unsorted part after this pass?</li>
+<li><strong>Step 7:</strong> Yes: <code>i = i + 1</code>, and go back to Step 2.</li>
+<li><strong>Step 8:</strong> No: the list is sorted. Selection sort makes at most <code>n - 1</code> swaps, which is O(n).</li>
 </ul>
 <p><a href="#table-of-contents">Back to the Table of Contents</a></p>
 <h3 id="172-answer-script">17.2 Answer Script<a class="headerlink" href="#172-answer-script" title="Permanent link">&para;</a></h3>
@@ -12501,7 +12492,7 @@ Reversed list of 20 elements:
 <tr>
 <td>Types supported</td>
 <td>Almost all Python types, including <code>datetime</code>, sets and your own classes</td>
-<td>Only <code>str</code>, <code>int</code>, <code>float</code>, <code>bool</code>, <code>None</code>, <code>list</code> and <code>dict</code></td>
+<td>Only <code>str</code>, <code>int</code>, <code>float</code>, <code>bool</code>, <code>None</code>, <code>list</code> and <code>dict</code> (a <code>tuple</code> is saved as a list)</td>
 </tr>
 <tr>
 <td>Safe to load from an unknown source?</td>
@@ -12907,22 +12898,17 @@ Same final order? True
 <li>Runs that whole measurement 5 times and keeps the fastest, which is the one least disturbed by background activity.</li>
 </ol>
 <p><strong>Measurement methodology</strong></p>
-<p><img alt="Q20. Big-O Timing Comparison" src="../../resources/LR-ch16-scripting-qa-hard-fig-12.png" /></p>
+<p><img alt="Q20. Big-O Timing Comparison" src="../../resources/S16-LR-ch16-scripting-qa-hard-fig-12.png" /></p>
 <p><strong>Reading the figure</strong></p>
 <ul>
 <li><strong>Step 1:</strong> Choose the list sizes to test.</li>
-<li><strong>Step 2:</strong> Take the next size <code>n</code>.</li>
-<li><strong>Step 3:</strong> Build a list of <code>n</code> random numbers, and a sorted copy for binary search.</li>
-<li><strong>Step 4:</strong> Choose a target that is not in the data, so every search does the most work it can: the worst case.</li>
-<li><strong>Step 5:</strong> Read <code>time.perf_counter()</code> as the start time.</li>
-<li><strong>Step 6:</strong> Run the search many times in a row, because one search is too fast to time accurately.</li>
-<li><strong>Step 7:</strong> Read <code>time.perf_counter()</code> as the end time.</li>
-<li><strong>Step 8:</strong> Work out the time for one run: <code>(end - start) / repeats</code>.</li>
-<li><strong>Step 9:</strong> Have 5 rounds been done? If not, go back to Step 5.</li>
-<li><strong>Step 10:</strong> Yes: keep the fastest of the 5 rounds, the one least disturbed by background activity.</li>
-<li><strong>Step 11:</strong> If more sizes are left, go back to Step 2.</li>
-<li><strong>Step 12:</strong> No: print the table of times and how much each time grew from one size to the next.</li>
-<li><strong>Step 13:</strong> Draw the graph of time against <code>n</code> and save it.</li>
+<li><strong>Step 2:</strong> Are any sizes left?</li>
+<li><strong>Step 3:</strong> Yes: take the next size <code>n</code>, build a list of <code>n</code> random numbers and a sorted copy for binary search, and choose a target that is not in the data, so every search does the most work it can: the worst case.</li>
+<li><strong>Step 4:</strong> Read <code>time.perf_counter()</code> as the start time, run the search many times in a row (one search is too fast to time accurately), read <code>time.perf_counter()</code> again, and work out the time for one run: <code>(end - start) / repeats</code>.</li>
+<li><strong>Step 5:</strong> Have 5 rounds been done? If not, go back to Step 4.</li>
+<li><strong>Step 6:</strong> Yes: keep the fastest of the 5 rounds, the one least disturbed by background activity. Then go back to Step 2.</li>
+<li><strong>Step 7:</strong> No sizes are left: print the table of times and how much each time grew from one size to the next.</li>
+<li><strong>Step 8:</strong> Draw the graph of time against <code>n</code> and save it.</li>
 </ul>
 <p><a href="#table-of-contents">Back to the Table of Contents</a></p>
 <h3 id="202-answer-script">20.2 Answer Script<a class="headerlink" href="#202-answer-script" title="Permanent link">&para;</a></h3>

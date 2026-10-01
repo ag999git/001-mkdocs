@@ -9683,20 +9683,18 @@
 <li>Compare the times to see how they grow with <code>n</code>.</li>
 </ol>
 <p>We use <a href="https://docs.python.org/3/library/time.html#time.perf_counter">time.perf_counter()</a> because it is a precise clock made for measuring short periods. <a href="https://docs.python.org/3/library/random.html#random.randint">random.randint(a, b)</a> gives a random whole number between <code>a</code> and <code>b</code>, including both.</p>
-<p><img alt="Linear Search Timing" src="../../resources/LR-ch16-scripting-qa-easy-fig-01.png" /></p>
+<p><img alt="Linear Search Timing" src="../../resources/S16-LR-ch16-scripting-qa-easy-fig-01.png" /></p>
 <p><strong>Reading the figure</strong></p>
 <ul>
-<li><strong>Step 1:</strong> Take the next list size <code>n</code> from <code>sizes = [1000, 10000, 100000, 500000]</code>.</li>
-<li><strong>Step 2:</strong> Build a list of <code>n</code> random numbers with <code>random.randint(1, 100000)</code>.</li>
+<li><strong>Step 1:</strong> Are any list sizes left in <code>sizes = [1000, 10000, 100000, 500000]</code>?</li>
+<li><strong>Step 2:</strong> Yes: take the next size <code>n</code> and build a list of <code>n</code> random numbers with <code>random.randint(1, 100000)</code>.</li>
 <li><strong>Step 3:</strong> Start the timer with <code>time.perf_counter()</code> and call <code>linear_search()</code>.</li>
-<li><strong>Step 4:</strong> Linear search takes the next item from the list.</li>
-<li><strong>Step 5:</strong> Does the item equal the target?</li>
+<li><strong>Step 4:</strong> Linear search: are there items left to check?</li>
+<li><strong>Step 5:</strong> Yes: does the next item equal the target? No: go back to Step 4.</li>
 <li><strong>Step 6:</strong> Yes: return <code>True</code>. (In this script the target is <code>-1</code>, which is never in the list, so this branch is never taken.)</li>
-<li><strong>Step 7:</strong> No: if more items are left, go back to Step 4.</li>
-<li><strong>Step 8:</strong> No items are left: return <code>False</code>. Every item has been checked, which is the worst case.</li>
-<li><strong>Step 9:</strong> Stop the timer and record the time taken for this size.</li>
-<li><strong>Step 10:</strong> If more sizes are left, go back to Step 1.</li>
-<li><strong>Step 11:</strong> Print each size with its time. The time grows roughly in step with <code>n</code>, which is O(n).</li>
+<li><strong>Step 7:</strong> No items are left: return <code>False</code>. Every item has been checked, which is the worst case.</li>
+<li><strong>Step 8:</strong> Stop the timer, record the time taken for this size, and go back to Step 1.</li>
+<li><strong>Step 9:</strong> No sizes are left: print each size with its time. The time grows roughly in step with <code>n</code>, which is O(n).</li>
 </ul>
 <p><a href="#table-of-contents">Back to the Table of Contents</a></p>
 <h3 id="12-answer-script">1.2 Answer Script<a class="headerlink" href="#12-answer-script" title="Permanent link">&para;</a></h3>
@@ -9852,7 +9850,7 @@ Graph saved as 065-ch16-linear-search-timing.png
 <li>Otherwise, search the left half: <code>right = middle - 1</code>.</li>
 <li>If <code>left</code> passes <code>right</code>, the target is not in the list. Return <code>-1</code>.</li>
 </ol>
-<p><img alt="Binary Search" src="../../resources/LR-ch16-scripting-qa-easy-fig-02.png" /></p>
+<p><img alt="Binary Search" src="../../resources/S16-LR-ch16-scripting-qa-easy-fig-02.png" /></p>
 <p><strong>Reading the figure</strong></p>
 <ul>
 <li><strong>Step 1:</strong> Start with the whole list: <code>left = 0</code>, <code>right = len(numbers) - 1</code>, and <code>comparisons = 0</code>.</li>
@@ -9861,9 +9859,7 @@ Graph saved as 065-ch16-linear-search-timing.png
 <li><strong>Step 4:</strong> Yes: find the middle, <code>middle = (left + right) // 2</code>, and count one comparison.</li>
 <li><strong>Step 5:</strong> Is the item at <code>middle</code> equal to the target?</li>
 <li><strong>Step 6:</strong> Yes: return <code>middle</code> and the number of comparisons.</li>
-<li><strong>Step 7:</strong> No: is the target bigger than the middle item?</li>
-<li><strong>Step 8:</strong> Yes: the target can only be in the right half, so <code>left = middle + 1</code>. Go back to Step 2.</li>
-<li><strong>Step 9:</strong> No: the target can only be in the left half, so <code>right = middle - 1</code>. Go back to Step 2.</li>
+<li><strong>Step 7:</strong> No: if the target is bigger than the middle item, it can only be in the right half, so <code>left = middle + 1</code>; otherwise <code>right = middle - 1</code>. Go back to Step 2.</li>
 </ul>
 <p>Here is the search for 70 in <code>[10, 20, 30, 40, 50, 60, 70]</code>:</p>
 <table>
@@ -9989,20 +9985,19 @@ Target 35: index -1, comparisons 3
 <li>Each pass can stop one position earlier than the last, because the end of the list is already sorted.</li>
 <li>Print the list after each pass.</li>
 </ol>
-<p><img alt="Bubble Sort Implementation" src="../../resources/LR-ch16-scripting-qa-easy-fig-03.png" /></p>
+<p><img alt="Bubble Sort Implementation" src="../../resources/S16-LR-ch16-scripting-qa-easy-fig-03.png" /></p>
 <p><strong>Reading the figure</strong></p>
 <ul>
 <li><strong>Step 1:</strong> Start with the first pass, <code>pass_no = 0</code>.</li>
 <li><strong>Step 2:</strong> Start each pass at the first pair, <code>i = 0</code>.</li>
-<li><strong>Step 3:</strong> Is <code>numbers[i]</code> bigger than the item after it, <code>numbers[i + 1]</code>?</li>
-<li><strong>Step 4:</strong> Yes: swap the two items, so the bigger one moves right.</li>
-<li><strong>Step 5:</strong> No: leave the pair as it is.</li>
-<li><strong>Step 6:</strong> Are there more pairs in this pass? Each pass stops one position earlier than the last, because the end of the list is already sorted.</li>
-<li><strong>Step 7:</strong> Yes: move to the next pair, <code>i = i + 1</code>, and go back to Step 3.</li>
-<li><strong>Step 8:</strong> No: the pass is over. Print the list, so you can watch the biggest remaining item settle at the end.</li>
-<li><strong>Step 9:</strong> Are there more passes left?</li>
-<li><strong>Step 10:</strong> Yes: <code>pass_no = pass_no + 1</code>, and go back to Step 2.</li>
-<li><strong>Step 11:</strong> No: the list is sorted.</li>
+<li><strong>Step 3:</strong> Are there more pairs in this pass? Each pass stops one position earlier than the last, because the end of the list is already sorted.</li>
+<li><strong>Step 4:</strong> Yes: is <code>numbers[i]</code> bigger than the item after it, <code>numbers[i + 1]</code>?</li>
+<li><strong>Step 5:</strong> Yes: swap the two items, so the bigger one moves right.</li>
+<li><strong>Step 6:</strong> Move to the next pair, <code>i = i + 1</code>, and go back to Step 3. (No from Step 4 comes straight here.)</li>
+<li><strong>Step 7:</strong> No pairs are left: the pass is over. Print the list, so you can watch the biggest remaining item settle at the end.</li>
+<li><strong>Step 8:</strong> Are there more passes left?</li>
+<li><strong>Step 9:</strong> Yes: <code>pass_no = pass_no + 1</code>, and go back to Step 2.</li>
+<li><strong>Step 10:</strong> No: the list is sorted.</li>
 </ul>
 <p>The line <code>numbers[i], numbers[i+1] = (numbers[i+1], numbers[i])</code> swaps two items in one step. Python first builds the pair on the right, then assigns it to the two positions on the left. This is called <a href="https://docs.python.org/3/tutorial/datastructures.html#tuples-and-sequences">tuple unpacking</a>.</p>
 <p><a href="#table-of-contents">Back to the Table of Contents</a></p>
@@ -10132,18 +10127,17 @@ Sorted: [1, 2, 3, 4, 5, 6]
 <li>Put the key into the gap.</li>
 <li>Repeat until every item has been placed.</li>
 </ol>
-<p><img alt="Insertion Sort" src="../../resources/LR-ch16-scripting-qa-easy-fig-04.png" /></p>
+<p><img alt="Insertion Sort" src="../../resources/S16-LR-ch16-scripting-qa-easy-fig-04.png" /></p>
 <p><strong>Reading the figure</strong></p>
 <ul>
 <li><strong>Step 1:</strong> Start with the second item, <code>key_index = 1</code>. A single item on its own is already sorted.</li>
-<li><strong>Step 2:</strong> Pick up the item as <code>key</code>, and start comparing with the item just before it: <code>position = key_index - 1</code>.</li>
-<li><strong>Step 3:</strong> Is <code>position</code> still inside the list (<code>position &gt;= 0</code>), and is the item there bigger than <code>key</code>? Both must be true.</li>
-<li><strong>Step 4:</strong> Yes: shift that item one place to the right, <code>numbers[position + 1] = numbers[position]</code>.</li>
-<li><strong>Step 5:</strong> Move one step further left, <code>position = position - 1</code>, and go back to Step 3.</li>
+<li><strong>Step 2:</strong> Are there items left to place?</li>
+<li><strong>Step 3:</strong> Yes: pick up the item as <code>key</code>, and start comparing with the item just before it: <code>position = key_index - 1</code>.</li>
+<li><strong>Step 4:</strong> Is <code>position</code> still inside the list (<code>position &gt;= 0</code>), and is the item there bigger than <code>key</code>? Both must be true.</li>
+<li><strong>Step 5:</strong> Yes: shift that item one place to the right, <code>numbers[position + 1] = numbers[position]</code>, then move one step further left, <code>position = position - 1</code>, and go back to Step 4.</li>
 <li><strong>Step 6:</strong> No: the gap is at <code>position + 1</code>, so put <code>key</code> there.</li>
-<li><strong>Step 7:</strong> Are there more items to place?</li>
-<li><strong>Step 8:</strong> Yes: <code>key_index = key_index + 1</code>, and go back to Step 2.</li>
-<li><strong>Step 9:</strong> No: every item has been placed, so the list is sorted.</li>
+<li><strong>Step 7:</strong> <code>key_index = key_index + 1</code>, and go back to Step 2.</li>
+<li><strong>Step 8:</strong> No items are left to place: the list is sorted.</li>
 </ul>
 <p><a href="#table-of-contents">Back to the Table of Contents</a></p>
 <h3 id="42-answer-script">4.2 Answer Script<a class="headerlink" href="#42-answer-script" title="Permanent link">&para;</a></h3>
@@ -10239,21 +10233,16 @@ Sorted: [2, 3, 4, 5]
 <li>If the smallest item is not already at this position, swap them.</li>
 <li>When every position has been filled, the list is sorted.</li>
 </ol>
-<p><img alt="Selection Sort" src="../../resources/LR-ch16-scripting-qa-easy-fig-05.png" /></p>
+<p><img alt="Selection Sort" src="../../resources/S16-LR-ch16-scripting-qa-easy-fig-05.png" /></p>
 <p><strong>Reading the figure</strong></p>
 <ul>
 <li><strong>Step 1:</strong> Start with the first position, <code>position = 0</code>.</li>
-<li><strong>Step 2:</strong> Assume for now that the smallest item is the one at <code>position</code>: <code>min_index = position</code>.</li>
-<li><strong>Step 3:</strong> Take the next item after <code>position</code>.</li>
-<li><strong>Step 4:</strong> Is it smaller than the smallest item found so far, the one at <code>min_index</code>?</li>
-<li><strong>Step 5:</strong> Yes: remember its index, <code>min_index</code> = index of that item.</li>
-<li><strong>Step 6:</strong> If more items are left to scan, go back to Step 3.</li>
-<li><strong>Step 7:</strong> The scan is over. Is <code>min_index</code> different from <code>position</code>?</li>
-<li><strong>Step 8:</strong> Yes: swap the item at <code>position</code> with the smallest item.</li>
-<li><strong>Step 9:</strong> No: the smallest item is already in place, so no swap is needed.</li>
-<li><strong>Step 10:</strong> Are there more positions to fill?</li>
-<li><strong>Step 11:</strong> Yes: <code>position = position + 1</code>, and go back to Step 2.</li>
-<li><strong>Step 12:</strong> No: every position has been filled, so the list is sorted.</li>
+<li><strong>Step 2:</strong> Assume for now that the smallest item is at <code>position</code> (<code>min_index = position</code>), then scan every item after it; whenever one is smaller than the item at <code>min_index</code>, remember its index in <code>min_index</code>.</li>
+<li><strong>Step 3:</strong> The scan is over. Is the smallest item already at <code>position</code>, that is, <code>min_index == position</code>?</li>
+<li><strong>Step 4:</strong> No: swap the item at <code>position</code> with the smallest item.</li>
+<li><strong>Step 5:</strong> Move on: <code>position = position + 1</code>. (Yes from Step 3 comes straight here, with no swap.)</li>
+<li><strong>Step 6:</strong> Are there more positions to fill? Yes: go back to Step 2.</li>
+<li><strong>Step 7:</strong> No: every position has been filled, so the list is sorted.</li>
 </ul>
 <p><a href="#table-of-contents">Back to the Table of Contents</a></p>
 <h3 id="52-answer-script">5.2 Answer Script<a class="headerlink" href="#52-answer-script" title="Permanent link">&para;</a></h3>
@@ -10463,7 +10452,7 @@ IndexError: pop from empty list
 <li>Add tasks at the right end with <code>append()</code>.</li>
 <li>While the deque is not empty, remove the task at the left end with <code>popleft()</code> and process it.</li>
 </ol>
-<p><img alt="Queue using deque" src="../../resources/LR-ch16-scripting-qa-easy-fig-06.png" /></p>
+<p><img alt="Queue using deque" src="../../resources/S16-LR-ch16-scripting-qa-easy-fig-06.png" /></p>
 <p><strong>Reading the figure</strong></p>
 <ul>
 <li><strong>Step 1:</strong> Create an empty <code>deque</code>.</li>
@@ -10632,16 +10621,16 @@ ruby appears 0 times
 <li>The first time a subject is used, an empty list is created for it automatically.</li>
 <li>Print the groups.</li>
 </ol>
-<p><img alt="defaultdict" src="../../resources/LR-ch16-scripting-qa-easy-fig-07.png" /></p>
+<p><img alt="defaultdict" src="../../resources/S16-LR-ch16-scripting-qa-easy-fig-07.png" /></p>
 <p><strong>Reading the figure</strong></p>
 <ul>
 <li><strong>Step 1:</strong> Create <code>students = defaultdict(list)</code>. A missing key will get an empty list.</li>
-<li><strong>Step 2:</strong> Take the next student's name and subject.</li>
-<li><strong>Step 3:</strong> The line <code>students[subject].append(name)</code> first looks up the subject. Does that key exist yet?</li>
-<li><strong>Step 4:</strong> No: <code>defaultdict</code> creates the key with an empty list, <code>[]</code>, instead of raising <code>KeyError</code>.</li>
-<li><strong>Step 5:</strong> The name is appended to the list for that subject. (Yes from Step 3 comes straight here.)</li>
-<li><strong>Step 6:</strong> If more students are left, go back to Step 2.</li>
-<li><strong>Step 7:</strong> No: print the groups, each subject with its list of names.</li>
+<li><strong>Step 2:</strong> Are any students left?</li>
+<li><strong>Step 3:</strong> Yes: take the next student's name and subject.</li>
+<li><strong>Step 4:</strong> The line <code>students[subject].append(name)</code> first looks up the subject. Does that key exist yet?</li>
+<li><strong>Step 5:</strong> No: <code>defaultdict</code> creates the key with an empty list, <code>[]</code>, instead of raising <code>KeyError</code>.</li>
+<li><strong>Step 6:</strong> The name is appended to the list for that subject, then go back to Step 2. (Yes from Step 4 comes straight here.)</li>
+<li><strong>Step 7:</strong> No students are left: print the groups, each subject with its list of names.</li>
 </ul>
 <p><a href="#table-of-contents">Back to the Table of Contents</a></p>
 <h3 id="92-answer-script">9.2 Answer Script<a class="headerlink" href="#92-answer-script" title="Permanent link">&para;</a></h3>
@@ -10817,7 +10806,7 @@ Original: Student(name='Anita', age=20) | Updated copy: Student(name='Anita', ag
 <li>Combine them with <code>ChainMap(user_settings, default_settings)</code>. The order matters: the first dictionary is searched first.</li>
 <li>When you look up a key, ChainMap checks <code>user_settings</code> first. If the key is not there, it checks <code>default_settings</code>.</li>
 </ol>
-<p><img alt="ChainMap: Combine User Settings with Default Settings" src="../../resources/LR-ch16-scripting-qa-easy-fig-08.png" /></p>
+<p><img alt="ChainMap: Combine User Settings with Default Settings" src="../../resources/S16-LR-ch16-scripting-qa-easy-fig-08.png" /></p>
 <p><strong>Reading the figure</strong></p>
 <ul>
 <li><strong>Step 1:</strong> Look up a key in <code>settings = ChainMap(user_settings, default_settings)</code>.</li>
@@ -10933,7 +10922,7 @@ Language after changing the defaults: Hindi
 <li>Tuples are compared by their first item, so the priority number decides the order. A smaller number means more important.</li>
 <li>Remove tasks one by one with <code>heapq.heappop()</code>. It always returns the tuple with the smallest priority number.</li>
 </ol>
-<p><img alt="heapq: Process Tasks According to Priority" src="../../resources/LR-ch16-scripting-qa-easy-fig-09.png" /></p>
+<p><img alt="heapq: Process Tasks According to Priority" src="../../resources/S16-LR-ch16-scripting-qa-easy-fig-09.png" /></p>
 <p><strong>Reading the figure</strong></p>
 <ul>
 <li><strong>Step 1:</strong> Start with an empty list, <code>tasks = []</code>, which <code>heapq</code> will use as a heap.</li>
@@ -11308,7 +11297,7 @@ Undo: Typed Hello
 <li>Write a function that checks which status it has received.</li>
 <li>Call the function with a readable name.</li>
 </ol>
-<p><img alt="Enum: Represent Fixed Choices" src="../../resources/LR-ch16-scripting-qa-easy-fig-10.png" /></p>
+<p><img alt="Enum: Represent Fixed Choices" src="../../resources/S16-LR-ch16-scripting-qa-easy-fig-10.png" /></p>
 <p><strong>Reading the figure</strong></p>
 <ul>
 <li><strong>Step 1:</strong> The function <code>show_status</code> is called with a member of the <code>Status</code> enum.</li>
@@ -11469,7 +11458,7 @@ s1 == s3: True
 <li>Unlike a namedtuple, a dataclass object can be changed, so <code>s2.marks = 45</code> worked.</li>
 <li><code>s1 == s3</code> is <code>True</code> because the generated <code>__eq__()</code> compares the field values. Without <code>@dataclass</code>, two separate objects would not be equal even with the same data.</li>
 </ol>
-<p>Fields with default values must come <strong>after</strong> fields without defaults. Writing <code>passed: bool = True</code> before <code>marks: int</code> would raise a <code>TypeError</code>, just as it would in a normal function definition.</p>
+<p>Fields with default values must come <strong>after</strong> fields without defaults. Writing <code>passed: bool = True</code> before <code>marks: int</code> would raise a <code>TypeError</code>. The same rule applies in a normal function definition, where breaking it is a <code>SyntaxError</code>.</p>
 <p><a href="#table-of-contents">Back to the Table of Contents</a></p>
 <h3 id="185-follow-up-questions">18.5 Follow-up Questions<a class="headerlink" href="#185-follow-up-questions" title="Permanent link">&para;</a></h3>
 <p><strong>18.5.1 How would you work out <code>passed</code> from <code>marks</code> automatically?</strong></p>
@@ -11505,7 +11494,7 @@ Student(name='Bob', marks=35, passed=False)
 <li>The first call with <code>10</code> runs the function body, which is slow, and saves the result.</li>
 <li>The second call with <code>10</code> finds the saved result and returns it immediately.</li>
 </ol>
-<p><img alt="lrucache: Avoid Repeated Calculations" src="../../resources/LR-ch16-scripting-qa-easy-fig-11.png" /></p>
+<p><img alt="lru_cache: Avoid Repeated Calculations" src="../../resources/S16-LR-ch16-scripting-qa-easy-fig-11.png" /></p>
 <p><strong>Reading the figure</strong></p>
 <ul>
 <li><strong>Step 1:</strong> <code>calculate_square(10)</code> is called. The function has <code>@lru_cache(maxsize=None)</code> above it.</li>

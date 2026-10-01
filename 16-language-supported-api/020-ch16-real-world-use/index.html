@@ -8512,7 +8512,7 @@
 </tr>
 </tbody>
 </table>
-<p>All scripts on this page were tested with Python 3.11. They should work the same way in Python 3.8 and later.</p>
+<p>All scripts on this page were tested with Python 3.11 and 3.12. They should work the same way in Python 3.8 and later. Where an error message is worded differently between versions, this is pointed out.</p>
 <hr />
 <h2 id="table-of-contents">Table of Contents<a class="headerlink" href="#table-of-contents" title="Permanent link">&para;</a></h2>
 <ul>
@@ -8727,7 +8727,7 @@
 </tr>
 </tbody>
 </table>
-<p><img alt="Counter: Log File Analysis" src="../../resources/LR-ch16-real-world-use-fig-01.png" /></p>
+<p><img alt="Counter: Log File Analysis" src="../../resources/S16-LR-ch16-real-world-use-fig-01.png" /></p>
 <p><strong>Reading the figure</strong></p>
 <ul>
 <li><strong>Step 1:</strong> Store the whole log as one multi-line string.</li>
@@ -8876,15 +8876,15 @@ Current History: ['pwd', 'mkdir new_folder', 'ls -l']
 <li>Append the student's name to the list for that grade.</li>
 <li>Print the result.</li>
 </ol>
-<p><img alt="defaultdict: Grouping Grades by Letter" src="../../resources/LR-ch16-real-world-use-fig-02.png" /></p>
+<p><img alt="defaultdict: Grouping Grades by Letter" src="../../resources/S16-LR-ch16-real-world-use-fig-02.png" /></p>
 <p><strong>Reading the figure</strong></p>
 <ul>
 <li><strong>Step 1:</strong> Create <code>grade_book = defaultdict(list)</code>. Any missing key will get an empty list as its value.</li>
-<li><strong>Step 2:</strong> Take the next student's name and grade.</li>
-<li><strong>Step 3:</strong> Check whether this grade is already a key in <code>grade_book</code>. You do not write this check yourself: <code>defaultdict</code> does it for you.</li>
-<li><strong>Step 4:</strong> No: <code>defaultdict</code> quietly creates the key with an empty list, <code>[]</code>, so no <code>KeyError</code> is raised.</li>
-<li><strong>Step 5:</strong> Append the student's name to the list for that grade. (Yes from Step 3 comes straight here.)</li>
-<li><strong>Step 6:</strong> If more students are left, go back to Step 2.</li>
+<li><strong>Step 2:</strong> Are any students left?</li>
+<li><strong>Step 3:</strong> Yes: take the next student's name and grade.</li>
+<li><strong>Step 4:</strong> Is this grade already a key in <code>grade_book</code>? You do not write this check yourself: <code>defaultdict</code> does it for you.</li>
+<li><strong>Step 5:</strong> No: <code>defaultdict</code> quietly creates the key with an empty list, <code>[]</code>, so no <code>KeyError</code> is raised.</li>
+<li><strong>Step 6:</strong> Append the student's name to the list for that grade, then go back to Step 2. (Yes from Step 4 comes straight here.)</li>
 <li><strong>Step 7:</strong> No students are left, so print the grade book: each grade with the list of names that earned it.</li>
 </ul>
 <div class="highlight"><pre><span></span><code><span class="c1"># Step 1 - Import defaultdict</span>
@@ -9108,13 +9108,13 @@ Step 6 - 10% bonus: 8500
 <li>Look up "volume". It is not in the user settings, so the default value is used.</li>
 <li>Change a setting through the <code>ChainMap</code> and see where the change is stored.</li>
 </ol>
-<p><img alt="ChainMap: Application Configuration" src="../../resources/LR-ch16-real-world-use-fig-03.png" /></p>
+<p><img alt="ChainMap: Application Configuration" src="../../resources/S16-LR-ch16-real-world-use-fig-03.png" /></p>
 <p><strong>Reading the figure</strong></p>
 <ul>
 <li><strong>Step 1:</strong> Look up a key in the <code>ChainMap</code>, for example <code>config['theme']</code>.</li>
 <li><strong>Step 2:</strong> <code>ChainMap</code> searches the first mapping first: is the key in <code>user_prefs</code>?</li>
 <li><strong>Step 3:</strong> Yes: the user's value is returned, and <code>defaults</code> is never looked at.</li>
-<li><strong>Step 4:</strong> No: <code>ChainMap</code> moves on to the next mapping, <code>defaults</code>.</li>
+<li><strong>Step 4:</strong> No: <code>ChainMap</code> moves on to the next mapping. Is the key in <code>defaults</code>?</li>
 <li><strong>Step 5:</strong> Yes: the default value is returned.</li>
 <li><strong>Step 6:</strong> No: the key is in neither mapping, so <code>KeyError</code> is raised.</li>
 </ul>
@@ -9200,12 +9200,12 @@ Step 7 - defaults  : {'theme': 'light', 'volume': 50, 'difficulty': 'normal'}
 <li>Keep popping the front task until the heap is empty.</li>
 <li>Each pop gives the most urgent task still waiting.</li>
 </ol>
-<p><img alt="Priority Task Manager" src="../../resources/LR-ch16-real-world-use-fig-04.png" /></p>
+<p><img alt="Priority Task Manager" src="../../resources/S16-LR-ch16-real-world-use-fig-04.png" /></p>
 <p><strong>Reading the figure</strong></p>
 <ul>
 <li><strong>Step 1:</strong> Create an empty list, <code>tasks</code>. <code>heapq</code> will use it as a heap.</li>
 <li><strong>Step 2:</strong> <code>heapq.heappush()</code> adds each task as a <code>(priority, description)</code> tuple. After every push, the tuple with the smallest priority number is at the front, <code>tasks[0]</code>.</li>
-<li><strong>Step 3:</strong> Check whether the heap is empty.</li>
+<li><strong>Step 3:</strong> Is the heap empty?</li>
 <li><strong>Step 4:</strong> No: <code>heapq.heappop()</code> removes and returns the task with the smallest priority number, the most urgent one.</li>
 <li><strong>Step 5:</strong> Print its priority and description, then go back to Step 3.</li>
 <li><strong>Step 6:</strong> Yes: every task has been handled, so the program ends.</li>
@@ -9322,7 +9322,7 @@ Priority 3: Organize desk
 </tbody>
 </table>
 <p>Only two comparisons were needed. For a list of one million marks, binary search needs only about 20.</p>
-<p><img alt="Student Marks List" src="../../resources/LR-ch16-real-world-use-fig-05.png" /></p>
+<p><img alt="Student Marks List" src="../../resources/S16-LR-ch16-real-world-use-fig-05.png" /></p>
 <p><strong>Reading the figure</strong></p>
 <ul>
 <li><strong>Step 1:</strong> Start with a list of marks that is already sorted: <code>[40, 55, 70, 80, 95]</code>.</li>
@@ -9610,7 +9610,7 @@ Treating patients:
 <li>Call the function with a readable name such as <code>HttpStatus.NOT_FOUND</code>.</li>
 <li>See how to get the name and the number from an enum member, and how to go from a number back to a member.</li>
 </ol>
-<p><img alt="HTTP Status Codes" src="../../resources/LR-ch16-real-world-use-fig-06.png" /></p>
+<p><img alt="HTTP Status Codes" src="../../resources/S16-LR-ch16-real-world-use-fig-06.png" /></p>
 <p><strong>Reading the figure</strong></p>
 <ul>
 <li><strong>Step 1:</strong> The function <code>send_response</code> is called with an <code>HttpStatus</code> member, for example <code>HttpStatus.NOT_FOUND</code>.</li>
@@ -9691,7 +9691,7 @@ Step 4 - HttpStatus.NOT_FOUND == 404 ? False
 Step 4 - HttpStatus.NOT_FOUND.value == 404 ? True
 Step 5 - AttributeError: type object 'HttpStatus' has no attribute 'NOT_FOUNT'
 </code></pre></div>
-<p><strong>Explanation:</strong> <code>HttpStatus.NOT_FOUND</code> stands for the number <code>404</code>, and you can get that number with <code>HttpStatus.NOT_FOUND.value</code>. Using the name makes the code instantly understandable to another developer. If you type <code>HttpStatus.NOT_FOUNT</code> by mistake, Python immediately raises an <code>AttributeError</code>, so typos are caught at once. A bare number like <code>4040</code> would slip through unnoticed.</p>
+<p><strong>Explanation:</strong> <code>HttpStatus.NOT_FOUND</code> stands for the number <code>404</code>, and you can get that number with <code>HttpStatus.NOT_FOUND.value</code>. Using the name makes the code instantly understandable to another developer. If you type <code>HttpStatus.NOT_FOUNT</code> by mistake, Python immediately raises an <code>AttributeError</code>, so typos are caught at once. (The message shown is from Python 3.12 and later. Python 3.11 and earlier print only the misspelt name: <code>Step 5 - AttributeError: NOT_FOUNT</code>.) A bare number like <code>4040</code> would slip through unnoticed.</p>
 <p>Notice from Step 4 that an <code>Enum</code> member is not equal to its plain number. <code>HttpStatus.NOT_FOUND == 404</code> is <code>False</code>. If you need members that also behave like integers, Python provides <a href="https://docs.python.org/3/library/enum.html#enum.IntEnum">IntEnum</a>. In fact, the standard library already has a ready-made <a href="https://docs.python.org/3/library/http.html#http.HTTPStatus">http.HTTPStatus</a> enum built this way.</p>
 <p><a href="#table-of-contents">Back to the Table of Contents</a></p>
 <hr />
@@ -9830,7 +9830,7 @@ p2 == p3 ? True
 <li>Measure the time for each call to see the difference.</li>
 <li>Ask the cache for its statistics.</li>
 </ol>
-<p><img alt="lrucache: Simulating a Slow Database" src="../../resources/LR-ch16-real-world-use-fig-07.png" /></p>
+<p><img alt="lru_cache: Simulating a Slow Database" src="../../resources/S16-LR-ch16-real-world-use-fig-07.png" /></p>
 <p><strong>Reading the figure</strong></p>
 <ul>
 <li><strong>Step 1:</strong> Call the function decorated with <code>@lru_cache</code>, for example <code>get_user_from_db(42)</code>.</li>
@@ -10036,13 +10036,13 @@ CacheInfo(hits=2, misses=1, maxsize=None, currsize=1)
 </tr>
 </tbody>
 </table>
-<p><img alt="reduce: Calculating Shopping Cart Total" src="../../resources/LR-ch16-real-world-use-fig-08.png" /></p>
+<p><img alt="reduce: Calculating Shopping Cart Total" src="../../resources/S16-LR-ch16-real-world-use-fig-08.png" /></p>
 <p><strong>Reading the figure</strong></p>
 <ul>
 <li><strong>Step 1:</strong> <code>reduce</code> starts the accumulator <code>acc</code> at 0, the initial value given as its third argument.</li>
-<li><strong>Step 2:</strong> Take the next item from the cart.</li>
-<li><strong>Step 3:</strong> The function adds the item's price to the running total: <code>acc = acc + price</code>.</li>
-<li><strong>Step 4:</strong> If there are more items in the cart, go back to Step 2.</li>
+<li><strong>Step 2:</strong> Are there items left in the cart?</li>
+<li><strong>Step 3:</strong> Yes: take the next item from the cart.</li>
+<li><strong>Step 4:</strong> The function adds the item's price to the running total, <code>acc = acc + item["price"]</code>, and goes back to Step 2.</li>
 <li><strong>Step 5:</strong> No items are left, so <code>reduce</code> returns <code>acc</code>, the grand total.</li>
 </ul>
 <div class="highlight"><pre><span></span><code><span class="c1"># Step 1 - Import reduce and create the cart</span>
