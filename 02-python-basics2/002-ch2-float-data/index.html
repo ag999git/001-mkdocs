@@ -9540,7 +9540,17 @@ True
 </tbody>
 </table>
 <p>So 0.1 in binary is <code>0.0001100110011001100...</code>, with <code>0011</code> repeating forever. A float can keep only 53 significant bits, so Python cuts the pattern off and rounds it. The stored value is very slightly more than 0.1.</p>
-<p><img alt="Why 0.1 Cannot Be Stored Exactly" src="../../resources/ch02-float-data-fig-01.png" /></p>
+<p><img alt="Why 0.1 Cannot Be Stored Exactly" src="../../resources/S02-LR-ch02-float-data-fig-01.png" /></p>
+<p><strong>Reading the figure</strong></p>
+<ul>
+<li><strong>Step 1:</strong> You type <code>0.1</code> in your code.</li>
+<li><strong>Step 2:</strong> Python converts it to binary.</li>
+<li><strong>Step 3:</strong> In binary the digits repeat forever: <code>0.0001100110011...</code>.</li>
+<li><strong>Step 4:</strong> A float can keep only 53 significant bits.</li>
+<li><strong>Step 5:</strong> The rest are rounded off.</li>
+<li><strong>Step 6:</strong> The value actually stored is very slightly more than 0.1: <code>0.1000000000000000055511...</code>.</li>
+<li><strong>Step 7:</strong> <code>print(0.1)</code> shows the shortest text that gives back the same float, so it shows <code>0.1</code>.</li>
+</ul>
 <p>Step 7 explains why <code>print(0.1)</code> still shows <code>0.1</code>. Python hides the tiny error when it prints a single number. The error shows up only after arithmetic, as in <code>0.1 + 0.2</code>, which prints <code>0.30000000000000004</code>.</p>
 <p>Learn more: <a href="https://docs.python.org/3/tutorial/floatingpoint.html">Floating-point arithmetic: issues and limitations</a>.</p>
 <p><a href="#table-of-contents">Back to the Table of Contents</a></p>
@@ -9754,7 +9764,20 @@ OverflowError: int too large to convert to float
 </code></pre></div>
 <p>Note that <code>float("3,5")</code> fails. Python always uses a point, never a comma, as the decimal separator.</p>
 <p>The flowchart shows how <code>float()</code> decides what to do.</p>
-<p><img alt="All the Conversions in One Script" src="../../resources/ch02-float-data-fig-02.png" /></p>
+<p><img alt="How float() decides what to do" src="../../resources/S02-LR-ch02-float-data-fig-02.png" /></p>
+<p><strong>Reading the figure</strong></p>
+<ul>
+<li><strong>Step 1:</strong> Call <code>float(x)</code>.</li>
+<li><strong>Step 2:</strong> What type is <code>x</code>?</li>
+<li><strong>Step 3:</strong> An <code>int</code> or <code>bool</code>: is it too large for a float (more than about 309 digits)?</li>
+<li><strong>Step 4:</strong> Yes: <code>OverflowError: int too large to convert to float</code>.</li>
+<li><strong>Step 5:</strong> No: the nearest float to the integer is used.</li>
+<li><strong>Step 6:</strong> A <code>str</code>: is the text a valid number, or <code>"inf"</code> or <code>"nan"</code>?</li>
+<li><strong>Step 7:</strong> Yes: the nearest float is used (or infinity if the number is too large).</li>
+<li><strong>Step 8:</strong> No: <code>ValueError</code>, for example <code>float("3,5")</code>.</li>
+<li><strong>Step 9:</strong> Any other type, such as <code>None</code> or a list: <code>TypeError</code>.</li>
+<li><strong>Step 10:</strong> The successful branches return a new <code>float</code>.</li>
+</ul>
 <p>Branch numbers: the int branch is steps 3 to 5, the string branch is steps 6 to 8 and the other branch is step 9. The two successful branches meet at step 10.</p>
 <p><a href="#table-of-contents">Back to the Table of Contents</a></p>
 <h3 id="8-floats-vs-decimal-vs-fraction-advanced">8. Floats vs Decimal vs Fraction (Advanced)<a class="headerlink" href="#8-floats-vs-decimal-vs-fraction-advanced" title="Permanent link">&para;</a></h3>
@@ -9851,7 +9874,18 @@ OverflowError: int too large to convert to float
 </tr>
 </tbody>
 </table>
-<p><img alt="Comparing the Three Types" src="../../resources/ch02-float-data-fig-03.png" /></p>
+<p><img alt="Choosing between int, Decimal, Fraction and float" src="../../resources/S02-LR-ch02-float-data-fig-03.png" /></p>
+<p><strong>Reading the figure</strong></p>
+<ul>
+<li><strong>Step 1:</strong> Decide what kind of numbers your program needs.</li>
+<li><strong>Step 2:</strong> Only whole numbers?</li>
+<li><strong>Step 3:</strong> Yes: use <code>int</code>, which is exact and has no size limit.</li>
+<li><strong>Step 4:</strong> No: money, or anything that must match exact decimal places?</li>
+<li><strong>Step 5:</strong> Yes: use <code>Decimal</code>.</li>
+<li><strong>Step 6:</strong> No: exact fractions, such as 1/3?</li>
+<li><strong>Step 7:</strong> Yes: use <code>Fraction</code>.</li>
+<li><strong>Step 8:</strong> No: use <code>float</code>, which is fast and fine for science, engineering and measurements.</li>
+</ul>
 <p><a href="#table-of-contents">Back to the Table of Contents</a></p>
 <h3 id="9-common-float-pitfalls">9. Common Float Pitfalls<a class="headerlink" href="#9-common-float-pitfalls" title="Permanent link">&para;</a></h3>
 <p>These are the mistakes that learners most often make with floats. The combined script at the end of this section shows all of them.</p>
@@ -9986,7 +10020,17 @@ True
 1.0
 </code></pre></div>
 <p>Note the last two lines. From Python 3.12, the built-in <code>sum()</code> adds floats more carefully, so it also gives <code>1.0</code> here. In older versions it gives <code>0.9999999999999999</code>. <code>math.fsum()</code> is accurate in every version.</p>
-<p><img alt="Using math.isclose() Correctly" src="../../resources/0000-24-using-isclose.png" /></p>
+<p><img alt="Using math.isclose() Correctly" src="../../resources/S02-LR-0000-24-using-isclose.png" /></p>
+<p><strong>Reading the figure</strong></p>
+<ul>
+<li><strong>Step 1:</strong> You want to compare two floats, <code>a</code> and <code>b</code>, without <code>==</code>.</li>
+<li><strong>Step 2:</strong> Could either value be NaN?</li>
+<li><strong>Step 3:</strong> Yes: check with <code>math.isnan()</code> first, because NaN is never close to anything, not even itself.</li>
+<li><strong>Step 4:</strong> Could one value be zero, or very close to zero?</li>
+<li><strong>Step 5:</strong> No: <code>math.isclose(a, b)</code> is enough; its default relative tolerance is <code>1e-09</code>.</li>
+<li><strong>Step 6:</strong> Yes: add an absolute tolerance, <code>math.isclose(a, b, abs_tol=...)</code>, because a relative tolerance alone never matches zero.</li>
+<li><strong>Step 7:</strong> Use the <code>True</code> or <code>False</code> result in your program.</li>
+</ul>
 <p><a href="#table-of-contents">Back to the Table of Contents</a></p>
 <h3 id="11-summary">11. Summary<a class="headerlink" href="#11-summary" title="Permanent link">&para;</a></h3>
 <ul>
@@ -11169,7 +11213,7 @@ True
 1.0
 1.1102230246251565e-15
 </code></pre></div>
-<p>Steps 1 to 4 show what happens with the original example:</p>
+<p>Steps 1 to 4 show what happens when a tiny number is added to a huge one:</p>
 <ol>
 <li>Expected: <code>1</code>. Actual: <code>0.0</code>.</li>
 <li>At 1e16, neighbouring floats are 2 apart, so the float cannot hold 1e16 + 1. Adding a tiny number to a huge one loses the low-order bits, and the <code>1</code> disappears completely. This effect is often called <strong>absorption</strong>.</li>

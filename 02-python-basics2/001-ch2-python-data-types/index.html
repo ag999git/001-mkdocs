@@ -9362,7 +9362,17 @@ Number of digits: 5001
 </tbody>
 </table>
 <p>The flowchart shows the steps Python follows for <code>a // b</code>.</p>
-<p><img alt="Floor Division with Negative Numbers" src="../../resources/0000-20-floor-division-with-negative-numbers.png" /></p>
+<p><img alt="Floor Division with Negative Numbers" src="../../resources/S02-LR-0000-20-floor-division-with-negative-numbers.png" /></p>
+<p><strong>Reading the figure</strong></p>
+<ul>
+<li><strong>Step 1:</strong> Start with the floor division <code>a // b</code>.</li>
+<li><strong>Step 2:</strong> Work out the exact answer, <code>a / b</code>.</li>
+<li><strong>Step 3:</strong> Is the exact answer already a whole number?</li>
+<li><strong>Step 4:</strong> Yes: keep that whole number.</li>
+<li><strong>Step 5:</strong> No: move down to the next smaller whole number, towards minus infinity, not towards zero.</li>
+<li><strong>Step 6:</strong> For example, <code>-15 / 4</code> is <code>-3.75</code>, so <code>-15 // 4</code> is <code>-4</code> (not <code>-3</code>).</li>
+<li><strong>Step 7:</strong> That whole number is the result of <code>a // b</code>.</li>
+</ul>
 <p><a href="#table-of-contents">Back to the Table of Contents</a></p>
 <h3 id="34-the-remainder-operator-with-negative-numbers">3.4 The Remainder Operator with Negative Numbers<a class="headerlink" href="#34-the-remainder-operator-with-negative-numbers" title="Permanent link">&para;</a></h3>
 <p>The <code>%</code> operator is linked to <code>//</code>. Python makes sure that this rule is always true:</p>
@@ -9595,7 +9605,16 @@ Each step to the left doubles a bit's place value, just as each step to the left
 
 
 
-![Advanced Concept: How the Left Shift Works (Example: 10 Shifted Left by 3)](../resources/ch02-python-data-types-fig-02.png)
+![How the left shift works: 10 shifted left by 3](../resources/S02-LR-ch02-python-data-types-fig-02.png)
+
+**Reading the figure**
+
+- **Step 1:** Start with the number 10.
+- **Step 2:** Write it in binary: `1010` (8 + 2).
+- **Step 3:** `10 << 3` shifts every bit three places to the left, adding three zeros on the right.
+- **Step 4:** The new binary number is `1010000`.
+- **Step 5:** Converting back: 64 + 16 = 80.
+- **Step 6:** Check: shifting left by 3 multiplies by 2³ = 8, and 10 × 8 = 80.
 
 **The same steps in Python**
 
@@ -9781,7 +9800,21 @@ None -&gt; TypeError
 </ul>
 <p><a href="#table-of-contents">Back to the Table of Contents</a></p>
 <h3 id="72-how-int-decides-what-to-do">7.2 How int() Decides What to Do<a class="headerlink" href="#72-how-int-decides-what-to-do" title="Permanent link">&para;</a></h3>
-<p><img alt="How int() Decides What to Do" src="../../resources/ch02-python-data-types-fig-03.png" /></p>
+<p><img alt="How int() Decides What to Do" src="../../resources/S02-LR-ch02-python-data-types-fig-03.png" /></p>
+<p><strong>Reading the figure</strong></p>
+<ul>
+<li><strong>Step 1:</strong> Call <code>int(x)</code>.</li>
+<li><strong>Step 2:</strong> What type is <code>x</code>?</li>
+<li><strong>Step 3:</strong> A <code>bool</code>: <code>True</code> gives 1 and <code>False</code> gives 0.</li>
+<li><strong>Step 4:</strong> A <code>float</code>: is it infinity or NaN (not a number)?</li>
+<li><strong>Step 5:</strong> Yes: infinity raises <code>OverflowError</code> and NaN raises <code>ValueError</code>.</li>
+<li><strong>Step 6:</strong> No: the part after the decimal point is cut off (<code>int(-3.9)</code> is <code>-3</code>).</li>
+<li><strong>Step 7:</strong> A <code>str</code>: is the text a valid whole number in the given base (10 unless you pass another)?</li>
+<li><strong>Step 8:</strong> Yes: the digits are read.</li>
+<li><strong>Step 9:</strong> No: <code>ValueError</code>, for example <code>int("3.5")</code>.</li>
+<li><strong>Step 10:</strong> Any other type, such as a list, a dictionary or <code>None</code>: <code>TypeError</code>.</li>
+<li><strong>Step 11:</strong> The successful branches all return a new <code>int</code>.</li>
+</ul>
 <p>Branch numbers: the bool branch is step 3, the float branch is steps 4 to 6, the string branch is steps 7 to 9 and the other branch is step 10. The three successful branches meet again at step 11.</p>
 <p><a href="#table-of-contents">Back to the Table of Contents</a></p>
 <h3 id="73-int-truncates-it-does-not-round">7.3 int() Truncates, It Does Not Round<a class="headerlink" href="#73-int-truncates-it-does-not-round" title="Permanent link">&para;</a></h3>
@@ -10177,7 +10210,17 @@ True
 <p>Learn more: <a href="https://docs.python.org/3/library/stdtypes.html#numeric-types-int-float-complex">Numeric types</a> and the <a href="https://docs.python.org/3/library/numbers.html">numbers module</a>.</p>
 <p><a href="#table-of-contents">Back to the Table of Contents</a></p>
 <h3 id="102-how-python-picks-the-result-type">10.2 How Python Picks the Result Type<a class="headerlink" href="#102-how-python-picks-the-result-type" title="Permanent link">&para;</a></h3>
-<p><img alt="How Python Picks the Result Type" src="../../resources/0000-21-how-python-picks-result-type.png" /></p>
+<p><img alt="How Python Picks the Result Type" src="../../resources/S02-LR-0000-21-how-python-picks-result-type.png" /></p>
+<p><strong>Reading the figure</strong></p>
+<ul>
+<li><strong>Step 1:</strong> Python sees an arithmetic operation, such as <code>a + b</code>.</li>
+<li><strong>Step 2:</strong> Is either <code>a</code> or <code>b</code> a complex number?</li>
+<li><strong>Step 3:</strong> Yes: both are converted to <code>complex</code>.</li>
+<li><strong>Step 4:</strong> No: is either of them a <code>float</code>?</li>
+<li><strong>Step 5:</strong> Yes: both are converted to <code>float</code>.</li>
+<li><strong>Step 6:</strong> No: both are <code>int</code> (or <code>bool</code>, which counts as an int), so the result stays an <code>int</code>. (True division <code>/</code> always gives a float.)</li>
+<li><strong>Step 7:</strong> Python does the arithmetic and returns a result of that type.</li>
+</ul>
 <table>
 <thead>
 <tr>
@@ -10272,7 +10315,7 @@ True
 <li>Even <code>0</code> and <code>1</code> use one digit, so the smallest integer takes 28 bytes.</li>
 </ul>
 <p>For example, <code>10 ** 100</code> needs 333 bits. That is 12 digits of 30 bits each (12 × 30 = 360 ≥ 333). So its size is 24 + 12 × 4 = 72 bytes.</p>
-<p>Older versions give slightly different numbers. In Python 3.11, for example, <code>sys.getsizeof(0)</code> returns 24. The general idea (a fixed part plus a bit more for each digit) is the same in every version.</p>
+<p>Older versions give slightly different numbers. In Python 3.10, for example, <code>sys.getsizeof(0)</code> returns 24. The general idea (a fixed part plus a bit more for each digit) is the same in every version.</p>
 <p><a href="#table-of-contents">Back to the Table of Contents</a></p>
 <h3 id="112-measuring-integer-size-with-sysgetsizeof">11.2 Measuring Integer Size with sys.getsizeof<a class="headerlink" href="#112-measuring-integer-size-with-sysgetsizeof" title="Permanent link">&para;</a></h3>
 <p>The function <a href="https://docs.python.org/3/library/sys.html#sys.getsizeof"><code>sys.getsizeof()</code></a> returns the size of an object in bytes. The method <code>bit_length()</code> returns how many bits a number needs, without the sign.</p>
@@ -10665,7 +10708,16 @@ Small numbers such as loop counters and list positions are used all the time, so
 
 The flowchart shows what Python does when it needs an integer.
 
-![Advanced Concept: Understanding Performance of Integer Operations in Python](../resources/0000-22-what-python-does-when-it-needs-an-integer.png)
+![What Python does when it needs an integer](../resources/S02-LR-0000-22-what-python-does-when-it-needs-an-integer.png)
+
+**Reading the figure**
+
+- **Step 1:** Python needs an integer object with the value `v`.
+- **Step 2:** Is `v` between -5 and 256?
+- **Step 3:** Yes: Python takes the ready-made object from its small-integer cache; no memory is set aside.
+- **Step 4:** No: Python sets aside memory for a new `int` object.
+- **Step 5:** It stores the value `v` in the new object.
+- **Step 6:** The object is given to your variable.
 
 The script below shows the cache at work. It uses `int("100")` instead of the literal `100` on purpose. When the same literal appears twice in one script, Python may reuse one object for both, even for large numbers, which would hide the effect we want to see.
 
@@ -10734,7 +10786,17 @@ CPython's `int` does **not** use FFT-based methods (such as the Schönhage–Str
 
 
 
-![Advanced Concept: Understanding Performance of Integer Operations in Python](../resources/0000-23.png)
+![How Python chooses a method to multiply two integers](../resources/S02-LR-0000-23.png)
+
+**Reading the figure**
+
+- **Step 1:** Python multiplies two integers, `a * b`.
+- **Step 2:** Are both numbers below 2³⁰, so each fits in one 30-bit piece?
+- **Step 3:** Yes: a single quick machine multiplication is enough.
+- **Step 4:** No: do both numbers have about 70 or more 30-bit pieces (roughly 630 or more decimal digits)?
+- **Step 5:** Yes: CPython uses the Karatsuba method, about O(n^1.585).
+- **Step 6:** No: it uses the schoolbook method, O(n²).
+- **Step 7:** Either way, the result is returned as a new `int` object.
 
 </details>
 
