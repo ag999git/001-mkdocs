@@ -10110,13 +10110,13 @@ mango costs 60
 <p><img alt="Q17. Explain structural pattern matching (match-case) on tuples. Detail the flow." src="../../resources/S19-LR-ch19-tuples-conceptual-qa-fig-07.png" /></p>
 <p><strong>Reading the figure</strong></p>
 <ul>
-<li><strong>Step 1:</strong> Take the next <code>case</code> pattern, working from top to bottom.</li>
-<li><strong>Step 2:</strong> Is the value a sequence of the right length? <code>case (404, msg)</code> needs a sequence of exactly two items.</li>
-<li><strong>Step 3:</strong> Yes: do the fixed values match? In <code>case (404, msg)</code> the first item must be <code>404</code>.</li>
-<li><strong>Step 4:</strong> Yes: store the other items in the capture names. A plain name such as <code>msg</code> matches anything, so <code>msg</code> becomes <code>"Not Found"</code>.</li>
-<li><strong>Step 5:</strong> Run this case's code and leave the <code>match</code> statement. Later cases are not checked.</li>
-<li><strong>Step 6:</strong> A check failed: are there more <code>case</code> patterns? If so, go back to Step 1.</li>
-<li><strong>Step 7:</strong> No case matched, so nothing runs, unless there is a final <code>case _:</code>, which catches everything that is left.</li>
+<li><strong>Step 1:</strong> Python starts the <code>match</code> statement with the value to test, for example a status tuple.</li>
+<li><strong>Step 2:</strong> Are there <code>case</code> patterns left, working from top to bottom?</li>
+<li><strong>Step 3:</strong> Yes: take the next <code>case</code> pattern.</li>
+<li><strong>Step 4:</strong> Is the value a sequence of the right length? <code>case (404, msg)</code> needs a sequence of exactly two items. If not, go back to Step 2.</li>
+<li><strong>Step 5:</strong> Yes: do the fixed values match? In <code>case (404, msg)</code> the first item must be <code>404</code>. If not, go back to Step 2.</li>
+<li><strong>Step 6:</strong> Yes: store the other items in the capture names (a plain name such as <code>msg</code> matches anything, so <code>msg</code> becomes <code>"Not Found"</code>), run this case's code and leave the <code>match</code> statement. Later cases are not checked.</li>
+<li><strong>Step 7:</strong> No case matched, so nothing runs. A final <code>case _:</code> prevents this, because it matches everything that is left.</li>
 </ul>
 <p><strong>Script: matching HTTP status tuples</strong></p>
 <p>An HTTP status code is the number a web server sends back to your browser. For example, <code>200</code> means "OK" and <code>404</code> means "page not found".</p>

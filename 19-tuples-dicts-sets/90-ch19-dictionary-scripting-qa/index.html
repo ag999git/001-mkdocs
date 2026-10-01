@@ -8997,9 +8997,8 @@ After:  {'Ann': 55, 'Dev': 72}
 <li><strong>Step 1:</strong> Make a snapshot of the keys, <code>list(marks.keys())</code>, and loop over it instead of over the dictionary.</li>
 <li><strong>Step 2:</strong> Is there another name in the snapshot?</li>
 <li><strong>Step 3:</strong> Yes: are this student's marks below 40? If not, go back to Step 2.</li>
-<li><strong>Step 4:</strong> Yes: delete the entry from the real dictionary, <code>del marks[student]</code>.</li>
-<li><strong>Step 5:</strong> The snapshot list is not affected by the deletion, so the loop carries on safely. Looping over <code>marks</code> itself would raise <code>RuntimeError: dictionary changed size during iteration</code>.</li>
-<li><strong>Step 6:</strong> No names are left: print <code>marks</code>, which now holds only the students with 40 or more.</li>
+<li><strong>Step 4:</strong> Yes: delete the entry from the real dictionary, <code>del marks[student]</code>, then go back to Step 2. The snapshot list is not affected by the deletion, so the loop carries on safely. Looping over <code>marks</code> itself would raise <code>RuntimeError: dictionary changed size during iteration</code>.</li>
+<li><strong>Step 5:</strong> No names are left: print <code>marks</code>, which now holds only the students with 40 or more.</li>
 </ul>
 <p><strong>Try this next</strong></p>
 <p>Do the same job with a dictionary comprehension. It builds a <strong>new</strong> dictionary containing only the students who passed, so nothing is deleted during a loop.</p>
@@ -9425,12 +9424,13 @@ February is unchanged: {'Notebook': 70, 'Eraser': 30}
 <p><img alt="Q11. Two dicts: Jan sales and Feb sales by product. Merge Feb into Jan with update() (overlaps must update, not add duplicates)." src="../../resources/S19-LR-ch19-dictionary-scripting-qa-fig-05.png" /></p>
 <p><strong>Reading the figure</strong></p>
 <ul>
-<li><strong>Step 1:</strong> <code>jan_sales.update(feb_sales)</code> takes the next key from <code>feb_sales</code>.</li>
-<li><strong>Step 2:</strong> Is that key already in <code>jan_sales</code>?</li>
-<li><strong>Step 3:</strong> Yes: its value is overwritten with the February value, as "Notebook" goes from 50 to 70.</li>
-<li><strong>Step 4:</strong> No: the key and value are added, as "Eraser" is. Keys only in <code>jan_sales</code>, such as "Pen", are kept.</li>
-<li><strong>Step 5:</strong> If more keys are left in <code>feb_sales</code>, go back to Step 1.</li>
-<li><strong>Step 6:</strong> Done. <code>jan_sales</code> itself has changed, and <code>update()</code> returns <code>None</code>, not the merged dictionary.</li>
+<li><strong>Step 1:</strong> Call <code>jan_sales.update(feb_sales)</code>. It works through the keys of <code>feb_sales</code> one by one.</li>
+<li><strong>Step 2:</strong> Are there keys left in <code>feb_sales</code>?</li>
+<li><strong>Step 3:</strong> Yes: take the next key.</li>
+<li><strong>Step 4:</strong> Is that key already in <code>jan_sales</code>?</li>
+<li><strong>Step 5:</strong> Yes: its value is overwritten with the February value, as "Notebook" goes from 50 to 70. Then go back to Step 2.</li>
+<li><strong>Step 6:</strong> No: the key and value are added, as "Eraser" is. Then go back to Step 2. Keys only in <code>jan_sales</code>, such as "Pen", are kept.</li>
+<li><strong>Step 7:</strong> Done. <code>jan_sales</code> itself has changed, and <code>update()</code> returns <code>None</code>, not the merged dictionary.</li>
 </ul>
 <p><strong>Try this next</strong></p>
 <p><code>update()</code> <strong>replaces</strong> overlapping values. What if you want the <strong>total</strong> sales for both months instead? Add the values yourself with <code>get()</code>.</p>

@@ -9007,11 +9007,11 @@ hash(42) in a new run:       42 42
 <p><strong>Reading the figure</strong></p>
 <ul>
 <li><strong>Step 1:</strong> <code>hash(t)</code> is called on a tuple, for example when the tuple is used as a dictionary key.</li>
-<li><strong>Step 2:</strong> Take the next item of the tuple.</li>
-<li><strong>Step 3:</strong> Is this item hashable?</li>
-<li><strong>Step 4:</strong> No: stop at once and raise <code>TypeError</code>. <code>(1, 2, [3, 4])</code> fails with <code>unhashable type: 'list'</code>.</li>
-<li><strong>Step 5:</strong> Yes: mix this item's hash into the running result. A tuple inside the tuple is checked item by item in the same way.</li>
-<li><strong>Step 6:</strong> If there are more items, go back to Step 2.</li>
+<li><strong>Step 2:</strong> Are there items left to check?</li>
+<li><strong>Step 3:</strong> Yes: take the next item of the tuple.</li>
+<li><strong>Step 4:</strong> Is this item hashable?</li>
+<li><strong>Step 5:</strong> No: stop at once and raise <code>TypeError</code>. <code>(1, 2, [3, 4])</code> fails with <code>unhashable type: 'list'</code>.</li>
+<li><strong>Step 6:</strong> Yes: mix this item's hash into the running result, then go back to Step 2. A tuple inside the tuple is checked item by item in the same way.</li>
 <li><strong>Step 7:</strong> No items are left, so return the combined hash. The tuple is hashable, as <code>(1, 2, 3)</code> is. That is what "conditionally hashable" means.</li>
 </ul>
 <p><strong>Script: hashable and unhashable tuples</strong></p>
@@ -9264,10 +9264,9 @@ Separate lists: {'a': [1], 'b': []}
 <li><strong>Step 2:</strong> Is there another item in the iterable?</li>
 <li><strong>Step 3:</strong> Yes: put the next item into the loop variable, <code>word</code>.</li>
 <li><strong>Step 4:</strong> Is there an <code>if</code> condition, and is it <code>False</code> for this item? If so, skip the item and go back to Step 2.</li>
-<li><strong>Step 5:</strong> No condition, or it is <code>True</code>: work out the key expression, <code>word</code>.</li>
-<li><strong>Step 6:</strong> Work out the value expression, <code>len(word)</code>.</li>
-<li><strong>Step 7:</strong> Store <code>key: value</code> in the dictionary, then go back to Step 2.</li>
-<li><strong>Step 8:</strong> No items are left, so the finished dictionary is returned.</li>
+<li><strong>Step 5:</strong> No condition, or it is <code>True</code>: work out the key expression, <code>word</code>, and the value expression, <code>len(word)</code>.</li>
+<li><strong>Step 6:</strong> Store <code>key: value</code> in the dictionary, then go back to Step 2.</li>
+<li><strong>Step 7:</strong> No items are left, so the finished dictionary is returned.</li>
 </ul>
 <p><strong>Script: a comprehension and the loop it replaces</strong></p>
 <div class="highlight"><pre><span></span><code><span class="n">words</span> <span class="o">=</span> <span class="p">[</span><span class="s2">"apple"</span><span class="p">,</span> <span class="s2">"fig"</span><span class="p">,</span> <span class="s2">"kiwi"</span><span class="p">]</span>

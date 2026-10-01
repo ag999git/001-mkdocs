@@ -9084,15 +9084,14 @@ The counter stopped at: -1
 <li><strong>Step 1:</strong> Start with a word, for example "Python".</li>
 <li><strong>Step 2:</strong> Which direction do you want to go?</li>
 <li><strong>Step 3:</strong> Forward: write <code>for character in word:</code>.</li>
-<li><strong>Step 4:</strong> Python hands over the next character each time round the loop. No counter is needed.</li>
-<li><strong>Step 5:</strong> Print the character.</li>
-<li><strong>Step 6:</strong> If characters are left, go back to Step 4. If not, go to Step 12.</li>
+<li><strong>Step 4:</strong> Are any characters left? The <code>for</code> loop checks this for you each time round. If not, go to Step 11.</li>
+<li><strong>Step 5:</strong> Yes: Python hands over the next character. No counter is needed.</li>
+<li><strong>Step 6:</strong> Print the character, then go back to Step 4.</li>
 <li><strong>Step 7:</strong> Backward: set a counter to the last index, <code>len(word) - 1</code>, which is 5 for "Python".</li>
-<li><strong>Step 8:</strong> Is the counter still 0 or more?</li>
+<li><strong>Step 8:</strong> Is the counter still 0 or more? If not, the counter is -1: it has passed the first character, so the loop stops and goes to Step 11.</li>
 <li><strong>Step 9:</strong> Yes: print the character at that index, <code>word[counter]</code>.</li>
 <li><strong>Step 10:</strong> Take 1 off the counter and go back to Step 8.</li>
-<li><strong>Step 11:</strong> No: the counter is -1, so it has passed the first character and the loop stops.</li>
-<li><strong>Step 12:</strong> Done.</li>
+<li><strong>Step 11:</strong> Done.</li>
 </ul>
 <p><strong>Design Pattern Explanation</strong></p>
 <ul>
@@ -9736,14 +9735,14 @@ Is 'apple' less than 'Banana'?: False
 <p><img alt="Question 10. Comparing Two Strings, and the Tie-Breaker" src="../../resources/S17-LR-ch17-scripting-qa-fig-06.png" /></p>
 <p><strong>Reading the figure</strong></p>
 <ul>
-<li><strong>Step 1:</strong> Compare two strings.</li>
-<li><strong>Step 2:</strong> Look at the characters in the same position in each string, starting with the first.</li>
-<li><strong>Step 3:</strong> Are they the same?</li>
-<li><strong>Step 4:</strong> No: the string whose character has the smaller code point is the smaller string, and the comparison ends.</li>
-<li><strong>Step 5:</strong> Yes: move to the next position.</li>
-<li><strong>Step 6:</strong> Has either string run out of characters? If not, go back to Step 2.</li>
-<li><strong>Step 7:</strong> Both ran out at once: the strings are equal.</li>
-<li><strong>Step 8:</strong> Only one ran out: the shorter string is the smaller one, so "Book" is less than "Bookcase".</li>
+<li><strong>Step 1:</strong> Compare two strings. Python works through them one position at a time, starting with the first.</li>
+<li><strong>Step 2:</strong> Has either string run out of characters?</li>
+<li><strong>Step 3:</strong> No: take the characters in the same position in each string.</li>
+<li><strong>Step 4:</strong> Are they the same? If so, go back to Step 2 for the next position.</li>
+<li><strong>Step 5:</strong> No: the string whose character has the smaller code point is the smaller string, and the comparison ends.</li>
+<li><strong>Step 6:</strong> Yes, a string has run out at Step 2: did both run out at once?</li>
+<li><strong>Step 7:</strong> Yes: the strings are equal.</li>
+<li><strong>Step 8:</strong> No, only one ran out: the shorter string is the smaller one, so "Book" is less than "Bookcase".</li>
 </ul>
 <p><strong>Design Pattern Explanation</strong></p>
 <ul>
