@@ -9497,7 +9497,16 @@
 <li><strong>Java</strong> - compiled to <strong>bytecode</strong> first (a simpler, portable form of the program), which is then run by the <strong>Java Virtual Machine (JVM)</strong>. So Java uses a mix of compiling and interpreting.</li>
 </ul>
 <p>The flowchart below shows the steps.</p>
-<p><img alt="Examples" src="../../resources/0000-15-steps-in-how-compiler-works.png" /></p>
+<p><img alt="Examples" src="../../resources/S01-LR-0000-15-steps-in-how-compiler-works.png" /></p>
+<p><strong>Reading the figure</strong></p>
+<ul>
+<li><strong>Step 1:</strong> Start with the source code, for example <code>hello.cpp</code>.</li>
+<li><strong>Step 2:</strong> The compiler translates the whole program at once.</li>
+<li><strong>Step 3:</strong> Did it find any errors?</li>
+<li><strong>Step 4:</strong> Yes: fix the code and compile again.</li>
+<li><strong>Step 5:</strong> No: the result is an executable file, for example <code>hello.exe</code>.</li>
+<li><strong>Step 6:</strong> The executable can be run any number of times, with no compiler needed.</li>
+</ul>
 <p><a href="#table-of-contents">Back to the Table of Contents</a></p>
 <h3 id="what-are-the-advantages-of-using-a-compiler">What are the Advantages of Using a Compiler?<a class="headerlink" href="#what-are-the-advantages-of-using-a-compiler" title="Permanent link">&para;</a></h3>
 <ul>
@@ -9538,7 +9547,16 @@
 <li>The <strong>Python Virtual Machine (PVM)</strong>, which is part of the interpreter, then runs the bytecode instruction by instruction.</li>
 <li>For modules that you import, Python saves the bytecode in a <code>__pycache__</code> folder as <code>.pyc</code> files, so that it does not have to compile them again next time.</li>
 </ol>
-<p><img alt="How does Python actually run your code?" src="../../resources/0000-16-how-does-python-run-code.png" /></p>
+<p><img alt="How does Python actually run your code?" src="../../resources/S01-LR-0000-16-how-does-python-run-code.png" /></p>
+<p><strong>Reading the figure</strong></p>
+<ul>
+<li><strong>Step 1:</strong> Start with the source code, <code>hello.py</code>.</li>
+<li><strong>Step 2:</strong> Python first compiles the whole file to bytecode.</li>
+<li><strong>Step 3:</strong> Are there any syntax errors?</li>
+<li><strong>Step 4:</strong> Yes: Python reports a <code>SyntaxError</code> and not a single line runs.</li>
+<li><strong>Step 5:</strong> No: the Python Virtual Machine runs the bytecode, instruction by instruction.</li>
+<li><strong>Step 6:</strong> You get the output, or a runtime error (such as <code>ZeroDivisionError</code>) at the line where it happens; the lines before it have already run.</li>
+</ul>
 <p>This has an important effect that surprises many beginners: <strong>a syntax error anywhere in a file stops the whole file from running</strong>, even the lines before it. Try this file, saved as <code>syntax_demo.py</code>:</p>
 <div class="highlight"><pre><span></span><code><span class="nb">print</span><span class="p">(</span><span class="s2">"Line 1 runs"</span><span class="p">)</span>
 <span class="nb">print</span><span class="p">(</span><span class="s2">"Line 2 runs"</span><span class="p">)</span>
@@ -10114,7 +10132,14 @@ Step 3 - x = 3.14 | type: float
 <span class="n">x</span> <span class="o">=</span> <span class="s2">"hi"</span>   <span class="c1"># x -&gt; string object "hi"</span>
 </code></pre></div>
 <p><code>x</code> is <em>re-bound</em> each time: it simply points to a different object.</p>
-<p><img alt="Step 3 - and now to a decimal number (float)" src="../../resources/0000-17.png" /></p>
+<p><img alt="Dynamic binding: x is re-bound from an int object to a str object" src="../../resources/S01-LR-0000-17.png" /></p>
+<p><strong>Reading the figure</strong></p>
+<ul>
+<li><code>x = 10</code> binds the name <code>x</code> to an integer object, 10.</li>
+<li>The type belongs to the object: <code>type(x)</code> is <code>int</code>.</li>
+<li><code>x = "hi"</code> re-binds the same name to a different object.</li>
+<li>Now <code>x</code> refers to a string object, and <code>type(x)</code> is <code>str</code>. The integer object is no longer used by <code>x</code>; if nothing else refers to it, Python can free it (small integers such as 10 are kept in Python's store and are never freed).</li>
+</ul>
 <p>A note on the term: in other books, "dynamic binding" (also called <strong>late binding</strong>) often means something slightly different - deciding <em>which method to call</em> while the program runs, a topic you will meet in the chapters on classes. In this chapter, it means binding names to values while the program runs.</p>
 <p><a href="#table-of-contents">Back to the Table of Contents</a></p>
 <h3 id="give-key-points-about-dynamic-typing-in-python">Give Key points about dynamic typing in Python<a class="headerlink" href="#give-key-points-about-dynamic-typing-in-python" title="Permanent link">&para;</a></h3>
@@ -10228,7 +10253,18 @@ Step 3 - Age: 20
 <li>So Python also has a <strong>garbage collector</strong>, which runs from time to time, finds such unreachable groups of objects, and frees them.</li>
 <li>Together, these two methods prevent most memory leaks (memory that is never given back) and help programs use memory efficiently.</li>
 </ul>
-<p><img alt="Step 3 - Convert the number to text first, then join them" src="../../resources/0000-18-garbage-collection.png" /></p>
+<p><img alt="Reference counting and the garbage collector" src="../../resources/S01-LR-0000-18-garbage-collection.png" /></p>
+<p><strong>Reading the figure</strong></p>
+<ul>
+<li><strong>Step 1:</strong> When an object is created, its reference count is 1.</li>
+<li><strong>Step 2:</strong> Each extra name or container that refers to it raises the count.</li>
+<li><strong>Step 3:</strong> When a name is deleted or re-bound, the count goes down.</li>
+<li><strong>Step 4:</strong> Has the count reached zero?</li>
+<li><strong>Step 5:</strong> Yes: the memory is freed immediately.</li>
+<li><strong>Step 6:</strong> No: is the object reachable only through a reference cycle (objects referring to each other)?</li>
+<li><strong>Step 7:</strong> Yes: the garbage collector finds the cycle when it runs and frees the objects.</li>
+<li><strong>Step 8:</strong> No: the object is still in use and stays.</li>
+</ul>
 <p><a href="#table-of-contents">Back to the Table of Contents</a></p>
 <h4 id="example">Example<a class="headerlink" href="#example" title="Permanent link">&para;</a></h4>
 <div class="highlight"><pre><span></span><code><span class="n">x</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">]</span>   <span class="c1"># memory allocated for the list</span>
@@ -10453,7 +10489,15 @@ Step 5 - unreachable objects found: 2
 </ul>
 <p><a href="#table-of-contents">Back to the Table of Contents</a></p>
 <h3 id="what-are-the-steps-to-create-and-run-a-python-script">What are the steps to create and run a Python script?<a class="headerlink" href="#what-are-the-steps-to-create-and-run-a-python-script" title="Permanent link">&para;</a></h3>
-<p><img alt="Step 4 - The garbage collector finds the cycle and frees both objects" src="../../resources/ch01-question-answers1-fig-05.png" /></p>
+<p><img alt="The steps to create and run a Python script" src="../../resources/S01-LR-ch01-question-answers1-fig-05.png" /></p>
+<p><strong>Reading the figure</strong></p>
+<ul>
+<li><strong>Step 1:</strong> Create a new file named <code>hello.py</code>.</li>
+<li><strong>Step 2:</strong> Type the Python code and save the file.</li>
+<li><strong>Step 3:</strong> Open a terminal (or command prompt) in the folder that contains the file.</li>
+<li><strong>Step 4:</strong> Run <code>python hello.py</code> (on Windows you can also use <code>py hello.py</code>).</li>
+<li><strong>Step 5:</strong> The output appears in the terminal.</li>
+</ul>
 <p><a href="#table-of-contents">Back to the Table of Contents</a></p>
 <h4 id="1-create-a-new-python-file">1. Create a new Python file<a class="headerlink" href="#1-create-a-new-python-file" title="Permanent link">&para;</a></h4>
 <p>Create a file named:</p>
