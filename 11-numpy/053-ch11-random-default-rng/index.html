@@ -76,7 +76,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#chapter-1153-project-modern-random-number-generation-in-numpy" class="md-skip">
+        <a href="#chapter-1153--project-modern-random-number-generation-in-numpy" class="md-skip">
           Skip to content
         </a>
       
@@ -3957,7 +3957,7 @@
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#part-a-conceptual-study" class="md-nav__link">
+  <a href="#part-a--conceptual-study" class="md-nav__link">
     <span class="md-ellipsis">
       
         Part A — Conceptual Study
@@ -3968,7 +3968,7 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#part-b-practical-task" class="md-nav__link">
+  <a href="#part-b--practical-task" class="md-nav__link">
     <span class="md-ellipsis">
       
         Part B — Practical Task
@@ -4006,7 +4006,7 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#answer-theory" class="md-nav__link">
+  <a href="#answer--theory" class="md-nav__link">
     <span class="md-ellipsis">
       
         ANSWER — Theory
@@ -4102,7 +4102,7 @@
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#old-api-one-shared-global-generator" class="md-nav__link">
+  <a href="#old-api--one-shared-global-generator" class="md-nav__link">
     <span class="md-ellipsis">
       
         Old API → one shared, global generator
@@ -4113,7 +4113,7 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#new-api-independent-generators" class="md-nav__link">
+  <a href="#new-api--independent-generators" class="md-nav__link">
     <span class="md-ellipsis">
       
         New API → independent generators
@@ -8299,7 +8299,7 @@
   
 
 
-<h1 id="chapter-1153-project-modern-random-number-generation-in-numpy">Chapter 11.53 — Project: Modern Random Number Generation in NumPy<a class="headerlink" href="#chapter-1153-project-modern-random-number-generation-in-numpy" title="Permanent link">&para;</a></h1>
+<h1 id="chapter-1153--project-modern-random-number-generation-in-numpy">Chapter 11.53 — Project: Modern Random Number Generation in NumPy<a class="headerlink" href="#chapter-1153--project-modern-random-number-generation-in-numpy" title="Permanent link">&para;</a></h1>
 <h2 id="what-this-page-covers">What this page covers<a class="headerlink" href="#what-this-page-covers" title="Permanent link">&para;</a></h2>
 <p>This page is a research and practical project on how NumPy generates random numbers — and, more specifically, on a genuinely important shift in how NumPy recommends doing it. For a long time, the standard approach was <code>np.random.seed(...)</code> plus functions like <code>np.random.rand()</code>. NumPy now recommends a newer approach built around <code>np.random.default_rng()</code>. This page investigates <em>why</em> that recommendation exists, and what concrete problems the older approach can cause.</p>
 <p>This matters well beyond NumPy itself: the underlying idea — a single shared, hidden piece of global state versus separate, independent objects each managing their own state — is a pattern that shows up throughout programming (it's closely related to why global variables in general are often risky, as covered in the earlier chapter page on the LEGB rule). Understanding it here, in a concrete, visual way with random numbers, makes the more abstract version of the same lesson easier to recognize elsewhere.</p>
@@ -8310,13 +8310,13 @@
 <hr />
 <h2 id="task">Task<a class="headerlink" href="#task" title="Permanent link">&para;</a></h2>
 <p><em>(Kept exactly as set in the assignment.)</em></p>
-<h3 id="part-a-conceptual-study">Part A — Conceptual Study<a class="headerlink" href="#part-a-conceptual-study" title="Permanent link">&para;</a></h3>
+<h3 id="part-a--conceptual-study">Part A — Conceptual Study<a class="headerlink" href="#part-a--conceptual-study" title="Permanent link">&para;</a></h3>
 <p>Investigate the following:
 1. What is the difference between <code>np.random.seed()</code> and <code>np.random.default_rng(seed)</code>?
 2. Why does NumPy recommend using <code>default_rng()</code> in modern applications?
 3. What problems can arise from using global random state?
 4. Explain the role of randomness in simulations, machine learning, and data analysis.</p>
-<h3 id="part-b-practical-task">Part B — Practical Task<a class="headerlink" href="#part-b-practical-task" title="Permanent link">&para;</a></h3>
+<h3 id="part-b--practical-task">Part B — Practical Task<a class="headerlink" href="#part-b--practical-task" title="Permanent link">&para;</a></h3>
 <p>Write a Python program that:
 1. Creates random arrays using both the old API (<code>np.random</code>) and the new API (<code>default_rng()</code>)
 2. Uses the following distributions: uniform, normal, integers
@@ -8327,7 +8327,7 @@
 <h3 id="a-follow-up-question-worth-exploring">A follow-up question worth exploring<a class="headerlink" href="#a-follow-up-question-worth-exploring" title="Permanent link">&para;</a></h3>
 <p>The theory below demonstrates the old API's "order matters" problem using two calls to <code>np.random.rand()</code>. As a follow-up exercise: <strong>does the same "order matters" problem affect the new API if you create just one single <code>default_rng()</code> generator and call it twice, in different orders?</strong> Try it yourself before reading further — the answer reveals an important nuance: independence comes from having <em>separate generator objects</em>, not merely from using the new function name. A single <code>rng</code> object, called multiple times, still produces its results in the order you call it, exactly as you'd expect from any stateful object — the real fix is creating separate <code>rng</code> objects when you specifically need independence.</p>
 <hr />
-<h2 id="answer-theory">ANSWER — Theory<a class="headerlink" href="#answer-theory" title="Permanent link">&para;</a></h2>
+<h2 id="answer--theory">ANSWER — Theory<a class="headerlink" href="#answer--theory" title="Permanent link">&para;</a></h2>
 <h3 id="1-global-vs-local-random-state">1. Global vs. Local Random State<a class="headerlink" href="#1-global-vs-local-random-state" title="Permanent link">&para;</a></h3>
 <ul>
 <li><code>np.random.seed()</code> sets a <strong>global state</strong> — one single, shared, hidden random generator used by the entire program.</li>
@@ -8405,7 +8405,7 @@
 <p><strong>So far, no difference at all between the two approaches.</strong></p>
 <h3 id="2-where-the-real-difference-actually-shows-up">2. Where the real difference actually shows up<a class="headerlink" href="#2-where-the-real-difference-actually-shows-up" title="Permanent link">&para;</a></h3>
 <p>The difference isn't in "same seed gives same sequence" (both APIs agree on that) — it's in <strong>how the sequence is managed and shared</strong> afterward.</p>
-<h4 id="old-api-one-shared-global-generator">Old API → one shared, global generator<a class="headerlink" href="#old-api-one-shared-global-generator" title="Permanent link">&para;</a></h4>
+<h4 id="old-api--one-shared-global-generator">Old API → one shared, global generator<a class="headerlink" href="#old-api--one-shared-global-generator" title="Permanent link">&para;</a></h4>
 <p>There is exactly <strong>one</strong> hidden random generator for the entire program. Every single call to a <code>np.random.*</code> function, anywhere in your code, uses this same shared generator.</p>
 <div class="highlight"><pre><span></span><code><span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
 
@@ -8441,7 +8441,7 @@
 <li><strong>Step 4:</strong> The second call takes the next three numbers. So the values each variable gets depend on the order of the calls.</li>
 </ul>
 <p><strong>This is the core problem with the old API:</strong> a shared global sequence means the <em>order</em> in which different parts of your program happen to call random functions can change your results — a subtle, easy-to-introduce bug, especially in larger programs where you might not even realize two unrelated functions are both quietly drawing from the same global sequence.</p>
-<h4 id="new-api-independent-generators">New API → independent generators<a class="headerlink" href="#new-api-independent-generators" title="Permanent link">&para;</a></h4>
+<h4 id="new-api--independent-generators">New API → independent generators<a class="headerlink" href="#new-api--independent-generators" title="Permanent link">&para;</a></h4>
 <p>Each <code>rng</code> object created with <code>default_rng()</code> is its own, completely separate random-number machine.</p>
 <div class="highlight"><pre><span></span><code><span class="n">rng1</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">default_rng</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
 <span class="n">rng2</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">default_rng</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>

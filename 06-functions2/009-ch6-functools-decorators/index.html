@@ -76,7 +76,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#chapter-69-using-functoolswraps-in-decorators" class="md-skip">
+        <a href="#chapter-69--using-functoolswraps-in-decorators" class="md-skip">
           Skip to content
         </a>
       
@@ -1891,7 +1891,7 @@
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#case-a-without-functoolswraps-identity-is-lost" class="md-nav__link">
+  <a href="#case-a--without-functoolswraps-identity-is-lost" class="md-nav__link">
     <span class="md-ellipsis">
       
         Case A — Without functools.wraps (identity is lost)
@@ -1902,7 +1902,7 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#case-b-with-functoolswraps-identity-is-retained" class="md-nav__link">
+  <a href="#case-b--with-functoolswraps-identity-is-retained" class="md-nav__link">
     <span class="md-ellipsis">
       
         Case B — With functools.wraps (identity is retained)
@@ -1952,7 +1952,7 @@
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#case-a-manual-identity-copying" class="md-nav__link">
+  <a href="#case-a--manual-identity-copying" class="md-nav__link">
     <span class="md-ellipsis">
       
         Case A — Manual identity copying
@@ -1963,7 +1963,7 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#case-b-the-functoolswraps-way" class="md-nav__link">
+  <a href="#case-b--the-functoolswraps-way" class="md-nav__link">
     <span class="md-ellipsis">
       
         Case B — The functools.wraps way
@@ -8232,7 +8232,7 @@
   
 
 
-<h1 id="chapter-69-using-functoolswraps-in-decorators">Chapter 6.9 — Using <code>functools.wraps</code> in Decorators<a class="headerlink" href="#chapter-69-using-functoolswraps-in-decorators" title="Permanent link">&para;</a></h1>
+<h1 id="chapter-69--using-functoolswraps-in-decorators">Chapter 6.9 — Using <code>functools.wraps</code> in Decorators<a class="headerlink" href="#chapter-69--using-functoolswraps-in-decorators" title="Permanent link">&para;</a></h1>
 <h2 id="what-this-page-covers">What this page covers<a class="headerlink" href="#what-this-page-covers" title="Permanent link">&para;</a></h2>
 <p>This page explains <strong><code>functools.wraps</code></strong>, a small but important tool from Python's standard <code>functools</code> module that every decorator-writer should know. It builds directly on the earlier sections of Chapter 6, which introduced decorators — functions that wrap other functions to add extra behaviour (logging, timing, access checks, and so on).</p>
 <p>The problem <code>functools.wraps</code> solves is simple to state but easy to miss as a beginner: <strong>when you wrap a function with a decorator, Python "forgets" the original function's name, docstring, and other metadata — unless you tell it not to.</strong> This page shows you exactly what goes wrong, why it happens, and how <code>functools.wraps</code> fixes it, using two worked examples you can run yourself.</p>
@@ -8338,7 +8338,7 @@
 <p><code>@functools.wraps(func)</code> acts like an identity copier. Placed just above your inner <code>wrapper</code> function, it copies key attributes — including <code>__name__</code>, <code>__doc__</code>, <code>__module__</code>, and <code>__wrapped__</code> (a reference back to the original function) — from the <em>original</em> function (<code>func</code>) onto the <code>wrapper</code>. The result: your decorated function keeps looking like itself from the outside, even though it's technically running extra code underneath.</p>
 <hr />
 <h2 id="3-example-1-seeing-the-identity-loss-and-the-fix">3. Example 1: Seeing the identity loss (and the fix)<a class="headerlink" href="#3-example-1-seeing-the-identity-loss-and-the-fix" title="Permanent link">&para;</a></h2>
-<h3 id="case-a-without-functoolswraps-identity-is-lost">Case A — Without <code>functools.wraps</code> (identity is lost)<a class="headerlink" href="#case-a-without-functoolswraps-identity-is-lost" title="Permanent link">&para;</a></h3>
+<h3 id="case-a--without-functoolswraps-identity-is-lost">Case A — Without <code>functools.wraps</code> (identity is lost)<a class="headerlink" href="#case-a--without-functoolswraps-identity-is-lost" title="Permanent link">&para;</a></h3>
 <div class="highlight"><pre><span></span><code><span class="c1"># NOTE: functools is not imported here on purpose,</span>
 <span class="c1"># so you can see what goes wrong without it.</span>
 
@@ -8372,7 +8372,7 @@
 <span class="c1"># Actual: None   &lt;-- the docstring is gone too</span>
 </code></pre></div>
 <p><strong>For beginners:</strong> nothing here is "broken" in the sense of causing an error — <code>bark()</code> still runs and still prints <code>"Woof!"</code>. The problem is invisible until something inspects the function's metadata: a debugger, a documentation generator like Sphinx, an IDE's autocomplete/tooltip, or a teammate calling <code>help(bark)</code>. In a small script this may not matter; in a real codebase with many decorators, it makes bugs much harder to track down, because every traceback and every <code>help()</code> call points to a generic <code>wrapper</code> instead of the function you actually meant.</p>
-<h3 id="case-b-with-functoolswraps-identity-is-retained">Case B — With <code>functools.wraps</code> (identity is retained)<a class="headerlink" href="#case-b-with-functoolswraps-identity-is-retained" title="Permanent link">&para;</a></h3>
+<h3 id="case-b--with-functoolswraps-identity-is-retained">Case B — With <code>functools.wraps</code> (identity is retained)<a class="headerlink" href="#case-b--with-functoolswraps-identity-is-retained" title="Permanent link">&para;</a></h3>
 <div class="highlight"><pre><span></span><code><span class="kn">import</span><span class="w"> </span><span class="nn">functools</span>
 
 <span class="c1"># --- THE DECORATOR ---</span>
@@ -8449,7 +8449,7 @@
 <hr />
 <h2 id="4-example-2-the-manual-approach-and-why-functoolswraps-is-better">4. Example 2: The manual approach (and why <code>functools.wraps</code> is better)<a class="headerlink" href="#4-example-2-the-manual-approach-and-why-functoolswraps-is-better" title="Permanent link">&para;</a></h2>
 <p>Before <code>functools.wraps</code> existed (or if you ever need to see what it's doing under the hood), you could fix the identity problem by hand, by copying each attribute across yourself.</p>
-<h3 id="case-a-manual-identity-copying">Case A — Manual identity copying<a class="headerlink" href="#case-a-manual-identity-copying" title="Permanent link">&para;</a></h3>
+<h3 id="case-a--manual-identity-copying">Case A — Manual identity copying<a class="headerlink" href="#case-a--manual-identity-copying" title="Permanent link">&para;</a></h3>
 <div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">food_safety_check</span><span class="p">(</span><span class="n">func</span><span class="p">):</span>
     <span class="k">def</span><span class="w"> </span><span class="nf">wrapper</span><span class="p">(</span><span class="n">food_type</span><span class="p">):</span>
         <span class="n">prohibited_foods</span> <span class="o">=</span> <span class="p">[</span><span class="s2">"Chocolate"</span><span class="p">,</span> <span class="s2">"Cakes"</span><span class="p">,</span> <span class="s2">"Ice Cream"</span><span class="p">,</span> <span class="s2">"Onions"</span><span class="p">]</span>
@@ -8479,7 +8479,7 @@
 <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"Function Doc:  </span><span class="si">{</span><span class="n">feed_pet</span><span class="o">.</span><span class="vm">__doc__</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>   <span class="c1"># "Feeds the pet..."</span>
 </code></pre></div>
 <p>This works, but it's easy to forget an attribute (there are more than the three shown here, such as <code>__annotations__</code> and <code>__wrapped__</code>), and it's three extra lines to write in <em>every single decorator you ever create</em>.</p>
-<h3 id="case-b-the-functoolswraps-way">Case B — The <code>functools.wraps</code> way<a class="headerlink" href="#case-b-the-functoolswraps-way" title="Permanent link">&para;</a></h3>
+<h3 id="case-b--the-functoolswraps-way">Case B — The <code>functools.wraps</code> way<a class="headerlink" href="#case-b--the-functoolswraps-way" title="Permanent link">&para;</a></h3>
 <div class="highlight"><pre><span></span><code><span class="kn">import</span><span class="w"> </span><span class="nn">functools</span>
 
 <span class="k">def</span><span class="w"> </span><span class="nf">food_safety_check</span><span class="p">(</span><span class="n">func</span><span class="p">):</span>

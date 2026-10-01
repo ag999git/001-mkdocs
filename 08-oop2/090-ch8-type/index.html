@@ -76,7 +76,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#chapter-890-metaclasses-part-1-basic-concepts" class="md-skip">
+        <a href="#chapter-890--metaclasses-part-1-basic-concepts" class="md-skip">
           Skip to content
         </a>
       
@@ -2705,7 +2705,7 @@
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#step-1-creating-a-class-normally-without-type" class="md-nav__link">
+  <a href="#step-1--creating-a-class-normally-without-type" class="md-nav__link">
     <span class="md-ellipsis">
       
         Step 1 — creating a class normally, without type()
@@ -2716,7 +2716,7 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#step-2-creating-the-exact-same-kind-of-class-using-type-directly" class="md-nav__link">
+  <a href="#step-2--creating-the-exact-same-kind-of-class-using-type-directly" class="md-nav__link">
     <span class="md-ellipsis">
       
         Step 2 — creating the exact same kind of class using type() directly
@@ -8299,7 +8299,7 @@
   
 
 
-<h1 id="chapter-890-metaclasses-part-1-basic-concepts">Chapter 8.90 — Metaclasses, Part 1: Basic Concepts<a class="headerlink" href="#chapter-890-metaclasses-part-1-basic-concepts" title="Permanent link">&para;</a></h1>
+<h1 id="chapter-890--metaclasses-part-1-basic-concepts">Chapter 8.90 — Metaclasses, Part 1: Basic Concepts<a class="headerlink" href="#chapter-890--metaclasses-part-1-basic-concepts" title="Permanent link">&para;</a></h1>
 <h2 id="what-this-page-covers">What this page covers<a class="headerlink" href="#what-this-page-covers" title="Permanent link">&para;</a></h2>
 <p>This page pulls back one more curtain in Python's object model — the earlier chapter page on <code>__new__()</code> vs. <code>__init__()</code> explained the two-step process behind creating an <em>object</em> from a <em>class</em>. This page asks the natural next question: <strong>if objects are created by classes, what creates the classes themselves?</strong> The answer is a <strong>metaclass</strong> — and understanding this reveals that in Python, classes aren't special, hardcoded language constructs; they're just another kind of object, created the same way any other object is.</p>
 <p>This is genuinely advanced material — most Python code you'll ever write doesn't need to touch metaclasses directly. But understanding that they exist, and roughly how they work, deepens your understanding of <em>why</em> Python behaves the way it does at a fundamental level, and explains where frameworks that do "seemingly magical" things (like Django's ORM, or certain plugin systems) actually get their power from.</p>
@@ -8381,11 +8381,11 @@
 </blockquote>
 <hr />
 <h2 id="3-basic-example">3. Basic example<a class="headerlink" href="#3-basic-example" title="Permanent link">&para;</a></h2>
-<h3 id="step-1-creating-a-class-normally-without-type">Step 1 — creating a class normally, without <code>type()</code><a class="headerlink" href="#step-1-creating-a-class-normally-without-type" title="Permanent link">&para;</a></h3>
+<h3 id="step-1--creating-a-class-normally-without-type">Step 1 — creating a class normally, without <code>type()</code><a class="headerlink" href="#step-1--creating-a-class-normally-without-type" title="Permanent link">&para;</a></h3>
 <div class="highlight"><pre><span></span><code><span class="k">class</span><span class="w"> </span><span class="nc">Dog</span><span class="p">:</span>   <span class="c1"># The familiar, readable way</span>
     <span class="n">sound</span> <span class="o">=</span> <span class="s2">"Woof"</span>
 </code></pre></div>
-<h3 id="step-2-creating-the-exact-same-kind-of-class-using-type-directly">Step 2 — creating the exact same kind of class using <code>type()</code> directly<a class="headerlink" href="#step-2-creating-the-exact-same-kind-of-class-using-type-directly" title="Permanent link">&para;</a></h3>
+<h3 id="step-2--creating-the-exact-same-kind-of-class-using-type-directly">Step 2 — creating the exact same kind of class using <code>type()</code> directly<a class="headerlink" href="#step-2--creating-the-exact-same-kind-of-class-using-type-directly" title="Permanent link">&para;</a></h3>
 <div class="highlight"><pre><span></span><code><span class="c1"># type() lets you build a class AT RUNTIME, which is useful in cases</span>
 <span class="c1"># where you need to generate classes dynamically -- based on user</span>
 <span class="c1"># input, configuration files, or other data your program only knows</span>

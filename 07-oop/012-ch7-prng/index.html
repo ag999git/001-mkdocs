@@ -76,7 +76,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#chapter-7-research-question-breaking-a-linear-congruential-generator-lcg" class="md-skip">
+        <a href="#chapter-7--research-question-breaking-a-linear-congruential-generator-lcg" class="md-skip">
           Skip to content
         </a>
       
@@ -2195,7 +2195,7 @@
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#attack-1-finding-c-when-a-and-m-are-already-known" class="md-nav__link">
+  <a href="#attack-1--finding-c-when-a-and-m-are-already-known" class="md-nav__link">
     <span class="md-ellipsis">
       
         Attack 1 — Finding c (when a and m are already known)
@@ -2206,7 +2206,7 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#attack-2-finding-both-a-and-c-when-only-m-is-known" class="md-nav__link">
+  <a href="#attack-2--finding-both-a-and-c-when-only-m-is-known" class="md-nav__link">
     <span class="md-ellipsis">
       
         Attack 2 — Finding both a and c (when only m is known)
@@ -8210,7 +8210,7 @@
   
 
 
-<h1 id="chapter-7-research-question-breaking-a-linear-congruential-generator-lcg">Chapter 7 — Research Question: Breaking a Linear Congruential Generator (LCG)<a class="headerlink" href="#chapter-7-research-question-breaking-a-linear-congruential-generator-lcg" title="Permanent link">&para;</a></h1>
+<h1 id="chapter-7--research-question-breaking-a-linear-congruential-generator-lcg">Chapter 7 — Research Question: Breaking a Linear Congruential Generator (LCG)<a class="headerlink" href="#chapter-7--research-question-breaking-a-linear-congruential-generator-lcg" title="Permanent link">&para;</a></h1>
 <h2 id="what-this-page-covers">What this page covers<a class="headerlink" href="#what-this-page-covers" title="Permanent link">&para;</a></h2>
 <p>This page is a research-level deep dive that connects two topics from earlier in the book: Python classes (Chapter 7) and random number generation. It looks at a specific, well-known weakness in a simple kind of random number generator called a <strong>Linear Congruential Generator (LCG)</strong>, and shows — with working Python code — exactly how someone who sees just a handful of "random" numbers produced by an LCG can mathematically work backwards and predict every number it will ever produce next.</p>
 <p>This is relevant beyond pure math curiosity: LCGs are simple, fast, and still used in places where speed matters more than security — such as simulations, games, and some older or lightweight system libraries. The mistake beginners (and sometimes real systems) make is assuming <em>any</em> "random-looking" number generator is safe to use for things like passwords, tokens, or session IDs. This page demonstrates concretely why that assumption is dangerous for an LCG specifically, and why cryptographic applications need generators designed for security, not just for producing numbers that merely <em>look</em> random.</p>
@@ -8271,14 +8271,14 @@
 <li><strong>Step 4:</strong> No, only <code>m</code> is known: Attack 2 recovers both <code>a</code> and <code>c</code> from three outputs, using a modular inverse.</li>
 <li><strong>Step 5:</strong> With <code>a</code>, <code>c</code> and <code>m</code> known, the attacker can predict every value the generator will ever produce.</li>
 </ul>
-<h4 id="attack-1-finding-c-when-a-and-m-are-already-known">Attack 1 — Finding <code>c</code> (when <code>a</code> and <code>m</code> are already known)<a class="headerlink" href="#attack-1-finding-c-when-a-and-m-are-already-known" title="Permanent link">&para;</a></h4>
+<h4 id="attack-1--finding-c-when-a-and-m-are-already-known">Attack 1 — Finding <code>c</code> (when <code>a</code> and <code>m</code> are already known)<a class="headerlink" href="#attack-1--finding-c-when-a-and-m-are-already-known" title="Permanent link">&para;</a></h4>
 <p>With just two consecutive outputs, <span class="arithmatex">\(X_0\)</span> and <span class="arithmatex">\(X_1\)</span>, we can rearrange the LCG formula to isolate <span class="arithmatex">\(c\)</span>:</p>
 <div class="arithmatex">\[c \equiv (X_1 - a \cdot X_0) \pmod m\]</div>
 <p><strong>In plain terms, step by step:</strong>
 1. Take the known next value, <span class="arithmatex">\(X_1\)</span>.
 2. Subtract <span class="arithmatex">\(a \times X_0\)</span> from it.
 3. Apply <code>mod m</code> to bring the result back into the valid range <span class="arithmatex">\([0, m-1]\)</span> — this is exactly what Python's <code>%</code> operator does for us automatically.</p>
-<h4 id="attack-2-finding-both-a-and-c-when-only-m-is-known">Attack 2 — Finding both <code>a</code> and <code>c</code> (when only <code>m</code> is known)<a class="headerlink" href="#attack-2-finding-both-a-and-c-when-only-m-is-known" title="Permanent link">&para;</a></h4>
+<h4 id="attack-2--finding-both-a-and-c-when-only-m-is-known">Attack 2 — Finding both <code>a</code> and <code>c</code> (when only <code>m</code> is known)<a class="headerlink" href="#attack-2--finding-both-a-and-c-when-only-m-is-known" title="Permanent link">&para;</a></h4>
 <p>This is the harder, more general case, and needs <strong>three</strong> consecutive outputs, <span class="arithmatex">\(X_0\)</span>, <span class="arithmatex">\(X_1\)</span>, <span class="arithmatex">\(X_2\)</span>. We start with the LCG formula written out twice:</p>
 <ol>
 <li><span class="arithmatex">\(X_1 \equiv a \cdot X_0 + c \pmod m\)</span></li>

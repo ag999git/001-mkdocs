@@ -6972,7 +6972,7 @@
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#architectural-core-concepts" class="md-nav__link">
+  <a href="#architectural--core-concepts" class="md-nav__link">
     <span class="md-ellipsis">
       
         Architectural &amp; Core Concepts
@@ -6984,7 +6984,7 @@
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#1-defensive-programming-state-verification" class="md-nav__link">
+  <a href="#1-defensive-programming--state-verification" class="md-nav__link">
     <span class="md-ellipsis">
       
         1. Defensive Programming &amp; State Verification
@@ -7006,7 +7006,7 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#3-output-of-the-pytest-with-flag-s-shows-that-resources-are-optimized" class="md-nav__link">
+  <a href="#3-output-of-the-pytest-with-flag--s-shows-that-resources-are-optimized" class="md-nav__link">
     <span class="md-ellipsis">
       
         3. Output of the pytest (with flag -s) shows that resources are optimized
@@ -7038,7 +7038,7 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#precautions-concerns-in-using-session-scope" class="md-nav__link">
+  <a href="#precautions--concerns-in-using-session-scope" class="md-nav__link">
     <span class="md-ellipsis">
       
         Precautions &amp; Concerns in using session scope
@@ -8823,8 +8823,8 @@
 <p><code>python -m pytest</code> and <code>pytest</code> do the same job. This page shows the shorter <code>pytest</code> form in its commands.</p>
 <p><a href="./#table-of-contents">Back to the Table of Contents</a></p>
 <h2 id="discussion">Discussion<a class="headerlink" href="#discussion" title="Permanent link">&para;</a></h2>
-<h3 id="architectural-core-concepts">Architectural &amp; Core Concepts<a class="headerlink" href="#architectural-core-concepts" title="Permanent link">&para;</a></h3>
-<h4 id="1-defensive-programming-state-verification">1. Defensive Programming &amp; State Verification<a class="headerlink" href="#1-defensive-programming-state-verification" title="Permanent link">&para;</a></h4>
+<h3 id="architectural--core-concepts">Architectural &amp; Core Concepts<a class="headerlink" href="#architectural--core-concepts" title="Permanent link">&para;</a></h3>
+<h4 id="1-defensive-programming--state-verification">1. Defensive Programming &amp; State Verification<a class="headerlink" href="#1-defensive-programming--state-verification" title="Permanent link">&para;</a></h4>
 <p>The <code>PaymentGateway</code> class follows a style called <strong>defensive programming</strong>. This means the code checks that things are in a valid condition before it does its work, instead of assuming everything is fine.</p>
 <p>Here, <code>process_payment()</code> checks the <code>is_connected</code> flag first. If the gateway is not connected, it raises a <code>ConnectionError</code> straight away. The program fails cleanly, with a clear message, instead of carrying on and producing a wrong or confusing result.</p>
 <p>Because the gateway must be connected before it can be used, every test that processes a payment needs a connected gateway to start with. Preparing this starting state in the same way for many tests is exactly the job a pytest fixture is designed for.</p>
@@ -8898,7 +8898,7 @@ PASSED
 <li><strong>Step 8:</strong> The fixture continues after <code>yield</code> and closes the gateway. This teardown runs even if a test failed.</li>
 </ul>
 <p><a href="./#table-of-contents">Back to the Table of Contents</a></p>
-<h4 id="3-output-of-the-pytest-with-flag-s-shows-that-resources-are-optimized">3. Output of the pytest (with flag -s) shows that resources are optimized<a class="headerlink" href="#3-output-of-the-pytest-with-flag-s-shows-that-resources-are-optimized" title="Permanent link">&para;</a></h4>
+<h4 id="3-output-of-the-pytest-with-flag--s-shows-that-resources-are-optimized">3. Output of the pytest (with flag -s) shows that resources are optimized<a class="headerlink" href="#3-output-of-the-pytest-with-flag--s-shows-that-resources-are-optimized" title="Permanent link">&para;</a></h4>
 <p>When this test file is run with the <code>-s</code> flag, output capturing is turned off. The <code>print()</code> messages then appear on the screen, and they show the fixture's lifecycle clearly. We also add <code>-v</code> to see the name of each test.</p>
 <p>Run:</p>
 <div class="highlight"><pre><span></span><code>pytest<span class="w"> </span>-v<span class="w"> </span>-s<span class="w"> </span>test_payments.py
@@ -9074,7 +9074,7 @@ PASSED
 <p>With 3 tests the saving is 2 seconds. With 1,000 tests and a 2-second login, the function scope would spend over 30 minutes just logging in, while the session scope would spend 2 seconds.</p>
 <p>But notice the last row. The function scope gives every test a fresh gateway, so no test can be affected by another. The session scope gives up this safety in exchange for speed. The next section explains why that matters.</p>
 <p><a href="./#table-of-contents">Back to the Table of Contents</a></p>
-<h2 id="precautions-concerns-in-using-session-scope">Precautions &amp; Concerns in using session scope<a class="headerlink" href="#precautions-concerns-in-using-session-scope" title="Permanent link">&para;</a></h2>
+<h2 id="precautions--concerns-in-using-session-scope">Precautions &amp; Concerns in using session scope<a class="headerlink" href="#precautions--concerns-in-using-session-scope" title="Permanent link">&para;</a></h2>
 <p>Session scope can save a great deal of time, but it also brings real risks. You need to understand them and guard against them.</p>
 <p><a href="./#table-of-contents">Back to the Table of Contents</a></p>
 <h3 id="1-shared-state-contamination-test-interdependence">1. Shared State Contamination (Test Interdependence)<a class="headerlink" href="#1-shared-state-contamination-test-interdependence" title="Permanent link">&para;</a></h3>

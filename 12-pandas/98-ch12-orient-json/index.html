@@ -76,7 +76,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#chapter-12-supplement-reading-json-into-pandas-the-orient-parameter-and-json_normalize" class="md-skip">
+        <a href="#chapter-12-supplement-reading-json-into-pandas--the-orient-parameter-and-json_normalize" class="md-skip">
           Skip to content
         </a>
       
@@ -4802,7 +4802,7 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#introduction-what-this-file-contains-and-why-it-matters" class="md-nav__link">
+  <a href="#introduction--what-this-file-contains-and-why-it-matters" class="md-nav__link">
     <span class="md-ellipsis">
       
         Introduction — What This File Contains and Why It Matters
@@ -4813,7 +4813,7 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#part-a-understanding-the-orient-parameter" class="md-nav__link">
+  <a href="#part-a--understanding-the-orient-parameter" class="md-nav__link">
     <span class="md-ellipsis">
       
         Part A — Understanding the orient Parameter
@@ -4869,7 +4869,7 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#14-choosing-the-right-orient-a-decision-guide" class="md-nav__link">
+  <a href="#14-choosing-the-right-orient--a-decision-guide" class="md-nav__link">
     <span class="md-ellipsis">
       
         1.4 Choosing the Right orient — A Decision Guide
@@ -5092,7 +5092,7 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#part-b-introduction-to-json_normalize" class="md-nav__link">
+  <a href="#part-b--introduction-to-json_normalize" class="md-nav__link">
     <span class="md-ellipsis">
       
         Part B — Introduction to json_normalize()
@@ -5203,7 +5203,7 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#combined-script-part-a-all-eight-orient-examples-in-one-runnable-file" class="md-nav__link">
+  <a href="#combined-script-part-a--all-eight-orient-examples-in-one-runnable-file" class="md-nav__link">
     <span class="md-ellipsis">
       
         Combined Script (Part A — all eight orient examples in one runnable file)
@@ -5214,7 +5214,7 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#combined-script-part-b-json_normalize-in-one-runnable-file" class="md-nav__link">
+  <a href="#combined-script-part-b--json_normalize-in-one-runnable-file" class="md-nav__link">
     <span class="md-ellipsis">
       
         Combined Script (Part B — json_normalize() in one runnable file)
@@ -8494,12 +8494,12 @@
   
 
 
-<h1 id="chapter-12-supplement-reading-json-into-pandas-the-orient-parameter-and-json_normalize">Chapter 12 (Supplement): Reading JSON into Pandas — the <code>orient</code> Parameter and <code>json_normalize()</code><a class="headerlink" href="#chapter-12-supplement-reading-json-into-pandas-the-orient-parameter-and-json_normalize" title="Permanent link">&para;</a></h1>
+<h1 id="chapter-12-supplement-reading-json-into-pandas--the-orient-parameter-and-json_normalize">Chapter 12 (Supplement): Reading JSON into Pandas — the <code>orient</code> Parameter and <code>json_normalize()</code><a class="headerlink" href="#chapter-12-supplement-reading-json-into-pandas--the-orient-parameter-and-json_normalize" title="Permanent link">&para;</a></h1>
 <blockquote>
 <p><strong>GitHub source:</strong> <a href="https://github.com/ag999git/001-Python-book-2026/blob/main/12-pandas/98-ch12-orient-json.md?plain=1">98-ch12-orient-json.md</a></p>
 </blockquote>
 <hr />
-<h2 id="introduction-what-this-file-contains-and-why-it-matters">Introduction — What This File Contains and Why It Matters<a class="headerlink" href="#introduction-what-this-file-contains-and-why-it-matters" title="Permanent link">&para;</a></h2>
+<h2 id="introduction--what-this-file-contains-and-why-it-matters">Introduction — What This File Contains and Why It Matters<a class="headerlink" href="#introduction--what-this-file-contains-and-why-it-matters" title="Permanent link">&para;</a></h2>
 <p>Almost every real-world Python data project touches <strong>JSON</strong> (<em>JavaScript Object Notation — a text format for storing data as dictionaries and lists; read more on <a href="https://www.json.org/json-en.html">json.org</a></em>): web APIs return it, configuration files use it, log files store it. But JSON is <strong>not</strong> a table — it's nested and shapeless. Pandas needs to be told <em>how to interpret</em> each JSON's shape before it can build a DataFrame.</p>
 <p>This supplement covers the two tools that solve this:</p>
 <ol>
@@ -8511,7 +8511,7 @@
 <p>💡 <strong>Technical terms used below</strong> (briefly explained at first use): <strong>JSON</strong>, <strong>DataFrame</strong> (pandas' table object — rows and columns), <strong>index</strong> (row labels), <strong>NaN</strong> (pandas' marker for missing data), <strong>round-trip</strong> (saving data and loading it back with nothing lost). Official docs: <a href="https://pandas.pydata.org/docs/reference/api/pandas.read_json.html">read_json</a> · <a href="https://pandas.pydata.org/docs/reference/api/pandas.json_normalize.html">json_normalize</a> · <a href="https://pandas.pydata.org/docs/user_guide/io.html#json">IO tools guide</a>.</p>
 </blockquote>
 <hr />
-<h2 id="part-a-understanding-the-orient-parameter">Part A — Understanding the <code>orient</code> Parameter<a class="headerlink" href="#part-a-understanding-the-orient-parameter" title="Permanent link">&para;</a></h2>
+<h2 id="part-a--understanding-the-orient-parameter">Part A — Understanding the <code>orient</code> Parameter<a class="headerlink" href="#part-a--understanding-the-orient-parameter" title="Permanent link">&para;</a></h2>
 <h2 id="11-what-is-the-orient-parameter">1.1 What is the <code>orient</code> Parameter?<a class="headerlink" href="#11-what-is-the-orient-parameter" title="Permanent link">&para;</a></h2>
 <p>The <code>orient</code> parameter in pandas' <code>read_json()</code> function tells pandas <strong>how your JSON data is structured</strong> so it can correctly convert it into a DataFrame or Series. Think of it as a <strong>map that guides pandas</strong> in translating your JSON data into a tabular format that pandas can work with efficiently. JSON data can come in various shapes and formats, and <code>orient</code> helps pandas understand exactly which parts of your JSON correspond to columns, rows, index values, and data points.</p>
 <p>Without the correct <code>orient</code> setting, pandas might misinterpret your data, leading to errors or DataFrames that don't look right. For beginners, the most important thing to know is that <strong>matching the <code>orient</code> parameter to your JSON's structure is essential</strong> for successful data loading.</p>
@@ -8589,7 +8589,7 @@
 </tr>
 </tbody>
 </table>
-<h3 id="14-choosing-the-right-orient-a-decision-guide">1.4 Choosing the Right <code>orient</code> — A Decision Guide<a class="headerlink" href="#14-choosing-the-right-orient-a-decision-guide" title="Permanent link">&para;</a></h3>
+<h3 id="14-choosing-the-right-orient--a-decision-guide">1.4 Choosing the Right <code>orient</code> — A Decision Guide<a class="headerlink" href="#14-choosing-the-right-orient--a-decision-guide" title="Permanent link">&para;</a></h3>
 <p><img alt="Flowchart" src="../../resources/S12-LR-ch12-august-2026-JSON-into-pandas-01.png" /></p>
 <p><strong>Reading the figure</strong></p>
 <ul>
@@ -8979,7 +8979,7 @@ dtype: object
 <li><strong>Version Compatibility</strong>: Different pandas versions may handle 'table' format differently</li>
 </ul>
 <hr />
-<h2 id="part-b-introduction-to-json_normalize">Part B — Introduction to <code>json_normalize()</code><a class="headerlink" href="#part-b-introduction-to-json_normalize" title="Permanent link">&para;</a></h2>
+<h2 id="part-b--introduction-to-json_normalize">Part B — Introduction to <code>json_normalize()</code><a class="headerlink" href="#part-b--introduction-to-json_normalize" title="Permanent link">&para;</a></h2>
 <p>In real-world applications, JSON data is often <strong>nested</strong>, meaning that some fields may contain dictionaries or lists instead of simple values. While Pandas can read such data, the resulting DataFrame may contain columns with complex structures that are difficult to analyze.</p>
 <p>To address this, Pandas provides the <strong><code>json_normalize()</code></strong> function.</p>
 <p><strong><code>json_normalize()</code> is used to convert (flatten) nested JSON data into a flat table (DataFrame)</strong>, where each nested key becomes a separate column.</p>
@@ -9131,7 +9131,7 @@ Students with math &gt; 85:
 <p><strong>Note the dot notation:</strong> <code>grades.math</code> means <em>"the <code>math</code> key that was inside the <code>grades</code> dictionary."</em> The default separator is <code>.</code>; you can change it with the <code>sep</code> parameter (e.g. <code>sep='_'</code> gives <code>grades_math</code>).</p>
 </blockquote>
 <hr />
-<h2 id="combined-script-part-a-all-eight-orient-examples-in-one-runnable-file">Combined Script (Part A — all eight <code>orient</code> examples in one runnable file)<a class="headerlink" href="#combined-script-part-a-all-eight-orient-examples-in-one-runnable-file" title="Permanent link">&para;</a></h2>
+<h2 id="combined-script-part-a--all-eight-orient-examples-in-one-runnable-file">Combined Script (Part A — all eight <code>orient</code> examples in one runnable file)<a class="headerlink" href="#combined-script-part-a--all-eight-orient-examples-in-one-runnable-file" title="Permanent link">&para;</a></h2>
 <div class="highlight"><pre><span></span><code><span class="sd">"""</span>
 <span class="sd">SUPPLEMENT: pd.read_json() — the orient parameter</span>
 <span class="sd">Demonstrates all eight orient examples with runnable code.</span>
@@ -9292,7 +9292,7 @@ Students with math &gt; 85:
 <span class="s2">"""</span><span class="p">)</span>
 </code></pre></div>
 <hr />
-<h2 id="combined-script-part-b-json_normalize-in-one-runnable-file">Combined Script (Part B — <code>json_normalize()</code> in one runnable file)<a class="headerlink" href="#combined-script-part-b-json_normalize-in-one-runnable-file" title="Permanent link">&para;</a></h2>
+<h2 id="combined-script-part-b--json_normalize-in-one-runnable-file">Combined Script (Part B — <code>json_normalize()</code> in one runnable file)<a class="headerlink" href="#combined-script-part-b--json_normalize-in-one-runnable-file" title="Permanent link">&para;</a></h2>
 <div class="highlight"><pre><span></span><code><span class="sd">"""</span>
 <span class="sd">SUPPLEMENT: pd.json_normalize() — flattening nested JSON</span>
 <span class="sd">Shows the SAME data loaded the naive way and the normalized way.</span>

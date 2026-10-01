@@ -76,7 +76,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#chapter-7-research-question-str-versus-repr" class="md-skip">
+        <a href="#chapter-7--research-question-str-versus-repr" class="md-skip">
           Skip to content
         </a>
       
@@ -2244,7 +2244,7 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#case-1-both-__str__-and-__repr__-are-defined" class="md-nav__link">
+  <a href="#case-1--both-__str__-and-__repr__-are-defined" class="md-nav__link">
     <span class="md-ellipsis">
       
         Case 1 — Both __str__() and __repr__() are defined
@@ -2255,7 +2255,7 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#case-2-only-__repr__-is-defined-__str__-is-missing" class="md-nav__link">
+  <a href="#case-2--only-__repr__-is-defined-__str__-is-missing" class="md-nav__link">
     <span class="md-ellipsis">
       
         Case 2 — Only __repr__() is defined (__str__() is missing)
@@ -2266,7 +2266,7 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#case-3-only-__str__-is-defined-__repr__-is-missing" class="md-nav__link">
+  <a href="#case-3--only-__str__-is-defined-__repr__-is-missing" class="md-nav__link">
     <span class="md-ellipsis">
       
         Case 3 — Only __str__() is defined (__repr__() is missing)
@@ -2277,7 +2277,7 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#case-4-neither-method-is-defined" class="md-nav__link">
+  <a href="#case-4--neither-method-is-defined" class="md-nav__link">
     <span class="md-ellipsis">
       
         Case 4 — Neither method is defined
@@ -8204,7 +8204,7 @@
   
 
 
-<h1 id="chapter-7-research-question-str-versus-repr">Chapter 7 — Research Question: <code>str()</code> versus <code>repr()</code><a class="headerlink" href="#chapter-7-research-question-str-versus-repr" title="Permanent link">&para;</a></h1>
+<h1 id="chapter-7--research-question-str-versus-repr">Chapter 7 — Research Question: <code>str()</code> versus <code>repr()</code><a class="headerlink" href="#chapter-7--research-question-str-versus-repr" title="Permanent link">&para;</a></h1>
 <h2 id="what-this-page-covers">What this page covers<a class="headerlink" href="#what-this-page-covers" title="Permanent link">&para;</a></h2>
 <p>This page is a research-question deep dive for Chapter 7, following on from the earlier material on <code>__init__</code> and other dunder ("double underscore") methods. It investigates two special methods that control how an object is converted into text: <code>__str__()</code> and <code>__repr__()</code>. Earlier in the book you learned how to give an object a readable string form using <code>__str__()</code> — this page explains the <em>other</em> method Python offers for the same general purpose, why both exist, and what happens when only one of them is defined.</p>
 <p>This is relevant to every Python programmer, not just those writing complex classes, because it affects two things you'll do constantly: <strong>showing information to a user</strong> (<code>print()</code>) and <strong>debugging your own code</strong> (inspecting objects in a console, in logs, or in error messages). Choosing the right method — or understanding what happens when you only define one — changes what actually shows up in each of those situations.</p>
@@ -8280,7 +8280,7 @@
 <li>Write your conclusions.</li>
 </ol>
 <hr />
-<h2 id="case-1-both-__str__-and-__repr__-are-defined">Case 1 — Both <code>__str__()</code> and <code>__repr__()</code> are defined<a class="headerlink" href="#case-1-both-__str__-and-__repr__-are-defined" title="Permanent link">&para;</a></h2>
+<h2 id="case-1--both-__str__-and-__repr__-are-defined">Case 1 — Both <code>__str__()</code> and <code>__repr__()</code> are defined<a class="headerlink" href="#case-1--both-__str__-and-__repr__-are-defined" title="Permanent link">&para;</a></h2>
 <div class="highlight"><pre><span></span><code><span class="c1"># Example demonstrating __str__() and __repr__()</span>
 <span class="k">class</span><span class="w"> </span><span class="nc">Pet</span><span class="p">:</span>
     <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">animal_type</span><span class="p">):</span>
@@ -8315,7 +8315,7 @@
 </code></pre></div>
 <p><strong>What this shows:</strong> when both methods are defined, each one is used exactly where you'd expect — <code>print()</code>/<code>str()</code> use the friendly version, and <code>repr()</code> uses the formal, developer-oriented version.</p>
 <hr />
-<h2 id="case-2-only-__repr__-is-defined-__str__-is-missing">Case 2 — Only <code>__repr__()</code> is defined (<code>__str__()</code> is missing)<a class="headerlink" href="#case-2-only-__repr__-is-defined-__str__-is-missing" title="Permanent link">&para;</a></h2>
+<h2 id="case-2--only-__repr__-is-defined-__str__-is-missing">Case 2 — Only <code>__repr__()</code> is defined (<code>__str__()</code> is missing)<a class="headerlink" href="#case-2--only-__repr__-is-defined-__str__-is-missing" title="Permanent link">&para;</a></h2>
 <div class="highlight"><pre><span></span><code><span class="k">class</span><span class="w"> </span><span class="nc">Pet</span><span class="p">:</span>
     <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">animal_type</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="n">name</span>
@@ -8340,7 +8340,7 @@
 </code></pre></div>
 <p><strong>What this shows:</strong> removing <code>__str__()</code> doesn't cause an error or blank output — Python quietly falls back to <code>__repr__()</code> everywhere, so all three lines print the same, more "formal-looking" text.</p>
 <hr />
-<h2 id="case-3-only-__str__-is-defined-__repr__-is-missing">Case 3 — Only <code>__str__()</code> is defined (<code>__repr__()</code> is missing)<a class="headerlink" href="#case-3-only-__str__-is-defined-__repr__-is-missing" title="Permanent link">&para;</a></h2>
+<h2 id="case-3--only-__str__-is-defined-__repr__-is-missing">Case 3 — Only <code>__str__()</code> is defined (<code>__repr__()</code> is missing)<a class="headerlink" href="#case-3--only-__str__-is-defined-__repr__-is-missing" title="Permanent link">&para;</a></h2>
 <p><em>(This case wasn't in the original book exercise, but directly answers one of the natural follow-up questions above — what happens in the opposite situation?)</em></p>
 <div class="highlight"><pre><span></span><code><span class="k">class</span><span class="w"> </span><span class="nc">Pet</span><span class="p">:</span>
     <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">animal_type</span><span class="p">):</span>
@@ -8368,7 +8368,7 @@
 </code></pre></div>
 <p><strong>What this shows:</strong> the fallback relationship only goes one way. Defining <code>__str__()</code> alone does <em>not</em> give <code>repr()</code> anything useful to fall back to — you're left with Python's generic <code>&lt;ClassName object at 0x...&gt;</code> message, which reveals almost nothing about the object's actual data.</p>
 <hr />
-<h2 id="case-4-neither-method-is-defined">Case 4 — Neither method is defined<a class="headerlink" href="#case-4-neither-method-is-defined" title="Permanent link">&para;</a></h2>
+<h2 id="case-4--neither-method-is-defined">Case 4 — Neither method is defined<a class="headerlink" href="#case-4--neither-method-is-defined" title="Permanent link">&para;</a></h2>
 <p><em>(A second natural follow-up: what if you define neither?)</em></p>
 <div class="highlight"><pre><span></span><code><span class="k">class</span><span class="w"> </span><span class="nc">Pet</span><span class="p">:</span>
     <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">animal_type</span><span class="p">):</span>
