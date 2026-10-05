@@ -8275,7 +8275,7 @@
 <li><code>Animal</code> is the abstract base class. It provides <code>walk()</code> and declares the abstract method <code>speak()</code>.</li>
 <li><code>Friendly</code> is a separate, unrelated parent class that provides <code>nature()</code>.</li>
 <li><code>Cat</code> inherits from <code>Animal</code> only (single inheritance).</li>
-<li><code>Dog</code> has two arrows coming in, from <code>Animal</code> and from <code>Friendly</code>: this is multiple inheritance. Its MRO is <code>Dog</code>, <code>Animal</code>, <code>Friendly</code>, <code>object</code>.</li>
+<li><code>Dog</code> has two arrows coming in, from <code>Animal</code> and from <code>Friendly</code>: this is multiple inheritance. Its MRO is <code>Dog</code>, <code>Animal</code>, <code>ABC</code>, <code>Friendly</code>, <code>object</code>.</li>
 </ul>
 <p>Notice <code>Dog</code> has <strong>two</strong> arrows pointing into it — one from <code>Animal</code>, one from <code>Friendly</code> — this is exactly what multiple inheritance looks like: a single class combining behaviour from two separate parents at once.</p>
 <hr />
@@ -8407,17 +8407,17 @@
 <span class="c1"># --- 7. Method Resolution Order (MRO) ---</span>
 <span class="nb">print</span><span class="p">(</span><span class="n">Dog</span><span class="o">.</span><span class="vm">__mro__</span><span class="p">)</span>
 <span class="c1"># Output:</span>
-<span class="c1"># (&lt;class '__main__.Dog'&gt;, &lt;class '__main__.Animal'&gt;,</span>
+<span class="c1"># (&lt;class '__main__.Dog'&gt;, &lt;class '__main__.Animal'&gt;, &lt;class 'abc.ABC'&gt;,</span>
 <span class="c1">#  &lt;class '__main__.Friendly'&gt;, &lt;class 'object'&gt;)</span>
 <span class="c1"># This is the exact order Python searches when looking for a method on</span>
-<span class="c1"># a Dog object: Dog itself first, then Animal, then Friendly, and</span>
+<span class="c1"># a Dog object: Dog itself first, then Animal, then ABC, then Friendly, and</span>
 <span class="c1"># finally object -- the shared root every class ultimately traces back to</span>
 <span class="c1"># (see the previous chapter page on implicit inheritance from 'object').</span>
 
 <span class="c1"># --- Follow-up: compare with Cat's MRO ---</span>
 <span class="nb">print</span><span class="p">(</span><span class="n">Cat</span><span class="o">.</span><span class="vm">__mro__</span><span class="p">)</span>
 <span class="c1"># Output:</span>
-<span class="c1"># (&lt;class '__main__.Cat'&gt;, &lt;class '__main__.Animal'&gt;, &lt;class 'object'&gt;)</span>
+<span class="c1"># (&lt;class '__main__.Cat'&gt;, &lt;class '__main__.Animal'&gt;, &lt;class 'abc.ABC'&gt;, &lt;class 'object'&gt;)</span>
 <span class="c1"># Cat's MRO is SHORTER than Dog's, because Cat only has one parent</span>
 <span class="c1"># (Animal), while Dog has two (Animal and Friendly).</span>
 </code></pre></div>
