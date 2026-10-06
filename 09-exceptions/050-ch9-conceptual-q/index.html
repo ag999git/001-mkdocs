@@ -8692,13 +8692,13 @@ The answers — each one is now broken into logical steps, includes a short runn
     <span class="n">content</span> <span class="o">=</span> <span class="n">f</span><span class="o">.</span><span class="n">read</span><span class="p">()</span>
 <span class="c1"># __exit__ has ALREADY closed the file by this point, automatically</span>
 </code></pre></div>
-<p>This section of the book has an entire chapter dedicated to this topic if you'd like to go deeper — see <em>Context Managers: <code>with</code>, <code>__enter__()</code>, and <code>__exit__()</code></em> elsewhere in this chapter for a full breakdown, including how to build your own.</p>
+<p>This chapter has a whole page dedicated to this topic if you'd like to go deeper — see <em>Context Managers: <code>with</code>, <code>__enter__()</code>, and <code>__exit__()</code></em> elsewhere in this chapter for a full breakdown, including how to build your own.</p>
 <hr />
 <h3 id="9-why-must-custom-exceptions-be-derived-from-the-exception-class-rather-than-the-baseexception-class">9. Why must custom exceptions be derived from the <code>Exception</code> class rather than the <code>BaseException</code> class?<a class="headerlink" href="#9-why-must-custom-exceptions-be-derived-from-the-exception-class-rather-than-the-baseexception-class" title="Permanent link">&para;</a></h3>
 <p><strong>Answer</strong></p>
 <ol>
 <li><code>BaseException</code> sits at the very top of Python's exception hierarchy — but its direct children include things that are <em>not</em> ordinary program errors, like <code>KeyboardInterrupt</code> (Ctrl+C) and <code>SystemExit</code> (raised when the program is deliberately closing).</li>
-<li>If a custom exception were built directly on <code>BaseException</code>, a broad <code>except BaseException:</code> written somewhere else in the program could accidentally catch these system-level signals too — for example, silently swallowing the user's Ctrl+C press.</li>
+<li>Most error-handling code is written as <code>except Exception:</code>. A custom exception built directly on <code>BaseException</code> is not a child of <code>Exception</code>, so those ordinary handlers will <strong>miss</strong> it: it slips past them as Ctrl+C does, and can stop the program even where the code was written to catch every ordinary error.</li>
 <li><code>Exception</code> is a subclass of <code>BaseException</code> that specifically groups together ordinary, application-level errors — the kind you actually want caught by typical error-handling code.</li>
 <li>Building your own exceptions on top of <code>Exception</code> keeps them safely inside that "ordinary application error" category, without any risk of interfering with these system-level signals.</li>
 </ol>
@@ -8706,8 +8706,9 @@ The answers — each one is now broken into logical steps, includes a short runn
 <span class="k">class</span><span class="w"> </span><span class="nc">InsufficientBalanceError</span><span class="p">(</span><span class="ne">Exception</span><span class="p">):</span>
     <span class="k">pass</span>
 
-<span class="c1"># Risky: inherits from BaseException, and could get accidentally</span>
-<span class="c1"># caught by (or interfere with) system-level exception handling</span>
+
+<span class="c1"># Risky: inherits from BaseException, so an ordinary</span>
+<span class="c1"># 'except Exception:' handler will NOT catch it</span>
 <span class="k">class</span><span class="w"> </span><span class="nc">RiskyCustomError</span><span class="p">(</span><span class="ne">BaseException</span><span class="p">):</span>
     <span class="k">pass</span>
 </code></pre></div>
@@ -9298,7 +9299,7 @@ The answers — each one is now broken into logical steps, includes a short runn
     <span class="c1"># send error_details to a log file, database, or monitoring service</span>
     <span class="nb">print</span><span class="p">(</span><span class="s2">"An unexpected error occurred. Our team has been notified."</span><span class="p">)</span>
 </code></pre></div>
-<p>This section of the book covers <code>traceback</code> — along with <code>sys.exc_info()</code> and the modern <code>e.__traceback__</code> attribute — in much greater depth in the two chapters specifically dedicated to it.</p>
+<p>This section of the book covers <code>traceback</code> — along with <code>sys.exc_info()</code> and the modern <code>e.__traceback__</code> attribute — in much greater depth in the two pages of this chapter specifically dedicated to it.</p>
 <hr />
 <h3 id="39-why-is-it-a-best-practice-to-keep-the-try-block-as-small-as-possible">39. Why is it a best practice to keep the <code>try</code> block as small as possible?<a class="headerlink" href="#39-why-is-it-a-best-practice-to-keep-the-try-block-as-small-as-possible" title="Permanent link">&para;</a></h3>
 <p><strong>Answer</strong></p>
