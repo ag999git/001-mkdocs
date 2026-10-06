@@ -8355,7 +8355,7 @@
 
 
 <h1 id="exceptions-as-objects-__traceback__-and-the-traceback-module">Exceptions as Objects: <code>__traceback__</code> and the <code>traceback</code> Module<a class="headerlink" href="#exceptions-as-objects-__traceback__-and-the-traceback-module" title="Permanent link">&para;</a></h1>
-<p>The previous section showed how to pull detailed error information out of <code>sys.exc_info()</code>. This section covers a more modern, more direct route to almost the same information: the exception object itself already carries its own traceback, available directly as <code>e.__traceback__</code>. Since Python 3, exceptions are simply objects — and like any object, they store their own data. Once you know that, a lot of what felt like "extra machinery" around error handling turns out to be sitting right there on the exception you already caught with <code>except ... as e</code>.</p>
+<p>The previous section showed how to pull detailed error information out of <code>sys.exc_info()</code>. This section covers a more modern, more direct route to almost the same information: the exception object itself already carries its own traceback, available directly as <code>e.__traceback__</code>. Exceptions are objects — and since Python 3 every exception object also stores its own traceback, in the <code>__traceback__</code> attribute. Once you know that, a lot of what felt like "extra machinery" around error handling turns out to be sitting right there on the exception you already caught with <code>except ... as e</code>.</p>
 <p>This section is meant to be read as a natural follow-on to the previous one — same underlying idea (extracting rich detail about an error, not just its message), but a cleaner way of getting there, and one you're more likely to see used in modern Python code.</p>
 <hr />
 <h2 id="research-question-part-1-discussion">Research Question (Part 1 Discussion)<a class="headerlink" href="#research-question-part-1-discussion" title="Permanent link">&para;</a></h2>
@@ -8380,7 +8380,7 @@
 <hr />
 <h2 id="answer">Answer<a class="headerlink" href="#answer" title="Permanent link">&para;</a></h2>
 <h3 id="step-1-exceptions-are-objects">Step 1: Exceptions are objects<a class="headerlink" href="#step-1-exceptions-are-objects" title="Permanent link">&para;</a></h3>
-<p>In Python 3, every exception you catch is a genuine <strong>object</strong>, built from an exception class — and like any object, it carries its own data around with it, ready to be inspected.</p>
+<p>Every exception you catch is a genuine <strong>object</strong>, built from an exception class — and like any object, it carries its own data around with it, ready to be inspected.</p>
 <div class="highlight"><pre><span></span><code><span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
     <span class="o">...</span>
 </code></pre></div>
@@ -8455,7 +8455,7 @@
 </tr>
 </tbody>
 </table>
-<p><strong>In short:</strong> <code>e.__traceback__</code> is the more direct, more modern way to get at the same traceback information <code>sys.exc_info()</code> provides — since Python 3 made exceptions full objects, there's usually no need to go through <code>sys</code> at all if you already have the exception object in hand from <code>except ... as e</code>.</p>
+<p><strong>In short:</strong> <code>e.__traceback__</code> is the more direct, more modern way to get at the same traceback information <code>sys.exc_info()</code> provides — since Python 3 added the <code>__traceback__</code> attribute to every exception object, there's usually no need to go through <code>sys</code> at all if you already have the exception object in hand from <code>except ... as e</code>.</p>
 <h3 id="step-4-tracebackextract_tb-and-tracebackformat_exc">Step 4: <code>traceback.extract_tb()</code> and <code>traceback.format_exc()</code><a class="headerlink" href="#step-4-tracebackextract_tb-and-tracebackformat_exc" title="Permanent link">&para;</a></h3>
 <p><strong>Why we still need the <code>traceback</code> module at all:</strong> <code>e.__traceback__</code> on its own is <em>raw</em> data — a chain of internal objects that isn't very readable by itself. The <code>traceback</code> module is what turns that raw data into something a human (or a log file) can actually use.</p>
 <p><strong><code>traceback.extract_tb()</code></strong></p>
