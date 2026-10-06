@@ -8852,9 +8852,11 @@
 <div class="highlight"><pre><span></span><code><span class="n">my_list</span> <span class="o">=</span> <span class="p">[</span><span class="mi">10</span><span class="p">,</span> <span class="mi">20</span><span class="p">]</span>
 
 <span class="k">try</span><span class="p">:</span>
-    <span class="c1"># Step 1: valid indices here are only 0 and 1 -- index 2 is</span>
-    <span class="c1"># one position past the end of this 2-item list</span>
-    <span class="n">item</span> <span class="o">=</span> <span class="n">my_list</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span>
+    <span class="c1"># Step 1: the loop asks for positions 0, 1 and 2, but valid</span>
+    <span class="c1"># indices here are only 0 and 1 -- index 2 is one position</span>
+    <span class="c1"># past the end of this 2-item list</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">3</span><span class="p">):</span>
+        <span class="nb">print</span><span class="p">(</span><span class="n">my_list</span><span class="p">[</span><span class="n">i</span><span class="p">])</span>
 
 <span class="k">except</span> <span class="ne">IndexError</span><span class="p">:</span>
     <span class="nb">print</span><span class="p">(</span><span class="s2">"List Error: You are trying to access a position that doesn't exist."</span><span class="p">)</span>
@@ -8983,9 +8985,10 @@
     <span class="c1"># Catching KeyboardInterrupt BY NAME, deliberately, is fine --</span>
     <span class="c1"># it's a conscious choice to react to Ctrl+C specifically.</span>
     <span class="c1"># What's usually avoided is catching it ACCIDENTALLY through a</span>
-    <span class="c1"># bare 'except:' or an overly broad 'except Exception:' block</span>
-    <span class="c1"># (see Exercise 8), which silently swallows it along with</span>
-    <span class="c1"># everything else.</span>
+    <span class="c1"># bare 'except:' or 'except BaseException:' block (see Exercise 8),</span>
+    <span class="c1"># which silently swallows it along with everything else.</span>
+    <span class="c1"># ('except Exception:' does NOT catch it: KeyboardInterrupt comes</span>
+    <span class="c1"># directly from BaseException, not from Exception.)</span>
     <span class="nb">print</span><span class="p">(</span><span class="s2">"User aborted the process."</span><span class="p">)</span>
 </code></pre></div>
 <hr />
@@ -9110,7 +9113,8 @@
     <span class="nb">print</span><span class="p">(</span><span class="n">error_stack</span><span class="p">)</span>
 </code></pre></div>
 <blockquote>
-<p>This section of the book covers <code>sys.exc_info()</code>, <code>e.__traceback__</code>, and the <code>traceback</code> module in much greater depth in the two chapters specifically dedicated to them.</p>
+<p>This section of the book covers <code>sys.exc_info()</code>, <code>e.__traceback__</code>, and the <code>traceback</code> module in much greater depth
+in the two pages of this chapter specifically dedicated to them.</p>
 </blockquote>
 <hr />
 <h3 id="37-advanced-create-a-custom-context-manager-using-a-class-with-__enter__-and-__exit__">37. <em>(Advanced)</em> Create a custom Context Manager using a class with <code>__enter__</code> and <code>__exit__</code>.<a class="headerlink" href="#37-advanced-create-a-custom-context-manager-using-a-class-with-__enter__-and-__exit__" title="Permanent link">&para;</a></h3>
@@ -9152,7 +9156,9 @@
 <span class="c1"># genuinely want to ignore ONE particular, expected exception type</span>
 <span class="k">with</span> <span class="n">suppress</span><span class="p">(</span><span class="ne">FileNotFoundError</span><span class="p">):</span>
     <span class="n">os</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span><span class="s2">"non_existent_file.txt"</span><span class="p">)</span>
-    <span class="nb">print</span><span class="p">(</span><span class="s2">"This line runs, but nothing happens if the file is missing."</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">"File removed."</span><span class="p">)</span>   <span class="c1"># skipped if the file is missing</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s2">"The program carries on, whether or not the file existed."</span><span class="p">)</span>
 </code></pre></div>
 <blockquote>
 <p><strong>A word of caution:</strong> this is one of the few places where silently ignoring an exception is considered acceptable practice — but only because it names one <em>specific</em>, genuinely expected exception type. Compare this to the dangers of silently swallowing <em>everything</em>, covered in the conceptual Q&amp;A (Question 35).</p>
