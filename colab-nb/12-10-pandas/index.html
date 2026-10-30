@@ -7273,6 +7273,8 @@
       
         
       
+        
+      
     
     
     
@@ -8825,6 +8827,34 @@
     
   
     Chapter 21: Design Patterns in Python
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../17-10-strings_1/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter 17: Strings (Beyond Basics)
   
 
     
@@ -10605,7 +10635,7 @@ dtype: float64
 <span class="c1"># Note: In dictionaries, the keys automatically become the custom index labels</span>
 <span class="n">data_dict</span> <span class="o">=</span> <span class="p">{</span><span class="s1">'Name'</span><span class="p">:</span> <span class="s1">'John'</span><span class="p">,</span> <span class="s1">'Age'</span><span class="p">:</span> <span class="mi">25</span><span class="p">,</span> <span class="s1">'City'</span><span class="p">:</span> <span class="s1">'NYC'</span><span class="p">}</span>
 <span class="n">s3</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">(</span><span class="n">data_dict</span><span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span><span class="s2">"</span><span class="se">\n</span><span class="s2">From Dictionary:</span><span class="se">\n</span><span class="s2">"</span><span class="p">,</span> <span class="n">s3</span><span class="p">)</span>  <span class="c1"># The keys ('Name', 'Age', 'City') become the index</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">"</span><span class="se">\n</span><span class="s2">From Dictionary:</span><span class="se">\n</span><span class="s2">"</span><span class="p">,</span> <span class="n">s3</span><span class="p">)</span>  <span class="c1"># The keys become the index</span>
 
 <span class="c1"># Method 6: From NumPy Array with Custom Index</span>
 <span class="n">arr</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mf">1.5</span><span class="p">,</span> <span class="mf">2.5</span><span class="p">,</span> <span class="mf">3.5</span><span class="p">,</span> <span class="mf">4.5</span><span class="p">])</span>
@@ -10646,7 +10676,7 @@ print("\nWith Custom Index:\n", s2) # Custom index labels are 'a', 'b', 'c'
 # Note: In dictionaries, the keys automatically become the custom index labels
 data_dict = {'Name': 'John', 'Age': 25, 'City': 'NYC'}
 s3 = pd.Series(data_dict)
-print("\nFrom Dictionary:\n", s3)  # The keys ('Name', 'Age', 'City') become the index
+print("\nFrom Dictionary:\n", s3)  # The keys become the index
 
 # Method 6: From NumPy Array with Custom Index
 arr = np.array([1.5, 2.5, 3.5, 4.5])
@@ -12151,7 +12181,7 @@ Day names in capitals: ['SUN' 'SAT' 'THUR' 'FRI']
     <span class="p">{</span><span class="s1">'Shop'</span><span class="p">:</span> <span class="s1">'Shop1'</span><span class="p">,</span> <span class="s1">'Item'</span><span class="p">:</span> <span class="s1">'Item1'</span><span class="p">,</span> <span class="s1">'sale'</span><span class="p">:</span> <span class="mi">200</span><span class="p">}</span>
 <span class="p">]</span>
 
-<span class="c1"># 2. Create DataFrame in "long" format (one row per sale record).</span>
+<span class="c1"># 2. Create a DataFrame in "long" format (one row per sale record).</span>
 <span class="n">sale_df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">sale_data</span><span class="p">)</span>
 <span class="nb">print</span><span class="p">(</span><span class="s2">"Original Data:</span><span class="se">\n</span><span class="s2">"</span><span class="p">,</span> <span class="n">sale_df</span><span class="p">)</span>
 
@@ -12160,7 +12190,7 @@ Day names in capitals: ['SUN' 'SAT' 'THUR' 'FRI']
 <span class="n">pv</span> <span class="o">=</span> <span class="n">sale_df</span><span class="o">.</span><span class="n">pivot_table</span><span class="p">(</span><span class="n">index</span><span class="o">=</span><span class="s1">'Shop'</span><span class="p">,</span> <span class="c1"># Index will be the Shop names</span>
                         <span class="n">columns</span><span class="o">=</span><span class="s1">'Item'</span><span class="p">,</span> <span class="c1"># Columns will be the Item names</span>
                         <span class="n">values</span><span class="o">=</span><span class="s1">'sale'</span><span class="p">,</span>  <span class="c1"># Values will be the 'sale' amounts</span>
-                        <span class="n">aggfunc</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">,</span> <span class="c1"># aggfunc is sum.</span>
+                        <span class="n">aggfunc</span><span class="o">=</span><span class="s1">'sum'</span><span class="p">,</span> <span class="c1"># aggfunc is sum.</span>
                         <span class="n">fill_value</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>  <span class="c1"># NaN → 0 →visualing stack/unstack</span>
 <span class="nb">print</span><span class="p">(</span><span class="s2">"pivot table:→</span><span class="se">\n</span><span class="s2">"</span><span class="p">,</span> <span class="n">pv</span><span class="p">)</span>
 
@@ -12196,7 +12226,7 @@ sale_data = [
     {'Shop': 'Shop1', 'Item': 'Item1', 'sale': 200}
 ]
 
-# 2. Create DataFrame in "long" format (one row per sale record).
+# 2. Create a DataFrame in "long" format (one row per sale record).
 sale_df = pd.DataFrame(sale_data)
 print("Original Data:\n", sale_df)
 
@@ -12205,7 +12235,7 @@ print("Original Data:\n", sale_df)
 pv = sale_df.pivot_table(index='Shop', # Index will be the Shop names
                         columns='Item', # Columns will be the Item names
                         values='sale',  # Values will be the 'sale' amounts
-                        aggfunc=np.sum, # aggfunc is sum.
+                        aggfunc='sum', # aggfunc is sum.
                         fill_value=0)  # NaN → 0 →visualing stack/unstack
 print("pivot table:→\n", pv)
 
@@ -12284,14 +12314,6 @@ Item
 Item1    290    100      0     80
 Item2     70    100      0      0
 Item3      0      0    250      0
-</pre>
-</div>
-</div>
-<div class="jp-OutputArea-child">
-<div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
-<div class="jp-RenderedText jp-OutputArea-output" data-mime-type="application/vnd.jupyter.stderr" tabindex="0">
-<pre>/tmp/ipykernel_473/939392056.py:23: FutureWarning: The provided callable &lt;function sum at 0x7f7b2095e480&gt; is currently using DataFrameGroupBy.sum. In a future version of pandas, the provided callable will be used directly. To keep current behavior pass the string "sum" instead.
-  pv = sale_df.pivot_table(index='Shop', # Index will be the Shop names
 </pre>
 </div>
 </div>
@@ -13503,6 +13525,7 @@ Read back: (244, 7) rows x columns
 </div>
 <div class="highlight-ipynb hl-python"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">pandas</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">pd</span>
 <span class="kn">import</span><span class="w"> </span><span class="nn">requests</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">io</span><span class="w"> </span><span class="kn">import</span> <span class="n">StringIO</span>
 
 <span class="c1"># STEP 1: Provide input (URL or HTML file)</span>
 <span class="c1"># Input must contain HTML with one or more tables</span>
@@ -13519,7 +13542,7 @@ Read back: (244, 7) rows x columns
 
 <span class="c1"># STEP 3: Call read_html()</span>
 <span class="c1"># Pass HTML content in html_text instead of URL</span>
-<span class="n">tables</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_html</span><span class="p">(</span><span class="n">html_text</span><span class="p">)</span>
+<span class="n">tables</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_html</span><span class="p">(</span><span class="n">StringIO</span><span class="p">(</span><span class="n">html_text</span><span class="p">))</span>
 
 <span class="c1"># STEP 4: Read HTML content (Already done via requests.get())</span>
 
@@ -13544,6 +13567,7 @@ Read back: (244, 7) rows x columns
 </pre></div>
 <div class="clipboard-copy-txt" id="cell-19">import pandas as pd
 import requests
+from io import StringIO
 
 # STEP 1: Provide input (URL or HTML file)
 # Input must contain HTML with one or more tables
@@ -13560,7 +13584,7 @@ html_text = response.text  # Raw HTML. Contains the tables we want to extract.
 
 # STEP 3: Call read_html()
 # Pass HTML content in html_text instead of URL
-tables = pd.read_html(html_text)
+tables = pd.read_html(StringIO(html_text))
 
 # STEP 4: Read HTML content (Already done via requests.get())
 
@@ -13618,14 +13642,6 @@ STEP 11: Selected table preview:
 2        8.0         5.76  
 3        8.0         7.71  
 4        8.0         8.84  
-</pre>
-</div>
-</div>
-<div class="jp-OutputArea-child">
-<div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
-<div class="jp-RenderedText jp-OutputArea-output" data-mime-type="application/vnd.jupyter.stderr" tabindex="0">
-<pre>/tmp/ipykernel_1575/2509845714.py:19: FutureWarning: Passing literal html to 'read_html' is deprecated and will be removed in a future version. To read from a literal string, wrap it in a 'StringIO' object.
-  tables = pd.read_html(html_text)
 </pre>
 </div>
 </div>
@@ -13826,7 +13842,7 @@ print(df_excel.head())
 <span class="nb">print</span><span class="p">(</span><span class="s2">"Islands:-&gt;"</span><span class="p">,</span> <span class="n">penguins</span><span class="p">[</span><span class="s1">'island'</span><span class="p">]</span><span class="o">.</span><span class="n">unique</span><span class="p">())</span>
 <span class="c1"># Islands:-&gt; ['Torgersen', 'Biscoe', 'Dream']</span>
 <span class="nb">print</span><span class="p">(</span><span class="s2">"Sex:-&gt;"</span><span class="p">,</span> <span class="n">penguins</span><span class="p">[</span><span class="s1">'sex'</span><span class="p">]</span><span class="o">.</span><span class="n">unique</span><span class="p">())</span>
-<span class="c1"># Sex:-&gt; ['Male', 'Female', NaN]  # Note: There are some missing values in 'sex' column</span>
+<span class="c1"># Sex:-&gt; ['Male', 'Female', NaN]  # Note: some 'sex' values are missing</span>
 
 <span class="c1"># STEP 3: Remove missing values (important)</span>
 <span class="n">penguins</span> <span class="o">=</span> <span class="n">penguins</span><span class="o">.</span><span class="n">dropna</span><span class="p">(</span><span class="n">subset</span><span class="o">=</span><span class="p">[</span><span class="s1">'sex'</span><span class="p">])</span>
@@ -13850,7 +13866,7 @@ print(df_excel.head())
 <span class="nb">print</span><span class="p">(</span><span class="s2">"</span><span class="se">\n</span><span class="s2">STEP 5: NUMBER OF GROUPS"</span><span class="p">)</span>
 <span class="nb">print</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">grouped</span><span class="p">))</span>  <span class="c1"># 6. We have 6 combinations of island and sex</span>
 
-<span class="c1"># STEP 6: Access one group of the MultiIndex. Example, count of male penguins on Biscoe island.</span>
+<span class="c1"># STEP 6: Access one group of the MultiIndex, e.g. males on Biscoe island.</span>
 <span class="nb">print</span><span class="p">(</span><span class="s2">"</span><span class="se">\n</span><span class="s2">STEP 6: ACCESS ONE GROUP"</span><span class="p">)</span>
 <span class="nb">print</span><span class="p">(</span><span class="s2">"Male penguins on Biscoe island:"</span><span class="p">,</span> <span class="n">grouped</span><span class="o">.</span><span class="n">loc</span><span class="p">[(</span><span class="s1">'Biscoe'</span><span class="p">,</span> <span class="s1">'Male'</span><span class="p">)])</span>
 <span class="c1"># 83 is the count of male penguins on Biscoe island according to the dataset</span>
@@ -13869,7 +13885,7 @@ print("\nSTEP 2: UNIQUE VALUES")
 print("Islands:-&gt;", penguins['island'].unique())
 # Islands:-&gt; ['Torgersen', 'Biscoe', 'Dream']
 print("Sex:-&gt;", penguins['sex'].unique())
-# Sex:-&gt; ['Male', 'Female', NaN]  # Note: There are some missing values in 'sex' column
+# Sex:-&gt; ['Male', 'Female', NaN]  # Note: some 'sex' values are missing
 
 # STEP 3: Remove missing values (important)
 penguins = penguins.dropna(subset=['sex'])
@@ -13893,7 +13909,7 @@ print("Grouped Data-&gt;\n", grouped)
 print("\nSTEP 5: NUMBER OF GROUPS")
 print(len(grouped))  # 6. We have 6 combinations of island and sex
 
-# STEP 6: Access one group of the MultiIndex. Example, count of male penguins on Biscoe island.
+# STEP 6: Access one group of the MultiIndex, e.g. males on Biscoe island.
 print("\nSTEP 6: ACCESS ONE GROUP")
 print("Male penguins on Biscoe island:", grouped.loc[('Biscoe', 'Male')])
 # 83 is the count of male penguins on Biscoe island according to the dataset

@@ -7273,6 +7273,8 @@
       
         
       
+        
+      
     
     
     
@@ -9207,6 +9209,34 @@
     
   
     Chapter 21: Design Patterns in Python
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../17-10-strings_1/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter 17: Strings (Beyond Basics)
   
 
     
@@ -11933,11 +11963,11 @@ result = re.match(r"\d+", text)
 <div class="highlight-ipynb hl-python"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">re</span>
 <span class="n">text</span> <span class="o">=</span> <span class="s2">"abc 123 def 456"</span>
 
-<span class="c1"># Example 1: Capture ONLY the two digit sequences. Ignore text between them.</span>
+<span class="c1"># Example 1: Capture ONLY the two-digit sequences. Ignore the text between them.</span>
 <span class="c1"># The pattern is r"(\d+)\D+(\d+)".</span>
 <span class="c1"># (\d+) captures first sequence of digits (the first group),</span>
 <span class="c1"># \D+ matches space &amp; "def" between "123" &amp; "456". Does not capture them as group.</span>
-<span class="c1"># (\d+) matches and captures the second sequence of digits (456) (the second group).</span>
+<span class="c1"># (\d+) matches and captures the second sequence of digits (456) (group 2).</span>
 
 <span class="n">m1</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">search</span><span class="p">(</span><span class="sa">r</span><span class="s2">"(\d+)\D+(\d+)"</span><span class="p">,</span> <span class="n">text</span><span class="p">)</span>
 <span class="nb">print</span><span class="p">(</span><span class="s2">"First digits :"</span><span class="p">,</span> <span class="n">m1</span><span class="o">.</span><span class="n">group</span><span class="p">(</span><span class="mi">1</span><span class="p">))</span>   <span class="c1"># 123</span>
@@ -11957,11 +11987,11 @@ result = re.match(r"\d+", text)
 <div class="clipboard-copy-txt" id="cell-8">import re
 text = "abc 123 def 456"
 
-# Example 1: Capture ONLY the two digit sequences. Ignore text between them.
+# Example 1: Capture ONLY the two-digit sequences. Ignore the text between them.
 # The pattern is r"(\d+)\D+(\d+)".
 # (\d+) captures first sequence of digits (the first group),
 # \D+ matches space &amp; "def" between "123" &amp; "456". Does not capture them as group.
-# (\d+) matches and captures the second sequence of digits (456) (the second group).
+# (\d+) matches and captures the second sequence of digits (456) (group 2).
 
 m1 = re.search(r"(\d+)\D+(\d+)", text)
 print("First digits :", m1.group(1))   # 123
@@ -12132,7 +12162,7 @@ Second digits: 456
 <span class="c1"># 5. re.finditer()</span>
 <span class="c1"># Finds ALL matches and returns an ITERATOR</span>
 <span class="c1"># Each item is a Match object</span>
-<span class="nb">print</span><span class="p">(</span><span class="s2">"re.finditer(r'\d+', text):"</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">r</span><span class="s2">"re.finditer(r'\d+', text):"</span><span class="p">)</span>
 <span class="k">for</span> <span class="n">match</span> <span class="ow">in</span> <span class="n">re</span><span class="o">.</span><span class="n">finditer</span><span class="p">(</span><span class="sa">r</span><span class="s2">"\d+"</span><span class="p">,</span> <span class="n">text</span><span class="p">):</span>  <span class="c1"># Iterate over all matches</span>
     <span class="nb">print</span><span class="p">(</span><span class="s2">"Match:"</span><span class="p">,</span> <span class="n">match</span><span class="o">.</span><span class="n">group</span><span class="p">(),</span> <span class="s2">"at position"</span><span class="p">,</span> <span class="n">match</span><span class="o">.</span><span class="n">start</span><span class="p">())</span>
 <span class="c1"># Match: 123 at position 4</span>
@@ -12190,7 +12220,7 @@ print(f"Findall {r'\d+'} In {text}-&gt; {result}")
 # 5. re.finditer()
 # Finds ALL matches and returns an ITERATOR
 # Each item is a Match object
-print("re.finditer(r'\d+', text):")
+print(r"re.finditer(r'\d+', text):")
 for match in re.finditer(r"\d+", text):  # Iterate over all matches
     print("Match:", match.group(), "at position", match.start())
 # Match: 123 at position 4
@@ -12236,16 +12266,6 @@ Match: 456 at position 12
 Split \s+ In abc 123 def 456-&gt; ['abc', '123', 'def', '456']
 Sub \d+ With '#' In abc 123 def 456-&gt; abc # def #
 Subn \d+ With '#' In abc 123 def 456-&gt;  ('abc # def #', 2)
-</pre>
-</div>
-</div>
-<div class="jp-OutputArea-child">
-<div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
-<div class="jp-RenderedText jp-OutputArea-output" data-mime-type="application/vnd.jupyter.stderr" tabindex="0">
-<pre>&lt;&gt;:34: SyntaxWarning: invalid escape sequence '\d'
-&lt;&gt;:34: SyntaxWarning: invalid escape sequence '\d'
-/tmp/ipykernel_687/3856532202.py:34: SyntaxWarning: invalid escape sequence '\d'
-  print("re.finditer(r'\d+', text):")
 </pre>
 </div>
 </div>
@@ -13059,7 +13079,7 @@ Without the flag: None
 <span class="k">if</span> <span class="n">p</span><span class="o">.</span><span class="n">flags</span> <span class="o">&amp;</span> <span class="n">re</span><span class="o">.</span><span class="n">I</span><span class="p">:</span>                      <span class="c1"># is the IGNORECASE flag set?</span>
     <span class="nb">print</span><span class="p">(</span><span class="s2">"Case Insensitive is ON"</span><span class="p">)</span>
 
-<span class="k">if</span> <span class="n">p</span><span class="o">.</span><span class="n">flags</span> <span class="o">&amp;</span> <span class="n">re</span><span class="o">.</span><span class="n">S</span><span class="p">:</span>                      <span class="c1"># is the DOTALL flag set?</span>
+<span class="k">if</span> <span class="n">p</span><span class="o">.</span><span class="n">flags</span> <span class="o">&amp;</span> <span class="n">re</span><span class="o">.</span><span class="n">S</span><span class="p">:</span>  <span class="c1"># Check if DOTALL flag is set</span>
     <span class="nb">print</span><span class="p">(</span><span class="s2">"DotAll is ON"</span><span class="p">)</span>
 <span class="k">else</span><span class="p">:</span>
     <span class="nb">print</span><span class="p">(</span><span class="s2">"DotAll is OFF"</span><span class="p">)</span>
@@ -13072,7 +13092,7 @@ print(p.flags)   # 42: re.UNICODE (32) + re.I (2) + re.M (8)
 if p.flags &amp; re.I:                      # is the IGNORECASE flag set?
     print("Case Insensitive is ON")
 
-if p.flags &amp; re.S:                      # is the DOTALL flag set?
+if p.flags &amp; re.S:  # Check if DOTALL flag is set
     print("DotAll is ON")
 else:
     print("DotAll is OFF")</div>
@@ -13205,7 +13225,7 @@ DotAll is OFF
 <span class="c1"># Output: m.groups() -&gt; ('123',)</span>
 
 <span class="c1"># 4. m.groupdict() - Named capturing groups as a dictionary</span>
-<span class="n">m_named</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">search</span><span class="p">(</span><span class="sa">r</span><span class="s2">"(?P&lt;digits&gt;\d+)"</span><span class="p">,</span> <span class="s2">"abc 123 def 456"</span><span class="p">)</span>  <span class="c1"># Search with named capturing group</span>
+<span class="n">m_named</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">search</span><span class="p">(</span><span class="sa">r</span><span class="s2">"(?P&lt;digits&gt;\d+)"</span><span class="p">,</span> <span class="s2">"abc 123 def 456"</span><span class="p">)</span>  <span class="c1"># Named group</span>
 <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"m_named.groupdict() -&gt; </span><span class="si">{</span><span class="n">m_named</span><span class="o">.</span><span class="n">groupdict</span><span class="p">()</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
 <span class="c1"># Output: m_named.groupdict() -&gt; {'digits': '123'}</span>
 </pre></div>
@@ -13225,7 +13245,7 @@ print(f"m.groups() -&gt; {m.groups()}")
 # Output: m.groups() -&gt; ('123',)
 
 # 4. m.groupdict() - Named capturing groups as a dictionary
-m_named = re.search(r"(?P&lt;digits&gt;\d+)", "abc 123 def 456")  # Search with named capturing group
+m_named = re.search(r"(?P&lt;digits&gt;\d+)", "abc 123 def 456")  # Named group
 print(f"m_named.groupdict() -&gt; {m_named.groupdict()}")
 # Output: m_named.groupdict() -&gt; {'digits': '123'}
 
@@ -13428,7 +13448,7 @@ print(m_named.groupdict())</div>
 <span class="nb">print</span><span class="p">(</span><span class="n">match</span><span class="o">.</span><span class="n">group</span><span class="p">(</span><span class="mi">1</span><span class="p">))</span>   <span class="c1"># "abc" matches the first capturing group</span>
 <span class="nb">print</span><span class="p">(</span><span class="n">match</span><span class="o">.</span><span class="n">group</span><span class="p">(</span><span class="mi">2</span><span class="p">))</span>   <span class="c1"># "123" matches the second capturing group</span>
 <span class="nb">print</span><span class="p">(</span><span class="n">match</span><span class="o">.</span><span class="n">group</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">))</span>  <span class="c1"># ("abc", "123") matches both groups as a tuple</span>
-<span class="nb">print</span><span class="p">(</span><span class="n">match</span><span class="o">.</span><span class="n">group</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">0</span><span class="p">))</span>  <span class="c1"># ("abc", "123", "abc123") matches groups 1, 2, and the entire match as a tuple</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">match</span><span class="o">.</span><span class="n">group</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">0</span><span class="p">))</span>  <span class="c1"># ("abc", "123", "abc123"): groups 1, 2, 0</span>
 
 <span class="c1"># Following if uncommented raises IndexError as there is no group 3</span>
 <span class="c1"># print(match.group(3))  # ERROR</span>
@@ -13440,7 +13460,7 @@ print(match.group(0))   # "abc123" also matches the entire match
 print(match.group(1))   # "abc" matches the first capturing group
 print(match.group(2))   # "123" matches the second capturing group
 print(match.group(1, 2))  # ("abc", "123") matches both groups as a tuple
-print(match.group(1, 2, 0))  # ("abc", "123", "abc123") matches groups 1, 2, and the entire match as a tuple
+print(match.group(1, 2, 0))  # ("abc", "123", "abc123"): groups 1, 2, 0
 
 # Following if uncommented raises IndexError as there is no group 3
 # print(match.group(3))  # ERROR
@@ -14094,7 +14114,7 @@ cat
 
 <span class="c1"># 3.    Example 3: Cleaner Group Numbering</span>
 <span class="c1"># Explaining: (?:Mr|Ms|Dr)\. (\w+)</span>
-<span class="c1"># (?:Mr|Ms|Dr)→ non-capturing group→ matches title but doesnt create numbered group</span>
+<span class="c1"># (?:Mr|Ms|Dr)→ non-capturing group→ matches title, no numbered group</span>
 <span class="c1"># while (\w+) captures the name as Group 1.</span>
 <span class="n">m</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">search</span><span class="p">(</span><span class="sa">r</span><span class="s2">"(?:Mr|Ms|Dr)\. (\w+)"</span><span class="p">,</span> <span class="s2">"Dr. John"</span><span class="p">)</span>
 <span class="nb">print</span><span class="p">(</span><span class="n">m</span><span class="o">.</span><span class="n">group</span><span class="p">(</span><span class="mi">1</span><span class="p">))</span>  <span class="c1"># Output: John</span>
@@ -14127,7 +14147,7 @@ print(result)  # Output: ['cat', 'dog', 'rat']
 
 # 3.    Example 3: Cleaner Group Numbering
 # Explaining: (?:Mr|Ms|Dr)\. (\w+)
-# (?:Mr|Ms|Dr)→ non-capturing group→ matches title but doesnt create numbered group
+# (?:Mr|Ms|Dr)→ non-capturing group→ matches title, no numbered group
 # while (\w+) captures the name as Group 1.
 m = re.search(r"(?:Mr|Ms|Dr)\. (\w+)", "Dr. John")
 print(m.group(1))  # Output: John
