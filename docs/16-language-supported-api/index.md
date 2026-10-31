@@ -17,6 +17,8 @@ You need to be comfortable with lists, dictionaries, loops and functions before 
 | [Scripting Questions with Answers](065-ch16-scripting-qa-easy.md) | Twenty short programs with complete answers: linear and binary search, bubble, insertion and selection sort, stacks, queues and the `collections` types | Practice |
 | [Advanced Scripting Questions with Answers](070-ch16-scripting-qa-hard.md) | Twenty harder programs: timing comparisons, early-exit sorting, producer-consumer threads, an LRU cache, `groupby` and measured Big-O growth | Practice, after the easier set |
 
+The `dataclasses` section of the Real-World page declares each field with a type hint, such as `name: str`. If type hints are new to you, read [Type Hints](../06-functions2/010-ch6-type-hints.md) in the Chapter 6 pages first; its Section 9 is about dataclasses.
+
 ## Suggested Reading Order
 
 1. **Converting a NamedTuple into a Dictionary** as a gentle start; it is one exercise, worked through completely.
