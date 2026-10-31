@@ -15,6 +15,7 @@ You need Chapter 5 first.
 | [zip(), lambda, map() and filter()](006-ch6-zip.md) | The four functional tools, one at a time, then combined | After questions 10 to 15 |
 | [Advanced Generators](007-ch6-generators-advanced.md) | What happens when a generator finishes, how `for` drives one, and two worked generators | After questions 16 and 17 |
 | [functools.wraps in Decorators](009-ch6-functools-decorators.md) | Why a decorator quietly loses the name and docstring of the function it wraps, and the one line that fixes it | When you write your first decorator |
+| [Type Hints](010-ch6-type-hints.md) | What a type hint is, why Python ignores hints when the program runs, hints for lists, dictionaries and values that may be `None`, and how mypy finds type mistakes before you run | Once you can write functions with confidence |
 | [Additional Problems on Recursion](004-ch6-additional-recursion-problems.md) | Five worked recursive problems: powers, palindromes, GCD, Tower of Hanoi, and testing for even | Practice |
 | [Beyond the Text: Research Tasks](005-beyond-text-ch6-functions2.md) | Eight open-ended tasks, from reading real library source to writing a pseudo-random generator | Going further |
 | [Interactive Notebook](001-ch6-colab.md) | Opens this chapter's exercises in Google Colab | Running code in a browser |
@@ -37,6 +38,7 @@ You need Chapter 5 first.
 4. **Additional Problems on Recursion.** The Tower of Hanoi is the classic; work it by hand for three discs before reading the answer.
 5. **functools.wraps** when you first write a decorator.
 6. **Beyond the Text** last, as project work rather than reading.
+7. **Type Hints** at any point after questions 1 to 5. It adds one idea to the functions you already write: labelling what goes in and what comes out.
 
 ## Three Points Worth Extra Care
 
