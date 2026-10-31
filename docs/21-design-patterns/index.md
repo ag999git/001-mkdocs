@@ -48,3 +48,4 @@ Every script is complete and ready to run. Copy it into a `.py` file or a notebo
 
 The short snippets inside the follow-up questions are the exception. Those are fragments that extend a class from the main script above them, so run that script first.
 
+You can also run every script in Google Colab, with nothing to install: [Open the Chapter 21 notebook](https://colab.research.google.com/github/ag999git/001-Python-book-2026/blob/main/colab-nb/21-10-design-patterns.ipynb).

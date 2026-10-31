@@ -653,6 +653,8 @@ Decoration wraps an existing object. Because the wrapping happens while the prog
 
 Python makes this idea especially convenient through the `@decorator` syntax ([Python glossary: decorator](https://docs.python.org/3/glossary.html#term-decorator)). In Python, functions are objects, so one function can receive another function and return a new, improved one.
 
+Decorators are explained from first principles in Chapter 6 of the book (Sections 6.27 and 6.28). The online page [Using functools.wraps in Decorators](../06-functions2/009-ch6-functools-decorators.md) shows how to write them properly.
+
 Instead of writing separate wrapper classes, as is common in languages such as Java or C++, Python allows programmers to decorate functions (and classes) directly. This results in shorter, cleaner and more readable code.
 
 One small but useful point: the `@` syntax applies the decorator **once, when the function is defined**. The classical Decorator pattern wraps **objects** while the program runs. Both follow the same idea of "wrap and add", and a Python decorator can also be applied at runtime by an ordinary call, as Step 5 of the first script shows.
