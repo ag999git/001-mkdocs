@@ -1276,6 +1276,8 @@ To run them on your computer:
 
 If you run the whole folder with `python -m pytest`, expect the summary `2 failed, 12 passed, 1 skipped, 1 xfailed, 1 xpassed`. The two failures come from `test_q03_assert.py` and `test_q09_shared_state.py`, which fail on purpose to demonstrate an idea.
 
+The folder includes a small `pytest.ini` file so that pytest does not also run the scripting answers stored in `scripting-qa`.
+
 Detailed, step-by-step instructions (installing Python and VS Code, downloading files from GitHub and fixing common errors) are given in [Running the Scripts on Your Computer](020-ch20-unittest-disadvantage-rigid-oop-style.md#running-the-scripts-on-your-computer).
 
 [Back to the Table of Contents](095-ch20-conceptual-qa.md#table-of-contents)
