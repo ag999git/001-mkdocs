@@ -48,23 +48,38 @@ five_diag = identity * 5
 print(five_diag)
 
 ```
-4. Generate a `10x10` array with random values. Find the minimum and maximum values and their memory addresses.
+4. Generate a `10x10` array with random values. Find the minimum and maximum values and their positions (row and column).
 
 ```python
 import numpy as np
 
-# Create random floats in [0, 1)
-data = np.random.rand(10, 10)
+np.random.seed(0)                  # fixed seed, so you get the same numbers as shown
+data = np.random.rand(10, 10)      # 100 random floats in [0, 1)
 
-# Use built-in aggregate functions
 min_val = data.min()
 max_val = data.max()
 
-print(f"Min: {min_val}, Max: {max_val}")
-# The data pointer shows the memory start location
-print(f"Memory Address: {data.ctypes.data}")
+# argmin() and argmax() give the position counted across all 100 cells (0 to 99)
+i_min = data.argmin()
+i_max = data.argmax()
 
+# unravel_index() turns that single position into (row, column)
+min_row, min_col = np.unravel_index(i_min, data.shape)
+max_row, max_col = np.unravel_index(i_max, data.shape)
+
+print(f"Min: {min_val:.4f} at position {i_min}, i.e. row {min_row}, column {min_col}")
+print(f"Max: {max_val:.4f} at position {i_max}, i.e. row {max_row}, column {max_col}")
 ```
+
+Output:
+
+```text
+Min: 0.0047 at position 99, i.e. row 9, column 9
+Max: 0.9884 at position 52, i.e. row 5, column 2
+```
+
+A single number inside an array does not have a separate memory address that is useful to you. What you can find is **where** the value sits in the array. `argmin()` and `argmax()` give its position counted from 0 across all 100 cells, and `np.unravel_index()` turns that position into a row and a column. The seed is fixed only so that your output matches the one above; remove `np.random.seed(0)` to get new numbers each time.
+
 5. Create a `2D` array with 1 on the border and 0 inside.
 
 ```python
