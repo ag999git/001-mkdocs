@@ -14,6 +14,8 @@ You need Chapter 9 (exceptions) first, because almost every file operation can f
 | [Text Files versus Binary Files](020-ch10-text-binary.md) | How the two differ, a comparison table, and how to decide which mode you need | Early |
 | [A Comprehensive Study of open()](030-ch10-file-open.md) | Every parameter of `open()`, what the file object gives you, and which exception to expect when | Reference |
 | [File Capability Methods](050-ch10-file-capability.md) | `readable()`, `writable()`, `seekable()` and what they tell you about an open file | After `open()` |
+| [Working with Files and Folders Using pathlib](150-ch10-pathlib.md) | Building, checking, reading, writing, listing, renaming and deleting with `Path` objects, and how they compare with `os.path` | The modern way to handle paths |
+| [Working with CSV Files Using the csv Module](160-ch10-csv-module.md) | Reading and writing CSV with `reader`, `writer`, `DictReader` and `DictWriter`, why `newline=""` matters, other delimiters, and bad values | Tables of data in plain text |
 
 ## The Question Pages
 
@@ -45,6 +47,7 @@ Each of these is a complete small project: a question, the reasoning, then a scr
 4. **The Script Questions**, Part 1, as practice.
 5. **The research projects**, in whatever order interests you. `seek()`, then pickling and JSON, is a natural path.
 6. **LBYL versus EAFP** once you have written a few file programs and met the errors for yourself.
+7. **pathlib** and then **the csv module**, once opening, reading and closing a file feels natural. pathlib is the modern way to handle paths; the csv module is the right way to read and write tables.
 
 ## Three Points Worth Extra Care
 
